@@ -1,0 +1,21 @@
+[package]
+name = "picasso-app"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+anyhow = "1.0.104"
+eframe = "0.37.0"
+egui = "0.37.0"
+env_logger = "0.11.11"
+image = { version = "0.25.10", default-features = false, features = ["png"] }
+log = "0.4.34"
+picasso-core = { version = "0.0.1", path = "../picasso-core" }
+picasso-interop = { version = "0.0.1", path = "../picasso-interop" }
+picasso-media = { version = "0.0.1", path = "../picasso-media" }
+picasso-render = { version = "0.0.1", path = "../picasso-render" }
+rfd = "0.17.2"
+
+[[bin]]
+name = "picasso-suite"
+path = "src/main.rs"
