@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.fabox_os.PicassoSuite</id>
+  <name>Picasso Suite</name>
+  <summary>Non-linear video editor with a DaVinci Resolve-style interface</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT OR Apache-2.0</project_license>
+  <description>
+    <p>Cut, Edit and Deliver pages, all formats through FFmpeg, H.264/H.265 export and .drp project import. Not affiliated with Blackmagic Design.</p>
+  </description>
+  <launchable type="desktop-id">io.github.fabox_os.PicassoSuite.desktop</launchable>
+  <url type="homepage">https://github.com/fabox-os/Picasso-Suite</url>
+  <releases>
+    <release version="0.0.1" date="2026-10-25"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

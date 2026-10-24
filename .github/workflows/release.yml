@@ -1,0 +1,92 @@
+name: release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev flatpak flatpak-builder
+      - run: cargo build --release --workspace
+      - run: cargo install cargo-deb cargo-generate-rpm --locked
+      - run: |
+          cargo deb -p picasso-app --no-build -o picasso-suite_0.0.1_amd64.deb
+          cargo generate-rpm -p crates/picasso-app -o picasso-suite-0.0.1.x86_64.rpm
+      - run: |
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak-builder --user --install-deps-from=flathub --force-clean --repo=repo build-dir packaging/linux/flatpak.yml
+          flatpak build-bundle repo picasso-suite-0.0.1.flatpak io.github.fabox_os.PicassoSuite
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: |
+            *.deb
+            *.rpm
+            *.flatpak
+
+  macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-apple-darwin,aarch64-apple-darwin
+      - run: |
+          cargo build --release --workspace --target aarch64-apple-darwin
+          cargo build --release --workspace --target x86_64-apple-darwin
+      - run: |
+          APP="Picasso Suite.app"
+          mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+          for bin in picasso-suite picasso; do
+            lipo -create -output "$APP/Contents/MacOS/$bin" \
+              target/aarch64-apple-darwin/release/$bin target/x86_64-apple-darwin/release/$bin
+          done
+          cp packaging/macos/Info.plist "$APP/Contents/Info.plist"
+          mkdir icon.iconset
+          for s in 16 32 64 128 256; do
+            sips -z $s $s crates/picasso-app/assets/icon.png --out icon.iconset/icon_${s}x${s}.png
+          done
+          iconutil -c icns icon.iconset -o "$APP/Contents/Resources/icon.icns"
+          lipo -info "$APP/Contents/MacOS/picasso-suite"
+          ditto -c -k --keepParent "$APP" picasso-suite-0.0.1-macos-universal.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: picasso-suite-0.0.1-macos-universal.zip
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --release --workspace
+      - shell: pwsh
+        run: |
+          New-Item -ItemType Directory picasso-suite-0.0.1-windows | Out-Null
+          Copy-Item target/release/picasso-suite.exe, target/release/picasso.exe, README.md, CHANGELOG.md, LICENSE-MIT picasso-suite-0.0.1-windows
+          Compress-Archive picasso-suite-0.0.1-windows picasso-suite-0.0.1-windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: picasso-suite-0.0.1-windows.zip
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux, macos, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: out/*

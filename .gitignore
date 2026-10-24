@@ -2,3 +2,4 @@
 /vendor
 *.pcsp.bak
 /dist
+/out

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Picasso Suite
+Comment=Non-linear video editor
+Exec=picasso-suite %f
+Icon=io.github.fabox_os.PicassoSuite
+Terminal=false
+Categories=AudioVideo;Video;AudioVideoEditing;

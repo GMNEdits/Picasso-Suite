@@ -19,3 +19,29 @@ rfd = "0.17.2"
 [[bin]]
 name = "picasso-suite"
 path = "src/main.rs"
+
+[package.metadata.deb]
+name = "picasso-suite"
+maintainer = "Picasso Suite contributors"
+section = "video"
+priority = "optional"
+depends = "$auto, ffmpeg"
+extended-description = "Non-linear video editor with a DaVinci Resolve-style interface. Not affiliated with Blackmagic Design."
+assets = [
+    ["../../target/release/picasso-suite", "usr/bin/", "755"],
+    ["../../target/release/picasso", "usr/bin/", "755"],
+    ["../../packaging/linux/io.github.fabox_os.PicassoSuite.desktop", "usr/share/applications/", "644"],
+    ["../../packaging/linux/io.github.fabox_os.PicassoSuite.metainfo.xml", "usr/share/metainfo/", "644"],
+    ["assets/icon.png", "usr/share/icons/hicolor/256x256/apps/io.github.fabox_os.PicassoSuite.png", "644"],
+]
+
+[package.metadata.generate-rpm]
+name = "picasso-suite"
+summary = "Non-linear video editor with a DaVinci Resolve-style interface"
+assets = [
+    { source = "../../target/release/picasso-suite", dest = "/usr/bin/picasso-suite", mode = "755" },
+    { source = "../../target/release/picasso", dest = "/usr/bin/picasso", mode = "755" },
+    { source = "../../packaging/linux/io.github.fabox_os.PicassoSuite.desktop", dest = "/usr/share/applications/io.github.fabox_os.PicassoSuite.desktop", mode = "644" },
+    { source = "../../packaging/linux/io.github.fabox_os.PicassoSuite.metainfo.xml", dest = "/usr/share/metainfo/io.github.fabox_os.PicassoSuite.metainfo.xml", mode = "644" },
+    { source = "assets/icon.png", dest = "/usr/share/icons/hicolor/256x256/apps/io.github.fabox_os.PicassoSuite.png", mode = "644" },
+]

@@ -1,0 +1,60 @@
+# Builds the Flatpak from the release binaries produced by CI (see .github/workflows/release.yml).
+# FFmpeg (with x264/x265) is built inside the sandbox, so the app works without host FFmpeg.
+app-id: io.github.fabox_os.PicassoSuite
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: picasso-suite
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --filesystem=home
+modules:
+  - name: x264
+    config-opts: [--enable-shared, --disable-cli]
+    sources:
+      - type: git
+        url: https://code.videolan.org/videolan/x264.git
+        branch: stable
+  - name: x265
+    buildsystem: cmake-ninja
+    subdir: source
+    config-opts: [-DCMAKE_BUILD_TYPE=Release, -DENABLE_CLI=OFF]
+    sources:
+      - type: git
+        url: https://bitbucket.org/multicoreware/x265_git.git
+        tag: "4.1"
+  - name: ffmpeg
+    config-opts:
+      - --enable-gpl
+      - --enable-shared
+      - --disable-static
+      - --disable-doc
+      - --disable-ffplay
+      - --enable-libx264
+      - --enable-libx265
+    sources:
+      - type: git
+        url: https://git.ffmpeg.org/ffmpeg.git
+        tag: n7.1
+  - name: picasso-suite
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 picasso-suite /app/bin/picasso-suite
+      - install -Dm755 picasso /app/bin/picasso
+      - install -Dm644 icon.png /app/share/icons/hicolor/256x256/apps/io.github.fabox_os.PicassoSuite.png
+      - install -Dm644 io.github.fabox_os.PicassoSuite.desktop /app/share/applications/io.github.fabox_os.PicassoSuite.desktop
+      - install -Dm644 io.github.fabox_os.PicassoSuite.metainfo.xml /app/share/metainfo/io.github.fabox_os.PicassoSuite.metainfo.xml
+    sources:
+      - type: file
+        path: ../../target/release/picasso-suite
+      - type: file
+        path: ../../target/release/picasso
+      - type: file
+        path: ../../crates/picasso-app/assets/icon.png
+      - type: file
+        path: io.github.fabox_os.PicassoSuite.desktop
+      - type: file
+        path: io.github.fabox_os.PicassoSuite.metainfo.xml
