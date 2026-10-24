@@ -6,8 +6,8 @@
   <key>CFBundleIdentifier</key><string>io.github.fabox-os.PicassoSuite</string>
   <key>CFBundleExecutable</key><string>picasso-suite</string>
   <key>CFBundleIconFile</key><string>icon.icns</string>
-  <key>CFBundleShortVersionString</key><string>0.0.1</string>
-  <key>CFBundleVersion</key><string>0.0.1</string>
+  <key>CFBundleShortVersionString</key><string>0.1.0</string>
+  <key>CFBundleVersion</key><string>0.1.0</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>LSMinimumSystemVersion</key><string>11.0</string>
   <key>NSHighResolutionCapable</key><true/>

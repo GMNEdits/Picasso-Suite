@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.1 — first release
+## 0.1.0 — first release
 
 ### Application
 - Native Rust application (egui/eframe, wgpu) with a borderless window and DaVinci Resolve-style

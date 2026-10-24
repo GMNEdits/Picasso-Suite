@@ -11,7 +11,7 @@
   <launchable type="desktop-id">io.github.fabox_os.PicassoSuite.desktop</launchable>
   <url type="homepage">https://github.com/fabox-os/Picasso-Suite</url>
   <releases>
-    <release version="0.0.1" date="2026-10-25"/>
+    <release version="0.1.0" date="2026-10-25"/>
   </releases>
   <content_rating type="oars-1.1"/>
 </component>

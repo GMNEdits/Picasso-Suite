@@ -2678,7 +2678,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-app"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "eframe",
@@ -2695,7 +2695,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-cli"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2708,7 +2708,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-core"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
@@ -2718,7 +2718,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-interop"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "log",
  "picasso-core",
@@ -2732,7 +2732,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-media"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "log",
  "picasso-core",
@@ -2744,7 +2744,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-render"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "log",
  "picasso-core",

@@ -16,12 +16,12 @@ jobs:
       - run: cargo build --release --workspace
       - run: cargo install cargo-deb cargo-generate-rpm --locked
       - run: |
-          cargo deb -p picasso-app --no-build -o picasso-suite_0.0.1_amd64.deb
-          cargo generate-rpm -p crates/picasso-app -o picasso-suite-0.0.1.x86_64.rpm
+          cargo deb -p picasso-app --no-build -o picasso-suite_0.1.0_amd64.deb
+          cargo generate-rpm -p crates/picasso-app -o picasso-suite-0.1.0.x86_64.rpm
       - run: |
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           flatpak-builder --user --install-deps-from=flathub --force-clean --repo=repo build-dir packaging/linux/flatpak.yml
-          flatpak build-bundle repo picasso-suite-0.0.1.flatpak io.github.fabox_os.PicassoSuite
+          flatpak build-bundle repo picasso-suite-0.1.0.flatpak io.github.fabox_os.PicassoSuite
       - uses: actions/upload-artifact@v4
         with:
           name: linux
@@ -54,11 +54,11 @@ jobs:
           done
           iconutil -c icns icon.iconset -o "$APP/Contents/Resources/icon.icns"
           lipo -info "$APP/Contents/MacOS/picasso-suite"
-          ditto -c -k --keepParent "$APP" picasso-suite-0.0.1-macos-universal.zip
+          ditto -c -k --keepParent "$APP" picasso-suite-0.1.0-macos-universal.zip
       - uses: actions/upload-artifact@v4
         with:
           name: macos
-          path: picasso-suite-0.0.1-macos-universal.zip
+          path: picasso-suite-0.1.0-macos-universal.zip
 
   windows:
     runs-on: windows-latest
@@ -68,13 +68,13 @@ jobs:
       - run: cargo build --release --workspace
       - shell: pwsh
         run: |
-          New-Item -ItemType Directory picasso-suite-0.0.1-windows | Out-Null
-          Copy-Item target/release/picasso-suite.exe, target/release/picasso.exe, README.md, CHANGELOG.md, LICENSE picasso-suite-0.0.1-windows
-          Compress-Archive picasso-suite-0.0.1-windows picasso-suite-0.0.1-windows.zip
+          New-Item -ItemType Directory picasso-suite-0.1.0-windows | Out-Null
+          Copy-Item target/release/picasso-suite.exe, target/release/picasso.exe, README.md, CHANGELOG.md, LICENSE picasso-suite-0.1.0-windows
+          Compress-Archive picasso-suite-0.1.0-windows picasso-suite-0.1.0-windows.zip
       - uses: actions/upload-artifact@v4
         with:
           name: windows
-          path: picasso-suite-0.0.1-windows.zip
+          path: picasso-suite-0.1.0-windows.zip
 
   publish:
     if: startsWith(github.ref, 'refs/tags/v')
