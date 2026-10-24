@@ -69,7 +69,7 @@ jobs:
       - shell: pwsh
         run: |
           New-Item -ItemType Directory picasso-suite-0.0.1-windows | Out-Null
-          Copy-Item target/release/picasso-suite.exe, target/release/picasso.exe, README.md, CHANGELOG.md, LICENSE-MIT picasso-suite-0.0.1-windows
+          Copy-Item target/release/picasso-suite.exe, target/release/picasso.exe, README.md, CHANGELOG.md, LICENSE picasso-suite-0.0.1-windows
           Compress-Archive picasso-suite-0.0.1-windows picasso-suite-0.0.1-windows.zip
       - uses: actions/upload-artifact@v4
         with:
