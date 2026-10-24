@@ -15,6 +15,20 @@ A cross-platform video editor written in Rust — Windows, Linux and macOS.
   resolution, frame rate). Media paths from any OS are relinked automatically.
   Send timelines back to Resolve (or Premiere/Avid) with OpenTimelineIO export.
 
+## Screenshots
+
+**Cut** — fast assembly with an overview strip and a zoomed detail timeline.
+
+![Cut page](docs/screenshots/cut.png)
+
+**Edit** — media pool, source and timeline viewers, multi-track timeline.
+
+![Edit page](docs/screenshots/edit.png)
+
+**Deliver** — H.264, H.265, ProRes, DNxHR and AV1 export presets with a render queue.
+
+![Deliver page](docs/screenshots/deliver.png)
+
 ## Requirements
 
 - **Rust** 1.85+ (`rustup`)
