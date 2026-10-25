@@ -11,7 +11,7 @@ finish-args:
   - --device=dri
   - --filesystem=home
 modules:
-  # FFmpeg comes prebuilt (johnvansickle.com's static GPL build, downloaded by the release workflow into
+  # FFmpeg comes prebuilt (BtbN's static GPL FFmpeg 8.1 build, downloaded by the release workflow into
   # packaging/linux/ffmpeg/), so the app works without FFmpeg on the host.
   - name: picasso-suite
     buildsystem: simple

@@ -38,14 +38,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev flatpak flatpak-builder
       - run: cargo build --release --workspace
-      - name: Download prebuilt FFmpeg (static, GPL, with x264/x265)
+      - name: Download prebuilt FFmpeg (BtbN static GPL build, checked against its SHA-256)
         run: |
-          base=https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-          curl -fsSL -o ffmpeg-release-amd64-static.tar.xz "$base"
-          curl -fsSL -o ffmpeg.md5 "$base.md5"
-          md5sum -c ffmpeg.md5
+          file=ffmpeg-n8.1-latest-linux64-gpl-8.1.tar.xz
+          base=https://github.com/BtbN/FFmpeg-Builds/releases/download/latest
+          curl -fsSL --retry 5 --retry-delay 5 -o "$file" "$base/$file"
+          curl -fsSL --retry 5 -o checksums.sha256 "$base/checksums.sha256"
+          grep " $file\$" checksums.sha256 | sha256sum -c -
           mkdir -p packaging/linux/ffmpeg
-          tar -xJf ffmpeg-release-amd64-static.tar.xz --strip-components=1 -C packaging/linux/ffmpeg --wildcards '*/ffmpeg' '*/ffprobe'
+          tar -xJf "$file" --strip-components=2 -C packaging/linux/ffmpeg --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
           packaging/linux/ffmpeg/ffmpeg -version | head -1
       - run: |
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
