@@ -2,36 +2,45 @@
 
 Status as of 0.1.0.
 
-## Done
+## Phase 1: Foundation (done)
 
 - [x] Rust workspace: `picasso-core`, `-media`, `-render`, `-interop`, `-app`, `-cli`
-- [x] Resolve-style chrome: menu bar, interface toolbar, page bar, design-grid scaling
-- [x] **Cut page**: media pool, viewer, transport, overview timeline, detail timeline with centre playhead
-- [x] **Edit page** and **Deliver page**
-- [x] Multi-track timeline: place/overwrite, blade, delete, ripple delete, move, trim, snapping, linked clips
-- [x] Per-clip zoom, position, opacity, volume; undo/redo
+- [x] Project model, undo/redo, `.pcsp` project files
 - [x] Any FFmpeg-readable format: probe, frame-accurate decode, thumbnails, waveforms
-- [x] Export: H.264 and H.265 (8/10-bit) with x264/x265 and hardware encoders, ProRes, DNxHR, AV1, VP9, FFV1, image sequences, WAV, MP3
-- [x] `.pcsp` project files
+- [x] Float32 compositor with a decoder pool
+
+## Phase 2: Editor and interface (done)
+
+- [x] Resolve-style chrome: menu bar, toolbars, page bar, design-grid scaling
+- [x] Cut, Edit and Deliver pages
+- [x] Multi-track timeline: place/overwrite, blade, delete, ripple delete, move, trim, snapping, linked clips
+- [x] Per-clip zoom, position, opacity, volume
+
+## Phase 3: Export and interchange (done)
+
+- [x] H.264 and H.265 (8/10-bit) with x264/x265 and hardware encoders
+- [x] ProRes, DNxHR, AV1, VP9, FFV1, image sequences, WAV, MP3
 - [x] `.drp` import (plain-XML parts) with cross-OS media relinking
-- [x] OpenTimelineIO export
-- [x] `picasso` command-line tool
-- [x] Packaging: Windows zip, `.deb`, `.rpm`, macOS universal app
+- [x] OpenTimelineIO export, `picasso` command-line tool
+
+## Phase 4: Release (in progress)
+
 - [x] GPL-3.0-or-later licence, changelog, release workflow
+- [x] Windows zip, `.deb`, `.rpm`, macOS universal app
+- [ ] Flatpak: FFmpeg-in-sandbox build fix pushed, waiting for a successful CI run
+- [ ] Cut page: pixel-level match with the reference (ruler, meter, empty media pool)
 
-## In progress
-
-- [ ] Flatpak package: FFmpeg-in-sandbox build fix pushed, waiting for a successful CI run
-- [ ] Cut page: pixel-level match with the reference (ruler, meter and media-pool empty state still being refined)
-
-## Not done
+## Phase 5: Polish (not done)
 
 - [ ] Real-time audio playback (preview is silent)
 - [ ] Restyle Edit and Deliver pages to match the Cut page
+- [ ] Hardware-decode toggle in the UI
+- [ ] Automated tests in CI
+- [ ] Bundled FFmpeg for the Windows and macOS packages
+- [ ] Signed and notarised macOS app
+
+## Phase 6: New pages and features (not done)
+
 - [ ] Color, Fusion and Fairlight pages
 - [ ] Effects, transitions, titles and keyframes
-- [ ] `.drp` binary-encoded parts, and a round-trip test against a real project exported from Resolve
-- [ ] Signed and notarised macOS app
-- [ ] Automated tests in CI (tests run locally only)
-- [ ] Hardware-accelerated decode toggle in the UI
-- [ ] Bundled FFmpeg for the Windows and macOS packages
+- [ ] `.drp` binary-encoded parts, and a round-trip test against a real Resolve export
