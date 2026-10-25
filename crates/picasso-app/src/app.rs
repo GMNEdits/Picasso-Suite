@@ -1,9 +1,11 @@
+use crate::audio::AudioPlayer;
 use crate::commands::{Cmd, Page, allowed_while_typing};
 use crate::keymap::Keymap;
 use crate::theme::{self, *};
 use crate::timeline_ui::{Action, TimelineState, Tool};
 use crate::workers::{ExportJob, ImportOutcome, OverviewResult, Overviews, Preview, spawn_export, spawn_import};
 use egui::{Color32, RichText, TextureHandle, TextureOptions, pos2, vec2};
+use picasso_core::time::frames_to_seconds;
 use picasso_core::{Edge, History, Id, Project, ProjectSettings, Rational, TrackKind};
 use picasso_media::encoders::{ExportPreset, Quality, available_encoders, available_presets};
 use picasso_render::ExportSettings;
@@ -71,6 +73,8 @@ pub struct PicassoApp {
     pub(crate) media_selection: Option<Id>,
     pub(crate) playhead: i64,
     pub(crate) playing: Option<Playback>,
+    /// The sound of the current playback, and which playback and edit it was started for.
+    audio: Option<((Instant, i64, u64), Option<AudioPlayer>)>,
     pub(crate) source_pos: f64,
     pub(crate) marks: (Option<i64>, Option<i64>),
     pub(crate) timeline: TimelineState,
@@ -137,6 +141,7 @@ impl PicassoApp {
             media_selection: None,
             playhead: 0,
             playing: None,
+            audio: None,
             source_pos: 0.0,
             marks: (None, None),
             timeline: TimelineState::default(),
@@ -186,11 +191,18 @@ impl PicassoApp {
         app.shortcuts_open = std::env::var_os("PICASSO_SHORTCUTS").is_some();
         app.about_open = std::env::var_os("PICASSO_ABOUT").is_some();
         if let Ok(page) = std::env::var("PICASSO_PAGE") {
-            if page.eq_ignore_ascii_case("edit") {
-                app.page = Page::Edit;
-            }
-            if page.eq_ignore_ascii_case("deliver") {
-                app.page = Page::Deliver;
+            let named = [
+                ("media", Page::Media),
+                ("photo", Page::Photo),
+                ("cut", Page::Cut),
+                ("edit", Page::Edit),
+                ("fusion", Page::Effects),
+                ("color", Page::Color),
+                ("fairlight", Page::Audio),
+                ("deliver", Page::Deliver),
+            ];
+            if let Some((_, found)) = named.iter().find(|(n, _)| page.eq_ignore_ascii_case(n)) {
+                app.page = *found;
             }
             if page.eq_ignore_ascii_case("inspector") {
                 app.show_inspector = true;
@@ -688,6 +700,24 @@ impl PicassoApp {
         }
     }
 
+    /// Starts, restarts or stops the sound to match playback. Sound plays at normal speed only.
+    fn sync_audio(&mut self) {
+        let want = self.playing.as_ref().filter(|p| p.speed == 1.0).map(|p| (p.t0, p.f0, self.version));
+        if want == self.audio.as_ref().map(|a| a.0) {
+            return;
+        }
+        self.audio = None;
+        if let (Some(key), Some(p)) = (want, &self.playing) {
+            // After an edit, the new sound starts from where the picture is now.
+            let from = self.playhead.max(p.f0);
+            let at = p.t0 + std::time::Duration::from_secs_f64(frames_to_seconds(from - p.f0, self.fps()));
+            let player = AudioPlayer::start(&self.project, from, at)
+                .inspect_err(|e| log::warn!("no sound during playback: {e}"))
+                .ok();
+            self.audio = Some((key, player));
+        }
+    }
+
     fn advance_playback(&mut self, ctx: &egui::Context) {
         if let Some(p) = &self.playing {
             let frame = p.f0 + (p.t0.elapsed().as_secs_f64() * self.fps().as_f64() * p.speed) as i64;
@@ -1049,6 +1079,7 @@ impl PicassoApp {
         theme::fit_to_design_width(&ctx);
         self.poll_workers(&ctx);
         self.advance_playback(&ctx);
+        self.sync_audio();
         self.shortcuts(&ctx);
         let title = self.title();
         if title != self.last_title {

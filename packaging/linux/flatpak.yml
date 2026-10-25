@@ -9,6 +9,7 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --device=dri
+  - --socket=pulseaudio
   - --filesystem=home
 modules:
   # FFmpeg comes prebuilt (BtbN's static GPL FFmpeg 8.1 build, downloaded by the release workflow into

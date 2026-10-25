@@ -1,7 +1,7 @@
 //! Vector icons drawn in code. Each is an original drawing laid out on a unit
 //! square and scaled into its rectangle.
 
-use egui::epaint::{CircleShape, PathShape, PathStroke};
+use egui::epaint::{CircleShape, Mesh, PathShape, PathStroke};
 use egui::{Color32, Painter, Pos2, Rect, Shape, Stroke, pos2, vec2};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -109,6 +109,41 @@ pub enum Icon {
     Close,
 }
 
+fn cross(o: Pos2, a: Pos2, b: Pos2) -> f32 {
+    (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x)
+}
+
+fn is_convex(pts: &[Pos2]) -> bool {
+    let n = pts.len();
+    let mut turns = (0..n).map(|i| cross(pts[i], pts[(i + 1) % n], pts[(i + 2) % n]));
+    turns.clone().all(|t| t >= 0.0) || turns.all(|t| t <= 0.0)
+}
+
+/// Ear-clipping triangulation of a simple polygon, as vertex indices.
+fn triangulate(pts: &[Pos2]) -> Vec<[u32; 3]> {
+    let area: f32 = (0..pts.len()).map(|i| cross(Pos2::ZERO, pts[i], pts[(i + 1) % pts.len()])).sum();
+    let sign = area.signum();
+    let mut left: Vec<usize> = (0..pts.len()).collect();
+    let mut tris = Vec::new();
+    while left.len() > 3 {
+        let n = left.len();
+        let ear = (0..n).find(|&i| {
+            let (a, b, c) = (left[(i + n - 1) % n], left[i], left[(i + 1) % n]);
+            cross(pts[a], pts[b], pts[c]) * sign > 0.0
+                && !left.iter().any(|&j| {
+                    j != a && j != b && j != c && [(a, b), (b, c), (c, a)].iter().all(|&(u, v)| cross(pts[u], pts[v], pts[j]) * sign >= 0.0)
+                })
+        });
+        let Some(i) = ear else { break };
+        tris.push([left[(i + n - 1) % n] as u32, left[i] as u32, left[(i + 1) % n] as u32]);
+        left.remove(i);
+    }
+    if left.len() == 3 {
+        tris.push([left[0] as u32, left[1] as u32, left[2] as u32]);
+    }
+    tris
+}
+
 struct Pen<'a> {
     painter: &'a Painter,
     rect: Rect,
@@ -131,9 +166,23 @@ impl Pen<'_> {
         let shape = if closed { PathShape::closed_line(pts, self.s()) } else { PathShape::line(pts, self.s()) };
         self.painter.add(shape);
     }
+    /// Fills a polygon. egui only fills convex paths correctly, so concave outlines (the selection
+    /// arrow, the speaker) are cut into triangles and edged with a thin line for anti-aliasing.
     fn fill(&self, pts: &[(f32, f32)]) {
         let pts: Vec<Pos2> = pts.iter().map(|(x, y)| self.p(*x, *y)).collect();
-        self.painter.add(Shape::Path(PathShape { points: pts, closed: true, fill: self.color, stroke: PathStroke::NONE }));
+        if is_convex(&pts) {
+            self.painter.add(Shape::Path(PathShape { points: pts, closed: true, fill: self.color, stroke: PathStroke::NONE }));
+            return;
+        }
+        let mut mesh = Mesh::default();
+        for p in &pts {
+            mesh.colored_vertex(*p, self.color);
+        }
+        for [a, b, c] in triangulate(&pts) {
+            mesh.add_triangle(a, b, c);
+        }
+        self.painter.add(mesh);
+        self.painter.add(PathShape::closed_line(pts, Stroke::new(0.8, self.color)));
     }
     fn rect(&self, x0: f32, y0: f32, x1: f32, y1: f32) {
         self.painter.rect_stroke(Rect::from_min_max(self.p(x0, y0), self.p(x1, y1)), 1.0, self.s(), egui::StrokeKind::Middle);
@@ -328,7 +377,7 @@ pub fn paint(painter: &Painter, rect: Rect, icon: Icon, color: Color32) {
             pen.arc(0.5, 0.5, 0.3, 0.2 * t, 1.75 * t);
             pen.poly(&[(0.7, 0.3), (0.8, 0.44), (0.88, 0.28)], false);
         }
-        Select => pen.fill(&[(0.3, 0.12), (0.3, 0.82), (0.46, 0.66), (0.58, 0.9), (0.68, 0.85), (0.56, 0.62), (0.78, 0.62)]),
+        Select => pen.fill(&[(0.3, 0.12), (0.3, 0.78), (0.45, 0.648), (0.57, 0.87), (0.684, 0.828), (0.606, 0.618), (0.774, 0.57)]),
         Trim => {
             pen.poly(&[(0.42, 0.15), (0.3, 0.15), (0.3, 0.85), (0.42, 0.85)], false);
             pen.poly(&[(0.58, 0.15), (0.7, 0.15), (0.7, 0.85), (0.58, 0.85)], false);
@@ -630,4 +679,25 @@ pub fn button(ui: &mut egui::Ui, rect: Rect, icon: Icon, active: bool, enabled: 
     };
     paint(ui.painter(), rect, icon, color);
     resp
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn area(a: Pos2, b: Pos2, c: Pos2) -> f32 {
+        cross(a, b, c).abs() / 2.0
+    }
+
+    #[test]
+    fn the_selection_arrow_is_filled_exactly() {
+        let arrow = [(0.3, 0.12), (0.3, 0.78), (0.45, 0.648), (0.57, 0.87), (0.684, 0.828), (0.606, 0.618), (0.774, 0.57)];
+        let pts: Vec<Pos2> = arrow.iter().map(|&(x, y)| pos2(x, y)).collect();
+        assert!(!is_convex(&pts));
+        let tris = triangulate(&pts);
+        assert_eq!(tris.len(), pts.len() - 2);
+        let polygon: f32 = (0..pts.len()).map(|i| cross(Pos2::ZERO, pts[i], pts[(i + 1) % pts.len()])).sum::<f32>().abs() / 2.0;
+        let covered: f32 = tris.iter().map(|t| area(pts[t[0] as usize], pts[t[1] as usize], pts[t[2] as usize])).sum();
+        assert!((polygon - covered).abs() < 1e-5, "{polygon} vs {covered}");
+    }
 }

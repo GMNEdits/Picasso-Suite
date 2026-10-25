@@ -20,7 +20,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: |
           sudo apt-get update
-          sudo apt-get install -y pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev
+          sudo apt-get install -y pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev
       - run: cargo build --release --workspace
       - run: cargo install cargo-deb cargo-generate-rpm --locked
       - run: |

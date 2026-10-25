@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.2.0
+
+### New
+- [x] **Sound during playback:** the timeline's audio plays in sync with the viewer at normal speed, with each clip's volume.
+- [x] **Edit page:** the media pool, source and timeline viewers and track headers laid out as in DaVinci Resolve at 1080p.
+- [x] **Color page:** Curves panel with a histogram that follows playback; wheels, Soft Clip and scopes arranged as in Resolve.
+- [x] **Deliver page:** Custom Export preset list with icons and submenus; the render settings fit without scrolling.
+- [x] **Frame-rate prompt:** when the first imported video has another frame rate, you choose whether to change the project's.
+- [x] **Delete track:** right-click a track header to delete it (the last track of each kind stays).
+- [x] New projects start with one picture track (V1) and one sound track (A1), as in Resolve.
+- [x] Linux: the Flatpak may use the sound server (`--socket=pulseaudio`).
+
+### Changed
+- [x] Every page is laid out to Resolve's 1080p size; the layout scales with the window.
+- [x] Selection arrow and loop icon redrawn to match Resolve.
+- [x] Cut page timeline, overview and detail views as in Resolve.
+- [x] Release builds use full link-time optimisation and drop debug symbols.
+- [x] Page bar and top toolbars labelled as in Resolve.
+
+### Fixed
+- [x] The Selection tool's red arrow was misshapen; it is a proper cursor arrow now. The speaker icon too.
+- [x] The 1080p pages keep a safe minimum body height, so a very short window cannot give them negative sizes.
+
+### Removed
+- [x] The unused `tracing` dependency of `picasso-media`.
+
+### Known limitations
+- [ ] Curve editing in the Color page's Curves panel is not yet possible (the histogram and controls are shown).
+- [ ] Edit and Soft Clip effects are shown but do nothing yet.
+- [ ] Deliver's interchange presets (Premiere, Avid) are listed but not built.
+- [ ] Cut page track buttons are shown but do nothing yet.
+- [ ] The Photo page still shows the Capture tools.
+- [ ] Sound plays at normal speed only; fast-forward and reverse stay silent.
+- [ ] macOS package does not include FFmpeg yet.
+
 ## 0.1.0 hotfix
 
 ### Fixed
