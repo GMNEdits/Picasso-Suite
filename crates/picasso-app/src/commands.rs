@@ -90,6 +90,7 @@ pub enum Cmd {
     FullScreen,
     Shortcuts,
     About,
+    Preferences,
     /// A menu entry that exists in the layout but has no function yet.
     NotYet,
 }
@@ -159,6 +160,7 @@ pub const BINDINGS: &[Binding] = &[
     b(Cmd::Page(Page::Edit), SHIFT, Key::Num4),
     b(Cmd::Page(Page::Deliver), SHIFT, Key::Num8),
     b(Cmd::FullScreen, CMD_SHIFT, Key::F),
+    b(Cmd::Preferences, CMD, Key::Comma),
 ];
 
 /// Commands that make sense while a text field has keyboard focus.
@@ -216,6 +218,8 @@ pub const MENUS: &[(&str, &[Entry])] = &[
         Item("Project Settings...", Cmd::ProjectSettings),
         Sep,
         Item("Quick Export...", Cmd::QuickExport),
+        Sep,
+        Item("Preferences...", Cmd::Preferences),
         Sep,
         Item("Quit Picasso Suite", Cmd::Quit),
     ]),

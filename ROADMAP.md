@@ -39,7 +39,7 @@ Status after 0.1.0 hotfix (unreleased work included).
 - [x] Selection tool arrow and speaker icons drawn correctly
 - [x] Real-time audio playback, in sync with the picture (normal speed; fast-forward and reverse stay silent)
 - [ ] Restyle Edit and Deliver pages to match the Cut page
-- [ ] Hardware-decode toggle in the UI
+- [x] Hardware-decode toggle in the UI
 - [ ] Automated tests in CI
 - [x] Bundled FFmpeg in the Windows package
 - [ ] Bundled FFmpeg in the macOS package

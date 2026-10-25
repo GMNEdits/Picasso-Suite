@@ -40,16 +40,7 @@ fn normalize(m: Modifiers) -> Modifiers {
 }
 
 fn config_path() -> Option<PathBuf> {
-    let base = if cfg!(windows) {
-        PathBuf::from(std::env::var_os("APPDATA")?)
-    } else if cfg!(target_os = "macos") {
-        PathBuf::from(std::env::var_os("HOME")?).join("Library/Application Support")
-    } else {
-        std::env::var_os("XDG_CONFIG_HOME")
-            .map(PathBuf::from)
-            .or_else(|| std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".config")))?
-    };
-    Some(base.join("PicassoSuite").join("keybinds.json"))
+    crate::config::path("keybinds.json")
 }
 
 fn same_combo(a: &Binding, mods: Modifiers, key: Key) -> bool {

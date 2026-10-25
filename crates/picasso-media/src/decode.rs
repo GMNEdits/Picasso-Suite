@@ -13,12 +13,33 @@ use picasso_core::{MediaItem, Rational};
 use std::ffi::OsString;
 use std::io::{BufReader, Read};
 use std::process::{Child, ChildStdout, Stdio};
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
 /// How far ahead (in seconds) we decode-and-discard instead of re-seeking.
 const MAX_SKIP_SECONDS: f64 = 2.0;
 /// Codecs that benefit from hardware decoding when available.
 const HWACCEL_CODECS: &[&str] = &["h264", "hevc", "av1", "vp9", "mpeg2video", "vc1"];
+
+/// Process-wide hardware-decoding switch, set from the app's Preferences.
+///
+/// Decoding hardware belongs to the machine, not to a project, so this is a
+/// global setting (as in DaVinci Resolve's Preferences ▸ System ▸ Decode Options)
+/// rather than a project setting. `PICASSO_NO_HWACCEL` still wins for one run.
+static HARDWARE_DECODING: AtomicBool = AtomicBool::new(true);
+
+pub fn set_hardware_decoding(enabled: bool) {
+    HARDWARE_DECODING.store(enabled, Ordering::Relaxed);
+}
+
+pub fn hardware_decoding() -> bool {
+    HARDWARE_DECODING.load(Ordering::Relaxed) && std::env::var_os("PICASSO_NO_HWACCEL").is_none()
+}
+
+/// Whether `codec` should be decoded by the GPU, given the current switch.
+fn uses_hwaccel(codec: &str, hardware: bool) -> bool {
+    hardware && HWACCEL_CODECS.contains(&codec)
+}
 
 pub struct VideoDecoder {
     input: Vec<OsString>,
@@ -50,7 +71,7 @@ impl VideoDecoder {
     /// Decoder producing `width`×`height` RGBA frames (scaled by FFmpeg).
     pub fn new(media: &MediaItem, width: u32, height: u32) -> Result<Self> {
         let video = media.info.video.as_ref().ok_or_else(|| MediaError::NoStreams(media.name.clone()))?;
-        let hwaccel = HWACCEL_CODECS.contains(&video.codec.as_str()) && std::env::var_os("PICASSO_NO_HWACCEL").is_none();
+        let hwaccel = uses_hwaccel(&video.codec, hardware_decoding());
         Ok(Self {
             input: input_args(media),
             fps: video.fps,
@@ -165,5 +186,19 @@ impl VideoDecoder {
             }
         }
         Ok(None)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn only_supported_codecs_use_the_gpu() {
+        assert!(uses_hwaccel("h264", true));
+        assert!(uses_hwaccel("hevc", true));
+        assert!(uses_hwaccel("av1", true));
+        assert!(!uses_hwaccel("prores", true));
+        assert!(!uses_hwaccel("h264", false));
     }
 }
