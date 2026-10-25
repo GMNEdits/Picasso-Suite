@@ -18,13 +18,41 @@ A cross-platform video editor written in Rust - Windows, Linux and macOS.
 
 ## Screenshots
 
-**Edit** - media pool, source and timeline viewers and track headers, laid out as in DaVinci Resolve at 1080p.
+**Project Manager** - your local projects, with New Project, Open, Import and Export.
 
-![Edit page](docs/screenshots/edit-1080p.png)
+![Project Manager](docs/screenshots/0.2.0/project-manager.webp)
 
-**Deliver** - render settings, render queue and timeline.
+**Media** - browse your drives, preview a clip with its embedded audio meters, and read its metadata (codec, resolution, frame rate, size, path) before adding it to the media pool.
 
-![Deliver page](docs/screenshots/deliver-1080p.png)
+![Media page](docs/screenshots/0.2.0/media.webp)
+
+**Photo** - the photo album, viewer, rating bar and inspector, laid out as in Resolve.
+
+![Photo page](docs/screenshots/0.2.0/photo.webp)
+
+**Cut** - the media pool and viewer over two timelines: the whole edit on top, a close-up around the playhead below. Drag a clip from the pool onto either one.
+
+![Cut page](docs/screenshots/0.2.0/cut.webp)
+
+**Edit** - source and timeline viewers, the toolbar, and video and audio tracks with thumbnails and waveforms.
+
+![Edit page](docs/screenshots/0.2.0/edit.webp)
+
+**Fusion** - the clip's MediaIn and MediaOut nodes, the viewer, the frame ruler and the inspector.
+
+![Fusion page](docs/screenshots/0.2.0/fusion.webp)
+
+**Color** - clip thumbnails, the node graph, color wheels, Curves with a live histogram, and RGB parade scopes.
+
+![Color page](docs/screenshots/0.2.0/color.webp)
+
+**Fairlight** - audio tracks with waveforms, track and bus meters, loudness, and the mixer.
+
+![Fairlight page](docs/screenshots/0.2.0/fairlight.webp)
+
+**Deliver** - Custom Export render settings, the render queue, clip thumbnails and the timeline.
+
+![Deliver page](docs/screenshots/0.2.0/deliver.webp)
 
 ## Install
 
