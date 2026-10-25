@@ -1,6 +1,6 @@
 # Picasso Suite
 
-A cross-platform video editor written in Rust — Windows, Linux and macOS.
+A cross-platform video editor written in Rust - Windows, Linux and macOS.
 
 - **Edit:** media pool, multi-track timeline (video + audio), linked picture/sound,
   drag-and-drop, move, trim, split (Ctrl+B), delete / ripple delete, snapping,
@@ -17,27 +17,27 @@ A cross-platform video editor written in Rust — Windows, Linux and macOS.
 
 ## Screenshots
 
-**Project Manager** — local projects, new project and open.
+**Project Manager** - local projects, new project and open.
 
 ![Project Manager](docs/screenshots/project-manager.webp)
 
-**Edit** — media pool, source and timeline viewers, multi-track timeline.
+**Edit** - media pool, source and timeline viewers, multi-track timeline.
 
 ![Edit page](docs/screenshots/edit.webp)
 
-**Color** — primaries color wheels, node graph and parade scope.
+**Color** - primaries color wheels, node graph and parade scope.
 
 ![Color page](docs/screenshots/color.webp)
 
-**Fusion** — node-based compositing with inspector.
+**Fusion** - node-based compositing with inspector.
 
 ![Fusion page](docs/screenshots/fusion.webp)
 
-**Fairlight** — audio timeline, mixer, loudness and control room meters.
+**Fairlight** - audio timeline, mixer, loudness and control room meters.
 
 ![Fairlight page](docs/screenshots/fairlight.webp)
 
-**Deliver** — render settings, render queue and timeline.
+**Deliver** - render settings, render queue and timeline.
 
 ![Deliver page](docs/screenshots/deliver.webp)
 
