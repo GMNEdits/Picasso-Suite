@@ -1,4 +1,4 @@
-# DaVinci Resolve — Clean-Room Architecture Reference
+# DaVinci Resolve - Clean-Room Architecture Reference
 
 Reference for designing **Picasso Suite**. Built only from public, documented sources shipped with
 DaVinci Resolve 21.1 (Windows):
