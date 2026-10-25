@@ -1,6 +1,6 @@
 # Roadmap
 
-Status as of 0.1.0.
+Status as of 0.1.0 hotfix.
 
 ## Phase 1: Foundation (done)
 
@@ -28,10 +28,14 @@ Status as of 0.1.0.
 - [x] GPL-3.0-or-later licence, changelog, release workflow
 - [x] Windows zip, `.deb`, `.rpm`, macOS universal app
 - [x] Flatpak, with FFmpeg included
+- [x] 0.1.0 hotfix release: packages named after the tag, rebuilds replace the old files
 - [ ] Cut page: pixel-level match with the reference (ruler, meter, empty media pool)
 
-## Phase 5: Polish (not done)
+## Phase 5: Polish (in progress)
 
+- [x] UI stalls fixed (About window, window title)
+- [x] Rebindable keyboard shortcuts, with a warning when a key is taken
+- [x] Clear message when FFmpeg is missing
 - [ ] Real-time audio playback (preview is silent)
 - [ ] Restyle Edit and Deliver pages to match the Cut page
 - [ ] Hardware-decode toggle in the UI
