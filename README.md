@@ -37,19 +37,32 @@ A cross-platform video editor written in Rust — Windows, Linux and macOS.
 
 ![Deliver page](docs/screenshots/deliver.webp)
 
-## Requirements
+## Install
 
-- **Rust** 1.85+ (`rustup`)
-- **FFmpeg 6 or 7** (`ffmpeg` and `ffprobe`) on `PATH`, next to the executable, or set via
-  `PICASSO_FFMPEG` / `PICASSO_FFPROBE`.
+Download a package from the [latest release](https://github.com/fabox-os/Picasso-Suite/releases/latest):
 
-| OS | FFmpeg | Extra build packages |
-|---|---|---|
-| Windows | `winget install ffmpeg` | — |
-| macOS | `brew install ffmpeg` | Xcode command-line tools |
-| Debian/Ubuntu | `sudo apt install ffmpeg` | `sudo apt install build-essential pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev xdg-desktop-portal` |
-| Fedora | `sudo dnf install ffmpeg` (RPM Fusion) | `sudo dnf install gcc pkgconf libxkbcommon-devel mesa-libGL-devel wayland-devel libX11-devel xdg-desktop-portal` |
-| Arch | `sudo pacman -S ffmpeg` | `sudo pacman -S base-devel libxkbcommon mesa wayland libx11 xdg-desktop-portal` |
+| OS | Package | Install | FFmpeg |
+|---|---|---|---|
+| Windows | `picasso-suite-0.1.0-windows.zip` | Unzip and run `picasso-suite.exe` | `winget install ffmpeg` |
+| macOS (Intel + Apple silicon) | `picasso-suite-0.1.0-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) | `brew install ffmpeg` |
+| Debian/Ubuntu | `picasso-suite_0.1.0_amd64.deb` | `sudo apt install ./picasso-suite_0.1.0_amd64.deb` | installed as a dependency |
+| Fedora/openSUSE | `picasso-suite-0.1.0.x86_64.rpm` | `sudo dnf install ./picasso-suite-0.1.0.x86_64.rpm` | `sudo dnf install ffmpeg` (RPM Fusion) |
+| Any Linux | `picasso-suite-0.1.0.flatpak` | `flatpak install ./picasso-suite-0.1.0.flatpak` | bundled |
+
+FFmpeg 6 or 7 (`ffmpeg` and `ffprobe`) must be on `PATH`, next to the executable, or set via
+`PICASSO_FFMPEG` / `PICASSO_FFPROBE`.
+
+## Build from source
+
+Requires **Rust** 1.85+ (`rustup`) and FFmpeg 6 or 7 to run.
+
+| OS | Extra build packages |
+|---|---|
+| Windows | none |
+| macOS | Xcode command-line tools |
+| Debian/Ubuntu | `sudo apt install build-essential pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev xdg-desktop-portal` |
+| Fedora | `sudo dnf install gcc pkgconf libxkbcommon-devel mesa-libGL-devel wayland-devel libX11-devel xdg-desktop-portal` |
+| Arch | `sudo pacman -S base-devel libxkbcommon mesa wayland libx11 xdg-desktop-portal` |
 
 ## Build and run
 
