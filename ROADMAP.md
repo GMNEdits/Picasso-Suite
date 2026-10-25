@@ -1,6 +1,6 @@
 # Roadmap
 
-Status as of 0.1.0 hotfix.
+Status after 0.1.0 hotfix (unreleased work included).
 
 ## Phase 1: Foundation (done)
 
@@ -36,7 +36,8 @@ Status as of 0.1.0 hotfix.
 - [x] UI stalls fixed (About window, window title)
 - [x] Rebindable keyboard shortcuts, with a warning when a key is taken
 - [x] Clear message when FFmpeg is missing
-- [ ] Real-time audio playback (preview is silent)
+- [x] Selection tool arrow and speaker icons drawn correctly
+- [x] Real-time audio playback, in sync with the picture (normal speed; fast-forward and reverse stay silent)
 - [ ] Restyle Edit and Deliver pages to match the Cut page
 - [ ] Hardware-decode toggle in the UI
 - [ ] Automated tests in CI

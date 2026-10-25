@@ -124,6 +124,18 @@ fn audio_graph(project: &Project, start: i64, end: i64, first_input: usize) -> (
     (inputs, graph)
 }
 
+/// ffmpeg arguments that mix the timeline's audio from `start` to `end` and write it to stdout as
+/// interleaved stereo 32-bit float samples at `rate` Hz, for playback.
+pub fn preview_audio_args(project: &Project, start: i64, end: i64, rate: u32) -> Vec<OsString> {
+    let mut args: Vec<OsString> = ["-hide_banner", "-loglevel", "error", "-nostdin"].map(OsString::from).to_vec();
+    let (inputs, graph) = audio_graph(project, start, end, 0);
+    args.extend(inputs);
+    args.extend(["-filter_complex".into(), graph.into()]);
+    args.extend(["-map", "[aout]", "-f", "f32le", "-ac", "2"].map(OsString::from));
+    args.extend(["-ar".into(), rate.to_string().into(), "pipe:1".into()]);
+    args
+}
+
 /// The full ffmpeg argument list for an export.
 pub fn ffmpeg_args(project: &Project, settings: &ExportSettings, start: i64, end: i64) -> Vec<OsString> {
     let preset = settings.preset;
@@ -303,6 +315,15 @@ mod tests {
         assert!(graph.contains("adelay=delays=8000:all=1[a1]"));
         assert!(graph.contains("amix=inputs=2"));
         assert!(graph.ends_with("atrim=end=10.000000[aout]"));
+    }
+
+    #[test]
+    fn preview_audio_streams_raw_stereo_floats() {
+        let p = project();
+        let args: Vec<String> = preview_audio_args(&p, 50, 300, 44100).iter().map(|a| a.to_string_lossy().into_owned()).collect();
+        let tail = &args[args.len() - 9..];
+        assert_eq!(tail, ["-map", "[aout]", "-f", "f32le", "-ac", "2", "-ar", "44100", "pipe:1"]);
+        assert!(args.iter().any(|a| a.contains("amix=inputs=2")));
     }
 
     #[test]

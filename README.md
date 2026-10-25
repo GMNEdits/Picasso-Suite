@@ -17,29 +17,13 @@ A cross-platform video editor written in Rust - Windows, Linux and macOS.
 
 ## Screenshots
 
-**Project Manager** - local projects, new project and open.
+**Edit** - media pool, source and timeline viewers and track headers, laid out as in DaVinci Resolve at 1080p.
 
-![Project Manager](docs/screenshots/project-manager-local.webp)
-
-**Edit** - media pool, source and timeline viewers, multi-track timeline.
-
-![Edit page](docs/screenshots/edit.webp)
-
-**Color** - primaries color wheels, node graph and parade scope.
-
-![Color page](docs/screenshots/color.webp)
-
-**Fusion** - node-based compositing with inspector.
-
-![Fusion page](docs/screenshots/fusion.webp)
-
-**Fairlight** - audio timeline, mixer, loudness and control room meters.
-
-![Fairlight page](docs/screenshots/fairlight.webp)
+![Edit page](docs/screenshots/edit-1080p.png)
 
 **Deliver** - render settings, render queue and timeline.
 
-![Deliver page](docs/screenshots/deliver.webp)
+![Deliver page](docs/screenshots/deliver-1080p.png)
 
 ## Install
 
