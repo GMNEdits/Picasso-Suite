@@ -5,7 +5,7 @@
 ### Fixed
 - [x] UI stalls while the About window was open: it started `ffprobe` and `ffmpeg` on every frame (about 115 ms each). The FFmpeg version is now read once at startup.
 - [x] The window title was sent to the operating system on every frame; now only when it changes.
-- [x] Flatpak: FFmpeg failed to build with GCC 14 (`incompatible pointer types`); it now builds FFmpeg 7.1.1 with that error turned off.
+- [x] Flatpak: building FFmpeg from source inside the sandbox kept failing; the Flatpak now ships a prebuilt static FFmpeg 7 (GPL, with x264/x265), checked against its published MD5.
 
 ### Added
 - [x] **Rebindable keyboard shortcuts** (Help → Keyboard Shortcuts): click a key and press the new combination. If another command already uses it you get a warning and can replace it or cancel. Reset per command or all; saved to `keybinds.json` in the user's config folder.

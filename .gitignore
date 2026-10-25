@@ -3,3 +3,4 @@
 *.pcsp.bak
 /dist
 /out
+/packaging/linux/ffmpeg

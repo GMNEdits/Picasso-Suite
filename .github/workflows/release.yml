@@ -3,6 +3,10 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish to
+        default: v0.1.0-hotfix
 
 jobs:
   linux:
@@ -34,6 +38,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev flatpak flatpak-builder
       - run: cargo build --release --workspace
+      - name: Download prebuilt FFmpeg (static, GPL, with x264/x265)
+        run: |
+          base=https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+          curl -fsSL -o ffmpeg-release-amd64-static.tar.xz "$base"
+          curl -fsSL -o ffmpeg.md5 "$base.md5"
+          md5sum -c ffmpeg.md5
+          mkdir -p packaging/linux/ffmpeg
+          tar -xJf ffmpeg-release-amd64-static.tar.xz --strip-components=1 -C packaging/linux/ffmpeg --wildcards '*/ffmpeg' '*/ffprobe'
+          packaging/linux/ffmpeg/ffmpeg -version | head -1
       - run: |
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           flatpak-builder --user --install-deps-from=flathub --force-clean --repo=repo build-dir packaging/linux/flatpak.yml
@@ -103,7 +116,7 @@ jobs:
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v0.1.0' }}
-          name: Picasso Suite ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v0.1.0' }}
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.tag }}
+          name: Picasso Suite ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.tag }}
           body_path: CHANGELOG.md
           files: out/*
