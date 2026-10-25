@@ -7,7 +7,8 @@ A cross-platform video editor written in Rust - Windows, Linux and macOS.
   per-clip zoom/position/opacity/volume, undo/redo.
 - **Any format FFmpeg reads:** H.264, H.265/HEVC, ProRes, DNxHR, AV1, VP9, MPEG-2,
   image sequences (EXR, DPX, TIFF, PNG…), stills, WAV/FLAC/MP3/AAC… Hardware decoding is
-  used for H.264/H.265/AV1/VP9 when available.
+  used for H.264/H.265/AV1/VP9 when available. Turn it off in **File ▸ Preferences** (`Ctrl/Cmd+,`)
+  if a clip decodes badly.
 - **Export:** H.264 and H.265 (8- and 10-bit) via x264/x265, NVIDIA NVENC, Intel Quick Sync,
   AMD AMF, VA-API (Linux) and VideoToolbox (macOS) - whichever your FFmpeg build has - in
   MP4/MOV/MKV; plus ProRes, DNxHR, AV1, VP9, FFV1, PNG sequences, WAV and MP3.
@@ -84,10 +85,11 @@ cargo run --release --bin picasso -- otio edit.pcsp edit.otio
 | Del / Shift+Del | Delete / ripple delete |
 | Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z | Undo / redo |
 | Ctrl/Cmd+I / E / S / O / N | Import / export / save / open / new |
+| Ctrl/Cmd+, | Preferences |
 | + / −, Ctrl+wheel | Zoom timeline |
 | Alt while dragging | Disable snapping |
 
-To change a shortcut, open **Help → Keyboard Shortcuts**, click the key, and press the new combination. If another command already uses it you are warned and can replace it or cancel. Changes are saved to `keybinds.json` in your config folder (`%APPDATA%\PicassoSuite` on Windows, `~/Library/Application Support/PicassoSuite` on macOS, `~/.config/PicassoSuite` on Linux).
+To change a shortcut, open **Help → Keyboard Shortcuts**, click the key, and press the new combination. If another command already uses it you are warned and can replace it or cancel. Changes are saved to `keybinds.json` in your config folder (`%APPDATA%\PicassoSuite` on Windows, `~/Library/Application Support/PicassoSuite` on macOS, `~/.config/PicassoSuite` on Linux). The preferences file (`preferences.json`) sits in the same folder.
 
 ## DaVinci Resolve `.drp` notes
 

@@ -10,7 +10,7 @@ pub mod probe;
 pub mod sequence;
 pub mod tools;
 
-pub use decode::VideoDecoder;
+pub use decode::{VideoDecoder, hardware_decoding, set_hardware_decoding};
 pub use frame::RgbaImage;
 pub use probe::probe;
 

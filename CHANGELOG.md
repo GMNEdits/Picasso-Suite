@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### New
+- [x] **Preferences:** **File ▸ Preferences** (`Ctrl/Cmd+,`) with a **Decode Options** section for hardware decoding, arranged as in Resolve's Preferences ▸ System.
+
 ## 0.2.0
 
 ### New

@@ -1,6 +1,7 @@
 use crate::audio::AudioPlayer;
 use crate::commands::{Cmd, Page, allowed_while_typing};
 use crate::keymap::Keymap;
+use crate::prefs::{Preferences, PreferencesWindow};
 use crate::theme::{self, *};
 use crate::timeline_ui::{Action, TimelineState, Tool};
 use crate::workers::{ExportJob, ImportOutcome, OverviewResult, Overviews, Preview, spawn_export, spawn_import};
@@ -96,6 +97,8 @@ pub struct PicassoApp {
     pub(crate) about_open: bool,
     pub(crate) shortcuts_open: bool,
     pub(crate) keymap: Keymap,
+    pub(crate) prefs: Preferences,
+    pub(crate) prefs_window: PreferencesWindow,
     /// `PICASSO_PERF`: frame times in ms, printed after 150 frames, then quit.
     perf: Option<Vec<f64>>,
     pub(crate) status: String,
@@ -130,6 +133,8 @@ impl PicassoApp {
             cc.egui_ctx.load_texture("logo", img, TextureOptions::LINEAR)
         });
         let project = Project::new("New Project", ProjectSettings::default());
+        let prefs = Preferences::load();
+        picasso_media::set_hardware_decoding(prefs.hardware_decode);
         let mut app = Self {
             snapshot: Arc::new(project.clone()),
             project,
@@ -171,6 +176,8 @@ impl PicassoApp {
             about_open: false,
             shortcuts_open: false,
             keymap: Keymap::load(),
+            prefs,
+            prefs_window: PreferencesWindow::default(),
             perf: std::env::var_os("PICASSO_PERF").map(|_| Vec::new()),
             status: "Ready".into(),
             tools_error,
@@ -190,6 +197,7 @@ impl PicassoApp {
         };
         app.shortcuts_open = std::env::var_os("PICASSO_SHORTCUTS").is_some();
         app.about_open = std::env::var_os("PICASSO_ABOUT").is_some();
+        app.prefs_window.open = std::env::var_os("PICASSO_PREFERENCES").is_some();
         if let Ok(page) = std::env::var("PICASSO_PAGE") {
             let named = [
                 ("media", Page::Media),
@@ -401,6 +409,7 @@ impl PicassoApp {
             }
             Cmd::Shortcuts => self.shortcuts_open = true,
             Cmd::About => self.about_open = true,
+            Cmd::Preferences => self.prefs_window.open = true,
             Cmd::NotYet => {}
         }
     }
@@ -1021,6 +1030,19 @@ impl PicassoApp {
         });
         self.about_open = about;
         self.shortcuts_window(ctx);
+        self.preferences_window(ctx);
+    }
+
+    fn preferences_window(&mut self, ctx: &egui::Context) {
+        if !self.prefs_window.show(ctx, &mut self.prefs) {
+            return;
+        }
+        self.prefs.save();
+        picasso_media::set_hardware_decoding(self.prefs.hardware_decode);
+        // Running viewers keep the decoders they started with; recreate them so
+        // the new setting is used without restarting the app.
+        self.preview = Preview::spawn(ctx.clone());
+        self.source_preview = Preview::spawn(ctx.clone());
     }
 }
 
