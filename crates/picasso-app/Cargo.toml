@@ -2,6 +2,9 @@
 name = "picasso-app"
 version.workspace = true
 edition.workspace = true
+license.workspace = true
+description = "Non-linear video editor with a DaVinci Resolve-style interface"
+repository = "https://github.com/fabox-os/Picasso-Suite"
 
 [dependencies]
 anyhow = "1.0.104"
