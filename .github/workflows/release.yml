@@ -83,10 +83,13 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           path: out
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
+          name: Picasso Suite ${{ github.ref_name }}
+          body_path: CHANGELOG.md
           files: out/*
