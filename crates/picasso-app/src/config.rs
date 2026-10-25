@@ -23,3 +23,21 @@ pub fn dir() -> Option<PathBuf> {
 pub fn path(file: &str) -> Option<PathBuf> {
     Some(dir()?.join(file))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn the_folder_is_the_platform_config_folder() {
+        let dir = dir().expect("the config folder needs APPDATA or HOME");
+        assert!(dir.ends_with("PicassoSuite"));
+        let text = dir.to_string_lossy();
+        if cfg!(target_os = "macos") {
+            assert!(text.contains("Library/Application Support"), "{text}");
+        } else if cfg!(not(windows)) && std::env::var_os("XDG_CONFIG_HOME").is_none() {
+            assert!(text.contains(".config"), "{text}");
+        }
+        assert_eq!(path("preferences.json"), Some(dir.join("preferences.json")));
+    }
+}
