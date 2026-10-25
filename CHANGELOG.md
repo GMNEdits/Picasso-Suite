@@ -1,9 +1,20 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 hotfix
 
 ### New
-- [x] **Preferences:** **File ▸ Preferences** (`Ctrl/Cmd+,`) with a **Decode Options** section for hardware decoding, arranged as in Resolve's Preferences ▸ System.
+- [x] **Preferences:** **File ▸ Preferences…** (`Ctrl/Cmd+,`) with a **Decode Options** section, arranged as in Resolve's Preferences ▸ System ▸ Decode Options. Contributed by @GMNEdits.
+- [x] **Hardware-decode toggle:** turn hardware decoding on or off for the whole app, for when a GPU driver decodes a clip badly (green frames, corruption, media going offline). It was only possible with the `PICASSO_NO_HWACCEL` environment variable before.
+- [x] The preview and source viewers restart their decoders when the toggle changes, so it applies without restarting the app. Export, thumbnails and overviews follow the setting when they are created.
+- [x] The setting is saved to `preferences.json` in the per-user config folder next to `keybinds.json` (`%APPDATA%\PicassoSuite`, `~/Library/Application Support/PicassoSuite`, `~/.config/PicassoSuite`), and is not stored in the project.
+
+### Changed
+- [x] Hardware decoding stays on by default, as before; nothing is written until the toggle is used.
+- [x] `PICASSO_NO_HWACCEL=1` still turns hardware decoding off for a single run, whatever the preference says.
+- [x] The README documents the Preferences window, the `Ctrl/Cmd+,` shortcut and `preferences.json`.
+
+### Thanks
+- Thanks to @GMNEdits for the Preferences window and the hardware-decode toggle.
 
 ## 0.2.0
 

@@ -162,9 +162,25 @@ jobs:
                 gh release delete-asset "$RELEASE_TAG" "$asset" -R "$GITHUB_REPOSITORY" -y
               done
           fi
+      # The release notes are this version's section of CHANGELOG.md only, not the older versions.
+      # Tag v0.2.0-hotfix reads the section "## 0.2.0 hotfix"; v0.1.0 reads "## 0.1.0 — first release".
+      - name: Take this version's notes from the changelog
+        run: |
+          ver="${RELEASE_TAG#v}"
+          name="${ver//-/ }"
+          awk -v n="$name" '
+            { sub(/\r$/, "") }
+            /^## / { on = ($0 == "## " n || index($0, "## " n " —") == 1); next }
+            on
+          ' CHANGELOG.md > RELEASE_NOTES.md
+          if ! grep -q '[^[:space:]]' RELEASE_NOTES.md; then
+            echo "CHANGELOG.md has no section for $RELEASE_TAG (expected: ## $name)" >&2
+            exit 1
+          fi
+          cat RELEASE_NOTES.md
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.RELEASE_TAG }}
           name: Picasso Suite ${{ env.RELEASE_TAG }}
-          body_path: CHANGELOG.md
+          body_path: RELEASE_NOTES.md
           files: out/*
