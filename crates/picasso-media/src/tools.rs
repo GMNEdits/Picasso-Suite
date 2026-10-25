@@ -56,6 +56,28 @@ pub fn command(tool: Tool) -> Command {
     cmd
 }
 
+/// What to tell the user when `missing` (`ffmpeg` or `ffprobe`) cannot be run: both programs are
+/// needed, named as this operating system names them, and where to put them.
+pub fn missing_help(missing: &str) -> String {
+    let exe = std::env::consts::EXE_SUFFIX;
+    let how = if cfg!(windows) {
+        "The Windows download of Picasso Suite includes both. If you got Picasso Suite another way, \
+         either run `winget install ffmpeg` in a terminal and restart Picasso Suite, or download a \
+         Windows build of FFmpeg (a .zip whose bin folder holds ffmpeg.exe and ffprobe.exe) and copy \
+         those two .exe files into the folder that holds picasso-suite.exe."
+    } else if cfg!(target_os = "macos") {
+        "Install FFmpeg with `brew install ffmpeg` (https://brew.sh), then restart Picasso Suite."
+    } else {
+        "Install FFmpeg from your distribution (Debian/Ubuntu: `sudo apt install ffmpeg`; Fedora: \
+         `sudo dnf install ffmpeg` from RPM Fusion), then restart Picasso Suite. The Flatpak includes it."
+    };
+    format!(
+        "FFmpeg is missing: {missing}{exe} could not be started. Picasso Suite needs two FFmpeg \
+         programs, ffmpeg{exe} and ffprobe{exe}. {how} (Advanced: PICASSO_FFMPEG and \
+         PICASSO_FFPROBE can point at them.)"
+    )
+}
+
 /// Returns the first line of `ffmpeg -version`, or an error explaining how to install it.
 pub fn check_tools() -> Result<String, MediaError> {
     for tool in [Tool::Ffprobe, Tool::Ffmpeg] {
@@ -69,4 +91,17 @@ pub fn check_tools() -> Result<String, MediaError> {
         }
     }
     unreachable!()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn the_missing_message_names_both_programs() {
+        let text = missing_help("ffprobe");
+        let exe = std::env::consts::EXE_SUFFIX;
+        assert!(text.contains(&format!("ffprobe{exe} could not be started")));
+        assert!(text.contains(&format!("ffmpeg{exe} and ffprobe{exe}")));
+    }
 }

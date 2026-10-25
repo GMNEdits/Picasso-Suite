@@ -111,11 +111,27 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build --release --workspace
+      # FFmpeg goes in the zip next to picasso-suite.exe, so the app works right after unzipping.
+      - name: Download FFmpeg for Windows (BtbN static GPL build, checked against its SHA-256)
+        shell: pwsh
+        run: |
+          $file = "ffmpeg-n8.1-latest-win64-gpl-8.1.zip"
+          $base = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest"
+          Invoke-WebRequest "$base/$file" -OutFile $file -MaximumRetryCount 5 -RetryIntervalSec 5
+          Invoke-WebRequest "$base/checksums.sha256" -OutFile checksums.sha256 -MaximumRetryCount 5
+          $want = (Select-String -Path checksums.sha256 -Pattern " $file$").Line.Split(" ")[0]
+          $got = (Get-FileHash $file -Algorithm SHA256).Hash.ToLower()
+          if ($want -ne $got) { throw "FFmpeg checksum mismatch: $got, expected $want" }
+          Expand-Archive $file -DestinationPath ffmpeg-win
       - shell: pwsh
         run: |
           $name = "picasso-suite-" + $env:RELEASE_TAG.TrimStart('v') + "-windows"
           New-Item -ItemType Directory $name | Out-Null
           Copy-Item target/release/picasso-suite.exe, target/release/picasso.exe, README.md, CHANGELOG.md, LICENSE $name
+          $bin = Get-ChildItem ffmpeg-win -Recurse -Directory -Filter bin | Select-Object -First 1
+          Copy-Item "$($bin.FullName)/ffmpeg.exe", "$($bin.FullName)/ffprobe.exe" $name
+          Copy-Item "$($bin.Parent.FullName)/LICENSE.txt" "$name/FFMPEG-LICENSE.txt"
+          & "$name/ffmpeg.exe" -version | Select-Object -First 1
           Compress-Archive $name "$name.zip"
       - uses: actions/upload-artifact@v4
         with:

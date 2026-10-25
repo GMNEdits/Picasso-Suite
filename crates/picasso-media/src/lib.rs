@@ -16,10 +16,7 @@ pub use probe::probe;
 
 #[derive(Debug, thiserror::Error)]
 pub enum MediaError {
-    #[error(
-        "{0} was not found. Install FFmpeg (Linux: `sudo apt install ffmpeg` or your distro's package; \
-         Windows: `winget install ffmpeg`) or set PICASSO_FFMPEG / PICASSO_FFPROBE"
-    )]
+    #[error("{}", tools::missing_help(.0))]
     ToolMissing(&'static str),
     #[error("i/o error: {0}")]
     Io(#[from] std::io::Error),

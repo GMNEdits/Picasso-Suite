@@ -47,14 +47,17 @@ Download a package from the [latest release](https://github.com/fabox-os/Picasso
 
 | OS | Package | Install | FFmpeg |
 |---|---|---|---|
-| Windows | `picasso-suite-0.1.0-hotfix-windows.zip` | Unzip and run `picasso-suite.exe` | `winget install ffmpeg` |
+| Windows | `picasso-suite-0.1.0-hotfix-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` | included (`ffmpeg.exe` and `ffprobe.exe` sit next to `picasso-suite.exe`) |
 | macOS (Intel + Apple silicon) | `picasso-suite-0.1.0-hotfix-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) | `brew install ffmpeg` |
 | Debian/Ubuntu | `picasso-suite-0.1.0-hotfix-amd64.deb` | `sudo apt install ./picasso-suite-0.1.0-hotfix-amd64.deb` | installed as a dependency |
 | Fedora/openSUSE | `picasso-suite-0.1.0-hotfix-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.1.0-hotfix-x86_64.rpm` | `sudo dnf install ffmpeg` (RPM Fusion) |
 | Any Linux | `picasso-suite-0.1.0-hotfix.flatpak` | `flatpak install ./picasso-suite-0.1.0-hotfix.flatpak` | bundled |
 
-FFmpeg 6 or 7 (`ffmpeg` and `ffprobe`) must be on `PATH`, next to the executable, or set via
-`PICASSO_FFMPEG` / `PICASSO_FFPROBE`.
+Picasso Suite needs **two** FFmpeg programs, `ffmpeg` and `ffprobe` (FFmpeg 6 or newer). They are found
+next to the executable, on `PATH`, or via `PICASSO_FFMPEG` / `PICASSO_FFPROBE`. The Windows zip and the
+Flatpak include them; on macOS use `brew install ffmpeg`. If you add them by hand on Windows, copy
+both `ffmpeg.exe` and `ffprobe.exe` from the `bin` folder of a **Windows** FFmpeg build into the folder
+that holds `picasso-suite.exe` (files without `.exe` are Linux or macOS builds and will not work).
 
 ## Build from source
 
