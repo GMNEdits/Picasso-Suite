@@ -9,7 +9,7 @@ A cross-platform video editor written in Rust - Windows, Linux and macOS.
   image sequences (EXR, DPX, TIFF, PNG…), stills, WAV/FLAC/MP3/AAC… Hardware decoding is
   used for H.264/H.265/AV1/VP9 when available.
 - **Export:** H.264 and H.265 (8- and 10-bit) via x264/x265, NVIDIA NVENC, Intel Quick Sync,
-  AMD AMF, VA-API (Linux) and VideoToolbox (macOS) — whichever your FFmpeg build has — in
+  AMD AMF, VA-API (Linux) and VideoToolbox (macOS) - whichever your FFmpeg build has - in
   MP4/MOV/MKV; plus ProRes, DNxHR, AV1, VP9, FFV1, PNG sequences, WAV and MP3.
 - **DaVinci Resolve projects:** open `.drp` files (timeline, tracks, clips, media paths,
   resolution, frame rate). Media paths from any OS are relinked automatically.
