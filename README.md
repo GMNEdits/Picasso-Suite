@@ -47,11 +47,11 @@ Download a package from the [latest release](https://github.com/fabox-os/Picasso
 
 | OS | Package | Install | FFmpeg |
 |---|---|---|---|
-| Windows | `picasso-suite-0.1.0-windows.zip` | Unzip and run `picasso-suite.exe` | `winget install ffmpeg` |
-| macOS (Intel + Apple silicon) | `picasso-suite-0.1.0-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) | `brew install ffmpeg` |
-| Debian/Ubuntu | `picasso-suite_0.1.0_amd64.deb` | `sudo apt install ./picasso-suite_0.1.0_amd64.deb` | installed as a dependency |
-| Fedora/openSUSE | `picasso-suite-0.1.0.x86_64.rpm` | `sudo dnf install ./picasso-suite-0.1.0.x86_64.rpm` | `sudo dnf install ffmpeg` (RPM Fusion) |
-| Any Linux | `picasso-suite-0.1.0.flatpak` | `flatpak install ./picasso-suite-0.1.0.flatpak` | bundled |
+| Windows | `picasso-suite-0.1.0-hotfix-windows.zip` | Unzip and run `picasso-suite.exe` | `winget install ffmpeg` |
+| macOS (Intel + Apple silicon) | `picasso-suite-0.1.0-hotfix-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) | `brew install ffmpeg` |
+| Debian/Ubuntu | `picasso-suite-0.1.0-hotfix-amd64.deb` | `sudo apt install ./picasso-suite-0.1.0-hotfix-amd64.deb` | installed as a dependency |
+| Fedora/openSUSE | `picasso-suite-0.1.0-hotfix-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.1.0-hotfix-x86_64.rpm` | `sudo dnf install ffmpeg` (RPM Fusion) |
+| Any Linux | `picasso-suite-0.1.0-hotfix.flatpak` | `flatpak install ./picasso-suite-0.1.0-hotfix.flatpak` | bundled |
 
 FFmpeg 6 or 7 (`ffmpeg` and `ffprobe`) must be on `PATH`, next to the executable, or set via
 `PICASSO_FFMPEG` / `PICASSO_FFPROBE`.
