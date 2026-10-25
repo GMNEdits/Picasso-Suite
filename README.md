@@ -19,7 +19,7 @@ A cross-platform video editor written in Rust - Windows, Linux and macOS.
 
 **Project Manager** - local projects, new project and open.
 
-![Project Manager](docs/screenshots/project-manager.webp)
+![Project Manager](docs/screenshots/project-manager-local.webp)
 
 **Edit** - media pool, source and timeline viewers, multi-track timeline.
 
