@@ -92,6 +92,8 @@ pub struct PicassoApp {
     pub(crate) about_open: bool,
     pub(crate) shortcuts_open: bool,
     pub(crate) keymap: Keymap,
+    /// `PICASSO_PERF`: frame times in ms, printed after 150 frames, then quit.
+    perf: Option<Vec<f64>>,
     pub(crate) status: String,
     pub(crate) tools_error: Option<String>,
     /// First line of `ffmpeg -version`, read once at startup (spawning it per frame stalls the UI).
@@ -164,6 +166,7 @@ impl PicassoApp {
             about_open: false,
             shortcuts_open: false,
             keymap: Keymap::load(),
+            perf: std::env::var_os("PICASSO_PERF").map(|_| Vec::new()),
             status: "Ready".into(),
             tools_error,
             tools_version,
@@ -181,6 +184,7 @@ impl PicassoApp {
             screenshot: std::env::var_os("PICASSO_SCREENSHOT").map(|p| (PathBuf::from(p), 0)),
         };
         app.shortcuts_open = std::env::var_os("PICASSO_SHORTCUTS").is_some();
+        app.about_open = std::env::var_os("PICASSO_ABOUT").is_some();
         if let Ok(page) = std::env::var("PICASSO_PAGE") {
             if page.eq_ignore_ascii_case("edit") {
                 app.page = Page::Edit;
@@ -1023,6 +1027,24 @@ fn dirs_home() -> Option<PathBuf> {
 
 impl eframe::App for PicassoApp {
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
+        let started = std::time::Instant::now();
+        self.frame(ui);
+        if let Some(times) = &mut self.perf {
+            times.push(started.elapsed().as_secs_f64() * 1000.0);
+            ui.ctx().request_repaint();
+            if times.len() == 150 {
+                let mut t = times.split_off(30);
+                t.sort_by(|a, b| a.total_cmp(b));
+                let avg = t.iter().sum::<f64>() / t.len() as f64;
+                println!("frames={} avg={avg:.2}ms p50={:.2}ms p95={:.2}ms max={:.2}ms", t.len(), t[t.len() / 2], t[t.len() * 95 / 100], t[t.len() - 1]);
+                ui.ctx().send_viewport_cmd(egui::ViewportCommand::Close);
+            }
+        }
+    }
+}
+
+impl PicassoApp {
+    fn frame(&mut self, ui: &mut egui::Ui) {
         let ctx = ui.ctx().clone();
         theme::fit_to_design_width(&ctx);
         self.poll_workers(&ctx);
