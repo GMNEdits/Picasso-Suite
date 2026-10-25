@@ -100,6 +100,8 @@ cargo run --release --bin picasso -- otio edit.pcsp edit.otio
 | + / −, Ctrl+wheel | Zoom timeline |
 | Alt while dragging | Disable snapping |
 
+To change a shortcut, open **Help → Keyboard Shortcuts**, click the key, and press the new combination. If another command already uses it you are warned and can replace it or cancel. Changes are saved to `keybinds.json` in your config folder (`%APPDATA%\PicassoSuite` on Windows, `~/Library/Application Support/PicassoSuite` on macOS, `~/.config/PicassoSuite` on Linux).
+
 ## DaVinci Resolve `.drp` notes
 
 `.drp` import reads the plain-XML parts of Resolve's export: timelines, tracks, clip

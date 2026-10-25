@@ -2,7 +2,7 @@
 //! interface toolbar, and the page bar.
 
 use crate::app::PicassoApp;
-use crate::commands::{Cmd, Entry, MENUS, Page, shortcut_text};
+use crate::commands::{Cmd, Entry, MENUS, Page};
 use crate::icons::{self, Icon};
 use crate::theme::*;
 use egui::{Align2, Color32, Rect, ResizeDirection, Sense, Stroke, ViewportCommand, pos2, vec2};
@@ -94,7 +94,7 @@ impl PicassoApp {
                         None => label.to_string(),
                     };
                     let mut button = egui::Button::new(text);
-                    if let Some(s) = shortcut_text(ui.ctx(), *cmd) {
+                    if let Some(s) = self.keymap.text(ui.ctx(), *cmd) {
                         button = button.shortcut_text(s);
                     }
                     if ui.add_enabled(enabled, button).clicked() {

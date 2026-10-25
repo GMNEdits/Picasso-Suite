@@ -1,4 +1,5 @@
-use crate::commands::{BINDINGS, Cmd, Page, allowed_while_typing};
+use crate::commands::{Cmd, Page, allowed_while_typing};
+use crate::keymap::Keymap;
 use crate::theme::{self, *};
 use crate::timeline_ui::{Action, TimelineState, Tool};
 use crate::workers::{ExportJob, ImportOutcome, OverviewResult, Overviews, Preview, spawn_export, spawn_import};
@@ -90,8 +91,13 @@ pub struct PicassoApp {
     pub(crate) settings_open: bool,
     pub(crate) about_open: bool,
     pub(crate) shortcuts_open: bool,
+    pub(crate) keymap: Keymap,
     pub(crate) status: String,
     pub(crate) tools_error: Option<String>,
+    /// First line of `ffmpeg -version`, read once at startup (spawning it per frame stalls the UI).
+    tools_version: String,
+    /// Last window title sent to the OS; it is only re-sent when it changes.
+    last_title: String,
     pub(crate) first_layout: bool,
     pub(crate) adjusting: bool,
     pub(crate) page: Page,
@@ -109,7 +115,9 @@ pub struct PicassoApp {
 impl PicassoApp {
     pub fn new(cc: &eframe::CreationContext<'_>, open: Option<PathBuf>) -> Self {
         theme::install(&cc.egui_ctx);
-        let tools_error = picasso_media::tools::check_tools().err().map(|e| e.to_string());
+        let tools_check = picasso_media::tools::check_tools();
+        let tools_version = tools_check.as_ref().map(|v| v.clone()).unwrap_or_else(|e| e.to_string());
+        let tools_error = tools_check.err().map(|e| e.to_string());
         let presets = available_encoders().map(|e| available_presets(&e)).unwrap_or_default();
         let logo = eframe::icon_data::from_png_bytes(include_bytes!("../assets/icon.png")).ok().map(|icon| {
             let img = egui::ColorImage::from_rgba_unmultiplied([icon.width as usize, icon.height as usize], &icon.rgba);
@@ -155,8 +163,11 @@ impl PicassoApp {
             settings_open: false,
             about_open: false,
             shortcuts_open: false,
+            keymap: Keymap::load(),
             status: "Ready".into(),
             tools_error,
+            tools_version,
+            last_title: String::new(),
             first_layout: true,
             adjusting: false,
             page: Page::Cut,
@@ -169,6 +180,7 @@ impl PicassoApp {
             cut_zoom: 239.5,
             screenshot: std::env::var_os("PICASSO_SCREENSHOT").map(|p| (PathBuf::from(p), 0)),
         };
+        app.shortcuts_open = std::env::var_os("PICASSO_SHORTCUTS").is_some();
         if let Ok(page) = std::env::var("PICASSO_PAGE") {
             if page.eq_ignore_ascii_case("edit") {
                 app.page = Page::Edit;
@@ -385,10 +397,15 @@ impl PicassoApp {
     }
 
     fn shortcuts(&mut self, ctx: &egui::Context) {
+        // While a new key is being picked, presses belong to the shortcuts window.
+        if self.keymap.capturing.is_some() {
+            return;
+        }
         let typing = ctx.egui_wants_keyboard_input();
         let mut fired = Vec::new();
+        let bindings = self.keymap.bindings();
         ctx.input_mut(|i| {
-            for b in BINDINGS {
+            for b in bindings {
                 if typing && !allowed_while_typing(b.cmd) {
                     continue;
                 }
@@ -965,23 +982,11 @@ impl PicassoApp {
         egui::Window::new("About Picasso Suite").open(&mut about).resizable(false).collapsible(false).show(ctx, |ui| {
             ui.heading(format!("Picasso Suite {}", crate::chrome::VERSION));
             ui.label("A cross-platform video editor.");
-            ui.label(RichText::new(picasso_media::tools::check_tools().unwrap_or_else(|e| e.to_string())).color(TEXT_DIM));
+            ui.label(RichText::new(self.tools_version.as_str()).color(TEXT_DIM));
             ui.label(RichText::new("Fonts: Noto Sans (SIL Open Font License 1.1).").color(TEXT_DIM));
         });
         self.about_open = about;
-        let mut keys = self.shortcuts_open;
-        egui::Window::new("Keyboard Shortcuts").open(&mut keys).resizable(true).show(ctx, |ui| {
-            egui::ScrollArea::vertical().max_height(520.0).show(ui, |ui| {
-                egui::Grid::new("keys").striped(true).show(ui, |ui| {
-                    for b in BINDINGS {
-                        ui.label(format!("{:?}", b.cmd));
-                        ui.monospace(ctx.format_shortcut(&egui::KeyboardShortcut::new(b.mods, b.key)));
-                        ui.end_row();
-                    }
-                });
-            });
-        });
-        self.shortcuts_open = keys;
+        self.shortcuts_window(ctx);
     }
 }
 
@@ -1023,7 +1028,11 @@ impl eframe::App for PicassoApp {
         self.poll_workers(&ctx);
         self.advance_playback(&ctx);
         self.shortcuts(&ctx);
-        ctx.send_viewport_cmd(egui::ViewportCommand::Title(self.title()));
+        let title = self.title();
+        if title != self.last_title {
+            ctx.send_viewport_cmd(egui::ViewportCommand::Title(title.clone()));
+            self.last_title = title;
+        }
         let dropped: Vec<PathBuf> = ctx.input(|i| i.raw.dropped_files.iter().map(|f| f.path().to_path_buf()).filter(|p| !p.as_os_str().is_empty()).collect());
         if !dropped.is_empty() {
             self.import_paths(&ctx, dropped);

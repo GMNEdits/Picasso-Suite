@@ -2691,6 +2691,8 @@ dependencies = [
  "picasso-media",
  "picasso-render",
  "rfd",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

@@ -94,6 +94,7 @@ pub enum Cmd {
     NotYet,
 }
 
+#[derive(Clone, Copy)]
 pub struct Binding {
     pub cmd: Cmd,
     pub mods: Modifiers,
@@ -189,11 +190,6 @@ pub fn allowed_while_typing(cmd: Cmd) -> bool {
             | Cmd::TrimEnd
             | Cmd::Page(_)
     )
-}
-
-/// The shortcut shown next to a command in menus.
-pub fn shortcut_text(ctx: &egui::Context, cmd: Cmd) -> Option<String> {
-    BINDINGS.iter().find(|bnd| bnd.cmd == cmd).map(|bnd| ctx.format_shortcut(&egui::KeyboardShortcut::new(bnd.mods, bnd.key)))
 }
 
 pub enum Entry {

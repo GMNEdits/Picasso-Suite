@@ -74,11 +74,10 @@ impl PicassoApp {
         for (i, (x, icon, tip, cmd)) in tb_icons.iter().enumerate() {
             let rect = Rect::from_center_size(pos2(x0 + x, cy), vec2(30.0, 30.0));
             let active = *cmd == Some(Cmd::ToggleMediaPool) && self.show_pool;
-            if icons::button(ui, rect, *icon, active, cmd.is_some(), tip).clicked() {
-                if let Some(c) = cmd {
+            if icons::button(ui, rect, *icon, active, cmd.is_some(), tip).clicked()
+                && let Some(c) = cmd {
                     self.run(*c, &ctx);
                 }
-            }
             if i < 5 {
                 let sx = x0 + (x + tb_icons[i + 1].0) / 2.0;
                 painter.line_segment([pos2(sx, cy - 18.0), pos2(sx, cy + 18.0)], Stroke::new(1.0, CELL_LINE));
@@ -94,11 +93,10 @@ impl PicassoApp {
         ];
         for (i, (x, icon, tip, cmd)) in right.iter().enumerate() {
             let rect = Rect::from_center_size(pos2(x0 + x, cy), vec2(30.0, 30.0));
-            if icons::button(ui, rect, *icon, false, cmd.is_some() && self.cmd_enabled(cmd.unwrap()), tip).clicked() {
-                if let Some(c) = cmd {
+            if icons::button(ui, rect, *icon, false, cmd.is_some() && self.cmd_enabled(cmd.unwrap()), tip).clicked()
+                && let Some(c) = cmd {
                     self.run(*c, &ctx);
                 }
-            }
             if i > 0 {
                 let sx = x0 + (x + right[i - 1].0) / 2.0;
                 painter.line_segment([pos2(sx, cy - 18.0), pos2(sx, cy + 18.0)], Stroke::new(1.0, CELL_LINE));
@@ -211,11 +209,10 @@ impl PicassoApp {
         let tchev = |painter: &egui::Painter, x: f32| {
             painter.add(egui::Shape::line(vec![pos2(x0 + x - 5.0, ty - 2.5), pos2(x0 + x, ty + 2.5), pos2(x0 + x + 5.0, ty - 2.5)], Stroke::new(1.4, ICON)));
         };
-        if icons::button(ui, at(40.0, 30.0), Icon::SmartInsert, false, true, "Smart insert at playhead").clicked() {
-            if let Some(m) = self.media_selection {
+        if icons::button(ui, at(40.0, 30.0), Icon::SmartInsert, false, true, "Smart insert at playhead").clicked()
+            && let Some(m) = self.media_selection {
                 self.place_media(m, self.playhead, None);
             }
-        }
         tchev(&painter, 74.0);
         icons::button(ui, at(183.0, 30.0), Icon::Append, false, false, "Append");
         icons::button(ui, at(245.0, 30.0), Icon::RippleOverwrite, false, false, "Ripple overwrite");
@@ -382,11 +379,10 @@ impl PicassoApp {
             self.failures = frame.failures;
         }
         self.preview.request(&self.snapshot, self.version, self.playhead, pw, ph);
-        if self.project.timeline.duration() > 0 {
-            if let Some(t) = &self.texture {
+        if self.project.timeline.duration() > 0
+            && let Some(t) = &self.texture {
                 ui.painter_at(area).image(t.id(), pic, Rect::from_min_max(pos2(0.0, 0.0), pos2(1.0, 1.0)), Color32::WHITE);
             }
-        }
     }
 
     /// The whole timeline compressed into one strip, with a draggable playhead.
@@ -435,12 +431,11 @@ impl PicassoApp {
             }
         }
         let resp = ui.interact(area, ui.scope_id().with("cut-overview"), Sense::click_and_drag());
-        if resp.clicked() || resp.dragged() {
-            if let Some(p) = resp.interact_pointer_pos() {
+        if (resp.clicked() || resp.dragged())
+            && let Some(p) = resp.interact_pointer_pos() {
                 let frame = ((p.x - area.left() - 3.0) / px_per_frame).round() as i64;
                 self.seek(frame.clamp(0, duration.max(0)));
             }
-        }
         // Gray playhead.
         let x = x_of(self.playhead);
         painter.line_segment([pos2(x, area.top() + 6.0), pos2(x, area.bottom())], Stroke::new(1.5, PLAYHEAD_GRAY));
@@ -585,12 +580,11 @@ impl PicassoApp {
                 }
             }
         }
-        if let Some(payload) = resp.dnd_release_payload::<MediaDrag>() {
-            if let Some(p) = ctx.pointer_interact_pos() {
+        if let Some(payload) = resp.dnd_release_payload::<MediaDrag>()
+            && let Some(p) = ctx.pointer_interact_pos() {
                 let frame = self.playhead + ((p.x - head_x) / px_per_frame).round() as i64;
                 self.place_media(payload.0, frame.max(0), None);
             }
-        }
 
         // Fixed centre playhead (gray, as in the reference).
         painter.line_segment([pos2(head_x, area.top()), pos2(head_x, area.bottom())], Stroke::new(1.5, PLAYHEAD_GRAY));

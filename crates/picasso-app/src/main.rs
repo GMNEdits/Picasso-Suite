@@ -7,6 +7,7 @@ mod cut_page;
 mod deliver_page;
 mod edit_page;
 mod icons;
+mod keymap;
 mod theme;
 mod timeline_ui;
 mod workers;
