@@ -90,7 +90,7 @@ jobs:
           path: picasso-suite-0.1.0-windows.zip
 
   publish:
-    if: ${{ !cancelled() && startsWith(github.ref, 'refs/tags/v') }}
+    if: ${{ !cancelled() }}
     needs: [linux, flatpak, macos, windows]
     runs-on: ubuntu-latest
     permissions:
@@ -103,6 +103,7 @@ jobs:
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
-          name: Picasso Suite ${{ github.ref_name }}
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v0.1.0' }}
+          name: Picasso Suite ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v0.1.0' }}
           body_path: CHANGELOG.md
           files: out/*

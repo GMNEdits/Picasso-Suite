@@ -28,6 +28,7 @@ modules:
         tag: "4.1"
   - name: ffmpeg
     config-opts:
+      - --extra-cflags=-Wno-error=incompatible-pointer-types -Wno-error=int-conversion -Wno-incompatible-pointer-types
       - --enable-gpl
       - --enable-shared
       - --disable-static
@@ -38,7 +39,7 @@ modules:
     sources:
       - type: git
         url: https://git.ffmpeg.org/ffmpeg.git
-        tag: n7.1
+        tag: n7.1.1
   - name: picasso-suite
     buildsystem: simple
     build-commands:
