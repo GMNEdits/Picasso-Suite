@@ -7,7 +7,7 @@ use egui::{
     TextureOptions, Ui,
 };
 use picasso_core::{Command, MediaId, MediaItem, MediaSource};
-use picasso_render::{render_thumbnail, MediaCache};
+use picasso_render::{render_thumbnail_exact, MediaCache};
 
 use crate::app::StudioApp;
 use crate::theme;
@@ -71,6 +71,10 @@ pub(crate) fn kind_name(source: &MediaSource) -> &'static str {
 struct Thumb {
     source: MediaSource,
     generation: u64,
+    /// Whether the picture was final. One still waiting for a video picture is made again when
+    /// one arrives (`video`, the video generation it was made at changes).
+    exact: bool,
+    video: u64,
     texture: TextureHandle,
 }
 
@@ -127,12 +131,15 @@ impl Pool {
         cache: &MediaCache,
         generation: u64,
     ) -> Option<TextureId> {
+        let video = cache.video_generation();
         if let Some(t) = self.thumbs.get(&item.id) {
-            if t.source == item.source && t.generation == generation {
+            if t.source == item.source && t.generation == generation && (t.exact || t.video == video)
+            {
                 return Some(t.texture.id());
             }
         }
-        let frame = render_thumbnail(project, item, cache, THUMB.x as u32, THUMB.y as u32).ok()?;
+        let (frame, exact) =
+            render_thumbnail_exact(project, item, cache, THUMB.x as u32, THUMB.y as u32).ok()?;
         let image = ColorImage::from_rgba_unmultiplied(
             [frame.width as usize, frame.height as usize],
             &frame.rgba,
@@ -145,6 +152,8 @@ impl Pool {
             Thumb {
                 source: item.source.clone(),
                 generation,
+                exact,
+                video,
                 texture,
             },
         );

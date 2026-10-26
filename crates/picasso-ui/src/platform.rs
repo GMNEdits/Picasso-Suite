@@ -95,9 +95,9 @@ fn path_of(_: &rfd::FileHandle) -> Option<String> {
 pub(crate) const PROJECT_EXTENSIONS: [&str; 2] = ["picasso", "json"];
 
 /// File extensions of video the desktop app can read through FFmpeg.
-pub(crate) const VIDEO_EXTENSIONS: [&str; 14] = [
-    "mp4", "mov", "mkv", "webm", "avi", "mxf", "m4v", "ts", "mts", "wmv", "flv", "mpg", "mpeg",
-    "ogv",
+pub(crate) const VIDEO_EXTENSIONS: [&str; 21] = [
+    "mp4", "mov", "mkv", "webm", "avi", "mxf", "m4v", "ts", "mts", "m2ts", "wmv", "flv", "mpg",
+    "mpeg", "ogv", "3gp", "3g2", "f4v", "vob", "dv", "asf",
 ];
 
 pub(crate) fn is_video_name(name: &str) -> bool {

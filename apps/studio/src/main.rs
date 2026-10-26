@@ -149,15 +149,34 @@ fn api_name(backend: eframe::wgpu::Backend) -> String {
     }
 }
 
+/// On a Wayland desktop, opens the window through XWayland when it is there: winit 0.30 does
+/// not take files dropped on a Wayland window, so the media pool could not receive them.
+/// `PICASSO_WAYLAND=1` keeps the native Wayland window.
+#[cfg(not(target_arch = "wasm32"))]
+fn prefer_x11_for_drops() {
+    if cfg!(target_os = "linux")
+        && std::env::var_os("PICASSO_WAYLAND").is_none()
+        && std::env::var_os("WAYLAND_DISPLAY").is_some()
+        && std::env::var_os("DISPLAY").is_some()
+    {
+        // No other thread is running yet.
+        std::env::remove_var("WAYLAND_DISPLAY");
+    }
+}
+
 #[cfg(not(target_arch = "wasm32"))]
 fn main() -> eframe::Result {
     if std::env::args().any(|a| a == "--menu-status") {
         println!("{}", picasso_ui::menu_status_markdown());
         return Ok(());
     }
+    prefer_x11_for_drops();
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()
             .with_title("Picasso Suite")
+            // Wayland's app id and X11's WM_CLASS: the Linux desktop entry has this name, so the
+            // dock shows the icon and groups the window with its launcher.
+            .with_app_id("io.github.fabox_os.PicassoSuite")
             .with_inner_size(window_size())
             .with_min_inner_size([936.0, 500.0])
             .with_decorations(false)

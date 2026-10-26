@@ -1,0 +1,5 @@
+#!/bin/sh
+# Starts Picasso Suite inside the AppImage, which keeps FFmpeg's libraries beside the program.
+HERE=$(dirname "$(readlink -f "$0")")
+export PATH="$HERE/usr/bin:$PATH"
+exec "$HERE/usr/lib/picasso-suite/picasso-suite" "$@"

@@ -7,6 +7,7 @@
 //! - macOS (`Picasso Suite.app`): the new app replaces the old one, which is kept as
 //!   `Picasso Suite.app.old` until the next start.
 //! - Flatpak: the new bundle is installed by the host's `flatpak`, through `flatpak-spawn`.
+//! - AppImage: the new file is downloaded beside the old one and renamed over it.
 //! - Debian/Ubuntu and Fedora/openSUSE (`/usr/bin`): the new package is installed with `pkexec`,
 //!   which asks for the password.
 //! - Anything else (a build from source): the release page is opened instead.
@@ -37,6 +38,8 @@ pub(crate) enum Install {
     /// The macOS app at this path.
     MacApp(PathBuf),
     Flatpak,
+    /// The AppImage file at this path (its runtime says where, in `APPIMAGE`).
+    AppImage(PathBuf),
     Deb,
     Rpm,
     /// Built from source or copied by hand: nothing to update in place.
@@ -48,6 +51,14 @@ impl Install {
     pub(crate) fn detect() -> Self {
         if std::env::var_os("FLATPAK_ID").is_some() || Path::new("/.flatpak-info").exists() {
             return Self::Flatpak;
+        }
+        if cfg!(target_os = "linux") {
+            if let Some(file) = std::env::var_os("APPIMAGE")
+                .map(PathBuf::from)
+                .filter(|p| p.is_file())
+            {
+                return Self::AppImage(file);
+            }
         }
         let Ok(exe) = std::env::current_exe() else {
             return Self::Unmanaged;
@@ -66,11 +77,16 @@ impl Install {
                 .map_or(Self::Unmanaged, |app| Self::MacApp(app.into()));
         }
         if exe.starts_with("/usr") {
-            if Path::new("/usr/bin/dpkg").exists() {
+            // dpkg's own list of the package's files, so an rpm install on a system that also
+            // has dpkg (or the other way round) is not mistaken.
+            if Path::new("/var/lib/dpkg/info/picasso-suite.list").exists() {
                 return Self::Deb;
             }
             if Path::new("/usr/bin/rpm").exists() {
                 return Self::Rpm;
+            }
+            if Path::new("/usr/bin/dpkg").exists() {
+                return Self::Deb;
             }
         }
         Self::Unmanaged
@@ -90,8 +106,11 @@ impl Install {
                     || (cfg!(target_arch = "aarch64") && file.ends_with("-macos-arm64.zip"))
             }
             Self::Flatpak => file.ends_with(".flatpak"),
+            // Linux packages are built for x86_64 and aarch64; Debian calls them amd64 and arm64.
+            Self::AppImage(_) => file.ends_with(&format!("-{}.AppImage", std::env::consts::ARCH)),
+            Self::Deb if cfg!(target_arch = "aarch64") => file.ends_with("arm64.deb"),
             Self::Deb => file.ends_with("amd64.deb"),
-            Self::Rpm => file.ends_with("x86_64.rpm"),
+            Self::Rpm => file.ends_with(&format!("{}.rpm", std::env::consts::ARCH)),
             Self::Unmanaged => false,
         }
     }
@@ -285,6 +304,8 @@ fn download_and_install(
             let _ = std::fs::create_dir_all(&cache);
             cache.join(&file)
         }
+        // Beside the AppImage, so it can be renamed over it (a rename cannot cross drives).
+        Install::AppImage(target) => target.with_file_name(format!(".{file}.download")),
         _ => work.join(&file),
     };
     step(&format!("Downloading {file}..."));
@@ -295,8 +316,14 @@ fn download_and_install(
         Install::MacApp(app) => install_mac(&package, &work, app)?,
         Install::Flatpak => {
             let mut cmd = quiet("flatpak-spawn");
-            cmd.args(["--host", "flatpak", "install", "--noninteractive", "-y", "--reinstall"])
-                .arg(&package);
+            cmd.args(["--host", "flatpak", "install", "--noninteractive", "-y", "--reinstall"]);
+            // A per-user install is replaced per-user; flatpak would otherwise install it for
+            // the whole system, asking for a password, next to the old one.
+            let info = std::fs::read_to_string("/.flatpak-info").unwrap_or_default();
+            if is_user_flatpak(&info) {
+                cmd.arg("--user");
+            }
+            cmd.arg(&package);
             run(cmd, "Installing the Flatpak").map_err(|e| {
                 format!(
                     "{e}\n\nInstall it from a terminal instead:\nflatpak install --reinstall {}",
@@ -308,6 +335,7 @@ fn download_and_install(
                 restart: false,
             }
         }
+        Install::AppImage(target) => install_appimage(&package, target, &release.tag)?,
         Install::Deb | Install::Rpm => install_linux_package(install, &package, &release.tag)?,
         Install::Unmanaged => return Err("this copy cannot update itself".into()),
     };
@@ -417,6 +445,42 @@ fn old_app_path(app: &Path) -> PathBuf {
     PathBuf::from(old)
 }
 
+/// Makes the downloaded AppImage runnable and renames it over the old one. The running copy keeps
+/// reading the old file until it closes.
+fn install_appimage(new: &Path, target: &Path, tag: &str) -> Result<Installed, String> {
+    let replaced = make_runnable(new).and_then(|()| std::fs::rename(new, target));
+    if let Err(e) = replaced {
+        let _ = std::fs::remove_file(new);
+        return Err(format!(
+            "{} cannot be replaced ({e}). Download the new AppImage from the release page instead.",
+            target.display()
+        ));
+    }
+    Ok(Installed {
+        message: format!("Picasso Suite {tag} is installed. Restart Picasso Suite to use it."),
+        restart: true,
+    })
+}
+
+#[cfg(unix)]
+fn make_runnable(file: &Path) -> std::io::Result<()> {
+    use std::os::unix::fs::PermissionsExt as _;
+    std::fs::set_permissions(file, std::fs::Permissions::from_mode(0o755))
+}
+
+#[cfg(not(unix))]
+fn make_runnable(_file: &Path) -> std::io::Result<()> {
+    Ok(())
+}
+
+/// Whether the Flatpak runs from a per-user installation, from its `/.flatpak-info`: the app's
+/// files are then under the user's `.local/share/flatpak`.
+fn is_user_flatpak(info: &str) -> bool {
+    info.lines()
+        .filter_map(|l| l.trim().strip_prefix("app-path="))
+        .any(|path| path.contains("/.local/share/flatpak/"))
+}
+
 /// Installs a `.deb` or `.rpm` with the system's package manager, asking for the password.
 fn install_linux_package(install: &Install, package: &Path, tag: &str) -> Result<Installed, String> {
     let manual = match install {
@@ -485,6 +549,10 @@ fn relaunch(install: &Install) {
     match install {
         Install::MacApp(app) => {
             let _ = quiet("open").arg("-n").arg(app).spawn();
+        }
+        // The program itself runs from a folder the AppImage mounts, which goes away on exit.
+        Install::AppImage(file) => {
+            let _ = quiet(file).spawn();
         }
         _ => {
             if let Ok(exe) = std::env::current_exe() {
@@ -699,11 +767,15 @@ mod tests {
             )
         };
         format!(
-            r#"{{"tag_name":"v0.2.0-hotfix","body":"New:\r\n- Preferences","assets":[{},{},{},{},{}]}}"#,
+            r#"{{"tag_name":"v0.2.0-hotfix","body":"New:\r\n- Preferences","assets":[{},{},{},{},{},{},{},{},{}]}}"#,
             asset("picasso-suite-0.2.0-hotfix-amd64.deb"),
+            asset("picasso-suite-0.2.0-hotfix-arm64.deb"),
             asset("picasso-suite-0.2.0-hotfix-macos-universal.zip"),
             asset("picasso-suite-0.2.0-hotfix-windows.zip"),
             asset("picasso-suite-0.2.0-hotfix-x86_64.rpm"),
+            asset("picasso-suite-0.2.0-hotfix-aarch64.rpm"),
+            asset("picasso-suite-0.2.0-hotfix-x86_64.AppImage"),
+            asset("picasso-suite-0.2.0-hotfix-aarch64.AppImage"),
             asset("picasso-suite-0.2.0-hotfix.flatpak"),
         )
     }
@@ -725,8 +797,15 @@ mod tests {
             Some("picasso-suite-0.2.0-hotfix-macos-universal.zip")
         );
         assert_eq!(pick(Install::Flatpak).as_deref(), Some("picasso-suite-0.2.0-hotfix.flatpak"));
-        assert_eq!(pick(Install::Deb).as_deref(), Some("picasso-suite-0.2.0-hotfix-amd64.deb"));
-        assert_eq!(pick(Install::Rpm).as_deref(), Some("picasso-suite-0.2.0-hotfix-x86_64.rpm"));
+        // The Linux packages are this computer's kind of processor.
+        let arch = std::env::consts::ARCH;
+        let deb = if arch == "aarch64" { "arm64" } else { "amd64" };
+        assert_eq!(pick(Install::Deb), Some(format!("picasso-suite-0.2.0-hotfix-{deb}.deb")));
+        assert_eq!(pick(Install::Rpm), Some(format!("picasso-suite-0.2.0-hotfix-{arch}.rpm")));
+        assert_eq!(
+            pick(Install::AppImage(PathBuf::from("x"))),
+            Some(format!("picasso-suite-0.2.0-hotfix-{arch}.AppImage"))
+        );
         assert_eq!(pick(Install::Unmanaged), None);
     }
 
@@ -743,6 +822,17 @@ mod tests {
         let r = parse_release(json, &Install::WindowsZip(PathBuf::from("x")));
         assert_eq!(r.map(|r| r.package), Ok(None));
         assert!(download("https://example.com/evil.zip", Path::new("x")).is_err());
+    }
+
+    #[test]
+    fn a_per_user_flatpak_is_told_apart() {
+        let user = "[Application]\nname=io.github.fabox_os.PicassoSuite\n\n[Instance]\n\
+                    app-path=/home/me/.local/share/flatpak/app/io.github.fabox_os.PicassoSuite/x86_64/master/abc/files\n";
+        let system = "[Instance]\n\
+                      app-path=/var/lib/flatpak/app/io.github.fabox_os.PicassoSuite/x86_64/master/abc/files\n";
+        assert!(is_user_flatpak(user));
+        assert!(!is_user_flatpak(system));
+        assert!(!is_user_flatpak(""));
     }
 
     #[test]

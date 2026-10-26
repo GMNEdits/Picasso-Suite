@@ -640,6 +640,25 @@ impl StudioApp {
                 |ui| self.pool_grid(ui, ctx),
             );
         }
+        // Files dragged over the window are imported into the pool, so the pool shows where they
+        // go. Drawn last, over the clips.
+        if ctx.input(|i| !i.raw.hovered_files.is_empty()) {
+            let area = l.r(0.0, 100.0, 960.0, 478.0);
+            painter.rect_filled(area, 0.0, Color32::from_rgba_unmultiplied(20, 20, 24, 210));
+            painter.rect_stroke(
+                area.shrink(4.0),
+                0.0,
+                Stroke::new(2.0, theme::ACCENT),
+                StrokeKind::Inside,
+            );
+            painter.text(
+                area.center(),
+                Align2::CENTER_CENTER,
+                "Drop to add to the media pool",
+                regular(24.0 * R),
+                theme::ACCENT,
+            );
+        }
     }
 
     fn viewer_region(&mut self, ui: &mut Ui, l: &Lay) {

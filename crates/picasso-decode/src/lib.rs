@@ -458,7 +458,8 @@ impl VideoDecoder {
             let mut got = false;
             while self.decoder.receive_frame(&mut decoded).is_ok() {
                 got = true;
-                let t = self.to_us(decoded.pts().unwrap_or(0));
+                // The best-effort time also covers streams whose pictures carry no time of their own.
+                let t = self.to_us(decoded.timestamp().unwrap_or(0));
                 // Pictures on the card are copied out at once: the card has few of them.
                 let picture = if hw::on_card(&decoded) {
                     hw::download(&decoded)?

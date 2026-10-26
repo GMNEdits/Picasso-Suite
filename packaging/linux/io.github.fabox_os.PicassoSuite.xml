@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The project file types Picasso Suite opens, installed by the Linux packages (picasso-bridge
+     install-linux registers the same types for a build from source). -->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-davinci-resolve-project">
+    <comment>DaVinci Resolve project</comment>
+    <glob pattern="*.drp"/>
+  </mime-type>
+  <mime-type type="application/x-davinci-resolve-timeline">
+    <comment>DaVinci Resolve timeline</comment>
+    <glob pattern="*.drt"/>
+  </mime-type>
+  <mime-type type="application/x-davinci-resolve-bin">
+    <comment>DaVinci Resolve bin</comment>
+    <glob pattern="*.drb"/>
+  </mime-type>
+  <mime-type type="application/x-picasso-project">
+    <comment>Picasso Suite project</comment>
+    <glob pattern="*.picasso"/>
+  </mime-type>
+</mime-info>

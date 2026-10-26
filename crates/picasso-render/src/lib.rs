@@ -15,6 +15,6 @@ mod transform;
 pub use cache::{Decoded, FrameSource, MediaCache, VideoFrame};
 pub use compose::{
     encode_png, export_sequence, render_frame, render_frame_alpha, render_frame_exact,
-    render_media_frame, render_thumbnail, Frame, RenderError,
+    render_media_frame, render_thumbnail, render_thumbnail_exact, Frame, RenderError,
 };
 pub use frames::{content_hash, FrameCache, FrameKey};

@@ -1,8 +1,12 @@
 [Desktop Entry]
 Type=Application
 Name=Picasso Suite
+GenericName=Video Editor
 Comment=Non-linear video editor
-Exec=picasso-suite %f
+Keywords=video;editor;nle;edit;color;grading;audio;resolve;
+Exec=picasso-suite %F
 Icon=io.github.fabox_os.PicassoSuite
+StartupWMClass=io.github.fabox_os.PicassoSuite
 Terminal=false
 Categories=AudioVideo;Video;AudioVideoEditing;
+MimeType=application/x-picasso-project;application/x-davinci-resolve-project;application/x-davinci-resolve-timeline;application/x-davinci-resolve-bin;video/mp4;video/quicktime;video/x-matroska;video/webm;video/x-msvideo;application/mxf;video/x-m4v;video/mp2t;video/x-ms-wmv;video/x-flv;video/mpeg;video/ogg;

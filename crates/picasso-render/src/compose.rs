@@ -126,27 +126,34 @@ fn compose_tracks(
     {
         if let Some((left, right, kind, t)) = picasso_core::transition_at(track, at) {
             // Both pictures, then one made of the two.
+            // A disabled clip contributes nothing, in a transition as anywhere else.
             let mut first = vec![0u8; w * h * 4];
-            exact &= draw_clip(
-                project,
-                left,
-                cache,
-                at,
-                (w, h),
-                depth,
-                &mut first,
-                &mut moved,
-            );
-            exact &= draw_clip(
-                project,
-                right,
-                cache,
-                at,
-                (w, h),
-                depth,
-                &mut layer,
-                &mut moved,
-            );
+            if left.enabled {
+                exact &= draw_clip(
+                    project,
+                    left,
+                    cache,
+                    at,
+                    (w, h),
+                    depth,
+                    &mut first,
+                    &mut moved,
+                );
+            }
+            if right.enabled {
+                exact &= draw_clip(
+                    project,
+                    right,
+                    cache,
+                    at,
+                    (w, h),
+                    depth,
+                    &mut layer,
+                    &mut moved,
+                );
+            } else {
+                layer.fill(0);
+            }
             mix_transition(&first, &mut layer, kind, t);
             let (lo, ro) = (left.opacity_at(at), right.opacity_at(at));
             let opacity = lo + (ro - lo) * t;
@@ -291,6 +298,19 @@ pub fn render_thumbnail(
     width: u32,
     height: u32,
 ) -> Result<Frame, RenderError> {
+    render_thumbnail_exact(project, item, cache, width, height).map(|(frame, _)| frame)
+}
+
+/// Like [`render_thumbnail`], and also says whether the picture is final (see
+/// [`render_frame_exact`]). It never waits for a video: a picture still being decoded shows
+/// what is there, so the caller can make the thumbnail again once the real one arrives.
+pub fn render_thumbnail_exact(
+    project: &Project,
+    item: &MediaItem,
+    cache: &MediaCache,
+    width: u32,
+    height: u32,
+) -> Result<(Frame, bool), RenderError> {
     let pixels = u64::from(width) * u64::from(height);
     if width == 0 || height == 0 || pixels > MAX_PIXELS {
         return Err(RenderError::Size);
@@ -298,21 +318,25 @@ pub fn render_thumbnail(
     let (w, h) = (width as usize, height as usize);
     let mut out = [0u8, 0, 0, 255].repeat(w * h);
     let mut layer = vec![0u8; w * h * 4];
-    // A thumbnail is made once, so it waits for the real picture of a video.
+    let mut exact = true;
     if let MediaSource::Compound { timeline } = item.source {
         if let Some(inner) = project.timeline_tracks(timeline) {
-            let (nested, _) = compose_tracks(project, inner, &cache.blocking(), 0, (w, h), true, 1);
+            let (nested, ok) = compose_tracks(project, inner, cache, 0, (w, h), true, 1);
             layer.copy_from_slice(&nested);
+            exact = ok;
         }
     } else {
-        source::draw(item, &cache.blocking(), (w, h), 0, &mut layer);
+        exact = source::draw(item, cache, (w, h), 0, &mut layer);
     }
     transform::blend(&mut out, &layer, 1.0, BlendMode::Normal);
-    Ok(Frame {
-        width,
-        height,
-        rgba: out,
-    })
+    Ok((
+        Frame {
+            width,
+            height,
+            rgba: out,
+        },
+        exact,
+    ))
 }
 
 /// The picture of one media item at frame `frame` of the media (for the source viewer). A
@@ -740,6 +764,55 @@ mod tests {
         let item = p.media.last().unwrap().clone();
         let thumb = render_thumbnail(&p, &item, &cache, 4, 4).unwrap();
         assert_eq!(px(&thumb, 1, 1), [10, 200, 30, 255]);
+    }
+
+    #[test]
+    fn a_disabled_clip_stays_out_of_a_dissolve() {
+        let (mut p, red) = project_with([200, 0, 0]);
+        let Outcome::Media(blue) = (Command::AddMedia {
+            name: "b".into(),
+            source: MediaSource::Solid { rgb: [0, 0, 200] },
+            length: None,
+            default_duration: 10,
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!()
+        };
+        let v1 = p.tracks[0].id;
+        for (media, start) in [(red, 0), (blue, 10)] {
+            Command::AddClip {
+                track: v1,
+                media,
+                start,
+                duration: Some(10),
+                with_sound: false,
+            }
+            .apply(&mut p)
+            .unwrap();
+        }
+        let first = p.tracks[0].clips[0].id;
+        let second = p.tracks[0].clips[1].id;
+        Command::SetTransition {
+            clip: second,
+            transition: Some(picasso_core::Transition {
+                kind: picasso_core::TransitionKind::CrossDissolve,
+                frames: 4,
+            }),
+        }
+        .apply(&mut p)
+        .unwrap();
+        Command::SetClipEnabled {
+            clip: first,
+            enabled: false,
+        }
+        .apply(&mut p)
+        .unwrap();
+        let cache = MediaCache::new();
+        // Frame 9 is inside the dissolve, which starts two frames before the cut at 10.
+        let [r, _, b, _] = px(&render_frame(&p, &cache, 9, 2, 2).unwrap(), 0, 0);
+        assert_eq!(r, 0, "the disabled clip does not show in the dissolve");
+        assert!(b > 0, "the enabled clip does");
     }
 
     #[test]

@@ -2,6 +2,20 @@
 
 const ALPHABET: &[u8; 64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+const NOT_IN_ALPHABET: u8 = u8::MAX;
+
+/// The value of each byte in the alphabet, found once instead of searching it for every
+/// character of a picture.
+const VALUES: [u8; 256] = {
+    let mut table = [NOT_IN_ALPHABET; 256];
+    let mut i = 0;
+    while i < ALPHABET.len() {
+        table[ALPHABET[i] as usize] = i as u8;
+        i += 1;
+    }
+    table
+};
+
 pub fn encode(bytes: &[u8]) -> String {
     let mut out = String::with_capacity(bytes.len().div_ceil(3) * 4);
     for chunk in bytes.chunks(3) {
@@ -28,8 +42,11 @@ pub fn decode(text: &str) -> Option<Vec<u8>> {
     let mut out = Vec::with_capacity(text.len() * 3 / 4);
     let (mut acc, mut bits) = (0u32, 0u32);
     for c in text.bytes() {
-        let v = ALPHABET.iter().position(|a| *a == c)? as u32;
-        acc = (acc << 6) | v;
+        let v = VALUES[usize::from(c)];
+        if v == NOT_IN_ALPHABET {
+            return None;
+        }
+        acc = (acc << 6) | u32::from(v);
         bits += 6;
         if bits >= 8 {
             bits -= 8;

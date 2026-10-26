@@ -23,16 +23,22 @@ pub struct Decoded {
 impl Decoded {
     /// Decodes PNG or JPEG bytes. The format is found from the bytes, not from a file name.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, RenderError> {
-        let reader = ImageReader::new(Cursor::new(bytes))
-            .with_guessed_format()
+        let reader = || {
+            ImageReader::new(Cursor::new(bytes))
+                .with_guessed_format()
+                .map_err(|e| RenderError::Decode(e.to_string()))
+        };
+        // The size is checked from the header first, so a huge picture is refused before it is
+        // decoded into memory.
+        let (width, height) = reader()?
+            .into_dimensions()
             .map_err(|e| RenderError::Decode(e.to_string()))?;
-        let image = reader
-            .decode()
-            .map_err(|e| RenderError::Decode(e.to_string()))?;
-        let (width, height) = (image.width(), image.height());
         if width == 0 || height == 0 || width > MAX_SIDE || height > MAX_SIDE {
             return Err(RenderError::Decode("the image is too big".into()));
         }
+        let image = reader()?
+            .decode()
+            .map_err(|e| RenderError::Decode(e.to_string()))?;
         Ok(Self {
             width,
             height,
@@ -46,8 +52,12 @@ impl Decoded {
         if self.width <= max_w && self.height <= max_h || max_w == 0 || max_h == 0 {
             return self;
         }
-        let Some(buffer) = image::RgbaImage::from_raw(self.width, self.height, self.rgba.clone())
-        else {
+        // Resampled straight from the pixels: copying a big picture first doubles its memory.
+        let Some(buffer) = image::ImageBuffer::<image::Rgba<u8>, &[u8]>::from_raw(
+            self.width,
+            self.height,
+            &self.rgba,
+        ) else {
             return self;
         };
         let scale = (max_w as f32 / self.width as f32).min(max_h as f32 / self.height as f32);
