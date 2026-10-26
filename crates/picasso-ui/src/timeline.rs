@@ -34,6 +34,8 @@ const CUT_BLUE: Color32 = Color32::from_rgb(67, 119, 161);
 /// The Cut page's timeline background, and the darker time before the timeline starts.
 const CUT_BG: Color32 = Color32::from_rgb(41, 40, 47);
 const CUT_BEFORE: Color32 = Color32::from_rgb(30, 29, 34);
+/// The grey lead-in before a track's first clip on the Cut page's detail timeline.
+const CUT_LEAD_IN: Color32 = Color32::from_rgb(58, 57, 63);
 /// The overview shows at least this many seconds, so a short timeline does not fill it.
 const OVERVIEW_MIN_SECONDS: f32 = 43.08;
 /// Space left of the first frame in the overview.
@@ -1381,6 +1383,19 @@ impl StudioApp {
                     ],
                     Stroke::new(width, color),
                 );
+            } else if mode == Mode::Detail {
+                // Resolve's grey lead-in: the empty timeline before a track's first clip.
+                if let Some(first) = track.clips.iter().map(|c| c.start).min().filter(|&f| f > 0) {
+                    let left = geo.x(0.0).max(area.left());
+                    let right = geo.x(first as f32).min(area.right());
+                    if right > left {
+                        painter.rect_filled(
+                            Rect::from_min_max(pos2(left, top), pos2(right, top + geo.track_h(i))),
+                            0.0,
+                            CUT_LEAD_IN,
+                        );
+                    }
+                }
             }
             for clip in &track.clips {
                 let rect = geo.clip_rect(i, clip.start, clip.end());
