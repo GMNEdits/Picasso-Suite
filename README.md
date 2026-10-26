@@ -69,8 +69,19 @@ FFmpeg is included in all of them.
 | Windows | `picasso-suite-0.2.1-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` |
 | macOS (Apple silicon) | `picasso-suite-0.2.1-macos-arm64.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) |
 | Debian/Ubuntu (22.04 or newer) | `picasso-suite-0.2.1-amd64.deb` | `sudo apt install ./picasso-suite-0.2.1-amd64.deb` |
-| Fedora/openSUSE | `picasso-suite-0.2.1-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.2.1-x86_64.rpm` |
+| Fedora/openSUSE | `picasso-suite-0.2.1-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.2.1-x86_64.rpm` (openSUSE: `sudo zypper install`) |
 | Any Linux | `picasso-suite-0.2.1.flatpak` | `flatpak install ./picasso-suite-0.2.1.flatpak` |
+| Any Linux (glibc 2.35 or newer), no install | `picasso-suite-0.2.1-x86_64.AppImage` | `chmod +x picasso-suite-0.2.1-x86_64.AppImage`, then run it |
+| Linux on ARM64 | `picasso-suite-0.2.1-arm64.deb`, `-aarch64.rpm`, `-aarch64.AppImage` | as above |
+
+The ARM64 packages and the AppImage come with releases after 0.2.1.
+
+On Linux the packages add Picasso Suite to the applications menu, open `.picasso`, `.drp`, `.drt`
+and `.drb` files with it, and offer it under "Open With" for video files. On a Wayland desktop the
+window opens through XWayland, because files dropped on a Wayland window do not reach the program
+yet (a limit of winit, the window library); `PICASSO_WAYLAND=1 picasso-suite` opens a native
+Wayland window without drag and drop. The Flatpak can read your home folder and drives mounted
+under `/media` and `/run/media`.
 
 ## Build from source
 

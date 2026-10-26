@@ -124,6 +124,9 @@ pub(crate) struct TimelineView {
     scroll: f32,
     snap: bool,
     drag: Drag,
+    /// The last answer of [`StudioApp::would_work`]: the project revision it was for, the
+    /// command, and whether it worked.
+    would: Option<(u64, Command, bool)>,
 }
 
 impl TimelineView {
@@ -138,6 +141,7 @@ impl TimelineView {
             scroll: 0.0,
             snap: true,
             drag: Drag::None,
+            would: None,
         }
     }
 }
@@ -809,9 +813,19 @@ impl StudioApp {
         }
     }
 
-    /// Whether `command` would work on the project as it is now.
-    fn would_work(&self, command: Command) -> bool {
-        command.apply(&mut self.project().clone()).is_ok()
+    /// Whether `command` would work on the project as it is now. A drag asks the same question on
+    /// every pointer move, so the last answer is kept until the project changes; a copy of the
+    /// whole project is only made when it is not.
+    fn would_work(&self, view: &mut TimelineView, command: Command) -> bool {
+        let revision = self.session.revision();
+        if let Some((known, asked, ok)) = &view.would {
+            if *known == revision && *asked == command {
+                return *ok;
+            }
+        }
+        let ok = command.clone().apply(&mut self.project().clone()).is_ok();
+        view.would = Some((revision, command, ok));
+        ok
     }
 
     /// The edge or playhead nearest to `frame`, if one is within the snapping distance.
@@ -872,7 +886,7 @@ impl StudioApp {
                     .filter(|t| self.project().tracks.get(*t).map(|t| t.kind) == own_kind)
                     .unwrap_or(track);
                 let ok = self.project().tracks.get(track).is_some_and(|t| !t.locked)
-                    && self.would_work(Command::MoveClip {
+                    && self.would_work(view, Command::MoveClip {
                         clip,
                         track: self.project().tracks[track].id,
                         start: start as u64,
@@ -892,7 +906,7 @@ impl StudioApp {
                 view.drag = Drag::TrimStart {
                     clip,
                     to,
-                    ok: self.would_work(Command::TrimStart { clip, start: to }),
+                    ok: self.would_work(view, Command::TrimStart { clip, start: to }),
                 };
             }
             Drag::Roll { left, right, .. } => {
@@ -903,7 +917,7 @@ impl StudioApp {
                     left,
                     right,
                     to,
-                    ok: self.would_work(Command::RollTrim { left, right, to }),
+                    ok: self.would_work(view, Command::RollTrim { left, right, to }),
                 };
             }
             Drag::TrimEnd { clip, .. } => {
@@ -913,7 +927,7 @@ impl StudioApp {
                 view.drag = Drag::TrimEnd {
                     clip,
                     to,
-                    ok: self.would_work(Command::TrimEnd { clip, end: to }),
+                    ok: self.would_work(view, Command::TrimEnd { clip, end: to }),
                 };
             }
         }

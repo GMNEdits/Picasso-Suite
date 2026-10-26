@@ -27,6 +27,9 @@ Status at 0.2.1.
 - [x] Decoding on the graphics card (D3D11, VideoToolbox, VA-API, CUDA) with a System Preferences switch, falling back to the processor
 - [x] Keyboard Customization: every command's keys can be changed, a taken key is moved after asking, saved in the preferences
 - [x] Interchange: OpenTimelineIO export (File > Export > Timeline: OpenTimelineIO)
+- [x] Linux: files dragged from the file manager reach the media pool on Wayland desktops (the window opens through XWayland); the window is grouped with its launcher and icon; the packages open project files and offer "Open With" for video; .deb and .rpm name the window libraries they need; the Flatpak reads drives under `/media` and `/run/media`
+- [x] Linux: every release's .deb and .rpm are installed and started on Ubuntu 22.04 and 24.04, Debian 12, Fedora and openSUSE Tumbleweed, opening the window on all but openSUSE
+- [x] Linux: ARM64 (aarch64) .deb, .rpm and AppImage, installed and started on Ubuntu 24.04 and Fedora for ARM; an AppImage for x86_64 too, which Check for Updates replaces in place; icons from 16 to 256 pixels
 
 ## To do
 
@@ -41,8 +44,9 @@ Status at 0.2.1.
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: instant scrubbing on long-GOP video (cache of key-frame pictures or optimised media); the remaining compositing on the interface thread (about 2 ms per picture) moved to a worker
 - [ ] Project: libraries, archives, media management, metadata import/export, layouts (save/load), Lightbox, dual screen, clean feed
-- [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm, and the Flatpak needs `--talk-name=org.freedesktop.Flatpak` to install its own update
+- [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm (a per-user Flatpak now updates per-user; a .deb is told from an .rpm by dpkg's file list)
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
+- [ ] Linux: native Wayland drag and drop (when winit supports it), Flathub (needs a submission to flathub/flathub, building FFmpeg from source there), an ARM64 Flatpak
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
 - [ ] Interchange: OpenTimelineIO import, and OTIO export from `picasso-bridge`

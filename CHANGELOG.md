@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased
+
+**✨ New**
+- ✅ **Linux on ARM64:** .deb, .rpm and AppImage for 64-bit ARM computers (Raspberry Pi 5, ARM laptops and servers)
+- ✅ **AppImage:** one file that runs on most Linux distributions without installing; Help > Check for Updates replaces it with the new version
+- ✅ **Cut page:** files dragged over the window show a drop target on the media pool, and 3GP, 3G2, F4V, VOB, DV, ASF and M2TS video can be imported
+
+**🛠️ Fixed**
+- 🛠️ **Linux:** dragging video files from the file manager into the media pool works on Wayland desktops (Ubuntu's default); the window opens through XWayland, and `PICASSO_WAYLAND=1` keeps a native Wayland window
+- 🛠️ **Linux:** the dock shows Picasso Suite's icon and groups the window with its launcher
+- 🛠️ **Linux:** a per-user Flatpak installs its update per-user
+- 🛠️ **Media pool:** video thumbnails are made without holding up the window while the first frame decodes
+- 🛠️ **Timeline:** a disabled clip no longer shows through a transition (dissolve or dip) next to it
+- 🛠️ **Timeline:** dragging a clip, trim or roll no longer copies the whole project on every pointer move
+- 🛠️ **Stills:** shrinking a big picture uses less memory, and an image too big to show is refused from its header before it is decoded
+- 🛠️ **Projects:** the pictures kept in a project (stills) load faster
+- 🛠️ **Video:** a frame with no time of its own is placed by its best-effort time instead of at the start of the file
+
+**🔄 Changed**
+- ✅ **Linux packages:** `.picasso`, `.drp`, `.drt` and `.drb` files open with Picasso Suite, and video files offer it under "Open With", several at once
+- ✅ **Linux packages:** the .deb and .rpm name the window libraries they need, so a minimal system gets them; the .rpm names them in a way both Fedora and openSUSE understand
+- ✅ **Flatpak:** footage on USB drives and memory cards (`/media`, `/run/media`) can be imported
+- ✅ **Linux:** icons in 16 to 256 pixels, so menus and docks show a sharp icon at every size
+
 ## 0.2.1
 
 Picasso Suite 0.2.1 is the full editor: all eight pages (Media, Photo, Cut, Edit, Fusion, Color,

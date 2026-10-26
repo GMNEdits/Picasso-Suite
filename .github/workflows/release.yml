@@ -19,17 +19,25 @@ env:
   FFMPEG_NAME: ffmpeg-n7.1.5-12-g1fdbca85aa
 
 jobs:
+  # Built on Ubuntu 22.04 (glibc 2.35), for x86_64 and ARM64. Debian calls these amd64 and arm64,
+  # rpm and AppImage x86_64 and aarch64.
   linux:
-    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runner: ubuntu-22.04, ffmpeg: linux64, deb: amd64, arch: x86_64 }
+          - { runner: ubuntu-22.04-arm, ffmpeg: linuxarm64, deb: arm64, arch: aarch64 }
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - run: |
           sudo apt-get update
-          sudo apt-get install -y pkg-config clang libclang-dev libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev
+          sudo apt-get install -y pkg-config clang libclang-dev libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev imagemagick rpm desktop-file-utils
       - name: Download FFmpeg 7.1 (BtbN shared GPL build, checked against its SHA-256)
         run: |
-          file="$FFMPEG_NAME-linux64-gpl-shared-7.1.tar.xz"
+          file="$FFMPEG_NAME-${{ matrix.ffmpeg }}-gpl-shared-7.1.tar.xz"
           curl -fsSL --retry 5 --retry-delay 5 -o "$file" "$FFMPEG_BASE/$file"
           curl -fsSL --retry 5 -o checksums.sha256 "$FFMPEG_BASE/checksums.sha256"
           grep " $file\$" checksums.sha256 | sha256sum -c -
@@ -54,29 +62,140 @@ jobs:
           # Every FFmpeg library the program needs must be found beside it.
           cp target/release/picasso-suite dist/linux-lib/
           ldd dist/linux-lib/picasso-suite
-          ! ldd dist/linux-lib/picasso-suite | grep "not found"
+          # (A `! cmd` line does not stop a step, hence the if.)
+          if ldd dist/linux-lib/picasso-suite | grep "not found"; then exit 1; fi
           rm dist/linux-lib/picasso-suite
           cp ffmpeg-linux/LICENSE.txt dist/FFMPEG-LICENSE.txt
+      # The menus and docks ask for small icons too; they are made from the 256-pixel one.
+      - name: Icons in more sizes
+        run: |
+          mkdir -p dist/icons
+          for s in 16 32 48 64 128; do
+            convert assets/icon.png -resize ${s}x${s} "dist/icons/$s.png"
+          done
       - run: cargo install cargo-deb cargo-generate-rpm --locked
       - run: |
           NAME="picasso-suite-${RELEASE_TAG#v}"
-          cargo deb -p picasso-suite --no-build -o "$NAME-amd64.deb"
-          cargo generate-rpm -p apps/studio -o "$NAME-x86_64.rpm"
+          cargo deb -p picasso-suite --no-build -o "$NAME-${{ matrix.deb }}.deb"
+          cargo generate-rpm -p apps/studio -o "$NAME-${{ matrix.arch }}.rpm"
+          # The packages say the processor they were built for.
+          test "$(dpkg-deb -f "$NAME-${{ matrix.deb }}.deb" Architecture)" = "${{ matrix.deb }}"
+          test "$(rpm -qp --qf '%{ARCH}' "$NAME-${{ matrix.arch }}.rpm")" = "${{ matrix.arch }}"
+      # The AppImage runs on most distributions without installing; it uses the same system
+      # libraries as the .deb (window, sound, Vulkan) and carries FFmpeg's.
+      - name: AppImage
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: 1
+        run: |
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          ARCH=${{ matrix.arch }}
+          curl -fsSL --retry 5 -o appimagetool \
+            "https://github.com/AppImage/appimagetool/releases/download/1.9.0/appimagetool-$ARCH.AppImage"
+          chmod +x appimagetool
+          D=AppDir
+          ID=io.github.fabox_os.PicassoSuite
+          mkdir -p $D/usr/lib/picasso-suite $D/usr/bin $D/usr/share/applications
+          cp target/release/picasso-suite dist/linux-lib/* $D/usr/lib/picasso-suite/
+          cp target/release/picasso-bridge $D/usr/bin/
+          cp dist/FFMPEG-LICENSE.txt $D/usr/lib/picasso-suite/
+          cp packaging/linux/$ID.desktop $D/usr/share/applications/
+          cp packaging/linux/$ID.desktop assets/icon.png $D/
+          mv $D/icon.png $D/$ID.png
+          for s in 16 32 48 64 128; do
+            install -Dm644 dist/icons/$s.png $D/usr/share/icons/hicolor/${s}x${s}/apps/$ID.png
+          done
+          install -Dm644 assets/icon.png $D/usr/share/icons/hicolor/256x256/apps/$ID.png
+          install -m755 packaging/linux/AppRun $D/AppRun
+          ARCH=$ARCH ./appimagetool $D "$NAME-$ARCH.AppImage"
+          "./$NAME-$ARCH.AppImage" --menu-status > /dev/null
       - uses: actions/upload-artifact@v4
         with:
-          name: pkg-linux
+          name: pkg-linux-${{ matrix.deb }}
           path: |
             *.deb
             *.rpm
+            *.AppImage
       # The Flatpak job packs these same files.
       - uses: actions/upload-artifact@v4
         with:
-          name: linux-binaries
+          name: linux-binaries-${{ matrix.deb }}
           path: |
             target/release/picasso-suite
             target/release/picasso-bridge
             dist/linux-lib
+            dist/icons
             dist/FFMPEG-LICENSE.txt
+
+  # Installs the .deb or .rpm on clean systems, which checks that every package it depends on
+  # exists there, then starts the program. Where Xvfb and Mesa's software Vulkan (lavapipe) are
+  # easy to get, the window is really opened and saves a picture of the Cut page.
+  linux-install:
+    needs: linux
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { image: 'ubuntu:22.04', window: true, runner: ubuntu-latest, deb: amd64 }
+          - { image: 'ubuntu:24.04', window: true, runner: ubuntu-latest, deb: amd64, appimage: true }
+          - { image: 'debian:12', window: true, runner: ubuntu-latest, deb: amd64 }
+          - { image: 'fedora:latest', window: true, runner: ubuntu-latest, deb: amd64 }
+          - { image: 'opensuse/tumbleweed', window: false, runner: ubuntu-latest, deb: amd64 }
+          - { image: 'ubuntu:24.04', window: true, runner: ubuntu-24.04-arm, deb: arm64, appimage: true }
+          - { image: 'fedora:latest', window: false, runner: ubuntu-24.04-arm, deb: arm64 }
+    container: ${{ matrix.image }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pkg-linux-${{ matrix.deb }}
+          path: pkg
+      - name: Install the package
+        run: |
+          if command -v apt-get >/dev/null; then
+            apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y ./pkg/*.deb
+          elif command -v dnf >/dev/null; then
+            dnf install -y ./pkg/*.rpm
+          else
+            zypper --non-interactive install --allow-unsigned-rpm ./pkg/*.rpm
+          fi
+      - name: The program and its libraries are found
+        run: |
+          if ldd /usr/lib/picasso-suite/picasso-suite | grep "not found"; then exit 1; fi
+          picasso-suite --menu-status > /dev/null
+          usage=$(picasso-bridge 2>&1 || true)
+          echo "$usage" | grep -q usage
+          # winit opens these when the window opens, so ldd cannot see them.
+          for lib in libX11.so.6 libX11-xcb.so.1 libXcursor.so.1 libXrandr.so.2 libXi.so.6 \
+                     libxkbcommon.so.0 libxkbcommon-x11.so.0 libwayland-client.so.0; do
+            ldconfig -p | grep -q "$lib" || { echo "missing $lib"; exit 1; }
+          done
+      # Without FUSE in the container, the AppImage unpacks itself and runs from there.
+      - name: The AppImage starts
+        if: matrix.appimage
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: 1
+        run: |
+          chmod +x pkg/*.AppImage
+          cd pkg && ./*.AppImage --menu-status > /dev/null
+      - name: The window opens
+        if: matrix.window
+        run: |
+          if command -v apt-get >/dev/null; then
+            DEBIAN_FRONTEND=noninteractive apt-get install -y xvfb mesa-vulkan-drivers
+          else
+            dnf install -y xorg-x11-server-Xvfb mesa-vulkan-drivers
+          fi
+          Xvfb :99 -screen 0 1920x1080x24 &
+          sleep 2
+          DISPLAY=:99 PICASSO_SCREENSHOT=$PWD/cut.png timeout 180 picasso-suite --page=cut
+          test -s cut.png
+      - if: matrix.window
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-window-${{ matrix.deb }}-${{ strategy.job-index }}
+          path: cut.png
+          if-no-files-found: ignore
 
   flatpak:
     needs: linux
@@ -89,10 +208,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: linux-binaries
+          name: linux-binaries-amd64
           path: .
       - run: |
-          ls -la target/release dist dist/linux-lib
+          ls -la target/release dist dist/linux-lib dist/icons
           echo "PKG=picasso-suite-${RELEASE_TAG#v}" >> "$GITHUB_ENV"
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
@@ -133,7 +252,7 @@ jobs:
           cp "$(brew --prefix ffmpeg@7)/LICENSE.md" "$APP/Contents/Resources/FFMPEG-LICENSE.md" || true
           codesign --force --deep -s - "$APP"
           otool -L "$APP/Contents/MacOS/picasso-suite"
-          ! otool -L "$APP/Contents/MacOS/picasso-suite" | grep -E "/opt/homebrew|/usr/local/"
+          if otool -L "$APP/Contents/MacOS/picasso-suite" | grep -E "/opt/homebrew|/usr/local/"; then exit 1; fi
           ditto -c -k --keepParent "$APP" "$NAME-macos-arm64.zip"
       - uses: actions/upload-artifact@v4
         with:
