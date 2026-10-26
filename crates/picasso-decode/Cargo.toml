@@ -1,0 +1,15 @@
+[package]
+name = "picasso-decode"
+description = "Reads video files with FFmpeg: probe and frame decoding (desktop only)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+ffmpeg-next.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

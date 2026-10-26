@@ -1,10 +1,17 @@
 [package]
 name = "picasso-core"
+description = "The project model, edit commands and undo history of Picasso Suite (pure Rust, no I/O)"
 version.workspace = true
 edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
 
 [dependencies]
-serde = { version = "1.0.229", features = ["derive"] }
-serde_json = "1.0.154"
-thiserror = "2.0.21"
-uuid = { version = "1.28.0", features = ["v4", "serde"] }
+picasso-color.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

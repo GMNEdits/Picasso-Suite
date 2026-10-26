@@ -1,20 +1,23 @@
 # Picasso Suite
 
-A cross-platform video editor written in Rust - Windows, Linux and macOS.
+A cross-platform video editor written in Rust, laid out like DaVinci Resolve: Media, Photo, Cut,
+Edit, Fusion, Color, Fairlight and Deliver pages. Windows, Linux and macOS.
 
-- **Edit:** media pool, multi-track timeline (video + audio), linked picture/sound,
-  drag-and-drop, move, trim, split (Ctrl+B), delete / ripple delete, snapping,
-  per-clip zoom/position/opacity/volume, undo/redo.
-- **Any format FFmpeg reads:** H.264, H.265/HEVC, ProRes, DNxHR, AV1, VP9, MPEG-2,
-  image sequences (EXR, DPX, TIFF, PNG…), stills, WAV/FLAC/MP3/AAC… Hardware decoding is
-  used for H.264/H.265/AV1/VP9 when available. Turn it off in **File ▸ Preferences** (`Ctrl/Cmd+,`)
-  if a clip decodes badly.
-- **Export:** H.264 and H.265 (8- and 10-bit) via x264/x265, NVIDIA NVENC, Intel Quick Sync,
-  AMD AMF, VA-API (Linux) and VideoToolbox (macOS) - whichever your FFmpeg build has - in
-  MP4/MOV/MKV; plus ProRes, DNxHR, AV1, VP9, FFV1, PNG sequences, WAV and MP3.
-- **DaVinci Resolve projects:** open `.drp` files (timeline, tracks, clips, media paths,
-  resolution, frame rate). Media paths from any OS are relinked automatically.
-  Send timelines back to Resolve (or Premiere/Avid) with OpenTimelineIO export.
+- **Edit:** media pool and bins, multi-track timeline, linked picture and sound, blade, trim,
+  ripple, roll, slip and slide, Dynamic Trim, compound clips, multicam, speed changes and ramps,
+  keyframes, transitions, titles, undo/redo.
+- **Color:** serial, parallel and layer nodes; lift, gamma, gain and offset wheels; custom curves
+  (Y, R, G, B, intensity and soft clip); qualifier and power windows; LUTs; gallery stills;
+  parade, waveform, vectorscope and histogram scopes.
+- **Fairlight:** per-track EQ and compressor, meters, loudness (BS.1770), recording from the
+  microphone, voice-over, Bounce Mix to Track.
+- **Any format FFmpeg reads:** H.264, H.265/HEVC, ProRes, DNxHR, AV1, VP9 and more, images and
+  sound. FFmpeg comes with every package.
+- **Deliver:** H.264, H.265 and ProRes video, WAV, PNG sequences, a render queue and Resolve's
+  render presets.
+- **DaVinci Resolve files:** opens `.drp` projects, `.drt` timelines, `.drb` bins and XML exports
+  (name, frame rate, picture size and media).
+- **Updates:** Help > Check for Updates installs the latest release.
 
 ## Screenshots
 
@@ -56,96 +59,81 @@ A cross-platform video editor written in Rust - Windows, Linux and macOS.
 
 ## Install
 
-Download a package from the [latest release](https://github.com/fabox-os/Picasso-Suite/releases/latest):
+Download a package from the [latest release](https://github.com/fabox-os/Picasso-Suite/releases/latest).
+FFmpeg is included in all of them.
 
-| OS | Package | Install | FFmpeg |
-|---|---|---|---|
-| Windows | `picasso-suite-0.1.0-hotfix-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` | included (`ffmpeg.exe` and `ffprobe.exe` sit next to `picasso-suite.exe`) |
-| macOS (Intel + Apple silicon) | `picasso-suite-0.1.0-hotfix-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) | `brew install ffmpeg` |
-| Debian/Ubuntu | `picasso-suite-0.1.0-hotfix-amd64.deb` | `sudo apt install ./picasso-suite-0.1.0-hotfix-amd64.deb` | installed as a dependency |
-| Fedora/openSUSE | `picasso-suite-0.1.0-hotfix-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.1.0-hotfix-x86_64.rpm` | `sudo dnf install ffmpeg` (RPM Fusion) |
-| Any Linux | `picasso-suite-0.1.0-hotfix.flatpak` | `flatpak install ./picasso-suite-0.1.0-hotfix.flatpak` | bundled |
-
-Picasso Suite needs **two** FFmpeg programs, `ffmpeg` and `ffprobe` (FFmpeg 6 or newer). They are found
-next to the executable, on `PATH`, or via `PICASSO_FFMPEG` / `PICASSO_FFPROBE`. The Windows zip and the
-Flatpak include them; on macOS use `brew install ffmpeg`. If you add them by hand on Windows, copy
-both `ffmpeg.exe` and `ffprobe.exe` from the `bin` folder of a **Windows** FFmpeg build into the folder
-that holds `picasso-suite.exe` (files without `.exe` are Linux or macOS builds and will not work).
+| OS | Package | Install |
+|---|---|---|
+| Windows | `picasso-suite-0.2.1-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` |
+| macOS (Apple silicon) | `picasso-suite-0.2.1-macos-arm64.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) |
+| Debian/Ubuntu (22.04 or newer) | `picasso-suite-0.2.1-amd64.deb` | `sudo apt install ./picasso-suite-0.2.1-amd64.deb` |
+| Fedora/openSUSE | `picasso-suite-0.2.1-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.2.1-x86_64.rpm` |
+| Any Linux | `picasso-suite-0.2.1.flatpak` | `flatpak install ./picasso-suite-0.2.1.flatpak` |
 
 ## Build from source
 
-Requires **Rust** 1.85+ (`rustup`) and FFmpeg 6 or 7 to run.
+Requires **Rust** 1.95 or newer, FFmpeg 7.1 (the shared build, with its headers and libraries) and
+LLVM 19 for the FFmpeg bindings (newer LLVM produces empty structs). Point these variables at them:
 
-| OS | Extra build packages |
-|---|---|
-| Windows | none |
-| macOS | Xcode command-line tools |
-| Debian/Ubuntu | `sudo apt install build-essential pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev xdg-desktop-portal` |
-| Fedora | `sudo dnf install gcc pkgconf libxkbcommon-devel mesa-libGL-devel wayland-devel libX11-devel xdg-desktop-portal` |
-| Arch | `sudo pacman -S base-devel libxkbcommon mesa wayland libx11 xdg-desktop-portal` |
-
-## Build and run
-
-```bash
-cargo run --release --bin picasso-suite
+```
+FFMPEG_DIR=<folder with include/ lib/ bin/>
+LIBCLANG_PATH=<LLVM bin folder>
 ```
 
-Open a project directly: `picasso-suite path/to/project.pcsp` (or a `.drp`).
+On Windows, [BtbN's FFmpeg 7.1 shared build](https://github.com/BtbN/FFmpeg-Builds) works; run from a
+Visual Studio developer prompt so the bindings find the MSVC headers. On macOS,
+`brew install ffmpeg@7` and set `PKG_CONFIG_PATH` to its `lib/pkgconfig` instead of `FFMPEG_DIR`. On
+Linux, also install the window and sound headers:
 
-### Command line
+| OS | Packages |
+|---|---|
+| Debian/Ubuntu | `sudo apt install build-essential pkg-config clang libclang-dev libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev` |
+| Fedora | `sudo dnf install gcc pkgconf clang-devel libxkbcommon-devel mesa-libGL-devel wayland-devel libX11-devel alsa-lib-devel` |
 
 ```bash
-cargo run --release --bin picasso -- presets
-cargo run --release --bin picasso -- new edit.pcsp a.mp4 b.mov music.wav
-cargo run --release --bin picasso -- render edit.pcsp out.mp4 --preset h265_10bit
-cargo run --release --bin picasso -- import-drp project.drp edit.pcsp --search /mnt/footage --map "D:\Footage=/mnt/footage"
-cargo run --release --bin picasso -- otio edit.pcsp edit.otio
+cargo run --release -p picasso-suite
 ```
 
-## Keyboard
+`picasso-suite [--place] <project or media file>...` opens a project, or imports media (with
+`--place`, also onto the timeline). `cargo test --workspace` runs the tests.
 
-| Key | Action |
-|---|---|
-| Space | Play / pause |
-| ← / → (Shift: 1 s) | Step |
-| Home / End | Start / end |
-| Ctrl/Cmd+B | Split at playhead (selected clips, or all) |
-| Del / Shift+Del | Delete / ripple delete |
-| Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z | Undo / redo |
-| Ctrl/Cmd+I / E / S / O / N | Import / export / save / open / new |
-| Ctrl/Cmd+, | Preferences |
-| + / −, Ctrl+wheel | Zoom timeline |
-| Alt while dragging | Disable snapping |
+## DaVinci Resolve files
 
-To change a shortcut, open **Help → Keyboard Shortcuts**, click the key, and press the new combination. If another command already uses it you are warned and can replace it or cancel. Changes are saved to `keybinds.json` in your config folder (`%APPDATA%\PicassoSuite` on Windows, `~/Library/Application Support/PicassoSuite` on macOS, `~/.config/PicassoSuite` on Linux). The preferences file (`preferences.json`) sits in the same folder.
+File > Open (or dropping the file on the window) opens a DaVinci Resolve project (`.drp`),
+timeline (`.drt`), bin (`.drb`) or XML export. The new project takes its name, frame rate and
+picture size, and its media pool gets every media file the Resolve file uses; files that are not on
+this computer are kept as offline media. Where clips sit on Resolve's timelines is not read yet.
 
-## DaVinci Resolve `.drp` notes
+The same works from a terminal with `picasso-bridge`, which also registers the files on Linux:
 
-`.drp` import reads the plain-XML parts of Resolve's export: timelines, tracks, clip
-positions, source in-points, media paths, frame rate and resolution. Grades, Fusion
-compositions, titles/generators, effects and transitions are stored by Resolve in
-undocumented binary blobs and are **not** imported (titles/generators are counted and
-skipped). The current timeline of the project is imported.
-
-Media that moved is found by, in order: the original path; `PICASSO_PATH_MAP`
-(`"D:\Footage=/mnt/footage;/Volumes/Media=/media/me/Media"`); a search under the folder
-holding the `.drp` and its parent. Anything still missing is imported offline — use
-**File ▸ Relink missing media…**.
-
-Picasso Suite does not write `.drp` files. To move an edit into Resolve, use
-**File ▸ Export timeline as OpenTimelineIO** and in Resolve **File ▸ Import ▸ Timeline**.
+```sh
+picasso-bridge info project.drp              # name, rate, size and media (missing files marked ?)
+picasso-bridge convert project.drp           # writes project.picasso next to it
+picasso-bridge install-linux                 # .drp/.drt/.drb/.picasso open with Picasso Suite
+```
 
 ## Layout
 
-```
-crates/
-  picasso-core     project model, editing operations, undo, .pcsp files
-  picasso-media    FFmpeg discovery, probing, frame decoding, export presets
-  picasso-render   compositor, decoder pool, export pipeline
-  picasso-interop  .drp import, OpenTimelineIO export, cross-OS relinking
-  picasso-app      the desktop app (egui)
-  picasso-cli      the `picasso` command-line tool
-docs/resolve-architecture-reference.md   clean-room reference from Resolve's public SDKs
-```
+| Folder | Role |
+|---|---|
+| `crates/picasso-core` | the project model, every edit as a command, undo history, project files |
+| `crates/picasso-color` | grading maths (wheels, curves, qualifier, windows, LUTs) and the scopes |
+| `crates/picasso-decode` | FFmpeg: probe, video frames, audio, waveforms |
+| `crates/picasso-audio` | the mix, background audio decoding and the sound card output |
+| `crates/picasso-media` | facts about imported media and the `.picasso` project file (SQLite) |
+| `crates/picasso-export` | rendering to files through FFmpeg |
+| `crates/picasso-render` | the compositor that makes a frame |
+| `crates/picasso-drp` | reads DaVinci Resolve files |
+| `crates/picasso-ui` | the interface: pages, timeline, wheels, scopes, menus, icons |
+| `apps/studio` | the desktop program (and the WebAssembly entry point) |
+| `apps/bridge` | `picasso-bridge`, Resolve files from the command line |
 
-`cargo test --workspace` runs the unit tests (no FFmpeg needed for them).
+The menus follow [`Menu-Spec.md`](Menu-Spec.md); [`Menu-Status.md`](Menu-Status.md) lists which entries
+work. The code never panics (no `unwrap`, `expect` or `panic!`) and every change to a project is a
+command.
+
+## Licence
+
+GPL-3.0-or-later. The bundled Noto Sans fonts (`crates/picasso-ui/assets/fonts`) are under the SIL
+Open Font License 1.1 (`OFL.txt` beside them). FFmpeg, included in the packages, is under the GPL
+(`FFMPEG-LICENSE`). Not affiliated with Blackmagic Design.

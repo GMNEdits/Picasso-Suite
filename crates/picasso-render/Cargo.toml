@@ -1,11 +1,16 @@
 [package]
 name = "picasso-render"
+description = "Renders a frame of a project: generated media, still images, grading and compositing (pure Rust)"
 version.workspace = true
 edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
 
 [dependencies]
-log = "0.4.34"
-picasso-core = { version = "0.2.0", path = "../picasso-core" }
-picasso-media = { version = "0.2.0", path = "../picasso-media" }
-rayon = "1.12.0"
-thiserror = "2.0.21"
+picasso-core.workspace = true
+picasso-color.workspace = true
+image.workspace = true
+ab_glyph = "0.2"
+
+[lints]
+workspace = true

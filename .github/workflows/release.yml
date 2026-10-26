@@ -2,15 +2,21 @@ name: release
 on:
   push:
     tags: ['v*']
+    # A push to a release-* branch builds every package as a check, without publishing.
+    branches: ['release-*']
   workflow_dispatch:
     inputs:
       tag:
         description: Release tag to publish to
-        default: v0.1.0-hotfix
+        default: v0.2.1
 
-# Packages are named after the release tag: tag v0.1.0-hotfix gives picasso-suite-0.1.0-hotfix-*.
+# Packages are named after the release tag: tag v0.2.1 gives picasso-suite-0.2.1-*.
 env:
-  RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.tag }}
+  RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.tag || 'check' }}
+  # The program links FFmpeg 7.1's libraries (ffmpeg-next 7.1). Windows and Linux build against
+  # this BtbN build, pinned and checked against its SHA-256, and ship its libraries.
+  FFMPEG_BASE: https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-07-31-14-10
+  FFMPEG_NAME: ffmpeg-n7.1.5-12-g1fdbca85aa
 
 jobs:
   linux:
@@ -20,26 +26,57 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: |
           sudo apt-get update
-          sudo apt-get install -y pkg-config libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev
-      - run: cargo build --release --workspace
+          sudo apt-get install -y pkg-config clang libclang-dev libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev
+      - name: Download FFmpeg 7.1 (BtbN shared GPL build, checked against its SHA-256)
+        run: |
+          file="$FFMPEG_NAME-linux64-gpl-shared-7.1.tar.xz"
+          curl -fsSL --retry 5 --retry-delay 5 -o "$file" "$FFMPEG_BASE/$file"
+          curl -fsSL --retry 5 -o checksums.sha256 "$FFMPEG_BASE/checksums.sha256"
+          grep " $file\$" checksums.sha256 | sha256sum -c -
+          mkdir ffmpeg-linux
+          tar -xJf "$file" --strip-components=1 -C ffmpeg-linux
+          echo "FFMPEG_DIR=$PWD/ffmpeg-linux" >> "$GITHUB_ENV"
+      # The program finds FFmpeg's libraries in its own folder ($ORIGIN). DT_RPATH (not RUNPATH)
+      # also applies to the libraries those load.
+      - run: cargo build --release -p picasso-suite -p picasso-bridge
+        env:
+          RUSTFLAGS: -C link-arg=-Wl,--disable-new-dtags,-rpath,$ORIGIN
+      - name: Gather FFmpeg's libraries
+        run: |
+          mkdir -p dist/linux-lib
+          for f in ffmpeg-linux/lib/lib*.so.*; do
+            name=$(basename "$f")
+            case "$name" in
+              *.so.[0-9]|*.so.[0-9][0-9]) cp -L "$f" "dist/linux-lib/$name" ;;
+            esac
+          done
+          ls -la dist/linux-lib
+          # Every FFmpeg library the program needs must be found beside it.
+          cp target/release/picasso-suite dist/linux-lib/
+          ldd dist/linux-lib/picasso-suite
+          ! ldd dist/linux-lib/picasso-suite | grep "not found"
+          rm dist/linux-lib/picasso-suite
+          cp ffmpeg-linux/LICENSE.txt dist/FFMPEG-LICENSE.txt
       - run: cargo install cargo-deb cargo-generate-rpm --locked
       - run: |
           NAME="picasso-suite-${RELEASE_TAG#v}"
-          cargo deb -p picasso-app --no-build -o "$NAME-amd64.deb"
-          cargo generate-rpm -p crates/picasso-app -o "$NAME-x86_64.rpm"
+          cargo deb -p picasso-suite --no-build -o "$NAME-amd64.deb"
+          cargo generate-rpm -p apps/studio -o "$NAME-x86_64.rpm"
       - uses: actions/upload-artifact@v4
         with:
           name: pkg-linux
           path: |
             *.deb
             *.rpm
-      # The Flatpak job packs these same binaries.
+      # The Flatpak job packs these same files.
       - uses: actions/upload-artifact@v4
         with:
           name: linux-binaries
           path: |
             target/release/picasso-suite
-            target/release/picasso
+            target/release/picasso-bridge
+            dist/linux-lib
+            dist/FFMPEG-LICENSE.txt
 
   flatpak:
     needs: linux
@@ -53,16 +90,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: linux-binaries
-          path: target/release
-      - name: Download prebuilt FFmpeg (BtbN static GPL build, checked against its SHA-256)
-        run: |
-          file=ffmpeg-n8.1-latest-linux64-gpl-8.1.tar.xz
-          base=https://github.com/BtbN/FFmpeg-Builds/releases/download/latest
-          curl -fsSL --retry 5 --retry-delay 5 -o "$file" "$base/$file"
-          curl -fsSL --retry 5 -o checksums.sha256 "$base/checksums.sha256"
-          grep " $file\$" checksums.sha256 | sha256sum -c -
-          mkdir -p packaging/linux/ffmpeg
-          tar -xJf "$file" --strip-components=2 -C packaging/linux/ffmpeg --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
+          path: .
+      - run: |
+          ls -la target/release dist dist/linux-lib
           echo "PKG=picasso-suite-${RELEASE_TAG#v}" >> "$GITHUB_ENV"
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
@@ -79,59 +109,73 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: x86_64-apple-darwin,aarch64-apple-darwin
+      - run: brew install ffmpeg@7 dylibbundler
       - run: |
-          cargo build --release --workspace --target aarch64-apple-darwin
-          cargo build --release --workspace --target x86_64-apple-darwin
+          export PKG_CONFIG_PATH="$(brew --prefix ffmpeg@7)/lib/pkgconfig"
+          cargo build --release -p picasso-suite -p picasso-bridge
+      # Apple silicon only: Homebrew's FFmpeg on this runner is arm64.
       - run: |
           NAME="picasso-suite-${RELEASE_TAG#v}"
           APP="Picasso Suite.app"
-          mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-          for bin in picasso-suite picasso; do
-            lipo -create -output "$APP/Contents/MacOS/$bin" \
-              target/aarch64-apple-darwin/release/$bin target/x86_64-apple-darwin/release/$bin
-          done
-          cp packaging/macos/Info.plist "$APP/Contents/Info.plist"
+          mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Frameworks"
+          cp target/release/picasso-suite target/release/picasso-bridge "$APP/Contents/MacOS/"
+          VERSION=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)
+          sed "s/0\.1\.0/$VERSION/g" packaging/macos/Info.plist > "$APP/Contents/Info.plist"
           mkdir icon.iconset
           for s in 16 32 64 128 256; do
-            sips -z $s $s crates/picasso-app/assets/icon.png --out icon.iconset/icon_${s}x${s}.png
+            sips -z $s $s assets/icon.png --out icon.iconset/icon_${s}x${s}.png
           done
           iconutil -c icns icon.iconset -o "$APP/Contents/Resources/icon.icns"
-          lipo -info "$APP/Contents/MacOS/picasso-suite"
-          ditto -c -k --keepParent "$APP" "$NAME-macos-universal.zip"
+          # FFmpeg and the libraries it needs go inside the app, so it runs without Homebrew.
+          dylibbundler -of -b -cd \
+            -x "$APP/Contents/MacOS/picasso-suite" \
+            -d "$APP/Contents/Frameworks" -p @executable_path/../Frameworks/
+          cp "$(brew --prefix ffmpeg@7)/LICENSE.md" "$APP/Contents/Resources/FFMPEG-LICENSE.md" || true
+          codesign --force --deep -s - "$APP"
+          otool -L "$APP/Contents/MacOS/picasso-suite"
+          ! otool -L "$APP/Contents/MacOS/picasso-suite" | grep -E "/opt/homebrew|/usr/local/"
+          ditto -c -k --keepParent "$APP" "$NAME-macos-arm64.zip"
       - uses: actions/upload-artifact@v4
         with:
           name: pkg-macos
-          path: "*-macos-universal.zip"
+          path: "*-macos-arm64.zip"
 
   windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo build --release --workspace
-      # FFmpeg goes in the zip next to picasso-suite.exe, so the app works right after unzipping.
-      - name: Download FFmpeg for Windows (BtbN static GPL build, checked against its SHA-256)
+      # bindgen reads FFmpeg's headers with libclang; LLVM 20 and later produce empty structs
+      # for them, so LLVM 19 is installed.
+      - name: LLVM 19
         shell: pwsh
         run: |
-          $file = "ffmpeg-n8.1-latest-win64-gpl-8.1.zip"
-          $base = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest"
-          Invoke-WebRequest "$base/$file" -OutFile $file -MaximumRetryCount 5 -RetryIntervalSec 5
-          Invoke-WebRequest "$base/checksums.sha256" -OutFile checksums.sha256 -MaximumRetryCount 5
+          choco install llvm --version=19.1.7 -y --no-progress --allow-downgrade --force
+          & "C:\Program Files\LLVM\bin\clang.exe" --version
+          "LIBCLANG_PATH=C:\Program Files\LLVM\bin" >> $env:GITHUB_ENV
+      # Puts the MSVC headers on INCLUDE, where libclang finds them.
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Download FFmpeg 7.1 (BtbN shared GPL build, checked against its SHA-256)
+        shell: pwsh
+        run: |
+          $file = "$env:FFMPEG_NAME-win64-gpl-shared-7.1.zip"
+          Invoke-WebRequest "$env:FFMPEG_BASE/$file" -OutFile $file -MaximumRetryCount 5 -RetryIntervalSec 5
+          Invoke-WebRequest "$env:FFMPEG_BASE/checksums.sha256" -OutFile checksums.sha256 -MaximumRetryCount 5
           $want = (Select-String -Path checksums.sha256 -Pattern " $file$").Line.Split(" ")[0]
           $got = (Get-FileHash $file -Algorithm SHA256).Hash.ToLower()
           if ($want -ne $got) { throw "FFmpeg checksum mismatch: $got, expected $want" }
           Expand-Archive $file -DestinationPath ffmpeg-win
+          $dir = (Get-ChildItem ffmpeg-win -Directory | Select-Object -First 1).FullName
+          "FFMPEG_DIR=$dir" >> $env:GITHUB_ENV
+      - run: cargo build --release -p picasso-suite -p picasso-bridge
       - shell: pwsh
         run: |
           $name = "picasso-suite-" + $env:RELEASE_TAG.TrimStart('v') + "-windows"
           New-Item -ItemType Directory $name | Out-Null
-          Copy-Item target/release/picasso-suite.exe, target/release/picasso.exe, README.md, CHANGELOG.md, LICENSE $name
-          $bin = Get-ChildItem ffmpeg-win -Recurse -Directory -Filter bin | Select-Object -First 1
-          Copy-Item "$($bin.FullName)/ffmpeg.exe", "$($bin.FullName)/ffprobe.exe" $name
-          Copy-Item "$($bin.Parent.FullName)/LICENSE.txt" "$name/FFMPEG-LICENSE.txt"
-          & "$name/ffmpeg.exe" -version | Select-Object -First 1
+          Copy-Item target/release/picasso-suite.exe, target/release/picasso-bridge.exe, README.md, CHANGELOG.md, LICENSE $name
+          Copy-Item "$env:FFMPEG_DIR/bin/*.dll" $name
+          Copy-Item "$env:FFMPEG_DIR/LICENSE.txt" "$name/FFMPEG-LICENSE.txt"
+          Get-ChildItem $name | Format-Table Name, Length
           Compress-Archive $name "$name.zip"
       - uses: actions/upload-artifact@v4
         with:
@@ -139,7 +183,7 @@ jobs:
           path: "*-windows.zip"
 
   publish:
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && (startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch') }}
     needs: [linux, flatpak, macos, windows]
     runs-on: ubuntu-latest
     permissions:

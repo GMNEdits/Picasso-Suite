@@ -4,3 +4,8 @@
 /dist
 /out
 /packaging/linux/ffmpeg
+apps/studio/dist/
+target-alt/
+.cargo/
+reference/
+docs/reference/

@@ -1,0 +1,33 @@
+[package]
+name = "picasso-ui"
+description = "The Picasso Suite interface: pages, timeline, viewer, colour wheels and scopes (egui)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+picasso-core.workspace = true
+picasso-audio.workspace = true
+picasso-color.workspace = true
+picasso-render.workspace = true
+egui = { version = "0.36", default-features = false, features = ["default_fonts"] }  # MIT OR Apache-2.0
+# File dialogs: native on Windows and macOS, the desktop portal on Linux (no GTK needed), and the
+# browser's file picker and downloads on the web.
+rfd = "0.17"  # MIT
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+picasso-decode.workspace = true
+picasso-export.workspace = true
+picasso-media.workspace = true
+picasso-drp.workspace = true
+tracing.workspace = true
+pollster = "0.4"  # MIT OR Apache-2.0
+# Help > Check for Updates reads GitHub's answer about the latest release.
+serde_json.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen-futures = "0.4"  # MIT OR Apache-2.0
+
+[lints]
+workspace = true
