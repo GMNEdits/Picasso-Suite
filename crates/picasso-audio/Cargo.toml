@@ -1,0 +1,18 @@
+[package]
+name = "picasso-audio"
+description = "What the timeline sounds like: the mix, the decoders that feed it and the sound card output"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+picasso-core.workspace = true
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+picasso-decode.workspace = true
+cpal.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

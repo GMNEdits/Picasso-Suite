@@ -1,0 +1,74 @@
+//! Project files. On the desktop a project is a SQLite database (the project as JSON next to a
+//! table of facts about its media); the browser keeps plain JSON text. Reading accepts both, so
+//! older projects, and projects saved in the browser, still open.
+
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) use picasso_media::MediaMetadata;
+
+/// What is known about a media item; the browser knows nothing beyond the picture itself.
+#[cfg(target_arch = "wasm32")]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub(crate) struct MediaMetadata {
+    pub media: u64,
+}
+
+#[cfg(target_arch = "wasm32")]
+impl MediaMetadata {
+    pub(crate) fn summary(&self) -> String {
+        String::new()
+    }
+}
+
+/// The bytes of a project file: the project's JSON and the facts about its media.
+pub(crate) fn encode(json: &str, facts: &[MediaMetadata]) -> Result<Vec<u8>, String> {
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        picasso_media::to_bytes(json, facts).map_err(|e| e.to_string())
+    }
+    #[cfg(target_arch = "wasm32")]
+    {
+        let _ = facts;
+        Ok(json.as_bytes().to_vec())
+    }
+}
+
+/// The project's JSON and the facts about its media from the bytes of a project file, which is a
+/// database or JSON text.
+pub(crate) fn decode(bytes: Vec<u8>) -> Result<(String, Vec<MediaMetadata>), String> {
+    #[cfg(not(target_arch = "wasm32"))]
+    if picasso_media::is_database(&bytes) {
+        return picasso_media::from_bytes(&bytes).map_err(|e| e.to_string());
+    }
+    String::from_utf8(bytes)
+        .map(|text| (text, Vec::new()))
+        .map_err(|_| "that file is not a project (it is neither a database nor text)".to_string())
+}
+
+/// The facts of a still image.
+pub(crate) fn image_facts(
+    media: u64,
+    path: &str,
+    width: u32,
+    height: u32,
+) -> Option<MediaMetadata> {
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        Some(MediaMetadata::image(media, path, width, height))
+    }
+    #[cfg(target_arch = "wasm32")]
+    {
+        let _ = (media, path, width, height);
+        None
+    }
+}
+
+/// The facts of a video or sound file, read from disk (desktop only).
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) fn file_facts(media: u64, path: &str, sound_only: bool) -> Option<MediaMetadata> {
+    let path = std::path::Path::new(path);
+    if sound_only {
+        MediaMetadata::probe_audio(media, path).ok()
+    } else {
+        MediaMetadata::probe_video(media, path).ok()
+    }
+}

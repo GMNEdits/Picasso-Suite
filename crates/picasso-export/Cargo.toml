@@ -1,0 +1,18 @@
+[package]
+name = "picasso-export"
+description = "Renders a project to files: video through FFmpeg encoders, WAV audio and PNG sequences (desktop only)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+picasso-core.workspace = true
+picasso-render.workspace = true
+picasso-audio.workspace = true
+ffmpeg-next.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

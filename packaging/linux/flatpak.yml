@@ -1,4 +1,5 @@
-# Builds the Flatpak from the release binaries produced by CI (see .github/workflows/release.yml).
+# Builds the Flatpak from the release files produced by CI (see .github/workflows/release.yml):
+# the program, and FFmpeg 7.1's libraries beside it in /app/lib/picasso-suite.
 app-id: io.github.fabox_os.PicassoSuite
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
@@ -11,16 +12,20 @@ finish-args:
   - --device=dri
   - --socket=pulseaudio
   - --filesystem=home
+  # Help > Check for Updates installs a new bundle with the host's flatpak.
+  - --talk-name=org.freedesktop.Flatpak
+  # Check for Updates asks GitHub for the latest release.
+  - --share=network
 modules:
-  # FFmpeg comes prebuilt (BtbN's static GPL FFmpeg 8.1 build, downloaded by the release workflow into
-  # packaging/linux/ffmpeg/), so the app works without FFmpeg on the host.
   - name: picasso-suite
     buildsystem: simple
     build-commands:
-      - install -Dm755 picasso-suite /app/bin/picasso-suite
-      - install -Dm755 picasso /app/bin/picasso
-      - install -Dm755 ffmpeg /app/bin/ffmpeg
-      - install -Dm755 ffprobe /app/bin/ffprobe
+      - install -Dm755 picasso-suite /app/lib/picasso-suite/picasso-suite
+      - cp -a lib/. /app/lib/picasso-suite/
+      - install -Dm644 FFMPEG-LICENSE.txt /app/share/licenses/picasso-suite/FFMPEG-LICENSE.txt
+      - install -Dm755 picasso-bridge /app/bin/picasso-bridge
+      - printf '#!/bin/sh\nexec /app/lib/picasso-suite/picasso-suite "$@"\n' > /app/bin/picasso-suite
+      - chmod 755 /app/bin/picasso-suite
       - install -Dm644 icon.png /app/share/icons/hicolor/256x256/apps/io.github.fabox_os.PicassoSuite.png
       - install -Dm644 io.github.fabox_os.PicassoSuite.desktop /app/share/applications/io.github.fabox_os.PicassoSuite.desktop
       - install -Dm644 io.github.fabox_os.PicassoSuite.metainfo.xml /app/share/metainfo/io.github.fabox_os.PicassoSuite.metainfo.xml
@@ -28,13 +33,14 @@ modules:
       - type: file
         path: ../../target/release/picasso-suite
       - type: file
-        path: ../../target/release/picasso
+        path: ../../target/release/picasso-bridge
+      - type: dir
+        path: ../../dist/linux-lib
+        dest: lib
       - type: file
-        path: ffmpeg/ffmpeg
+        path: ../../dist/FFMPEG-LICENSE.txt
       - type: file
-        path: ffmpeg/ffprobe
-      - type: file
-        path: ../../crates/picasso-app/assets/icon.png
+        path: ../../assets/icon.png
       - type: file
         path: io.github.fabox_os.PicassoSuite.desktop
       - type: file

@@ -1,0 +1,22 @@
+[package]
+name = "picasso-drp"
+description = "Reads DaVinci Resolve project archives (.drp) into Picasso Suite projects (pure Rust)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+picasso-core.workspace = true
+thiserror.workspace = true
+# A .drp file is a ZIP archive of XML documents.
+zip = { version = "8", default-features = false, features = ["deflate-flate2"] }  # MIT
+quick-xml = "0.41"  # MIT
+# The pure-Rust inflater behind zip (miniz_oxide), so no C library is needed on any platform.
+flate2 = { version = "1", default-features = false, features = ["rust_backend"] }  # MIT OR Apache-2.0
+
+[dev-dependencies]
+zip = { version = "8", default-features = false, features = ["deflate-flate2"] }  # MIT
+
+[lints]
+workspace = true

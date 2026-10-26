@@ -1,0 +1,17 @@
+[package]
+name = "picasso-bridge"
+description = "Converts DaVinci Resolve project files (.drp, .drt, .drb, .xml) to Picasso Suite projects, and registers them with Linux desktops"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "picasso-bridge"
+path = "src/main.rs"
+
+[dependencies]
+picasso-drp.workspace = true
+
+[lints]
+workspace = true

@@ -1,14 +1,70 @@
 [workspace]
 resolver = "3"
-members = ["crates/*"]
+members = ["crates/*", "apps/*"]
 
 [workspace.package]
-version = "0.2.0"
-edition = "2024"
+version = "0.2.1"
+edition = "2021"
 license = "GPL-3.0-or-later"
+rust-version = "1.95"
 
-[profile.dev.package."*"]
-opt-level = 2
+[workspace.dependencies]
+# internal
+picasso-color = { path = "crates/picasso-color" }
+picasso-audio = { path = "crates/picasso-audio" }
+picasso-export = { path = "crates/picasso-export" }
+picasso-media = { path = "crates/picasso-media" }
+picasso-decode = { path = "crates/picasso-decode" }
+picasso-core = { path = "crates/picasso-core" }
+picasso-render = { path = "crates/picasso-render" }
+picasso-ui = { path = "crates/picasso-ui" }
+picasso-drp = { path = "crates/picasso-drp" }
 
+# external (pure Rust, GPLv3-compatible licences)
+ffmpeg-next = { version = "7.1", default-features = false, features = ["codec", "format", "software-scaling", "software-resampling"] }  # WTFPL; links FFmpeg (GPL build)
+cpal = "0.18"  # Apache-2.0
+rusqlite = { version = "0.40", features = ["bundled", "serialize"] }  # MIT
+thiserror = "2"  # MIT OR Apache-2.0
+tracing = "0.1"  # MIT
+serde = { version = "1", features = ["derive"] }  # MIT OR Apache-2.0
+serde_json = "1"  # MIT OR Apache-2.0
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }  # MIT OR Apache-2.0
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+dbg_macro = "warn"
+todo = "warn"
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+unimplemented = "deny"
+# Pixel loops over `chunks_exact(4)` read better than `as_chunks`.
+chunks_exact_to_as_chunks = "allow"
+unreachable = "deny"
+
+# Debug builds of the maths and the UI are unusably slow otherwise.
 [profile.dev]
 opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+# The pixel loops (decoding, scaling, grading, mixing, encoding) run for every picture of a
+# playing video, so they are optimised in debug builds too.
+[profile.dev.package.picasso-render]
+opt-level = 3
+[profile.dev.package.picasso-decode]
+opt-level = 3
+[profile.dev.package.picasso-color]
+opt-level = 3
+[profile.dev.package.picasso-audio]
+opt-level = 3
+[profile.dev.package.picasso-export]
+opt-level = 3
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = "debuginfo"

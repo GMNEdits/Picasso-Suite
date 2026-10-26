@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.2.1
+
+Picasso Suite 0.2.1 is the full editor: all eight pages (Media, Photo, Cut, Edit, Fusion, Color,
+Fairlight and Deliver), with FFmpeg included in every package.
+
+**✨ New**
+- ✅ **Curve editing:** on the Color page, add, drag and remove points on the Y, R, G and B curves to grade the picture
+- ✅ **Curve intensity:** each curve's strength can be set from 0 to 100
+- ✅ **Soft Clip:** clip and soften black (Low, L.S.) and white (High, H.S.)
+- ✅ **Curves are saved** with each node, and a whole drag is one undo step
+- ✅ **Check for Updates:** Help > Check for Updates finds the latest release and installs it on Windows, macOS, Flatpak, .deb and .rpm
+- ✅ **Safe Windows updates:** if an update fails partway, your version is restored
+
+**🔄 Changed**
+- ✅ Renders start at **60 fps** by default
+- ✅ The camera tab on the page bar is now called **Media**
+
+**🛠️ Fixed**
+- 🛠️ Media and Deliver no longer flash black when you open them
+- 🛠️ Dragging a clip from the media pool onto the Cut page timeline works again
+- 🛠️ Dragging the playhead no longer makes the viewer flash black
+
+**⚡ Performance**
+- 🛠️ Playback is about **2x lighter**: Cut 4.8 → 2.4 ms, Edit 6.6 → 3.1 ms, Color 8.6 → ~4 ms per frame
+- 🛠️ Videos are decoded at the viewer's size, so pictures show faster
+- 🛠️ The Color page scopes update 20 times a second and no longer slow down playback
+- 🛠️ Color grading is up to **14x faster** (wheels + curves: 6.5 → 0.45 ms per picture)
+
+**⚠️ Known limitations**
+- ❌ The Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curves aren't done yet
+- ❌ Check for Updates has only been tested on Windows so far
+- ❌ The macOS package is for Apple silicon only
+- ❌ Projects from 0.2.0 and earlier (`.pcsp`) do not open in 0.2.1, which saves `.picasso` projects
+
 ## 0.2.0 hotfix
 
 ### New
