@@ -131,7 +131,7 @@ impl Pool {
         cache: &MediaCache,
         generation: u64,
     ) -> Option<TextureId> {
-        let video = cache.video_generation();
+        let video = cache.thumbnail_generation();
         if let Some(t) = self.thumbs.get(&item.id) {
             if t.source == item.source && t.generation == generation && (t.exact || t.video == video)
             {
@@ -139,7 +139,14 @@ impl Pool {
             }
         }
         let (frame, exact) =
-            render_thumbnail_exact(project, item, cache, THUMB.x as u32, THUMB.y as u32).ok()?;
+            render_thumbnail_exact(
+                project,
+                item,
+                &cache.for_thumbnails(),
+                THUMB.x as u32,
+                THUMB.y as u32,
+            )
+            .ok()?;
         let image = ColorImage::from_rgba_unmultiplied(
             [frame.width as usize, frame.height as usize],
             &frame.rgba,

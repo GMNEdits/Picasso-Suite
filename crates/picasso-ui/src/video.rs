@@ -9,6 +9,7 @@ pub(crate) fn new_cache(ctx: &egui::Context) -> MediaCache {
     #[cfg(not(target_arch = "wasm32"))]
     {
         MediaCache::with_video_source(std::sync::Arc::new(native::VideoPool::new(ctx.clone())))
+            .with_thumbnail_source(std::sync::Arc::new(native::VideoPool::new(ctx.clone())))
     }
     #[cfg(target_arch = "wasm32")]
     {

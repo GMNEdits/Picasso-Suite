@@ -114,6 +114,9 @@ pub trait FrameSource: Send + Sync + std::fmt::Debug {
 pub struct MediaCache {
     images: HashMap<MediaId, Arc<Decoded>>,
     video: Option<Arc<dyn FrameSource>>,
+    /// Decodes the media pool's thumbnails apart from `video`, whose one request per video the
+    /// viewer replaces many times a second: a thumbnail's first frame would never be decoded.
+    thumbnails: Option<Arc<dyn FrameSource>>,
     wait_for_video: bool,
     /// How much smaller video pictures are asked for (a proxy); 0 and 1 mean whole.
     reduction: u32,
@@ -129,9 +132,38 @@ impl MediaCache {
         Self {
             images: HashMap::new(),
             video: Some(source),
+            thumbnails: None,
             wait_for_video: false,
             reduction: 1,
         }
+    }
+
+    /// The same cache, with the thumbnails' video pictures coming from `source`.
+    pub fn with_thumbnail_source(self, source: Arc<dyn FrameSource>) -> Self {
+        Self {
+            thumbnails: Some(source),
+            ..self
+        }
+    }
+
+    /// The same cache, rendering video pictures from the thumbnail source when there is one.
+    pub fn for_thumbnails(&self) -> Self {
+        match &self.thumbnails {
+            Some(source) => Self {
+                video: Some(Arc::clone(source)),
+                reduction: 1,
+                ..self.clone()
+            },
+            None => self.clone(),
+        }
+    }
+
+    /// Changes when a thumbnail's video picture arrives in the background.
+    pub fn thumbnail_generation(&self) -> u64 {
+        self.thumbnails
+            .as_ref()
+            .or(self.video.as_ref())
+            .map_or(0, |v| v.generation())
     }
 
     /// The same cache, but rendering with it waits for each exact video picture. Exports use it.
