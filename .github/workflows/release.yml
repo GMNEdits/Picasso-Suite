@@ -34,7 +34,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: |
           sudo apt-get update
-          sudo apt-get install -y pkg-config clang libclang-dev libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev imagemagick rpm
+          sudo apt-get install -y pkg-config clang libclang-dev libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev imagemagick rpm desktop-file-utils
       - name: Download FFmpeg 7.1 (BtbN shared GPL build, checked against its SHA-256)
         run: |
           file="$FFMPEG_NAME-${{ matrix.ffmpeg }}-gpl-shared-7.1.tar.xz"
