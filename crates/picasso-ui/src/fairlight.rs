@@ -889,19 +889,9 @@ impl StudioApp {
             c.line((463.0, o), (495.0, o), 1.0, g);
         }
         c.outline(463.0, y - 13.0, 495.0, y + 13.0, 2.0, 1.0, g);
-        // The arrow in red.
-        c.poly(
-            &[
-                (677.0, y - 13.0),
-                (677.0, y + 12.0),
-                (683.0, y + 6.0),
-                (689.0, y + 16.0),
-                (693.0, y + 14.0),
-                (687.0, y + 4.0),
-                (695.0, y + 4.0),
-            ],
-            Color32::from_rgb(232, 70, 56),
-        );
+        // The selection arrow in red, the same pointer as the Edit page's. (A hand-made polygon
+        // here was concave, and egui fills a convex one, which bent it out of shape.)
+        c.icon(686.0, y, Icon::Pointer, theme::TOOL_RED, 0.85);
         // A cross.
         c.line((748.0, y - 13.0), (748.0, y + 13.0), 1.6, g);
         c.line((735.0, y), (761.0, y), 1.6, g);
