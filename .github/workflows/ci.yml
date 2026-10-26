@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # The workspace is built against FFmpeg 7.1 and LLVM 19 (newer LLVM generates empty
+    # structs for the FFmpeg bindings). Debian trixie packages both, so the job runs in its
+    # image instead of building FFmpeg by hand.
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - name: Install the build dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            build-essential ca-certificates curl git pkg-config \
+            clang-19 libclang-19-dev \
+            libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libswresample-dev \
+            libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev \
+            libxcursor-dev libxrandr-dev libxi-dev libasound2-dev
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+      - name: Build and test
+        env:
+          LIBCLANG_PATH: /usr/lib/llvm-19/lib
+        run: cargo test --workspace
