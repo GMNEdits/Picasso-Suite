@@ -31,7 +31,9 @@ serde_json = "1"  # MIT OR Apache-2.0
 image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }  # MIT OR Apache-2.0
 
 [workspace.lints.rust]
-unsafe_code = "forbid"
+# Denied everywhere; picasso-decode's `hw` module (FFmpeg's hardware devices, which ffmpeg-next
+# does not wrap) is the one place that allows it.
+unsafe_code = "deny"
 
 [workspace.lints.clippy]
 dbg_macro = "warn"

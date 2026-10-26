@@ -3,8 +3,12 @@
 //! The structure follows `Menu-Spec.md`. An entry without an [`Act`] is planned: it is shown
 //! (disabled, with its key as the spec gives it) but does nothing and never takes a key, so a key
 //! two entries share always belongs to the one that works.
+//!
+//! Keyboard Customization can give any act other keys; those replace the table's keys of that act
+//! everywhere (the menus, the shortcut list and what the keys do).
 
-use std::sync::OnceLock;
+use std::collections::HashMap;
+use std::sync::{Arc, RwLock};
 
 use egui::{Key, KeyboardShortcut, Modifiers};
 use picasso_core::EffectKind;
@@ -175,6 +179,7 @@ pub(crate) enum Act {
     SetClipColor(Option<u8>),
     NormalizeAudio,
     ExportEdl,
+    ExportOtio,
     ImportTimeline,
     ExportSubtitles,
     CreateSubtitleTrack,
@@ -288,6 +293,7 @@ const FILE: &[Entry] = &[
         "Export",
         &[
             item("Timeline: EDL...", &[], Act::ExportEdl),
+            item("Timeline: OpenTimelineIO...", &[], Act::ExportOtio),
             planned("Timeline: AAF, XML...", ""),
             item("Subtitle...", &[], Act::ExportSubtitles),
             planned("Bin...", ""),
@@ -953,39 +959,222 @@ pub(crate) fn key_texts() -> Vec<(&'static str, Act)> {
     all
 }
 
-/// Every binding, the most specific (most modifiers) first, so `Shift+Home` is tried before
-/// `Home`.
-pub(crate) fn bindings() -> &'static [Binding] {
-    static BINDINGS: OnceLock<Vec<Binding>> = OnceLock::new();
-    BINDINGS.get_or_init(|| {
-        let mut all: Vec<Binding> = key_texts()
-            .into_iter()
-            .filter_map(|(text, act)| {
-                parse_keys(text).map(|shortcut| Binding {
-                    shortcut,
-                    text: text.to_string(),
-                    act,
-                })
+/// Every binding with the keys of `custom` in place of the table's for those acts, the most
+/// specific (most modifiers) first, so `Shift+Home` is tried before `Home`.
+pub(crate) fn bindings_with(custom: &HashMap<Act, Vec<String>>) -> Vec<Binding> {
+    let table = key_texts()
+        .into_iter()
+        .filter(|(_, act)| !custom.contains_key(act))
+        .map(|(text, act)| (text.to_string(), act));
+    let changed = custom
+        .iter()
+        .flat_map(|(act, keys)| keys.iter().map(|k| (k.clone(), *act)));
+    let mut all: Vec<Binding> = table
+        .chain(changed)
+        .filter_map(|(text, act)| {
+            parse_keys(&text).map(|shortcut| Binding {
+                shortcut,
+                text,
+                act,
             })
-            .collect();
-        all.sort_by_key(|b| {
-            std::cmp::Reverse(
-                usize::from(b.shortcut.modifiers.command)
-                    + usize::from(b.shortcut.modifiers.shift)
-                    + usize::from(b.shortcut.modifiers.alt),
-            )
-        });
-        all
-    })
+        })
+        .collect();
+    all.sort_by_key(|b| {
+        std::cmp::Reverse(
+            usize::from(b.shortcut.modifiers.command)
+                + usize::from(b.shortcut.modifiers.shift)
+                + usize::from(b.shortcut.modifiers.alt),
+        )
+    });
+    all
 }
 
-/// Every entry that has a key or is built, for the shortcut list: menu, label, keys, built.
-pub(crate) fn listing() -> Vec<(&'static str, &'static str, String, bool)> {
-    fn walk(
-        menu: &'static str,
-        entries: &'static [Entry],
-        out: &mut Vec<(&'static str, &'static str, String, bool)>,
-    ) {
+/// The keys set in Keyboard Customization and the bindings they make.
+struct Keymap {
+    custom: HashMap<Act, Vec<String>>,
+    bindings: Arc<Vec<Binding>>,
+}
+
+static KEYMAP: RwLock<Option<Keymap>> = RwLock::new(None);
+
+fn with_keymap<R>(f: impl FnOnce(&Keymap) -> R) -> R {
+    {
+        let map = KEYMAP.read().unwrap_or_else(|e| e.into_inner());
+        if let Some(map) = map.as_ref() {
+            return f(map);
+        }
+    }
+    let mut map = KEYMAP.write().unwrap_or_else(|e| e.into_inner());
+    let map = map.get_or_insert_with(|| Keymap {
+        custom: HashMap::new(),
+        bindings: Arc::new(bindings_with(&HashMap::new())),
+    });
+    f(map)
+}
+
+/// Every binding in use: the table's keys, and those set in Keyboard Customization.
+pub(crate) fn bindings() -> Arc<Vec<Binding>> {
+    with_keymap(|m| m.bindings.clone())
+}
+
+/// The acts whose keys were changed, and their keys.
+pub(crate) fn custom_keys() -> HashMap<Act, Vec<String>> {
+    with_keymap(|m| m.custom.clone())
+}
+
+/// Uses `custom` for the acts in it from now on; keys that cannot be read are left out.
+pub(crate) fn set_custom_keys(mut custom: HashMap<Act, Vec<String>>) {
+    for keys in custom.values_mut() {
+        keys.retain(|k| parse_keys(k).is_some());
+    }
+    let bindings = Arc::new(bindings_with(&custom));
+    *KEYMAP.write().unwrap_or_else(|e| e.into_inner()) = Some(Keymap { custom, bindings });
+}
+
+/// The table's keys of an act.
+pub(crate) fn default_keys(act: Act) -> Vec<&'static str> {
+    let mut keys: Vec<&'static str> = Vec::new();
+    for (text, a) in key_texts() {
+        if a == act && !keys.contains(&text) {
+            keys.push(text);
+        }
+    }
+    keys
+}
+
+/// The keys an act has with the changed keys `custom`.
+pub(crate) fn keys_in(custom: &HashMap<Act, Vec<String>>, act: Act) -> Vec<String> {
+    custom
+        .get(&act)
+        .cloned()
+        .unwrap_or_else(|| default_keys(act).into_iter().map(str::to_string).collect())
+}
+
+/// The keys an act has now.
+pub(crate) fn keys_of(act: Act) -> Vec<String> {
+    with_keymap(|m| keys_in(&m.custom, act))
+}
+
+/// The keys a menu entry shows: those set in Keyboard Customization for its act, else the
+/// table's.
+pub(crate) fn display_keys(act: Option<Act>, shown: &str, keys: &[&str]) -> String {
+    match act.and_then(|a| with_keymap(|m| m.custom.get(&a).cloned())) {
+        Some(custom) => custom.join(" / "),
+        None => shown_keys(shown, keys),
+    }
+}
+
+/// The name an act is saved under.
+pub(crate) fn act_name(act: Act) -> String {
+    format!("{act:?}")
+}
+
+/// The act saved under `name`, among those that have a menu entry or a key.
+pub(crate) fn act_named(name: &str) -> Option<Act> {
+    rows()
+        .into_iter()
+        .filter_map(|r| r.act)
+        .find(|a| act_name(*a) == name)
+}
+
+/// Whether a key is Shift, Ctrl, Alt or the system key on its own, which egui also reports as a
+/// key: those are held with a key, not one themselves.
+pub(crate) fn is_modifier(key: Key) -> bool {
+    matches!(
+        key,
+        Key::ShiftLeft
+            | Key::ShiftRight
+            | Key::ControlLeft
+            | Key::ControlRight
+            | Key::AltLeft
+            | Key::AltRight
+            | Key::SuperLeft
+            | Key::SuperRight
+    )
+}
+
+/// The text of a key as the table writes it ("Ctrl+Shift+Z", "["), when it is one the table can
+/// read back.
+pub(crate) fn key_text(modifiers: Modifiers, key: Key) -> Option<String> {
+    if is_modifier(key) {
+        return None;
+    }
+    let name = match key {
+        Key::OpenBracket => "[",
+        Key::CloseBracket => "]",
+        Key::Comma => ",",
+        Key::Period => ".",
+        Key::Slash => "/",
+        Key::Backslash => "\\",
+        Key::Delete => "Delete",
+        Key::ArrowLeft => "Left",
+        Key::ArrowRight => "Right",
+        Key::ArrowUp => "Up",
+        Key::ArrowDown => "Down",
+        other => other.name(),
+    };
+    let mut text = String::new();
+    if modifiers.command || modifiers.ctrl {
+        text.push_str("Ctrl+");
+    }
+    if modifiers.alt {
+        text.push_str("Alt+");
+    }
+    if modifiers.shift {
+        text.push_str("Shift+");
+    }
+    text.push_str(name);
+    let read = parse_keys(&text)?;
+    (read.logical_key == key).then_some(text)
+}
+
+/// Whether two key texts are the same key ("Del" and "Delete" are).
+pub(crate) fn same_key(a: &str, b: &str) -> bool {
+    match (parse_keys(a), parse_keys(b)) {
+        (Some(x), Some(y)) => x == y,
+        _ => false,
+    }
+}
+
+/// The acts other than `act` that `text` starts now.
+pub(crate) fn key_users(text: &str, act: Act) -> Vec<Act> {
+    key_users_in(&bindings(), text, act)
+}
+
+/// The acts other than `act` that `text` starts among `bindings`.
+pub(crate) fn key_users_in(bindings: &[Binding], text: &str, act: Act) -> Vec<Act> {
+    let mut users = Vec::new();
+    for b in bindings {
+        if b.act != act && same_key(&b.text, text) && !users.contains(&b.act) {
+            users.push(b.act);
+        }
+    }
+    users
+}
+
+/// One line of Keyboard Customization: where the command is, its name, its act (none when it is
+/// planned) and the keys the table gives it.
+pub(crate) struct KeyRow {
+    pub menu: &'static str,
+    pub label: &'static str,
+    pub act: Option<Act>,
+    pub default: String,
+}
+
+/// The names of the keys that have no menu entry.
+fn hidden_label(act: Act) -> &'static str {
+    match act {
+        Act::TogglePlay => "Play / Stop",
+        Act::SecondBack => "Back one second",
+        Act::SecondForward => "Forward one second",
+        Act::LeaveViewer => "Leave the full-screen viewer",
+        _ => "",
+    }
+}
+
+/// Every menu entry that has a key or works, then the keys without an entry (under "Other").
+pub(crate) fn rows() -> Vec<KeyRow> {
+    fn walk(menu: &'static str, entries: &'static [Entry], out: &mut Vec<KeyRow>) {
         for e in entries {
             match e {
                 Entry::Item {
@@ -994,9 +1183,14 @@ pub(crate) fn listing() -> Vec<(&'static str, &'static str, String, bool)> {
                     keys,
                     act,
                 } => {
-                    let text = shown_keys(shown, keys);
-                    if !text.is_empty() {
-                        out.push((menu, label, text, act.is_some()));
+                    let default = shown_keys(shown, keys);
+                    if !default.is_empty() || act.is_some() {
+                        out.push(KeyRow {
+                            menu,
+                            label,
+                            act: *act,
+                            default,
+                        });
                     }
                 }
                 Entry::Sub { items, .. } => walk(menu, items, out),
@@ -1008,7 +1202,23 @@ pub(crate) fn listing() -> Vec<(&'static str, &'static str, String, bool)> {
     for (menu, _, entries) in MENUS {
         walk(menu, entries, &mut out);
     }
+    for (text, act) in HIDDEN_KEYS {
+        out.push(KeyRow {
+            menu: "Other",
+            label: hidden_label(act),
+            act: Some(act),
+            default: text.to_string(),
+        });
+    }
     out
+}
+
+/// The name of an act for messages: its first menu entry's label.
+pub(crate) fn act_label(act: Act) -> &'static str {
+    rows()
+        .into_iter()
+        .find(|r| r.act == Some(act))
+        .map_or("another command", |r| r.label)
 }
 
 /// How many entries the menus have, and how many of them work.
@@ -1102,7 +1312,7 @@ mod tests {
     #[test]
     fn one_key_never_does_two_things() {
         let mut seen: HashMap<String, Act> = HashMap::new();
-        for b in bindings() {
+        for b in bindings().iter() {
             let id = format!("{:?}", b.shortcut);
             if let Some(other) = seen.insert(id, b.act) {
                 assert_eq!(
@@ -1126,6 +1336,69 @@ mod tests {
         assert_eq!(parse_keys("Shift+9").unwrap().logical_key, Key::Num9);
         assert!(parse_keys("Ctrl+Nonsense").is_none());
         assert!(parse_keys("").is_none());
+    }
+
+    #[test]
+    fn custom_keys_replace_the_tables_keys_of_their_act_only() {
+        let mut custom = HashMap::new();
+        custom.insert(Act::Undo, vec!["Ctrl+U".to_string()]);
+        custom.insert(Act::Redo, Vec::new());
+        let all = bindings_with(&custom);
+        let undo: Vec<&str> = all
+            .iter()
+            .filter(|b| b.act == Act::Undo)
+            .map(|b| b.text.as_str())
+            .collect();
+        assert_eq!(undo, ["Ctrl+U"], "Ctrl+Z no longer undoes");
+        assert!(all.iter().all(|b| b.act != Act::Redo), "Redo has no key");
+        assert!(
+            all.iter()
+                .any(|b| b.act == Act::SaveProject && b.text == "Ctrl+S"),
+            "the others keep theirs"
+        );
+    }
+
+    #[test]
+    fn keys_read_back_as_they_are_written() {
+        let ctrl = Modifiers {
+            ctrl: true,
+            command: true,
+            ..Modifiers::NONE
+        };
+        let shift = Modifiers::SHIFT;
+        for (m, key, text) in [
+            (ctrl, Key::Z, "Ctrl+Z"),
+            (Modifiers::NONE, Key::OpenBracket, "["),
+            (shift | Modifiers::ALT, Key::ArrowLeft, "Alt+Shift+Left"),
+            (Modifiers::NONE, Key::Delete, "Delete"),
+            (Modifiers::NONE, Key::F5, "F5"),
+            (Modifiers::NONE, Key::Space, "Space"),
+            (shift, Key::Num9, "Shift+9"),
+        ] {
+            assert_eq!(key_text(m, key).as_deref(), Some(text));
+            assert!(same_key(text, &key_text(m, key).unwrap_or_default()));
+        }
+        assert_eq!(
+            key_text(ctrl, Key::ControlLeft),
+            None,
+            "Ctrl alone is not a key"
+        );
+        assert!(same_key("Del", "Delete"));
+        assert!(!same_key("Ctrl+Z", "Z"));
+    }
+
+    #[test]
+    fn every_act_is_saved_and_found_by_its_name() {
+        for row in rows() {
+            if let Some(act) = row.act {
+                assert_eq!(act_named(&act_name(act)), Some(act), "{}", row.label);
+            }
+        }
+        assert_eq!(act_named("NoSuchCommand"), None);
+        assert!(rows()
+            .iter()
+            .any(|r| r.label == "Play / Stop" && r.default == "Space"));
+        assert_eq!(act_label(Act::Undo), "Undo");
     }
 
     #[test]
@@ -1218,12 +1491,13 @@ mod tests {
 
     #[test]
     fn the_listing_marks_what_is_built() {
-        let list = listing();
+        let list = rows();
+        assert!(list.iter().any(|r| r.menu == "Edit"
+            && r.label == "Undo"
+            && r.default == "Ctrl+Z"
+            && r.act == Some(Act::Undo)));
         assert!(list
             .iter()
-            .any(|(m, l, k, built)| *m == "Edit" && *l == "Undo" && k == "Ctrl+Z" && *built));
-        assert!(list
-            .iter()
-            .any(|(_, l, _, built)| *l == "Media Management..." && !*built));
+            .any(|r| r.label == "Media Management..." && r.act.is_none()));
     }
 }

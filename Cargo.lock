@@ -2089,6 +2089,7 @@ dependencies = [
  "ffmpeg-next",
  "picasso-audio",
  "picasso-core",
+ "picasso-decode",
  "picasso-render",
  "thiserror 2.0.21",
  "tracing",

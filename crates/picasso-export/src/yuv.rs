@@ -32,78 +32,145 @@ fn byte(v: f32) -> u8 {
     v.round().clamp(0.0, 255.0) as u8
 }
 
-/// Converts to planar YUV 4:2:0, 8 bits. `planes` are the three destination planes and `strides`
-/// their row lengths in bytes. The picture must be `w * h * 4` bytes; an odd size is rounded up
-/// by repeating the last row and column.
-pub fn rgba_to_yuv420p(
+/// How an encoder wants a picture laid out in memory.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Layout {
+    /// How many pixels across and down one colour (Cb, Cr) sample covers: 2 x 2 is 4:2:0, 2 x 1
+    /// 4:2:2 and 1 x 1 4:4:4.
+    pub step: (usize, usize),
+    /// 10 bits a sample in 16-bit little-endian words, instead of 8 bits in a byte.
+    pub ten_bit: bool,
+    /// Cb and Cr take turns in one plane (NV12, P010), instead of a plane each; their 10 bits
+    /// are then the top ones of the word (P010).
+    pub interleaved: bool,
+}
+
+impl Layout {
+    /// The layout of an FFmpeg pixel format the encoders here use.
+    pub fn of(pixel: ffmpeg_next::format::Pixel) -> Option<Self> {
+        use ffmpeg_next::format::Pixel as P;
+        let (step, ten_bit, interleaved) = match pixel {
+            P::YUV420P => ((2, 2), false, false),
+            P::YUV420P10LE => ((2, 2), true, false),
+            P::YUV422P => ((2, 1), false, false),
+            P::YUV422P10LE => ((2, 1), true, false),
+            P::YUV444P10LE => ((1, 1), true, false),
+            P::NV12 => ((2, 2), false, true),
+            P::P010LE => ((2, 2), true, true),
+            _ => return None,
+        };
+        Some(Self {
+            step,
+            ten_bit,
+            interleaved,
+        })
+    }
+}
+
+/// Converts an RGBA picture of `w * h * 4` bytes to YUV in `layout`. `planes` are the
+/// destination planes (two when interleaved, else three) and `strides` their row lengths in
+/// bytes. A size that does not divide by the colour step repeats the last row and column.
+pub fn rgba_to_yuv(
     rgba: &[u8],
     (w, h): (usize, usize),
-    planes: [&mut [u8]; 3],
-    strides: [usize; 3],
+    layout: Layout,
+    planes: &mut [&mut [u8]],
+    strides: &[usize],
     full: bool,
 ) {
-    let [yp, up, vp] = planes;
-    for cy in 0..h.div_ceil(2) {
-        for cx in 0..w.div_ceil(2) {
+    let bytes = if layout.ten_bit { 2 } else { 1 };
+    // Writes a value on the 8-bit scale as a sample of the layout.
+    let put = |plane: &mut [u8], at: usize, v: f32| {
+        if layout.ten_bit {
+            let mut word = (v * 4.0).round().clamp(0.0, 1023.0) as u16;
+            if layout.interleaved {
+                word <<= 6;
+            }
+            if let Some(dst) = plane.get_mut(at..at + 2) {
+                dst.copy_from_slice(&word.to_le_bytes());
+            }
+        } else if let Some(slot) = plane.get_mut(at) {
+            *slot = byte(v);
+        }
+    };
+    let (sx, sy) = (layout.step.0.max(1), layout.step.1.max(1));
+    let stride = |i: usize| strides.get(i).copied().unwrap_or(0);
+    for cy in 0..h.div_ceil(sy) {
+        for cx in 0..w.div_ceil(sx) {
             let (mut r, mut g, mut b) = (0.0, 0.0, 0.0);
-            for (dx, dy) in [(0, 0), (1, 0), (0, 1), (1, 1)] {
-                let (x, y) = (cx * 2 + dx, cy * 2 + dy);
-                let p = px(rgba, w, h, x, y);
-                if x < w && y < h {
-                    if let Some(slot) = yp.get_mut(y * strides[0] + x) {
-                        *slot = byte(yuv709(p[0], p[1], p[2], full).0);
+            for dy in 0..sy {
+                for dx in 0..sx {
+                    let (x, y) = (cx * sx + dx, cy * sy + dy);
+                    let p = px(rgba, w, h, x, y);
+                    if x < w && y < h {
+                        if let Some(plane) = planes.get_mut(0) {
+                            put(
+                                plane,
+                                y * stride(0) + x * bytes,
+                                yuv709(p[0], p[1], p[2], full).0,
+                            );
+                        }
+                    }
+                    r += p[0];
+                    g += p[1];
+                    b += p[2];
+                }
+            }
+            let n = (sx * sy) as f32;
+            let (_, cb, cr) = yuv709(r / n, g / n, b / n, full);
+            if layout.interleaved {
+                let at = cy * stride(1) + cx * 2 * bytes;
+                if let Some(plane) = planes.get_mut(1) {
+                    put(plane, at, cb);
+                    put(plane, at + bytes, cr);
+                }
+            } else {
+                for (i, v) in [(1, cb), (2, cr)] {
+                    let at = cy * stride(i) + cx * bytes;
+                    if let Some(plane) = planes.get_mut(i) {
+                        put(plane, at, v);
                     }
                 }
-                r += p[0];
-                g += p[1];
-                b += p[2];
-            }
-            let (_, cb, cr) = yuv709(r / 4.0, g / 4.0, b / 4.0, full);
-            if let Some(slot) = up.get_mut(cy * strides[1] + cx) {
-                *slot = byte(cb);
-            }
-            if let Some(slot) = vp.get_mut(cy * strides[2] + cx) {
-                *slot = byte(cr);
             }
         }
     }
 }
 
-/// Converts to planar YUV 4:2:2 with 10 bits per sample, stored in 16-bit little-endian words
-/// (what ProRes 422 takes). `strides` are in bytes.
-pub fn rgba_to_yuv422p10(
+/// Converts to planar YUV 4:2:0, 8 bits (see [`rgba_to_yuv`]).
+#[cfg(test)]
+pub fn rgba_to_yuv420p(
     rgba: &[u8],
-    (w, h): (usize, usize),
+    size: (usize, usize),
     planes: [&mut [u8]; 3],
     strides: [usize; 3],
     full: bool,
 ) {
-    let [yp, up, vp] = planes;
-    let put = |plane: &mut [u8], stride: usize, row: usize, col: usize, v: f32| {
-        let word = ((v * 4.0).round().clamp(0.0, 1023.0) as u16).to_le_bytes();
-        let at = row * stride + col * 2;
-        if let Some(dst) = plane.get_mut(at..at + 2) {
-            dst.copy_from_slice(&word);
-        }
+    let layout = Layout {
+        step: (2, 2),
+        ten_bit: false,
+        interleaved: false,
     };
-    for y in 0..h {
-        for cx in 0..w.div_ceil(2) {
-            let (mut r, mut g, mut b) = (0.0, 0.0, 0.0);
-            for dx in 0..2 {
-                let x = cx * 2 + dx;
-                let p = px(rgba, w, h, x, y);
-                if x < w {
-                    put(yp, strides[0], y, x, yuv709(p[0], p[1], p[2], full).0);
-                }
-                r += p[0];
-                g += p[1];
-                b += p[2];
-            }
-            let (_, cb, cr) = yuv709(r / 2.0, g / 2.0, b / 2.0, full);
-            put(up, strides[1], y, cx, cb);
-            put(vp, strides[2], y, cx, cr);
-        }
-    }
+    let mut planes = planes;
+    rgba_to_yuv(rgba, size, layout, &mut planes, &strides, full);
+}
+
+/// Converts to planar YUV 4:2:2 with 10 bits per sample, stored in 16-bit little-endian words
+/// (what ProRes 422 takes). `strides` are in bytes.
+#[cfg(test)]
+pub fn rgba_to_yuv422p10(
+    rgba: &[u8],
+    size: (usize, usize),
+    planes: [&mut [u8]; 3],
+    strides: [usize; 3],
+    full: bool,
+) {
+    let layout = Layout {
+        step: (2, 1),
+        ten_bit: true,
+        interleaved: false,
+    };
+    let mut planes = planes;
+    rgba_to_yuv(rgba, size, layout, &mut planes, &strides, full);
 }
 
 #[cfg(test)]
@@ -184,6 +251,53 @@ mod tests {
         );
         assert!(y.iter().all(|p| *p == 235));
         assert!(u.iter().all(|p| *p == 128));
+    }
+
+    #[test]
+    fn nv12_and_p010_put_cb_and_cr_side_by_side() {
+        let white = solid(4, 2, [255, 255, 255]);
+        let nv12 = Layout::of(ffmpeg_next::format::Pixel::NV12).unwrap();
+        let (mut y, mut uv) = ([0u8; 8], [0u8; 4]);
+        rgba_to_yuv(
+            &solid(4, 2, [255, 0, 0]),
+            (4, 2),
+            nv12,
+            &mut [&mut y, &mut uv],
+            &[4, 4],
+            false,
+        );
+        assert_eq!(y[0], 63);
+        assert_eq!(uv, [102, 240, 102, 240], "Cb then Cr for each 2 x 2 block");
+        let p010 = Layout::of(ffmpeg_next::format::Pixel::P010LE).unwrap();
+        let (mut y, mut uv) = ([0u8; 16], [0u8; 8]);
+        rgba_to_yuv(&white, (4, 2), p010, &mut [&mut y, &mut uv], &[8, 8], false);
+        let word = |p: &[u8], i: usize| u16::from_le_bytes([p[i * 2], p[i * 2 + 1]]);
+        assert_eq!(word(&y, 0), 940 << 6, "10 bits in the top of the word");
+        assert_eq!(word(&uv, 0), 512 << 6);
+        assert_eq!(word(&uv, 1), 512 << 6);
+    }
+
+    #[test]
+    fn four_four_four_keeps_every_colour_sample() {
+        let layout = Layout::of(ffmpeg_next::format::Pixel::YUV444P10LE).unwrap();
+        let mut rgba = solid(2, 1, [255, 0, 0]);
+        rgba[4..8].copy_from_slice(&[0, 0, 255, 255]);
+        let (mut y, mut u, mut v) = ([0u8; 4], [0u8; 4], [0u8; 4]);
+        rgba_to_yuv(
+            &rgba,
+            (2, 1),
+            layout,
+            &mut [&mut y, &mut u, &mut v],
+            &[4, 4, 4],
+            false,
+        );
+        let word = |p: &[u8], i: usize| u16::from_le_bytes([p[i * 2], p[i * 2 + 1]]);
+        assert_eq!(
+            (word(&u, 0), word(&u, 1)),
+            (409, 960),
+            "red, then blue, each its own"
+        );
+        assert!(Layout::of(ffmpeg_next::format::Pixel::RGBA).is_none());
     }
 
     #[test]

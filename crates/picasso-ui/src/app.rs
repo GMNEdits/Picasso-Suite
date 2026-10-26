@@ -157,7 +157,18 @@ impl StudioApp {
         // The files the last update renamed while they were in use.
         #[cfg(not(target_arch = "wasm32"))]
         crate::update::clean_up();
-        Self::with_project(ctx, Project::start("New Project"))
+        #[allow(unused_mut)] // set below outside the tests
+        let mut app = Self::with_project(ctx, Project::start("New Project"));
+        // The tests keep the defaults: a user's own keys must not change what they check.
+        #[cfg(not(test))]
+        {
+            app.extra.prefs = crate::prefs::Preferences::load();
+            app.extra.prefs.apply();
+        }
+        // Which graphics cards' encoders work here, for the Deliver page.
+        #[cfg(not(target_arch = "wasm32"))]
+        picasso_export::check_hardware();
+        app
     }
 
     fn with_project(ctx: &Context, project: Project) -> Self {

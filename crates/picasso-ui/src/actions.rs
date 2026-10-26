@@ -884,9 +884,11 @@ impl StudioApp {
             | Act::MulticamViewer
             | Act::SetClipColor(_)
             | Act::NormalizeAudio => self.target_clip().is_some(),
-            Act::MarkTimeline | Act::SelectNearestEdit | Act::ExportEdl | Act::StillToPool => {
-                project.duration() > 0
-            }
+            Act::MarkTimeline
+            | Act::SelectNearestEdit
+            | Act::ExportEdl
+            | Act::ExportOtio
+            | Act::StillToPool => project.duration() > 0,
             Act::PlayAroundMark => project.mark_in.is_some() || project.mark_out.is_some(),
             Act::TimelineFromSelection => !self.selected_ids().is_empty(),
             _ => true,
@@ -1416,6 +1418,7 @@ impl StudioApp {
             Act::SetClipColor(color) => self.set_clip_color(color),
             Act::NormalizeAudio => self.extra.normalize = Some(-9.0),
             Act::ExportEdl => self.export_edl(ctx),
+            Act::ExportOtio => self.export_otio(ctx),
             Act::ImportTimeline => self.open_dialog(ctx),
             Act::ExportSubtitles => self.export_subtitles(ctx),
             Act::CreateSubtitleTrack => {
@@ -1467,10 +1470,11 @@ impl StudioApp {
 
     /// Runs the acts of the keys pressed this frame.
     pub(crate) fn run_shortcuts(&mut self, ctx: &Context) {
-        if ctx.egui_wants_keyboard_input() {
+        // A key being chosen in Keyboard Customization does nothing else.
+        if ctx.egui_wants_keyboard_input() || self.extra.keys.capture.is_some() {
             return;
         }
-        for binding in menu::bindings() {
+        for binding in menu::bindings().iter() {
             if ctx.input_mut(|i| i.consume_shortcut(&binding.shortcut))
                 && self.act_enabled(binding.act)
             {
@@ -1531,7 +1535,7 @@ impl StudioApp {
                 } => {
                     let enabled = act.is_some_and(|a| self.act_enabled(a));
                     let mut button = Button::new(*label);
-                    let text = menu::shown_keys(shown, keys);
+                    let text = menu::display_keys(*act, shown, keys);
                     if !text.is_empty() {
                         button = button.shortcut_text(text);
                     }
@@ -1579,36 +1583,7 @@ impl StudioApp {
                 });
             self.show_about = open;
         }
-        if self.show_shortcuts {
-            let mut open = true;
-            egui::Window::new("Keyboard shortcuts")
-                .open(&mut open)
-                .collapsible(false)
-                .default_width(520.0)
-                .show(ctx, |ui| {
-                    ui.label(
-                        "The keys come from the menus. Planned entries show the key they will get.",
-                    );
-                    egui::ScrollArea::vertical()
-                        .max_height(520.0)
-                        .show(ui, |ui| {
-                            egui::Grid::new("shortcut_list")
-                                .num_columns(3)
-                                .spacing([20.0, 3.0])
-                                .striped(true)
-                                .show(ui, |ui| {
-                                    for (menu, label, keys, built) in menu::listing() {
-                                        ui.label(menu);
-                                        ui.label(label);
-                                        let text = egui::RichText::new(keys).monospace();
-                                        ui.label(if built { text } else { text.weak() });
-                                        ui.end_row();
-                                    }
-                                });
-                        });
-                });
-            self.show_shortcuts = open;
-        }
+        self.keyboard_window(ctx);
         let mut dialog = self.marker_dialog.take();
         if let Some(d) = dialog.as_mut() {
             let mut keep = true;

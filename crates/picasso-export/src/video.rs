@@ -10,9 +10,9 @@ use picasso_core::Project;
 use picasso_render::{render_frame, MediaCache};
 
 use crate::burn::burn_in;
-use crate::yuv::{rgba_to_yuv420p, rgba_to_yuv422p10};
-use crate::{AudioCodec, ExportError, Options, Preset, Rate, Settings};
-use crate::{BurnIn, Levels, PixelAspect};
+use crate::yuv::{rgba_to_yuv, Layout};
+use crate::{BurnIn, Levels, PixelAspect, DNXHR_PROFILES};
+use crate::{ExportError, Hardware, Options, Preset, Quality, Rate, Settings, Speed};
 
 fn enc_err(e: ff::Error) -> ExportError {
     ExportError::Encode(e.to_string())
@@ -21,66 +21,310 @@ fn enc_err(e: ff::Error) -> ExportError {
 /// What a preset asks of the video encoder.
 struct VideoSpec {
     encoder: &'static str,
+    /// The layout the pictures are converted to.
     pixel: Pixel,
+    /// A graphics card's encoder.
+    hardware: bool,
+    /// The encoder takes its pictures from the card's memory (VA-API).
+    vaapi: bool,
     /// Options for the encoder, from the preset and what the Deliver page set.
     options: Vec<(&'static str, String)>,
-    /// A rate in bits a second, when the page asked for one instead of a quality.
+    /// The data rate in bits a second; 0 when a quality decides it (FFmpeg's own default of
+    /// 200 kb/s would hold the encoders back).
+    bit_rate: usize,
+    /// The encoder's quality number, for encoders that take it as `global_quality`.
+    global_quality: Option<i32>,
+    /// `global_quality` is a quality scale (VideoToolbox).
+    qscale: bool,
+    /// Every picture is a key frame (FFV1).
+    intra: bool,
+}
+
+/// The four qualities as numbers of an encoder's own scale, best first.
+fn scale(encoder: &str) -> [i32; 4] {
+    if encoder.ends_with("videotoolbox") {
+        // 1 to 100, higher is better.
+        return [80, 65, 50, 35];
+    }
+    if encoder.contains("av1") {
+        return [20, 28, 35, 42];
+    }
+    if encoder == "libvpx-vp9" {
+        return [15, 24, 31, 38];
+    }
+    if encoder.contains("hevc") || encoder == "libx265" {
+        return [18, 22, 27, 32];
+    }
+    [14, 18, 23, 28]
+}
+
+fn quality_index(q: Quality) -> usize {
+    match q {
+        Quality::Best => 0,
+        Quality::High => 1,
+        Quality::Medium => 2,
+        Quality::Low => 3,
+    }
+}
+
+/// The name of the encoder a preset wants with `hardware`, for messages when it is missing.
+fn wanted(preset: Preset, hardware: Hardware) -> &'static str {
+    let codec = match preset {
+        Preset::H265 => "hevc",
+        Preset::Av1 => "av1",
+        _ => "h264",
+    };
+    match hardware {
+        Hardware::Native => preset.software_encoders().first().copied(),
+        h => h.encoder(codec),
+    }
+    .unwrap_or("video")
+}
+
+fn video_spec(preset: Preset, o: &Options) -> Result<Option<VideoSpec>, ExportError> {
+    if preset.software_encoders().is_empty() {
+        return Ok(None);
+    }
+    let hardware = match preset {
+        Preset::H264Web | Preset::H265 | Preset::Av1 => o.hardware,
+        _ => Hardware::Native,
+    };
+    let encoder = preset
+        .encoder_name(hardware)
+        .ok_or(ExportError::NoEncoder(wanted(preset, hardware)))?;
+    let ten = o.ten_bit && preset.has_ten_bit();
+    // The cards make 10-bit H.265 and AV1, but (but for the newest NVIDIA ones) not H.264.
+    if ten && preset == Preset::H264Web && hardware != Hardware::Native {
+        return Err(ExportError::NoTenBit(encoder));
+    }
+    let quality = match o.rate {
+        Rate::Quality(q) => Some(scale(encoder)[quality_index(q)]),
+        Rate::Bitrate(_) => None,
+    };
+    let bit_rate = match o.rate {
+        Rate::Quality(_) => 0,
+        Rate::Bitrate(kbps) => kbps.max(1) as usize * 1000,
+    };
+    let fast = |faster: &str, balanced: &str, best: &str| {
+        match o.speed {
+            Speed::Faster => faster,
+            Speed::Balanced => balanced,
+            Speed::Best => best,
+        }
+        .to_string()
+    };
+    let h264 = preset == Preset::H264Web;
+    let hevc = preset == Preset::H265;
+    // The H.264 profile asked for, or High 10 / Main 10 for 10 bits.
+    let profile = if ten && h264 {
+        Some("high10")
+    } else if ten && hevc {
+        Some("main10")
+    } else if h264 {
+        o.profile.name()
+    } else {
+        None
+    };
+    let (pixel_8, pixel_10) = if hardware == Hardware::Native {
+        (Pixel::YUV420P, Pixel::YUV420P10LE)
+    } else {
+        // The cards take the colour samples side by side.
+        (Pixel::NV12, Pixel::P010LE)
+    };
+    let mut spec = VideoSpec {
+        encoder,
+        pixel: if ten { pixel_10 } else { pixel_8 },
+        hardware: hardware != Hardware::Native,
+        vaapi: hardware == Hardware::Vaapi,
+        options: Vec::new(),
+        bit_rate,
+        global_quality: None,
+        qscale: false,
+        intra: false,
+    };
+    let opts = &mut spec.options;
+    let quality_as = |name: &'static str, opts: &mut Vec<(&'static str, String)>| {
+        if let Some(q) = quality {
+            opts.push((name, q.to_string()));
+        }
+    };
+    match encoder {
+        "libx264" | "libx265" => {
+            quality_as("crf", opts);
+            opts.push(("preset", o.speed.encoder_preset().to_string()));
+            if encoder == "libx265" {
+                opts.push(("x265-params", "log-level=error".to_string()));
+            }
+            if let Some(p) = profile {
+                opts.push(("profile", p.to_string()));
+            }
+        }
+        "libsvtav1" => {
+            quality_as("crf", opts);
+            opts.push(("preset", fast("10", "8", "5")));
+        }
+        "libaom-av1" => {
+            quality_as("crf", opts);
+            opts.push(("cpu-used", fast("6", "4", "2")));
+            opts.push(("row-mt", "1".to_string()));
+        }
+        "libvpx-vp9" => {
+            quality_as("crf", opts);
+            opts.push(("deadline", "good".to_string()));
+            opts.push(("cpu-used", fast("4", "2", "1")));
+            opts.push(("row-mt", "1".to_string()));
+            if ten {
+                opts.push(("profile", "2".to_string()));
+            }
+        }
+        "prores_ks" => {
+            spec.pixel = Pixel::YUV422P10LE;
+            // 0 is Proxy, 1 LT, 2 ProRes 422 (standard), 3 HQ.
+            opts.push(("profile", o.prores.min(3).to_string()));
+            spec.bit_rate = 0;
+        }
+        "dnxhd" => {
+            let i = usize::from(o.dnxhr).min(DNXHR_PROFILES.len() - 1);
+            let name = DNXHR_PROFILES.get(i).map_or("dnxhr_hq", |p| p.1);
+            spec.pixel = match name {
+                "dnxhr_hqx" => Pixel::YUV422P10LE,
+                "dnxhr_444" => Pixel::YUV444P10LE,
+                _ => Pixel::YUV422P,
+            };
+            opts.push(("profile", name.to_string()));
+            spec.bit_rate = 0;
+        }
+        "ffv1" => {
+            spec.pixel = Pixel::YUV444P10LE;
+            opts.push(("level", "3".to_string()));
+            opts.push(("slicecrc", "1".to_string()));
+            spec.intra = true;
+            spec.bit_rate = 0;
+        }
+        e if e.ends_with("_nvenc") => {
+            opts.push(("preset", fast("p3", "p5", "p7")));
+            opts.push(("tune", "hq".to_string()));
+            opts.push(("rc", "vbr".to_string()));
+            quality_as("cq", opts);
+            if let Some(p) = profile {
+                opts.push(("profile", p.to_string()));
+            }
+        }
+        e if e.ends_with("_qsv") => {
+            opts.push(("preset", fast("veryfast", "medium", "veryslow")));
+            spec.global_quality = quality;
+            if let Some(p) = profile {
+                opts.push(("profile", p.to_string()));
+            }
+        }
+        e if e.ends_with("_amf") => {
+            opts.push(("quality", fast("speed", "balanced", "quality")));
+            if let Some(q) = quality {
+                opts.push(("rc", "cqp".to_string()));
+                for name in ["qp_i", "qp_p", "qp_b"] {
+                    opts.push((name, q.to_string()));
+                }
+            } else {
+                opts.push(("rc", "vbr_peak".to_string()));
+            }
+            // AMF has no High 10; 10-bit H.264 on it is refused by the pixel check instead.
+            match profile {
+                Some("baseline") => opts.push(("profile", "constrained_baseline".to_string())),
+                Some("high10") | None => {}
+                Some(p) => opts.push(("profile", p.to_string())),
+            }
+        }
+        e if e.ends_with("_videotoolbox") => {
+            spec.global_quality = quality;
+            spec.qscale = quality.is_some();
+            if let Some(p) = profile {
+                opts.push(("profile", p.to_string()));
+            }
+        }
+        e if e.ends_with("_vaapi") => {
+            spec.global_quality = quality;
+            opts.push((
+                "rc_mode",
+                if quality.is_some() { "CQP" } else { "VBR" }.to_string(),
+            ));
+            if let Some(p) = profile {
+                let p = if p == "baseline" {
+                    "constrained_baseline"
+                } else {
+                    p
+                };
+                opts.push(("profile", p.to_string()));
+            }
+        }
+        _ => {}
+    }
+    Ok(Some(spec))
+}
+
+/// Whether a graphics card's encoder opens here, tried with a small picture.
+pub(crate) fn opens(name: &str, hardware: Hardware) -> bool {
+    let Some(codec) = encoder::find_by_name(name) else {
+        return false;
+    };
+    let Ok(mut enc) = codec::context::Context::new_with_codec(codec)
+        .encoder()
+        .video()
+    else {
+        return false;
+    };
+    let (width, height) = (640, 360);
+    enc.set_width(width);
+    enc.set_height(height);
+    enc.set_time_base(Rational(1, 30));
+    enc.set_frame_rate(Some(Rational(30, 1)));
+    let _frames = if hardware == Hardware::Vaapi {
+        let Ok(frames) = picasso_decode::hw::VaapiFrames::new(width, height, Pixel::NV12) else {
+            return false;
+        };
+        enc.set_format(Pixel::VAAPI);
+        frames.attach(&mut enc);
+        Some(frames)
+    } else {
+        enc.set_format(Pixel::NV12);
+        None
+    };
+    enc.open_with(Dictionary::new()).is_ok()
+}
+
+/// The sound encoder of a file and how it takes its samples.
+struct AudioSpec {
+    encoder: &'static str,
+    /// 32-bit float, a plane a channel (AAC, MP3); otherwise 16-bit, interleaved.
+    planar: bool,
+    /// The data rate in bits a second, for the encoders that have one.
     bit_rate: Option<usize>,
 }
 
-fn video_spec(preset: Preset, o: &Options) -> Option<VideoSpec> {
-    let rate = |h265: bool| match o.rate {
-        Rate::Quality(q) => (vec![("crf", q.crf(h265).to_string())], None),
-        Rate::Bitrate(kbps) => (Vec::new(), Some(kbps.max(1) as usize * 1000)),
-    };
-    match preset {
-        Preset::H264Web => {
-            let (mut options, bit_rate) = rate(false);
-            options.push(("preset", o.speed.encoder_preset().to_string()));
-            if let Some(profile) = o.profile.name() {
-                options.push(("profile", profile.to_string()));
-            }
-            Some(VideoSpec {
-                encoder: "libx264",
-                pixel: Pixel::YUV420P,
-                options,
-                bit_rate,
-            })
-        }
-        Preset::H265 => {
-            let (mut options, bit_rate) = rate(true);
-            options.push(("preset", o.speed.encoder_preset().to_string()));
-            options.push(("x265-params", "log-level=error".to_string()));
-            Some(VideoSpec {
-                encoder: "libx265",
-                pixel: Pixel::YUV420P,
-                options,
-                bit_rate,
-            })
-        }
-        Preset::ProRes422 => Some(VideoSpec {
-            encoder: "prores_ks",
-            pixel: Pixel::YUV422P10LE,
-            // 0 is Proxy, 1 LT, 2 ProRes 422 (standard), 3 HQ.
-            options: vec![("profile", o.prores.min(3).to_string())],
+fn audio_spec(preset: Preset, o: &Options) -> Option<AudioSpec> {
+    let encoder = preset.audio_encoder(o.audio_codec)?;
+    let kbps = |lo: u32, hi: u32| Some(o.audio_kbps.clamp(lo, hi) as usize * 1000);
+    Some(match encoder {
+        "aac" => AudioSpec {
+            encoder,
+            planar: true,
+            bit_rate: kbps(32, 640),
+        },
+        "libmp3lame" => AudioSpec {
+            encoder,
+            planar: true,
+            bit_rate: kbps(32, 320),
+        },
+        "libopus" => AudioSpec {
+            encoder,
+            planar: false,
+            bit_rate: kbps(6, 510),
+        },
+        _ => AudioSpec {
+            encoder,
+            planar: false,
             bit_rate: None,
-        }),
-        Preset::Wav | Preset::PngSequence => None,
-    }
-}
-
-/// The sound encoder of a video file: AAC, or 16-bit PCM in a QuickTime file when asked.
-fn audio_encoder_name(preset: Preset, o: &Options) -> &'static str {
-    let pcm = match o.audio_codec {
-        AudioCodec::Auto => preset == Preset::ProRes422,
-        AudioCodec::Pcm => preset == Preset::ProRes422,
-        AudioCodec::Aac => false,
-    };
-    if pcm {
-        "pcm_s16le"
-    } else {
-        "aac"
-    }
+        },
+    })
 }
 
 /// An open sound encoder and the samples waiting for it, as it wants them in blocks.
@@ -134,6 +378,11 @@ impl AudioOut {
     fn drain(&mut self, octx: &mut format::context::Output) -> Result<(), ExportError> {
         let mut packet = Packet::empty();
         while self.enc.receive_packet(&mut packet).is_ok() {
+            // FLAC ends with an empty packet that only updates its header (the checksum), which
+            // Matroska refuses; the header written at the start stands.
+            if packet.size() == 0 {
+                continue;
+            }
             packet.set_stream(self.stream);
             packet.rescale_ts(Rational(1, SAMPLE_RATE as i32), self.stream_time_base);
             packet.write_interleaved(octx).map_err(enc_err)?;
@@ -172,17 +421,18 @@ pub(crate) fn encode(
 ) -> Result<(), ExportError> {
     let preset = settings.preset;
     let o = &settings.options;
-    let spec = video_spec(preset, o).ok_or(ExportError::Empty)?;
+    let spec = video_spec(preset, o)?;
     let sound_plan: AudioPlan = plan(project);
-    let want_video = o.video;
+    let want_video = o.video && spec.is_some();
     let want_audio = o.audio && !sound_plan.clips.is_empty();
     if !want_video && !want_audio {
         return Err(ExportError::Empty);
     }
     let (width, height) = o.picture_size(project);
     let fps = o.frame_rate(project);
-    // ProRes is always at video levels; the others follow the page.
-    let full_range = o.levels == Levels::Full && preset != Preset::ProRes422;
+    // ProRes and DNxHR are always at video levels; the others follow the page.
+    let full_range =
+        o.levels == Levels::Full && !matches!(preset, Preset::ProRes422 | Preset::DnxHr);
     let time_base = Rational(fps.den as i32, fps.num as i32);
 
     let mut octx = format::output(&settings.path)
@@ -192,9 +442,31 @@ pub(crate) fn encode(
     // ---- video
     let mut video_index = 0;
     let mut venc: Option<encoder::Video> = None;
-    if want_video {
+    let mut vaapi: Option<picasso_decode::hw::VaapiFrames> = None;
+    let mut layout = None;
+    if let (true, Some(spec)) = (want_video, spec.as_ref()) {
         let codec =
             encoder::find_by_name(spec.encoder).ok_or(ExportError::NoEncoder(spec.encoder))?;
+        // A 10-bit picture needs an encoder built for it (x264 is built for one depth).
+        let takes = |p: Pixel| {
+            codec
+                .video()
+                .ok()
+                .and_then(|v| v.formats().map(|mut f| f.any(|x| x == p)))
+                .unwrap_or(true)
+        };
+        let fed = if spec.vaapi { Pixel::VAAPI } else { spec.pixel };
+        if !takes(fed) {
+            return Err(if o.ten_bit {
+                ExportError::NoTenBit(spec.encoder)
+            } else {
+                ExportError::NoEncoder(spec.encoder)
+            });
+        }
+        layout = Some(
+            Layout::of(spec.pixel)
+                .ok_or_else(|| ExportError::Encode(format!("{:?} pictures", spec.pixel)))?,
+        );
         let mut stream = octx.add_stream(codec).map_err(enc_err)?;
         video_index = stream.index();
         let mut enc = codec::context::Context::new_with_codec(codec)
@@ -203,15 +475,22 @@ pub(crate) fn encode(
             .map_err(enc_err)?;
         enc.set_width(width);
         enc.set_height(height);
-        enc.set_format(spec.pixel);
+        enc.set_format(fed);
         enc.set_time_base(time_base);
         enc.set_frame_rate(Some(Rational(fps.num as i32, fps.den as i32)));
-        enc.set_gop(o.keyframes.unwrap_or(fps.nominal() as u32 * 2).max(1));
+        let gop = if spec.intra {
+            1
+        } else {
+            o.keyframes.unwrap_or(fps.nominal() as u32 * 2)
+        };
+        enc.set_gop(gop.max(1));
         if !o.frame_reordering || o.profile == crate::Profile::Baseline {
             enc.set_max_b_frames(0);
         }
-        if let Some(rate) = spec.bit_rate {
-            enc.set_bit_rate(rate);
+        enc.set_bit_rate(spec.bit_rate);
+        if let Some(q) = spec.global_quality {
+            // A quality scale counts in FFmpeg's lambda units.
+            enc.set_global_quality(if spec.qscale { q * 118 } else { q });
         }
         enc.set_colorspace(color::Space::BT709);
         enc.set_color_range(if full_range {
@@ -222,8 +501,24 @@ pub(crate) fn encode(
         if o.pixel_aspect == PixelAspect::Cinemascope {
             enc.set_aspect_ratio(Rational(2, 1));
         }
+        let mut flags = codec::Flags::empty();
         if global_header {
-            enc.set_flags(codec::Flags::GLOBAL_HEADER);
+            flags |= codec::Flags::GLOBAL_HEADER;
+        }
+        if spec.qscale {
+            flags |= codec::Flags::QSCALE;
+        }
+        enc.set_flags(flags);
+        if spec.vaapi {
+            let frames =
+                picasso_decode::hw::VaapiFrames::new(width, height, spec.pixel).map_err(|why| {
+                    ExportError::Hardware {
+                        encoder: spec.encoder,
+                        why,
+                    }
+                })?;
+            frames.attach(&mut enc);
+            vaapi = Some(frames);
         }
         let mut options = Dictionary::new();
         for (k, v) in &spec.options {
@@ -232,15 +527,24 @@ pub(crate) fn encode(
         // What the file says about its colours; the pictures themselves are not changed.
         options.set("color_primaries", o.color_primaries.unwrap_or("bt709"));
         options.set("color_trc", o.color_trc.unwrap_or("bt709"));
-        let opened = enc.open_with(options).map_err(enc_err)?;
+        let opened = enc.open_with(options).map_err(|e| {
+            if spec.hardware {
+                ExportError::Hardware {
+                    encoder: spec.encoder,
+                    why: e.to_string(),
+                }
+            } else {
+                enc_err(e)
+            }
+        })?;
         stream.set_parameters(&opened);
         venc = Some(opened);
     }
 
     // ---- sound, when anything makes a sound
     let mut audio: Option<AudioOut> = None;
-    if want_audio {
-        let name = audio_encoder_name(preset, o);
+    if let (true, Some(sound)) = (want_audio, audio_spec(preset, o)) {
+        let name = sound.encoder;
         let acodec = encoder::find_by_name(name).ok_or(ExportError::NoEncoder(name))?;
         let mut astream = octx.add_stream(acodec).map_err(enc_err)?;
         let stream_index = astream.index();
@@ -248,7 +552,7 @@ pub(crate) fn encode(
             .encoder()
             .audio()
             .map_err(enc_err)?;
-        let planar = name == "aac";
+        let planar = sound.planar;
         a.set_rate(SAMPLE_RATE as i32);
         a.set_channel_layout(ChannelLayout::STEREO);
         a.set_format(if planar {
@@ -256,8 +560,8 @@ pub(crate) fn encode(
         } else {
             Sample::I16(Type::Packed)
         });
-        if planar {
-            a.set_bit_rate(o.audio_kbps.clamp(32, 640) as usize * 1000);
+        if let Some(rate) = sound.bit_rate {
+            a.set_bit_rate(rate);
         }
         a.set_time_base(Rational(1, SAMPLE_RATE as i32));
         if global_header {
@@ -308,8 +612,11 @@ pub(crate) fn encode(
             .map_err(enc_err)?;
         }
     }
+    if venc.is_none() && audio.is_none() {
+        return Err(ExportError::Empty);
+    }
     let mut header_options = Dictionary::new();
-    if o.faststart {
+    if o.faststart && matches!(preset.extension(), "mp4" | "mov") {
         // Put the index at the front so the file can start playing while it downloads.
         header_options.set("movflags", "+faststart");
     }
@@ -332,13 +639,19 @@ pub(crate) fn encode(
     let audio_origin = frames_to_samples(project, settings.start);
     let audio_length = frames_to_samples(project, settings.end) - audio_origin;
     let mut audio_done = 0u64; // samples mixed so far
-    let mut vframe = frame::Video::new(spec.pixel, width, height);
+    let pixel = spec.as_ref().map_or(Pixel::YUV420P, |s| s.pixel);
+    let mut vframe = frame::Video::new(pixel, width, height);
     vframe.set_color_space(color::Space::BT709);
     vframe.set_color_range(if full_range {
         color::Range::JPEG
     } else {
         color::Range::MPEG
     });
+    // The planes are separate buffers of the frame; they are filled here, then copied in.
+    let strides: Vec<usize> = (0..vframe.planes()).map(|i| vframe.stride(i)).collect();
+    let mut planes: Vec<Vec<u8>> = (0..vframe.planes())
+        .map(|i| vec![0u8; vframe.data(i).len()])
+        .collect();
     let mut packet = Packet::empty();
     for n in 0..total {
         let timeline_frame = o.timeline_frame(project, settings.start, settings.end, n);
@@ -366,41 +679,29 @@ pub(crate) fn encode(
                     name,
                 );
             }
-            let strides = [vframe.stride(0), vframe.stride(1), vframe.stride(2)];
-            {
-                // The planes are separate buffers; take them one after the other.
-                let mut y = vec![0u8; strides[0] * height as usize];
-                let rows_c = if spec.pixel == Pixel::YUV420P {
-                    height as usize / 2
-                } else {
-                    height as usize
-                };
-                let mut u = vec![0u8; strides[1] * rows_c];
-                let mut v = vec![0u8; strides[2] * rows_c];
-                let size = (width as usize, height as usize);
-                if spec.pixel == Pixel::YUV420P {
-                    rgba_to_yuv420p(
-                        &picture.rgba,
-                        size,
-                        [&mut y, &mut u, &mut v],
-                        strides,
-                        full_range,
-                    );
-                } else {
-                    rgba_to_yuv422p10(
-                        &picture.rgba,
-                        size,
-                        [&mut y, &mut u, &mut v],
-                        strides,
-                        false,
-                    );
-                }
-                vframe.data_mut(0).copy_from_slice(&y);
-                vframe.data_mut(1).copy_from_slice(&u);
-                vframe.data_mut(2).copy_from_slice(&v);
+            if let Some(layout) = layout {
+                let mut slices: Vec<&mut [u8]> = planes.iter_mut().map(Vec::as_mut_slice).collect();
+                rgba_to_yuv(
+                    &picture.rgba,
+                    (width as usize, height as usize),
+                    layout,
+                    &mut slices,
+                    &strides,
+                    full_range,
+                );
+            }
+            for (i, plane) in planes.iter().enumerate() {
+                vframe.data_mut(i).copy_from_slice(plane);
             }
             vframe.set_pts(Some(n as i64));
-            venc.send_frame(&vframe).map_err(enc_err)?;
+            match &vaapi {
+                Some(frames) => {
+                    let on_card = frames.upload(&vframe).map_err(enc_err)?;
+                    venc.send_frame(&on_card)
+                }
+                None => venc.send_frame(&vframe),
+            }
+            .map_err(enc_err)?;
             while venc.receive_packet(&mut packet).is_ok() {
                 packet.set_stream(video_index);
                 packet.rescale_ts(time_base, video_stream_tb);

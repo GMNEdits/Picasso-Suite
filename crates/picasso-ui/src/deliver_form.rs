@@ -38,7 +38,9 @@ mod native {
         pos2, vec2, Align2, Color32, Context, Painter, Rect, Response, Sense, Stroke, StrokeKind,
         Ui, UiBuilder,
     };
-    use picasso_export::{AudioCodec, Preset, Profile, Quality, Rate, Speed};
+    use picasso_export::{
+        AudioCodec, Hardware, Preset, Profile, Quality, Rate, Speed, DNXHR_PROFILES,
+    };
 
     use crate::app::StudioApp;
     use crate::chrome::Screen;
@@ -57,10 +59,13 @@ mod native {
     const OFF: Color32 = Color32::from_rgb(86, 86, 92);
 
     /// The formats and the presets (codecs) each holds.
-    const FORMATS: [(&str, &[Preset]); 4] = [
-        ("MP4", &[Preset::H264Web, Preset::H265]),
-        ("QuickTime", &[Preset::ProRes422]),
+    const FORMATS: [(&str, &[Preset]); 7] = [
+        ("MP4", &[Preset::H264Web, Preset::H265, Preset::Av1]),
+        ("QuickTime", &[Preset::ProRes422, Preset::DnxHr]),
+        ("WebM", &[Preset::Vp9]),
+        ("Matroska", &[Preset::Ffv1]),
         ("WAV", &[Preset::Wav]),
+        ("MP3", &[Preset::Mp3]),
         ("Image Sequence", &[Preset::PngSequence]),
     ];
 
@@ -68,10 +73,20 @@ mod native {
         match p {
             Preset::H264Web => "H.264",
             Preset::H265 => "H.265",
+            Preset::Av1 => "AV1",
+            Preset::Vp9 => "VP9",
             Preset::ProRes422 => "Apple ProRes",
+            Preset::DnxHr => "DNxHR",
+            Preset::Ffv1 => "FFV1",
             Preset::Wav => "Linear PCM",
+            Preset::Mp3 => "MP3",
             Preset::PngSequence => "PNG",
         }
+    }
+
+    /// Whether a preset makes a video file (not sound only, not a folder of pictures).
+    fn video_file(preset: Preset) -> bool {
+        !matches!(preset, Preset::Wav | Preset::Mp3 | Preset::PngSequence)
     }
 
     fn enabled_text(on: bool) -> Color32 {
@@ -633,8 +648,8 @@ mod native {
         fn form_video(&mut self, ui: &mut Ui, row: &mut dyn FnMut(&mut Ui, f32) -> Rect) {
             let p = ui.painter().clone();
             let preset = self.deliver.preset;
-            let is_video_preset = !matches!(preset, Preset::Wav);
-            let is_file = matches!(preset, Preset::H264Web | Preset::H265 | Preset::ProRes422);
+            let is_video_preset = !preset.is_audio_only();
+            let is_file = video_file(preset);
 
             let r = row(ui, 52.0);
             if let Some(v) = check(
@@ -695,26 +710,55 @@ mod native {
                     self.deliver.preset = *p;
                 }
             }
+            // The processor's encoder or a graphics card's: the ones this FFmpeg has, those that did
+            // not open on this computer greyed out.
             let r = row(ui, 44.0);
-            let _ = combo(
+            let choices = preset.hardware_choices();
+            // A codec without a card's encoder (ProRes ...) shows Native but keeps the choice
+            // for when an H.264, H.265 or AV1 codec is chosen again.
+            let hardware = if choices.contains(&self.deliver.options.hardware) {
+                self.deliver.options.hardware
+            } else {
+                if choices.len() > 1 {
+                    self.deliver.options.hardware = Hardware::Native;
+                }
+                Hardware::Native
+            };
+            let list: Vec<(String, bool)> = choices
+                .iter()
+                .map(|h| {
+                    let works = picasso_export::hardware_works(preset, *h) != Some(false);
+                    (h.label().to_string(), works)
+                })
+                .collect();
+            if let Some(i) = combo(
                 ui,
                 r,
                 "encoder",
                 "Encoder",
-                "Auto",
-                &[("Auto".to_string(), true)],
+                hardware.label(),
+                &list,
                 WIDE,
-                is_file,
-            );
+                is_file && choices.len() > 1,
+            ) {
+                if let Some(h) = choices.get(i) {
+                    self.deliver.options.hardware = *h;
+                    // The cards make no 10-bit H.264.
+                    if *h != Hardware::Native && preset == Preset::H264Web {
+                        self.deliver.options.ten_bit = false;
+                    }
+                }
+            }
             let r = row(ui, 44.0);
+            let mp4 = matches!(preset.extension(), "mp4" | "mov");
             if let Some(v) = check(
                 ui,
                 r,
                 "network",
                 CONTROL_LEFT - 8.0,
                 "Network Optimization",
-                self.deliver.options.faststart,
-                is_file,
+                self.deliver.options.faststart && mp4,
+                is_file && mp4,
             ) {
                 self.deliver.options.faststart = v;
             }
@@ -839,49 +883,81 @@ mod native {
             rule(&p, r);
 
             // The encoder's settings.
-            let h264 = preset == Preset::H264Web;
-            let prores = preset == Preset::ProRes422;
-            let encodes = h264 || preset == Preset::H265;
+            let encodes = matches!(
+                preset,
+                Preset::H264Web | Preset::H265 | Preset::Av1 | Preset::Vp9
+            );
+            let on_card = self.deliver.options.hardware != Hardware::Native;
+            let ten = self.deliver.options.ten_bit;
             let r = row(ui, 44.0);
-            let (profiles, current): (Vec<(String, bool)>, usize) = if prores {
-                (
-                    [
-                        "ProRes 422 Proxy",
-                        "ProRes 422 LT",
-                        "ProRes 422",
-                        "ProRes 422 HQ",
-                    ]
+            // The profiles of the codec; for H.264, H.265, AV1 and VP9 the last is the 10-bit one.
+            let profiles: Vec<(String, bool)> = match preset {
+                Preset::ProRes422 => [
+                    "ProRes 422 Proxy",
+                    "ProRes 422 LT",
+                    "ProRes 422",
+                    "ProRes 422 HQ",
+                ]
+                .iter()
+                .map(|n| (n.to_string(), true))
+                .collect(),
+                Preset::DnxHr => DNXHR_PROFILES
                     .iter()
-                    .map(|n| (n.to_string(), true))
+                    .map(|(n, _)| (n.to_string(), true))
                     .collect(),
-                    usize::from(self.deliver.options.prores.min(3)),
-                )
-            } else {
-                (
-                    Profile::ALL
-                        .iter()
-                        .map(|p| (p.label().to_string(), h264 || *p == Profile::Auto))
-                        .collect(),
-                    Profile::ALL
-                        .iter()
-                        .position(|p| *p == self.deliver.options.profile)
-                        .unwrap_or(0),
-                )
+                Preset::H264Web => Profile::ALL
+                    .iter()
+                    .map(|p| (p.label().to_string(), true))
+                    .chain([("High 10".to_string(), !on_card)])
+                    .collect(),
+                Preset::H265 => vec![("Main".into(), true), ("Main 10".into(), true)],
+                Preset::Av1 => vec![("Main, 8-bit".into(), true), ("Main, 10-bit".into(), true)],
+                Preset::Vp9 => vec![
+                    ("Profile 0, 8-bit".into(), true),
+                    ("Profile 2, 10-bit".into(), true),
+                ],
+                Preset::Ffv1 => vec![("Level 3, 10-bit 4:4:4".into(), true)],
+                _ => vec![("Auto".into(), true)],
             };
+            let current = match preset {
+                Preset::ProRes422 => usize::from(self.deliver.options.prores),
+                Preset::DnxHr => usize::from(self.deliver.options.dnxhr),
+                Preset::H264Web if ten => Profile::ALL.len(),
+                Preset::H264Web => Profile::ALL
+                    .iter()
+                    .position(|p| *p == self.deliver.options.profile)
+                    .unwrap_or(0),
+                Preset::H265 | Preset::Av1 | Preset::Vp9 => usize::from(ten),
+                _ => 0,
+            }
+            .min(profiles.len().saturating_sub(1));
+            let shown = profiles.get(current).map_or("Auto", |(n, _)| n.as_str());
             if let Some(i) = combo(
                 ui,
                 r,
                 "profile",
                 "Encoding Profile",
-                &profiles[current].0,
+                shown,
                 &profiles,
-                188.0,
-                is_file && (prores || h264),
+                240.0,
+                is_file && profiles.len() > 1,
             ) {
-                if prores {
-                    self.deliver.options.prores = i as u8;
-                } else if let Some(pr) = Profile::ALL.get(i) {
-                    self.deliver.options.profile = *pr;
+                let o = &mut self.deliver.options;
+                match preset {
+                    Preset::ProRes422 => o.prores = i as u8,
+                    Preset::DnxHr => o.dnxhr = i as u8,
+                    Preset::H264Web => match Profile::ALL.get(i) {
+                        Some(pr) => {
+                            o.profile = *pr;
+                            o.ten_bit = false;
+                        }
+                        None => {
+                            o.profile = Profile::Auto;
+                            o.ten_bit = true;
+                        }
+                    },
+                    Preset::H265 | Preset::Av1 | Preset::Vp9 => o.ten_bit = i == 1,
+                    _ => {}
                 }
             }
             // Key frames.
@@ -1038,11 +1114,8 @@ mod native {
         fn form_advanced(&mut self, ui: &mut Ui, row: &mut dyn FnMut(&mut Ui, f32) -> Rect) {
             let p = ui.painter().clone();
             let x = CONTROL_LEFT - 8.0;
-            let video = !matches!(self.deliver.preset, Preset::Wav);
-            let is_file = matches!(
-                self.deliver.preset,
-                Preset::H264Web | Preset::H265 | Preset::ProRes422
-            );
+            let video = !self.deliver.preset.is_audio_only();
+            let is_file = video_file(self.deliver.preset);
             let on = video && is_file;
             row(ui, 6.0);
             // The shape of a pixel.
@@ -1425,7 +1498,6 @@ mod native {
             let p = ui.painter().clone();
             let preset = self.deliver.preset;
             let has_sound = !matches!(preset, Preset::PngSequence);
-            let file = matches!(preset, Preset::H264Web | Preset::H265 | Preset::ProRes422);
             let r = row(ui, 52.0);
             if let Some(v) = check(
                 ui,
@@ -1441,40 +1513,41 @@ mod native {
             let r = row(ui, 12.0);
             rule(&p, r);
             let on = has_sound && self.deliver.options.audio;
-            // The codec: AAC, and linear PCM in a QuickTime file.
+            // The codec: each file type has its own, and a QuickTime file AAC or linear PCM.
             let r = row(ui, 44.0);
-            let pcm_ok = preset == Preset::ProRes422;
-            let codec = self.deliver.options.audio_codec;
-            let pcm_now = match codec {
-                AudioCodec::Pcm => pcm_ok,
-                AudioCodec::Auto => pcm_ok,
-                AudioCodec::Aac => false,
+            let mov = matches!(preset, Preset::ProRes422 | Preset::DnxHr);
+            let pcm_now = mov && self.deliver.options.audio_codec != AudioCodec::Aac;
+            let shown = match preset {
+                Preset::Wav => "Linear PCM",
+                Preset::Mp3 => "MP3",
+                Preset::Vp9 => "Opus",
+                Preset::Ffv1 => "FLAC",
+                _ if pcm_now => "Linear PCM",
+                _ => "AAC",
             };
-            let shown = if preset == Preset::Wav || pcm_now {
-                "Linear PCM"
+            let list: Vec<(String, bool)> = if mov {
+                vec![("AAC".to_string(), true), ("Linear PCM".to_string(), true)]
             } else {
-                "AAC"
+                vec![(shown.to_string(), true)]
             };
-            let list = vec![
-                ("AAC".to_string(), true),
-                ("Linear PCM".to_string(), pcm_ok),
-            ];
-            if let Some(i) = combo(ui, r, "acodec", "Codec", shown, &list, WIDE, on && file) {
+            if let Some(i) = combo(ui, r, "acodec", "Codec", shown, &list, WIDE, on && mov) {
                 self.deliver.options.audio_codec = if i == 0 {
                     AudioCodec::Aac
                 } else {
                     AudioCodec::Pcm
                 };
             }
-            // The data rate of AAC.
+            // The data rate of the codecs that have one.
             let r = row(ui, 44.0);
             let rates = [128u32, 192, 256, 320];
             let list: Vec<(String, bool)> =
                 rates.iter().map(|k| (format!("{k} kbps"), true)).collect();
             let current = format!("{} kbps", self.deliver.options.audio_kbps);
-            let aac = on && file && !pcm_now;
-            if let Some(i) = combo(ui, r, "arate", "Data Rate", &current, &list, WIDE, aac) {
-                self.deliver.options.audio_kbps = rates[i];
+            let has_rate = on && matches!(shown, "AAC" | "Opus" | "MP3");
+            if let Some(i) = combo(ui, r, "arate", "Data Rate", &current, &list, WIDE, has_rate) {
+                if let Some(k) = rates.get(i) {
+                    self.deliver.options.audio_kbps = *k;
+                }
             }
             let r = row(ui, 44.0);
             label(&p, r, "Output Track 1", on);

@@ -545,9 +545,24 @@ pub(crate) mod native {
             let scale = f64::from(w) * f64::from(h) / (1920.0 * 1080.0);
             let speed = fps.as_f64() / 24.0;
             let video_mbps = match (self.deliver.preset, o.rate) {
-                (Preset::H264Web | Preset::H265, picasso_export::Rate::Bitrate(kbps)) => {
-                    f64::from(kbps) / 1000.0
+                (
+                    Preset::H264Web | Preset::H265 | Preset::Av1 | Preset::Vp9,
+                    picasso_export::Rate::Bitrate(kbps),
+                ) => f64::from(kbps) / 1000.0,
+                (Preset::Av1, picasso_export::Rate::Quality(q)) => {
+                    scale * speed * super::quality_mbps(q) * 0.5
                 }
+                (Preset::Vp9, picasso_export::Rate::Quality(q)) => {
+                    scale * speed * super::quality_mbps(q) * 0.65
+                }
+                // Avid's rates at 1080p, 24 frames a second.
+                (Preset::DnxHr, _) => {
+                    let rates = [36.0, 116.0, 176.0, 176.0, 352.0];
+                    scale * speed * rates[usize::from(o.dnxhr).min(rates.len() - 1)]
+                }
+                // Lossless: about a third of the raw 10-bit picture.
+                (Preset::Ffv1, _) => scale * speed * 450.0,
+                (Preset::Mp3, _) => 0.0,
                 (Preset::H264Web, picasso_export::Rate::Quality(q)) => {
                     scale * speed * super::quality_mbps(q)
                 }
@@ -565,10 +580,13 @@ pub(crate) mod native {
                 0.0
             } else if self.deliver.preset == Preset::Wav {
                 48_000.0 * 24.0 * 2.0 / 1.0e6
-            } else if self.deliver.preset == Preset::ProRes422
+            } else if matches!(self.deliver.preset, Preset::ProRes422 | Preset::DnxHr)
                 && o.audio_codec != picasso_export::AudioCodec::Aac
             {
                 48_000.0 * 16.0 * 2.0 / 1.0e6
+            } else if self.deliver.preset == Preset::Ffv1 {
+                // FLAC: about 60 % of 16-bit PCM.
+                48_000.0 * 16.0 * 2.0 * 0.6 / 1.0e6
             } else {
                 f64::from(o.audio_kbps) / 1000.0
             };

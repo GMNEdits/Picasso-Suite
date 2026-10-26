@@ -287,6 +287,10 @@ mod native {
             if exact(&shared.lock(), media, time_us, reduce).is_some() {
                 continue;
             }
+            // Hardware decoding was turned on or off: open the file again the new way.
+            if decoder.as_ref().is_some_and(VideoDecoder::is_stale) {
+                decoder = None;
+            }
             if decoder.is_none() {
                 match VideoDecoder::open(Path::new(&path)) {
                     Ok(d) => decoder = Some(d),

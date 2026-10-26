@@ -14,6 +14,7 @@ pub mod edl;
 pub mod error;
 pub mod keyframe;
 pub mod multicam;
+pub mod otio;
 pub mod project;
 pub mod session;
 pub mod time;

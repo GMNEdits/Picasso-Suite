@@ -2,8 +2,9 @@
 //! build has no FFmpeg. Times are whole microseconds (`i64`), never floating-point seconds.
 
 pub mod audio;
+pub mod hw;
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::Once;
 
 use ff::format::{context::Input, Pixel};
@@ -259,6 +260,11 @@ pub fn probe(path: &Path) -> Result<MediaInfo, DecodeError> {
 
 /// Decodes the pictures of one file, on request.
 pub struct VideoDecoder {
+    path: PathBuf,
+    /// The pictures come from the graphics card ([`hw`]).
+    on_card: bool,
+    /// Whether hardware decoding was asked for when the file was opened.
+    asked: bool,
     input: Input,
     stream: usize,
     decoder: ff::decoder::Video,
@@ -274,7 +280,13 @@ pub struct VideoDecoder {
 }
 
 impl VideoDecoder {
+    /// Opens the video of a file, decoding it on the graphics card when System Preferences says
+    /// so and the card can.
     pub fn open(path: &Path) -> Result<Self, DecodeError> {
+        Self::open_with(path, hw::hardware_decoding())
+    }
+
+    fn open_with(path: &Path, hardware: bool) -> Result<Self, DecodeError> {
         let input = open(path)?;
         let (stream, params, time_base) = {
             let s = input
@@ -284,13 +296,18 @@ impl VideoDecoder {
             (s.index(), s.parameters(), s.time_base())
         };
         let mut context = ff::codec::context::Context::from_parameters(params)?;
-        // Decode on every core: pictures of a 1080p or 4K file do not arrive in time on one.
+        let on_card = hardware && hw::attach(&mut context);
+        // Decode on every core: pictures of a 1080p or 4K file do not arrive in time on one. The
+        // card needs no threads, and each would hold more of its memory.
         context.set_threading(ff::threading::Config {
             kind: ff::threading::Type::Frame,
-            count: 0,
+            count: if on_card { 1 } else { 0 },
         });
         let decoder = context.decoder().video()?;
         Ok(Self {
+            path: path.to_path_buf(),
+            on_card,
+            asked: hardware,
             input,
             stream,
             decoder,
@@ -370,7 +387,32 @@ impl VideoDecoder {
     /// times smaller on each side (1 is the whole picture). Asking for times that move forward a
     /// little each time decodes on from where it was; anything else seeks to the key frame before
     /// the time.
+    ///
+    /// If the graphics card fails, the file is opened again and decoded on the processor.
     pub fn frame_at_reduced(&mut self, pts_us: i64, reduce: u32) -> Result<Frame, DecodeError> {
+        match self.read(pts_us, reduce) {
+            Err(e) if self.on_card => {
+                tracing::warn!(
+                    "hardware decoding of {} failed ({e}); decoding on the processor",
+                    self.path.display()
+                );
+                let asked = self.asked;
+                *self = Self::open_with(&self.path.clone(), false)?;
+                // Still counts as opened with the setting on, so it is not opened again for it.
+                self.asked = asked;
+                self.read(pts_us, reduce)
+            }
+            other => other,
+        }
+    }
+
+    /// Whether System Preferences turned hardware decoding on or off since the file was opened,
+    /// so it should be opened again.
+    pub fn is_stale(&self) -> bool {
+        self.asked != hw::hardware_decoding()
+    }
+
+    fn read(&mut self, pts_us: i64, reduce: u32) -> Result<Frame, DecodeError> {
         let target = pts_us.max(0);
         let continuing = self
             .best
@@ -417,10 +459,16 @@ impl VideoDecoder {
             while self.decoder.receive_frame(&mut decoded).is_ok() {
                 got = true;
                 let t = self.to_us(decoded.pts().unwrap_or(0));
-                if t <= target {
-                    self.best = Some((decoded.clone(), t));
+                // Pictures on the card are copied out at once: the card has few of them.
+                let picture = if hw::on_card(&decoded) {
+                    hw::download(&decoded)?
                 } else {
-                    self.ahead = Some((decoded.clone(), t));
+                    decoded.clone()
+                };
+                if t <= target {
+                    self.best = Some((picture, t));
+                } else {
+                    self.ahead = Some((picture, t));
                     done = true;
                     break;
                 }
@@ -503,6 +551,37 @@ mod tests {
         assert_eq!((small.width, small.height), (80, 45));
         assert_eq!(small.rgba.len(), 80 * 45 * 4);
         assert_eq!(small.pts_us, frame.pts_us);
+        let _ = std::fs::remove_file(path);
+        Ok(())
+    }
+
+    #[test]
+    fn the_card_and_the_processor_give_the_same_pictures() -> Result<(), String> {
+        let Some(path) = test_clip("picasso_decode_hw.mp4") else {
+            return Ok(());
+        };
+        let mut card = VideoDecoder::open_with(&path, true).map_err(|e| e.to_string())?;
+        let mut cpu = VideoDecoder::open_with(&path, false).map_err(|e| e.to_string())?;
+        assert!(!cpu.on_card);
+        for t in [0, 500_000, 1_000_000, 1_958_333] {
+            let a = card.frame_at(t).map_err(|e| e.to_string())?;
+            let b = cpu.frame_at(t).map_err(|e| e.to_string())?;
+            assert_eq!((a.width, a.height, a.pts_us), (b.width, b.height, b.pts_us));
+            // The card hands over NV12 rather than planar YUV, so colour edges round a little
+            // differently (about one level in 255 on average); a wrong picture is far off.
+            let total: u64 = a
+                .rgba
+                .iter()
+                .zip(&b.rgba)
+                .map(|(x, y)| u64::from(x.abs_diff(*y)))
+                .sum();
+            let mean = total as f64 / a.rgba.len() as f64;
+            assert!(
+                mean < 3.0,
+                "{mean} levels apart at {t} (card: {})",
+                card.on_card
+            );
+        }
         let _ = std::fs::remove_file(path);
         Ok(())
     }

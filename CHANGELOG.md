@@ -12,6 +12,13 @@ Fairlight and Deliver), with FFmpeg included in every package.
 - ✅ **Curves are saved** with each node, and a whole drag is one undo step
 - ✅ **Check for Updates:** Help > Check for Updates finds the latest release and installs it on Windows, macOS, Flatpak, .deb and .rpm
 - ✅ **Safe Windows updates:** if an update fails partway, your version is restored
+- ✅ **More codecs on the Deliver page:** AV1 (MP4), VP9 (WebM), Avid DNxHR LB, SQ, HQ, HQX and 444 (QuickTime), lossless FFV1 with FLAC sound (Matroska) and MP3 audio
+- ✅ **10-bit video:** H.264 High 10, H.265 Main 10, AV1 and VP9 profile 2, from the Encoding Profile list
+- ✅ **Graphics card encoders:** Encoder can be NVIDIA, Intel Quick Sync, AMD, Apple VideoToolbox or VA-API for H.264, H.265 and AV1; the ones this computer has no card for are greyed out
+- ✅ **Hardware decoding:** H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card (D3D11 on Windows, VideoToolbox on macOS, VA-API or CUDA on Linux), with a switch in System Preferences > Decode Options; a clip the card can't decode falls back to the processor
+- ✅ **Keyboard Customization:** click any command's keys and press a new one; a key another command has is moved after asking; Reset and Reset All
+- ✅ **OpenTimelineIO export:** File > Export > Timeline: OpenTimelineIO, for Resolve, Premiere, Avid and others
+- ✅ System Preferences and your keys are saved, and stay after a restart
 
 **🔄 Changed**
 - ✅ Renders start at **60 fps** by default
@@ -31,6 +38,8 @@ Fairlight and Deliver), with FFmpeg included in every package.
 **⚠️ Known limitations**
 - ❌ The Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curves aren't done yet
 - ❌ Check for Updates has only been tested on Windows so far
+- ❌ The graphics card encoders were only tried with an AMD card on Windows; NVIDIA, Intel, Apple and VA-API are untested
+- ❌ The cards make no 10-bit H.264 (it is offered with the Native encoder only)
 - ❌ The macOS package is for Apple silicon only
 - ❌ Projects from 0.2.0 and earlier (`.pcsp`) do not open in 0.2.1, which saves `.picasso` projects
 

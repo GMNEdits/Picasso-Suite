@@ -49,6 +49,10 @@ pub(crate) struct Extra {
     pub rename_bin: Option<(u64, String)>,
     /// New Smart Bin: its name, the words to look for and the type (0 is any).
     pub smart_bin: Option<(String, String, usize)>,
+    /// What System Preferences and Keyboard Customization set for this computer.
+    pub prefs: crate::prefs::Preferences,
+    /// Keyboard Customization.
+    pub keys: crate::keyboard::KeyEditor,
 }
 
 /// The Speed Ramp window: from one speed to another over the clip, in steps, along a curve.
@@ -530,6 +534,24 @@ impl StudioApp {
         );
     }
 
+    /// Writes the timeline as an OpenTimelineIO file, for Resolve, Premiere, Avid and the like.
+    pub(crate) fn export_otio(&mut self, ctx: &Context) {
+        let title = self.project().timeline_name.clone();
+        let text = picasso_core::otio::to_otio(self.project());
+        let stem: String = title
+            .chars()
+            .map(|c| if c.is_alphanumeric() { c } else { '_' })
+            .collect();
+        crate::platform::save_as(
+            self.inbox.clone(),
+            ctx.clone(),
+            format!("{stem}.otio"),
+            ("OpenTimelineIO", vec!["otio"]),
+            text.into_bytes(),
+            false,
+        );
+    }
+
     /// Reads an EDL into a new timeline, matching its clips to the media pool by name (the
     /// clip name, else the reel). Events whose media is not in the pool are left out.
     pub(crate) fn import_edl(&mut self, name: &str, text: &str) {
@@ -791,6 +813,7 @@ impl StudioApp {
         let mut lock = self.extra.position_lock;
         let mut follow = self.extra.selection_follows;
         let mut volume = self.monitor.volume;
+        let mut hardware = self.extra.prefs.hardware_decoding;
         egui::Window::new("System Preferences")
             .open(&mut open)
             .collapsible(false)
@@ -812,6 +835,21 @@ impl StudioApp {
                 });
                 ui.add(egui::Slider::new(&mut volume, 0.0..=1.0).text("Monitor volume"));
                 ui.separator();
+                ui.heading("Decode Options");
+                ui.checkbox(
+                    &mut hardware,
+                    "Decode supported video using hardware acceleration",
+                );
+                ui.label(
+                    RichText::new(
+                        "H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card \
+                         when its driver can. Turn this off if clips show green or broken \
+                         pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.",
+                    )
+                    .small()
+                    .weak(),
+                );
+                ui.separator();
                 ui.label(format!("Picasso Suite {}", env!("CARGO_PKG_VERSION")));
             });
         if snap != self.timeline.snap() {
@@ -828,6 +866,13 @@ impl StudioApp {
         self.extra.selection_follows = follow;
         if volume != self.monitor.volume {
             self.set_monitor(|m| m.volume = volume);
+        }
+        if hardware != self.extra.prefs.hardware_decoding {
+            // The clips open again the new way as they are next drawn.
+            self.extra.prefs.hardware_decoding = hardware;
+            self.extra.prefs.apply();
+            #[cfg(not(test))]
+            self.extra.prefs.save();
         }
         self.extra.preferences = open;
     }

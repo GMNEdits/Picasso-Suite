@@ -9,6 +9,7 @@ rust-version.workspace = true
 [dependencies]
 picasso-core.workspace = true
 picasso-render.workspace = true
+picasso-decode.workspace = true
 picasso-audio.workspace = true
 ffmpeg-next.workspace = true
 thiserror.workspace = true

@@ -22,6 +22,11 @@ Status at 0.2.1.
 - [x] Performance: grading of per-channel nodes (wheels, curves, soft clip) turned into 8-bit tables, up to 14 times faster
 - [x] Help: Check for Updates reads the latest GitHub release and installs it for the Windows zip, macOS app, Flatpak, .deb and .rpm (a build from source opens the release page)
 - [x] Fixes: Media and Deliver no longer flash black when opened; clips dropped anywhere on the Cut page's timelines land on a track; dragging the playhead no longer flashes black
+- [x] Deliver: AV1 (MP4), VP9 (WebM), DNxHR LB to 444 (QuickTime), lossless FFV1 (Matroska) and MP3; 10-bit H.264, H.265, AV1 and VP9
+- [x] Deliver: graphics card encoders (NVIDIA NVENC, Intel Quick Sync, AMD AMF, Apple VideoToolbox, VA-API) for H.264, H.265 and AV1, checked at start so those without a card are greyed out
+- [x] Decoding on the graphics card (D3D11, VideoToolbox, VA-API, CUDA) with a System Preferences switch, falling back to the processor
+- [x] Keyboard Customization: every command's keys can be changed, a taken key is moved after asking, saved in the preferences
+- [x] Interchange: OpenTimelineIO export (File > Export > Timeline: OpenTimelineIO)
 
 ## To do
 
@@ -39,3 +44,5 @@ Status at 0.2.1.
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm, and the Flatpak needs `--talk-name=org.freedesktop.Flatpak` to install its own update
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
+- [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
+- [ ] Interchange: OpenTimelineIO import, and OTIO export from `picasso-bridge`

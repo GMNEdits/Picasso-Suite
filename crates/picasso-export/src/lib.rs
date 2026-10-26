@@ -1,5 +1,7 @@
-//! Renders a project to files. Presets (Roadmap, phase 6): H.264 for the web, H.265, ProRes 422,
-//! WAV audio and a PNG sequence. Video goes through FFmpeg's encoders (desktop only).
+//! Renders a project to files. Presets: H.264, H.265 and AV1 in MP4, VP9 in WebM, ProRes and
+//! DNxHR in QuickTime, lossless FFV1 in Matroska, WAV and MP3 audio, and PNG sequences. H.264,
+//! H.265, AV1 and VP9 can be 10-bit, and H.264, H.265 and AV1 can use the graphics card's encoder
+//! (NVIDIA, Intel, AMD, Apple, VA-API). Video goes through FFmpeg's encoders (desktop only).
 
 mod burn;
 mod video;
@@ -7,7 +9,7 @@ mod yuv;
 
 use std::io::Write;
 use std::path::{Path, PathBuf};
-use std::sync::Once;
+use std::sync::{Once, OnceLock};
 
 use picasso_audio::{
     encode_wav, frames_to_samples, mixdown, plan, wav_header, AudioPool, MixdownError, Offline,
@@ -24,20 +26,35 @@ pub enum Preset {
     H264Web,
     /// H.265 video and AAC sound in an MP4 file.
     H265,
+    /// AV1 video and AAC sound in an MP4 file.
+    Av1,
+    /// VP9 video and Opus sound in a WebM file.
+    Vp9,
     /// ProRes 422 video and 16-bit PCM sound in a MOV file.
     ProRes422,
+    /// Avid DNxHR video and 16-bit PCM sound in a MOV file.
+    DnxHr,
+    /// Lossless FFV1 video (10-bit 4:4:4) and FLAC sound in a Matroska file, for archiving.
+    Ffv1,
     /// The mix as a 24-bit WAV file.
     Wav,
+    /// The mix as an MP3 file.
+    Mp3,
     /// One PNG per frame, into a folder.
     PngSequence,
 }
 
 impl Preset {
-    pub const ALL: [Self; 5] = [
+    pub const ALL: [Self; 10] = [
         Self::H264Web,
         Self::H265,
+        Self::Av1,
+        Self::Vp9,
         Self::ProRes422,
+        Self::DnxHr,
+        Self::Ffv1,
         Self::Wav,
+        Self::Mp3,
         Self::PngSequence,
     ];
 
@@ -45,8 +62,13 @@ impl Preset {
         match self {
             Self::H264Web => "H.264 (MP4, for the web)",
             Self::H265 => "H.265 (MP4)",
+            Self::Av1 => "AV1 (MP4)",
+            Self::Vp9 => "VP9 (WebM)",
             Self::ProRes422 => "ProRes 422 (MOV)",
+            Self::DnxHr => "DNxHR (MOV)",
+            Self::Ffv1 => "FFV1 lossless (MKV)",
             Self::Wav => "WAV audio",
+            Self::Mp3 => "MP3 audio",
             Self::PngSequence => "PNG sequence",
         }
     }
@@ -54,9 +76,12 @@ impl Preset {
     /// The file extension of the output; empty when the output is a folder.
     pub fn extension(self) -> &'static str {
         match self {
-            Self::H264Web | Self::H265 => "mp4",
-            Self::ProRes422 => "mov",
+            Self::H264Web | Self::H265 | Self::Av1 => "mp4",
+            Self::Vp9 => "webm",
+            Self::ProRes422 | Self::DnxHr => "mov",
+            Self::Ffv1 => "mkv",
             Self::Wav => "wav",
+            Self::Mp3 => "mp3",
             Self::PngSequence => "",
         }
     }
@@ -66,25 +91,143 @@ impl Preset {
         self == Self::PngSequence
     }
 
-    /// The name of the FFmpeg encoder the preset needs, if it uses one.
-    fn encoder(self) -> Option<&'static str> {
+    /// Whether the file has only sound.
+    pub fn is_audio_only(self) -> bool {
+        matches!(self, Self::Wav | Self::Mp3)
+    }
+
+    /// Whether the preset's codec can be 10-bit (the others are fixed: ProRes and FFV1 are always
+    /// 10-bit, DNxHR's profile decides).
+    pub fn has_ten_bit(self) -> bool {
+        matches!(self, Self::H264Web | Self::H265 | Self::Av1 | Self::Vp9)
+    }
+
+    /// The encoders that can make the preset on this computer's processor, the first that this
+    /// FFmpeg has is used.
+    fn software_encoders(self) -> &'static [&'static str] {
         match self {
-            Self::H264Web => Some("libx264"),
-            Self::H265 => Some("libx265"),
-            Self::ProRes422 => Some("prores_ks"),
+            Self::H264Web => &["libx264"],
+            Self::H265 => &["libx265"],
+            // SVT-AV1 is many times faster than the reference encoder.
+            Self::Av1 => &["libsvtav1", "libaom-av1"],
+            Self::Vp9 => &["libvpx-vp9"],
+            Self::ProRes422 => &["prores_ks"],
+            Self::DnxHr => &["dnxhd"],
+            Self::Ffv1 => &["ffv1"],
+            Self::Wav | Self::Mp3 | Self::PngSequence => &[],
+        }
+    }
+
+    /// The name of the FFmpeg encoder the preset uses with `hardware`, if this FFmpeg has it.
+    pub fn encoder_name(self, hardware: Hardware) -> Option<&'static str> {
+        init();
+        let names: Vec<&'static str> = match (self, hardware) {
+            (_, Hardware::Native) => self.software_encoders().to_vec(),
+            (Self::H264Web, h) => h.encoder("h264").into_iter().collect(),
+            (Self::H265, h) => h.encoder("hevc").into_iter().collect(),
+            (Self::Av1, h) => h.encoder("av1").into_iter().collect(),
+            _ => Vec::new(),
+        };
+        names
+            .into_iter()
+            .find(|n| ffmpeg_next::encoder::find_by_name(n).is_some())
+    }
+
+    /// The sound encoder of the preset's file, given the codec asked for.
+    fn audio_encoder(self, codec: AudioCodec) -> Option<&'static str> {
+        match self {
+            Self::H264Web | Self::H265 | Self::Av1 => Some("aac"),
+            Self::ProRes422 | Self::DnxHr => Some(if codec == AudioCodec::Aac {
+                "aac"
+            } else {
+                "pcm_s16le"
+            }),
+            Self::Vp9 => Some("libopus"),
+            Self::Ffv1 => Some("flac"),
+            Self::Mp3 => Some("libmp3lame"),
             Self::Wav | Self::PngSequence => None,
         }
     }
 
     /// Whether this build of FFmpeg has what the preset needs.
     pub fn available(self) -> bool {
-        match self.encoder() {
-            Some(name) => {
-                init();
-                ffmpeg_next::encoder::find_by_name(name).is_some()
-            }
-            None => true,
+        init();
+        let video =
+            self.software_encoders().is_empty() || self.encoder_name(Hardware::Native).is_some();
+        let audio = self
+            .audio_encoder(AudioCodec::Auto)
+            .is_none_or(|n| ffmpeg_next::encoder::find_by_name(n).is_some());
+        // An MP3 file has nothing without its sound encoder; the others still have a picture.
+        video && (audio || self != Self::Mp3)
+    }
+
+    /// The graphics cards' encoders this FFmpeg has for the preset, the processor's first.
+    pub fn hardware_choices(self) -> Vec<Hardware> {
+        Hardware::ALL
+            .into_iter()
+            .filter(|h| self.encoder_name(*h).is_some())
+            .collect()
+    }
+}
+
+/// Which encoder makes the video: the processor's, or a graphics card's.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
+pub enum Hardware {
+    /// The processor (x264, x265, SVT-AV1 ...): the best picture for the size, the slowest.
+    #[default]
+    Native,
+    /// NVIDIA's NVENC.
+    Nvidia,
+    /// Intel's Quick Sync.
+    Intel,
+    /// AMD's AMF (Windows).
+    Amd,
+    /// Apple's VideoToolbox (macOS).
+    Apple,
+    /// VA-API (Linux, Intel and AMD cards).
+    Vaapi,
+}
+
+impl Hardware {
+    pub const ALL: [Self; 6] = [
+        Self::Native,
+        Self::Nvidia,
+        Self::Intel,
+        Self::Amd,
+        Self::Apple,
+        Self::Vaapi,
+    ];
+
+    pub fn label(self) -> &'static str {
+        match self {
+            Self::Native => "Native",
+            Self::Nvidia => "NVIDIA",
+            Self::Intel => "Intel Quick Sync",
+            Self::Amd => "AMD",
+            Self::Apple => "Apple VideoToolbox",
+            Self::Vaapi => "VA-API",
         }
+    }
+
+    /// The FFmpeg encoder of this card for a codec ("h264", "hevc" or "av1").
+    fn encoder(self, codec: &str) -> Option<&'static str> {
+        Some(match (self, codec) {
+            (Self::Nvidia, "h264") => "h264_nvenc",
+            (Self::Nvidia, "hevc") => "hevc_nvenc",
+            (Self::Nvidia, "av1") => "av1_nvenc",
+            (Self::Intel, "h264") => "h264_qsv",
+            (Self::Intel, "hevc") => "hevc_qsv",
+            (Self::Intel, "av1") => "av1_qsv",
+            (Self::Amd, "h264") => "h264_amf",
+            (Self::Amd, "hevc") => "hevc_amf",
+            (Self::Amd, "av1") => "av1_amf",
+            (Self::Apple, "h264") => "h264_videotoolbox",
+            (Self::Apple, "hevc") => "hevc_videotoolbox",
+            (Self::Vaapi, "h264") => "h264_vaapi",
+            (Self::Vaapi, "hevc") => "hevc_vaapi",
+            (Self::Vaapi, "av1") => "av1_vaapi",
+            _ => return None,
+        })
     }
 }
 
@@ -125,21 +268,6 @@ impl Quality {
             Self::High => "High",
             Self::Medium => "Medium",
             Self::Low => "Low",
-        }
-    }
-
-    /// The constant rate factor for H.264; H.265 is a little higher for the same look.
-    fn crf(self, h265: bool) -> u32 {
-        let base = match self {
-            Self::Best => 14,
-            Self::High => 18,
-            Self::Medium => 23,
-            Self::Low => 28,
-        };
-        if h265 {
-            base + 4
-        } else {
-            base
         }
     }
 }
@@ -187,12 +315,22 @@ impl Profile {
 /// The sound encoder of a video file.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum AudioCodec {
-    /// What the preset usually has: AAC, and PCM in a ProRes file.
+    /// What the preset usually has: AAC, PCM in a ProRes or DNxHR file, Opus in WebM, FLAC in
+    /// Matroska.
     Auto,
     Aac,
     /// 16-bit linear PCM (QuickTime files only).
     Pcm,
 }
+
+/// The DNxHR flavours, as Avid names them, and the FFmpeg profile of each.
+pub const DNXHR_PROFILES: [(&str, &str); 5] = [
+    ("DNxHR LB", "dnxhr_lb"),
+    ("DNxHR SQ", "dnxhr_sq"),
+    ("DNxHR HQ", "dnxhr_hq"),
+    ("DNxHR HQX (10-bit)", "dnxhr_hqx"),
+    ("DNxHR 444 (10-bit)", "dnxhr_444"),
+];
 
 /// The shape of a pixel.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -244,8 +382,14 @@ pub struct Options {
     pub profile: Profile,
     /// The ProRes flavour: 0 Proxy, 1 LT, 2 Standard, 3 HQ.
     pub prores: u8,
+    /// The DNxHR flavour, an index of [`DNXHR_PROFILES`].
+    pub dnxhr: u8,
+    /// 10 bits a sample instead of 8 (H.264 High 10, H.265 Main 10, AV1, VP9 profile 2).
+    pub ten_bit: bool,
+    /// The processor's encoder or a graphics card's (H.264, H.265 and AV1).
+    pub hardware: Hardware,
+    /// The sound's data rate in kilobits a second (AAC, Opus, MP3).
     pub audio_codec: AudioCodec,
-    /// The AAC data rate in kilobits a second.
     pub audio_kbps: u32,
     /// Write the project's markers in the range as chapters.
     pub chapters: bool,
@@ -274,6 +418,9 @@ impl Default for Options {
             rate: Rate::Quality(Quality::Best),
             profile: Profile::Auto,
             prores: 2,
+            dnxhr: 2,
+            ten_bit: false,
+            hardware: Hardware::Native,
             audio_codec: AudioCodec::Auto,
             audio_kbps: 320,
             chapters: false,
@@ -351,12 +498,68 @@ pub enum ExportError {
     Empty,
     #[error("this FFmpeg build has no {0} encoder")]
     NoEncoder(&'static str),
+    #[error("the {0} encoder cannot make 10-bit video")]
+    NoTenBit(&'static str),
+    #[error(
+        "the {encoder} encoder did not start ({why}). Is the graphics card there, with its driver?"
+    )]
+    Hardware { encoder: &'static str, why: String },
     #[error("could not render a frame: {0}")]
     Render(String),
     #[error("could not write {0}")]
     Write(String),
     #[error("encoding failed: {0}")]
     Encode(String),
+}
+
+/// Which graphics cards' encoders open on this computer, by FFmpeg name; filled once, in the
+/// background, by [`check_hardware`].
+static CARDS: OnceLock<Vec<(&'static str, bool)>> = OnceLock::new();
+
+/// Starts finding out, on a thread of its own, which of the graphics cards' encoders this FFmpeg
+/// has can open here (an encoder can be built in with no card for it). Opening each takes a
+/// moment, so the program does it once at start rather than when the Deliver page is drawn.
+pub fn check_hardware() {
+    static STARTED: Once = Once::new();
+    STARTED.call_once(|| {
+        let spawned = std::thread::Builder::new()
+            .name("encoder check".into())
+            .spawn(|| {
+                init();
+                // An encoder without its card says so on the console; here that is the answer,
+                // not an error.
+                use ffmpeg_next::util::log;
+                log::set_level(log::Level::Quiet);
+                let mut found = Vec::new();
+                for preset in [Preset::H264Web, Preset::H265, Preset::Av1] {
+                    for hardware in Hardware::ALL.into_iter().skip(1) {
+                        if let Some(name) = preset.encoder_name(hardware) {
+                            found.push((name, video::opens(name, hardware)));
+                        }
+                    }
+                }
+                log::set_level(log::Level::Error);
+                tracing::info!("graphics card encoders: {found:?}");
+                let _ = CARDS.set(found);
+            });
+        if let Err(e) = spawned {
+            tracing::warn!("could not check the graphics card encoders: {e}");
+        }
+    });
+}
+
+/// Whether `preset` can be made with `hardware` here: `None` while [`check_hardware`] has not
+/// finished, or when this FFmpeg lacks the encoder.
+pub fn hardware_works(preset: Preset, hardware: Hardware) -> Option<bool> {
+    if hardware == Hardware::Native {
+        return Some(preset.available());
+    }
+    let name = preset.encoder_name(hardware)?;
+    CARDS
+        .get()?
+        .iter()
+        .find(|(n, _)| *n == name)
+        .map(|(_, works)| *works)
 }
 
 fn init() {
@@ -384,6 +587,7 @@ pub fn render(
     let result = match settings.preset {
         Preset::PngSequence => png_sequence(project, cache, settings, progress),
         Preset::Wav => wav(project, settings, progress),
+        // MP3 goes through the encoder, with no picture.
         _ => {
             init();
             video::encode(project, cache, settings, progress)
@@ -608,6 +812,164 @@ mod tests {
             assert!((0.9..1.2).contains(&duration), "{duration}");
             let _ = std::fs::remove_file(&s.path);
         }
+    }
+
+    /// One `codec,profile,type,pixel format` line per stream (ffprobe's order).
+    fn streams(path: &Path) -> Option<String> {
+        let out = std::process::Command::new("ffprobe")
+            .args(["-v", "error", "-show_entries"])
+            .arg("stream=codec_type,codec_name,pix_fmt,profile")
+            .args(["-of", "csv=p=0"])
+            .arg(path)
+            .output()
+            .ok()?;
+        out.status
+            .success()
+            .then(|| String::from_utf8_lossy(&out.stdout).to_string())
+    }
+
+    /// The line of the stream of `kind` ("video", "audio") that has `codec`.
+    fn stream<'a>(text: &'a str, codec: &str, kind: &str) -> Option<&'a str> {
+        text.lines()
+            .find(|l| l.starts_with(&format!("{codec},")) && l.contains(&format!(",{kind}")))
+    }
+
+    #[test]
+    fn the_other_codecs_make_files_that_play() {
+        let Some(p) = project(true) else { return };
+        for (preset, video, audio) in [
+            (Preset::Av1, "av1", "aac"),
+            (Preset::Vp9, "vp9", "opus"),
+            (Preset::DnxHr, "dnxhd", "pcm_s16le"),
+            (Preset::Ffv1, "ffv1", "flac"),
+            (Preset::Mp3, "", "mp3"),
+        ] {
+            if !preset.available() {
+                eprintln!("this FFmpeg has no encoder for {preset:?}");
+                continue;
+            }
+            let name = format!("picasso_export_{video}{audio}.{}", preset.extension());
+            let s = settings(preset, &name, 24);
+            let mut steps = 0;
+            render(&p, &MediaCache::new(), &s, &mut |_, _| {
+                steps += 1;
+                true
+            })
+            .unwrap_or_else(|e| panic!("{preset:?}: {e}"));
+            assert_eq!(steps, 24, "{preset:?}");
+            let Some(text) = streams(&s.path) else { return };
+            if video.is_empty() {
+                assert!(!text.contains("video"), "{text}");
+            } else {
+                assert!(
+                    stream(&text, video, "video").is_some(),
+                    "{preset:?}: {text}"
+                );
+            }
+            assert!(
+                stream(&text, audio, "audio").is_some(),
+                "{preset:?}: {text}"
+            );
+            let _ = std::fs::remove_file(&s.path);
+        }
+    }
+
+    #[test]
+    fn ten_bits_and_the_dnxhr_profiles_reach_the_file() {
+        let Some(p) = project(false) else { return };
+        let ten = Options {
+            ten_bit: true,
+            ..Options::default()
+        };
+        for (preset, codec, profile) in [
+            (Preset::H265, "hevc", "Main 10"),
+            (Preset::H264Web, "h264", "High 10"),
+            (Preset::Av1, "av1", "Main"),
+            (Preset::Vp9, "vp9", "Profile 2"),
+        ] {
+            if !preset.available() {
+                continue;
+            }
+            let s = with(
+                preset,
+                &format!("picasso_export_10_{preset:?}.{}", preset.extension()),
+                6,
+                ten.clone(),
+            );
+            match render(&p, &MediaCache::new(), &s, &mut |_, _| true) {
+                // An x264 built for 8 bits only says so instead of making an 8-bit file.
+                Err(ExportError::NoTenBit(_)) => continue,
+                other => other.unwrap_or_else(|e| panic!("{preset:?}: {e}")),
+            }
+            let Some(text) = streams(&s.path) else { return };
+            let line = stream(&text, codec, "video").unwrap_or_default();
+            assert!(
+                line.ends_with(",yuv420p10le") && line.contains(profile),
+                "{preset:?}: {text}"
+            );
+            let _ = std::fs::remove_file(&s.path);
+        }
+        for (dnxhr, pix) in [(0, ",yuv422p"), (3, ",yuv422p10le"), (4, ",yuv444p10le")] {
+            if !Preset::DnxHr.available() {
+                break;
+            }
+            let o = Options {
+                dnxhr,
+                ..Options::default()
+            };
+            let s = with(
+                Preset::DnxHr,
+                &format!("picasso_export_dnx{dnxhr}.mov"),
+                4,
+                o,
+            );
+            render(&p, &MediaCache::new(), &s, &mut |_, _| true)
+                .unwrap_or_else(|e| panic!("DNxHR {dnxhr}: {e}"));
+            let Some(text) = streams(&s.path) else { return };
+            let line = stream(&text, "dnxhd", "video").unwrap_or_default();
+            assert!(line.ends_with(pix), "DNxHR {dnxhr}: {text}");
+            let _ = std::fs::remove_file(&s.path);
+        }
+    }
+
+    #[test]
+    fn a_card_encoder_that_is_missing_or_absent_is_an_error_not_a_crash() {
+        let Some(p) = project(false) else { return };
+        // VA-API does not exist on Windows or macOS, and on Linux there may be no card for it.
+        let mut made = Vec::new();
+        for hardware in [
+            Hardware::Vaapi,
+            Hardware::Apple,
+            Hardware::Nvidia,
+            Hardware::Amd,
+            Hardware::Intel,
+        ] {
+            let o = Options {
+                hardware,
+                ..Options::default()
+            };
+            let s = with(Preset::H264Web, "picasso_export_card.mp4", 6, o);
+            match render(&p, &MediaCache::new(), &s, &mut |_, _| true) {
+                Ok(()) => {
+                    // This computer has the card: the file is H.264.
+                    let text = streams(&s.path).unwrap_or_default();
+                    assert!(
+                        stream(&text, "h264", "video").is_some(),
+                        "{hardware:?}: {text}"
+                    );
+                    made.push(hardware);
+                }
+                Err(ExportError::NoEncoder(_) | ExportError::Hardware { .. }) => {
+                    assert!(!s.path.exists(), "{hardware:?} left a file");
+                }
+                Err(e) => panic!("{hardware:?}: {e}"),
+            }
+            let _ = std::fs::remove_file(&s.path);
+        }
+        eprintln!("graphics card encoders that work here: {made:?}");
+        // Presets without a card's encoder always use the processor's.
+        assert_eq!(Preset::ProRes422.hardware_choices(), vec![Hardware::Native]);
+        assert_eq!(Preset::Wav.encoder_name(Hardware::Nvidia), None);
     }
 
     #[test]
