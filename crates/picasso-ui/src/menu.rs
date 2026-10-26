@@ -1489,6 +1489,20 @@ mod tests {
         assert_eq!(report.matches("\n## ").count(), 13);
     }
 
+    /// `Menu-Status.md` is generated from the table above, so it must match it. Regenerate it with
+    /// `cargo run -p picasso-suite -- --menu-status > Menu-Status.md` after changing a menu entry.
+    #[test]
+    fn the_menu_status_file_is_current() {
+        // Git on Windows may check the file out with CRLF; the report is written with LF. The shell
+        // redirect that writes the file adds a newline of its own, so trailing space is ignored.
+        let committed = include_str!("../../../Menu-Status.md").replace("\r\n", "\n");
+        assert_eq!(
+            committed.trim_end(),
+            status_markdown().trim_end(),
+            "Menu-Status.md is out of date: run `cargo run -p picasso-suite -- --menu-status > Menu-Status.md`"
+        );
+    }
+
     #[test]
     fn the_listing_marks_what_is_built() {
         let list = rows();
