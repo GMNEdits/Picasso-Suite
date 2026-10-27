@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.2.2 — release candidate
+## 0.3.0
+
+Picasso Suite 0.3.0 adds Linux on ARM64 (.deb, .rpm, AppImage and Flatpak), an AppImage for
+x86_64, panels you can resize on every page, a graphics check, and a faster window when
+switching pages and importing media. Packages for Windows, macOS and Linux (x86_64 and ARM64).
 
 **✨ New**
 - ✅ **Linux on ARM64:** .deb, .rpm and AppImage for 64-bit ARM computers (Raspberry Pi 5, ARM laptops and servers)
@@ -12,18 +16,18 @@
 - ✅ **Cut page:** the empty timeline before a track's first clip is grey, as in Resolve, so a clip that starts late is easy to see
 
 **🛠️ Fixed**
-- 🛠️ **Linux:** dragging video files from the file manager into the media pool works on Wayland desktops (Ubuntu's default); the window opens through XWayland, and `PICASSO_WAYLAND=1` keeps a native Wayland window
-- 🛠️ **Linux:** the dock shows Picasso Suite's icon and groups the window with its launcher
-- 🛠️ **Linux:** a per-user Flatpak installs its update per-user, and the command shown when that fails says `--user`
-- 🛠️ **Linux:** programs started from Picasso Suite (the browser, the installer) still see the Wayland desktop; the window asks for X11 itself instead of hiding the Wayland display from everything
-- 🛠️ **Check for Updates:** a download that breaks off leaves no half-file behind
-- 🛠️ **Media pool:** video thumbnails are made without holding up the window while the first frame decodes, by their own decoder, so the viewer no longer leaves them (and the clips on the timeline) black; they are decoded at a quarter of the size and the decoder is closed once the picture is made, so a pool of 4K clips does not keep a full picture and a thread for each
-- 🛠️ **Speed:** importing videos and sound no longer holds up the window (twelve clips took half a second; their files are now read in the background, so no frame took more than 1 ms), opening the Color page with many clips no longer freezes for a moment (it read every video's codec before drawing the first frame), the Deliver page no longer copies the whole project on every frame, and the Media page's file browser and media pool draw only the clips in view, so big projects and folders with thousands of files stay smooth when switching pages
-- 🛠️ **Timeline:** a disabled clip no longer shows through a transition (dissolve or dip) next to it
-- 🛠️ **Timeline:** dragging a clip, trim or roll no longer copies the whole project on every pointer move
-- 🛠️ **Stills:** shrinking a big picture uses less memory, and an image too big to show is refused from its header before it is decoded
-- 🛠️ **Projects:** the pictures kept in a project (stills) load faster
-- 🛠️ **Video:** a frame with no time of its own is placed by its best-effort time instead of at the start of the file
+- ✅ **Linux:** dragging video files from the file manager into the media pool works on Wayland desktops (Ubuntu's default); the window opens through XWayland, and `PICASSO_WAYLAND=1` keeps a native Wayland window
+- ✅ **Linux:** the dock shows Picasso Suite's icon and groups the window with its launcher
+- ✅ **Linux:** a per-user Flatpak installs its update per-user, and the command shown when that fails says `--user`
+- ✅ **Linux:** programs started from Picasso Suite (the browser, the installer) still see the Wayland desktop; the window asks for X11 itself instead of hiding the Wayland display from everything
+- ✅ **Check for Updates:** a download that breaks off leaves no half-file behind
+- ✅ **Media pool:** video thumbnails are made without holding up the window while the first frame decodes, by their own decoder, so the viewer no longer leaves them (and the clips on the timeline) black; they are decoded at a quarter of the size and the decoder is closed once the picture is made, so a pool of 4K clips does not keep a full picture and a thread for each
+- ✅ **Speed:** importing videos and sound no longer holds up the window (twelve clips took half a second; their files are now read in the background, so no frame took more than 1 ms), opening the Color page with many clips no longer freezes for a moment (it read every video's codec before drawing the first frame), the Deliver page no longer copies the whole project on every frame, and the Media page's file browser and media pool draw only the clips in view, so big projects and folders with thousands of files stay smooth when switching pages
+- ✅ **Timeline:** a disabled clip no longer shows through a transition (dissolve or dip) next to it
+- ✅ **Timeline:** dragging a clip, trim or roll no longer copies the whole project on every pointer move
+- ✅ **Stills:** shrinking a big picture uses less memory, and an image too big to show is refused from its header before it is decoded
+- ✅ **Projects:** the pictures kept in a project (stills) load faster
+- ✅ **Video:** a frame with no time of its own is placed by its best-effort time instead of at the start of the file
 
 **🔄 Changed**
 - ✅ **Linux packages:** `.picasso`, `.drp`, `.drt` and `.drb` files open with Picasso Suite, and video files offer it under "Open With", several at once
@@ -32,7 +36,7 @@
 - ✅ **Linux:** icons in 16 to 256 pixels, so menus and docks show a sharp icon at every size
 - ✅ **Releases:** a release is only published when every package built and the Linux ones installed and started on seven systems, so a failed build can no longer leave a release with fewer packages
 - ✅ **Flathub:** a manifest that builds FFmpeg and its codecs from source (`packaging/flathub`), built in CI on x86_64 and ARM64 and checked with Flathub's linter, with notes for the submission, which is not made yet; the screenshots and links in the app's appstream entry are filled in
-- ✅ **Releases:** a release candidate (a tag such as `v0.2.2-rc1`) is published as a pre-release for testing; Check for Updates does not offer it
+- ✅ **Releases:** a release candidate (a tag such as `v0.3.0-rc1`) is published as a pre-release for testing; Check for Updates does not offer it
 - ✅ **Development:** the tests run on every pull request, and a test checks `Menu-Status.md` against the menus' table
 - ✅ **Development:** `PICASSO_PERF=pages picasso-suite [--place] <files>` shows each page in turn and prints how long its frames take, and files given with `--place` now go one after another on the timeline instead of all at the playhead
 - ✅ **Status in the README:** a picture and a table of how much is made (menu entries that work, roadmap items done), drawn from `Menu-Status.md` and `ROADMAP.md` by `python3 scripts/status.py`
@@ -41,6 +45,9 @@
 - ❌ A native Wayland window takes no dropped files (winit 0.30 has no support and eframe 0.37 uses it), so the window opens through XWayland
 - ❌ The ARM64 and Flatpak packages are only started on GitHub's machines (containers with a virtual screen and a software Vulkan), not on real ARM or Linux desktops
 - ❌ Vulkan and the other graphics interfaces were only tried on an AMD card; run `picasso-suite --graphics-check` and send the report in
+- ❌ Nothing has been tried on a real Raspberry Pi or other ARM computer yet; if you have one, run `picasso-suite --graphics-check` and send the report in
+- ❌ The Color page's palettes (the wheels) keep their size, so they cannot be resized, and the Deliver settings form scrolls sideways in a narrow column instead of shrinking
+- ❌ The Flathub submission is not made yet
 
 ## 0.2.1
 
