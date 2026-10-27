@@ -17,6 +17,9 @@ const FORMAT_VERSION: i64 = 1;
 const MAX_BYTES: usize = 256 * 1024 * 1024;
 /// The first bytes of every SQLite database.
 const SQLITE_MAGIC: &[u8; 16] = b"SQLite format 3\0";
+/// A database that takes longer than this to read is refused: the file may come from anyone, and
+/// a view or a recursive query in it can run for ever. A real project is read in milliseconds.
+const READ_BUDGET: std::time::Duration = std::time::Duration::from_secs(5);
 
 #[derive(Debug, Error)]
 pub enum MediaError {
@@ -24,6 +27,8 @@ pub enum MediaError {
     NotAProject(String),
     #[error("the project file is too big")]
     TooBig,
+    #[error("the project file takes too long to read")]
+    TooSlow,
     #[error("the project file was made by a newer version (file layout {0})")]
     TooNew(i64),
     #[error("database error: {0}")]
@@ -192,6 +197,14 @@ pub fn to_bytes(project_json: &str, media: &[MediaMetadata]) -> Result<Vec<u8>, 
 
 /// Reads a project database: the project's JSON text and the facts about its media.
 pub fn from_bytes(bytes: &[u8]) -> Result<(String, Vec<MediaMetadata>), MediaError> {
+    from_bytes_within(bytes, READ_BUDGET)
+}
+
+/// `from_bytes` with the time it may take: past it, reading stops and the file is refused.
+fn from_bytes_within(
+    bytes: &[u8],
+    budget: std::time::Duration,
+) -> Result<(String, Vec<MediaMetadata>), MediaError> {
     if bytes.len() > MAX_BYTES {
         return Err(MediaError::TooBig);
     }
@@ -201,8 +214,21 @@ pub fn from_bytes(bytes: &[u8]) -> Result<(String, Vec<MediaMetadata>), MediaErr
     let mut db = Connection::open_in_memory()?;
     db.deserialize_read_exact(MAIN_DB, Cursor::new(bytes), bytes.len(), true)?;
     // The file may come from anyone: its views and triggers must not run unsafe functions,
-    // and reading it must not change anything.
+    // reading it must not change anything, and it must not run for ever: SQLite asks after every
+    // thousand steps and stops the query once the time is up.
     db.execute_batch("PRAGMA trusted_schema = OFF; PRAGMA query_only = ON;")?;
+    let deadline = std::time::Instant::now() + budget;
+    db.progress_handler(1000, Some(move || std::time::Instant::now() > deadline))?;
+    let read = read_project(&db);
+    // Whatever the error said, running out of time is the reason.
+    if read.is_err() && std::time::Instant::now() > deadline {
+        return Err(MediaError::TooSlow);
+    }
+    read
+}
+
+/// The project and the media facts in an opened project database.
+fn read_project(db: &Connection) -> Result<(String, Vec<MediaMetadata>), MediaError> {
     let not_project = |what: &str| MediaError::NotAProject(what.to_string());
     let format: Option<String> = db
         .query_row("SELECT value FROM meta WHERE key = 'format'", [], |r| {
@@ -228,7 +254,8 @@ pub fn from_bytes(bytes: &[u8]) -> Result<(String, Vec<MediaMetadata>), MediaErr
         .map_err(|_| not_project("it holds no project"))?;
     let mut stmt = db.prepare(
         "SELECT id, kind, path, width, height, fps_num, fps_den, duration_us,
-                video_codec, audio_codec, file_size FROM media ORDER BY id",
+                video_codec, audio_codec, file_size FROM media ORDER BY id
+         LIMIT 100000", // no real project has more media than that
     )?;
     let media = stmt
         .query_map([], |r| {
@@ -311,6 +338,38 @@ mod tests {
             *b = 0xA5;
         }
         assert!(from_bytes(&junk).is_err());
+    }
+
+    #[test]
+    fn a_database_that_never_finishes_is_refused_in_time() {
+        // A `media` view that counts for ever and sorts what it counts: the file looks right but
+        // reading it would hang the program.
+        let db = Connection::open_in_memory().unwrap();
+        db.execute_batch(
+            "CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+             INSERT INTO meta VALUES ('format', 'picasso-project'), ('version', '1');
+             CREATE TABLE project (id INTEGER PRIMARY KEY, json TEXT NOT NULL);
+             INSERT INTO project VALUES (1, '{}');
+             CREATE VIEW media AS
+               WITH RECURSIVE c(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM c)
+               SELECT x AS id, 'video' AS kind, 'p' AS path, NULL AS width, NULL AS height,
+                      NULL AS fps_num, NULL AS fps_den, NULL AS duration_us,
+                      NULL AS video_codec, NULL AS audio_codec, NULL AS file_size FROM c;",
+        )
+        .unwrap();
+        let bytes = db.serialize(MAIN_DB).unwrap().to_vec();
+        drop(db);
+        let started = std::time::Instant::now();
+        let read = from_bytes_within(&bytes, std::time::Duration::from_millis(300));
+        assert!(matches!(read, Err(MediaError::TooSlow)), "{read:?}");
+        assert!(
+            started.elapsed() < std::time::Duration::from_secs(5),
+            "it stopped late: {:?}",
+            started.elapsed()
+        );
+        // A real project is far inside the budget.
+        let bytes = to_bytes("{}", &sample()).unwrap();
+        assert!(from_bytes_within(&bytes, std::time::Duration::from_secs(5)).is_ok());
     }
 
     #[test]

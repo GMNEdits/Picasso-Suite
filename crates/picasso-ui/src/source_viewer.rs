@@ -83,10 +83,13 @@ impl StudioApp {
         self.source.accum = 0.0;
     }
 
-    /// The source viewer's picture, made again when the frame or the media changed.
+    /// The source viewer's picture, made again when the frame or the media changed, or when a
+    /// picture of its own arrives. Its videos are decoded apart from the timeline's
+    /// ([`picasso_render::MediaCache::for_source_viewer`]), so a playing timeline neither takes
+    /// its picture away nor makes it draw again on every frame.
     pub(crate) fn source_texture(&mut self, ctx: &Context) -> Option<TextureId> {
         let media = self.source.media?;
-        let key = (media, self.source.frame, self.cache.video_generation());
+        let key = (media, self.source.frame, self.cache.source_generation());
         if self.source.key == Some(key) {
             return self.source.texture.as_ref().map(TextureHandle::id);
         }
@@ -100,7 +103,7 @@ impl StudioApp {
         let frame = picasso_render::render_media_frame(
             self.project(),
             &item,
-            &self.cache,
+            &self.cache.for_source_viewer(),
             self.source.frame,
             w,
             h,

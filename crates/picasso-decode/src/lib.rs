@@ -30,6 +30,9 @@ pub enum DecodeError {
     Decode(String),
     #[error("there is no frame at that time")]
     NoFrame,
+    /// A newer picture was asked for while this one was being decoded ([`Scrub::cancel`]).
+    #[error("the picture was not wanted any more")]
+    Cancelled,
 }
 
 impl From<ff::Error> for DecodeError {
@@ -258,6 +261,22 @@ pub fn probe(path: &Path) -> Result<MediaInfo, DecodeError> {
     })
 }
 
+/// A key frame this much earlier than the picture asked for is worth showing on its own: the
+/// pictures between them take longer than that to decode.
+const PREVIEW_GAP_US: i64 = 250_000;
+
+/// What dragging the playhead needs of a read ([`VideoDecoder::frame_at_scrub`]): the decoder
+/// seeks to the key frame before the picture asked for and decodes forward, which on video with
+/// few key frames takes long enough that a newer request is waiting by the end.
+pub struct Scrub<'a> {
+    /// Asked between packets: when it says yes, the read stops with [`DecodeError::Cancelled`].
+    /// The decoder stays where it got to, so the next read goes on from there when it can.
+    pub cancel: &'a dyn Fn() -> bool,
+    /// Gets the key frame the read started from, as soon as it is decoded, when the picture
+    /// asked for is far after it: something to show while the rest is decoded.
+    pub preview: &'a mut dyn FnMut(Frame),
+}
+
 /// Decodes the pictures of one file, on request.
 pub struct VideoDecoder {
     path: PathBuf,
@@ -390,8 +409,28 @@ impl VideoDecoder {
     ///
     /// If the graphics card fails, the file is opened again and decoded on the processor.
     pub fn frame_at_reduced(&mut self, pts_us: i64, reduce: u32) -> Result<Frame, DecodeError> {
-        match self.read(pts_us, reduce) {
-            Err(e) if self.on_card => {
+        self.frame_at_with(pts_us, reduce, None)
+    }
+
+    /// `frame_at_reduced` for a playhead that is being dragged: it gives up as soon as `scrub`
+    /// says a newer picture is wanted, and hands over the key frame it starts from on the way.
+    pub fn frame_at_scrub(
+        &mut self,
+        pts_us: i64,
+        reduce: u32,
+        scrub: &mut Scrub<'_>,
+    ) -> Result<Frame, DecodeError> {
+        self.frame_at_with(pts_us, reduce, Some(scrub))
+    }
+
+    fn frame_at_with(
+        &mut self,
+        pts_us: i64,
+        reduce: u32,
+        mut scrub: Option<&mut Scrub<'_>>,
+    ) -> Result<Frame, DecodeError> {
+        match self.read(pts_us, reduce, scrub.as_deref_mut()) {
+            Err(e) if self.on_card && !matches!(e, DecodeError::Cancelled) => {
                 tracing::warn!(
                     "hardware decoding of {} failed ({e}); decoding on the processor",
                     self.path.display()
@@ -400,7 +439,7 @@ impl VideoDecoder {
                 *self = Self::open_with(&self.path.clone(), false)?;
                 // Still counts as opened with the setting on, so it is not opened again for it.
                 self.asked = asked;
-                self.read(pts_us, reduce)
+                self.read(pts_us, reduce, scrub)
             }
             other => other,
         }
@@ -412,12 +451,19 @@ impl VideoDecoder {
         self.asked != hw::hardware_decoding()
     }
 
-    fn read(&mut self, pts_us: i64, reduce: u32) -> Result<Frame, DecodeError> {
+    fn read(
+        &mut self,
+        pts_us: i64,
+        reduce: u32,
+        mut scrub: Option<&mut Scrub<'_>>,
+    ) -> Result<Frame, DecodeError> {
         let target = pts_us.max(0);
         let continuing = self
             .best
             .as_ref()
             .is_some_and(|(_, t)| target >= *t && target - *t <= 2 * MICROS);
+        // Only a read that starts from a key frame has one to hand over.
+        let mut preview_due = !continuing && scrub.is_some();
         if !continuing {
             // Jump to the key frame at or before the target, then decode forward.
             self.input.seek(target, ..target.saturating_add(1))?;
@@ -437,6 +483,9 @@ impl VideoDecoder {
         let mut decoded = ff::frame::Video::empty();
         let mut done = self.ahead.is_some();
         while !done {
+            if scrub.as_deref().is_some_and(|s| (s.cancel)()) {
+                return Err(DecodeError::Cancelled);
+            }
             if !self.at_end {
                 let mut packet = ff::Packet::empty();
                 match packet.read(&mut self.input) {
@@ -467,6 +516,14 @@ impl VideoDecoder {
                     decoded.clone()
                 };
                 if t <= target {
+                    // The first picture after a seek is the key frame.
+                    if preview_due && target - t > PREVIEW_GAP_US {
+                        preview_due = false;
+                        if let Some(s) = scrub.as_deref_mut() {
+                            let key = self.convert(&picture, t, reduce)?;
+                            (s.preview)(key);
+                        }
+                    }
                     self.best = Some((picture, t));
                 } else {
                     self.ahead = Some((picture, t));
@@ -511,6 +568,92 @@ mod tests {
             .status()
             .is_ok_and(|s| s.success());
         ok.then_some(path)
+    }
+
+    /// Eight seconds with a key frame only every 250 pictures, as cameras write long GOPs.
+    fn long_gop_clip(name: &str) -> Option<std::path::PathBuf> {
+        let path = std::env::temp_dir().join(name);
+        let ok = std::process::Command::new("ffmpeg")
+            .args(["-y", "-v", "error", "-f", "lavfi", "-i"])
+            .arg("testsrc=duration=8:size=320x180:rate=25")
+            .args(["-pix_fmt", "yuv420p", "-g", "250", "-keyint_min", "250"])
+            .args(["-sc_threshold", "0"])
+            .arg(&path)
+            .status()
+            .is_ok_and(|s| s.success());
+        ok.then_some(path)
+    }
+
+    #[test]
+    fn scrubbing_hands_over_the_key_frame_and_stops_when_told() -> Result<(), String> {
+        let Some(path) = long_gop_clip("picasso_decode_long_gop.mp4") else {
+            return Ok(());
+        };
+        let target = 6_000_000;
+        // What a plain read gives, to compare with.
+        let plain = VideoDecoder::open_with(&path, false)
+            .and_then(|mut d| d.frame_at_reduced(target, 1))
+            .map_err(|e| e.to_string())?;
+
+        let mut d = VideoDecoder::open_with(&path, false).map_err(|e| e.to_string())?;
+        // Nobody asks for anything newer: the key frame comes first, then the exact picture.
+        let mut previews = Vec::new();
+        let never = || false;
+        let mut take = |f: Frame| previews.push(f.pts_us);
+        let exact = d
+            .frame_at_scrub(
+                target,
+                1,
+                &mut Scrub {
+                    cancel: &never,
+                    preview: &mut take,
+                },
+            )
+            .map_err(|e| e.to_string())?;
+        assert_eq!(previews, [0], "the key frame at the start of the file");
+        assert_eq!((exact.pts_us, &exact.rgba), (plain.pts_us, &plain.rgba));
+
+        // A newer request arrives while the pictures are being decoded: the read stops, at once.
+        let mut d = VideoDecoder::open_with(&path, false).map_err(|e| e.to_string())?;
+        let asked = std::cell::Cell::new(0);
+        let soon = || {
+            asked.set(asked.get() + 1);
+            asked.get() > 5
+        };
+        let mut nothing = |_: Frame| {};
+        let stopped = d.frame_at_scrub(
+            target,
+            1,
+            &mut Scrub {
+                cancel: &soon,
+                preview: &mut nothing,
+            },
+        );
+        assert!(
+            matches!(stopped, Err(DecodeError::Cancelled)),
+            "{stopped:?}"
+        );
+        assert!(asked.get() <= 7, "it went on after being told to stop");
+        // The decoder is not left broken: the same picture, asked for plainly, is the same.
+        let again = d.frame_at_reduced(target, 1).map_err(|e| e.to_string())?;
+        assert_eq!((again.pts_us, &again.rgba), (plain.pts_us, &plain.rgba));
+
+        // A picture close after its key frame needs no preview.
+        let mut d = VideoDecoder::open_with(&path, false).map_err(|e| e.to_string())?;
+        let mut previews = 0;
+        let mut count = |_: Frame| previews += 1;
+        d.frame_at_scrub(
+            100_000,
+            1,
+            &mut Scrub {
+                cancel: &never,
+                preview: &mut count,
+            },
+        )
+        .map_err(|e| e.to_string())?;
+        assert_eq!(previews, 0);
+        let _ = std::fs::remove_file(path);
+        Ok(())
     }
 
     #[test]

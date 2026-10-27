@@ -176,7 +176,14 @@ impl StudioApp {
                 }
             });
         }
-        let Some(change) = answer else { return };
+        if let Some(change) = answer {
+            self.answer_fps_prompt(change);
+        }
+    }
+
+    /// Answers the question waiting: `change` takes the video's frame rate for the project. The
+    /// files that waited for the answer are imported.
+    pub(crate) fn answer_fps_prompt(&mut self, change: bool) {
         let Some(prompt) = self.fps_prompt.take() else {
             return;
         };

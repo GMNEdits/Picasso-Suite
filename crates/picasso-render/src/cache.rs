@@ -115,11 +115,18 @@ const THUMBNAIL_REDUCTION: u32 = 4;
 /// Decoded images by the media item they belong to. Cloning is cheap: the pictures are shared.
 #[derive(Clone, Debug, Default)]
 pub struct MediaCache {
-    images: HashMap<MediaId, Arc<Decoded>>,
+    /// Shared, so a copy of the cache (one for each picture the viewer's thread puts together,
+    /// many a second while playing) costs one count, not a copy of every image's entry. Adding
+    /// or removing one copies the map only while another copy still holds it.
+    images: Arc<HashMap<MediaId, Arc<Decoded>>>,
     video: Option<Arc<dyn FrameSource>>,
     /// Decodes the media pool's thumbnails apart from `video`, whose one request per video the
     /// viewer replaces many times a second: a thumbnail's first frame would never be decoded.
     thumbnails: Option<Arc<dyn FrameSource>>,
+    /// Decodes the Edit page's source viewer apart from `video`: one decoder serving both would
+    /// seek back and forth between the source's frame and the playing timeline's, and each would
+    /// lose its picture to the other (the source viewer blinked black while the timeline played).
+    source: Option<Arc<dyn FrameSource>>,
     wait_for_video: bool,
     /// How much smaller video pictures are asked for (a proxy); 0 and 1 mean whole.
     reduction: u32,
@@ -133,11 +140,41 @@ impl MediaCache {
     /// A cache whose videos come from `source`.
     pub fn with_video_source(source: Arc<dyn FrameSource>) -> Self {
         Self {
-            images: HashMap::new(),
+            images: Arc::default(),
             video: Some(source),
             thumbnails: None,
+            source: None,
             wait_for_video: false,
             reduction: 1,
+        }
+    }
+
+    /// The same cache, with the source viewer's video pictures coming from `source`.
+    pub fn with_source_viewer_source(self, source: Arc<dyn FrameSource>) -> Self {
+        Self {
+            source: Some(source),
+            ..self
+        }
+    }
+
+    /// The same cache, set up for the source viewer: its video pictures come from its own source
+    /// when there is one.
+    pub fn for_source_viewer(&self) -> Self {
+        match &self.source {
+            Some(source) => Self {
+                video: Some(Arc::clone(source)),
+                ..self.clone()
+            },
+            None => self.clone(),
+        }
+    }
+
+    /// Changes when a picture for the source viewer arrives. Without a source of its own it is
+    /// the viewer's ([`MediaCache::video_generation`]).
+    pub fn source_generation(&self) -> u64 {
+        match &self.source {
+            Some(source) => source.generation(),
+            None => self.video_generation(),
         }
     }
 
@@ -209,7 +246,7 @@ impl MediaCache {
     }
 
     pub fn insert(&mut self, media: MediaId, image: Decoded) {
-        self.images.insert(media, Arc::new(image));
+        Arc::make_mut(&mut self.images).insert(media, Arc::new(image));
     }
 
     pub fn get(&self, media: MediaId) -> Option<&Arc<Decoded>> {
@@ -221,7 +258,9 @@ impl MediaCache {
     }
 
     pub fn remove(&mut self, media: MediaId) {
-        self.images.remove(&media);
+        if self.images.contains_key(&media) {
+            Arc::make_mut(&mut self.images).remove(&media);
+        }
     }
 }
 
@@ -281,6 +320,33 @@ mod tests {
         cache.for_thumbnails().video_frame(MediaId(1), "a.mp4", 0);
         assert_eq!(*thumbs.0.lock().unwrap(), [(THUMBNAIL_REDUCTION, false)]);
         assert!(viewer.0.lock().unwrap().is_empty());
+    }
+
+    #[test]
+    fn the_source_viewer_decodes_apart_from_the_timeline() {
+        let (viewer, source) = (
+            Arc::new(Asked(Default::default())),
+            Arc::new(Asked(Default::default())),
+        );
+        let cache = MediaCache::with_video_source(viewer.clone())
+            .with_source_viewer_source(source.clone())
+            .with_reduction(2);
+        // The timeline playing asks the viewer's decoder only.
+        cache.video_frame(MediaId(1), "a.mp4", 5_000_000);
+        // The source viewer asks its own, at the size it asks for, and never waits.
+        cache
+            .for_source_viewer()
+            .video_frame(MediaId(1), "a.mp4", 0);
+        assert_eq!(*viewer.0.lock().unwrap(), [(2, false)]);
+        assert_eq!(*source.0.lock().unwrap(), [(2, false)]);
+        // Its pictures arriving is what makes it draw again, not the timeline's.
+        assert_eq!(cache.source_generation(), 7);
+        // Without its own source it shares the viewer's, as before.
+        let shared = MediaCache::with_video_source(viewer.clone());
+        shared
+            .for_source_viewer()
+            .video_frame(MediaId(1), "a.mp4", 0);
+        assert_eq!(viewer.0.lock().unwrap().len(), 2);
     }
 
     #[test]

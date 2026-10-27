@@ -49,6 +49,8 @@ jobs:
       - run: cargo build --release -p picasso-suite -p picasso-bridge
         env:
           RUSTFLAGS: -C link-arg=-Wl,--disable-new-dtags,-rpath,$ORIGIN
+          # `picasso-suite --version` names the commit, so the tests can tell which build runs.
+          PICASSO_BUILD_COMMIT: ${{ github.sha }}
       - name: Gather FFmpeg's libraries
         run: |
           mkdir -p dist/linux-lib
@@ -81,6 +83,23 @@ jobs:
           # The packages say the processor they were built for.
           test "$(dpkg-deb -f "$NAME-${{ matrix.deb }}.deb" Architecture)" = "${{ matrix.deb }}"
           test "$(rpm -qp --qf '%{ARCH}' "$NAME-${{ matrix.arch }}.rpm")" = "${{ matrix.arch }}"
+      # The same packages marked one step newer (the .deb's version + "+update", the .rpm's release
+      # 2), for linux-install to try Check for Updates: a package manager only installs a newer
+      # package over the one it has. They are not published.
+      - name: Packages marked newer, for the update test
+        run: |
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          mkdir -p update-test
+          dpkg-deb -R "$NAME-${{ matrix.deb }}.deb" repack
+          sed -i -E 's/^(Version: .*)$/\1+update/' repack/DEBIAN/control
+          dpkg-deb --root-owner-group -b repack "update-test/$NAME-${{ matrix.deb }}.deb"
+          cargo generate-rpm -p apps/studio -s 'release = "2"' -o "update-test/$NAME-${{ matrix.arch }}.rpm"
+          dpkg-deb -f "update-test/$NAME-${{ matrix.deb }}.deb" Version
+          test "$(rpm -qp --qf '%{RELEASE}' "update-test/$NAME-${{ matrix.arch }}.rpm")" = 2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: update-test-linux-${{ matrix.deb }}
+          path: update-test/*
       # The AppImage runs on most distributions without installing; it uses the same system
       # libraries as the .deb (window, sound, Vulkan) and carries FFmpeg's.
       - name: AppImage
@@ -172,6 +191,34 @@ jobs:
                      libxkbcommon.so.0 libxkbcommon-x11.so.0 libwayland-client.so.0; do
             ldconfig -p | grep -q "$lib" || { echo "missing $lib"; exit 1; }
           done
+      # Help > Check for Updates, from the place the package installed it: the same code installs
+      # the copy marked newer (the download is the only step left out), as root, as here, or
+      # through pkexec for everyone else. The package manager must then have the newer one.
+      - uses: actions/download-artifact@v4
+        with:
+          name: update-test-linux-${{ matrix.deb }}
+          path: update-test
+      - name: Check for Updates installs a newer package over this one
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          picasso-suite --version | tee version.txt
+          grep -q "(${GITHUB_SHA:0:12})" version.txt
+          if dpkg-query -W picasso-suite >/dev/null 2>&1; then
+            before=$(dpkg-query -W -f='${Version}' picasso-suite)
+            picasso-suite --update-from "$PWD/$(ls update-test/*.deb)"
+            after=$(dpkg-query -W -f='${Version}' picasso-suite)
+            echo "$before -> $after"
+            test "$after" = "$before+update"
+          else
+            before=$(rpm -q --qf '%{RELEASE}' picasso-suite)
+            picasso-suite --update-from "$PWD/$(ls update-test/*.rpm)"
+            after=$(rpm -q --qf '%{RELEASE}' picasso-suite)
+            echo "release $before -> $after"
+            test "$after" = 2
+          fi
+          # The updated program still starts.
+          picasso-suite --menu-status > /dev/null
       # Without FUSE in the container, the AppImage unpacks itself and runs from there.
       - name: The AppImage starts
         if: matrix.appimage
@@ -234,6 +281,20 @@ jobs:
           manifest-path: packaging/linux/flatpak.yml
           arch: ${{ matrix.arch }}
           upload-artifact: false
+      # Help > Check for Updates inside the sandbox: the bundle is installed for this user, then
+      # the program installs it again through the host's flatpak (flatpak-spawn --host), as it
+      # does with a downloaded one. It needs a session bus for that.
+      - name: Check for Updates reinstalls the Flatpak
+        run: |
+          ID=io.github.fabox_os.PicassoSuite
+          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y --noninteractive "$PKG.flatpak"
+          mkdir -p "$HOME/update-test"
+          cp "$PKG.flatpak" "$HOME/update-test/"
+          dbus-run-session -- flatpak run --user "$ID" --update-from "$HOME/update-test/$PKG.flatpak"
+          flatpak list --user --app | grep "$ID"
+          dbus-run-session -- flatpak run --user "$ID" --version | tee version.txt
+          grep -q "(${GITHUB_SHA:0:12})" version.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pkg-flatpak-${{ matrix.arch }}
@@ -248,6 +309,8 @@ jobs:
       - run: |
           export PKG_CONFIG_PATH="$(brew --prefix ffmpeg@7)/lib/pkgconfig"
           cargo build --release -p picasso-suite -p picasso-bridge
+        env:
+          PICASSO_BUILD_COMMIT: ${{ github.sha }}
       # Apple silicon only: Homebrew's FFmpeg on this runner is arm64.
       - run: |
           NAME="picasso-suite-${RELEASE_TAG#v}"
@@ -270,6 +333,21 @@ jobs:
           otool -L "$APP/Contents/MacOS/picasso-suite"
           if otool -L "$APP/Contents/MacOS/picasso-suite" | grep -E "/opt/homebrew|/usr/local/"; then exit 1; fi
           ditto -c -k --keepParent "$APP" "$NAME-macos-arm64.zip"
+      # Help > Check for Updates replaces the app: a copy is unpacked and marked, then updated from
+      # the zip by the same code that installs a downloaded one. The marked app must be the one set
+      # aside (`.app.old`, deleted on the next start), and the new one must start.
+      - name: Check for Updates replaces the app
+        run: |
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          dir="$RUNNER_TEMP/installed"
+          mkdir -p "$dir"
+          ditto -x -k "$NAME-macos-arm64.zip" "$dir"
+          touch "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --update-from "$PWD/$NAME-macos-arm64.zip"
+          test -f "$dir/Picasso Suite.app.old/Contents/Resources/old-copy"
+          test ! -e "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --version | tee version.txt
+          grep -q "(${GITHUB_SHA:0:12})" version.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pkg-macos
@@ -303,6 +381,8 @@ jobs:
           $dir = (Get-ChildItem ffmpeg-win -Directory | Select-Object -First 1).FullName
           "FFMPEG_DIR=$dir" >> $env:GITHUB_ENV
       - run: cargo build --release -p picasso-suite -p picasso-bridge
+        env:
+          PICASSO_BUILD_COMMIT: ${{ github.sha }}
       - shell: pwsh
         run: |
           $name = "picasso-suite-" + $env:RELEASE_TAG.TrimStart('v') + "-windows"
@@ -312,6 +392,28 @@ jobs:
           Copy-Item "$env:FFMPEG_DIR/LICENSE.txt" "$name/FFMPEG-LICENSE.txt"
           Get-ChildItem $name | Format-Table Name, Length
           Compress-Archive $name "$name.zip"
+      # Help > Check for Updates over an unpacked copy: the files in use are renamed to *.old and
+      # the new ones put in their place. The program is a window program, so PowerShell is told to
+      # wait for it.
+      - name: Check for Updates replaces the program
+        shell: pwsh
+        run: |
+          $name = "picasso-suite-" + $env:RELEASE_TAG.TrimStart('v') + "-windows"
+          $unpacked = Join-Path $env:RUNNER_TEMP unpacked
+          Expand-Archive "$name.zip" $unpacked
+          $dir = Join-Path $unpacked $name
+          Set-Content "$dir\README.md" "old copy"
+          $run = { param($what) Start-Process "$dir\picasso-suite.exe" -ArgumentList $what -Wait -PassThru `
+              -RedirectStandardOutput out.txt -RedirectStandardError err.txt }
+          $p = & $run @("--update-from", "$PWD\$name.zip")
+          Get-Content out.txt, err.txt
+          if ($p.ExitCode -ne 0) { throw "the update failed" }
+          if ((Get-Content "$dir\README.md.old") -ne "old copy") { throw "the old copy was not set aside" }
+          if (-not (Select-String -Path "$dir\README.md" -Pattern "Picasso Suite" -Quiet)) { throw "the new README is not there" }
+          $p = & $run @("--version")
+          $version = Get-Content out.txt
+          $version
+          if ($version -notmatch [regex]::Escape($env:GITHUB_SHA.Substring(0, 12))) { throw "this is not the new build" }
       - uses: actions/upload-artifact@v4
         with:
           name: pkg-windows

@@ -9,11 +9,38 @@
 use picasso_core::{Command, MediaSource, Project};
 
 use crate::app::StudioApp;
+use crate::platform::Incoming;
 
 impl StudioApp {
-    /// Opens a Resolve file read into `bytes`; `name` is its file name.
-    pub(crate) fn open_resolve(&mut self, name: &str, bytes: &[u8]) {
-        let drp = match picasso_drp::read(bytes) {
+    /// Opens a Resolve file read into `bytes`; `name` is its file name. The archive is unpacked
+    /// and read on a thread of its own (a big project takes a good while, and the window must
+    /// go on drawing); `finish_resolve` goes on when the answer arrives.
+    pub(crate) fn open_resolve(&mut self, name: &str, bytes: Vec<u8>) {
+        self.info(format!("Reading {name}..."));
+        let (name, inbox, ctx) = (name.to_string(), self.inbox.clone(), self.ctx.clone());
+        let epoch = self.epoch;
+        std::thread::spawn(move || {
+            let read = picasso_drp::read(&bytes).map_err(|e| e.to_string());
+            inbox.push(&ctx, Incoming::Resolved { name, read, epoch });
+        });
+    }
+
+    /// The Resolve file read in the background arrived: a new project from its settings, with
+    /// the media it lists. If another project was opened while it was read (`epoch` is no longer
+    /// the app's), that one stays: replacing it would throw away what the user turned to.
+    pub(crate) fn finish_resolve(
+        &mut self,
+        name: &str,
+        read: Result<picasso_drp::DrpProject, String>,
+        epoch: u64,
+    ) {
+        if epoch != self.epoch {
+            self.info(format!(
+                "{name} was not opened: another project was opened while it was read"
+            ));
+            return;
+        }
+        let drp = match read {
             Ok(drp) => drp,
             Err(e) => {
                 self.fail(format!("{name}: {e}"));
@@ -33,12 +60,14 @@ impl StudioApp {
 
         // Importing a file reads it, so only the first files are imported; the rest are listed
         // as offline media. Network paths and addresses are never touched (see `refuse_path`).
+        // Videos and sounds are read in the background, one after the other, and join the pool
+        // as they arrive.
         const MAX_IMPORTED: usize = 200;
         let (mut found, mut missing) = (0, 0);
         for media in &drp.media {
             let local = picasso_decode::refuse_path(&media.path).is_none();
             if local && found < MAX_IMPORTED && std::path::Path::new(&media.path).is_file() {
-                self.open_path_now(&media.path);
+                self.open_path(&media.path, false);
                 found += 1;
             } else {
                 // Kept as offline media, so the pool shows what the project needs.

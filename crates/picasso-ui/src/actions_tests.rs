@@ -2064,3 +2064,118 @@ fn the_layout_entries_open_their_windows() {
     act(&mut app, Act::LoadLayout);
     assert!(app.extra.load_layout);
 }
+
+/// Waits (up to ten seconds) until `done` says so, taking in what the background threads sent.
+fn wait_for(app: &mut StudioApp, done: impl Fn(&StudioApp) -> bool) -> bool {
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+    while std::time::Instant::now() < deadline {
+        app.process_inbox();
+        if done(app) {
+            return true;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(2));
+    }
+    false
+}
+
+#[test]
+fn a_resolve_file_is_read_in_the_background() {
+    let mut app = app();
+    let before = app.project().name.clone();
+    let xml = r#"<?xml version="1.0"?><xmeml><sequence><name>Cut 1</name>
+        <rate><timebase>25</timebase></rate>
+        <file><pathurl>file:///nowhere/shot.mov</pathurl></file></sequence></xmeml>"#;
+    app.open_bytes("cut.xml", None, xml.as_bytes().to_vec());
+    // Nothing has been read when the call returns: the file is read on another thread.
+    assert_eq!(app.project().name, before);
+    assert!(
+        wait_for(&mut app, |a| a.project().name == "Cut 1"),
+        "the project never arrived: {}",
+        app.status.text
+    );
+    // The clip is not on this computer, so the pool lists it offline.
+    assert_eq!(app.project().media.len(), 1);
+}
+
+#[test]
+fn a_damaged_resolve_file_says_so_and_changes_nothing() {
+    let mut app = app();
+    let before = app.project().name.clone();
+    app.open_bytes("bad.drp", None, b"this is not an archive".to_vec());
+    assert!(
+        wait_for(&mut app, |a| a.status.error),
+        "no answer: {}",
+        app.status.text
+    );
+    assert!(app.status.text.contains("bad.drp"), "{}", app.status.text);
+    assert_eq!(app.project().name, before);
+}
+
+#[test]
+fn the_cut_page_arrows_change_the_track_height_and_reset_puts_it_back() {
+    let mut app = app();
+    let usual = app.cut_detail_row_h();
+    app.step_cut_row_h(true);
+    assert_eq!(app.cut_detail_row_h(), usual + 12.0);
+    // It stops at the tallest and the shortest.
+    for _ in 0..20 {
+        app.step_cut_row_h(true);
+    }
+    assert_eq!(app.cut_detail_row_h(), 136.0);
+    for _ in 0..20 {
+        app.step_cut_row_h(false);
+    }
+    assert_eq!(app.cut_detail_row_h(), 40.0);
+    // It is part of the layout.
+    act(&mut app, Act::ResetLayout);
+    assert_eq!(app.cut_detail_row_h(), usual);
+}
+
+#[test]
+fn hardware_decoding_is_switched_from_the_playback_menu() {
+    let mut app = app();
+    assert_eq!(app.act_checked(Act::ToggleHardwareDecoding), Some(true));
+    // A picture made while the card decoded.
+    let project = app.project().clone();
+    let content = app.render_cache.content((0, 0, 0), &project);
+    let key = picasso_render::FrameKey {
+        content,
+        frame: 0,
+        width: 16,
+        height: 16,
+        reduce: 1,
+        alpha: false,
+    };
+    let frame = picasso_render::render_frame(app.project(), &app.cache, 0, 16, 16).unwrap();
+    app.render_cache.put(key, std::sync::Arc::new(frame), false);
+    act(&mut app, Act::ToggleHardwareDecoding);
+    assert_eq!(app.act_checked(Act::ToggleHardwareDecoding), Some(false));
+    assert!(!app.extra.prefs.hardware_decoding);
+    // The decoders opened from now on use the processor, and the old pictures are gone.
+    assert!(!picasso_decode::hw::hardware_decoding());
+    assert!(app.render_cache.get(&key).is_none());
+    assert!(app.status.text.contains("off"), "{}", app.status.text);
+    act(&mut app, Act::ToggleHardwareDecoding);
+    assert!(app.extra.prefs.hardware_decoding);
+    assert_eq!(
+        picasso_decode::hw::hardware_decoding(),
+        std::env::var_os("PICASSO_NO_HWACCEL").is_none()
+    );
+}
+
+#[test]
+fn a_resolve_file_read_late_does_not_replace_a_project_opened_meanwhile() {
+    let mut app = app();
+    let xml = r#"<?xml version="1.0"?><xmeml><sequence><name>Cut 1</name>
+        <rate><timebase>25</timebase></rate></sequence></xmeml>"#;
+    app.open_bytes("cut.xml", None, xml.as_bytes().to_vec());
+    // While it is read, the user opens another project.
+    app.new_project();
+    let opened = app.project().name.clone();
+    assert!(
+        wait_for(&mut app, |a| a.status.text.contains("was not opened")),
+        "{}",
+        app.status.text
+    );
+    assert_eq!(app.project().name, opened, "the project opened meanwhile stays");
+}

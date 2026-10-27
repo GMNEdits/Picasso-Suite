@@ -14,13 +14,25 @@ struct Window {
     /// `PICASSO_SCREENSHOT=<file.png>`: the app saves a picture of its own window and quits.
     #[cfg(not(target_arch = "wasm32"))]
     shot: Option<(std::path::PathBuf, std::time::Instant, bool)>,
-    /// `PICASSO_PERF=1`: frame times in ms, printed after 150 frames, then the window closes.
+    /// `PICASSO_PERF=1`: frame times in ms, printed after 150 frames (`PICASSO_PERF_FRAMES`), then
+    /// the window closes.
     #[cfg(not(target_arch = "wasm32"))]
-    perf: Option<Vec<f64>>,
+    perf: Option<Perf>,
     /// `PICASSO_PERF=pages`: each page in turn, its first frame (the switch) and its usual
     /// frames, printed when every page was shown twice, then the window closes.
     #[cfg(not(target_arch = "wasm32"))]
     pages: Option<PagePerf>,
+}
+
+/// What `PICASSO_PERF=1` has measured: the time the interface took on each frame, and the time
+/// from the frame before, which also counts drawing on the graphics card and showing the frame
+/// (a frame that takes long there is a stutter the interface's own time does not show).
+#[cfg(not(target_arch = "wasm32"))]
+struct Perf {
+    frames: usize,
+    times: Vec<f64>,
+    gaps: Vec<f64>,
+    last: Option<std::time::Instant>,
 }
 
 /// What `PICASSO_PERF=pages` has measured: the frame times of each visit to a page.
@@ -100,7 +112,16 @@ impl Window {
             #[cfg(not(target_arch = "wasm32"))]
             perf: std::env::var_os("PICASSO_PERF")
                 .filter(|v| v != "pages")
-                .map(|_| Vec::new()),
+                .map(|_| Perf {
+                    frames: std::env::var("PICASSO_PERF_FRAMES")
+                        .ok()
+                        .and_then(|n| n.parse().ok())
+                        .unwrap_or(150usize)
+                        .max(40),
+                    times: Vec::new(),
+                    gaps: Vec::new(),
+                    last: None,
+                }),
             #[cfg(not(target_arch = "wasm32"))]
             pages: std::env::var_os("PICASSO_PERF")
                 .filter(|v| v == "pages")
@@ -192,11 +213,17 @@ impl eframe::App for Window {
         }
         #[cfg(not(target_arch = "wasm32"))]
         {
-            if let Some(times) = &mut self.perf {
-                times.push(started.elapsed().as_secs_f64() * 1000.0);
+            if let Some(perf) = &mut self.perf {
+                let now = std::time::Instant::now();
+                perf.times.push(started.elapsed().as_secs_f64() * 1000.0);
+                if let Some(last) = perf.last {
+                    perf.gaps.push((now - last).as_secs_f64() * 1000.0);
+                }
+                perf.last = Some(now);
                 ui.ctx().request_repaint();
-                if times.len() == 150 {
-                    let mut t = times.split_off(30);
+                if perf.times.len() == perf.frames {
+                    // The first 30 frames open the window and import; they are left out.
+                    let mut t = perf.times.split_off(30);
                     t.sort_by(|a, b| a.total_cmp(b));
                     let avg = t.iter().sum::<f64>() / t.len() as f64;
                     println!(
@@ -206,6 +233,17 @@ impl eframe::App for Window {
                         t[t.len() * 95 / 100],
                         t[t.len() - 1]
                     );
+                    let mut g = perf.gaps.split_off(30.min(perf.gaps.len()));
+                    g.sort_by(|a, b| a.total_cmp(b));
+                    if !g.is_empty() {
+                        println!(
+                            "between frames: p50={:.1}ms p95={:.1}ms max={:.1}ms over 50ms={}",
+                            g[g.len() / 2],
+                            g[g.len() * 95 / 100],
+                            g[g.len() - 1],
+                            g.iter().filter(|&&x| x > 50.0).count()
+                        );
+                    }
                     ui.ctx()
                         .send_viewport_cmd(eframe::egui::ViewportCommand::Close);
                 }
@@ -297,6 +335,29 @@ fn main() -> eframe::Result {
         println!("{}", picasso_ui::menu_status_markdown());
         return Ok(());
     }
+    if std::env::args().any(|a| a == "--version") {
+        println!("{}", picasso_ui::version_line());
+        return Ok(());
+    }
+    // `--update-from <package>`: installs a release package over this copy, as Check for Updates
+    // does with the one it downloads (the release workflow tries the updater with it).
+    let args: Vec<String> = std::env::args().collect();
+    if let Some(i) = args.iter().position(|a| a == "--update-from") {
+        let Some(package) = args.get(i + 1) else {
+            eprintln!("--update-from needs the package file");
+            std::process::exit(2);
+        };
+        match picasso_ui::update_from_file(std::path::Path::new(package)) {
+            Ok(done) => {
+                println!("{done}");
+                return Ok(());
+            }
+            Err(e) => {
+                eprintln!("the update did not work: {e}");
+                std::process::exit(1);
+            }
+        }
+    }
     // `--graphics-check`: which graphics cards draw (for bug reports), without opening a window.
     if std::env::args().any(|a| a == "--graphics-check") {
         std::process::exit(i32::from(!graphics_check::run()));
@@ -330,11 +391,15 @@ fn main() -> eframe::Result {
                 println!("Graphics: {} ({api}, {:?})", info.name, info.device_type);
                 app.set_graphics(&info.name, &api, software);
             }
-            // `picasso-suite [--place] [--page=audio] <file>...` opens projects and imports media.
+            // `picasso-suite [--place [--play]] [--page=audio] <file>...` opens projects and
+            // imports media; `--play` starts playback once the files are on the timeline.
             let args: Vec<String> = std::env::args().skip(1).collect();
             let place = args.iter().any(|a| a == "--place");
             for path in args.iter().filter(|a| !a.starts_with("--")) {
                 app.open_path(path, place);
+            }
+            if args.iter().any(|a| a == "--play") {
+                app.play_when_placed();
             }
             if let Some(page) = args.iter().find_map(|a| a.strip_prefix("--page=")) {
                 app.show_page(page);

@@ -874,14 +874,29 @@ impl StudioApp {
         if volume != self.monitor.volume {
             self.set_monitor(|m| m.volume = volume);
         }
-        if hardware != self.extra.prefs.hardware_decoding {
-            // The clips open again the new way as they are next drawn.
-            self.extra.prefs.hardware_decoding = hardware;
-            self.extra.prefs.apply();
-            #[cfg(not(test))]
-            self.extra.prefs.save();
-        }
+        self.set_hardware_decoding(hardware);
         self.extra.preferences = open;
+    }
+
+    /// Turns decoding on the graphics card on or off (System Preferences > Decode Options, and
+    /// Playback > Hardware Decoding), for this computer. The clips open again the new way as they
+    /// are next drawn, and the viewer pictures made the old way are forgotten, so a picture the
+    /// card got wrong does not keep showing.
+    pub(crate) fn set_hardware_decoding(&mut self, on: bool) {
+        if on == self.extra.prefs.hardware_decoding {
+            return;
+        }
+        self.extra.prefs.hardware_decoding = on;
+        self.extra.prefs.apply();
+        #[cfg(not(test))]
+        self.extra.prefs.save();
+        let _ = self.render_cache.clear();
+        self.media_generation += 1;
+        self.info(if on {
+            "Hardware decoding is on: video is decoded on the graphics card where it can be"
+        } else {
+            "Hardware decoding is off: video is decoded on the processor"
+        });
     }
 
     fn rename_bin_window(&mut self, ctx: &Context) {

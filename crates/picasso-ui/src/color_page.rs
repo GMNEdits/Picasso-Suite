@@ -1842,19 +1842,61 @@ impl StudioApp {
                 LABEL,
             );
         }
-        c.p.text(
-            c.rv(6.0, 638.0),
-            Align2::LEFT_CENTER,
-            "V1",
-            theme::regular(8.5 * R),
-            LABEL,
-        );
-        c.p.rect_filled(
-            c.rrect(33.0, 631.0, 1913.0, 644.0),
-            1.0,
-            Color32::from_rgb(52, 116, 170),
-        );
-        let x = 40.0 + (self.playhead as f32 / duration as f32).clamp(0.0, 1.0) * span;
+        // Each picture track as a row of its clips where they sit on the timeline, V1 at the
+        // bottom as on the Edit page; up to three rows share the strip. The clip being graded
+        // has a red edge, and a track whose picture is off is dimmed.
+        let to_x = |frame: u64| 40.0 + (frame as f32 / duration as f32).clamp(0.0, 1.0) * span;
+        let videos: Vec<(String, bool, Vec<(picasso_core::ClipId, u64, u64)>)> = self
+            .project()
+            .tracks
+            .iter()
+            .filter(|t| t.kind == picasso_core::TrackKind::Video)
+            .take(3)
+            .map(|t| {
+                (
+                    t.name.clone(),
+                    !t.muted && t.picture,
+                    t.clips
+                        .iter()
+                        .map(|clip| (clip.id, clip.start, clip.start + clip.duration))
+                        .collect(),
+                )
+            })
+            .collect();
+        let rows = videos.len().max(1) as f32;
+        let (band_top, band_bottom) = (629.0, 647.0);
+        let row_h = (band_bottom - band_top) / rows;
+        for (i, (name, on, clips)) in videos.iter().enumerate() {
+            let bottom = band_bottom - row_h * i as f32;
+            let top = bottom - row_h + 1.0;
+            c.p.text(
+                c.rv(6.0, (top + bottom) / 2.0),
+                Align2::LEFT_CENTER,
+                name,
+                theme::regular((8.5 * R).min(row_h * 0.8)),
+                LABEL,
+            );
+            let fill = if *on {
+                Color32::from_rgb(52, 116, 170)
+            } else {
+                Color32::from_rgb(52, 62, 74)
+            };
+            for (id, start, end) in clips {
+                // At least a point wide, and a gap between clips that touch.
+                let (x0, x1) = (to_x(*start), to_x(*end));
+                let rect = c.rrect(x0, top, (x1 - 1.0).max(x0 + 1.0), bottom);
+                c.p.rect_filled(rect, 1.0, fill);
+                if current == Some(*id) {
+                    c.p.rect_stroke(
+                        rect,
+                        1.0,
+                        Stroke::new(1.2, Color32::from_rgb(226, 62, 52)),
+                        StrokeKind::Inside,
+                    );
+                }
+            }
+        }
+        let x = to_x(self.playhead);
         c.p.line_segment(
             [c.rv(x, 594.0), c.rv(x, 648.0)],
             Stroke::new(1.0, Color32::from_rgb(222, 64, 52)),

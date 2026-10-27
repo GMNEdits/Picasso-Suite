@@ -6,6 +6,7 @@ use picasso_core::Project;
 use crate::actions::Overlays;
 use std::sync::Arc;
 
+use crate::composer::{Composer, Job};
 use crate::render_cache::RenderCache;
 use picasso_render::{Frame, FrameKey, MediaCache};
 
@@ -51,11 +52,16 @@ pub(crate) struct Viewer {
     pub frame: Option<Arc<Frame>>,
     /// Counts the pictures rendered, so a scope knows when to measure again.
     pub generation: u64,
+    /// Puts the pictures together away from the interface ([`crate::composer`]).
+    composer: Composer,
+    /// The project as the compositing thread sees it, by its content hash: copied only when
+    /// the project changes, not on every frame that plays.
+    snapshot: Option<(u64, Arc<Project>)>,
 }
 
 impl Viewer {
-    /// Renders the picture again when what it depends on changed, or takes it from the render
-    /// cache.
+    /// Shows the picture for `key`: at once when the render cache has it, or else asks the
+    /// compositing thread for it and goes on showing the picture there is until it arrives.
     pub fn ensure(
         &mut self,
         ctx: &Context,
@@ -65,16 +71,58 @@ impl Viewer {
         frames: &mut RenderCache,
         frame_key: FrameKey,
     ) {
+        self.receive(ctx, frames);
         if self.key.as_ref() == Some(&key) {
             return;
         }
-        let Some(frame) = frames.render(project, cache, frame_key) else {
+        if let Some(frame) = frames.get(&frame_key) {
+            let image = color_image(&frame);
+            self.show(ctx, frame, image, key);
+            // A picture asked for before this one must not replace it when it arrives.
+            self.composer.outdate();
             return;
+        }
+        // Already on its way.
+        if self.composer.asked.as_ref() == Some(&key) {
+            return;
+        }
+        let project = match &self.snapshot {
+            Some((content, p)) if *content == frame_key.content => p.clone(),
+            _ => {
+                let p = Arc::new(project.clone());
+                self.snapshot = Some((frame_key.content, p.clone()));
+                p
+            }
         };
-        let image = ColorImage::from_rgba_unmultiplied(
-            [frame.width as usize, frame.height as usize],
-            &frame.rgba,
+        self.composer.submit(
+            ctx,
+            Job {
+                id: 0,
+                viewer: key,
+                key: frame_key,
+                project,
+                media: cache.clone(),
+            },
         );
+        // The browser puts it together at once.
+        self.receive(ctx, frames);
+    }
+
+    /// Shows the picture the compositing thread finished, if there is one, and keeps it in the
+    /// render cache when it is final.
+    fn receive(&mut self, ctx: &Context, frames: &mut RenderCache) {
+        if let Some(done) = self.composer.take_done() {
+            if done.exact {
+                frames.put(done.key, done.frame.clone(), done.slow);
+            }
+            // Kept either way, but shown only if nothing newer was shown since it was asked for.
+            if self.composer.is_current(&done) {
+                self.show(ctx, done.frame, done.image, done.viewer);
+            }
+        }
+    }
+
+    fn show(&mut self, ctx: &Context, frame: Arc<Frame>, image: ColorImage, key: ViewerKey) {
         match &mut self.texture {
             Some(texture) => texture.set(image, TextureOptions::LINEAR),
             None => self.texture = Some(ctx.load_texture("viewer", image, TextureOptions::LINEAR)),
@@ -127,6 +175,11 @@ impl Viewer {
     }
 }
 
+/// A rendered picture as the viewer's texture takes it.
+pub(crate) fn color_image(frame: &Frame) -> ColorImage {
+    ColorImage::from_rgba_unmultiplied([frame.width as usize, frame.height as usize], &frame.rgba)
+}
+
 /// Grey squares behind a picture with transparent parts.
 fn draw_checkerboard(painter: &egui::Painter, rect: Rect) {
     const SQUARE: f32 = 12.0;
@@ -173,6 +226,207 @@ fn draw_overlays(painter: &egui::Painter, rect: Rect, overlays: Overlays) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Plays a portrait 1080x1920 clip at 60 fps (a key frame every 2 seconds) through the viewer
+    /// in real time, twice (the second time the render cache has some pictures), as the app does
+    /// on every frame. Returns how often the picture on show went back in time, and how many
+    /// ticks it lagged more than 10 frames behind the playhead. `None` without `ffmpeg`.
+    #[cfg(not(target_arch = "wasm32"))]
+    fn play_through_the_viewer(name: &str, size: &str) -> Option<(usize, usize, Vec<u64>)> {
+        use picasso_core::{Command, Fps, MediaSource, Outcome};
+        let path = std::env::temp_dir().join(name);
+        let made = std::process::Command::new("ffmpeg")
+            .args(["-y", "-v", "error", "-f", "lavfi", "-i"])
+            .arg(format!("testsrc2=duration=6:size={size}:rate=60"))
+            .args([
+                "-pix_fmt", "yuv420p", "-g", "120", "-c:v", "libx264", "-preset", "veryfast",
+            ])
+            .arg(&path)
+            .status()
+            .is_ok_and(|s| s.success());
+        if !made {
+            return None;
+        }
+        let ctx = Context::default();
+        let mut p = Project::new("t");
+        (p.width, p.height, p.fps) = (1920, 1080, Fps::FPS_60);
+        let Ok(Outcome::Media(m)) = (Command::AddMedia {
+            name: "v".into(),
+            source: MediaSource::Video {
+                path: path.to_string_lossy().into_owned(),
+            },
+            length: Some(360),
+            default_duration: 360,
+        })
+        .apply(&mut p) else {
+            return None;
+        };
+        let track = p.tracks[0].id;
+        let _ = Command::AddClip {
+            track,
+            media: m,
+            start: 0,
+            duration: None,
+            with_sound: false,
+        }
+        .apply(&mut p);
+        // As the app: a 960 x 540 preview, the video decoded at half size.
+        let cache = crate::video::new_cache(&ctx).with_reduction(2);
+        let (mut viewer, mut frames) = (Viewer::default(), RenderCache::new());
+        let content = frames.content((0, 0, 0), &p);
+        let (mut back, mut late, mut shown) = (0, 0, Vec::new());
+        for _pass in 0..2 {
+            let start = std::time::Instant::now();
+            let mut last: Option<u64> = None;
+            loop {
+                let frame = (start.elapsed().as_secs_f64() * 60.0) as u64;
+                if frame >= 300 {
+                    break;
+                }
+                let key = ViewerKey {
+                    epoch: 0,
+                    revision: 0,
+                    media_generation: 0,
+                    video: cache.video_generation(),
+                    frame,
+                    width: 960,
+                    height: 540,
+                    alpha: false,
+                    highlight: 0,
+                };
+                let frame_key = FrameKey {
+                    content,
+                    frame,
+                    width: 960,
+                    height: 540,
+                    reduce: 2,
+                    alpha: false,
+                };
+                viewer.ensure(&ctx, &p, &cache, key, &mut frames, frame_key);
+                if let Some(on) = viewer.key.as_ref().map(|k| k.frame) {
+                    // (`l <= frame`: the last picture of the pass before does not count.)
+                    if last.is_some_and(|l| on < l && l <= frame) {
+                        back += 1;
+                    }
+                    if frame > on + 10 {
+                        late += 1;
+                    }
+                    last = Some(on);
+                    shown.push(on);
+                }
+                std::thread::sleep(std::time::Duration::from_millis(16));
+            }
+        }
+        let _ = std::fs::remove_file(path);
+        Some((back, late, shown))
+    }
+
+    /// Plays in real time for about 25 seconds: run it with `--ignored` when playback is in doubt.
+    #[cfg(not(target_arch = "wasm32"))]
+    #[test]
+    #[ignore]
+    fn playback_never_shows_an_older_picture_after_a_newer_one() {
+        // A clip that decodes in time, and a 4K one that does not on most computers.
+        for (name, size) in [
+            ("picasso_viewer_play.mp4", "1080x1920"),
+            ("picasso_viewer_play_4k.mp4", "2160x3840"),
+        ] {
+            let Some((back, late, shown)) = play_through_the_viewer(name, size) else {
+                return;
+            };
+            eprintln!(
+                "PLAYBACK {size}: back={back} late={late} ticks={}",
+                shown.len()
+            );
+            assert_eq!(
+                back, 0,
+                "{size}: the picture went back in time {back} times: {shown:?}"
+            );
+        }
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    #[test]
+    fn the_picture_is_put_together_away_from_the_interface_and_kept() {
+        use picasso_core::{Command, MediaSource, Outcome};
+        let mut p = Project::new("t");
+        (p.width, p.height) = (64, 36);
+        if let Ok(Outcome::Media(m)) = (Command::AddMedia {
+            name: "c".into(),
+            source: MediaSource::Solid { rgb: [10, 20, 30] },
+            length: None,
+            default_duration: 10,
+        })
+        .apply(&mut p)
+        {
+            let track = p.tracks[0].id;
+            let _ = Command::AddClip {
+                track,
+                media: m,
+                start: 0,
+                duration: None,
+                with_sound: false,
+            }
+            .apply(&mut p);
+        }
+        let ctx = Context::default();
+        let (mut viewer, mut frames, media) =
+            (Viewer::default(), RenderCache::new(), MediaCache::new());
+        let content = frames.content((0, 0, 0), &p);
+        let key = |frame| ViewerKey {
+            epoch: 0,
+            revision: 0,
+            media_generation: 0,
+            video: 0,
+            frame,
+            width: 64,
+            height: 36,
+            alpha: false,
+            highlight: 0,
+        };
+        let frame_key = |frame| FrameKey {
+            content,
+            frame,
+            width: 64,
+            height: 36,
+            reduce: 1,
+            alpha: false,
+        };
+        // The interface does not wait: nothing is on show when the call returns.
+        viewer.ensure(&ctx, &p, &media, key(3), &mut frames, frame_key(3));
+        assert!(
+            viewer.frame.is_none(),
+            "it was put together on the interface thread"
+        );
+        // It arrives on a later frame.
+        let end = std::time::Instant::now() + std::time::Duration::from_secs(5);
+        while viewer.frame.is_none() && std::time::Instant::now() < end {
+            std::thread::sleep(std::time::Duration::from_millis(1));
+            viewer.ensure(&ctx, &p, &media, key(3), &mut frames, frame_key(3));
+        }
+        let shown = viewer.frame.clone().expect("the picture never arrived");
+        assert_eq!(&shown.rgba[..4], &[10, 20, 30, 255]);
+        // It was kept: going back to it later is answered at once, from the render cache.
+        assert!(frames.get(&frame_key(3)).is_some());
+        viewer.ensure(&ctx, &p, &media, key(4), &mut frames, frame_key(4));
+        viewer.ensure(&ctx, &p, &media, key(3), &mut frames, frame_key(3));
+        assert_eq!(viewer.key, Some(key(3)));
+
+        // A picture asked for (5, not cached), then a newer one shown from the cache (3 again,
+        // standing for any frame the cache has): when 5 arrives late, it must not replace it.
+        viewer.ensure(&ctx, &p, &media, key(5), &mut frames, frame_key(5));
+        viewer.key = None;
+        viewer.ensure(&ctx, &p, &media, key(3), &mut frames, frame_key(3));
+        std::thread::sleep(std::time::Duration::from_millis(300));
+        viewer.receive(&ctx, &mut frames);
+        assert_eq!(
+            viewer.key,
+            Some(key(3)),
+            "an older picture came back on top"
+        );
+        // It was still kept for later.
+        assert!(frames.get(&frame_key(5)).is_some());
+    }
 
     #[test]
     fn preview_keeps_the_shape_and_caps_the_long_side() {

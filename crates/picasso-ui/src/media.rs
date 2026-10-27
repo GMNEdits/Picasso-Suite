@@ -185,6 +185,35 @@ pub(crate) fn fitting(p: &Painter, text: &str, size: f32, room: f32) -> egui::Fo
     regular(size * (room.max(1.0) / width.max(1.0)).min(1.0))
 }
 
+/// `text` cut to fit in `room` points in `font`, ending in "…" when it was cut. A name from a
+/// file can be as long as a sentence; drawn whole it runs over whatever is beside it.
+pub(crate) fn elided(p: &Painter, text: &str, font: &egui::FontId, room: f32) -> String {
+    let width = |t: &str| {
+        p.layout_no_wrap(t.to_string(), font.clone(), Color32::WHITE)
+            .size()
+            .x
+    };
+    if width(text) <= room {
+        return text.to_string();
+    }
+    // The longest start of the text that fits with the ellipsis, found by halving.
+    let chars: Vec<char> = text.chars().collect();
+    let (mut lo, mut hi) = (0, chars.len());
+    while lo < hi {
+        let mid = (lo + hi + 1) / 2;
+        let candidate: String = chars[..mid].iter().collect::<String>() + "…";
+        if width(&candidate) <= room {
+            lo = mid;
+        } else {
+            hi = mid - 1;
+        }
+    }
+    if lo == 0 {
+        return String::new();
+    }
+    chars[..lo].iter().collect::<String>().trim_end().to_string() + "…"
+}
+
 /// "No clips in media pool" in the panel from `x0`, `y0` to `x1`, `y1`, growing and shrinking
 /// with it as the dividers move, and never wider than it.
 fn empty_pool_message(p: &Painter, s: &Screen, x0: f32, x1: f32, y0: f32, y1: f32) {

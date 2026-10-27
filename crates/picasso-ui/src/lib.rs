@@ -36,6 +36,7 @@ mod project_manager;
 mod projectfile;
 mod queue;
 mod recording;
+mod composer;
 mod render_cache;
 #[cfg(not(target_arch = "wasm32"))]
 mod render_presets;
@@ -60,3 +61,6 @@ pub use app::{Page, StudioApp};
 pub fn menu_status_markdown() -> String {
     menu::status_markdown()
 }
+
+#[cfg(not(target_arch = "wasm32"))]
+pub use update::{update_from_file, version_line};

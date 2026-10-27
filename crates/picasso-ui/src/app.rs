@@ -97,6 +97,9 @@ pub struct StudioApp {
     prober: Option<std::sync::mpsc::Sender<(ImportedFile, bool)>>,
     /// Files given on the command line with `--place`: put on the timeline once imported.
     place_paths: Vec<String>,
+    /// `--play` on the command line: playback starts from the beginning once the files given
+    /// are imported and placed (for timing playback with `PICASSO_PERF`).
+    play_when_placed: bool,
     /// Set while `open_path_now` imports: the file is read on the spot, not in the background.
     sync_import: bool,
     pub(crate) clipboard: Vec<ClipCopy>,
@@ -227,6 +230,7 @@ impl StudioApp {
             #[cfg(not(target_arch = "wasm32"))]
             prober: None,
             place_paths: Vec::new(),
+            play_when_placed: false,
             sync_import: false,
             clipboard: Vec::new(),
             play_speed: 1.0,
@@ -363,6 +367,32 @@ impl StudioApp {
     pub(crate) fn go_to(&mut self, frame: u64) {
         self.playhead = frame.min(self.project().duration());
         self.play_accum = 0.0;
+    }
+
+    /// Starts playback from the start once the files on the command line are imported and placed
+    /// (`--play`).
+    pub fn play_when_placed(&mut self) {
+        self.play_when_placed = true;
+    }
+
+    /// `--play`: starts once nothing is left being read or waiting to be placed.
+    fn start_play_when_placed(&mut self) {
+        // Nobody is there to answer: the project takes the video's frame rate.
+        if self.play_when_placed && self.fps_prompt.is_some() {
+            self.answer_fps_prompt(true);
+        }
+        if self.play_when_placed
+            && self.probing == 0
+            && self.place_paths.is_empty()
+            && self.fps_prompt.is_none()
+            && self.project().duration() > 0
+        {
+            self.play_when_placed = false;
+            self.playhead = 0;
+            if !self.playing {
+                self.toggle_play();
+            }
+        }
     }
 
     pub(crate) fn toggle_play(&mut self) {
@@ -747,7 +777,7 @@ impl StudioApp {
             return;
         }
         if platform::is_resolve_name(name) {
-            self.open_resolve_bytes(name, &bytes);
+            self.open_resolve_bytes(name, bytes);
             return;
         }
         match crate::projectfile::decode(bytes) {
@@ -763,7 +793,7 @@ impl StudioApp {
     }
 
     /// Opens a DaVinci Resolve file (desktop only: its media is read from disk).
-    fn open_resolve_bytes(&mut self, name: &str, bytes: &[u8]) {
+    fn open_resolve_bytes(&mut self, name: &str, bytes: Vec<u8>) {
         #[cfg(not(target_arch = "wasm32"))]
         self.open_resolve(name, bytes);
         #[cfg(target_arch = "wasm32")]
@@ -810,7 +840,7 @@ impl StudioApp {
             return;
         }
         if platform::is_resolve_name(&file.name) {
-            self.open_resolve_bytes(&file.name, &file.bytes);
+            self.open_resolve_bytes(&file.name, file.bytes);
             return;
         }
         if platform::is_project_name(&file.name) {
@@ -1212,6 +1242,12 @@ impl StudioApp {
                 } => self.finish_probed(file, sound_only, probed),
                 #[cfg(target_arch = "wasm32")]
                 Incoming::Probed { .. } => {}
+                #[cfg(not(target_arch = "wasm32"))]
+                Incoming::Resolved { name, read, epoch } => {
+                    self.finish_resolve(&name, read, epoch)
+                }
+                #[cfg(target_arch = "wasm32")]
+                Incoming::Resolved { .. } => {}
                 Incoming::CodecLabel { media, label } => {
                     self.codec_labels.insert(media, label);
                 }
@@ -1239,6 +1275,7 @@ impl StudioApp {
     pub fn ui(&mut self, ui: &mut Ui) {
         let ctx = ui.ctx().clone();
         self.process_inbox();
+        self.start_play_when_placed();
         self.dynamic_trim_tick();
         self.take_dropped_files(&ctx);
         self.deliver.poll(&mut self.status, &ctx);

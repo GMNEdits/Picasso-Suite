@@ -55,6 +55,13 @@ pub(crate) enum Incoming {
         sound_only: bool,
         probed: Result<picasso_media::MediaMetadata, String>,
     },
+    /// A DaVinci Resolve file, unpacked and read in the background (desktop only).
+    Resolved {
+        name: String,
+        read: Result<picasso_drp::DrpProject, String>,
+        /// The app's epoch when it was asked for: another project opened since wins.
+        epoch: u64,
+    },
     /// The codec of a video, read from its file in the background (desktop only).
     CodecLabel {
         media: picasso_core::MediaId,

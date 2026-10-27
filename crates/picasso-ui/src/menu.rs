@@ -109,6 +109,7 @@ pub(crate) enum Act {
     ProxyHalf,
     ProxyQuarter,
     ProxyEighth,
+    ToggleHardwareDecoding,
     DeleteRenderCache,
     LinkClips,
     UnlinkClips,
@@ -643,6 +644,8 @@ const PLAYBACK: &[Entry] = &[
             item("Eighth", &[], Act::ProxyEighth),
         ],
     ),
+    // The same switch as System Preferences > Decode Options, where playback is judged.
+    item("Hardware Decoding", &[], Act::ToggleHardwareDecoding),
     item("Delete Render Cache", &[], Act::DeleteRenderCache),
 ];
 

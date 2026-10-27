@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.3.0, plus the changes on main since (the changelog's Unreleased section).
+Status at 0.4.0.
 
 ## Done
 
@@ -44,22 +44,27 @@ Status at 0.3.0, plus the changes on main since (the changelog's Unreleased sect
 - [x] Interface: the second page tab is called Photo, and `--page=` opens every page by its tab's name
 - [x] Timecode: the readouts on the Cut, Color and Deliver pages start at 01:00:00:00 like the rulers
 - [x] Development: CI fails when the status picture or the README's numbers are out of date
+- [x] Security: project databases are refused when reading them takes more than 5 seconds (a query built to run for ever), and Resolve files are read on a thread of their own with their media imported in the background
+- [x] Performance: the viewer's picture is put together on a thread of its own (1080p playback: Edit 3.0 to 1.35 ms a frame, Cut 2.2 to 0.66, Color 3.9 to 2.3); scrubbing drops a picture nobody wants any more and shows the key frame meanwhile (4K, 2-second GOP: 370 to 200 ms after letting go)
+- [x] Cut page: the height arrows of the track button row
+- [x] Color page: the mini timeline strip shows the clips of up to three picture tracks
+- [x] Playback: Playback > Hardware Decoding switches decoding on the graphics card off and on without opening System Preferences (a tester saw shaking and black pictures that do not happen on an AMD card; the cause is still being found)
+- [x] Playback: the timelines keep the width of a second at every frame rate (a 60 fps project ran 2.5 times faster across them); the Cut page's lower timeline keeps the playhead in the middle; the Edit page's source viewer decodes apart from the timeline, so it no longer blinks or slows playback of the same clip; long clips draw only their film strip and waveform on screen
+- [x] Interface: long clip names are cut with an ellipsis in the source viewer's header
+- [x] Help: Check for Updates installs as root without pkexec, and openSUSE's zypper is told the release's rpm is unsigned; `picasso-suite --update-from <package>` and `--version`
 
 ## To do
 
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
 - [ ] Deliver: IMF Generic, Final Cut Pro 7, Premiere XML, AVID AAF and Pro Tools presets (listed, greyed out) need interchange writers (XML, AAF, MXF)
 - [ ] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
-- [ ] Cut page: the height arrows of the track button row (lock, solo, mute and picture work)
-- [ ] Color page: the mini timeline strip under the clips
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
 - [ ] Editing: AAF/XML export, Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), Paste Mix, New Effects Clip, audio scrubbing, timeline in a new window, Bounce Selected Tracks
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
-- [ ] Performance: instant scrubbing on long-GOP video (cache of key-frame pictures or optimised media); the remaining compositing on the interface thread (about 2 ms per picture) moved to a worker
+- [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds; the Color page's scopes still measure on the interface thread (up to about 6 ms a frame)
 - [ ] Project: libraries, archives, media management, metadata import/export, Lightbox, dual screen, clean feed
-- [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm (a per-user Flatpak now updates per-user; a .deb is told from an .rpm by dpkg's file list)
-- [ ] Security: a time limit on reading project databases; Resolve import on a background thread
+- [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates: the release workflow now updates the .deb, .rpm, macOS app, Windows folder and Flatpak in place on every build (`--update-from`), and its first run is still to come; the download from GitHub itself is only tried on Windows
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
 - [ ] Linux: native Wayland drag and drop: not possible yet. eframe 0.37 uses winit 0.30.13, which takes no files dropped on a Wayland window; winit's own work on it (rust-windowing/winit#4773 is open, #4009 was closed unmerged) is in no release, 0.31 is a beta. Until then the window opens through XWayland. Writing it here against Wayland's data device would be a second, untestable copy of what winit will do
 - [ ] Linux: Flathub submission, for the project's owner: a pull request to flathub/flathub with the manifest. The linter's findings on it: the id `io.github.fabox_os.PicassoSuite` does not match the repository's name (`appid-url-not-reachable`: it looks for github.com/fabox-os/picassosuite, the repository is Picasso-Suite; changing the id would make it a new app for people with the current Flatpak, so the id stays and the request for an exception is written in `packaging/flathub/README.md`); the X11 + Wayland sockets (exception text in `packaging/flathub/README.md`); and a newer runtime (26.08)

@@ -3,7 +3,7 @@ resolver = "3"
 members = ["crates/*", "apps/*"]
 
 [workspace.package]
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 license = "GPL-3.0-or-later"
 rust-version = "1.95"
@@ -23,7 +23,7 @@ picasso-drp = { path = "crates/picasso-drp" }
 # external (pure Rust, GPLv3-compatible licences)
 ffmpeg-next = { version = "7.1", default-features = false, features = ["codec", "format", "software-scaling", "software-resampling"] }  # WTFPL; links FFmpeg (GPL build)
 cpal = "0.18"  # Apache-2.0
-rusqlite = { version = "0.40", features = ["bundled", "serialize"] }  # MIT
+rusqlite = { version = "0.40", features = ["bundled", "serialize", "hooks"] }  # MIT
 thiserror = "2"  # MIT OR Apache-2.0
 tracing = "0.1"  # MIT
 serde = { version = "1", features = ["derive"] }  # MIT OR Apache-2.0

@@ -663,11 +663,12 @@ impl StudioApp {
         } else {
             (0, 0)
         };
+        let length_tc = fps.timecode(length);
         e.label(
             701.0,
             162.0,
             Align2::LEFT_CENTER,
-            &fps.timecode(length),
+            &length_tc,
             18.5,
             TEXT,
             true,
@@ -679,11 +680,20 @@ impl StudioApp {
             .and_then(|m| self.project().media(m))
             .map(|m| m.name.clone())
         {
+            // The name ends at its usual place and is cut, with "…", where it would reach the
+            // length on its left.
+            let tc_end = e.at(701.0, 162.0).x
+                + e.p
+                    .layout_no_wrap(length_tc, theme::semibold(18.5 * SZ), TEXT)
+                    .size()
+                    .x;
+            let room = e.at(1000.0, 162.0).x - tc_end - 14.0 * SZ;
+            let shown = crate::media::elided(&e.p, &name, &theme::regular(16.0 * SZ), room);
             e.label(
                 1000.0,
                 162.0,
                 Align2::RIGHT_CENTER,
-                &name,
+                &shown,
                 16.0,
                 GREY,
                 false,
@@ -1025,7 +1035,8 @@ impl StudioApp {
         if hit(ui, e, "edit_zoom", 1712.0, y, 22.0, "Fit the timeline") {
             let width = e.at(2000.0, 0.0).x - e.at(1097.0, 0.0).x;
             let duration = self.project().duration();
-            self.timeline.fit(duration, width);
+            let fps = self.project().fps.nominal() as f32;
+            self.timeline.fit(duration, width, fps);
         }
 
         if hit(ui, e, "edit_tools", 1146.0, y, 26.0, "Insert clip (F9)") {

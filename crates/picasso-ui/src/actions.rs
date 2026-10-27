@@ -923,6 +923,7 @@ impl StudioApp {
             Act::ProxyHalf => Some(self.proxy == 2),
             Act::ProxyQuarter => Some(self.proxy == 4),
             Act::ProxyEighth => Some(self.proxy == 8),
+            Act::ToggleHardwareDecoding => Some(self.extra.prefs.hardware_decoding),
             Act::OverlaySafeArea => Some(self.overlays.safe_area),
             Act::OverlayCrosshair => Some(self.overlays.crosshair),
             Act::OverlayGrid => Some(self.overlays.grid),
@@ -1241,6 +1242,10 @@ impl StudioApp {
             Act::ProxyHalf => self.set_proxy(2),
             Act::ProxyQuarter => self.set_proxy(4),
             Act::ProxyEighth => self.set_proxy(8),
+            Act::ToggleHardwareDecoding => {
+                let on = !self.extra.prefs.hardware_decoding;
+                self.set_hardware_decoding(on);
+            }
             Act::LinkClips => {
                 let clips = self.selected_ids();
                 if self.run(Command::LinkClips { clips }).is_some() {

@@ -23,7 +23,8 @@ const EDGE_PX: f32 = 7.0;
 const SNAP_PX: f32 = 8.0;
 const MIN_ZOOM: f32 = 0.02;
 const MAX_ZOOM: f32 = 60.0;
-/// Pixels per frame of the detail timeline when it is first shown (240 px per second at 24 fps).
+/// Pixels per frame of the detail timeline when it is first shown (240 px per second at 24 fps;
+/// other frame rates get the same width a second, see `TimelineView::follow_rate`).
 const DETAIL_ZOOM: f32 = 10.0;
 /// The height of a sound strip under the picture on the Cut page's detail timeline.
 const CUT_AUDIO_H: f32 = 19.5;
@@ -122,6 +123,9 @@ pub(crate) struct TimelineView {
     mode: Mode,
     /// Pixels per frame.
     zoom: f32,
+    /// The frame rate `zoom` and `scroll` are in (the starting zooms are for 24 fps): see
+    /// [`TimelineView::follow_rate`].
+    fps: f32,
     /// The frame at the left edge.
     scroll: f32,
     snap: bool,
@@ -134,6 +138,21 @@ pub(crate) struct TimelineView {
 /// How many answers of `would_work` a drag remembers.
 const WOULD_KEPT: usize = 32;
 
+/// Where the Cut page's lower timeline is scrolled to: the playhead in the middle (`half` is half
+/// the width, in frames), so the clips move under it, except while the playhead is dragged by
+/// the ruler, when the view keeps still. A drag whose end this timeline never heard of (the
+/// button let go over another panel, or the page drawn again in between) is over once the button
+/// is up or playback runs: otherwise the view stayed still and the playhead ran across it.
+fn detail_scroll(drag: &mut Drag, playing: bool, held: bool, playhead: f32, half: f32) -> f32 {
+    if matches!(drag, Drag::Scrub { .. }) && (playing || !held) {
+        *drag = Drag::None;
+    }
+    match drag {
+        Drag::Scrub { scroll } => *scroll,
+        _ => playhead - half,
+    }
+}
+
 impl TimelineView {
     pub(crate) fn new(mode: Mode) -> Self {
         Self {
@@ -143,6 +162,7 @@ impl TimelineView {
                 Mode::Edit => EDIT_ZOOM,
                 Mode::Overview => 3.0,
             },
+            fps: 24.0,
             scroll: 0.0,
             snap: true,
             drag: Drag::None,
@@ -152,6 +172,18 @@ impl TimelineView {
 }
 
 impl TimelineView {
+    /// Puts the zoom and the scroll in frames of `fps`: a second keeps the width it had, and the
+    /// left edge the moment it showed. The zoom is in pixels per frame, so without this a 60 fps
+    /// project ran past two and a half times faster than a 24 fps one (600 pixels a second on the
+    /// Cut page's lower timeline instead of 240).
+    fn follow_rate(&mut self, fps: f32) {
+        if fps > 0.0 && (fps - self.fps).abs() > 0.01 {
+            self.zoom = (self.zoom * self.fps / fps).clamp(MIN_ZOOM, MAX_ZOOM);
+            self.scroll *= fps / self.fps;
+            self.fps = fps;
+        }
+    }
+
     pub(crate) fn snap(&self) -> bool {
         self.snap
     }
@@ -172,10 +204,11 @@ impl TimelineView {
             .clamp(MIN_ZOOM, MAX_ZOOM);
     }
 
-    /// Shows `frames` frames in `width` points, from the start.
-    pub(crate) fn fit(&mut self, frames: u64, width: f32) {
+    /// Shows `frames` frames of `fps` in `width` points, from the start.
+    pub(crate) fn fit(&mut self, frames: u64, width: f32, fps: f32) {
         self.zoom = (width / (frames.max(1) as f32 * 1.1)).clamp(MIN_ZOOM, MAX_ZOOM);
         self.scroll = 0.0;
+        self.fps = fps;
     }
 }
 
@@ -437,6 +470,7 @@ impl StudioApp {
             Sense::click_and_drag(),
         );
         let fps = self.project().fps.nominal() as f32;
+        view.follow_rate(fps);
 
         // Zoom (Ctrl + scroll) around the pointer, pan with the scroll wheel.
         if resp.hovered() && mode != Mode::Overview {
@@ -473,12 +507,16 @@ impl StudioApp {
                 view.scroll = view.scroll.max(0.0);
             }
             Mode::Detail => {
-                // The playhead stays in the middle, except while it is dragged by its ruler.
-                if let Drag::Scrub { scroll } = view.drag {
-                    view.scroll = scroll;
-                } else {
-                    view.scroll = self.playhead as f32 - body.width() / 2.0 / view.zoom;
-                }
+                // The frame the button is let go still counts as held: the drag's own end, further
+                // down, finishes it then (and applies a dynamic trim).
+                let held = ui.input(|i| i.pointer.primary_down() || i.pointer.primary_released());
+                view.scroll = detail_scroll(
+                    &mut view.drag,
+                    self.playing,
+                    held,
+                    self.playhead as f32,
+                    body.width() / 2.0 / view.zoom,
+                );
             }
             Mode::Overview => {
                 let seconds =
@@ -507,6 +545,9 @@ impl StudioApp {
             let audios = tracks.saturating_sub(videos.min(tracks)) as f32;
             let room = avail.height() - mode.ruler_h() - audios * 72.0 * crate::chrome::R;
             want.min(room / videos.max(1) as f32).max(36.0)
+        } else if mode == Mode::Detail {
+            // The height the arrows beside the tracks set (`crate::cut`).
+            self.cut_detail_row_h()
         } else {
             mode.row_h()
         };
@@ -2072,11 +2113,18 @@ impl StudioApp {
         let bar_h = (rect.height() * 0.22).clamp(14.0, 24.0);
         let pictures = Rect::from_min_max(rect.min, pos2(rect.right(), rect.bottom() - bar_h));
         if !audio {
-            // The picture repeated along the clip, as a film strip.
+            // The picture repeated along the clip, as a film strip: only the tiles on screen,
+            // or a 12-minute clip would queue a thousand of them on every frame it plays.
             if let Some(texture) = thumb {
                 let w = (pictures.height() * 16.0 / 9.0).max(8.0);
-                let mut x = pictures.left();
-                while x < pictures.right() {
+                let shown = painter.clip_rect();
+                for x in tile_starts(
+                    pictures.left(),
+                    pictures.right(),
+                    w,
+                    shown.left(),
+                    shown.right(),
+                ) {
                     let tile =
                         Rect::from_min_size(pos2(x, pictures.top()), vec2(w, pictures.height()));
                     painter.image(
@@ -2089,7 +2137,6 @@ impl StudioApp {
                             Color32::WHITE
                         },
                     );
-                    x += w;
                 }
             }
         } else if clip.sound || track.kind == TrackKind::Audio {
@@ -2205,6 +2252,17 @@ pub(crate) fn paint_lock(painter: &egui::Painter, c: egui::Pos2) {
     );
 }
 
+/// Where the film strip's tiles, `w` wide along `left..right`, start: only those that show
+/// between `from` and `to` on screen.
+fn tile_starts(left: f32, right: f32, w: f32, from: f32, to: f32) -> impl Iterator<Item = f32> {
+    let skip = ((from - left) / w).floor().max(0.0);
+    let first = left + skip * w;
+    let end = right.min(to);
+    (0u32..)
+        .map(move |i| first + i as f32 * w)
+        .take_while(move |x| *x < end)
+}
+
 fn paint_waveform(
     painter: &egui::Painter,
     rect: Rect,
@@ -2234,7 +2292,18 @@ fn paint_waveform_in(
     let per_frame = f64::from(project.fps.den) / f64::from(project.fps.num.max(1));
     let first = clip.source_in as f64 * per_frame * 50.0; // in buckets
     let span = clip.duration as f64 * per_frame * 50.0;
-    let columns = (rect.width() as usize).clamp(1, 4000);
+    // One line per point of the part on screen: a long clip is far wider than the window, and
+    // lines spread along all of it were both wasted and too few where it shows.
+    let shown = rect.intersect(painter.clip_rect());
+    if shown.width() < 1.0 || rect.width() < 1.0 {
+        return;
+    }
+    let columns = (shown.width() as usize).clamp(1, 4000);
+    // Where the part on screen starts, as a share of the clip, and how much a column covers.
+    let (start, step) = (
+        f64::from((shown.left() - rect.left()) / rect.width()),
+        f64::from(shown.width() / rect.width()) / columns as f64,
+    );
     let (mid, half) = if from_bottom {
         (area.bottom(), area.height())
     } else {
@@ -2247,8 +2316,8 @@ fn paint_waveform_in(
     };
     let mut lines = Vec::with_capacity(columns);
     for col in 0..columns {
-        let a = first + span * col as f64 / columns as f64;
-        let b = (first + span * (col + 1) as f64 / columns as f64).max(a + 1.0);
+        let a = first + span * (start + step * col as f64);
+        let b = (first + span * (start + step * (col + 1) as f64)).max(a + 1.0);
         let (from, to) = (a as usize, (b.ceil() as usize).min(peaks.len()));
         let peak = peaks
             .get(from..to.max(from))
@@ -2258,7 +2327,7 @@ fn paint_waveform_in(
         if peak == 0 {
             continue;
         }
-        let x = rect.left() + rect.width() * (col as f32 + 0.5) / columns as f32;
+        let x = shown.left() + shown.width() * (col as f32 + 0.5) / columns as f32;
         // A gentle curve so quiet sound is still visible.
         let h = (f32::from(peak) / 255.0)
             .powf(0.6)
@@ -2271,6 +2340,121 @@ fn paint_waveform_in(
         ));
     }
     painter.extend(lines);
+}
+
+#[cfg(test)]
+mod detail_tests {
+    use super::*;
+
+    #[test]
+    fn the_lower_cut_timeline_keeps_the_playhead_in_the_middle() {
+        // Playing: the view follows, so the playhead stays in the middle.
+        let mut drag = Drag::None;
+        assert_eq!(detail_scroll(&mut drag, true, false, 500.0, 100.0), 400.0);
+        assert_eq!(detail_scroll(&mut drag, true, false, 530.0, 100.0), 430.0);
+        // Dragging the playhead by the ruler: the view keeps still.
+        let mut drag = Drag::Scrub { scroll: 50.0 };
+        assert_eq!(detail_scroll(&mut drag, false, true, 500.0, 100.0), 50.0);
+        assert!(matches!(drag, Drag::Scrub { .. }));
+        // The drag's end was never heard of and the button is up: it is over, and the view
+        // follows the playhead again instead of keeping still while it runs across.
+        assert_eq!(detail_scroll(&mut drag, false, false, 500.0, 100.0), 400.0);
+        assert!(matches!(drag, Drag::None));
+        // Playback started with a drag left over: the same.
+        let mut drag = Drag::Scrub { scroll: 50.0 };
+        assert_eq!(detail_scroll(&mut drag, true, true, 600.0, 100.0), 500.0);
+        assert!(matches!(drag, Drag::None));
+    }
+
+    #[test]
+    fn only_the_film_strip_tiles_on_screen_are_drawn() {
+        // A clip 100 000 points long, tiles 100 wide, a window from 50 200 to 50 450.
+        let starts: Vec<f32> = tile_starts(0.0, 100_000.0, 100.0, 50_200.0, 50_450.0).collect();
+        assert_eq!(starts, [50_200.0, 50_300.0, 50_400.0]);
+        // The grid stays where it was: the first tile is cut by the window's edge.
+        let starts: Vec<f32> = tile_starts(30.0, 1000.0, 100.0, 0.0, 300.0).collect();
+        assert_eq!(starts, [30.0, 130.0, 230.0]);
+        let starts: Vec<f32> = tile_starts(30.0, 1000.0, 100.0, 250.0, 330.0).collect();
+        assert_eq!(starts, [230.0]);
+        // A clip off screen draws nothing.
+        assert_eq!(tile_starts(0.0, 500.0, 100.0, 900.0, 1200.0).count(), 0);
+    }
+
+    #[test]
+    fn a_long_clip_draws_its_waveform_only_where_it_shows() {
+        use picasso_core::{Command, Fps, MediaSource, Outcome};
+        // A 12-minute clip at 60 fps, its sound loud all the way.
+        let mut p = Project::new("t");
+        p.fps = Fps::FPS_60;
+        let minutes = 12 * 60 * 60;
+        let Ok(Outcome::Media(m)) = (Command::AddMedia {
+            name: "s".into(),
+            source: MediaSource::Solid { rgb: [0, 0, 0] },
+            length: None,
+            default_duration: minutes,
+        })
+        .apply(&mut p) else {
+            panic!("no media");
+        };
+        let track = p.tracks[0].id;
+        let _ = Command::AddClip {
+            track,
+            media: m,
+            start: 0,
+            duration: None,
+            with_sound: false,
+        }
+        .apply(&mut p);
+        let clip = p.tracks[0].clips[0].clone();
+        let peaks = vec![200u8; 12 * 60 * 50];
+        let ctx = Context::default();
+        ctx.begin_pass(egui::RawInput::default());
+        {
+            // The clip is 180 000 points long (250 a second); 200 points of it show.
+            let painter = ctx
+                .layer_painter(egui::LayerId::background())
+                .with_clip_rect(Rect::from_min_size(pos2(1000.0, 0.0), vec2(200.0, 100.0)));
+            let rect = Rect::from_min_size(pos2(-50_000.0, 0.0), vec2(180_000.0, 80.0));
+            paint_waveform(&painter, rect, &p, &clip, &peaks, false);
+        }
+        let mut out = ctx.end_pass();
+        // (The fonts' texture this first frame makes is not wanted here.)
+        out.textures_delta.clear();
+        let lines = out.shapes.len();
+        assert!(
+            (150..=210).contains(&lines),
+            "about one line per point on screen, not thousands along the clip: {lines}"
+        );
+    }
+
+    #[test]
+    fn a_second_is_as_wide_at_every_frame_rate() {
+        // Pixels a second, as a playing project moves past the playhead.
+        let per_second = |fps: f32| {
+            let mut view = TimelineView::new(Mode::Detail);
+            view.follow_rate(fps);
+            view.zoom * fps
+        };
+        assert_eq!(per_second(24.0), 240.0);
+        for fps in [25.0, 30.0, 50.0, 60.0] {
+            assert!(
+                (per_second(fps) - 240.0).abs() < 0.01,
+                "{fps} fps: {}",
+                per_second(fps)
+            );
+        }
+        // The Edit timeline too, and changing the rate keeps the moment at the left edge.
+        let mut view = TimelineView::new(Mode::Edit);
+        view.scroll = 240.0; // 10 seconds at 24 fps
+        view.follow_rate(60.0);
+        assert!((view.zoom * 60.0 - EDIT_ZOOM * 24.0).abs() < 0.01);
+        assert!((view.scroll - 600.0).abs() < 0.01, "still 10 seconds in");
+        // A zoom set by fitting is already in the project's rate.
+        view.fit(3600, 1000.0, 60.0);
+        let fitted = view.zoom;
+        view.follow_rate(60.0);
+        assert_eq!(view.zoom, fitted);
+    }
 }
 
 #[cfg(test)]

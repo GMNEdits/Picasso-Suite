@@ -290,6 +290,24 @@ pub(crate) struct Installed {
     pub restart: bool,
 }
 
+/// Where package `file` is put before it is installed. Flatpak and the Linux packages are
+/// installed by programs outside this one, which must be able to read the file: inside a Flatpak
+/// the cache folder is shared with the host.
+fn package_path(install: &Install, file: &str, work: &Path) -> PathBuf {
+    match install {
+        Install::Flatpak => {
+            let cache = std::env::var_os("XDG_CACHE_HOME")
+                .map(PathBuf::from)
+                .unwrap_or_else(std::env::temp_dir);
+            let _ = std::fs::create_dir_all(&cache);
+            cache.join(file)
+        }
+        // Beside the AppImage, so it can be renamed over it (a rename cannot cross drives).
+        Install::AppImage(target) => target.with_file_name(format!(".{file}.download")),
+        _ => work.join(file),
+    }
+}
+
 /// Downloads `release`'s package and installs it over this copy.
 fn download_and_install(
     install: &Install,
@@ -301,20 +319,7 @@ fn download_and_install(
         .clone()
         .ok_or("this release has no package for this kind of install")?;
     let work = work_dir(&release.tag)?;
-    // Flatpak and the Linux packages are installed by programs outside this one, which must be
-    // able to read the file: inside a Flatpak the cache folder is shared with the host.
-    let package = match install {
-        Install::Flatpak => {
-            let cache = std::env::var_os("XDG_CACHE_HOME")
-                .map(PathBuf::from)
-                .unwrap_or_else(std::env::temp_dir);
-            let _ = std::fs::create_dir_all(&cache);
-            cache.join(&file)
-        }
-        // Beside the AppImage, so it can be renamed over it (a rename cannot cross drives).
-        Install::AppImage(target) => target.with_file_name(format!(".{file}.download")),
-        _ => work.join(&file),
-    };
+    let package = package_path(install, &file, &work);
     step(&format!("Downloading {file}..."));
     if let Err(e) = download(&url, &package) {
         // curl leaves what it had when the connection broke.
@@ -322,9 +327,64 @@ fn download_and_install(
         return Err(e);
     }
     step("Installing...");
+    install_package(install, &package, &work, &release.tag)
+}
+
+/// `picasso-suite --update-from <package>`: installs a release package that is already on this
+/// computer over this copy, the way Check for Updates installs the one it downloads (the same
+/// code from here on). The release workflow uses it to try the updater where each kind of
+/// package really runs. The file must be this kind of install's package.
+pub fn update_from_file(path: &Path) -> Result<String, String> {
+    let install = Install::detect();
+    if !install.can_update() {
+        return Err(
+            "this copy was not installed from a release package, so it cannot update itself".into(),
+        );
+    }
+    let file = path
+        .file_name()
+        .and_then(|n| n.to_str())
+        .ok_or("the package has no file name")?
+        .to_string();
+    if !install.wants(&file) {
+        return Err(format!(
+            "{file} is not a package for this copy ({install:?})"
+        ));
+    }
+    let work = work_dir("from-file")?;
+    let package = package_path(&install, &file, &work);
+    // Copied to where a download would be, unless it is there already.
+    let same = matches!(
+        (path.canonicalize(), package.canonicalize()),
+        (Ok(a), Ok(b)) if a == b
+    );
+    if !same {
+        std::fs::copy(path, &package).map_err(|e| format!("{}: {e}", path.display()))?;
+    }
+    install_package(&install, &package, &work, &file)?;
+    Ok(format!("{file} is installed over this copy ({install:?})"))
+}
+
+/// This build's version, and the commit it was built from when the build says so
+/// (`PICASSO_BUILD_COMMIT`): what `picasso-suite --version` prints.
+pub fn version_line() -> String {
+    let commit = option_env!("PICASSO_BUILD_COMMIT")
+        .map(|c| format!(" ({})", &c[..c.len().min(12)]))
+        .unwrap_or_default();
+    format!("picasso-suite {}{commit}", current_version())
+}
+
+/// Installs `package`, which is in place for this kind of install ([`package_path`]), over this
+/// copy; `work` is this update's folder, `tag` names the new version in the messages.
+fn install_package(
+    install: &Install,
+    package: &Path,
+    work: &Path,
+    tag: &str,
+) -> Result<Installed, String> {
     let done = match install {
-        Install::WindowsZip(dir) => install_windows(&package, &work, dir)?,
-        Install::MacApp(app) => install_mac(&package, &work, app)?,
+        Install::WindowsZip(dir) => install_windows(package, work, dir)?,
+        Install::MacApp(app) => install_mac(package, work, app)?,
         Install::Flatpak => {
             let mut cmd = quiet("flatpak-spawn");
             cmd.args(["--host", "flatpak", "install", "--noninteractive", "-y", "--reinstall"]);
@@ -335,7 +395,7 @@ fn download_and_install(
             if user {
                 cmd.arg("--user");
             }
-            cmd.arg(&package);
+            cmd.arg(package);
             run(cmd, "Installing the Flatpak").map_err(|e| {
                 format!(
                     "{e}\n\nInstall it from a terminal instead:\nflatpak install {}--reinstall {}",
@@ -344,16 +404,18 @@ fn download_and_install(
                 )
             })?;
             Installed {
-                message: format!("Picasso Suite {} is installed. Close Picasso Suite and open it again.", release.tag),
+                message: format!(
+                    "Picasso Suite {tag} is installed. Close Picasso Suite and open it again."
+                ),
                 restart: false,
             }
         }
-        Install::AppImage(target) => install_appimage(&package, target, &release.tag)?,
-        Install::Deb | Install::Rpm => install_linux_package(install, &package, &release.tag)?,
+        Install::AppImage(target) => install_appimage(package, target, tag)?,
+        Install::Deb | Install::Rpm => install_linux_package(install, package, tag)?,
         Install::Unmanaged => return Err("this copy cannot update itself".into()),
     };
     if !matches!(install, Install::Flatpak | Install::Deb | Install::Rpm) {
-        let _ = std::fs::remove_dir_all(&work);
+        let _ = std::fs::remove_dir_all(work);
     }
     Ok(done)
 }
@@ -494,24 +556,49 @@ fn is_user_flatpak(info: &str) -> bool {
         .any(|path| path.contains("/.local/share/flatpak/"))
 }
 
-/// Installs a `.deb` or `.rpm` with the system's package manager, asking for the password.
+/// Whether this program runs as root (Linux): it then needs no password to install a package.
+fn running_as_root() -> bool {
+    // `Uid:` lists the real, effective, saved and file-system ids; the effective one counts.
+    std::fs::read_to_string("/proc/self/status")
+        .ok()
+        .and_then(|status| {
+            status
+                .lines()
+                .find_map(|l| l.strip_prefix("Uid:"))
+                .map(|ids| ids.split_whitespace().nth(1) == Some("0"))
+        })
+        .unwrap_or(false)
+}
+
+/// The package manager and its arguments that install a `.deb` or `.rpm` file.
+fn package_manager(install: &Install) -> (&'static str, &'static [&'static str]) {
+    match install {
+        Install::Deb => ("apt-get", &["install", "-y"]),
+        _ if Path::new("/usr/bin/dnf").exists() => ("dnf", &["install", "-y"]),
+        // The release's rpm is not signed; zypper refuses it unless told.
+        _ => (
+            "zypper",
+            &["--non-interactive", "install", "--allow-unsigned-rpm"],
+        ),
+    }
+}
+
+/// Installs a `.deb` or `.rpm` with the system's package manager, asking for the password
+/// (through `pkexec`) unless this program already runs as root.
 fn install_linux_package(install: &Install, package: &Path, tag: &str) -> Result<Installed, String> {
     let manual = match install {
         Install::Deb => format!("sudo apt install {}", package.display()),
         _ => format!("sudo dnf install {}", package.display()),
     };
-    let mut cmd = quiet("pkexec");
-    match install {
-        Install::Deb => {
-            cmd.args(["apt-get", "install", "-y"]).arg(package);
-        }
-        _ if Path::new("/usr/bin/dnf").exists() => {
-            cmd.args(["dnf", "install", "-y"]).arg(package);
-        }
-        _ => {
-            cmd.args(["zypper", "--non-interactive", "install"]).arg(package);
-        }
-    }
+    let (program, args) = package_manager(install);
+    let mut cmd = if running_as_root() {
+        quiet(program)
+    } else {
+        let mut c = quiet("pkexec");
+        c.arg(program);
+        c
+    };
+    cmd.args(args).arg(package);
     run(cmd, "Installing the package")
         .map_err(|e| format!("{e}\n\nInstall it from a terminal instead:\n{manual}"))?;
     Ok(Installed {
@@ -852,6 +939,25 @@ mod tests {
         assert!(is_user_flatpak(user));
         assert!(!is_user_flatpak(system));
         assert!(!is_user_flatpak(""));
+    }
+
+    #[test]
+    fn each_package_goes_to_its_package_manager() {
+        assert_eq!(package_manager(&Install::Deb), ("apt-get", &["install", "-y"][..]));
+        // openSUSE (no dnf): the release's rpm is unsigned, which zypper refuses unless told.
+        if !Path::new("/usr/bin/dnf").exists() {
+            let (program, args) = package_manager(&Install::Rpm);
+            assert_eq!(program, "zypper");
+            assert!(args.contains(&"--allow-unsigned-rpm"), "{args:?}");
+        }
+    }
+
+    #[test]
+    fn a_copy_built_from_source_does_not_update_from_a_file() {
+        // The test program is not an installed release, so nothing is touched.
+        let r = update_from_file(Path::new("picasso-suite-9.9.9-windows.zip"));
+        assert!(r.is_err_and(|e| e.contains("cannot update itself")));
+        assert!(version_line().starts_with(&format!("picasso-suite {}", current_version())));
     }
 
     #[test]

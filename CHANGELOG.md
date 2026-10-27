@@ -1,12 +1,33 @@
 # Changelog
 
-## Unreleased
+## 0.4.0
+
+Picasso Suite 0.4.0 makes playback smoother and steadier: the viewer's picture is put together on a thread of its own, scrubbing camera video is faster, the timelines move at the right speed at every frame rate, and the Edit page's source viewer no longer blinks. It adds saved layouts, working track buttons and height arrows on the Cut page, a mini timeline on the Color page and a Hardware Decoding switch in the Playback menu, with security fixes for project and Resolve files. Packages for Windows, macOS and Linux (x86_64 and ARM64).
 
 ### ✨ New
-- ✅ **Saved layouts:** Workspace › Layout › Save Layout keeps the sizes of the panels on every page under a name (`layouts/<name>.txt` in the data folder, readable and editable by hand); Load Layout puts one back. The menu status is now 224 of 261 entries (85.82%). Thanks to GANESH NIKAM for the pull request.
+- ✅ **Playback > Hardware Decoding:** turns decoding on the graphics card off (or on) straight from the Playback menu, the same switch as System Preferences > Decode Options. Pictures already made with the card are forgotten, so the change shows at once. If playback shakes, blinks or goes black on your computer, try it off and tell us your graphics card.
+- ✅ **Smoother playback:** the viewer's picture is put together on a thread of its own, so the window no longer waits for it. Measured with a 1080p clip playing, the interface's work per frame went from 3.0 to 1.35 ms on the Edit page, 2.2 to 0.66 ms on Cut and 3.9 to 2.3 ms on Color on average; the medians are now 0.6 to 0.9 ms, from 2.2 to 2.6 ms.
+- ✅ **Faster scrubbing on long-GOP video** (camera H.264/H.265): a picture being decoded is dropped as soon as the playhead moves on, and the key frame it starts from is shown while the rest is decoded and kept for the next pass. Dragging across 4K video with a key frame every 2 seconds, the exact picture arrives about 200 ms after letting go instead of 370 ms (worst case 270 ms instead of 570 ms).
+- ✅ **Cut page:** the height arrows beside the tracks make the picture rows taller or shorter; the height is kept with the panel sizes, in saved layouts too, and Reset UI Layout puts it back.
+- ✅ **Color page:** the mini timeline under the clips shows each clip where it sits on up to three picture tracks, with the clip being graded outlined, instead of one solid bar.
+- ✅ **Development:** `--play` starts playback once the files given with `--place` are on the timeline (answering the frame-rate question), so `PICASSO_PERF=1` can time playback.
+- ✅ **Saved layouts:** Workspace › Layout › Save Layout keeps the sizes of the panels on every page under a name (`layouts/<name>.txt` in the data folder, readable and editable by hand); Load Layout puts one back. Thanks to GANESH NIKAM for the pull request.
 - ✅ **Cut page track buttons:** the button row beside the tracks now works. Lock, mute, **solo** and **picture** act on the track of the selected clip (V1 when nothing is selected), undo, and are saved with the project. Solo silences every track that is not soloed, in playback, the mixdown and compound clips; picture off keeps a video track out of the program, the Color and Deliver previews and the subtitles. Older projects open with every track unsoloed and its picture on. Thanks to GANESH NIKAM.
 
 ### 🛠️ Fixed
+- ✅ **Viewer:** a picture still being put together when a newer one was shown from the render cache no longer replaces it when it arrives (playing a stretch a second time could jump back a frame). It is still kept for later.
+- ✅ **DaVinci Resolve files:** one still being read when another project is opened no longer replaces that project when it arrives.
+- ✅ **Playback with many stills:** the still images are shared with the viewer's thread instead of copied for every picture it puts together.
+- ✅ **Memory:** the key frames kept for scrubbing take at most 32 MB per video (96 before), so a multicam of nine angles stays under 300 MB for them.
+- ✅ **Edit page source viewer:** it no longer blinks black while the timeline plays the same clip, and playback no longer stutters for it. Both viewers asked one decoder for the clip, which then sought back and forth between their two moments, and the source viewer drew itself again on every frame. It now has a decoder of its own and draws again only when its own picture changes (Edit page with a 1080p clip: 1.04 to 0.49 ms of work a frame, the slowest frames 3.3 to 0.7 ms).
+- ✅ **Long clip names:** the source viewer's header cuts a long name with “…” where it would run over the length beside it.
+- ✅ **Timelines at 60 fps:** a second was two and a half times wider in a 60 fps project than in a 24 fps one (600 points on the Cut page's lower timeline instead of 240), so the playhead raced across while the picture and the timecode played at the right speed. The timelines now keep the width of a second at every frame rate.
+- ✅ **Cut page:** the lower timeline keeps the playhead in the middle while playing, even after a drag of the playhead whose end it missed (it used to stay still and let the playhead run across).
+- ✅ **Long clips:** the film strip and the waveform are drawn only where they are on screen; a 12-minute clip queued over a thousand film-strip tiles and spread its waveform along its whole length on every frame. The waveform is also sharper: one line per point.
+- ✅ **Check for Updates on openSUSE:** the new .rpm is installed with `--allow-unsigned-rpm`; zypper refused the release's unsigned package before.
+- ✅ **Check for Updates as root:** the .deb or .rpm is installed directly, without `pkexec`, which asked for a password that root does not need (and fails where there is no polkit).
+- ✅ **Security:** a project file (`.picasso`) that takes more than 5 seconds to read is refused, so a file built to run a query for ever cannot freeze the app; at most 100,000 media entries are read.
+- ✅ **DaVinci Resolve files** (`.drp`, `.drt`, `.drb`, XML) are read on a thread of their own, and the media they list is imported in the background, so a big project no longer freezes the window while it opens.
 - ✅ **Timecode:** the readouts on the Cut (TCG), Color and Deliver pages started at 00:00:00:00 while the rulers and the Edit page start at 01:00:00:00; they now agree. Thanks to GANESH NIKAM.
 - ✅ **Photo tab:** the second page tab said "Media" like the first; it now says **Photo**. `--page=photo`, `--page=fusion` and `--page=fairlight` open their pages (they were ignored); the old names still work. Thanks to GANESH NIKAM.
 - ✅ **Reset UI Layout** now puts the panel dividers back too, not only the floating windows.
@@ -15,7 +36,16 @@
 - ✅ The Save and Load Layout windows read the layouts once when they open, not on every frame, and Enter with no name no longer closes Save Layout.
 
 ### 🔄 Changed
+- ✅ **Releases:** the release workflow now tries Check for Updates where each package really runs (its first run is still to come): the .deb (Ubuntu 22.04 and 24.04, Debian 12) and .rpm (Fedora, openSUSE) are updated to a copy marked newer and the package manager must have it, the macOS app and the Windows folder are replaced with the old copy set aside, and the Flatpak is reinstalled through the host's flatpak, on x86_64 and ARM64.
+- ✅ **Development:** `picasso-suite --update-from <package>` installs a release package over this copy with the updater's own code (the download is the only step left out), and `picasso-suite --version` prints the version and, for release builds, the commit. `PICASSO_PERF=1` also gives the time between frames and how many took over 50 ms (`PICASSO_PERF_FRAMES` sets how many frames are timed).
 - ✅ **Development:** CI fails when `docs/status.svg` or the README's Status numbers no longer match `Menu-Status.md` and `ROADMAP.md` (run `python3 scripts/status.py`). Thanks to GANESH NIKAM.
+
+### ⚠️ Known limitations
+- ❌ A tester saw playback shake and go black on their computer, which could not be reproduced here; the Edit page's source viewer was one cause and is fixed. If it still happens, turn Playback > Hardware Decoding off and send your graphics card (`picasso-suite --graphics-check`).
+- ❌ Scrubbing video with very few key frames (one every 20 seconds of 4K) still takes seconds for the exact picture; that needs optimised media (proxies).
+- ❌ Check for Updates is tested by the release workflow on every package from this release on; before, it was only tried on Windows.
+- ❌ Not tried on real NVIDIA, Intel, Apple or ARM graphics cards, nor on a Raspberry Pi; the Color page's scopes still measure on the interface thread.
+- ❌ Native Wayland windows take no dropped files (winit 0.30), and the Flathub submission is still to be made.
 
 ## 0.3.0
 

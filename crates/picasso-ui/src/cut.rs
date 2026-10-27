@@ -27,6 +27,15 @@ const TRACK_RED: Color32 = Color32::from_rgb(221, 74, 62);
 /// Icons on this page are drawn at Resolve's size.
 const ICON: f32 = 0.6;
 
+/// The picture rows of the lower timeline: Resolve's height, how much an arrow beside the tracks
+/// changes it, and how far it goes. The height is kept with the panels' sizes (so a saved layout
+/// has it, and Reset UI Layout puts it back) as the points it differs by.
+const CUT_ROW: f32 = 76.0;
+const CUT_ROW_STEP: f32 = 12.0;
+const CUT_ROW_MIN: f32 = 40.0;
+const CUT_ROW_MAX: f32 = 136.0;
+const CUT_ROW_KEY: &str = "cut track height";
+
 /// The labels of the level meter and where they sit, measured from the top of the meter as a
 /// share of its height (the reference meter runs from row 75 to 465).
 const METER_LABELS: [(&str, f32); 8] = [
@@ -392,18 +401,38 @@ impl StudioApp {
         if let Some((_, _, row_top, h)) = rows.iter().rfind(|r| !r.1) {
             let y = row_top + h / 2.0 + 9.0 * R;
             let at = |x: f32| pos2(l.p(x, 0.0).x, y);
-            // Up and down arrows: the track's height.
+            // Up and down arrows: the height of the picture rows. Each is bright while it can
+            // still go that way.
             let c = at(28.0);
+            let row_h = self.cut_detail_row_h();
             for dir in [-1.0f32, 1.0] {
+                let can = if dir < 0.0 {
+                    row_h < CUT_ROW_MAX
+                } else {
+                    row_h > CUT_ROW_MIN
+                };
                 painter.add(egui::Shape::convex_polygon(
                     vec![
                         c + egui::vec2(-3.0 * R, dir * 2.0 * R),
                         c + egui::vec2(3.0 * R, dir * 2.0 * R),
                         c + egui::vec2(0.0, dir * 6.0 * R),
                     ],
-                    dim,
+                    if can { theme::ICON_BRIGHT } else { dim },
                     Stroke::NONE,
                 ));
+                let half = Rect::from_center_size(
+                    c + egui::vec2(0.0, dir * 4.5 * R),
+                    egui::vec2(18.0 * R, 9.0 * R),
+                );
+                let tip = if dir < 0.0 {
+                    "Taller tracks"
+                } else {
+                    "Shorter tracks"
+                };
+                let id = egui::Id::new(("cut track height", dir < 0.0));
+                if track_button(ui, half, id, tip) && can {
+                    self.step_cut_row_h(dir < 0.0);
+                }
             }
             paint_scaled(
                 &painter,
@@ -531,6 +560,33 @@ impl StudioApp {
 
     /// The track the Cut page's track buttons act on: the track of the selected clip, or V1
     /// when nothing is selected.
+    /// The height of the lower timeline's picture rows, as the arrows beside the tracks set it.
+    pub(crate) fn cut_detail_row_h(&self) -> f32 {
+        let by = self
+            .extra
+            .prefs
+            .panels
+            .moved
+            .get(CUT_ROW_KEY)
+            .copied()
+            .unwrap_or(0);
+        (CUT_ROW + f32::from(by)).clamp(CUT_ROW_MIN, CUT_ROW_MAX)
+    }
+
+    /// The up (`taller`) or down arrow beside the tracks: one step, kept in the preferences.
+    pub(crate) fn step_cut_row_h(&mut self, taller: bool) {
+        let step = if taller { CUT_ROW_STEP } else { -CUT_ROW_STEP };
+        let h = (self.cut_detail_row_h() + step).clamp(CUT_ROW_MIN, CUT_ROW_MAX);
+        let moved = &mut self.extra.prefs.panels.moved;
+        if (h - CUT_ROW).abs() < 0.5 {
+            moved.remove(CUT_ROW_KEY);
+        } else {
+            moved.insert(CUT_ROW_KEY.into(), (h - CUT_ROW).round() as i16);
+        }
+        #[cfg(not(test))]
+        self.extra.prefs.save();
+    }
+
     fn cut_track_target(&self) -> Option<picasso_core::TrackId> {
         let project = self.project();
         self.selection

@@ -22,7 +22,7 @@ const RAM_BUDGET: usize = 1 << 30;
 const DISK_BUDGET: u64 = 4 << 30;
 /// A picture that took longer than this to make is also kept on disk.
 #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
-const SLOW: std::time::Duration = std::time::Duration::from_millis(20);
+pub(crate) const SLOW: std::time::Duration = std::time::Duration::from_millis(20);
 
 pub(crate) struct RenderCache {
     ram: FrameCache,
@@ -108,7 +108,8 @@ impl RenderCache {
     }
 
     /// Renders frame `key.frame` of `project`, or takes it from the cache, and keeps a final
-    /// picture for next time.
+    /// picture for next time. The viewer does the same in the background ([`crate::composer`]).
+    #[cfg(test)]
     pub(crate) fn render(
         &mut self,
         project: &Project,
