@@ -60,6 +60,16 @@ pub enum Command {
         track: TrackId,
         muted: bool,
     },
+    /// Solo: with any track soloed, only the soloed tracks are heard.
+    SetTrackSolo {
+        track: TrackId,
+        solo: bool,
+    },
+    /// Whether the track's picture is drawn; off keeps it out of the program.
+    SetTrackPicture {
+        track: TrackId,
+        picture: bool,
+    },
     /// Places media on a track; `duration` defaults to the media's. With `with_sound`, a video's
     /// sound also gets a clip on an audio track, linked to the picture (see [`Command::LinkClips`]).
     AddClip {
@@ -473,6 +483,8 @@ impl Command {
             Self::RemoveTrack { .. } => "track.remove",
             Self::SetTrackLocked { .. } => "track.set_locked",
             Self::SetTrackMuted { .. } => "track.set_muted",
+            Self::SetTrackSolo { .. } => "track.set_solo",
+            Self::SetTrackPicture { .. } => "track.set_picture",
             Self::AddClip { .. } => "clip.add",
             Self::FitToFill { .. } => "clip.fit_to_fill",
             Self::PlaceOnTop { .. } => "clip.place_on_top",
@@ -557,6 +569,8 @@ impl Command {
             Self::RemoveTrack { .. } => "Delete track",
             Self::SetTrackLocked { .. } => "Lock track",
             Self::SetTrackMuted { .. } => "Mute track",
+            Self::SetTrackSolo { .. } => "Solo track",
+            Self::SetTrackPicture { .. } => "Picture track",
             Self::AddClip { .. } => "Add clip",
             Self::FitToFill { .. } => "Fit to fill",
             Self::PlaceOnTop { .. } => "Place on top",
@@ -714,9 +728,11 @@ impl Command {
                     kind,
                     clips: Vec::new(),
                     muted: false,
+                    locked: false,
+                    solo: false,
+                    picture: true,
                     gain_db: 0.0,
                     pan: 0.0,
-                    locked: false,
                     fx: Default::default(),
                 });
                 Ok(Outcome::Track(id))
@@ -745,6 +761,14 @@ impl Command {
             }
             Self::SetTrackMuted { track, muted } => {
                 p.track_mut(track).ok_or(EditError::NoSuchTrack)?.muted = muted;
+                Ok(Outcome::Nothing)
+            }
+            Self::SetTrackSolo { track, solo } => {
+                p.track_mut(track).ok_or(EditError::NoSuchTrack)?.solo = solo;
+                Ok(Outcome::Nothing)
+            }
+            Self::SetTrackPicture { track, picture } => {
+                p.track_mut(track).ok_or(EditError::NoSuchTrack)?.picture = picture;
                 Ok(Outcome::Nothing)
             }
             Self::AddClip {
@@ -2215,6 +2239,8 @@ fn create_compound(p: &mut Project, ids: &[ClipId], name: String) -> Result<Outc
             clips,
             muted: false,
             locked: false,
+            solo: false,
+            picture: true,
             gain_db: 0.0,
             pan: 0.0,
             fx: Default::default(),
@@ -3343,6 +3369,52 @@ mod tests {
     }
 
     #[test]
+    fn a_track_can_be_soloed_and_its_picture_turned_off() {
+        let (mut p, v1, a1, _) = demo();
+        assert!(!p.any_soloed());
+        Command::SetTrackSolo {
+            track: a1,
+            solo: true,
+        }
+        .apply(&mut p)
+        .unwrap();
+        assert!(p.track(a1).unwrap().solo);
+        assert!(p.any_soloed());
+        Command::SetTrackPicture {
+            track: v1,
+            picture: false,
+        }
+        .apply(&mut p)
+        .unwrap();
+        assert!(!p.track(v1).unwrap().picture);
+        assert!(p.track(a1).unwrap().picture, "only V1 lost its picture");
+        assert_eq!(
+            refused(
+                &mut p,
+                Command::SetTrackSolo {
+                    track: TrackId(u64::MAX),
+                    solo: true
+                }
+            ),
+            EditError::NoSuchTrack
+        );
+        Command::SetTrackSolo {
+            track: a1,
+            solo: false,
+        }
+        .apply(&mut p)
+        .unwrap();
+        Command::SetTrackPicture {
+            track: v1,
+            picture: true,
+        }
+        .apply(&mut p)
+        .unwrap();
+        assert!(!p.any_soloed());
+        assert!(p.track(v1).unwrap().picture);
+    }
+
+    #[test]
     fn opacity_is_clamped_and_nan_refused() {
         let (mut p, _, _, [a, ..]) = demo();
         Command::SetOpacity {
@@ -3438,6 +3510,14 @@ mod tests {
             Command::SetTrackMuted {
                 track: TrackId(1),
                 muted: true,
+            },
+            Command::SetTrackSolo {
+                track: TrackId(1),
+                solo: true,
+            },
+            Command::SetTrackPicture {
+                track: TrackId(1),
+                picture: false,
             },
             Command::AddClip {
                 track: TrackId(1),
@@ -5278,6 +5358,23 @@ mod tests {
         let (_, c) = old.clip(picture).unwrap();
         assert!(c.sound && c.link.is_none());
         assert!(old.linked_selection);
+    }
+
+    #[test]
+    fn projects_from_before_solo_and_picture_still_open() {
+        let p = Project::new("t");
+        let mut json: serde_json::Value = serde_json::from_str(&p.to_json().unwrap()).unwrap();
+        for track in json["tracks"].as_array_mut().unwrap() {
+            let track = track.as_object_mut().unwrap();
+            track.remove("solo");
+            track.remove("picture");
+        }
+        let old = Project::from_json(&json.to_string()).unwrap();
+        for track in &old.tracks {
+            assert!(!track.solo, "no track starts soloed");
+            assert!(track.picture, "every track shows its picture");
+        }
+        assert!(!old.any_soloed());
     }
 
     // ----- serial colour nodes -----

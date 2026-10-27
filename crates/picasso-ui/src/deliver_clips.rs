@@ -120,7 +120,7 @@ impl StudioApp {
             .tracks
             .iter()
             .rev()
-            .filter(|t| t.kind == TrackKind::Video && !t.muted)
+            .filter(|t| t.kind == TrackKind::Video && !t.muted && t.picture)
             .find_map(|t| picasso_core::Project::clip_at(t, at))
             .map(|c| c.id);
         let mut go = None;

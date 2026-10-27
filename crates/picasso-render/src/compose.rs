@@ -49,8 +49,8 @@ pub struct Frame {
 
 /// Renders timeline frame `at` of `project` at `width` x `height`.
 ///
-/// Tracks are drawn from the bottom up over black. A muted track and a track without a clip at
-/// that frame add nothing.
+/// Tracks are drawn from the bottom up over black. A muted track, a track whose picture is off
+/// and a track without a clip at that frame add nothing.
 pub fn render_frame(
     project: &Project,
     cache: &MediaCache,
@@ -122,7 +122,7 @@ fn compose_tracks(
     let mut coverage = if alpha { vec![0f32; w * h] } else { Vec::new() };
     for track in tracks
         .iter()
-        .filter(|t| t.kind == TrackKind::Video && !t.muted)
+        .filter(|t| t.kind == TrackKind::Video && !t.muted && t.picture)
     {
         if let Some((left, right, kind, t)) = picasso_core::transition_at(track, at) {
             // Both pictures, then one made of the two.
@@ -592,6 +592,42 @@ mod tests {
                 0
             ),
             [0, 0, 0, 255]
+        );
+    }
+
+    #[test]
+    fn tracks_whose_picture_is_off_are_skipped() {
+        let (mut p, m) = project_with([50, 60, 70]);
+        place(&mut p, 0, m, 0);
+        let t = p.tracks[0].id;
+        Command::SetTrackPicture {
+            track: t,
+            picture: false,
+        }
+        .apply(&mut p)
+        .unwrap();
+        assert_eq!(
+            px(
+                &render_frame(&p, &MediaCache::new(), 0, 2, 2).unwrap(),
+                0,
+                0
+            ),
+            [0, 0, 0, 255]
+        );
+        // The sound is not what the picture switch turns off.
+        Command::SetTrackPicture {
+            track: t,
+            picture: true,
+        }
+        .apply(&mut p)
+        .unwrap();
+        assert_eq!(
+            px(
+                &render_frame(&p, &MediaCache::new(), 0, 2, 2).unwrap(),
+                0,
+                0
+            ),
+            [50, 60, 70, 255]
         );
     }
 
