@@ -4,13 +4,18 @@
 
 ### ✨ New
 - ✅ **Saved layouts:** Workspace › Layout › Save Layout keeps the sizes of the panels on every page under a name (`layouts/<name>.txt` in the data folder, readable and editable by hand); Load Layout puts one back. The menu status is now 224 of 261 entries (85.82%). Thanks to GANESH NIKAM for the pull request.
+- ✅ **Cut page track buttons:** the button row beside the tracks now works. Lock, mute, **solo** and **picture** act on the track of the selected clip (V1 when nothing is selected), undo, and are saved with the project. Solo silences every track that is not soloed, in playback, the mixdown and compound clips; picture off keeps a video track out of the program, the Color and Deliver previews and the subtitles. Older projects open with every track unsoloed and its picture on. Thanks to GANESH NIKAM.
 
 ### 🛠️ Fixed
+- ✅ **Timecode:** the readouts on the Cut (TCG), Color and Deliver pages started at 00:00:00:00 while the rulers and the Edit page start at 01:00:00:00; they now agree. Thanks to GANESH NIKAM.
 - ✅ **Photo tab:** the second page tab said "Media" like the first; it now says **Photo**. `--page=photo`, `--page=fusion` and `--page=fairlight` open their pages (they were ignored); the old names still work. Thanks to GANESH NIKAM.
 - ✅ **Reset UI Layout** now puts the panel dividers back too, not only the floating windows.
 - ✅ A damaged layout file is refused with a message instead of loading as the default sizes.
 - ✅ A layout is found by its file, so a file renamed by hand still loads; names that make the same file name (`My Layout`, `my-layout`) no longer replace each other; names like `con` or `nul` are not written to Windows devices.
 - ✅ The Save and Load Layout windows read the layouts once when they open, not on every frame, and Enter with no name no longer closes Save Layout.
+
+### 🔄 Changed
+- ✅ **Development:** CI fails when `docs/status.svg` or the README's Status numbers no longer match `Menu-Status.md` and `ROADMAP.md` (run `python3 scripts/status.py`). Thanks to GANESH NIKAM.
 
 ## 0.3.0
 

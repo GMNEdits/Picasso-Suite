@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.3.0.
+Status at 0.3.0, plus the changes on main since (the changelog's Unreleased section).
 
 ## Done
 
@@ -39,20 +39,25 @@ Status at 0.3.0.
 - [x] Development: `PICASSO_PERF=pages picasso-suite [--place] <files>` shows each page in turn and prints its switch frame and frame times, with the time between frames (tried with twelve 1080p and 4K clips: every page under 1.5 ms a frame once shown, the first visit under 14 ms)
 - [x] Status: the README shows how much is made as a picture and a table (`scripts/status.py` draws `docs/status.svg` from `Menu-Status.md` and this file; run it after changing either)
 - [x] Interface: the panels on every page are resized by dragging the dividers between them (double click resets), kept in the preferences; panels keep at least two fifths of their usual size, and their text, icons and buttons shrink with them. Not yet: the Color palettes (the wheels have a fixed size), and the Deliver settings form only scrolls in a narrow column instead of shrinking
+- [x] Workspace: Layout > Save Layout and Load Layout keep the sizes of the panels on every page under a name (`layouts/<name>.txt` in the data folder); Reset UI Layout puts the dividers back too
+- [x] Cut page: the track buttons beside the tracks (lock, solo, mute, picture) act on the selected clip's track, undo and are saved with the project; solo silences the other tracks and picture off keeps a video track out of the program
+- [x] Interface: the second page tab is called Photo, and `--page=` opens every page by its tab's name
+- [x] Timecode: the readouts on the Cut, Color and Deliver pages start at 01:00:00:00 like the rulers
+- [x] Development: CI fails when the status picture or the README's numbers are out of date
 
 ## To do
 
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
 - [ ] Deliver: IMF Generic, Final Cut Pro 7, Premiere XML, AVID AAF and Pro Tools presets (listed, greyed out) need interchange writers (XML, AAF, MXF)
 - [ ] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
-- [ ] Cut page: the button row beside the tracks (height, lock, solo, mute, picture) only draws
+- [ ] Cut page: the height arrows of the track button row (lock, solo, mute and picture work)
 - [ ] Color page: the mini timeline strip under the clips
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
 - [ ] Editing: AAF/XML export, Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), Paste Mix, New Effects Clip, audio scrubbing, timeline in a new window, Bounce Selected Tracks
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: instant scrubbing on long-GOP video (cache of key-frame pictures or optimised media); the remaining compositing on the interface thread (about 2 ms per picture) moved to a worker
-- [ ] Project: libraries, archives, media management, metadata import/export, layouts (save/load), Lightbox, dual screen, clean feed
+- [ ] Project: libraries, archives, media management, metadata import/export, Lightbox, dual screen, clean feed
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm (a per-user Flatpak now updates per-user; a .deb is told from an .rpm by dpkg's file list)
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits

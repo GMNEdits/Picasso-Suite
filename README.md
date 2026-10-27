@@ -24,12 +24,12 @@ Edit, Fusion, Color, Fairlight and Deliver pages. Windows, Linux and macOS.
 ## Status
 
 <!-- status:start -->
-![Status: 85.82% of the menu entries work, 64.81% of the roadmap is done](docs/status.svg)
+![Status: 85.82% of the menu entries work, 67.80% of the roadmap is done](docs/status.svg)
 
 | | Done | Total | |
 |---|---|---|---|
 | Menu entries | 224 | 261 | 85.82% |
-| Roadmap items* | 35 | 54 | 64.81% |
+| Roadmap items* | 40 | 59 | 67.80% |
 
 Green is made, grey is not. Menu entries: every entry of every menu ([`Menu-Status.md`](Menu-Status.md)); the rest are shown disabled. \* Roadmap items ([`ROADMAP.md`](ROADMAP.md)): the to-do items are bigger than the done ones, so this share looks better than the work left. Made by `python3 scripts/status.py`.
 <!-- status:end -->
