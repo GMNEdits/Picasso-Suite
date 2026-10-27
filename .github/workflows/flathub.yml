@@ -42,14 +42,24 @@ jobs:
           curl -fsSL -o flatpak-cargo-generator.py \
             "https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/$CARGO_GENERATOR_COMMIT/cargo/flatpak-cargo-generator.py"
           python3 flatpak-cargo-generator.py Cargo.lock -o packaging/flathub/cargo-sources.json
-      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-        with:
-          bundle: picasso-suite-flathub-${{ matrix.arch }}.flatpak
-          manifest-path: packaging/flathub/io.github.fabox_os.PicassoSuite.yml
-          arch: ${{ matrix.arch }}
-          cache-key: flathub-${{ matrix.arch }}-${{ github.sha }}
-          restore-cache: false
-          upload-artifact: false
+      # flatpak-builder is run here instead of through the action so that, when it fails, the
+      # part of its log with the error is put into the run's annotations (readable without logging in).
+      - name: Build
+        shell: bash
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          rc=0
+          flatpak-builder --user --arch=${{ matrix.arch }} --install-deps-from=flathub --disable-rofiles-fuse --force-clean --repo=repo build packaging/flathub/io.github.fabox_os.PicassoSuite.yml > build.log 2>&1 || rc=$?
+          tail -n 40 build.log
+          if [ "$rc" -ne 0 ]; then
+            echo "flatpak-builder exited with $rc. The first error:" > failure.txt
+            grep -n -i -m1 -B6 -A12 'error\|fatal\|failed' build.log >> failure.txt || true
+            echo "... and the end of the log:" >> failure.txt
+            tail -n 20 build.log >> failure.txt
+            python3 -c 'import sys; t=open("failure.txt", errors="replace").read()[:3500]; print("::error title=flatpak-builder failed::" + t.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
+            exit "$rc"
+          fi
+          flatpak build-bundle repo picasso-suite-flathub-${{ matrix.arch }}.flatpak io.github.fabox_os.PicassoSuite --arch=${{ matrix.arch }}
       # Flathub's linter: what a reviewer there would see. The two X11/Wayland socket findings
       # are expected (see packaging/flathub/README.md); anything else is for the submission.
       - name: Flathub linter

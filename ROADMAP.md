@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.2.1.
+Status at 0.2.1, with the work since (see Unreleased in the changelog).
 
 ## Done
 
@@ -30,7 +30,8 @@ Status at 0.2.1.
 - [x] Linux: files dragged from the file manager reach the media pool on Wayland desktops (the window opens through XWayland); the window is grouped with its launcher and icon; the packages open project files and offer "Open With" for video; .deb and .rpm name the window libraries they need; the Flatpak reads drives under `/media` and `/run/media`
 - [x] Linux: every release's .deb and .rpm are installed and started on Ubuntu 22.04 and 24.04, Debian 12, Fedora and openSUSE Tumbleweed, opening the window on all but openSUSE
 - [x] Linux: ARM64 (aarch64) .deb, .rpm and AppImage, installed and started on Ubuntu 24.04 and Fedora for ARM; an AppImage for x86_64 too, which Check for Updates replaces in place; icons from 16 to 256 pixels
-- [x] Linux: ARM64 Flatpak, built on an ARM64 runner; Check for Updates picks the Flatpak of the computer's processor
+- [x] Cut page: the grey lead-in before a track's first clip
+- [x] Development: tests on every pull request; a test keeps `Menu-Status.md` in step with the menus; publishing waits for every package and the install tests
 - [x] Graphics: `picasso-suite --graphics-check` (every adapter draws a test picture and is read back; tried on an AMD card with Vulkan, DirectX 12 and OpenGL) and a "Graphics report" issue form for people to send theirs
 
 ## To do
@@ -38,7 +39,7 @@ Status at 0.2.1.
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
 - [ ] Deliver: IMF Generic, Final Cut Pro 7, Premiere XML, AVID AAF and Pro Tools presets (listed, greyed out) need interchange writers (XML, AAF, MXF)
 - [ ] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
-- [ ] Cut page: the button row beside the tracks (height, lock, solo, mute, picture) only draws; the clip area before a clip's start (Resolve's grey lead-in)
+- [ ] Cut page: the button row beside the tracks (height, lock, solo, mute, picture) only draws
 - [ ] Color page: the mini timeline strip under the clips
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
 - [ ] Editing: AAF/XML export, Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), Paste Mix, New Effects Clip, audio scrubbing, timeline in a new window, Bounce Selected Tracks
@@ -49,6 +50,7 @@ Status at 0.2.1.
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm (a per-user Flatpak now updates per-user; a .deb is told from an .rpm by dpkg's file list)
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
+- [ ] Linux: ARM64 Flatpak. It is in the release workflow (an x86_64 and an ARM64 runner) and Check for Updates picks the one of the computer's processor; done when a release build of it has passed and it has been tried on an ARM computer
 - [ ] Linux: native Wayland drag and drop: not possible yet. eframe 0.37 uses winit 0.30.13, which takes no files dropped on a Wayland window; winit's own work on it (rust-windowing/winit#4773 is open, #4009 was closed unmerged) is in no release, 0.31 is a beta. Until then the window opens through XWayland. Writing it here against Wayland's data device would be a second, untestable copy of what winit will do
 - [ ] Linux: Flathub. The manifest that builds FFmpeg and its codecs from source is in `packaging/flathub` and has a CI build (`flathub` workflow); the submission itself is a pull request to flathub/flathub by the project's owner, with an exception to ask for for holding both the X11 and Wayland sockets (the text is in `packaging/flathub/README.md`)
 - [ ] Graphics: Vulkan on real cards: the check and the report form exist; the NVIDIA, Intel, AMD (Linux, Mesa), Apple and ARM GPUs need people to run `--graphics-check` and send it in
