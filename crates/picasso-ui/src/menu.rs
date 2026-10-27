@@ -136,6 +136,8 @@ pub(crate) enum Act {
     ToggleScopes,
     // Workspace
     ResetLayout,
+    SaveLayout,
+    LoadLayout,
     PageMedia,
     PageCut,
     PageEdit,
@@ -824,8 +826,8 @@ const WORKSPACE: &[Entry] = &[
         "Layout",
         &[
             item("Reset UI Layout", &[], Act::ResetLayout),
-            planned("Save Layout", ""),
-            planned("Load Layout", ""),
+            item("Save Layout", &[], Act::SaveLayout),
+            item("Load Layout", &[], Act::LoadLayout),
         ],
     ),
     sub(

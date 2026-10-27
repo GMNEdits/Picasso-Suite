@@ -82,18 +82,7 @@ impl Preferences {
             "hardware_decoding={}\n",
             if self.hardware_decoding { "on" } else { "off" }
         );
-        let p = &self.panels;
-        let [a, b, c] = p.edit_columns;
-        out.push_str(&format!(
-            "panels={a},{b},{c},{},{},{}\n",
-            p.edit_viewers, p.cut_pool, p.cut_upper
-        ));
-        for (name, by) in &p.moved {
-            out.push_str(&format!(
-                "panel\t{}\t{by}\n",
-                name.replace(['\t', '\n'], "")
-            ));
-        }
+        out.push_str(&panels_text(&self.panels));
         let mut keys: Vec<(String, &Vec<String>)> = self
             .keys
             .iter()
@@ -159,6 +148,32 @@ fn parse_panels(value: &str) -> Option<Panels> {
         }
         .checked(),
     )
+}
+
+/// The lines that hold the panels' sizes: a `panels=` line, then a `panel` line for each divider
+/// that was moved. A saved layout (`crate::layouts`) is these lines and nothing else.
+pub(crate) fn panels_text(p: &Panels) -> String {
+    let [a, b, c] = p.edit_columns;
+    let mut out = format!(
+        "panels={a},{b},{c},{},{},{}\n",
+        p.edit_viewers, p.cut_pool, p.cut_upper
+    );
+    for (name, by) in &p.moved {
+        out.push_str(&format!("panel\t{}\t{by}\n", name.replace(['\t', '\n'], "")));
+    }
+    out
+}
+
+/// The panels' sizes in lines that `panels_text` wrote; `None` when the `panels=` line is missing
+/// or cannot be read (a damaged or hand-edited file), so a broken layout is not taken for the
+/// default sizes.
+pub(crate) fn panels_of(text: &str) -> Option<Panels> {
+    let value = text
+        .lines()
+        .take(MAX_LINES)
+        .find_map(|l| l.trim_end_matches('\r').strip_prefix("panels="))?;
+    parse_panels(value)?;
+    Some(Preferences::parse(text).panels)
 }
 
 #[cfg(test)]

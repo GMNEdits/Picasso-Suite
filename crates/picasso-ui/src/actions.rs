@@ -1350,8 +1350,14 @@ impl StudioApp {
             Act::ResetLayout => {
                 ctx.memory_mut(|m| m.reset_areas());
                 ctx.data_mut(|d| d.clear());
+                // The panels' dividers too: they are part of the layout (0.3.0).
+                self.extra.prefs.panels = crate::panels::Panels::default();
+                #[cfg(not(test))]
+                self.extra.prefs.save();
                 self.info("The layout was reset");
             }
+            Act::SaveLayout => self.extra.save_layout = Some(String::new()),
+            Act::LoadLayout => self.extra.load_layout = true,
             Act::PageMedia => self.page = Page::Media,
             Act::PageCut => self.page = Page::Cut,
             Act::PageEdit => self.page = Page::Edit,

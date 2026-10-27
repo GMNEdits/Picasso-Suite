@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### ✨ New
+- ✅ **Saved layouts:** Workspace › Layout › Save Layout keeps the sizes of the panels on every page under a name (`layouts/<name>.txt` in the data folder, readable and editable by hand); Load Layout puts one back. The menu status is now 224 of 261 entries (85.82%). Thanks to GANESH NIKAM for the pull request.
+
+### 🛠️ Fixed
+- ✅ **Reset UI Layout** now puts the panel dividers back too, not only the floating windows.
+- ✅ A damaged layout file is refused with a message instead of loading as the default sizes.
+- ✅ A layout is found by its file, so a file renamed by hand still loads; names that make the same file name (`My Layout`, `my-layout`) no longer replace each other; names like `con` or `nul` are not written to Windows devices.
+- ✅ The Save and Load Layout windows read the layouts once when they open, not on every frame, and Enter with no name no longer closes Save Layout.
+
 ## 0.3.0
 
 Picasso Suite 0.3.0 adds Linux on ARM64 (.deb, .rpm, AppImage and Flatpak), an AppImage for
