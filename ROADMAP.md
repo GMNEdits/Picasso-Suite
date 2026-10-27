@@ -35,6 +35,7 @@ Status at 0.2.1, with the work since (see Unreleased in the changelog).
 - [x] Linux: ARM64 Flatpak (`-aarch64.flatpak`), built on an ARM64 runner by the release workflow, with Check for Updates picking the Flatpak of the computer's processor; built there, not started on ARM hardware yet
 - [x] Linux: the Flathub manifest (`packaging/flathub`) builds FFmpeg 7.1 and its codecs, then the program, from source on x86_64 and aarch64 (about 20 minutes in the `flathub` workflow), which also runs Flathub's linter
 - [x] Graphics: `picasso-suite --graphics-check` (every adapter draws a test picture and is read back; tried on an AMD card with Vulkan, DirectX 12 and OpenGL, and run on Mesa's software Vulkan in the Linux install tests) and a "Graphics report" issue form for people to send theirs
+- [x] Releases: release candidates (`v0.2.2-rc1`) are published as pre-releases with their version's notes, and Check for Updates does not offer them
 
 ## To do
 
