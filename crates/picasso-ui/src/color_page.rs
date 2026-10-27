@@ -930,7 +930,7 @@ impl StudioApp {
         };
         c.label(1124.0, y, Align2::RIGHT_CENTER, &shown, 17.5, TEXT, true);
         c.chevron(1142.0, y, GREY);
-        let time = self.project().fps.timecode(self.playhead);
+        let time = self.tc(self.playhead as i64);
         c.label(1368.0, y, Align2::RIGHT_CENTER, &time, 17.5, TEXT, true);
         c.chevron(1387.0, y, GREY);
         let picker = ui
@@ -1837,7 +1837,7 @@ impl StudioApp {
             c.p.text(
                 c.rv(x + 6.0, 603.0),
                 Align2::LEFT_CENTER,
-                self.project().fps.timecode(frame as u64),
+                self.tc(frame as i64),
                 theme::regular(8.5 * R),
                 LABEL,
             );
