@@ -13,19 +13,48 @@ the project's owner can make.
 
 What the linter said (read it in the run's annotations):
 
-* **`appid-url-not-reachable`** (an error, and the one to settle before submitting). For an id
-  `io.github.<user>.<name>` Flathub looks for `https://github.com/<user>/<name>`, lower case. Here
-  that is `github.com/fabox-os/picassosuite`, which does not exist: the repository is
-  `Picasso-Suite`. The id Flathub would accept for this repository is
-  `io.github.fabox_os.Picasso_Suite`. Changing it renames the desktop file, icons, mime file and
-  `StartupWMClass`, and makes the Flathub app a different app from the Flatpak in the releases
-  (`io.github.fabox_os.PicassoSuite`), so those installs would not update to it. Otherwise ask the
-  Flathub team for an exception.
+* **`appid-url-not-reachable`** (an error). For an id `io.github.<user>.<name>` Flathub looks for
+  `https://github.com/<user>/<name>`, lower case. Here that is `github.com/fabox-os/picassosuite`,
+  which does not exist: the repository is `Picasso-Suite`. The id Flathub would accept for this
+  repository is `io.github.fabox_os.Picasso_Suite`, but that would make the Flathub app a different
+  app from the Flatpak in the releases (`io.github.fabox_os.PicassoSuite`), so those installs would
+  not update to it. Decision: keep the id and ask for an exception, text under "Asking for the id
+  exception" below.
 * `finish-args-contains-both-x11-and-wayland`: expected, see below.
 * `runtime-update-available-to-org.freedesktop.Platform-26.08`: the manifest uses 25.08, which is
   supported; moving to 26.08 means the `llvm22` extension (the bindings are tried with 20).
 * `appstream-external-screenshot-url`, `appstream-screenshots-not-mirrored-in-ostree`: Flathub's
   builders mirror the screenshots themselves; a local build always reports these.
+
+## Asking for the id exception
+
+Paste this in the submission pull request when the reviewers raise `appid-url-not-reachable` (or
+in a pull request to `flathub-infra/flatpak-builder-lint`, `exceptions.json`, under
+`io.github.fabox_os.PicassoSuite`):
+
+> **App id: `io.github.fabox_os.PicassoSuite` (`appid-url-not-reachable`)**
+>
+> The linter looks for `https://github.com/fabox-os/picassosuite`. The project is
+> `https://github.com/fabox-os/Picasso-Suite`: the repository name has a hyphen, so the id derived
+> from it would be `io.github.fabox_os.Picasso_Suite`.
+>
+> I would like to keep `io.github.fabox_os.PicassoSuite`, for two reasons:
+>
+> * It is the id of the Flatpak bundles already published on the project's releases page (desktop
+>   file, icons, mime file, window class and the app's own Check for Updates all use it). A different
+>   id on Flathub would be a different application: people who installed the bundle would not be
+>   moved to the Flathub one, and would have two copies with separate settings.
+> * The id is still in a namespace I control: `io.github.fabox_os.*` is the `fabox-os` GitHub
+>   account that owns the repository, so ownership can be verified through the GitHub login as for
+>   any `io.github.*` app.
+>
+> If the id has to match the repository's name for the app to be accepted, tell me and I will rename
+> it before the first Flathub release; only the id changes.
+
+If the exception is refused, the choices are the rename (`io.github.fabox_os.Picasso_Suite`, done in
+the desktop file, metainfo, icons, mime file, both manifests, the workflows and the updater) or
+renaming the GitHub repository to `PicassoSuite`, which makes the current id match (GitHub redirects
+the old address; not tried).
 
 ## Submitting
 
