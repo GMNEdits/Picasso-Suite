@@ -1022,20 +1022,12 @@ impl StudioApp {
         }
     }
 
-    /// Shows a page by name ("media", "cut", "edit", "color", "audio", "deliver"); anything else
-    /// is ignored. For the command line.
+    /// Shows the page named on the command line (`--page=photo`), by the tab's name or the
+    /// page's own, in any case. Anything else is ignored.
     pub fn show_page(&mut self, name: &str) {
-        self.page = match name {
-            "media" => Page::Media,
-            "cut" => Page::Cut,
-            "edit" => Page::Edit,
-            "color" => Page::Color,
-            "audio" => Page::Audio,
-            "capture" => Page::Capture,
-            "effects" => Page::Effects,
-            "deliver" => Page::Deliver,
-            _ => return,
-        };
+        if let Some(page) = crate::chrome::page_from_name(name) {
+            self.page = page;
+        }
     }
 
     /// `open_path` for the callers that go on with the media at once: the file is read now, not
