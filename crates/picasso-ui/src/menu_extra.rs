@@ -47,6 +47,10 @@ pub(crate) struct Extra {
     pub attributes: Option<(ClipId, String)>,
     /// Rename Bin: the bin and the name being typed.
     pub rename_bin: Option<(u64, String)>,
+    /// Workspace › Layout › Save Layout: the name being typed.
+    pub save_layout: Option<String>,
+    /// Workspace › Layout › Load Layout: the list of the saved layouts is open.
+    pub load_layout: bool,
     /// New Smart Bin: its name, the words to look for and the type (0 is any).
     pub smart_bin: Option<(String, String, usize)>,
     /// What System Preferences and Keyboard Customization set for this computer.
@@ -908,6 +912,92 @@ impl StudioApp {
         }
     }
 
+    /// Workspace › Layout › Save Layout: the sizes of the panels on every page under a name.
+    fn save_layout_window(&mut self, ctx: &Context) {
+        let Some(mut name) = self.extra.save_layout.take() else {
+            return;
+        };
+        let mut open = true;
+        let mut done = None;
+        egui::Window::new("Save Layout")
+            .open(&mut open)
+            .collapsible(false)
+            .resizable(false)
+            .show(ctx, |ui| {
+                ui.label("Name");
+                let field = ui.text_edit_singleline(&mut name);
+                if field.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter)) {
+                    done = Some(true);
+                }
+                ui.horizontal(|ui| {
+                    let named = !name.trim().is_empty();
+                    if ui.add_enabled(named, egui::Button::new("Save")).clicked() {
+                        done = Some(true);
+                    }
+                    if ui.button("Cancel").clicked() {
+                        done = Some(false);
+                    }
+                });
+                let saved = crate::layouts::names();
+                if !saved.is_empty() {
+                    ui.separator();
+                    ui.label(RichText::new(format!("Saved: {}", saved.join(", "))).weak());
+                }
+            });
+        if done == Some(true) {
+            let panels = self.extra.prefs.panels.clone();
+            match crate::layouts::save(&name, &panels) {
+                Ok(()) => self.info(format!("Saved the layout {}", name.trim())),
+                Err(why) => self.fail(why),
+            }
+        } else if open && done.is_none() {
+            self.extra.save_layout = Some(name);
+        }
+    }
+
+    /// Workspace › Layout › Load Layout: one of the saved sizes back.
+    fn load_layout_window(&mut self, ctx: &Context) {
+        if !self.extra.load_layout {
+            return;
+        }
+        let names = crate::layouts::names();
+        let mut open = true;
+        let mut chosen: Option<String> = None;
+        egui::Window::new("Load Layout")
+            .open(&mut open)
+            .collapsible(false)
+            .resizable(false)
+            .show(ctx, |ui| {
+                if names.is_empty() {
+                    ui.label("No layouts are saved yet.");
+                    ui.label(
+                        RichText::new(
+                            "Workspace › Layout › Save Layout keeps the sizes you have now.",
+                        )
+                        .weak(),
+                    );
+                }
+                for name in &names {
+                    if ui.button(name).clicked() {
+                        chosen = Some(name.clone());
+                    }
+                }
+            });
+        if let Some(name) = chosen {
+            match crate::layouts::load(&name) {
+                Some(panels) => {
+                    self.extra.prefs.panels = panels;
+                    #[cfg(not(test))]
+                    self.extra.prefs.save();
+                    self.info(format!("Loaded the layout {name}"));
+                }
+                None => self.fail(format!("the layout {name} could not be read")),
+            }
+            open = false;
+        }
+        self.extra.load_layout = open;
+    }
+
     fn smart_bin_window(&mut self, ctx: &Context) {
         let Some((mut name, mut contains, mut kind)) = self.extra.smart_bin.take() else {
             return;
@@ -1195,6 +1285,8 @@ impl StudioApp {
         self.ramp_window(ctx);
         self.rename_bin_window(ctx);
         self.smart_bin_window(ctx);
+        self.save_layout_window(ctx);
+        self.load_layout_window(ctx);
         self.normalize_window(ctx);
         self.preferences_window(ctx);
         self.speed_window(ctx);

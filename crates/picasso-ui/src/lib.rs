@@ -21,6 +21,7 @@ mod fps_prompt;
 mod icons;
 mod keyboard;
 mod keyframes_ui;
+mod layouts;
 mod media;
 mod menu;
 mod menu_extra;

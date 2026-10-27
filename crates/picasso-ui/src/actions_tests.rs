@@ -2044,3 +2044,23 @@ fn render_in_place_bakes_the_grade_into_a_new_file() {
     assert!(!c.is_graded(), "the grade is baked in: {}", app.status.text);
     assert_eq!(c.media, app.project().media.last().unwrap().id);
 }
+
+#[test]
+fn resetting_the_layout_puts_every_panel_back() {
+    let mut app = app();
+    app.extra.prefs.panels.set_edit_column(1, 700.0);
+    app.extra.prefs.panels.cut_upper = 400;
+    app.extra.prefs.panels.moved.insert("color gallery".into(), -35);
+    act(&mut app, Act::ResetLayout);
+    assert_eq!(app.extra.prefs.panels, crate::panels::Panels::default());
+}
+
+#[test]
+fn the_layout_entries_open_their_windows() {
+    let mut app = app();
+    act(&mut app, Act::SaveLayout);
+    assert_eq!(app.extra.save_layout, Some(String::new()));
+    assert!(!app.extra.load_layout);
+    act(&mut app, Act::LoadLayout);
+    assert!(app.extra.load_layout);
+}
