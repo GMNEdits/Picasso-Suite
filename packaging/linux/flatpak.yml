@@ -9,6 +9,8 @@ finish-args:
   - --share=ipc
   # X11 (XWayland) even on a Wayland desktop: winit 0.30 does not take files dropped on a
   # Wayland window, so the program opens through X11 when it can (PICASSO_WAYLAND=1 does not).
+  # Both sockets are needed for that choice at run time; Flathub's linter flags the pair
+  # (finish-args-contains-both-x11-and-wayland), so a Flathub submission has to ask for an exception.
   - --socket=x11
   - --socket=wayland
   - --device=dri

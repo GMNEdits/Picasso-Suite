@@ -47,6 +47,6 @@ Status at 0.2.1.
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm (a per-user Flatpak now updates per-user; a .deb is told from an .rpm by dpkg's file list)
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
-- [ ] Linux: native Wayland drag and drop (when winit supports it), Flathub (needs a submission to flathub/flathub, building FFmpeg from source there), an ARM64 Flatpak
+- [ ] Linux: native Wayland drag and drop (when winit supports it), Flathub (needs a submission to flathub/flathub, building FFmpeg from source there, and an exception for holding both the X11 and Wayland sockets), an ARM64 Flatpak
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
 - [ ] Interchange: OpenTimelineIO import, and OTIO export from `picasso-bridge`

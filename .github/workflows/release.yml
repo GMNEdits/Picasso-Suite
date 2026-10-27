@@ -132,6 +132,8 @@ jobs:
   linux-install:
     needs: linux
     runs-on: ${{ matrix.runner }}
+    # A rolling distribution can break by itself; it does not stop a release.
+    continue-on-error: ${{ matrix.rolling || false }}
     strategy:
       fail-fast: false
       matrix:
@@ -140,7 +142,7 @@ jobs:
           - { image: 'ubuntu:24.04', window: true, runner: ubuntu-latest, deb: amd64, appimage: true }
           - { image: 'debian:12', window: true, runner: ubuntu-latest, deb: amd64 }
           - { image: 'fedora:latest', window: true, runner: ubuntu-latest, deb: amd64 }
-          - { image: 'opensuse/tumbleweed', window: false, runner: ubuntu-latest, deb: amd64 }
+          - { image: 'opensuse/tumbleweed', window: false, runner: ubuntu-latest, deb: amd64, rolling: true }
           - { image: 'ubuntu:24.04', window: true, runner: ubuntu-24.04-arm, deb: arm64, appimage: true }
           - { image: 'fedora:latest', window: false, runner: ubuntu-24.04-arm, deb: arm64 }
     container: ${{ matrix.image }}
@@ -301,9 +303,11 @@ jobs:
           name: pkg-windows
           path: "*-windows.zip"
 
+  # Only when every package built and the Linux ones installed: it deletes the release's old
+  # packages first, so a failed build must not leave the release with fewer.
   publish:
-    if: ${{ !cancelled() && (startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch') }}
-    needs: [linux, flatpak, macos, windows]
+    if: ${{ success() && (startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch') }}
+    needs: [linux, linux-install, flatpak, macos, windows]
     runs-on: ubuntu-latest
     permissions:
       contents: write

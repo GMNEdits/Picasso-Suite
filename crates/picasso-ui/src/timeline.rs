@@ -124,10 +124,13 @@ pub(crate) struct TimelineView {
     scroll: f32,
     snap: bool,
     drag: Drag,
-    /// The last answer of [`StudioApp::would_work`]: the project revision it was for, the
-    /// command, and whether it worked.
-    would: Option<(u64, Command, bool)>,
+    /// The recent answers of [`StudioApp::would_work`], for the project they were asked of: its
+    /// `epoch` (a new one for each project opened) and revision.
+    would: ((u64, u64), Vec<(Command, bool)>),
 }
+
+/// How many answers of `would_work` a drag remembers.
+const WOULD_KEPT: usize = 32;
 
 impl TimelineView {
     pub(crate) fn new(mode: Mode) -> Self {
@@ -141,7 +144,7 @@ impl TimelineView {
             scroll: 0.0,
             snap: true,
             drag: Drag::None,
-            would: None,
+            would: ((0, 0), Vec::new()),
         }
     }
 }
@@ -814,17 +817,21 @@ impl StudioApp {
     }
 
     /// Whether `command` would work on the project as it is now. A drag asks the same question on
-    /// every pointer move, so the last answer is kept until the project changes; a copy of the
-    /// whole project is only made when it is not.
+    /// every frame, and again for the places it has been over, so the recent answers are kept
+    /// until the project changes; a copy of the whole project is only made for a new question.
     fn would_work(&self, view: &mut TimelineView, command: Command) -> bool {
-        let revision = self.session.revision();
-        if let Some((known, asked, ok)) = &view.would {
-            if *known == revision && *asked == command {
-                return *ok;
-            }
+        let project = (self.epoch, self.session.revision());
+        if view.would.0 != project {
+            view.would = (project, Vec::new());
+        }
+        if let Some((_, ok)) = view.would.1.iter().find(|(asked, _)| *asked == command) {
+            return *ok;
         }
         let ok = command.clone().apply(&mut self.project().clone()).is_ok();
-        view.would = Some((revision, command, ok));
+        if view.would.1.len() >= WOULD_KEPT {
+            view.would.1.remove(0);
+        }
+        view.would.1.push((command, ok));
         ok
     }
 
@@ -886,11 +893,14 @@ impl StudioApp {
                     .filter(|t| self.project().tracks.get(*t).map(|t| t.kind) == own_kind)
                     .unwrap_or(track);
                 let ok = self.project().tracks.get(track).is_some_and(|t| !t.locked)
-                    && self.would_work(view, Command::MoveClip {
-                        clip,
-                        track: self.project().tracks[track].id,
-                        start: start as u64,
-                    });
+                    && self.would_work(
+                        view,
+                        Command::MoveClip {
+                            clip,
+                            track: self.project().tracks[track].id,
+                            start: start as u64,
+                        },
+                    );
                 view.drag = Drag::Move {
                     clip,
                     grab,
