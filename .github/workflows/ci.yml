@@ -21,12 +21,17 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends \
-            build-essential ca-certificates curl git pkg-config \
+            build-essential ca-certificates curl git pkg-config python3 \
             clang-19 libclang-19-dev \
             libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libswresample-dev \
             libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev \
             libxcursor-dev libxrandr-dev libxi-dev libasound2-dev
       - uses: actions/checkout@v4
+      - name: Check the status picture and the README's numbers
+        # `scripts/status.py --check` fails when docs/status.svg or the README's Status section
+        # no longer match Menu-Status.md and ROADMAP.md: run `python3 scripts/status.py` when
+        # either of those changes.
+        run: python3 scripts/status.py --check
       - uses: dtolnay/rust-toolchain@stable
       - uses: actions/cache@v4
         with:
