@@ -69,9 +69,14 @@ jobs:
       # are expected (see packaging/flathub/README.md); anything else is for the submission.
       - name: Flathub linter
         continue-on-error: true
+        shell: bash
         run: |
-          flatpak install -y --noninteractive flathub org.flatpak.Builder || true
-          flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest packaging/flathub/io.github.fabox_os.PicassoSuite.yml || true
+          flatpak install --user -y --noninteractive flathub org.flatpak.Builder || true
+          flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest packaging/flathub/io.github.fabox_os.PicassoSuite.yml > lint-manifest.txt 2>&1 || true
+          flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo repo > lint-repo.txt 2>&1 || true
+          cat lint-manifest.txt lint-repo.txt
+          # Also as a run annotation, readable without logging in.
+          python3 -c 'import sys; t="manifest:\n"+open("lint-manifest.txt", errors="replace").read()+"\nrepo:\n"+open("lint-repo.txt", errors="replace").read(); print("::notice title=Flathub linter::" + t[:3500].replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
       - uses: actions/upload-artifact@v4
         with:
           name: flathub-${{ matrix.arch }}
