@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.2.1, with the work since (see Unreleased in the changelog).
+Status at 0.3.0.
 
 ## Done
 

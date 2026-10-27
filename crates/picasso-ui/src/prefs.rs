@@ -158,22 +158,22 @@ pub(crate) fn panels_text(p: &Panels) -> String {
         "panels={a},{b},{c},{},{},{}\n",
         p.edit_viewers, p.cut_pool, p.cut_upper
     );
-    let mut moved: Vec<(&String, &i16)> = p.moved.iter().collect();
-    moved.sort();
-    for (name, by) in moved {
+    for (name, by) in &p.moved {
         out.push_str(&format!("panel\t{}\t{by}\n", name.replace(['\t', '\n'], "")));
     }
     out
 }
 
 /// The panels' sizes in lines that `panels_text` wrote; `None` when the `panels=` line is missing
-/// or cannot be read (a damaged or hand-edited file).
+/// or cannot be read (a damaged or hand-edited file), so a broken layout is not taken for the
+/// default sizes.
 pub(crate) fn panels_of(text: &str) -> Option<Panels> {
-    let read = text
+    let value = text
         .lines()
         .take(MAX_LINES)
-        .any(|l| l.trim_end_matches('\r').starts_with("panels="));
-    read.then(|| Preferences::parse(text).panels)
+        .find_map(|l| l.trim_end_matches('\r').strip_prefix("panels="))?;
+    parse_panels(value)?;
+    Some(Preferences::parse(text).panels)
 }
 
 #[cfg(test)]

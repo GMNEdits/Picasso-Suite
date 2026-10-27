@@ -51,6 +51,9 @@ pub(crate) struct Extra {
     pub save_layout: Option<String>,
     /// Workspace › Layout › Load Layout: the list of the saved layouts is open.
     pub load_layout: bool,
+    /// The saved layouts the two layout windows list, read from the disk when one opens and again
+    /// after a save, not on every frame.
+    pub layouts: Option<Vec<crate::layouts::Layout>>,
     /// New Smart Bin: its name, the words to look for and the type (0 is any).
     pub smart_bin: Option<(String, String, usize)>,
     /// What System Preferences and Keyboard Customization set for this computer.
@@ -917,6 +920,13 @@ impl StudioApp {
         let Some(mut name) = self.extra.save_layout.take() else {
             return;
         };
+        let saved = self
+            .extra
+            .layouts
+            .get_or_insert_with(crate::layouts::list)
+            .iter()
+            .map(|l| l.name.clone())
+            .collect::<Vec<_>>();
         let mut open = true;
         let mut done = None;
         egui::Window::new("Save Layout")
@@ -925,12 +935,13 @@ impl StudioApp {
             .resizable(false)
             .show(ctx, |ui| {
                 ui.label("Name");
+                let named = !name.trim().is_empty();
                 let field = ui.text_edit_singleline(&mut name);
-                if field.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter)) {
+                // Enter saves only when there is a name, as the button does.
+                if named && field.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter)) {
                     done = Some(true);
                 }
                 ui.horizontal(|ui| {
-                    let named = !name.trim().is_empty();
                     if ui.add_enabled(named, egui::Button::new("Save")).clicked() {
                         done = Some(true);
                     }
@@ -938,7 +949,6 @@ impl StudioApp {
                         done = Some(false);
                     }
                 });
-                let saved = crate::layouts::names();
                 if !saved.is_empty() {
                     ui.separator();
                     ui.label(RichText::new(format!("Saved: {}", saved.join(", "))).weak());
@@ -950,8 +960,11 @@ impl StudioApp {
                 Ok(()) => self.info(format!("Saved the layout {}", name.trim())),
                 Err(why) => self.fail(why),
             }
+            self.extra.layouts = None;
         } else if open && done.is_none() {
             self.extra.save_layout = Some(name);
+        } else if !self.extra.load_layout {
+            self.extra.layouts = None;
         }
     }
 
@@ -960,15 +973,15 @@ impl StudioApp {
         if !self.extra.load_layout {
             return;
         }
-        let names = crate::layouts::names();
+        let layouts = self.extra.layouts.get_or_insert_with(crate::layouts::list).clone();
         let mut open = true;
-        let mut chosen: Option<String> = None;
+        let mut chosen: Option<crate::layouts::Layout> = None;
         egui::Window::new("Load Layout")
             .open(&mut open)
             .collapsible(false)
             .resizable(false)
             .show(ctx, |ui| {
-                if names.is_empty() {
+                if layouts.is_empty() {
                     ui.label("No layouts are saved yet.");
                     ui.label(
                         RichText::new(
@@ -977,14 +990,15 @@ impl StudioApp {
                         .weak(),
                     );
                 }
-                for name in &names {
-                    if ui.button(name).clicked() {
-                        chosen = Some(name.clone());
+                for layout in &layouts {
+                    if ui.button(&layout.name).clicked() {
+                        chosen = Some(layout.clone());
                     }
                 }
             });
-        if let Some(name) = chosen {
-            match crate::layouts::load(&name) {
+        if let Some(layout) = chosen {
+            let name = &layout.name;
+            match crate::layouts::load(&layout) {
                 Some(panels) => {
                     self.extra.prefs.panels = panels;
                     #[cfg(not(test))]
@@ -996,6 +1010,9 @@ impl StudioApp {
             open = false;
         }
         self.extra.load_layout = open;
+        if !open && self.extra.save_layout.is_none() {
+            self.extra.layouts = None;
+        }
     }
 
     fn smart_bin_window(&mut self, ctx: &Context) {
