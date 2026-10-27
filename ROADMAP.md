@@ -35,6 +35,7 @@ Status at 0.2.1, with the work since (see Unreleased in the changelog).
 - [x] Linux: ARM64 Flatpak (`-aarch64.flatpak`), built on an ARM64 runner by the release workflow, with Check for Updates picking the Flatpak of the computer's processor; built there, not started on ARM hardware yet
 - [x] Linux: the Flathub manifest (`packaging/flathub`) builds FFmpeg 7.1 and its codecs, then the program, from source on x86_64 and aarch64 (about 20 minutes in the `flathub` workflow), which also runs Flathub's linter
 - [x] Graphics: `picasso-suite --graphics-check` (every adapter draws a test picture and is read back; tried on an AMD card with Vulkan, DirectX 12 and OpenGL, and run on Mesa's software Vulkan in the Linux install tests) and a "Graphics report" issue form for people to send theirs
+- [x] Releases: release candidates (`v0.2.2-rc1`) are published as pre-releases with their version's notes, and Check for Updates does not offer them
 
 ## To do
 
@@ -53,7 +54,7 @@ Status at 0.2.1, with the work since (see Unreleased in the changelog).
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
 - [ ] Linux: native Wayland drag and drop: not possible yet. eframe 0.37 uses winit 0.30.13, which takes no files dropped on a Wayland window; winit's own work on it (rust-windowing/winit#4773 is open, #4009 was closed unmerged) is in no release, 0.31 is a beta. Until then the window opens through XWayland. Writing it here against Wayland's data device would be a second, untestable copy of what winit will do
-- [ ] Linux: Flathub submission, for the project's owner: a pull request to flathub/flathub with the manifest. The linter's findings on it: the id `io.github.fabox_os.PicassoSuite` does not match the repository's name (`appid-url-not-reachable`: it looks for github.com/fabox-os/picassosuite, the repository is Picasso-Suite, so Flathub would expect `io.github.fabox_os.Picasso_Suite`; changing the id makes it a new app for people with the current Flatpak, so this needs a decision, or an exception); the X11 + Wayland sockets (exception text in `packaging/flathub/README.md`); and a newer runtime (26.08)
+- [ ] Linux: Flathub submission, for the project's owner: a pull request to flathub/flathub with the manifest. The linter's findings on it: the id `io.github.fabox_os.PicassoSuite` does not match the repository's name (`appid-url-not-reachable`: it looks for github.com/fabox-os/picassosuite, the repository is Picasso-Suite; changing the id would make it a new app for people with the current Flatpak, so the id stays and the request for an exception is written in `packaging/flathub/README.md`); the X11 + Wayland sockets (exception text in `packaging/flathub/README.md`); and a newer runtime (26.08)
 - [ ] Graphics: Vulkan on real cards: the check and the report form exist; the NVIDIA, Intel, AMD (Linux, Mesa), Apple and ARM GPUs need people to run `--graphics-check` and send it in
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
 - [ ] Interchange: OpenTimelineIO import, and OTIO export from `picasso-bridge`

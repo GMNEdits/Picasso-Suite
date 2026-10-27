@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.2 — release candidate
 
 **✨ New**
 - ✅ **Linux on ARM64:** .deb, .rpm and AppImage for 64-bit ARM computers (Raspberry Pi 5, ARM laptops and servers)
@@ -30,6 +30,7 @@
 - ✅ **Linux:** icons in 16 to 256 pixels, so menus and docks show a sharp icon at every size
 - ✅ **Releases:** a release is only published when every package built and the Linux ones installed and started on seven systems, so a failed build can no longer leave a release with fewer packages
 - ✅ **Flathub:** a manifest that builds FFmpeg and its codecs from source (`packaging/flathub`), built in CI on x86_64 and ARM64 and checked with Flathub's linter, with notes for the submission, which is not made yet; the screenshots and links in the app's appstream entry are filled in
+- ✅ **Releases:** a release candidate (a tag such as `v0.2.2-rc1`) is published as a pre-release for testing; Check for Updates does not offer it
 - ✅ **Development:** the tests run on every pull request, and a test checks `Menu-Status.md` against the menus' table
 
 **⚠️ Known limitations**
