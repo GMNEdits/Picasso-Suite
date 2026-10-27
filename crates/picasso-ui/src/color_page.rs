@@ -22,6 +22,7 @@ use crate::capture::fit;
 use crate::chrome::{Screen, Tool, R};
 use crate::icons::Icon;
 use crate::menu::Act;
+use crate::panels::Split;
 use crate::theme;
 use crate::wheel::{color_wheel, master, set_master};
 
@@ -392,13 +393,18 @@ impl<'a> Cv<'a> {
     /// A point given in pixels of Resolve at 1080p, for the upper half: its rows from the second
     /// toolbar to the palette row fill the window's.
     fn rv(&self, x: f32, y: f32) -> Pos2 {
+        let (x, y) = self.rv_points(x, y);
+        self.s.p(x, y)
+    }
+    /// `rv` as the screen's own points, before the dividers move them.
+    fn rv_points(&self, x: f32, y: f32) -> (f32, f32) {
         let top = 92.0;
         let bottom = (self.s.h - (FRESH_HEIGHT - 656.0) * R).max(top + 300.0);
-        self.s
-            .p(x * R, top + (y - 33.0) * (bottom - top) / (656.0 - 33.0))
+        (x * R, top + (y - 33.0) * (bottom - top) / (656.0 - 33.0))
     }
     fn rrect(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
-        Rect::from_min_max(self.rv(x0, y0), self.rv(x1, y1))
+        self.s
+            .between(self.rv_points(x0, y0), self.rv_points(x1, y1))
     }
     /// Whether a row belongs to the upper half of the older reference.
     fn upper_row(&self, y: f32) -> bool {
@@ -442,21 +448,27 @@ impl<'a> Cv<'a> {
         }
     }
     fn at(&self, x: f32, y: f32) -> Pos2 {
+        let (x, y) = self.at_points(x, y);
+        self.s.p(x, y)
+    }
+    /// `at` as the screen's own points, before the dividers move them.
+    fn at_points(&self, x: f32, y: f32) -> (f32, f32) {
         if self.fresh {
-            self.s.p(x * R, self.s.h - (FRESH_HEIGHT - y) * R)
+            (x * R, self.s.h - (FRESH_HEIGHT - y) * R)
         } else if y < PALETTE_TOP {
             let map = if y <= TOOLBAR2_END {
                 &TB2_X[..]
             } else {
                 &BODY_X[..]
             };
-            self.rv(piece(map, x), piece(&ROWS_C, y))
+            self.rv_points(piece(map, x), piece(&ROWS_C, y))
         } else {
-            self.s.p(x * K, self.y(y))
+            (x * K, self.y(y))
         }
     }
     fn rect(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
-        Rect::from_min_max(self.at(x0, y0), self.at(x1, y1))
+        self.s
+            .between(self.at_points(x0, y0), self.at_points(x1, y1))
     }
     fn band(&self, x0: f32, y0: f32, x1: f32, y1: f32, c: Color32) {
         self.p.rect_filled(self.rect(x0, y0, x1, y1), 0.0, c);
@@ -469,11 +481,17 @@ impl<'a> Cv<'a> {
             fit(
                 self.p,
                 text,
-                width * if self.upper_row(y) { QU } else { K },
+                width * if self.upper_row(y) { QU } else { K } * self.shrink(x, y),
                 bold,
             ),
             c,
         );
+    }
+    /// How much smaller than usual text and icons at a reference point are drawn: as much as
+    /// the dividers squeezed the panel there, so they stay inside it.
+    fn shrink(&self, x: f32, y: f32) -> f32 {
+        let (x, y) = self.at_points(x, y);
+        self.s.shrink(x, y)
     }
     /// Text at a fixed size in points.
     fn label(&self, x: f32, y: f32, align: Align2, text: &str, size: f32, c: Color32, bold: bool) {
@@ -484,7 +502,7 @@ impl<'a> Cv<'a> {
             size * SZU
         } else {
             size
-        };
+        } * self.shrink(x, y);
         let font = if bold {
             theme::semibold(size)
         } else {
@@ -493,8 +511,10 @@ impl<'a> Cv<'a> {
         self.p.text(self.at(x, y), align, text, font, c);
     }
     fn line(&self, a: (f32, f32), b: (f32, f32), w: f32, c: Color32) {
-        self.p
-            .line_segment([self.at(a.0, a.1), self.at(b.0, b.1)], Stroke::new(w, c));
+        let ends = self
+            .s
+            .segment(self.at_points(a.0, a.1), self.at_points(b.0, b.1));
+        self.p.line_segment(ends, Stroke::new(w, c));
     }
     fn vline(&self, x: f32, y0: f32, y1: f32) {
         self.line((x, y0), (x, y1), 1.0, LINE);
@@ -506,7 +526,7 @@ impl<'a> Cv<'a> {
             size * SZU
         } else {
             size
-        };
+        } * self.shrink(x, y);
         crate::icons::paint_scaled(self.p, self.at(x, y), icon, c, size);
     }
     fn chevron(&self, x: f32, y: f32, c: Color32) {
@@ -795,6 +815,52 @@ impl StudioApp {
 
     pub(crate) fn color_page(&mut self, ui: &mut Ui, ctx: &Context, s: &Screen) {
         let painter = ui.painter().clone();
+        // The dividers: the gallery, the viewer and the node area side by side; the clips
+        // strip under them; the scopes beside the curves. The palettes keep their size: the
+        // color wheels are drawn at a fixed size, so they are neither stretched nor squeezed.
+        let splits = {
+            let c = Cv::new(&painter, s);
+            let f = c.fresh();
+            let (left, right) = (c.at(3.0, 200.0).x, c.at(2000.0, 200.0).x);
+            let (gallery, nodes) = (c.at(737.5, 200.0).x, c.at(1525.0, 200.0).x);
+            let (top, palettes) = (c.at(3.0, TOOLBAR2_END).y, f.at(0.0, 656.0).y);
+            [
+                Split::column(
+                    "color gallery",
+                    s,
+                    c.at(737.5, TOOLBAR2_END),
+                    c.at(737.5, 365.0),
+                    left,
+                    nodes,
+                ),
+                Split::column(
+                    "color nodes",
+                    s,
+                    c.at(1525.0, TOOLBAR2_END),
+                    c.at(1525.0, 365.0),
+                    gallery,
+                    right,
+                ),
+                Split::row(
+                    "color clips",
+                    s,
+                    c.rv(0.0, 456.0),
+                    c.rv(1919.0, 456.0),
+                    top,
+                    palettes,
+                ),
+                Split::column(
+                    "color scopes",
+                    s,
+                    f.at(1439.5, 693.0),
+                    f.at(1439.5, 1047.0),
+                    f.at(720.0, 693.0).x,
+                    right,
+                ),
+            ]
+        };
+        let warped = self.warped(s, &splits);
+        let s = &warped;
         let c = Cv::new(&painter, s);
         c.band(3.0, 62.0, 2000.0, PAGE_BAR, BG);
 
@@ -813,6 +879,7 @@ impl StudioApp {
             Palette::Window => self.color_window(ui, ctx, &c),
         }
         self.color_scopes(ui, ctx, &c);
+        self.dividers(ui, s, &splits);
     }
 
     fn color_toolbar2(&mut self, ui: &mut Ui, c: &Cv) {

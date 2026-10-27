@@ -14,6 +14,8 @@ use crate::theme;
 pub(crate) struct FpsPrompt {
     pub fps: Fps,
     pub files: Vec<ImportedFile>,
+    /// What the first file's probe found, so answering does not read the file again.
+    pub probed: Option<Result<picasso_media::MediaMetadata, String>>,
 }
 
 /// The common frame rates, to which a measured rate that is nearly one of them is rounded.
@@ -188,7 +190,10 @@ impl StudioApp {
         }
         let mut files = prompt.files.into_iter();
         if let Some(first) = files.next() {
-            self.import_path_media_now(first, false);
+            match prompt.probed {
+                Some(probed) => self.add_probed(first, false, probed),
+                None => self.import_file(first),
+            }
         }
         for file in files {
             self.import_file(file);

@@ -1018,7 +1018,7 @@ impl StudioApp {
             let before: Vec<picasso_core::MediaId> =
                 self.project().media.iter().map(|m| m.id).collect();
             for f in &files {
-                self.open_path(f, false);
+                self.open_path_now(f);
             }
             let moves: Vec<Command> = self
                 .project()

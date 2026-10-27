@@ -38,7 +38,7 @@ impl StudioApp {
         for media in &drp.media {
             let local = picasso_decode::refuse_path(&media.path).is_none();
             if local && found < MAX_IMPORTED && std::path::Path::new(&media.path).is_file() {
-                self.open_path(&media.path, false);
+                self.open_path_now(&media.path);
                 found += 1;
             } else {
                 // Kept as offline media, so the pool shows what the project needs.

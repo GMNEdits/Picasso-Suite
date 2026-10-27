@@ -733,6 +733,7 @@ fn a_video_can_be_imported_placed_and_drawn() {
         path: Some(path),
         bytes: Vec::new(),
     });
+    app.settle_imports();
     let item = app.project().media.last().unwrap().clone();
     assert!(matches!(item.source, MediaSource::Video { .. }));
     assert_eq!(item.length, Some(48), "two seconds at 24 fps");
@@ -764,6 +765,7 @@ fn a_video_can_be_imported_placed_and_drawn() {
         path: Some("no-such-file.mp4".into()),
         bytes: Vec::new(),
     });
+    app.settle_imports();
     assert_eq!(app.project().media.len(), count);
     assert!(app.status.error);
 }
@@ -779,6 +781,7 @@ fn playing_a_video_never_blocks_drawing() {
         path: Some(path),
         bytes: Vec::new(),
     });
+    app.settle_imports();
     let id = app.project().media.last().unwrap().id;
     app.insert_media(id);
     // Draw 40 frames as a player does, one every 20 ms (faster than real time).
@@ -821,6 +824,7 @@ fn a_video_with_sound_gets_a_waveform_and_a_play_plan() {
     let mut app = app();
     app.new_project();
     app.open_path(&path, true);
+    app.settle_imports();
     let clip = app.project().tracks[0].clips[0].clone();
     let MediaSource::Video { path } = &app.project().media[0].source else {
         panic!("not a video");
@@ -885,6 +889,7 @@ fn a_sound_file_makes_an_audio_track_and_sounds() {
         ]
     );
     app.open_path(&path, true);
+    app.settle_imports();
     let item = app.project().media.last().unwrap().clone();
     assert!(matches!(item.source, MediaSource::Audio { .. }));
     assert_eq!(item.length, Some(48), "two seconds at 24 fps");
@@ -925,6 +930,7 @@ fn the_render_queue_renders_wav_and_video_one_after_another() {
     let mut app = app();
     app.new_project();
     app.open_path(&path, true);
+    app.settle_imports();
     let clip = app.project().tracks[0].clips[0].id;
     // Half the level, and a fade in over the first half second (12 frames at 24 fps).
     app.run(Command::SetClipAudio {
@@ -1118,6 +1124,7 @@ fn facts_about_imported_video_and_sound_are_kept() {
     let mut app = app();
     app.new_project();
     app.open_path(&path, false);
+    app.settle_imports();
     let id = app.project().media[0].id;
     let facts = &app.media_facts[&id];
     assert_eq!(facts.kind, "video");

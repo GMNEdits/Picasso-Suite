@@ -5,7 +5,8 @@
 //!
 //! Positions are written in pixels of the 2000-pixel-wide reference and scaled to the
 //! 1872-point window (`K`). The bars keep their reference heights; the viewers and the tracks
-//! share what is left, in the reference's proportions.
+//! share what is left, in the reference's proportions. The dividers between the columns and the
+//! one between the viewers and the timeline can be dragged (`crate::panels`).
 
 #![allow(clippy::too_many_arguments)]
 
@@ -20,6 +21,7 @@ use crate::capture::fit;
 use crate::chrome::{Screen, Tool};
 use crate::icons::Icon;
 use crate::menu::Act;
+use crate::panels::{divider, Divider, Panels};
 use crate::theme;
 use crate::timeline::Mode;
 use crate::widgets::heading;
@@ -32,7 +34,8 @@ const KY: f32 = 0.61;
 /// How much smaller than the older reference text and icons are drawn.
 const SZ: f32 = 0.66;
 /// Where the columns of the older reference (x) land on Resolve's at 1080p (x, in its pixels):
-/// the bins, the media pool, the source viewer and the timeline viewer.
+/// the bins, the media pool, the source viewer and the timeline viewer. The three in the middle
+/// move with the dividers.
 const COLUMNS: [(f32, f32); 5] = [
     (3.0, 0.0),
     (233.0, 147.0),
@@ -41,19 +44,20 @@ const COLUMNS: [(f32, f32); 5] = [
     (2000.0, 1915.0),
 ];
 
-/// An x of the older reference as points from the left of the window.
-fn map_x(x: f32) -> f32 {
+/// An x of the older reference as points from the left of the window, with the columns where
+/// `columns` puts them.
+fn map_x(x: f32, columns: &[(f32, f32); 5]) -> f32 {
     let r = crate::chrome::R;
-    if x <= COLUMNS[0].0 {
-        return (COLUMNS[0].1 + (x - COLUMNS[0].0) * 0.64) * r;
+    if x <= columns[0].0 {
+        return (columns[0].1 + (x - columns[0].0) * 0.64) * r;
     }
-    for pair in COLUMNS.windows(2) {
+    for pair in columns.windows(2) {
         let ((a0, b0), (a1, b1)) = (pair[0], pair[1]);
         if x <= a1 {
             return (b0 + (x - a0) / (a1 - a0) * (b1 - b0)) * r;
         }
     }
-    let (a, b) = COLUMNS[COLUMNS.len() - 1];
+    let (a, b) = columns[columns.len() - 1];
     (b + (x - a) * 1.12) * r
 }
 
@@ -80,21 +84,26 @@ struct Ed<'a> {
     /// Heights in points of the viewers and of the tracks.
     viewers: f32,
     tracks: f32,
+    /// `COLUMNS` with the dividers where the user dragged them.
+    columns: [(f32, f32); 5],
 }
 
 impl<'a> Ed<'a> {
-    fn new(p: &'a Painter, s: &'a Screen) -> Self {
+    fn new(p: &'a Painter, s: &'a Screen, panels: &Panels) -> Self {
         let top = 92.0 + (TOOLBAR2_END - 100.0) * KY;
         let fixed = ((VIEW_TOP - TOOLBAR2_END) + (TRACKS_TOP - VIEW_BOTTOM)) * KY;
         let flex = (s.h - 46.8 - top - fixed).max(160.0);
-        let view = VIEW_BOTTOM - VIEW_TOP;
-        let tracks = PAGE_BAR - TRACKS_TOP;
-        let viewers = flex * view / (view + tracks);
+        let viewers = flex * f32::from(panels.edit_viewers) / 1000.0;
+        let mut columns = COLUMNS;
+        for (column, x) in columns[1..4].iter_mut().zip(panels.edit_columns) {
+            column.1 = f32::from(x);
+        }
         Ed {
             p,
             s,
             viewers,
             tracks: flex - viewers,
+            columns,
         }
     }
     fn y(&self, r: f32) -> f32 {
@@ -114,7 +123,7 @@ impl<'a> Ed<'a> {
         }
     }
     fn at(&self, x: f32, y: f32) -> Pos2 {
-        self.s.p(map_x(x), self.y(y))
+        self.s.p(map_x(x, &self.columns), self.y(y))
     }
     fn rect(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
         Rect::from_min_max(self.at(x0, y0), self.at(x1, y1))
@@ -133,12 +142,18 @@ impl<'a> Ed<'a> {
         self.p.text(self.at(x, y), align, text, font, c);
     }
     /// Text sized to fill `width` reference pixels.
+    /// Text `width` reference pixels wide, smaller when a divider made its column narrower than
+    /// usual, so it stays in its panel.
     fn fitted(&self, x: f32, y: f32, text: &str, width: f32, c: Color32) {
+        let (x0, x1) = (x - width / 2.0, x + width / 2.0);
+        let now = map_x(x1, &self.columns) - map_x(x0, &self.columns);
+        let usual = map_x(x1, &COLUMNS) - map_x(x0, &COLUMNS);
+        let shrink = (now / usual.max(1.0)).min(1.0);
         self.p.text(
             self.at(x, y),
             Align2::CENTER_CENTER,
             text,
-            fit(self.p, text, width * KY, false),
+            fit(self.p, text, width * KY * shrink, false),
             c,
         );
     }
@@ -247,7 +262,7 @@ impl StudioApp {
 
     pub(crate) fn edit_page(&mut self, ui: &mut Ui, ctx: &Context, s: &Screen) {
         let painter = ui.painter().clone();
-        let e = Ed::new(&painter, s);
+        let e = Ed::new(&painter, s, &self.extra.prefs.panels);
         e.band(3.0, 100.0, 2000.0, PAGE_BAR, BG);
 
         self.edit_toolbar2(ui, &e);
@@ -279,6 +294,53 @@ impl StudioApp {
         );
         e.vline(688.0, TOOLBAR2_END, PAGE_BAR);
         e.vline(689.0, TOOLBAR2_END, PAGE_BAR);
+        self.edit_dividers(ui, &e);
+    }
+
+    /// The dividers between the bins, the media pool, the source viewer and the timeline viewer,
+    /// and the one between the viewers and the timeline. They move on the next frame.
+    fn edit_dividers(&mut self, ui: &mut Ui, e: &Ed) {
+        let panels = &mut self.extra.prefs.panels;
+        let mut save = false;
+        let columns = [
+            ("edit bins", e.rect(233.0, TOOLBAR2_END, 234.0, PAGE_BAR)),
+            ("edit pool", e.rect(688.0, TOOLBAR2_END, 690.0, PAGE_BAR)),
+            ("edit viewers", e.rect(1348.0, TOOLBAR2_END, 1350.0, 590.0)),
+        ];
+        for (i, (id, line)) in columns.into_iter().enumerate() {
+            match divider(ui, id, line, false) {
+                Divider::Moved(at) => {
+                    panels.set_edit_column(i, (at.x - e.s.o.x) / crate::chrome::R)
+                }
+                Divider::Reset => {
+                    panels.set_edit_column(i, f32::from(Panels::default().edit_columns[i]));
+                    save = true;
+                }
+                Divider::Released => save = true,
+                Divider::Still => {}
+            }
+        }
+        match divider(
+            ui,
+            "edit timeline",
+            e.rect(689.0, 589.0, 2000.0, 591.0),
+            true,
+        ) {
+            Divider::Moved(at) => {
+                // The divider sits a fixed height below the viewers.
+                let viewers = at.y - (e.y(590.0) - e.viewers);
+                panels.edit_viewers = Panels::share(viewers / (e.viewers + e.tracks));
+            }
+            Divider::Reset => {
+                panels.edit_viewers = Panels::default().edit_viewers;
+                save = true;
+            }
+            Divider::Released => save = true,
+            Divider::Still => {}
+        }
+        if save {
+            self.extra.prefs.save();
+        }
     }
 
     fn edit_toolbar2(&mut self, ui: &mut Ui, e: &Ed) {

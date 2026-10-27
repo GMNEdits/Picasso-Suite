@@ -414,6 +414,10 @@ impl StudioApp {
                             vec2(thumb.x + 8.0, thumb.y + 28.0),
                             Sense::click_and_drag(),
                         );
+                        // Clips scrolled out of view are not drawn.
+                        if !ui.is_rect_visible(rect) {
+                            continue;
+                        }
                         let painter = ui.painter_at(rect);
                         let selected = self.selected_media == Some(*id);
                         let picture = Rect::from_min_size(rect.min + vec2(4.0, 4.0), thumb);

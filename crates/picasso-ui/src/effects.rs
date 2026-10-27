@@ -14,6 +14,7 @@ use crate::capture::fit;
 use crate::chrome::{Screen, Tool, R};
 use crate::icons::Icon;
 use crate::menu::Act;
+use crate::panels::Split;
 use crate::theme;
 
 /// Points per reference pixel.
@@ -186,15 +187,26 @@ impl<'a> Fx<'a> {
     }
     /// A point given in pixels of Resolve at 1080p: its 965 rows of body fill the window's.
     fn rv(&self, x: f32, y: f32) -> Pos2 {
+        let (x, y) = self.rv_points(x, y);
+        self.s.p(x, y)
+    }
+    /// `rv` as the screen's own points, before the dividers move them.
+    fn rv_points(&self, x: f32, y: f32) -> (f32, f32) {
         let vf = (self.s.h - 46.8 - 92.0).max(300.0) / 965.0;
-        self.s.p(x * R, 92.0 + (y - 40.0) * vf)
+        (x * R, 92.0 + (y - 40.0) * vf)
     }
     fn rrect(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
-        Rect::from_min_max(self.rv(x0, y0), self.rv(x1, y1))
+        self.s
+            .between(self.rv_points(x0, y0), self.rv_points(x1, y1))
     }
     fn at(&self, x: f32, y: f32) -> Pos2 {
+        let (x, y) = self.at_points(x, y);
+        self.s.p(x, y)
+    }
+    /// `at` as the screen's own points, before the dividers move them.
+    fn at_points(&self, x: f32, y: f32) -> (f32, f32) {
         if self.ins {
-            return self.rv(1498.0 + (x - 1350.0) * 0.648, piece(&INSPECTOR_ROWS, y));
+            return self.rv_points(1498.0 + (x - 1350.0) * 0.648, piece(&INSPECTOR_ROWS, y));
         }
         let map = if (107.0..=146.0).contains(&y) {
             &HEADER_X[..]
@@ -205,10 +217,11 @@ impl<'a> Fx<'a> {
         } else {
             &COLUMNS[..]
         };
-        self.rv(piece(map, x), piece(&ROWS, y))
+        self.rv_points(piece(map, x), piece(&ROWS, y))
     }
     fn rect(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
-        Rect::from_min_max(self.at(x0, y0), self.at(x1, y1))
+        self.s
+            .between(self.at_points(x0, y0), self.at_points(x1, y1))
     }
     fn band(&self, x0: f32, y0: f32, x1: f32, y1: f32, c: Color32) {
         self.p.rect_filled(self.rect(x0, y0, x1, y1), 0.0, c);
@@ -218,13 +231,19 @@ impl<'a> Fx<'a> {
             self.at(x, y),
             align,
             text,
-            fit(self.p, text, width * Q, bold),
+            fit(self.p, text, width * Q * self.shrink(x, y), bold),
             c,
         );
     }
+    /// How much smaller than usual text and icons at a reference point are drawn: as much as
+    /// the dividers squeezed the panel there, so they stay inside it.
+    fn shrink(&self, x: f32, y: f32) -> f32 {
+        let (x, y) = self.at_points(x, y);
+        self.s.shrink(x, y)
+    }
     /// Text at a fixed size in points.
     fn label(&self, x: f32, y: f32, align: Align2, text: &str, size: f32, c: Color32, bold: bool) {
-        let size = size * SZ;
+        let size = size * SZ * self.shrink(x, y);
         let font = if bold {
             theme::semibold(size)
         } else {
@@ -233,14 +252,17 @@ impl<'a> Fx<'a> {
         self.p.text(self.at(x, y), align, text, font, c);
     }
     fn line(&self, a: (f32, f32), b: (f32, f32), w: f32, c: Color32) {
-        self.p
-            .line_segment([self.at(a.0, a.1), self.at(b.0, b.1)], Stroke::new(w, c));
+        let ends = self
+            .s
+            .segment(self.at_points(a.0, a.1), self.at_points(b.0, b.1));
+        self.p.line_segment(ends, Stroke::new(w, c));
     }
     fn vline(&self, x: f32, y0: f32, y1: f32, c: Color32) {
         self.line((x, y0), (x, y1), 1.0, c);
     }
     fn icon(&self, x: f32, y: f32, icon: Icon, c: Color32, size: f32) {
-        crate::icons::paint_scaled(self.p, self.at(x, y), icon, c, size * SZ);
+        let size = size * SZ * self.shrink(x, y);
+        crate::icons::paint_scaled(self.p, self.at(x, y), icon, c, size);
     }
     fn chevron(&self, x: f32, y: f32, c: Color32) {
         let c0 = self.at(x, y);
@@ -344,6 +366,42 @@ impl StudioApp {
 
     pub(crate) fn effects_page(&mut self, ui: &mut Ui, ctx: &Context, s: &Screen) {
         let painter = ui.painter().clone();
+        // The dividers: between the two viewers, between the viewers and the node area (the
+        // ruler, transport and tool rows move with it), and before the inspector.
+        let splits = {
+            let c = Fx::new(&painter, s);
+            let (left, right) = (c.at(3.0, VIEW_TOP).x, c.at(2000.0, VIEW_TOP).x);
+            let inspector = c.at(1347.0, VIEW_TOP).x;
+            [
+                Split::column(
+                    "fx viewers",
+                    s,
+                    c.at(675.0, 107.0),
+                    c.at(675.0, VIEW_BOTTOM),
+                    left,
+                    inspector,
+                ),
+                Split::row(
+                    "fx nodes",
+                    s,
+                    c.at(3.0, VIEW_BOTTOM),
+                    c.at(1347.0, VIEW_BOTTOM),
+                    c.at(3.0, VIEW_TOP).y,
+                    c.at(3.0, NODES_BOTTOM).y,
+                )
+                .keeping(c.at(3.0, NODES_TOP).y - c.at(3.0, VIEW_BOTTOM).y),
+                Split::column(
+                    "fx inspector",
+                    s,
+                    c.at(1347.0, 107.0),
+                    c.at(1347.0, NODES_BOTTOM),
+                    left,
+                    right,
+                ),
+            ]
+        };
+        let warped = self.warped(s, &splits);
+        let s = &warped;
         let c = Fx::new(&painter, s);
         let inspector = 1350.0;
         let clip = self.fx_clip();
@@ -513,6 +571,7 @@ impl StudioApp {
             GREY,
             false,
         );
+        self.dividers(ui, s, &splits);
     }
 
     /// The MediaIn node's settings: its name, the clip's name, and the Image tab's controls.

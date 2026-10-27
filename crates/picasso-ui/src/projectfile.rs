@@ -61,14 +61,3 @@ pub(crate) fn image_facts(
         None
     }
 }
-
-/// The facts of a video or sound file, read from disk (desktop only).
-#[cfg(not(target_arch = "wasm32"))]
-pub(crate) fn file_facts(media: u64, path: &str, sound_only: bool) -> Option<MediaMetadata> {
-    let path = std::path::Path::new(path);
-    if sound_only {
-        MediaMetadata::probe_audio(media, path).ok()
-    } else {
-        MediaMetadata::probe_video(media, path).ok()
-    }
-}

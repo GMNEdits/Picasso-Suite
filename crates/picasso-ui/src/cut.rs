@@ -4,7 +4,8 @@
 //!
 //! Laid out on Resolve at 1920 x 1080 (`docs/reference/resolve-1080p/cut.png`): positions are its
 //! pixels, scaled by `R`. The media pool and viewer band and the detail timeline share the height
-//! the window has beyond the fixed rows.
+//! the window has beyond the fixed rows. The divider between the pool and the viewer, and the one
+//! below the transport row, can be dragged (`crate::panels`).
 
 use egui::{
     pos2, Align2, Color32, Context, Painter, Pos2, Rect, Stroke, StrokeKind, Ui, UiBuilder,
@@ -13,7 +14,9 @@ use egui::{
 use crate::app::StudioApp;
 use crate::chrome::{Screen, Tool, ToolbarItem, R};
 use crate::icons::{paint_scaled, Icon};
+use crate::media::fitting;
 use crate::menu::Act;
+use crate::panels::{divider, Divider, Panels};
 use crate::theme::{self, regular, semibold};
 use crate::timeline::Mode;
 
@@ -60,21 +63,31 @@ fn level_to_share(level: f32) -> f32 {
 
 /// Turns the reference's pixels into points on this window. Rows 0 to 100 (the toolbars and
 /// the pool's header) and 478 to 654 (transport, overview and the detail's tools) keep their
-/// size; rows 100 to 478 (pool and viewer) and 654 to 1004 (the detail timeline) share the rest.
+/// size; rows 100 to 478 (pool and viewer) and 654 to 1004 (the detail timeline) share the rest,
+/// as the panel sizes say. In rows 40 to 523 the pool and the viewer are as wide as they say too.
 #[derive(Clone, Copy)]
 struct Lay<'a> {
     s: &'a Screen,
-    /// Points per reference pixel in the two stretching bands.
-    k: f32,
+    /// Points per reference pixel in the pool and viewer band and in the detail timeline.
+    upper: f32,
+    lower: f32,
+    /// The height in points the two bands share.
+    room: f32,
+    /// Where the media pool ends, in reference pixels.
+    pool: f32,
 }
 
 impl<'a> Lay<'a> {
-    fn new(s: &'a Screen) -> Self {
+    fn new(s: &'a Screen, panels: &Panels) -> Self {
         let fixed = (100.0 + 176.0) * R;
-        let room = (s.h - 48.0 * R) - 40.0 - fixed;
+        let room = ((s.h - 48.0 * R) - 40.0 - fixed).max(0.2 * (378.0 + 350.0));
+        let upper = room * f32::from(panels.cut_upper) / 1000.0;
         Lay {
             s,
-            k: (room / (378.0 + 350.0)).max(0.2),
+            upper: upper / 378.0,
+            lower: (room - upper) / 350.0,
+            room,
+            pool: f32::from(panels.cut_pool),
         }
     }
     fn y(&self, r: f32) -> f32 {
@@ -82,15 +95,29 @@ impl<'a> Lay<'a> {
         if r <= 100.0 {
             top + r * R
         } else if r <= 478.0 {
-            top + 100.0 * R + (r - 100.0) * self.k
+            top + 100.0 * R + (r - 100.0) * self.upper
         } else if r <= 654.0 {
-            top + 100.0 * R + 378.0 * self.k + (r - 478.0) * R
+            top + 100.0 * R + 378.0 * self.upper + (r - 478.0) * R
         } else {
-            top + 276.0 * R + 378.0 * self.k + (r - 654.0) * self.k
+            top + 276.0 * R + 378.0 * self.upper + (r - 654.0) * self.lower
         }
     }
+    /// A reference x in points: in the rows of the pool and the viewer, the pool's columns are
+    /// stretched to where its divider is; the level meter keeps its place.
+    fn x(&self, x: f32, y: f32) -> f32 {
+        let (pool, meter) = (960.0, 1850.0);
+        if !(40.0..523.0).contains(&y) || x >= meter {
+            return x * R;
+        }
+        let x = if x <= pool {
+            x * self.pool / pool
+        } else {
+            self.pool + (x - pool) * (meter - self.pool) / (meter - pool)
+        };
+        x * R
+    }
     fn p(&self, x: f32, y: f32) -> Pos2 {
-        self.s.p(x * R, self.y(y))
+        self.s.p(self.x(x, y), self.y(y))
     }
     fn r(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
         Rect::from_min_max(self.p(x0, y0), self.p(x1, y1))
@@ -154,7 +181,7 @@ impl StudioApp {
 
     pub(crate) fn cut_page(&mut self, ui: &mut Ui, ctx: &Context, s: &Screen) {
         let painter = ui.painter().clone();
-        let l = Lay::new(s);
+        let l = Lay::new(s, &self.extra.prefs.panels);
         let dark = Color32::from_rgb(10, 10, 12);
 
         self.toolbar2(ui, ctx, &l);
@@ -258,6 +285,39 @@ impl StudioApp {
             |ui| self.timeline_ui(ui, ctx, Mode::Detail),
         );
         self.cut_track_controls(&painter, &l, bottom);
+        self.cut_dividers(ui, &l);
+    }
+
+    /// The divider between the media pool and the viewer, and the one between the transport row
+    /// and the timelines. They move on the next frame.
+    fn cut_dividers(&mut self, ui: &mut Ui, l: &Lay) {
+        let panels = &mut self.extra.prefs.panels;
+        let mut save = false;
+        match divider(ui, "cut pool", l.r(960.0, 70.0, 961.0, 522.0), false) {
+            Divider::Moved(at) => panels.set_cut_pool((at.x - l.s.o.x) / R),
+            Divider::Reset => {
+                panels.cut_pool = Panels::default().cut_pool;
+                save = true;
+            }
+            Divider::Released => save = true,
+            Divider::Still => {}
+        }
+        match divider(ui, "cut timeline", l.r(0.0, 522.0, 1919.0, 523.0), true) {
+            Divider::Moved(at) => {
+                // The divider sits a fixed height below the pool and viewer band.
+                let upper = at.y - (l.y(522.5) - 378.0 * l.upper);
+                panels.cut_upper = Panels::share(upper / l.room);
+            }
+            Divider::Reset => {
+                panels.cut_upper = Panels::default().cut_upper;
+                save = true;
+            }
+            Divider::Released => save = true,
+            Divider::Still => {}
+        }
+        if save {
+            self.extra.prefs.save();
+        }
     }
 
     /// Beside the detail timeline's tracks, as Resolve: a column with the track names (V1, A1)
@@ -620,18 +680,26 @@ impl StudioApp {
         );
         if self.project().media.is_empty() {
             let mid = (l.y(100.0) + l.y(478.0)) / 2.0;
-            painter.text(
-                pos2(l.p(480.0, 0.0).x, mid - 14.0 * R),
-                Align2::CENTER_CENTER,
+            // The message grows and shrinks with the pool, and stays inside it.
+            let usual = f32::from(Panels::default().cut_upper);
+            let k = (f32::from(self.extra.prefs.panels.cut_upper) / usual).clamp(0.4, 2.0);
+            let room = l.r(0.0, 100.0, 960.0, 478.0).width() - 24.0;
+            let (title, sub) = (
                 "No clips in media pool",
-                regular(30.0 * R),
+                "Add clips with Import, or drop files here",
+            );
+            painter.text(
+                pos2(l.p(480.0, 300.0).x, mid - 14.0 * R * k),
+                Align2::CENTER_CENTER,
+                title,
+                fitting(&painter, title, 30.0 * R * k, room),
                 theme::EMPTY_TITLE,
             );
             painter.text(
-                pos2(l.p(480.0, 0.0).x, mid + 26.0 * R),
+                pos2(l.p(480.0, 300.0).x, mid + 26.0 * R * k),
                 Align2::CENTER_CENTER,
-                "Add clips with Import, or drop files here",
-                regular(14.0 * R),
+                sub,
+                fitting(&painter, sub, 14.0 * R * k, room),
                 theme::EMPTY_SUB,
             );
         } else {

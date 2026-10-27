@@ -27,6 +27,7 @@ mod menu_extra;
 mod menu_more;
 mod monitor;
 mod multicam_ui;
+mod panels;
 mod platform;
 mod pool;
 mod prefs;

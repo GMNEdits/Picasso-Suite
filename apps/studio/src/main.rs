@@ -17,6 +17,77 @@ struct Window {
     /// `PICASSO_PERF=1`: frame times in ms, printed after 150 frames, then the window closes.
     #[cfg(not(target_arch = "wasm32"))]
     perf: Option<Vec<f64>>,
+    /// `PICASSO_PERF=pages`: each page in turn, its first frame (the switch) and its usual
+    /// frames, printed when every page was shown twice, then the window closes.
+    #[cfg(not(target_arch = "wasm32"))]
+    pages: Option<PagePerf>,
+}
+
+/// What `PICASSO_PERF=pages` has measured: the frame times of each visit to a page.
+#[cfg(not(target_arch = "wasm32"))]
+#[derive(Default)]
+struct PagePerf {
+    frame: usize,
+    /// For each visit: the page, the time the interface took on each frame, and the time from
+    /// the frame before (drawing on the graphics card and showing it included), in ms.
+    visits: Vec<(picasso_ui::Page, Vec<f64>, Vec<f64>)>,
+    last: Option<std::time::Instant>,
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+impl PagePerf {
+    const PAGES: [picasso_ui::Page; 8] = [
+        picasso_ui::Page::Media,
+        picasso_ui::Page::Capture,
+        picasso_ui::Page::Cut,
+        picasso_ui::Page::Edit,
+        picasso_ui::Page::Effects,
+        picasso_ui::Page::Color,
+        picasso_ui::Page::Audio,
+        picasso_ui::Page::Deliver,
+    ];
+    /// Frames shown of each page per visit.
+    const FRAMES: usize = 40;
+
+    /// The page to show this frame; none once every page was visited twice.
+    fn page(&mut self) -> Option<picasso_ui::Page> {
+        let visit = self.frame / Self::FRAMES;
+        if visit >= Self::PAGES.len() * 2 {
+            return None;
+        }
+        if self.frame.is_multiple_of(Self::FRAMES) {
+            let page = Self::PAGES[visit % Self::PAGES.len()];
+            self.visits.push((page, Vec::new(), Vec::new()));
+        }
+        self.frame += 1;
+        Some(Self::PAGES[visit % Self::PAGES.len()])
+    }
+
+    fn print(&self) {
+        // The second round: the first one also pays for loading fonts, icons and decoders.
+        let worst = |v: &[f64]| v.iter().copied().fold(0.0, f64::max);
+        for (page, t, gaps) in &self.visits[Self::PAGES.len()..] {
+            let mut rest = t[1..].to_vec();
+            rest.sort_by(|a, b| a.total_cmp(b));
+            println!(
+                "{page:?}: switch={:.2}ms next={:.2}ms p50={:.2}ms max={:.2}ms | between frames: switch={:.1}ms max={:.1}ms",
+                t[0],
+                t.get(1).copied().unwrap_or(0.0),
+                rest[rest.len() / 2],
+                rest[rest.len() - 1],
+                gaps.first().copied().unwrap_or(0.0),
+                worst(gaps),
+            );
+        }
+        for (page, t, gaps) in &self.visits[..Self::PAGES.len()] {
+            println!(
+                "first visit {page:?}: switch={:.2}ms worst frame={:.2}ms | between frames: max={:.1}ms",
+                t[0],
+                worst(t),
+                worst(gaps)
+            );
+        }
+    }
 }
 
 impl Window {
@@ -27,7 +98,13 @@ impl Window {
             shot: std::env::var_os("PICASSO_SCREENSHOT")
                 .map(|p| (p.into(), std::time::Instant::now(), false)),
             #[cfg(not(target_arch = "wasm32"))]
-            perf: std::env::var_os("PICASSO_PERF").map(|_| Vec::new()),
+            perf: std::env::var_os("PICASSO_PERF")
+                .filter(|v| v != "pages")
+                .map(|_| Vec::new()),
+            #[cfg(not(target_arch = "wasm32"))]
+            pages: std::env::var_os("PICASSO_PERF")
+                .filter(|v| v == "pages")
+                .map(|_| PagePerf::default()),
         }
     }
 
@@ -69,8 +146,50 @@ impl Window {
 impl eframe::App for Window {
     fn ui(&mut self, ui: &mut eframe::egui::Ui, _frame: &mut eframe::Frame) {
         #[cfg(not(target_arch = "wasm32"))]
+        let page = self.pages.as_mut().map(PagePerf::page);
+        #[cfg(not(target_arch = "wasm32"))]
+        // The first round's first page also answers "Change Project Frame Rate?" (Enter), so
+        // clips given on the command line are imported without a click.
+        if self
+            .pages
+            .as_ref()
+            .is_some_and(|p| p.frame < PagePerf::FRAMES)
+        {
+            ui.ctx().input_mut(|i| {
+                i.events.push(eframe::egui::Event::Key {
+                    key: eframe::egui::Key::Enter,
+                    physical_key: None,
+                    pressed: true,
+                    repeat: false,
+                    modifiers: Default::default(),
+                })
+            });
+        }
+        match page {
+            Some(Some(page)) => self.app.set_page(page),
+            Some(None) => {
+                if let Some(pages) = self.pages.take() {
+                    pages.print();
+                }
+                ui.ctx()
+                    .send_viewport_cmd(eframe::egui::ViewportCommand::Close);
+            }
+            None => {}
+        }
+        #[cfg(not(target_arch = "wasm32"))]
         let started = std::time::Instant::now();
         self.app.ui(ui);
+        #[cfg(not(target_arch = "wasm32"))]
+        if let Some(pages) = &mut self.pages {
+            let now = std::time::Instant::now();
+            let gap = pages.last.map(|l| (now - l).as_secs_f64() * 1000.0);
+            pages.last = Some(now);
+            if let Some((_, t, gaps)) = pages.visits.last_mut() {
+                t.push(started.elapsed().as_secs_f64() * 1000.0);
+                gaps.extend(gap);
+            }
+            ui.ctx().request_repaint();
+        }
         #[cfg(not(target_arch = "wasm32"))]
         {
             if let Some(times) = &mut self.perf {

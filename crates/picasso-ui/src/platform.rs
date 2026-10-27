@@ -48,6 +48,18 @@ pub(crate) enum Incoming {
         clip: picasso_core::ClipId,
         path: String,
     },
+    /// A video or sound file read in the background: what its file says, ready to import
+    /// (desktop only).
+    Probed {
+        file: ImportedFile,
+        sound_only: bool,
+        probed: Result<picasso_media::MediaMetadata, String>,
+    },
+    /// The codec of a video, read from its file in the background (desktop only).
+    CodecLabel {
+        media: picasso_core::MediaId,
+        label: String,
+    },
     Error(String),
 }
 

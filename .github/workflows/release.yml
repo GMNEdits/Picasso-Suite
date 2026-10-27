@@ -345,7 +345,7 @@ jobs:
           fi
       # The release notes are this version's section of CHANGELOG.md only, not the older versions.
       # Tag v0.2.0-hotfix reads the section "## 0.2.0 hotfix"; v0.1.0 reads "## 0.1.0 — first release";
-      # a release candidate, v0.2.2-rc1, reads the section of the version it is for ("## 0.2.2 — …").
+      # a release candidate, v0.3.0-rc1, reads the section of the version it is for ("## 0.3.0 — …").
       - name: Take this version's notes from the changelog
         run: |
           ver="${RELEASE_TAG#v}"

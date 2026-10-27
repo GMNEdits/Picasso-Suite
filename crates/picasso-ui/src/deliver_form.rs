@@ -325,8 +325,29 @@ mod native {
             top: f32,
             bottom: f32,
         ) {
-            let painter = ui.painter().clone();
             let pane = s.r(LEFT, top + BAR, LEFT_RIGHT - 1.0, bottom);
+            let usual = s.usual().r(LEFT, top + BAR, LEFT_RIGHT - 1.0, bottom);
+            if pane.width() >= usual.width() - 0.5 {
+                self.render_form_in(ui, ctx, pane);
+                return;
+            }
+            // Its column was made narrower than the form: the form keeps its size and scrolls
+            // sideways inside the column instead of running into the viewer.
+            ui.scope_builder(UiBuilder::new().max_rect(pane), |ui| {
+                egui::ScrollArea::horizontal()
+                    .id_salt("render_form_narrow")
+                    .auto_shrink([false, false])
+                    .show(ui, |ui| {
+                        let size = vec2(usual.width(), pane.height() - 12.0);
+                        let (rect, _) = ui.allocate_exact_size(size, Sense::hover());
+                        self.render_form_in(ui, ctx, rect);
+                    });
+            });
+        }
+
+        /// The form in `pane`.
+        fn render_form_in(&mut self, ui: &mut Ui, ctx: &Context, pane: Rect) {
+            let painter = ui.painter().clone();
 
             // The preset, always in view.
             let preset_row = Rect::from_min_size(pane.min, vec2(pane.width(), 96.0));

@@ -86,6 +86,19 @@ pub struct StudioApp {
     pub(crate) highlighted: Option<(HighlightStamp, picasso_core::Project, u64)>,
     /// The codec of each media item as the Deliver page shows it.
     pub(crate) codec_labels: std::collections::HashMap<picasso_core::MediaId, String>,
+    /// Videos whose codec is to be read from their file in the background: the media and its
+    /// path.
+    pub(crate) codec_wanted: Vec<(picasso_core::MediaId, String)>,
+    /// How many video and sound files are being read in the background, to be imported when
+    /// they arrive.
+    pub(crate) probing: usize,
+    /// The worker that reads those files, one after another so they arrive in order.
+    #[cfg(not(target_arch = "wasm32"))]
+    prober: Option<std::sync::mpsc::Sender<(ImportedFile, bool)>>,
+    /// Files given on the command line with `--place`: put on the timeline once imported.
+    place_paths: Vec<String>,
+    /// Set while `open_path_now` imports: the file is read on the spot, not in the background.
+    sync_import: bool,
     pub(crate) clipboard: Vec<ClipCopy>,
     pub(crate) play_speed: f64,
     pub(crate) play_range: Option<PlayRange>,
@@ -150,6 +163,18 @@ pub struct StudioApp {
     pub(crate) show_shortcuts: bool,
 }
 
+/// What a video or sound file says about itself (its media id is filled in when it is added).
+#[cfg(not(target_arch = "wasm32"))]
+fn probe_file(path: &str, sound_only: bool) -> Result<picasso_media::MediaMetadata, String> {
+    let path = std::path::Path::new(path);
+    if sound_only {
+        picasso_media::MediaMetadata::probe_audio(0, path)
+    } else {
+        picasso_media::MediaMetadata::probe_video(0, path)
+    }
+    .map_err(|e| e.to_string())
+}
+
 impl StudioApp {
     /// A new app with an empty project.
     pub fn new(ctx: &Context) -> Self {
@@ -197,6 +222,12 @@ impl StudioApp {
             heard: None,
             highlighted: None,
             codec_labels: std::collections::HashMap::new(),
+            codec_wanted: Vec::new(),
+            probing: 0,
+            #[cfg(not(target_arch = "wasm32"))]
+            prober: None,
+            place_paths: Vec::new(),
+            sync_import: false,
             clipboard: Vec::new(),
             play_speed: 1.0,
             play_range: None,
@@ -827,25 +858,11 @@ impl StudioApp {
         }
     }
 
-    /// Adds a video or sound file to the media pool, first asking whether the project should take
-    /// the frame rate of a video that differs (see [`crate::fps_prompt`]).
+    /// Adds a video or sound file to the media pool: its file is read on a thread of its own
+    /// (opening it takes tens of milliseconds, which held up the window for every file of a
+    /// big import), and when the answer arrives `finish_probed` asks whether the project
+    /// should take the frame rate of a video that differs (see [`crate::fps_prompt`]).
     fn import_path_media(&mut self, file: ImportedFile, sound_only: bool) {
-        #[cfg(not(target_arch = "wasm32"))]
-        if !sound_only {
-            let fps = file.path.as_deref().and_then(crate::video::frame_rate);
-            if let Some(fps) = fps.filter(|f| self.should_ask_fps(*f)) {
-                self.fps_prompt = Some(crate::fps_prompt::FpsPrompt {
-                    fps,
-                    files: vec![file],
-                });
-                return;
-            }
-        }
-        self.import_path_media_now(file, sound_only);
-    }
-
-    /// Adds a video or sound file to the media pool (desktop only; the browser has no decoder).
-    pub(crate) fn import_path_media_now(&mut self, file: ImportedFile, sound_only: bool) {
         #[cfg(target_arch = "wasm32")]
         {
             let _ = sound_only;
@@ -856,52 +873,152 @@ impl StudioApp {
         }
         #[cfg(not(target_arch = "wasm32"))]
         {
-            let Some(path) = file.path else {
+            let Some(path) = file.path.as_deref() else {
                 self.fail(format!("{}: the file has no path", file.name));
                 return;
             };
-            let imported_path = path.clone();
-            let fps = self.project().fps;
-            let probed = if sound_only {
-                crate::video::audio_length_in_frames(&path, (fps.num, fps.den))
-            } else {
-                crate::video::length_in_frames(&path, (fps.num, fps.den))
-            };
-            let length = match probed {
-                Ok(length) => length,
-                Err(e) => {
-                    self.fail(format!("{}: {e}", file.name));
-                    return;
-                }
-            };
-            let name = file
-                .name
-                .rsplit_once('.')
-                .map_or(file.name.as_str(), |(stem, _)| stem)
-                .to_string();
-            if let Some(Outcome::Media(id)) = self.run(Command::AddMedia {
-                name,
-                source: if sound_only {
-                    MediaSource::Audio { path }
-                } else {
-                    MediaSource::Video { path }
-                },
-                length: Some(length),
-                default_duration: length,
-            }) {
-                if let Some(facts) =
-                    crate::projectfile::file_facts(id.0, &imported_path, sound_only)
-                {
-                    self.media_facts.insert(id, facts);
-                }
-                self.media_generation += 1;
-                self.selected_media = Some(id);
-                self.info(if sound_only {
-                    "Imported sound"
-                } else {
-                    "Imported video"
-                });
+            // For the callers that go on with the media at once (a take, a render, a bounce).
+            if self.sync_import {
+                let probed = probe_file(path, sound_only);
+                self.probing += 1;
+                self.finish_probed(file, sound_only, probed);
+                return;
             }
+            let prober = self.prober.get_or_insert_with(|| {
+                let (tx, rx) = std::sync::mpsc::channel::<(ImportedFile, bool)>();
+                let (inbox, ctx) = (self.inbox.clone(), self.ctx.clone());
+                std::thread::spawn(move || {
+                    for (file, sound_only) in rx {
+                        let probed = file
+                            .path
+                            .as_deref()
+                            .map_or_else(|| Err("the file has no path".to_string()), |p| {
+                                probe_file(p, sound_only)
+                            });
+                        inbox.push(
+                            &ctx,
+                            Incoming::Probed {
+                                file,
+                                sound_only,
+                                probed,
+                            },
+                        );
+                    }
+                });
+                tx
+            });
+            if prober.send((file, sound_only)).is_ok() {
+                self.probing += 1;
+            }
+        }
+    }
+
+    /// A file read in the background arrived: asks about the frame rate if it needs asking,
+    /// or imports it.
+    #[cfg(not(target_arch = "wasm32"))]
+    fn finish_probed(
+        &mut self,
+        file: ImportedFile,
+        sound_only: bool,
+        probed: Result<picasso_media::MediaMetadata, String>,
+    ) {
+        self.probing = self.probing.saturating_sub(1);
+        // Behind a question already being asked: it waits there, and is read again after.
+        if let Some(prompt) = &mut self.fps_prompt {
+            prompt.files.push(file);
+            return;
+        }
+        if !sound_only {
+            let fps = probed
+                .as_ref()
+                .ok()
+                .and_then(|m| m.fps)
+                .and_then(|(n, d)| crate::fps_prompt::tidy(n, d));
+            if let Some(fps) = fps.filter(|f| self.should_ask_fps(*f)) {
+                self.fps_prompt = Some(crate::fps_prompt::FpsPrompt {
+                    fps,
+                    files: vec![file],
+                    probed: Some(probed),
+                });
+                return;
+            }
+        }
+        self.add_probed(file, sound_only, probed);
+    }
+
+    /// Adds a video or sound file, read already, to the media pool, and on the timeline when
+    /// it was given with `--place`.
+    #[cfg(not(target_arch = "wasm32"))]
+    pub(crate) fn add_probed(
+        &mut self,
+        file: ImportedFile,
+        sound_only: bool,
+        probed: Result<picasso_media::MediaMetadata, String>,
+    ) {
+        let Some(path) = file.path else {
+            self.fail(format!("{}: the file has no path", file.name));
+            return;
+        };
+        let mut facts = match probed {
+            Ok(facts) => facts,
+            Err(e) => {
+                self.fail(format!("{}: {e}", file.name));
+                return;
+            }
+        };
+        // Its length in project frames, from the duration the file says.
+        let fps = self.project().fps;
+        let per_second = u64::from(fps.num) / u64::from(fps.den.max(1));
+        let length = match facts.duration_us.and_then(|d| u128::try_from(d).ok()) {
+            None => per_second.max(1) * 60,
+            Some(us) => {
+                let frames = us * u128::from(fps.num) / (1_000_000 * u128::from(fps.den.max(1)));
+                u64::try_from(frames).unwrap_or(0).max(1)
+            }
+        };
+        let name = file
+            .name
+            .rsplit_once('.')
+            .map_or(file.name.as_str(), |(stem, _)| stem)
+            .to_string();
+        let place = self.place_paths.iter().position(|p| *p == path).map(|i| {
+            self.place_paths.remove(i);
+        });
+        if let Some(Outcome::Media(id)) = self.run(Command::AddMedia {
+            name,
+            source: if sound_only {
+                MediaSource::Audio { path }
+            } else {
+                MediaSource::Video { path }
+            },
+            length: Some(length),
+            default_duration: length,
+        }) {
+            facts.media = id.0;
+            self.media_facts.insert(id, facts);
+            self.media_generation += 1;
+            self.selected_media = Some(id);
+            self.info(if sound_only {
+                "Imported sound"
+            } else {
+                "Imported video"
+            });
+            if place.is_some() {
+                self.place_after_import();
+            }
+        }
+    }
+
+    /// Puts the media just imported on the timeline at the playhead, then moves the playhead
+    /// past it, so files placed together follow one another.
+    pub(crate) fn place_after_import(&mut self) {
+        let Some(id) = self.selected_media else {
+            return;
+        };
+        let end = self.project().duration();
+        self.insert_media(id);
+        if self.project().duration() > end {
+            self.playhead = self.project().duration();
         }
     }
 
@@ -921,6 +1038,15 @@ impl StudioApp {
         };
     }
 
+    /// `open_path` for the callers that go on with the media at once: the file is read now, not
+    /// in the background, so it is in the pool when this returns.
+    #[cfg(not(target_arch = "wasm32"))]
+    pub(crate) fn open_path_now(&mut self, path: &str) {
+        self.sync_import = true;
+        self.open_path(path, false);
+        self.sync_import = false;
+    }
+
     /// Opens a project or imports media from a path given on the command line (desktop only).
     /// With `place`, the imported media is also put on the timeline at the playhead.
     #[cfg(not(target_arch = "wasm32"))]
@@ -936,18 +1062,45 @@ impl StudioApp {
         match bytes {
             Ok(bytes) => {
                 let before = self.project().media.len();
+                let reading = self.probing;
+                if place {
+                    self.place_paths.push(path.to_string());
+                }
                 self.import_file(ImportedFile {
                     name,
                     path: Some(path.to_string()),
                     bytes,
                 });
-                if place && self.project().media.len() > before {
-                    if let Some(id) = self.selected_media {
-                        self.insert_media(id);
-                    }
+                // A video or sound is read in the background and placed when it arrives
+                // (`add_probed`); anything else is in the pool already.
+                if place && self.probing == reading && self.fps_prompt.is_none() {
+                    self.place_paths.retain(|p| p != path);
+                    self.place_imported(before, true);
                 }
             }
             Err(e) => self.fail(format!("{path}: {e}")),
+        }
+    }
+
+    /// Puts the media just imported on the timeline when `place` says so and the pool grew from
+    /// `before` items.
+    pub(crate) fn place_imported(&mut self, before: usize, place: bool) {
+        if place && self.project().media.len() > before {
+            self.place_after_import();
+        }
+    }
+
+    /// Waits until the video and sound files being read in the background are imported (and
+    /// the question about the frame rate, if there is one, is answered `change`).
+    #[cfg(test)]
+    pub(crate) fn settle_imports(&mut self) {
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(20);
+        while std::time::Instant::now() < deadline {
+            self.process_inbox();
+            if self.probing == 0 {
+                break;
+            }
+            std::thread::sleep(std::time::Duration::from_millis(2));
         }
     }
 
@@ -1059,9 +1212,21 @@ impl StudioApp {
                 Incoming::Bounced(path) => self.finish_bounce(&path),
                 Incoming::Rendered { clip, path } => self.finish_render_in_place(clip, &path),
                 Incoming::Lut { name, bytes } => self.apply_lut(&name, &bytes),
+                #[cfg(not(target_arch = "wasm32"))]
+                Incoming::Probed {
+                    file,
+                    sound_only,
+                    probed,
+                } => self.finish_probed(file, sound_only, probed),
+                #[cfg(target_arch = "wasm32")]
+                Incoming::Probed { .. } => {}
+                Incoming::CodecLabel { media, label } => {
+                    self.codec_labels.insert(media, label);
+                }
                 Incoming::Error(e) => self.fail(e),
             }
         }
+        self.read_wanted_codecs();
     }
 
     fn take_dropped_files(&mut self, ctx: &Context) {
@@ -1074,6 +1239,11 @@ impl StudioApp {
     // ----- the frame -----
 
     /// Draws the whole interface into `ui`, the root of the window.
+    /// Shows `page`, as clicking its tab does (for `PICASSO_PERF=pages`, which times each page).
+    pub fn set_page(&mut self, page: Page) {
+        self.page = page;
+    }
+
     pub fn ui(&mut self, ui: &mut Ui) {
         let ctx = ui.ctx().clone();
         self.process_inbox();
@@ -1158,6 +1328,7 @@ impl StudioApp {
         let s = Screen {
             o: rect.min,
             h: rect.height(),
+            warp: Default::default(),
         };
         ui.painter().rect_filled(rect, 0.0, theme::MENU_BG);
 
@@ -1202,6 +1373,7 @@ impl StudioApp {
             Screen {
                 o: egui::pos2(s.o.x, s.o.y - shift),
                 h: s.h + shift,
+                warp: Default::default(),
             }
         };
         if self.page == Page::Cut {
@@ -1227,6 +1399,7 @@ impl StudioApp {
                 s.o.y + if self.page == Page::Cut { 0.0 } else { shift },
             ),
             h: s.h - if self.page == Page::Cut { 0.0 } else { shift },
+            warp: Default::default(),
         };
         self.toolbar1(ui, ctx, &s);
         self.menu_row(ui, ctx, &s);

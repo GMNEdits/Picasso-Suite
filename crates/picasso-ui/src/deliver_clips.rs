@@ -7,6 +7,8 @@ use picasso_core::{ClipId, MediaId, MediaSource, TrackKind};
 use crate::app::StudioApp;
 use crate::chrome::Screen;
 use crate::icons::{paint, Icon};
+#[cfg(not(target_arch = "wasm32"))]
+use crate::platform::Incoming;
 use crate::theme::{self, regular, semibold};
 
 const TEXT: Color32 = Color32::from_rgb(244, 240, 236);
@@ -50,7 +52,9 @@ impl StudioApp {
     }
 
     /// The codec of a media item as editors write it ("H.264 High L4.0"); for a picture made
-    /// here, what it is. Probed once and remembered.
+    /// here, what it is. Read once and remembered; a video's is read from its file in the
+    /// background (empty until then), since opening files one after another held up the first
+    /// frame of a page showing many clips.
     pub(crate) fn codec_label(&mut self, media: MediaId) -> String {
         if let Some(label) = self.codec_labels.get(&media) {
             return label.clone();
@@ -59,9 +63,8 @@ impl StudioApp {
             Some(MediaSource::Video { path }) => {
                 #[cfg(not(target_arch = "wasm32"))]
                 {
-                    picasso_decode::probe(std::path::Path::new(&path))
-                        .map(|i| i.codec_label())
-                        .unwrap_or_else(|_| "Media offline".into())
+                    self.codec_wanted.push((media, path));
+                    String::new()
                 }
                 #[cfg(target_arch = "wasm32")]
                 {
@@ -80,6 +83,29 @@ impl StudioApp {
         };
         self.codec_labels.insert(media, label.clone());
         label
+    }
+
+    /// Reads the codecs `codec_label` asked for, on a thread of their own; they arrive through
+    /// the inbox.
+    pub(crate) fn read_wanted_codecs(&mut self) {
+        if self.codec_wanted.is_empty() {
+            return;
+        }
+        let wanted = std::mem::take(&mut self.codec_wanted);
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            let (inbox, ctx) = (self.inbox.clone(), self.ctx.clone());
+            std::thread::spawn(move || {
+                for (media, path) in wanted {
+                    let label = picasso_decode::probe(std::path::Path::new(&path))
+                        .map(|i| i.codec_label())
+                        .unwrap_or_else(|_| "Media offline".into());
+                    inbox.push(&ctx, Incoming::CodecLabel { media, label });
+                }
+            });
+        }
+        #[cfg(target_arch = "wasm32")]
+        drop(wanted);
     }
 
     /// The strip under the viewer: each video clip with its number and track over its picture,
@@ -195,7 +221,8 @@ impl StudioApp {
         top: f32,
     ) {
         let thumbs = self.timeline_thumbs(ctx);
-        let project = self.project().clone();
+        // Borrowed, not copied: copying the whole project on every frame was the cost of this page.
+        let project = self.project();
         let videos: Vec<usize> = (0..project.tracks.len())
             .rev()
             .filter(|i| project.tracks[*i].kind == TrackKind::Video)
@@ -229,6 +256,8 @@ impl StudioApp {
             let track = &project.tracks[*i];
             let video = track.kind == TrackKind::Video;
             let h = if video { 75.0 } else { 62.0 } * scale;
+            // As much smaller as the dividers made the headers narrower than their usual 380.
+            let z = (header.width() / 380.0).min(1.0);
             if y > area.bottom() - 16.0 {
                 break;
             }
@@ -246,22 +275,22 @@ impl StudioApp {
                 },
             );
             heads.text(
-                pos2(head.left() + 47.0, head.center().y),
+                pos2(head.left() + 47.0 * z, head.center().y),
                 Align2::CENTER_CENTER,
                 &track.name,
-                semibold(17.0),
+                semibold(17.0 * z),
                 TEXT,
             );
             heads.vline(
-                head.left() + 75.0,
+                head.left() + 75.0 * z,
                 head.top()..=head.bottom(),
                 Stroke::new(1.0, LINE),
             );
             if video {
                 let on = !track.muted;
                 let r = Rect::from_center_size(
-                    pos2(head.left() + 98.0, head.center().y),
-                    vec2(30.0, 24.0),
+                    pos2(head.left() + 98.0 * z, head.center().y),
+                    vec2(30.0 * z, 24.0 * z),
                 );
                 paint(
                     &heads,
@@ -294,8 +323,8 @@ impl StudioApp {
                 .enumerate()
                 {
                     let r = Rect::from_center_size(
-                        pos2(head.left() + 98.0 + 40.0 * k as f32, head.center().y),
-                        vec2(22.0, 22.0),
+                        pos2(head.left() + (98.0 + 40.0 * k as f32) * z, head.center().y),
+                        vec2(22.0 * z, 22.0 * z),
                     );
                     let fill = match (letter, lit) {
                         ("S", true) => Color32::from_rgb(214, 170, 40),
@@ -307,7 +336,7 @@ impl StudioApp {
                         r.center(),
                         Align2::CENTER_CENTER,
                         letter,
-                        regular(13.0),
+                        regular(13.0 * z),
                         if lit { Color32::BLACK } else { DIM },
                     );
                     if ui
@@ -319,10 +348,10 @@ impl StudioApp {
                     }
                 }
                 heads.text(
-                    pos2(head.right() - 18.0, head.center().y),
+                    pos2(head.right() - 18.0 * z, head.center().y),
                     Align2::RIGHT_CENTER,
                     "2.0",
-                    regular(15.0),
+                    regular(15.0 * z),
                     DIM,
                 );
             }
@@ -336,7 +365,7 @@ impl StudioApp {
                     continue;
                 }
                 let thumb = thumbs.get(&c.media).copied();
-                self.paint_edit_clip(&clipped, &project, rect, c.id, track.muted, thumb);
+                self.paint_edit_clip(&clipped, project, rect, c.id, track.muted, thumb);
             }
             clipped.hline(
                 area.left()..=area.right(),

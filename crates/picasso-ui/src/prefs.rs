@@ -1,12 +1,14 @@
 //! The settings of this computer rather than of a project (System Preferences and Keyboard
 //! Customization), in `preferences.txt` in the data folder: a `hardware_decoding=on` line, and a
 //! `key<TAB>Undo<TAB>Ctrl+U` line for each command whose keys were changed, with the keys it has
-//! instead of the menus' (none: no key). Lines
-//! that cannot be read are skipped, so a file from another version still opens.
+//! instead of the menus' (none: no key), and a `panels=147,457,1186,474,960,519` line with the sizes
+//! of the panels whose dividers were dragged (`crate::panels`). Lines that cannot be read are
+//! skipped, so a file from another version still opens.
 
 use std::collections::HashMap;
 
 use crate::menu::{self, Act};
+use crate::panels::Panels;
 
 #[cfg_attr(test, allow(dead_code))] // the tests never touch the real file
 const FILE: &str = "preferences.txt";
@@ -19,6 +21,8 @@ pub(crate) struct Preferences {
     pub hardware_decoding: bool,
     /// The commands whose keys were changed, and their keys.
     pub keys: HashMap<Act, Vec<String>>,
+    /// The sizes of the panels on the pages.
+    pub panels: Panels,
 }
 
 impl Default for Preferences {
@@ -26,6 +30,7 @@ impl Default for Preferences {
         Self {
             hardware_decoding: true,
             keys: HashMap::new(),
+            panels: Panels::default(),
         }
     }
 }
@@ -46,9 +51,26 @@ impl Preferences {
                     .map(str::to_string)
                     .collect();
                 prefs.keys.insert(act, keys);
+            } else if let Some(rest) = line.strip_prefix("panel\t") {
+                let Some((name, by)) = rest.split_once('\t') else {
+                    continue;
+                };
+                let moved = &mut prefs.panels.moved;
+                if let Ok(by) = by.trim().parse::<i16>() {
+                    if name.len() <= 40 && moved.len() < 64 {
+                        moved.insert(name.to_string(), by);
+                    }
+                }
             } else if let Some((name, value)) = line.split_once('=') {
-                if name.trim() == "hardware_decoding" {
-                    prefs.hardware_decoding = value.trim() != "off";
+                match name.trim() {
+                    "hardware_decoding" => prefs.hardware_decoding = value.trim() != "off",
+                    "panels" => {
+                        if let Some(panels) = parse_panels(value) {
+                            let moved = std::mem::take(&mut prefs.panels.moved);
+                            prefs.panels = Panels { moved, ..panels };
+                        }
+                    }
+                    _ => {}
                 }
             }
         }
@@ -60,6 +82,18 @@ impl Preferences {
             "hardware_decoding={}\n",
             if self.hardware_decoding { "on" } else { "off" }
         );
+        let p = &self.panels;
+        let [a, b, c] = p.edit_columns;
+        out.push_str(&format!(
+            "panels={a},{b},{c},{},{},{}\n",
+            p.edit_viewers, p.cut_pool, p.cut_upper
+        ));
+        for (name, by) in &p.moved {
+            out.push_str(&format!(
+                "panel\t{}\t{by}\n",
+                name.replace(['\t', '\n'], "")
+            ));
+        }
         let mut keys: Vec<(String, &Vec<String>)> = self
             .keys
             .iter()
@@ -106,6 +140,27 @@ impl Preferences {
     }
 }
 
+/// The six numbers of a `panels=` line; nothing unless all six read.
+fn parse_panels(value: &str) -> Option<Panels> {
+    let n: Vec<u16> = value
+        .split(',')
+        .map(|v| v.trim().parse().ok())
+        .collect::<Option<_>>()?;
+    let [a, b, c, viewers, pool, upper] = n[..] else {
+        return None;
+    };
+    Some(
+        Panels {
+            edit_columns: [a, b, c],
+            edit_viewers: viewers,
+            cut_pool: pool,
+            cut_upper: upper,
+            moved: Default::default(),
+        }
+        .checked(),
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -117,6 +172,9 @@ mod tests {
             ..Preferences::default()
         };
         prefs.keys.insert(Act::Undo, vec!["Ctrl+U".into()]);
+        prefs.panels.set_edit_column(1, 600.0);
+        prefs.panels.cut_upper = 400;
+        prefs.panels.moved.insert("color gallery".into(), -35);
         prefs.keys.insert(Act::Redo, Vec::new());
         prefs
             .keys
@@ -140,5 +198,16 @@ mod tests {
             Some(&vec!["Ctrl+U".to_string()])
         );
         assert_eq!(Preferences::parse(""), Preferences::default());
+        // Panel sizes: all six numbers or none, and in range.
+        assert_eq!(
+            Preferences::parse("panels=1,2,3").panels,
+            Preferences::default().panels
+        );
+        assert_eq!(
+            Preferences::parse("panels=147,457,1186,9999,960,519")
+                .panels
+                .edit_viewers,
+            750
+        );
     }
 }
