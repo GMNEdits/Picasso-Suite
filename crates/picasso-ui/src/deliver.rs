@@ -492,7 +492,7 @@ impl StudioApp {
             Some(None) => self.new_timeline(),
             None => {}
         }
-        let time = self.project().fps.timecode(self.playhead);
+        let time = self.tc(self.playhead as i64);
         painter.text(
             s.p(MIDDLE_RIGHT - 148.0, y),
             Align2::RIGHT_CENTER,

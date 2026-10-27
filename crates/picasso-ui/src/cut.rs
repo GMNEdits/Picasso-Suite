@@ -1166,7 +1166,7 @@ impl StudioApp {
         {
             self.go_to_edit(false);
         }
-        let tcg = format!("TCG {}", self.project().fps.timecode(self.playhead));
+        let tcg = format!("TCG {}", self.tc(self.playhead as i64));
         painter.text(
             l.p(1696.0, y),
             Align2::LEFT_CENTER,
