@@ -9,4 +9,4 @@ Icon=io.github.fabox_os.PicassoSuite
 StartupWMClass=io.github.fabox_os.PicassoSuite
 Terminal=false
 Categories=AudioVideo;Video;AudioVideoEditing;
-MimeType=application/x-picasso-project;application/x-davinci-resolve-project;application/x-davinci-resolve-timeline;application/x-davinci-resolve-bin;video/mp4;video/quicktime;video/x-matroska;video/webm;video/x-msvideo;application/mxf;video/x-m4v;video/mp2t;video/x-ms-wmv;video/x-flv;video/mpeg;video/ogg;
+MimeType=application/x-picasso-project;application/x-davinci-resolve-project;application/x-davinci-resolve-timeline;application/x-davinci-resolve-bin;video/mp4;video/quicktime;video/x-matroska;video/webm;video/x-msvideo;application/mxf;video/x-m4v;video/mp2t;video/x-ms-wmv;video/x-flv;video/mpeg;video/ogg;video/3gpp;video/3gpp2;video/x-f4v;video/dv;video/x-ms-asf;video/vnd.dlna.mpeg-tts;

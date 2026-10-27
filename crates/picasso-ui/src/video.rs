@@ -9,6 +9,9 @@ pub(crate) fn new_cache(ctx: &egui::Context) -> MediaCache {
     #[cfg(not(target_arch = "wasm32"))]
     {
         MediaCache::with_video_source(std::sync::Arc::new(native::VideoPool::new(ctx.clone())))
+            .with_thumbnail_source(std::sync::Arc::new(native::VideoPool::for_thumbnails(
+                ctx.clone(),
+            )))
     }
     #[cfg(target_arch = "wasm32")]
     {
@@ -100,6 +103,11 @@ mod native {
         state: Mutex<State>,
         changed: Condvar,
         generation: AtomicU64,
+        /// Pictures kept per video.
+        keep: usize,
+        /// Whether a video's worker ends, and closes its decoder, once it has answered its
+        /// request (the media pool's thumbnails: one picture per video, once).
+        one_shot: bool,
         ctx: egui::Context,
     }
 
@@ -124,11 +132,23 @@ mod native {
 
     impl VideoPool {
         pub(super) fn new(ctx: egui::Context) -> Self {
+            Self::with(ctx, KEEP, false)
+        }
+
+        /// A pool for the media pool's thumbnails: it keeps one small picture per video and does
+        /// not leave a thread and an open decoder behind for each.
+        pub(super) fn for_thumbnails(ctx: egui::Context) -> Self {
+            Self::with(ctx, 1, true)
+        }
+
+        fn with(ctx: egui::Context, keep: usize, one_shot: bool) -> Self {
             Self {
                 shared: Arc::new(Shared {
                     state: Mutex::default(),
                     changed: Condvar::new(),
                     generation: AtomicU64::new(0),
+                    keep,
+                    one_shot,
                     ctx,
                 }),
             }
@@ -278,6 +298,12 @@ mod native {
                         }
                         continue;
                     }
+                    if shared.one_shot {
+                        // Nothing more is wanted of this video: a later request starts a new
+                        // worker (it is taken out of the set while the lock is held).
+                        state.workers.remove(&media);
+                        return;
+                    }
                     state = shared
                         .changed
                         .wait(state)
@@ -332,7 +358,7 @@ mod native {
                 if let Some(image) = near {
                     let queue = state.frames.entry(media).or_default();
                     queue.push_back((time_us, reduce, image));
-                    while queue.len() > KEEP {
+                    while queue.len() > shared.keep {
                         queue.pop_front();
                     }
                     drop(state);
@@ -350,7 +376,7 @@ mod native {
                     let mut state = shared.lock();
                     let queue = state.frames.entry(media).or_default();
                     queue.push_back((time_us, reduce, image));
-                    while queue.len() > KEEP {
+                    while queue.len() > shared.keep {
                         queue.pop_front();
                     }
                     drop(state);

@@ -309,7 +309,11 @@ fn download_and_install(
         _ => work.join(&file),
     };
     step(&format!("Downloading {file}..."));
-    download(&url, &package)?;
+    if let Err(e) = download(&url, &package) {
+        // curl leaves what it had when the connection broke.
+        let _ = std::fs::remove_file(&package);
+        return Err(e);
+    }
     step("Installing...");
     let done = match install {
         Install::WindowsZip(dir) => install_windows(&package, &work, dir)?,
@@ -320,13 +324,15 @@ fn download_and_install(
             // A per-user install is replaced per-user; flatpak would otherwise install it for
             // the whole system, asking for a password, next to the old one.
             let info = std::fs::read_to_string("/.flatpak-info").unwrap_or_default();
-            if is_user_flatpak(&info) {
+            let user = is_user_flatpak(&info);
+            if user {
                 cmd.arg("--user");
             }
             cmd.arg(&package);
             run(cmd, "Installing the Flatpak").map_err(|e| {
                 format!(
-                    "{e}\n\nInstall it from a terminal instead:\nflatpak install --reinstall {}",
+                    "{e}\n\nInstall it from a terminal instead:\nflatpak install {}--reinstall {}",
+                    if user { "--user " } else { "" },
                     package.display()
                 )
             })?;
