@@ -25,6 +25,10 @@ pollster = "0.4"  # Apache-2.0 OR MIT; eframe uses it too (the graphics check wa
 [target.'cfg(target_os = "linux")'.dependencies]
 winit = { version = "0.30", default-features = false, features = ["x11"] }  # Apache-2.0
 
+# The same winit as eframe's, named to ask for X11 on a Wayland desktop (see main.rs).
+[target.'cfg(target_os = "linux")'.dependencies]
+winit = { version = "0.30", default-features = false, features = ["x11"] }  # Apache-2.0
+
 # Exception, to be removed: the browser build still draws through WebGL2 (glow). A wgpu build
 # for the web compiled but did not get past start-up in the test browser (see README).
 [target.'cfg(target_arch = "wasm32")'.dependencies]

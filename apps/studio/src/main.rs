@@ -178,10 +178,7 @@ fn main() -> eframe::Result {
         println!("{}", picasso_ui::menu_status_markdown());
         return Ok(());
     }
-    // `--graphics-check`: which graphics cards draw (for bug reports), without opening a window.
-    if std::env::args().any(|a| a == "--graphics-check") {
-        std::process::exit(i32::from(!graphics_check::run()));
-    }
+
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()
             .with_title("Picasso Suite")
