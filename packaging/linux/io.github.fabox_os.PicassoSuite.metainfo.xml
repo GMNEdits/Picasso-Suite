@@ -3,6 +3,9 @@
   <id>io.github.fabox_os.PicassoSuite</id>
   <name>Picasso Suite</name>
   <summary>Non-linear video editor with a DaVinci Resolve-style interface</summary>
+  <developer id="io.github.fabox-os">
+    <name>Picasso Suite contributors</name>
+  </developer>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <description>
@@ -10,6 +13,26 @@
   </description>
   <launchable type="desktop-id">io.github.fabox_os.PicassoSuite.desktop</launchable>
   <url type="homepage">https://github.com/fabox-os/Picasso-Suite</url>
+  <url type="bugtracker">https://github.com/fabox-os/Picasso-Suite/issues</url>
+  <url type="vcs-browser">https://github.com/fabox-os/Picasso-Suite</url>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://raw.githubusercontent.com/fabox-os/Picasso-Suite/main/docs/screenshots/0.2.0/cut.webp</image>
+      <caption>The Cut page</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/fabox-os/Picasso-Suite/main/docs/screenshots/0.2.0/edit.webp</image>
+      <caption>The Edit page</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/fabox-os/Picasso-Suite/main/docs/screenshots/0.2.0/color.webp</image>
+      <caption>The Color page with curves</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/fabox-os/Picasso-Suite/main/docs/screenshots/0.2.0/deliver.webp</image>
+      <caption>The Deliver page</caption>
+    </screenshot>
+  </screenshots>
   <releases>
     <release version="0.2.1" date="2026-10-26"/>
     <release version="0.1.0" date="2026-10-25"/>

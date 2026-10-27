@@ -30,6 +30,8 @@ Status at 0.2.1.
 - [x] Linux: files dragged from the file manager reach the media pool on Wayland desktops (the window opens through XWayland); the window is grouped with its launcher and icon; the packages open project files and offer "Open With" for video; .deb and .rpm name the window libraries they need; the Flatpak reads drives under `/media` and `/run/media`
 - [x] Linux: every release's .deb and .rpm are installed and started on Ubuntu 22.04 and 24.04, Debian 12, Fedora and openSUSE Tumbleweed, opening the window on all but openSUSE
 - [x] Linux: ARM64 (aarch64) .deb, .rpm and AppImage, installed and started on Ubuntu 24.04 and Fedora for ARM; an AppImage for x86_64 too, which Check for Updates replaces in place; icons from 16 to 256 pixels
+- [x] Linux: ARM64 Flatpak, built on an ARM64 runner; Check for Updates picks the Flatpak of the computer's processor
+- [x] Graphics: `picasso-suite --graphics-check` (every adapter draws a test picture and is read back; tried on an AMD card with Vulkan, DirectX 12 and OpenGL) and a "Graphics report" issue form for people to send theirs
 
 ## To do
 
@@ -47,6 +49,8 @@ Status at 0.2.1.
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm (a per-user Flatpak now updates per-user; a .deb is told from an .rpm by dpkg's file list)
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
-- [ ] Linux: native Wayland drag and drop (when winit supports it), Flathub (needs a submission to flathub/flathub, building FFmpeg from source there, and an exception for holding both the X11 and Wayland sockets), an ARM64 Flatpak
+- [ ] Linux: native Wayland drag and drop: not possible yet. eframe 0.37 uses winit 0.30.13, which takes no files dropped on a Wayland window; winit's own work on it (rust-windowing/winit#4773 is open, #4009 was closed unmerged) is in no release, 0.31 is a beta. Until then the window opens through XWayland. Writing it here against Wayland's data device would be a second, untestable copy of what winit will do
+- [ ] Linux: Flathub. The manifest that builds FFmpeg and its codecs from source is in `packaging/flathub` and has a CI build (`flathub` workflow); the submission itself is a pull request to flathub/flathub by the project's owner, with an exception to ask for for holding both the X11 and Wayland sockets (the text is in `packaging/flathub/README.md`)
+- [ ] Graphics: Vulkan on real cards: the check and the report form exist; the NVIDIA, Intel, AMD (Linux, Mesa), Apple and ARM GPUs need people to run `--graphics-check` and send it in
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
 - [ ] Interchange: OpenTimelineIO import, and OTIO export from `picasso-bridge`

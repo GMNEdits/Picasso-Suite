@@ -1,0 +1,231 @@
+# The Flathub manifest: everything is built from source (FFmpeg and the codecs it uses, then the
+# program with its Rust dependencies from cargo-sources.json), as Flathub requires. The
+# release Flatpak (../linux/flatpak.yml) packs the files built by CI instead and is not for Flathub.
+# See README.md here for how to make cargo-sources.json and submit this.
+app-id: io.github.fabox_os.PicassoSuite
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  # LLVM for FFmpeg's bindings (bindgen); 19 is what the project builds with elsewhere, and
+  # the 25.08 runtime has 20 and 21.
+  - org.freedesktop.Sdk.Extension.llvm20
+command: picasso-suite
+finish-args:
+  - --share=ipc
+  # Both are needed: the window opens through X11 (XWayland) on a Wayland desktop, because winit
+  # does not take files dropped on a Wayland window yet. The linter's
+  # finish-args-contains-both-x11-and-wayland needs an exception (README.md here has the text).
+  - --socket=x11
+  - --socket=wayland
+  - --device=dri
+  - --socket=pulseaudio
+  # Footage and projects can be anywhere in the home folder, and on USB drives and memory cards.
+  - --filesystem=home
+  - --filesystem=/media
+  - --filesystem=/run/media
+  # Help > Check for Updates asks GitHub for the latest release (and, here, opens its page).
+  - --share=network
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm20/bin
+  prepend-pkg-config-path: /app/lib/pkgconfig
+  env:
+    CARGO_HOME: /run/build/picasso-suite/cargo
+    LIBCLANG_PATH: /usr/lib/sdk/llvm20/lib
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /lib/*.a
+  - /lib/*.la
+  - /share/man
+modules:
+  - name: nv-codec-headers
+    buildsystem: simple
+    build-commands:
+      - make install PREFIX=/app
+    cleanup:
+      - '*'
+    sources:
+      - type: archive
+        url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n13.0.19.0.tar.gz
+        sha256: 86d15d1a7c0ac73a0eafdfc57bebfeba7da8264595bf531cf4d8db1c22940116
+
+  - name: amf-headers
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/include
+      - cp -a AMF /app/include/AMF
+    cleanup:
+      - '*'
+    sources:
+      - type: archive
+        url: https://github.com/GPUOpen-LibrariesAndSDKs/AMF/releases/download/v1.4.36/AMF-headers-v1.4.36.tar.gz
+        sha256: ec07ee21b820a73f5bae224e92fd3c492f52732d4885f0637f48189afdd87564
+
+  - name: x264
+    config-opts:
+      - --enable-shared
+      - --enable-pic
+      - --disable-cli
+    sources:
+      - type: archive
+        url: https://code.videolan.org/videolan/x264/-/archive/b35605ace3ddf7c1a5d67a2eb553f034aef41d55/x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.bz2
+        sha256: 6eeb82934e69fd51e043bd8c5b0d152839638d1ce7aa4eea65a3fedcf83ff224
+
+  # x265 with 8, 10 and 12 bits in one library (the 10 and 12-bit ones are built first and linked
+  # into the 8-bit one), which the 10-bit H.265 export needs.
+  - name: x265
+    buildsystem: simple
+    build-commands:
+      - mkdir 8bit 10bit 12bit
+      - |
+        cd 12bit
+        cmake -G Ninja ../source -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+          -DHIGH_BIT_DEPTH=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON
+        ninja
+      - |
+        cd 10bit
+        cmake -G Ninja ../source -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+          -DHIGH_BIT_DEPTH=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF
+        ninja
+      - |
+        cd 8bit
+        ln -s ../10bit/libx265.a libx265_main10.a
+        ln -s ../12bit/libx265.a libx265_main12.a
+        cmake -G Ninja ../source -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/app \
+          -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+          -DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. \
+          -DLINKED_10BIT=ON -DLINKED_12BIT=ON -DENABLE_CLI=OFF -DENABLE_SHARED=ON
+        ninja
+        ninja install
+    sources:
+      - type: archive
+        url: https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz
+        sha256: a31699c6a89806b74b0151e5e6a7df65de4b49050482fe5ebf8a4379d7af8f29
+
+  - name: libvpx
+    config-opts:
+      - --enable-shared
+      - --disable-static
+      - --enable-pic
+      - --enable-vp8
+      - --enable-vp9
+      - --enable-vp9-highbitdepth
+      - --enable-runtime-cpu-detect
+      - --disable-examples
+      - --disable-tools
+      - --disable-docs
+      - --disable-unit-tests
+    sources:
+      - type: archive
+        url: https://github.com/webmproject/libvpx/archive/refs/tags/v1.16.0.tar.gz
+        sha256: 7a479a3c66b9f5d5542a4c6a1b7d3768a983b1e5c14c60a9396edc9b649e015c
+
+  - name: libaom
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_SHARED_LIBS=ON
+      - -DENABLE_DOCS=OFF
+      - -DENABLE_EXAMPLES=OFF
+      - -DENABLE_TESTS=OFF
+      - -DENABLE_TOOLS=OFF
+    sources:
+      - type: archive
+        url: https://storage.googleapis.com/aom-releases/libaom-3.13.1.tar.gz
+        sha256: 19e45a5a7192d690565229983dad900e76b513a02306c12053fb9a262cbeca7d
+
+  - name: svt-av1
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_SHARED_LIBS=ON
+      - -DBUILD_APPS=OFF
+      - -DBUILD_TESTING=OFF
+    sources:
+      - type: archive
+        url: https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v3.1.2/SVT-AV1-v3.1.2.tar.gz
+        sha256: d0d73bfea42fdcc1222272bf2b0e2319e9df5574721298090c3d28315586ecb1
+
+  - name: opus
+    config-opts:
+      - --disable-static
+      - --disable-doc
+      - --disable-extra-programs
+    sources:
+      - type: archive
+        url: https://downloads.xiph.org/releases/opus/opus-1.5.2.tar.gz
+        sha256: 65c1d2f78b9f2fb20082c38cbe47c951ad5839345876e46941612ee87f9a7ce1
+
+  - name: lame
+    config-opts:
+      - --disable-static
+      - --disable-frontend
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
+        sha256: ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e
+
+  # FFmpeg 7.1, the version the program is built and tested with. Only the libraries are built.
+  # Quick Sync (libvpl) is left out; the BtbN builds of the release packages have it.
+  - name: ffmpeg
+    config-opts:
+      - --enable-shared
+      - --disable-static
+      - --disable-programs
+      - --disable-doc
+      - --disable-debug
+      - --disable-autodetect
+      - --enable-pic
+      - --enable-gpl
+      - --enable-version3
+      - --enable-libx264
+      - --enable-libx265
+      - --enable-libvpx
+      - --enable-libaom
+      - --enable-libsvtav1
+      - --enable-libopus
+      - --enable-libmp3lame
+      - --enable-vaapi
+      - --enable-ffnvcodec
+      - --enable-nvenc
+      - --enable-nvdec
+      - --enable-amf
+      - --enable-zlib
+      - --enable-bzlib
+      - --enable-lzma
+      - --enable-iconv
+    sources:
+      - type: archive
+        url: https://ffmpeg.org/releases/ffmpeg-7.1.5.tar.xz
+        sha256: de668509caf9e35e3cd162473441fdb29538c6d96ed080292b3cf9e6fc5d558f
+
+  - name: picasso-suite
+    buildsystem: simple
+    build-options:
+      env:
+        CARGO_NET_OFFLINE: 'true'
+    build-commands:
+      - cargo build --release --offline --locked -p picasso-suite -p picasso-bridge
+      - install -Dm755 target/release/picasso-suite /app/bin/picasso-suite
+      - install -Dm755 target/release/picasso-bridge /app/bin/picasso-bridge
+      # This copy is updated by Flathub, not by Help > Check for Updates.
+      - install -Dm644 /dev/null /app/share/picasso-suite/updates-by-flathub
+      - install -Dm644 assets/icon.png /app/share/icons/hicolor/256x256/apps/io.github.fabox_os.PicassoSuite.png
+      - install -Dm644 packaging/linux/io.github.fabox_os.PicassoSuite.desktop /app/share/applications/io.github.fabox_os.PicassoSuite.desktop
+      - install -Dm644 packaging/linux/io.github.fabox_os.PicassoSuite.metainfo.xml /app/share/metainfo/io.github.fabox_os.PicassoSuite.metainfo.xml
+      - install -Dm644 packaging/linux/io.github.fabox_os.PicassoSuite.xml /app/share/mime/packages/io.github.fabox_os.PicassoSuite.xml
+    sources:
+      # For a submission this is the git tag (type: git, url, tag, commit); the repository's own
+      # check build (.github/workflows/flathub.yml) uses the checked-out files.
+      - type: dir
+        path: ../..
+        skip:
+          - .git
+          - target
+          - dist
+          - out
+          - vendor
+      - cargo-sources.json

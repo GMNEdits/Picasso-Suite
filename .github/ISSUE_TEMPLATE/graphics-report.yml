@@ -1,0 +1,46 @@
+name: Graphics report
+description: Tell us how Picasso Suite runs on your graphics card (Vulkan, DirectX 12, Metal, OpenGL)
+title: "Graphics: <your card>"
+labels: ["graphics"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Picasso Suite is only tried on a few graphics cards. A report from yours helps a lot, whether
+        it works or not.
+
+        Run this in a terminal (on Windows, in the folder with `picasso-suite.exe`; it saves
+        `picasso-graphics-report.txt` there too, because the program has no console window):
+
+        ```
+        picasso-suite --graphics-check
+        ```
+  - type: textarea
+    id: report
+    attributes:
+      label: Output of `picasso-suite --graphics-check`
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: how
+    attributes:
+      label: How does the editor run?
+      options:
+        - Fine
+        - Works, but slow or with picture errors
+        - Does not start, or the window stays black
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Your system
+      description: Operating system and version, desktop (GNOME, KDE, ...) and Wayland or X11, and how you installed it (zip, .deb, .rpm, Flatpak, AppImage).
+    validations:
+      required: true
+  - type: textarea
+    id: more
+    attributes:
+      label: Anything else
+      description: Hardware encoding (NVIDIA, Intel, AMD, VA-API) in Deliver, hardware decoding in Preferences, and what you saw.

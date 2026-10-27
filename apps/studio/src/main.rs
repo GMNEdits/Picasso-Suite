@@ -3,6 +3,9 @@
 // Release builds on Windows start without a console window.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+#[cfg(not(target_arch = "wasm32"))]
+mod graphics_check;
+
 use picasso_ui::StudioApp;
 
 /// The window: `picasso-ui` draws, eframe runs it.
@@ -174,6 +177,10 @@ fn main() -> eframe::Result {
     if std::env::args().any(|a| a == "--menu-status") {
         println!("{}", picasso_ui::menu_status_markdown());
         return Ok(());
+    }
+    // `--graphics-check`: which graphics cards draw (for bug reports), without opening a window.
+    if std::env::args().any(|a| a == "--graphics-check") {
+        std::process::exit(i32::from(!graphics_check::run()));
     }
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()

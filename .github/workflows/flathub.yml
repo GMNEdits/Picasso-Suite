@@ -1,0 +1,65 @@
+# Builds the Flathub manifest (packaging/flathub) from source on both processors, as Flathub's own
+# builders do, and runs Flathub's linter on it. It takes an hour or more (FFmpeg and the codecs
+# are compiled), so it runs only on `flathub-*` branches and by hand, not on every push.
+name: flathub
+
+on:
+  push:
+    branches: ['flathub-*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Pinned: the tool that turns Cargo.lock into the list of crates the offline build downloads.
+  CARGO_GENERATOR_COMMIT: 41c20aa10819cdb2a4f3ca171758a96d1955c018
+
+jobs:
+  flathub:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runner: ubuntu-latest, arch: x86_64 }
+          - { runner: ubuntu-24.04-arm, arch: aarch64 }
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the desktop entry and the appstream file
+        run: |
+          dnf_or_apt() { if command -v apt-get >/dev/null; then apt-get install -y "$@"; else dnf install -y "$@"; fi; }
+          command -v appstreamcli >/dev/null || dnf_or_apt appstream
+          command -v desktop-file-validate >/dev/null || dnf_or_apt desktop-file-utils
+          desktop-file-validate packaging/linux/io.github.fabox_os.PicassoSuite.desktop
+          appstreamcli validate --no-net --pedantic packaging/linux/io.github.fabox_os.PicassoSuite.metainfo.xml
+      - name: List the crates for the offline build
+        run: |
+          python3 -m pip install --quiet aiohttp PyYAML tomlkit || pip install --quiet aiohttp PyYAML tomlkit
+          curl -fsSL -o flatpak-cargo-generator.py \
+            "https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/$CARGO_GENERATOR_COMMIT/cargo/flatpak-cargo-generator.py"
+          python3 flatpak-cargo-generator.py Cargo.lock -o packaging/flathub/cargo-sources.json
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: picasso-suite-flathub-${{ matrix.arch }}.flatpak
+          manifest-path: packaging/flathub/io.github.fabox_os.PicassoSuite.yml
+          arch: ${{ matrix.arch }}
+          cache-key: flathub-${{ matrix.arch }}-${{ github.sha }}
+          restore-cache: false
+          upload-artifact: false
+      # Flathub's linter: what a reviewer there would see. The two X11/Wayland socket findings
+      # are expected (see packaging/flathub/README.md); anything else is for the submission.
+      - name: Flathub linter
+        continue-on-error: true
+        run: |
+          flatpak install -y --noninteractive flathub org.flatpak.Builder || true
+          flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest packaging/flathub/io.github.fabox_os.PicassoSuite.yml || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flathub-${{ matrix.arch }}
+          path: |
+            picasso-suite-flathub-${{ matrix.arch }}.flatpak
+            packaging/flathub/cargo-sources.json

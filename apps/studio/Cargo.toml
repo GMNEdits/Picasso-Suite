@@ -19,6 +19,7 @@ picasso-ui.workspace = true
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 eframe = { version = "0.36", default-features = false, features = ["default_fonts", "wgpu", "wayland", "x11"] }  # MIT OR Apache-2.0
 image.workspace = true
+pollster = "0.4"  # Apache-2.0 OR MIT; eframe uses it too (the graphics check waits for the card)
 
 # The same winit as eframe's, named to ask for X11 on a Wayland desktop (see main.rs).
 [target.'cfg(target_os = "linux")'.dependencies]

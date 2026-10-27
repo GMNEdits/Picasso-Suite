@@ -4,6 +4,8 @@
 
 **✨ New**
 - ✅ **Linux on ARM64:** .deb, .rpm and AppImage for 64-bit ARM computers (Raspberry Pi 5, ARM laptops and servers)
+- ✅ **Linux Flatpak on ARM64:** `picasso-suite-X-aarch64.flatpak` beside the x86_64 one; Help > Check for Updates installs the one for the computer's processor
+- ✅ **Graphics check:** `picasso-suite --graphics-check` lists the graphics cards and interfaces (Vulkan, DirectX 12, Metal, OpenGL), tells which ones draw a test picture and saves the report as `picasso-graphics-report.txt`; there is a "Graphics report" issue form for sending it in
 - ✅ **AppImage:** one file that runs on most Linux distributions without installing; Help > Check for Updates replaces it with the new version
 - ✅ **Cut page:** files dragged over the window show a drop target on the media pool, and 3GP, 3G2, F4V, VOB, DV, ASF and M2TS video can be imported
 
