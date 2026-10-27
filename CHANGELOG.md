@@ -8,6 +8,7 @@
 - ✅ **Graphics check:** `picasso-suite --graphics-check` lists the graphics cards and interfaces (Vulkan, DirectX 12, Metal, OpenGL), tells which ones draw a test picture and saves the report as `picasso-graphics-report.txt`; there is a "Graphics report" issue form for sending it in
 - ✅ **AppImage:** one file that runs on most Linux distributions without installing; Help > Check for Updates replaces it with the new version
 - ✅ **Cut page:** files dragged over the window show a drop target on the media pool, and 3GP, 3G2, F4V, VOB, DV, ASF and M2TS video can be imported
+- ✅ **Resizable panels:** on every page, drag the dividers between the panels to resize them (Edit: bins, media pool, viewers, timeline; Cut: pool, viewer, timelines; Media: files, queue, viewer, storage, meters, upper and lower rows; Fusion: viewers, node area, inspector; Color: gallery, viewer, nodes, clips, scopes; Fairlight: meters, video, console, track headers, mixer; Deliver: settings, viewer, queue, timeline; Photo: pool, viewer, inspector, album). The divider lights up under the pointer, a double click puts it back, and the sizes are kept for the next start. Panels keep at least two fifths of their usual size; the text, icons and buttons in a narrowed panel get smaller with it instead of running into the next one (toolbars, track headers, transport, empty-panel messages), and the Deliver settings form scrolls sideways in a narrow column. The color wheels keep their size, so the palettes are not resizable
 - ✅ **Cut page:** the empty timeline before a track's first clip is grey, as in Resolve, so a clip that starts late is easy to see
 
 **🛠️ Fixed**
@@ -17,6 +18,7 @@
 - 🛠️ **Linux:** programs started from Picasso Suite (the browser, the installer) still see the Wayland desktop; the window asks for X11 itself instead of hiding the Wayland display from everything
 - 🛠️ **Check for Updates:** a download that breaks off leaves no half-file behind
 - 🛠️ **Media pool:** video thumbnails are made without holding up the window while the first frame decodes, by their own decoder, so the viewer no longer leaves them (and the clips on the timeline) black; they are decoded at a quarter of the size and the decoder is closed once the picture is made, so a pool of 4K clips does not keep a full picture and a thread for each
+- 🛠️ **Speed:** importing videos and sound no longer holds up the window (twelve clips took half a second; their files are now read in the background, so no frame took more than 1 ms), opening the Color page with many clips no longer freezes for a moment (it read every video's codec before drawing the first frame), the Deliver page no longer copies the whole project on every frame, and the Media page's file browser and media pool draw only the clips in view, so big projects and folders with thousands of files stay smooth when switching pages
 - 🛠️ **Timeline:** a disabled clip no longer shows through a transition (dissolve or dip) next to it
 - 🛠️ **Timeline:** dragging a clip, trim or roll no longer copies the whole project on every pointer move
 - 🛠️ **Stills:** shrinking a big picture uses less memory, and an image too big to show is refused from its header before it is decoded
@@ -32,6 +34,8 @@
 - ✅ **Flathub:** a manifest that builds FFmpeg and its codecs from source (`packaging/flathub`), built in CI on x86_64 and ARM64 and checked with Flathub's linter, with notes for the submission, which is not made yet; the screenshots and links in the app's appstream entry are filled in
 - ✅ **Releases:** a release candidate (a tag such as `v0.2.2-rc1`) is published as a pre-release for testing; Check for Updates does not offer it
 - ✅ **Development:** the tests run on every pull request, and a test checks `Menu-Status.md` against the menus' table
+- ✅ **Development:** `PICASSO_PERF=pages picasso-suite [--place] <files>` shows each page in turn and prints how long its frames take, and files given with `--place` now go one after another on the timeline instead of all at the playhead
+- ✅ **Status in the README:** a picture and a table of how much is made (menu entries that work, roadmap items done), drawn from `Menu-Status.md` and `ROADMAP.md` by `python3 scripts/status.py`
 
 **⚠️ Known limitations**
 - ❌ A native Wayland window takes no dropped files (winit 0.30 has no support and eframe 0.37 uses it), so the window opens through XWayland

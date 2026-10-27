@@ -250,7 +250,7 @@ impl StudioApp {
     #[cfg(not(target_arch = "wasm32"))]
     fn finish_bounce_native(&mut self, path: &str) {
         let before = self.project().media.len();
-        self.open_path(path, false);
+        self.open_path_now(path);
         if self.project().media.len() == before {
             return;
         }

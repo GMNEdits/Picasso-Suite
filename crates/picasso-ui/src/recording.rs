@@ -193,7 +193,7 @@ impl StudioApp {
             }
             let path = take.to_string_lossy().into_owned();
             let before = self.project().media.len();
-            self.open_path(&path, false);
+            self.open_path_now(&path);
             if self.project().media.len() == before {
                 return None;
             }

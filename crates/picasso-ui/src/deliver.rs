@@ -14,6 +14,7 @@ use picasso_render::{encode_png, render_frame};
 use crate::app::StudioApp;
 use crate::chrome::{Screen, Tool, DESIGN_WIDTH};
 use crate::icons::{paint, Icon};
+use crate::panels::Split;
 use crate::platform;
 use crate::queue::JobState;
 use crate::theme::{self, regular, semibold};
@@ -215,6 +216,7 @@ impl StudioApp {
         let sv = Screen {
             o: pos2(s.o.x / k, s.o.y / k),
             h: s.h / k,
+            warp: Default::default(),
         };
         // egui draws an Area's first frame invisible (its size is not known yet); repeat that
         // pass before anything is shown, so the page does not flash black when first opened.
@@ -242,6 +244,37 @@ impl StudioApp {
         let y_view = rv(521.0).min(bottom - 300.0);
         let y_tools = y_view + (rv(657.0) - rv(521.0));
         let y_ruler = y_tools + (rv(698.0) - rv(657.0));
+        // The dividers: the viewer and the render queue; the render settings column; and the
+        // timeline under the viewer (the clip strip and the tool row move with it unstretched).
+        let splits = [
+            Split::column(
+                "deliver queue",
+                s,
+                s.p(MIDDLE_RIGHT, TOP),
+                s.p(MIDDLE_RIGHT, y_view),
+                s.p(LEFT_RIGHT, 0.0).x,
+                s.p(RIGHT, 0.0).x,
+            ),
+            Split::column(
+                "deliver settings",
+                s,
+                s.p(LEFT_RIGHT, TOP),
+                s.p(LEFT_RIGHT, bottom),
+                s.p(LEFT, 0.0).x,
+                s.p(MIDDLE_RIGHT, 0.0).x,
+            ),
+            Split::row(
+                "deliver timeline",
+                s,
+                s.p(LEFT_RIGHT, y_view),
+                s.p(RIGHT, y_view),
+                s.p(0.0, TOP + BAR).y,
+                s.p(0.0, bottom).y,
+            )
+            .keeping(y_ruler - y_view),
+        ];
+        let warped = self.warped(s, &splits);
+        let s = &warped;
 
         fill(&painter, s, LEFT, TOP, RIGHT, bottom, theme::POOL_BG);
         fill(
@@ -314,6 +347,7 @@ impl StudioApp {
         let strip = s.r(LEFT_RIGHT + 1.0, y_view + 1.0, RIGHT, y_tools - 1.0);
         self.clip_strip(ui, ctx, s, strip);
         self.system_section(&painter, s, y_view - 160.0, y_view - 56.0);
+        self.dividers(ui, s, &splits);
     }
 
     /// What this computer renders with, in the band under the viewer: the graphics card and the
@@ -326,11 +360,13 @@ impl StudioApp {
             return;
         }
         let x = MIDDLE_RIGHT + 18.0;
+        // As much smaller as the dividers made the queue narrower.
+        let k = s.shrink(x + 150.0, y0 + 62.0);
         painter.text(
             s.p(x, y0 + 26.0),
             Align2::LEFT_CENTER,
             "System",
-            semibold(17.0),
+            semibold(17.0 * k),
             TEXT,
         );
         let (card, api) = self.graphics.clone().unwrap_or_else(|| {
@@ -352,14 +388,14 @@ impl StudioApp {
                 s.p(x + 150.0, y),
                 Align2::RIGHT_CENTER,
                 label,
-                regular(16.0),
+                regular(16.0 * k),
                 DIM,
             );
             painter.text(
                 s.p(x + 166.0, y),
                 Align2::LEFT_CENTER,
                 value,
-                regular(16.0),
+                regular(16.0 * k),
                 TEXT,
             );
         }
@@ -371,11 +407,20 @@ impl StudioApp {
         let y = TOP + BAR / 2.0;
         let t = |hint| Tool::new(hint).wide(36.0);
         let mut planned: Option<&str> = None;
+        // Text and buttons are as much smaller as the dividers squeezed their column; the
+        // settings title also stops short of the menu button.
+        let k = |x: f32| s.shrink(x, y);
+        let title = "Render Settings - Custom Export";
+        let room = s.p(LEFT_RIGHT - 52.0, y).x - s.p(LEFT + 16.0, y).x;
+        let wide = painter
+            .layout_no_wrap(title.to_string(), semibold(19.0), TEXT)
+            .size()
+            .x;
         painter.text(
             s.p(LEFT + 16.0, y),
             Align2::LEFT_CENTER,
-            "Render Settings - Custom Export",
-            semibold(19.0),
+            title,
+            semibold(19.0 * (room / wide.max(1.0)).min(1.0)),
             TEXT,
         );
         if self
@@ -383,7 +428,7 @@ impl StudioApp {
                 ui,
                 s.p(LEFT_RIGHT - 30.0, y),
                 Icon::Menu,
-                t("More").wide(34.0),
+                s.squeezed(t("More").wide(34.0), LEFT_RIGHT - 30.0, y),
             )
             .clicked()
         {
@@ -394,7 +439,7 @@ impl StudioApp {
             s.p(LEFT_RIGHT + 18.0, y),
             Align2::LEFT_CENTER,
             "22%",
-            regular(19.0),
+            regular(19.0 * k(LEFT_RIGHT + 18.0)),
             TEXT,
         );
         paint(
@@ -413,7 +458,7 @@ impl StudioApp {
             s.p(LEFT_RIGHT + 282.0, y),
             Align2::RIGHT_CENTER,
             &name,
-            regular(19.0),
+            regular(19.0 * k(LEFT_RIGHT + 282.0)),
             TEXT,
         );
         paint(
@@ -452,7 +497,7 @@ impl StudioApp {
             s.p(MIDDLE_RIGHT - 148.0, y),
             Align2::RIGHT_CENTER,
             &time,
-            semibold(19.0),
+            semibold(19.0 * k(MIDDLE_RIGHT - 148.0)),
             TEXT,
         );
         paint(
@@ -466,7 +511,7 @@ impl StudioApp {
                 ui,
                 s.p(MIDDLE_RIGHT - 90.0, y),
                 Icon::ColorWheel,
-                t("Viewer colour"),
+                s.squeezed(t("Viewer colour"), MIDDLE_RIGHT - 90.0, y),
             )
             .clicked()
         {
@@ -477,7 +522,7 @@ impl StudioApp {
                 ui,
                 s.p(MIDDLE_RIGHT - 44.0, y),
                 Icon::Menu,
-                t("More").wide(34.0),
+                s.squeezed(t("More").wide(34.0), MIDDLE_RIGHT - 44.0, y),
             )
             .clicked()
         {
@@ -487,11 +532,16 @@ impl StudioApp {
             s.p(MIDDLE_RIGHT + 16.0, y),
             Align2::LEFT_CENTER,
             "Render Queue",
-            semibold(19.0),
+            semibold(19.0 * k(MIDDLE_RIGHT + 16.0)),
             TEXT,
         );
         if self
-            .tool(ui, s.p(RIGHT - 24.0, y), Icon::Menu, t("More").wide(34.0))
+            .tool(
+                ui,
+                s.p(RIGHT - 24.0, y),
+                Icon::Menu,
+                s.squeezed(t("More").wide(34.0), RIGHT - 24.0, y),
+            )
             .clicked()
         {
             planned = Some("The render queue menu");
@@ -521,20 +571,17 @@ impl StudioApp {
             (192.0, "OUT", &tc_out),
             (466.0, "DURATION", &tc_dur),
         ] {
-            let galley = painter.layout_no_wrap(name.to_string(), regular(17.0), DIM);
+            // As much smaller as the dividers made the viewer narrower.
+            let k = s.shrink(x + dx, y);
+            let galley = painter.layout_no_wrap(name.to_string(), regular(17.0 * k), DIM);
             let width = galley.size().x;
+            let at = s.p(x + dx, y);
+            painter.text(at, Align2::LEFT_CENTER, name, regular(17.0 * k), DIM);
             painter.text(
-                s.p(x + dx, y),
-                Align2::LEFT_CENTER,
-                name,
-                regular(17.0),
-                DIM,
-            );
-            painter.text(
-                s.p(x + dx + width + 12.0, y),
+                at + vec2(width + 12.0 * k, 0.0),
                 Align2::LEFT_CENTER,
                 value,
-                regular(19.0),
+                regular(19.0 * k),
                 theme::WHITE,
             );
         }
@@ -580,15 +627,16 @@ impl StudioApp {
         let base = Tool::new("").wide(40.0).color(color);
         let (first, step) = (LEFT_RIGHT + 311.0, 46.0);
         let mut button = |app: &mut Self, n: f32, icon: Icon, hint: &'static str, col: Color32| {
+            let tool = Tool {
+                hint,
+                color: Some(col),
+                ..base
+            };
             app.tool(
                 ui,
                 s.p(first + n * step, y),
                 icon,
-                Tool {
-                    hint,
-                    color: Some(col),
-                    ..base
-                },
+                s.squeezed(tool, first + n * step, y),
             )
             .clicked()
         };
@@ -652,15 +700,17 @@ impl StudioApp {
         let area = s.r(MIDDLE_RIGHT + 1.0, TOP + BAR, RIGHT, y_view - 56.0);
         let jobs = self.jobs();
         if jobs.is_empty() {
+            let message = if self.can_render_here() {
+                "No jobs in queue"
+            } else {
+                "Rendering needs the desktop app"
+            };
             painter.text(
                 pos2(area.center().x, area.center().y - 20.0),
                 Align2::CENTER_CENTER,
-                if self.can_render_here() {
-                    "No jobs in queue"
-                } else {
-                    "Rendering needs the desktop app"
-                },
-                regular(46.0),
+                message,
+                // Smaller when the queue was made narrow, so it stays inside it.
+                crate::media::fitting(&painter, message, 46.0, area.width() - 24.0),
                 theme::EMPTY_TITLE,
             );
         }
@@ -771,7 +821,8 @@ impl StudioApp {
             pill.center(),
             Align2::CENTER_CENTER,
             "Render All",
-            regular(17.0),
+            // Smaller when the queue was made narrow, so it stays inside the button.
+            crate::media::fitting(&painter, "Render All", 17.0, pill.width() - 20.0),
             if waiting {
                 TEXT
             } else {
@@ -814,13 +865,19 @@ impl StudioApp {
     ) {
         let painter = ui.painter().clone();
         let y = y_tools + 29.0;
+        // Text and buttons are as much smaller as the dividers made the timeline narrower.
+        let k = s.shrink(LEFT_RIGHT + 500.0, y);
         let mut planned: Option<&str> = None;
         if self
             .tool(
                 ui,
                 s.p(LEFT_RIGHT + 46.0, y),
                 Icon::ListBullets,
-                Tool::new("Timeline options").wide(40.0),
+                s.squeezed(
+                    Tool::new("Timeline options").wide(40.0),
+                    LEFT_RIGHT + 46.0,
+                    y,
+                ),
             )
             .clicked()
         {
@@ -831,7 +888,7 @@ impl StudioApp {
             s.p(LEFT_RIGHT + 420.0, y),
             Align2::RIGHT_CENTER,
             "Render",
-            regular(19.0),
+            regular(19.0 * k),
             DIM,
         );
         let marks = self.project().mark_in.is_some() || self.project().mark_out.is_some();
@@ -841,19 +898,19 @@ impl StudioApp {
         painter.rect_stroke(field, 3.0, Stroke::new(1.0, LINE), egui::StrokeKind::Inside);
         let whole = self.range_is_whole();
         painter.text(
-            field.left_center() + vec2(12.0, 0.0),
+            field.left_center() + vec2(12.0 * k, 0.0),
             Align2::LEFT_CENTER,
             if whole {
                 "Entire Timeline"
             } else {
                 "In/Out Range"
             },
-            regular(18.0),
+            regular(18.0 * k),
             TEXT,
         );
         paint(
             &painter,
-            field.right_center() - vec2(14.0, 0.0),
+            field.right_center() - vec2(14.0 * k, 0.0),
             Icon::Chevron,
             theme::ICON,
         );
@@ -884,14 +941,14 @@ impl StudioApp {
             s.p(LEFT_RIGHT + 744.0, y),
             Align2::CENTER_CENTER,
             "-",
-            regular(22.0),
+            regular(22.0 * k),
             DIM,
         );
         painter.text(
             s.p(LEFT_RIGHT + 922.0, y),
             Align2::CENTER_CENTER,
             "+",
-            regular(22.0),
+            regular(22.0 * k),
             DIM,
         );
         let slide = ui.interact(track, ui.id().with("deliver_zoom"), Sense::click_and_drag());
@@ -913,7 +970,7 @@ impl StudioApp {
                 track.left() + track.width() * self.deliver_ui.zoom,
                 track.center().y,
             ),
-            5.5,
+            5.5 * k,
             theme::ICON_BRIGHT,
         );
         if self
@@ -921,7 +978,7 @@ impl StudioApp {
                 ui,
                 s.p(RIGHT - 30.0, y),
                 Icon::MusicLines,
-                Tool::new("Audio tracks").wide(40.0),
+                s.squeezed(Tool::new("Audio tracks").wide(40.0), RIGHT - 30.0, y),
             )
             .clicked()
         {
@@ -934,7 +991,7 @@ impl StudioApp {
             s.p(LEFT_RIGHT + 250.0, y_ruler + 36.0),
             Align2::CENTER_CENTER,
             self.tc(self.playhead as i64),
-            semibold(36.0),
+            semibold(36.0 * k),
             TEXT,
         );
         let fps = self.project().fps;

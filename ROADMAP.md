@@ -36,6 +36,9 @@ Status at 0.2.1, with the work since (see Unreleased in the changelog).
 - [x] Linux: the Flathub manifest (`packaging/flathub`) builds FFmpeg 7.1 and its codecs, then the program, from source on x86_64 and aarch64 (about 20 minutes in the `flathub` workflow), which also runs Flathub's linter
 - [x] Graphics: `picasso-suite --graphics-check` (every adapter draws a test picture and is read back; tried on an AMD card with Vulkan, DirectX 12 and OpenGL, and run on Mesa's software Vulkan in the Linux install tests) and a "Graphics report" issue form for people to send theirs
 - [x] Releases: release candidates (`v0.2.2-rc1`) are published as pre-releases with their version's notes, and Check for Updates does not offer them
+- [x] Development: `PICASSO_PERF=pages picasso-suite [--place] <files>` shows each page in turn and prints its switch frame and frame times, with the time between frames (tried with twelve 1080p and 4K clips: every page under 1.5 ms a frame once shown, the first visit under 14 ms)
+- [x] Status: the README shows how much is made as a picture and a table (`scripts/status.py` draws `docs/status.svg` from `Menu-Status.md` and this file; run it after changing either)
+- [x] Interface: the panels on every page are resized by dragging the dividers between them (double click resets), kept in the preferences; panels keep at least two fifths of their usual size, and their text, icons and buttons shrink with them. Not yet: the Color palettes (the wheels have a fixed size), and the Deliver settings form only scrolls in a narrow column instead of shrinking
 
 ## To do
 

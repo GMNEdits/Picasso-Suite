@@ -20,39 +20,6 @@ pub(crate) fn new_cache(ctx: &egui::Context) -> MediaCache {
     }
 }
 
-/// How many project frames the video at `path` lasts, at `fps` (frames, seconds). A file that
-/// does not say how long it is gets a minute, which can be trimmed.
-#[cfg(not(target_arch = "wasm32"))]
-pub(crate) fn length_in_frames(path: &str, fps: (u32, u32)) -> Result<u64, String> {
-    let info = picasso_decode::probe(std::path::Path::new(path)).map_err(|e| e.to_string())?;
-    let per_second = u64::from(fps.0) / u64::from(fps.1.max(1));
-    let Some(us) = info.duration_us.and_then(|d| u128::try_from(d).ok()) else {
-        return Ok(per_second.max(1) * 60);
-    };
-    let frames = us * u128::from(fps.0) / (1_000_000 * u128::from(fps.1.max(1)));
-    Ok(u64::try_from(frames).unwrap_or(0).max(1))
-}
-
-/// The frame rate of the video at `path`, when it says one.
-#[cfg(not(target_arch = "wasm32"))]
-pub(crate) fn frame_rate(path: &str) -> Option<picasso_core::Fps> {
-    let info = picasso_decode::probe(std::path::Path::new(path)).ok()?;
-    crate::fps_prompt::tidy(info.fps.0, info.fps.1)
-}
-
-/// How many project frames the sound file at `path` lasts, at `fps` (frames, seconds).
-#[cfg(not(target_arch = "wasm32"))]
-pub(crate) fn audio_length_in_frames(path: &str, fps: (u32, u32)) -> Result<u64, String> {
-    let duration = picasso_decode::audio::probe_audio(std::path::Path::new(path))
-        .map_err(|e| e.to_string())?;
-    let per_second = u64::from(fps.0) / u64::from(fps.1.max(1));
-    let Some(us) = duration.and_then(|d| u128::try_from(d).ok()) else {
-        return Ok(per_second.max(1) * 60);
-    };
-    let frames = us * u128::from(fps.0) / (1_000_000 * u128::from(fps.1.max(1)));
-    Ok(u64::try_from(frames).unwrap_or(0).max(1))
-}
-
 #[cfg(not(target_arch = "wasm32"))]
 mod native {
     use std::collections::{HashMap, HashSet, VecDeque};

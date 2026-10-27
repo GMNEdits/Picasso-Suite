@@ -22,15 +22,85 @@ pub(crate) const DESIGN_WIDTH: f32 = 1872.0;
 pub(crate) struct Screen {
     pub o: Pos2,
     pub h: f32,
+    /// Where the page's dragged dividers move its points (`crate::panels`).
+    pub warp: crate::panels::Warp,
 }
 
 impl Screen {
     pub fn p(&self, x: f32, y: f32) -> Pos2 {
+        let (x, y) = self.warp.apply(x, y);
         pos2(self.o.x + x, self.o.y + y)
     }
 
     pub fn r(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
-        Rect::from_min_max(self.p(x0, y0), self.p(x1, y1))
+        let middle = ((x0 + x1) / 2.0, (y0 + y1) / 2.0);
+        let (x0, y0) = self.warp.apply_within(x0, y0, middle);
+        let (x1, y1) = self.warp.apply_within(x1, y1, middle);
+        Rect::from_min_max(
+            pos2(self.o.x + x0, self.o.y + y0),
+            pos2(self.o.x + x1, self.o.y + y1),
+        )
+    }
+
+    /// The ends of a line between two points in this screen's own points: whether a divider
+    /// moves it is decided by its middle, as for `r`, so it is never moved at one end only.
+    pub fn segment(&self, a: (f32, f32), b: (f32, f32)) -> [Pos2; 2] {
+        let middle = ((a.0 + b.0) / 2.0, (a.1 + b.1) / 2.0);
+        let (ax, ay) = self.warp.apply_within(a.0, a.1, middle);
+        let (bx, by) = self.warp.apply_within(b.0, b.1, middle);
+        [
+            pos2(self.o.x + ax, self.o.y + ay),
+            pos2(self.o.x + bx, self.o.y + by),
+        ]
+    }
+
+    /// How much the dividers squeezed the page sideways at a point (1 where nothing is
+    /// narrower than usual).
+    pub fn squeeze(&self, x: f32, y: f32) -> f32 {
+        let (a, _) = self.warp.apply(x - 0.5, y);
+        let (b, _) = self.warp.apply(x + 0.5, y);
+        (b - a).clamp(0.1, 1.0)
+    }
+
+    /// How much smaller text drawn at a point has to be: the dividers squeezed the page there
+    /// sideways or up and down (1 where nothing is smaller than usual).
+    pub fn shrink(&self, x: f32, y: f32) -> f32 {
+        let (_, a) = self.warp.apply(x, y - 0.5);
+        let (_, b) = self.warp.apply(x, y + 0.5);
+        self.squeeze(x, y).min((b - a).clamp(0.1, 1.0))
+    }
+
+    /// `tool` drawn at `x`, `y` made smaller where a divider squeezed its panel, so the icons
+    /// of a narrowed toolbar do not run into one another.
+    pub fn squeezed(&self, mut tool: Tool, x: f32, y: f32) -> Tool {
+        let k = self.squeeze(x, y);
+        tool.scale *= k;
+        tool.width *= k;
+        tool.chevron = tool.chevron.map(|dx| dx * k);
+        tool
+    }
+
+    /// The same screen with every divider at its usual place.
+    pub fn usual(&self) -> Screen {
+        Screen {
+            warp: Default::default(),
+            ..*self
+        }
+    }
+
+    /// How much bigger than usual the dividers made a panel, by its height and by its width.
+    pub fn grown(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> (f32, f32) {
+        let (now, usual) = (self.r(x0, y0, x1, y1), self.usual().r(x0, y0, x1, y1));
+        (
+            now.height() / usual.height().max(1.0),
+            now.width() / usual.width().max(1.0),
+        )
+    }
+
+    /// A rectangle between two points given in this screen's own points (before the dividers
+    /// move them), as `r` places it.
+    pub fn between(&self, a: (f32, f32), b: (f32, f32)) -> Rect {
+        self.r(a.0, a.1, b.0, b.1)
     }
 }
 

@@ -17,6 +17,7 @@ use picasso_core::{MediaItem, MediaSource};
 use crate::app::StudioApp;
 use crate::chrome::{Screen, Tool, DESIGN_WIDTH, R};
 use crate::icons::{paint, Icon};
+use crate::panels::Split;
 use crate::theme::{self, regular, semibold};
 
 /// The page is laid out at a larger size than Resolve draws it and shown scaled down by this
@@ -175,6 +176,41 @@ fn level_share(level: f32) -> f32 {
     1.0
 }
 
+/// The regular font at `size`, or smaller so that `text` is no wider than `room`.
+pub(crate) fn fitting(p: &Painter, text: &str, size: f32, room: f32) -> egui::FontId {
+    let width = p
+        .layout_no_wrap(text.to_string(), regular(size), Color32::WHITE)
+        .size()
+        .x;
+    regular(size * (room.max(1.0) / width.max(1.0)).min(1.0))
+}
+
+/// "No clips in media pool" in the panel from `x0`, `y0` to `x1`, `y1`, growing and shrinking
+/// with it as the dividers move, and never wider than it.
+fn empty_pool_message(p: &Painter, s: &Screen, x0: f32, x1: f32, y0: f32, y1: f32) {
+    let area = s.r(x0, y0, x1, y1);
+    let (tall, _) = s.grown(x0, y0, x1, y1);
+    let k = tall.clamp(0.4, 2.0);
+    let mid = area.top() + area.height() * 0.43;
+    let room = area.width() - 24.0;
+    let title = "No clips in media pool";
+    p.text(
+        pos2(area.center().x, mid),
+        Align2::CENTER_CENTER,
+        title,
+        fitting(p, title, rx(27.0) * k, room),
+        theme::EMPTY_TITLE,
+    );
+    let sub = "Add clips from Media Storage to get started";
+    p.text(
+        pos2(area.center().x, mid + 70.0 * k),
+        Align2::CENTER_CENTER,
+        sub,
+        fitting(p, sub, rx(10.0) * k, room),
+        theme::EMPTY_SUB,
+    );
+}
+
 fn fill(p: &Painter, s: &Screen, x0: f32, y0: f32, x1: f32, y1: f32, color: Color32) {
     p.rect_filled(s.r(x0, y0, x1, y1), 0.0, color);
 }
@@ -190,6 +226,7 @@ impl StudioApp {
         let sv = Screen {
             o: pos2(s.o.x / k, s.o.y / k),
             h: s.h / k,
+            warp: Default::default(),
         };
         // egui draws an Area's first frame invisible (its size is not known yet); repeat that
         // pass before anything is shown, so the page does not flash black when first opened.
@@ -219,6 +256,57 @@ impl StudioApp {
         let middle = ((79.0 + (520.0 - 37.0) * R) / MEDIA_SCALE)
             .min(bottom - 300.0)
             .round();
+        // The dividers: the files, the render queue and the viewer in the upper row; the
+        // storage and bins column and the meters and metadata column, the whole height; the
+        // bar between the two rows (it moves with them unstretched).
+        let column = |id, x: f32, y0: f32, y1: f32, a: f32, b: f32| {
+            Split::column(id, s, s.p(x, y0), s.p(x, y1), s.p(a, 0.0).x, s.p(b, 0.0).x)
+        };
+        let splits = [
+            column(
+                "media files",
+                FILES_RIGHT,
+                top,
+                middle,
+                STORAGE_RIGHT,
+                QUEUE_RIGHT,
+            ),
+            column(
+                "media queue",
+                QUEUE_RIGHT,
+                top,
+                middle,
+                FILES_RIGHT,
+                VIEWER_RIGHT,
+            ),
+            column(
+                "media storage",
+                STORAGE_RIGHT,
+                top,
+                bottom,
+                LEFT,
+                VIEWER_RIGHT,
+            ),
+            column(
+                "media meters",
+                VIEWER_RIGHT,
+                top,
+                bottom,
+                STORAGE_RIGHT,
+                RIGHT,
+            ),
+            Split::row(
+                "media middle",
+                s,
+                s.p(LEFT, middle),
+                s.p(RIGHT, middle),
+                s.p(0.0, top + BAR).y,
+                s.p(0.0, bottom).y,
+            )
+            .keeping(BAR),
+        ];
+        let warped = self.warped(s, &splits);
+        let s = &warped;
 
         // The panes and the lines between them.
         fill(&painter, s, LEFT, top, RIGHT, bottom, theme::POOL_BG);
@@ -293,19 +381,31 @@ impl StudioApp {
         self.bins_panel(ui, s, middle + BAR, bottom);
         self.pool_area(ui, ctx, s, middle + BAR, bottom);
         self.metadata_panel(ui, s, middle + BAR, bottom);
+        self.dividers(ui, s, &splits);
     }
 
     /// The render queue between the files and the viewer: empty, with its two buttons.
     fn media_jobs_panel(&self, p: &Painter, s: &Screen, y0: f32, y1: f32) {
         let area = s.r(FILES_RIGHT + 1.0, y0, QUEUE_RIGHT - 1.0, y1);
+        // The message grows and shrinks with the panel, and stays inside it.
+        let (tall, _) = s.grown(FILES_RIGHT + 1.0, y0, QUEUE_RIGHT - 1.0, y1);
+        let title = "No jobs in Queue";
         p.text(
-            pos2(area.center().x, y0 + (y1 - y0) * 0.43),
+            pos2(area.center().x, area.top() + area.height() * 0.43),
             Align2::CENTER_CENTER,
-            "No jobs in Queue",
-            regular(rx(27.0)),
+            title,
+            fitting(
+                p,
+                title,
+                rx(27.0) * tall.clamp(0.4, 2.0),
+                area.width() - 24.0,
+            ),
             theme::EMPTY_TITLE,
         );
-        let bar = Rect::from_min_max(pos2(area.left(), y1 - rx(48.0)), area.right_bottom());
+        let bar = Rect::from_min_max(
+            pos2(area.left(), area.bottom() - rx(48.0)),
+            area.right_bottom(),
+        );
         p.rect_filled(bar, 0.0, Color32::from_rgb(40, 40, 44));
         p.rect_filled(
             Rect::from_min_max(bar.left_top(), pos2(bar.right(), bar.top() + 1.0)),
@@ -317,8 +417,8 @@ impl StudioApp {
             (981.0, 1091.0, "Clone", Color32::from_rgb(80, 80, 86)),
         ] {
             let r = Rect::from_min_max(
-                pos2(s.o.x + rx(x0), bar.center().y - rx(11.0)),
-                pos2(s.o.x + rx(x1), bar.center().y + rx(11.0)),
+                pos2(s.p(rx(x0), y0).x, bar.center().y - rx(11.0)),
+                pos2(s.p(rx(x1), y0).x, bar.center().y + rx(11.0)),
             );
             p.rect_stroke(
                 r,
@@ -358,7 +458,10 @@ impl StudioApp {
             } else {
                 t(hint).wide(30.0)
             };
-            if self.tool(ui, s.p(x, y), icon, tool).clicked() {
+            if self
+                .tool(ui, s.p(x, y), icon, s.squeezed(tool, x, y))
+                .clicked()
+            {
                 planned = Some(hint);
             }
         }
@@ -395,7 +498,11 @@ impl StudioApp {
             } else {
                 t(hint).wide(36.0)
             };
-            if self.tool(ui, s.p(x, y), icon, tool).clicked() && !self.pool_tool(hint) {
+            if self
+                .tool(ui, s.p(x, y), icon, s.squeezed(tool, x, y))
+                .clicked()
+                && !self.pool_tool(hint)
+            {
                 planned = Some(hint);
             }
         }
@@ -430,14 +537,19 @@ impl StudioApp {
                 ui,
                 s.p(rx(1427.0), y),
                 Icon::FitView,
-                t("Viewer size").chev(rx(21.0)),
+                s.squeezed(t("Viewer size").chev(rx(21.0)), rx(1427.0), y),
             )
             .clicked()
         {
             planned = Some("Viewer zoom");
         }
         if self
-            .tool(ui, s.p(rx(1480.0), y), Icon::Menu, t("More").wide(34.0))
+            .tool(
+                ui,
+                s.p(rx(1480.0), y),
+                Icon::Menu,
+                s.squeezed(t("More").wide(34.0), rx(1480.0), y),
+            )
             .clicked()
         {
             planned = Some("The viewer menu");
@@ -472,7 +584,10 @@ impl StudioApp {
             } else {
                 t(hint).wide(30.0)
             };
-            if self.tool(ui, s.p(x, y), icon, tool).clicked() {
+            if self
+                .tool(ui, s.p(x, y), icon, s.squeezed(tool, x, y))
+                .clicked()
+            {
                 if hint == "Import media" {
                     self.import_dialog(&self.ctx.clone());
                 } else if hint == "Link" {
@@ -501,7 +616,11 @@ impl StudioApp {
             } else {
                 t(hint).wide(36.0)
             };
-            if self.tool(ui, s.p(x, y), icon, tool).clicked() && !self.pool_tool(hint) {
+            if self
+                .tool(ui, s.p(x, y), icon, s.squeezed(tool, x, y))
+                .clicked()
+                && !self.pool_tool(hint)
+            {
                 planned = Some(hint);
             }
         }
@@ -643,15 +762,32 @@ impl StudioApp {
     /// The media files of the folder chosen: a click chooses one, two clicks import it.
     fn storage_files(&mut self, ui: &mut Ui, _ctx: &Context, s: &Screen, y0: f32, y1: f32) {
         let area = s.r(STORAGE_RIGHT + 1.0, y0, FILES_RIGHT - 1.0, y1);
-        let Some((folder, files)) = self.media.files.clone() else {
+        // Borrowed, not copied, and only the tiles in view are drawn: a folder can hold
+        // thousands of files.
+        let Some((folder, files)) = &self.media.files else {
+            if self.project().media.is_empty() {
+                empty_pool_message(
+                    ui.painter(),
+                    s,
+                    STORAGE_RIGHT + 1.0,
+                    FILES_RIGHT - 1.0,
+                    y0,
+                    y1,
+                );
+            }
             return;
         };
         if files.is_empty() {
             ui.painter().text(
                 area.center(),
                 Align2::CENTER_CENTER,
-                format!("No media in {}", name_of(&folder)),
-                regular(16.0),
+                format!("No media in {}", name_of(folder)),
+                fitting(
+                    ui.painter(),
+                    &format!("No media in {}", name_of(folder)),
+                    16.0,
+                    area.width() - 24.0,
+                ),
                 theme::EMPTY_SUB,
             );
             return;
@@ -665,11 +801,14 @@ impl StudioApp {
                 .show(ui, |ui| {
                     ui.horizontal_wrapped(|ui| {
                         ui.spacing_mut().item_spacing = vec2(4.0, 4.0);
-                        for path in &files {
+                        for path in files {
                             let (rect, response) = ui.allocate_exact_size(
                                 vec2(TILE, TILE * 0.62 + 30.0),
                                 Sense::click(),
                             );
+                            if !ui.is_rect_visible(rect) {
+                                continue;
+                            }
                             let p = ui.painter_at(rect);
                             let on = self.media.chosen_file.as_ref() == Some(path);
                             if on {
@@ -1189,22 +1328,18 @@ impl StudioApp {
         );
         let area = s.r(STORAGE_RIGHT + 1.0, y0 + rx(31.0), VIEWER_RIGHT - 1.0, y1);
         if self.project().media.is_empty() {
-            let painter = ui.painter();
-            let mid = (area.top() + area.bottom()) / 2.0 - 18.0;
-            painter.text(
-                pos2(area.center().x, mid),
-                Align2::CENTER_CENTER,
-                "No clips in media pool",
-                regular(rx(27.0)),
-                theme::EMPTY_TITLE,
-            );
-            painter.text(
-                pos2(area.center().x, mid + 70.0),
-                Align2::CENTER_CENTER,
-                "Add clips from Media Storage to get started",
-                regular(rx(10.0)),
-                theme::EMPTY_SUB,
-            );
+            // Shown in the file browser above while it has no folder open,
+            // in the pool when the browser lists a folder's files.
+            if self.media.files.is_some() {
+                empty_pool_message(
+                    ui.painter(),
+                    s,
+                    STORAGE_RIGHT + 1.0,
+                    VIEWER_RIGHT - 1.0,
+                    y0 + rx(31.0),
+                    y1,
+                );
+            }
             return;
         }
         ui.scope_builder(UiBuilder::new().max_rect(area.shrink(8.0)), |ui| {
@@ -1224,7 +1359,12 @@ impl StudioApp {
                 area.center() - vec2(0.0, 6.0),
                 Align2::CENTER_CENTER,
                 "Nothing to inspect",
-                regular(rx(27.0)),
+                fitting(
+                    &painter,
+                    "Nothing to inspect",
+                    rx(27.0),
+                    area.width() - 24.0,
+                ),
                 theme::EMPTY_TITLE,
             );
             return;

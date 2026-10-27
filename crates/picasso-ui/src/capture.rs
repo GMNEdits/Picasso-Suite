@@ -8,6 +8,7 @@ use egui::{Align2, Color32, Context, FontId, Painter, Pos2, Rect, Shape, Stroke,
 use crate::app::{Page, StudioApp};
 use crate::chrome::{Screen, Tool, R};
 use crate::icons::{paint, Icon};
+use crate::panels::Split;
 use crate::theme::{self, regular, semibold};
 
 /// A font whose text is exactly `width` points wide.
@@ -147,17 +148,56 @@ impl StudioApp {
     pub(crate) fn capture_page(&mut self, ui: &mut Ui, ctx: &Context, s: &Screen) {
         let painter = ui.painter().clone();
         let vf = (s.h - 46.8 - 92.0).max(300.0) / 965.0;
-        let rv = |x: f32, y: f32| s.p(x * R, 92.0 + (y - 35.0) * vf);
-        let rr = |x0: f32, y0: f32, x1: f32, y1: f32| Rect::from_min_max(rv(x0, y0), rv(x1, y1));
+        // The dividers: the pool, the viewer and the inspector side by side, and the album
+        // strip under them.
+        let splits = {
+            let rv = |x: f32, y: f32| s.p(x * R, 92.0 + (y - 35.0) * vf);
+            [
+                Split::column(
+                    "photo pool",
+                    s,
+                    rv(462.0, 59.0),
+                    rv(462.0, 864.0),
+                    rv(0.0, 0.0).x,
+                    rv(1498.0, 0.0).x,
+                ),
+                Split::column(
+                    "photo inspector",
+                    s,
+                    rv(1498.0, 59.0),
+                    rv(1498.0, 864.0),
+                    rv(462.0, 0.0).x,
+                    rv(1919.0, 0.0).x,
+                ),
+                Split::row(
+                    "photo album",
+                    s,
+                    rv(0.0, 864.0),
+                    rv(1919.0, 864.0),
+                    rv(0.0, 59.0).y,
+                    rv(0.0, 1000.0).y,
+                ),
+            ]
+        };
+        let warped = self.warped(s, &splits);
+        let s = &warped;
+        let points = |x: f32, y: f32| (x * R, 92.0 + (y - 35.0) * vf);
+        let rv = |x: f32, y: f32| {
+            let (x, y) = points(x, y);
+            s.p(x, y)
+        };
+        let rr = |x0: f32, y0: f32, x1: f32, y1: f32| s.between(points(x0, y0), points(x1, y1));
         let fill = |x0: f32, y0: f32, x1: f32, y1: f32, c: Color32| {
             painter.rect_filled(rr(x0, y0, x1, y1), 0.0, c);
         };
+        // Text and icons are as much smaller as the dividers squeezed their panel.
+        let shrink = |x: f32, y: f32| {
+            let (x, y) = points(x, y);
+            s.shrink(x, y)
+        };
         let text = |x: f32, y: f32, a: Align2, t: &str, size: f32, c: Color32, bold: bool| {
-            let font = if bold {
-                semibold(size * R)
-            } else {
-                regular(size * R)
-            };
+            let size = size * R * shrink(x, y);
+            let font = if bold { semibold(size) } else { regular(size) };
             painter.text(rv(x, y), a, t, font, c);
         };
 
@@ -190,7 +230,13 @@ impl StudioApp {
             (1741.0, Icon::Wand, "Effects"),
             (1805.0, Icon::Sliders, "File"),
         ] {
-            crate::icons::paint_scaled(&painter, rv(x, 78.0), icon, FAINT, 0.55 * R);
+            crate::icons::paint_scaled(
+                &painter,
+                rv(x, 78.0),
+                icon,
+                FAINT,
+                0.55 * R * shrink(x, 78.0),
+            );
             text(x, 100.0, Align2::CENTER_CENTER, name, 8.5, FAINT, false);
         }
         text(
@@ -232,7 +278,7 @@ impl StudioApp {
             (72.0, 977.0, Icon::Sort),
         ] {
             let size = if icon == Icon::Heart { 0.8 } else { 0.62 };
-            crate::icons::paint_scaled(&painter, rv(x, y), icon, FAINT, size * R);
+            crate::icons::paint_scaled(&painter, rv(x, y), icon, FAINT, size * R * shrink(x, y));
         }
         text(
             1005.0,
@@ -255,6 +301,7 @@ impl StudioApp {
 
         self.capture_toolbar2(ui, s, &rv);
         self.capture_view_bar(ui, s, &rv);
+        self.dividers(ui, s, &splits);
         let _ = ctx;
     }
 

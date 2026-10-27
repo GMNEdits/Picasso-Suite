@@ -12,6 +12,7 @@ use crate::app::StudioApp;
 use crate::capture::fit;
 use crate::chrome::{Screen, Tool, R};
 use crate::icons::Icon;
+use crate::panels::Split;
 use crate::theme;
 
 /// Points per reference pixel.
@@ -124,6 +125,11 @@ struct Canvas<'a> {
 
 impl Canvas<'_> {
     fn at(&self, x: f32, y: f32) -> Pos2 {
+        let (x, y) = self.at_points(x, y);
+        self.s.p(x, y)
+    }
+    /// `at` as the screen's own points, before the dividers move them.
+    fn at_points(&self, x: f32, y: f32) -> (f32, f32) {
         let map = if y <= 413.0 {
             &CONSOLE_X[..]
         } else if y <= 470.0 {
@@ -135,41 +141,50 @@ impl Canvas<'_> {
         };
         let rx = piece(map, x);
         let ry = if y >= 1100.0 {
-            return self.s.p(rx * R, self.bl);
+            return (rx * R, self.bl);
         } else if y > 612.0 {
             365.0 + (y - 612.0) * 0.638
         } else {
             piece(&ROWS, y)
         };
-        self.rv(rx, ry)
+        self.rv_points(rx, ry)
     }
     /// A point given in pixels of Resolve at 1080p.
     fn rv(&self, x: f32, y: f32) -> Pos2 {
+        let (x, y) = self.rv_points(x, y);
+        self.s.p(x, y)
+    }
+    /// `rv` as the screen's own points, before the dividers move them.
+    fn rv_points(&self, x: f32, y: f32) -> (f32, f32) {
         if y >= 1000.0 {
-            return self.s.p(x * R, self.bl);
+            return (x * R, self.bl);
         }
-        self.s.p(x * R, 92.0 + (y - 37.0) * self.vf())
+        (x * R, 92.0 + (y - 37.0) * self.vf())
     }
     /// Points per pixel of Resolve's rows: its 963 pixels of body fill the window's.
     fn vf(&self) -> f32 {
         (self.bl - 92.0).max(300.0) / 963.0
     }
     fn rr(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
-        Rect::from_min_max(self.rv(x0, y0), self.rv(x1, y1))
+        self.s
+            .between(self.rv_points(x0, y0), self.rv_points(x1, y1))
     }
     fn rband(&self, x0: f32, y0: f32, x1: f32, y1: f32, c: Color32) {
         self.p.rect_filled(self.rr(x0, y0, x1, y1), 0.0, c);
     }
     fn rtext(&self, x: f32, y: f32, align: Align2, text: &str, size: f32, c: Color32, bold: bool) {
+        let (px, py) = self.rv_points(x, y);
+        let size = size * R * self.s.shrink(px, py);
         let font = if bold {
-            theme::semibold(size * R)
+            theme::semibold(size)
         } else {
-            theme::regular(size * R)
+            theme::regular(size)
         };
         self.p.text(self.rv(x, y), align, text, font, c);
     }
     fn rect(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
-        Rect::from_min_max(self.at(x0, y0), self.at(x1, y1))
+        self.s
+            .between(self.at_points(x0, y0), self.at_points(x1, y1))
     }
     fn band(&self, x0: f32, y0: f32, x1: f32, y1: f32, c: Color32) {
         self.p.rect_filled(self.rect(x0, y0, x1, y1), 0.0, c);
@@ -179,24 +194,38 @@ impl Canvas<'_> {
             self.at(x, y),
             align,
             text,
-            fit(self.p, text, width * Q, bold),
+            fit(self.p, text, width * Q * self.shrink(x, y), bold),
             c,
         );
     }
     /// Text at a fixed size in points.
     fn label(&self, x: f32, y: f32, align: Align2, text: &str, size: f32, c: Color32) {
-        self.p
-            .text(self.at(x, y), align, text, theme::regular(size * SZ), c);
+        self.p.text(
+            self.at(x, y),
+            align,
+            text,
+            theme::regular(size * SZ * self.shrink(x, y)),
+            c,
+        );
+    }
+    /// How much smaller than usual text and icons at a reference point are drawn: as much as
+    /// the dividers squeezed the panel there, so they stay inside it.
+    fn shrink(&self, x: f32, y: f32) -> f32 {
+        let (x, y) = self.at_points(x, y);
+        self.s.shrink(x, y)
     }
     fn line(&self, a: (f32, f32), b: (f32, f32), w: f32, c: Color32) {
-        self.p
-            .line_segment([self.at(a.0, a.1), self.at(b.0, b.1)], Stroke::new(w, c));
+        let ends = self
+            .s
+            .segment(self.at_points(a.0, a.1), self.at_points(b.0, b.1));
+        self.p.line_segment(ends, Stroke::new(w, c));
     }
     fn vline(&self, x: f32, y0: f32, y1: f32, c: Color32) {
         self.line((x, y0), (x, y1), 1.0, c);
     }
     fn icon(&self, x: f32, y: f32, icon: Icon, c: Color32, size: f32) {
-        crate::icons::paint_scaled(self.p, self.at(x, y), icon, c, size * SZ / 0.936 * 0.936);
+        let size = size * SZ / 0.936 * 0.936 * self.shrink(x, y);
+        crate::icons::paint_scaled(self.p, self.at(x, y), icon, c, size);
     }
     fn poly(&self, pts: &[(f32, f32)], c: Color32) {
         self.p.add(Shape::convex_polygon(
@@ -293,6 +322,64 @@ impl StudioApp {
     pub(crate) fn fairlight_page(&mut self, ui: &mut Ui, ctx: &Context, s: &Screen) {
         let painter = ui.painter().clone();
         let bottom_line = s.h - 46.8;
+        // The dividers: under the console (everything below moves with it, and the timeline
+        // gets what is left), the meters and the video in the console, the track headers and
+        // the mixer beside the timeline.
+        let splits = {
+            let c = Canvas {
+                p: &painter,
+                s,
+                bl: bottom_line,
+            };
+            let (left, right) = (c.at(3.0, 200.0).x, c.at(2000.0, 200.0).x);
+            let (console, below) = (c.at(3.0, 413.0).y, bottom_line + s.o.y);
+            [
+                Split::column(
+                    "audio meters",
+                    s,
+                    c.at(873.0, 99.0),
+                    c.at(873.0, 411.0),
+                    left,
+                    c.at(1447.0, 200.0).x,
+                ),
+                Split::column(
+                    "audio video",
+                    s,
+                    c.at(1447.0, 99.0),
+                    c.at(1447.0, 411.0),
+                    c.at(1147.0, 200.0).x,
+                    right,
+                ),
+                Split::column(
+                    "audio headers",
+                    s,
+                    // From the tool row down, as the column's line and its timecodes are.
+                    c.at(358.0, 470.0),
+                    c.at(358.0, 1100.0),
+                    left,
+                    c.at(1783.0, 700.0).x,
+                ),
+                Split::column(
+                    "audio mixer",
+                    s,
+                    c.at(1783.0, 553.0),
+                    c.at(1783.0, 1100.0),
+                    c.at(358.0, 700.0).x,
+                    right,
+                ),
+                Split::row(
+                    "audio console",
+                    s,
+                    c.at(3.0, 412.0),
+                    c.at(2000.0, 412.0),
+                    c.at(3.0, 99.0).y,
+                    below,
+                )
+                .keeping(below - console - 1.0),
+            ]
+        };
+        let warped = self.warped(s, &splits);
+        let s = &warped;
         let c = Canvas {
             p: &painter,
             s,
@@ -391,6 +478,7 @@ impl StudioApp {
         self.fairlight_timeline(ui, ctx, &c, tl);
         self.fairlight_headers(ui, ctx, &c);
         self.fairlight_mixer(ui, ctx, &c, bottom_line);
+        self.dividers(ui, s, &splits);
     }
 
     fn meters_strip(&self, c: &Canvas) {
@@ -1053,7 +1141,7 @@ impl StudioApp {
                 field.center(),
                 Align2::CENTER_CENTER,
                 format!("{gain:.1}"),
-                theme::regular(14.0 * SZ),
+                theme::regular(14.0 * SZ * c.shrink(78.0, y0 + 66.0)),
                 TEXT,
             );
             let drag = ui
@@ -1102,21 +1190,26 @@ impl StudioApp {
                     (None, _) => self.monitor.bus_muted,
                     _ => false,
                 };
-                let r = Rect::from_center_size(c.at(*x, y0 + 66.0), egui::vec2(28.0 * Q, 28.0 * Q));
+                // As much smaller as the dividers squeezed the headers, so they stay apart.
+                let k = c.shrink(*x, y0 + 66.0);
+                let r = Rect::from_center_size(
+                    c.at(*x, y0 + 66.0),
+                    egui::vec2(28.0 * Q * k, 28.0 * Q * k),
+                );
                 if *what == "L" {
                     // A padlock.
                     let col = if lit { theme::WHITE } else { DIM };
                     c.p.rect_filled(
                         Rect::from_center_size(
-                            r.center() + egui::vec2(0.0, 3.0),
-                            egui::vec2(12.0 * SZ, 9.0 * SZ),
+                            r.center() + egui::vec2(0.0, 3.0 * k),
+                            egui::vec2(12.0 * SZ * k, 9.0 * SZ * k),
                         ),
                         1.5,
                         col,
                     );
                     c.p.circle_stroke(
-                        r.center() + egui::vec2(0.0, -2.0),
-                        4.0,
+                        r.center() + egui::vec2(0.0, -2.0 * k),
+                        4.0 * k,
                         Stroke::new(1.5, col),
                     );
                 } else {
@@ -1131,7 +1224,7 @@ impl StudioApp {
                         r.center(),
                         Align2::CENTER_CENTER,
                         *what,
-                        theme::regular(12.0 * SZ),
+                        theme::regular(12.0 * SZ * k),
                         if lit { theme::WHITE } else { TEXT },
                     );
                 }
@@ -1374,14 +1467,19 @@ impl StudioApp {
                     ("M", true) => Color32::from_rgb(200, 80, 60),
                     _ => Color32::from_rgb(64, 64, 70),
                 };
-                let r =
-                    Rect::from_center_size(c.rv(x0 + dx, 748.0), egui::vec2(15.0 * R, 14.0 * R));
+                // As much smaller as the dividers squeezed the mixer.
+                let (px, py) = c.rv_points(x0 + dx, 748.0);
+                let k = c.s.shrink(px, py);
+                let r = Rect::from_center_size(
+                    c.rv(x0 + dx, 748.0),
+                    egui::vec2(15.0 * R * k, 14.0 * R * k),
+                );
                 c.p.rect_filled(r, 2.0, fill);
                 c.p.text(
                     r.center(),
                     Align2::CENTER_CENTER,
                     *letter,
-                    theme::regular(8.5 * R),
+                    theme::regular(8.5 * R * k),
                     if lit { theme::WHITE } else { TEXT },
                 );
                 if ui
