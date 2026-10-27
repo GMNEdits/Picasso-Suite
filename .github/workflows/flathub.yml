@@ -52,11 +52,16 @@ jobs:
           flatpak-builder --user --arch=${{ matrix.arch }} --install-deps-from=flathub --disable-rofiles-fuse --force-clean --repo=repo build packaging/flathub/io.github.fabox_os.PicassoSuite.yml > build.log 2>&1 || rc=$?
           tail -n 40 build.log
           if [ "$rc" -ne 0 ]; then
-            echo "flatpak-builder exited with $rc. The first error:" > failure.txt
-            grep -n -i -m1 -B6 -A12 'error\|fatal\|failed' build.log >> failure.txt || true
-            echo "... and the end of the log:" >> failure.txt
-            tail -n 20 build.log >> failure.txt
-            python3 -c 'import sys; t=open("failure.txt", errors="replace").read()[:3500]; print("::error title=flatpak-builder failed::" + t.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
+            # Without curl's progress lines and the "Downloading" lines, which fill the log.
+            grep -v -E '^[[:space:]]*[0-9]+[[:space:]]|^Downloading |^[[:space:]]*$' build.log > clean.log || true
+            {
+              echo "flatpak-builder exited with $rc."
+              echo "CMake and compiler errors:"
+              grep -n -E -A10 'CMake Error|error:|Error [0-9]|FAILED:' clean.log | head -50 || true
+              echo "The end of its log, without CMake's status lines:"
+              grep -v '^-- ' clean.log | tail -n 25
+            } > failure.txt
+            python3 -c 'import sys; t=open("failure.txt", errors="replace").read()[-3500:]; print("::error title=flatpak-builder failed::" + t.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
             exit "$rc"
           fi
           flatpak build-bundle repo picasso-suite-flathub-${{ matrix.arch }}.flatpak io.github.fabox_os.PicassoSuite --arch=${{ matrix.arch }}
@@ -64,9 +69,14 @@ jobs:
       # are expected (see packaging/flathub/README.md); anything else is for the submission.
       - name: Flathub linter
         continue-on-error: true
+        shell: bash
         run: |
-          flatpak install -y --noninteractive flathub org.flatpak.Builder || true
-          flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest packaging/flathub/io.github.fabox_os.PicassoSuite.yml || true
+          flatpak install --user -y --noninteractive flathub org.flatpak.Builder || true
+          flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest packaging/flathub/io.github.fabox_os.PicassoSuite.yml > lint-manifest.txt 2>&1 || true
+          flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo repo > lint-repo.txt 2>&1 || true
+          cat lint-manifest.txt lint-repo.txt
+          # Also as a run annotation, readable without logging in.
+          python3 -c 'import sys; t="manifest:\n"+open("lint-manifest.txt", errors="replace").read()+"\nrepo:\n"+open("lint-repo.txt", errors="replace").read(); print("::notice title=Flathub linter::" + t[:3500].replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
       - uses: actions/upload-artifact@v4
         with:
           name: flathub-${{ matrix.arch }}

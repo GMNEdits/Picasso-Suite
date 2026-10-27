@@ -29,7 +29,7 @@
 - ✅ **Flatpak:** footage on USB drives and memory cards (`/media`, `/run/media`) can be imported
 - ✅ **Linux:** icons in 16 to 256 pixels, so menus and docks show a sharp icon at every size
 - ✅ **Releases:** a release is only published when every package built and the Linux ones installed and started on seven systems, so a failed build can no longer leave a release with fewer packages
-- ✅ **Flathub:** a manifest that builds FFmpeg and its codecs from source (`packaging/flathub`), with a CI build of it and notes for the submission, which is not made yet; the screenshots and links in the app's appstream entry are filled in
+- ✅ **Flathub:** a manifest that builds FFmpeg and its codecs from source (`packaging/flathub`), built in CI on x86_64 and ARM64 and checked with Flathub's linter, with notes for the submission, which is not made yet; the screenshots and links in the app's appstream entry are filled in
 - ✅ **Development:** the tests run on every pull request, and a test checks `Menu-Status.md` against the menus' table
 
 **⚠️ Known limitations**
