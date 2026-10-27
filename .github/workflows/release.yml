@@ -199,6 +199,8 @@ jobs:
           name: update-test-linux-${{ matrix.deb }}
           path: update-test
       - name: Check for Updates installs a newer package over this one
+        # bash, not the container's sh: Debian's and Ubuntu's sh (dash) stops at ${GITHUB_SHA:0:12}.
+        shell: bash
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
