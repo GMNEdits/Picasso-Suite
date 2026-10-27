@@ -6,10 +6,26 @@ headers, VA-API) are built from source, then the program with its Rust crates fr
 `cargo-sources.json`. The Flatpak in the releases (`../linux/flatpak.yml`) packs the files CI built
 instead and is not what Flathub builds.
 
-**Status:** written, not yet shown to build: `.github/workflows/flathub.yml` builds it in CI (run it
-by hand or push a `flathub-*` branch) for x86_64 and aarch64, and that run is what tells. Nobody
-has submitted it: a submission is a pull request to `flathub/flathub` from a GitHub account, which
-only the project's owner can make.
+**Status:** it builds. `.github/workflows/flathub.yml` builds it in CI (run it by hand or push a
+`flathub-*` branch) for x86_64 and aarch64 in about 20 minutes and runs Flathub's linter. Nobody has
+submitted it: a submission is a pull request to `flathub/flathub` from a GitHub account, which only
+the project's owner can make.
+
+What the linter said (read it in the run's annotations):
+
+* **`appid-url-not-reachable`** (an error, and the one to settle before submitting). For an id
+  `io.github.<user>.<name>` Flathub looks for `https://github.com/<user>/<name>`, lower case. Here
+  that is `github.com/fabox-os/picassosuite`, which does not exist: the repository is
+  `Picasso-Suite`. The id Flathub would accept for this repository is
+  `io.github.fabox_os.Picasso_Suite`. Changing it renames the desktop file, icons, mime file and
+  `StartupWMClass`, and makes the Flathub app a different app from the Flatpak in the releases
+  (`io.github.fabox_os.PicassoSuite`), so those installs would not update to it. Otherwise ask the
+  Flathub team for an exception.
+* `finish-args-contains-both-x11-and-wayland`: expected, see below.
+* `runtime-update-available-to-org.freedesktop.Platform-26.08`: the manifest uses 25.08, which is
+  supported; moving to 26.08 means the `llvm22` extension (the bindings are tried with 20).
+* `appstream-external-screenshot-url`, `appstream-screenshots-not-mirrored-in-ostree`: Flathub's
+  builders mirror the screenshots themselves; a local build always reports these.
 
 ## Submitting
 
