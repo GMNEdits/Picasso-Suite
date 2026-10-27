@@ -78,6 +78,8 @@ modules:
   - name: x265
     buildsystem: simple
     build-commands:
+      # CMake 4 no longer lets a project ask for the old behaviour of these two policies.
+      - sed -i 's/cmake_policy(SET CMP0025 OLD)/cmake_policy(SET CMP0025 NEW)/; s/cmake_policy(SET CMP0054 OLD)/cmake_policy(SET CMP0054 NEW)/' source/CMakeLists.txt
       - mkdir 8bit 10bit 12bit
       - |
         cd 12bit

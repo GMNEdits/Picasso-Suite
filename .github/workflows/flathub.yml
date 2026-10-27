@@ -55,8 +55,11 @@ jobs:
             # Without curl's progress lines and the "Downloading" lines, which fill the log.
             grep -v -E '^[[:space:]]*[0-9]+[[:space:]]|^Downloading |^[[:space:]]*$' build.log > clean.log || true
             {
-              echo "flatpak-builder exited with $rc. The end of its log:"
-              tail -n 40 clean.log
+              echo "flatpak-builder exited with $rc."
+              echo "CMake and compiler errors:"
+              grep -n -E -A10 'CMake Error|error:|Error [0-9]|FAILED:' clean.log | head -50 || true
+              echo "The end of its log, without CMake's status lines:"
+              grep -v '^-- ' clean.log | tail -n 25
             } > failure.txt
             python3 -c 'import sys; t=open("failure.txt", errors="replace").read()[-3500:]; print("::error title=flatpak-builder failed::" + t.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
             exit "$rc"
