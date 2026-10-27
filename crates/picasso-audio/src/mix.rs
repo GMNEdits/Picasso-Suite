@@ -111,13 +111,21 @@ fn db_to_gain(db: f32) -> f32 {
     }
 }
 
-/// The clips of `project` that make sound: enabled clips on unmuted tracks whose media is a
-/// video or an audio file and whose sound is on (a picture whose sound has a linked clip of its
-/// own is silent), with their gain, fades and the pan of their track. (Whether such a
-/// file has sound is only known when it is decoded.)
+/// The clips of `project` that make sound: enabled clips on unmuted tracks (only the soloed
+/// ones when any track is soloed) whose media is a video or an audio file and whose sound is
+/// on (a picture whose sound has a linked clip of its own is silent), with their gain, fades
+/// and the pan of their track. (Whether such a file has sound is only known when it is
+/// decoded.)
 pub fn plan(project: &Project) -> AudioPlan {
     let mut clips = Vec::new();
-    for (index, track) in project.tracks.iter().enumerate().filter(|(_, t)| !t.muted) {
+    // Solo: when any track is soloed, the others fall silent.
+    let soloed = project.any_soloed();
+    for (index, track) in project
+        .tracks
+        .iter()
+        .enumerate()
+        .filter(|(_, t)| !t.muted && (!soloed || t.solo))
+    {
         // A balance control: the pan lowers the channel it points away from.
         let left = if track.pan > 0.0 {
             1.0 - track.pan
@@ -230,7 +238,11 @@ fn nested_sounds(
         return;
     };
     let (first, last) = (outer.source_in, outer.source_in + outer.duration);
-    for track in tracks.iter().filter(|t| !t.muted) {
+    let soloed = tracks.iter().any(|t| t.solo);
+    for track in tracks
+        .iter()
+        .filter(|t| !t.muted && (!soloed || t.solo))
+    {
         let left = to.left
             * if track.pan > 0.0 {
                 1.0 - track.pan
@@ -621,6 +633,55 @@ mod tests {
         .unwrap();
         assert_eq!(plan(&p).clips.len(), 1);
         p.tracks[1].muted = true;
+        assert!(plan(&p).clips.is_empty());
+    }
+
+    #[test]
+    fn solo_silences_the_tracks_that_are_not_soloed() {
+        let mut p = Project::new("t");
+        let m = video(&mut p, "a");
+        let (v1, v2) = (p.tracks[0].id, p.tracks[1].id);
+        for track in [v1, v2] {
+            Command::AddClip {
+                track,
+                media: m,
+                start: 0,
+                duration: None,
+                with_sound: false,
+            }
+            .apply(&mut p)
+            .unwrap();
+        }
+        assert_eq!(plan(&p).clips.len(), 2);
+        Command::SetTrackSolo {
+            track: v2,
+            solo: true,
+        }
+        .apply(&mut p)
+        .unwrap();
+        let mix = plan(&p);
+        assert_eq!(mix.clips.len(), 1, "only the soloed track is heard");
+        assert_eq!(mix.clips[0].track, 1);
+        Command::SetTrackSolo {
+            track: v2,
+            solo: false,
+        }
+        .apply(&mut p)
+        .unwrap();
+        assert_eq!(plan(&p).clips.len(), 2, "unsoloing brings the rest back");
+        // Mute still wins over solo.
+        Command::SetTrackSolo {
+            track: v2,
+            solo: true,
+        }
+        .apply(&mut p)
+        .unwrap();
+        Command::SetTrackMuted {
+            track: v2,
+            muted: true,
+        }
+        .apply(&mut p)
+        .unwrap();
         assert!(plan(&p).clips.is_empty());
     }
 

@@ -43,12 +43,12 @@ pub(crate) struct Cue {
 }
 
 /// The cues of the title clips between timeline frames `start` and `end`, in time order: the
-/// enabled title clips of unmuted video tracks, cut to the range.
+/// enabled title clips of unmuted video tracks whose picture is on, cut to the range.
 pub(crate) fn cues(project: &Project, start: u64, end: u64) -> Vec<Cue> {
     let mut cues: Vec<Cue> = project
         .tracks
         .iter()
-        .filter(|t| t.kind == TrackKind::Video && !t.muted)
+        .filter(|t| t.kind == TrackKind::Video && !t.muted && t.picture)
         .flat_map(|t| t.clips.iter())
         .filter(|c| c.enabled)
         .filter_map(|c| {
