@@ -50,9 +50,5 @@ Status at 0.2.1, with the work since (see Unreleased in the changelog).
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates still to be tried on macOS, Flatpak, .deb and .rpm (a per-user Flatpak now updates per-user; a .deb is told from an .rpm by dpkg's file list)
 - [ ] Security: a time limit on reading project databases; Resolve import on a background thread
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
-- [ ] Linux: ARM64 Flatpak. It is in the release workflow (an x86_64 and an ARM64 runner) and Check for Updates picks the one of the computer's processor; done when a release build of it has passed and it has been tried on an ARM computer
-- [ ] Linux: native Wayland drag and drop: not possible yet. eframe 0.37 uses winit 0.30.13, which takes no files dropped on a Wayland window; winit's own work on it (rust-windowing/winit#4773 is open, #4009 was closed unmerged) is in no release, 0.31 is a beta. Until then the window opens through XWayland. Writing it here against Wayland's data device would be a second, untestable copy of what winit will do
-- [ ] Linux: Flathub. The manifest that builds FFmpeg and its codecs from source is in `packaging/flathub` and has a CI build (`flathub` workflow); the submission itself is a pull request to flathub/flathub by the project's owner, with an exception to ask for for holding both the X11 and Wayland sockets (the text is in `packaging/flathub/README.md`)
-- [ ] Graphics: Vulkan on real cards: the check and the report form exist; the NVIDIA, Intel, AMD (Linux, Mesa), Apple and ARM GPUs need people to run `--graphics-check` and send it in
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
 - [ ] Interchange: OpenTimelineIO import, and OTIO export from `picasso-bridge`

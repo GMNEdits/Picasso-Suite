@@ -13,10 +13,6 @@
 **🛠️ Fixed**
 - 🛠️ **Linux:** dragging video files from the file manager into the media pool works on Wayland desktops (Ubuntu's default); the window opens through XWayland, and `PICASSO_WAYLAND=1` keeps a native Wayland window
 - 🛠️ **Linux:** the dock shows Picasso Suite's icon and groups the window with its launcher
-- 🛠️ **Linux:** a per-user Flatpak installs its update per-user, and the command shown when that fails says `--user`
-- 🛠️ **Linux:** programs started from Picasso Suite (the browser, the installer) still see the Wayland desktop; the window asks for X11 itself instead of hiding the Wayland display from everything
-- 🛠️ **Check for Updates:** a download that breaks off leaves no half-file behind
-- 🛠️ **Media pool:** video thumbnails are made without holding up the window while the first frame decodes, by their own decoder, so the viewer no longer leaves them (and the clips on the timeline) black; they are decoded at a quarter of the size and the decoder is closed once the picture is made, so a pool of 4K clips does not keep a full picture and a thread for each
 - 🛠️ **Timeline:** a disabled clip no longer shows through a transition (dissolve or dip) next to it
 - 🛠️ **Timeline:** dragging a clip, trim or roll no longer copies the whole project on every pointer move
 - 🛠️ **Stills:** shrinking a big picture uses less memory, and an image too big to show is refused from its header before it is decoded
