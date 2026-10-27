@@ -151,17 +151,22 @@ fn api_name(backend: eframe::wgpu::Backend) -> String {
 
 /// On a Wayland desktop, opens the window through XWayland when it is there: winit 0.30 does
 /// not take files dropped on a Wayland window, so the media pool could not receive them.
-/// `PICASSO_WAYLAND=1` keeps the native Wayland window.
-#[cfg(not(target_arch = "wasm32"))]
-fn prefer_x11_for_drops() {
-    if cfg!(target_os = "linux")
-        && std::env::var_os("PICASSO_WAYLAND").is_none()
+/// `PICASSO_WAYLAND=1` keeps the native Wayland window. winit is told, rather than
+/// `WAYLAND_DISPLAY` removed, so the programs started from here (the browser, the installer)
+/// still find the Wayland desktop.
+#[cfg(target_os = "linux")]
+fn prefer_x11_for_drops(mut options: eframe::NativeOptions) -> eframe::NativeOptions {
+    use winit::platform::x11::EventLoopBuilderExtX11 as _;
+
+    if std::env::var_os("PICASSO_WAYLAND").is_none()
         && std::env::var_os("WAYLAND_DISPLAY").is_some()
         && std::env::var_os("DISPLAY").is_some()
     {
-        // No other thread is running yet.
-        std::env::remove_var("WAYLAND_DISPLAY");
+        options.event_loop_builder = Some(Box::new(|builder| {
+            builder.with_x11();
+        }));
     }
+    options
 }
 
 #[cfg(not(target_arch = "wasm32"))]
@@ -170,7 +175,6 @@ fn main() -> eframe::Result {
         println!("{}", picasso_ui::menu_status_markdown());
         return Ok(());
     }
-    prefer_x11_for_drops();
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()
             .with_title("Picasso Suite")
@@ -185,6 +189,8 @@ fn main() -> eframe::Result {
         wgpu_options: wgpu_options(),
         ..Default::default()
     };
+    #[cfg(target_os = "linux")]
+    let options = prefer_x11_for_drops(options);
     eframe::run_native(
         "Picasso Suite",
         options,

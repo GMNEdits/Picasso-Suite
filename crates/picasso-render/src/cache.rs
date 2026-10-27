@@ -109,11 +109,17 @@ pub trait FrameSource: Send + Sync + std::fmt::Debug {
     }
 }
 
+/// How much smaller than the file the media pool's video thumbnails are decoded.
+const THUMBNAIL_REDUCTION: u32 = 4;
+
 /// Decoded images by the media item they belong to. Cloning is cheap: the pictures are shared.
 #[derive(Clone, Debug, Default)]
 pub struct MediaCache {
     images: HashMap<MediaId, Arc<Decoded>>,
     video: Option<Arc<dyn FrameSource>>,
+    /// Decodes the media pool's thumbnails apart from `video`, whose one request per video the
+    /// viewer replaces many times a second: a thumbnail's first frame would never be decoded.
+    thumbnails: Option<Arc<dyn FrameSource>>,
     wait_for_video: bool,
     /// How much smaller video pictures are asked for (a proxy); 0 and 1 mean whole.
     reduction: u32,
@@ -129,9 +135,40 @@ impl MediaCache {
         Self {
             images: HashMap::new(),
             video: Some(source),
+            thumbnails: None,
             wait_for_video: false,
             reduction: 1,
         }
+    }
+
+    /// The same cache, with the thumbnails' video pictures coming from `source`.
+    pub fn with_thumbnail_source(self, source: Arc<dyn FrameSource>) -> Self {
+        Self {
+            thumbnails: Some(source),
+            ..self
+        }
+    }
+
+    /// The same cache, set up for the media pool's thumbnails. With a thumbnail source, video
+    /// pictures come from it, `THUMBNAIL_REDUCTION` times smaller than the file (a tile is small,
+    /// and a 4K picture per video would add up) and without waiting. Without one, the thumbnail
+    /// waits for the real picture, as before.
+    pub fn for_thumbnails(&self) -> Self {
+        match &self.thumbnails {
+            Some(source) => Self {
+                video: Some(Arc::clone(source)),
+                reduction: THUMBNAIL_REDUCTION,
+                ..self.clone()
+            },
+            None => self.blocking(),
+        }
+    }
+
+    /// Changes when a thumbnail's video picture arrives in the background. It stays 0 without a
+    /// thumbnail source: those thumbnails are final when they are made, and the viewer's
+    /// pictures arriving many times a second must not remake them.
+    pub fn thumbnail_generation(&self) -> u64 {
+        self.thumbnails.as_ref().map_or(0, |v| v.generation())
     }
 
     /// The same cache, but rendering with it waits for each exact video picture. Exports use it.
@@ -215,6 +252,45 @@ mod tests {
         let mut truncated = tiny_png();
         truncated.truncate(20);
         assert!(Decoded::from_bytes(&truncated).is_err());
+    }
+
+    /// Answers every request with a pending picture and a generation of 7, noting the size asked.
+    #[derive(Debug)]
+    struct Asked(std::sync::Mutex<Vec<(u32, bool)>>);
+
+    impl FrameSource for Asked {
+        fn video_frame(&self, _: MediaId, _: &str, _: i64, reduce: u32, wait: bool) -> VideoFrame {
+            self.0.lock().unwrap().push((reduce, wait));
+            VideoFrame::Pending
+        }
+
+        fn generation(&self) -> u64 {
+            7
+        }
+    }
+
+    #[test]
+    fn thumbnails_ask_small_pictures_from_their_own_source() {
+        let (viewer, thumbs) = (
+            Arc::new(Asked(Default::default())),
+            Arc::new(Asked(Default::default())),
+        );
+        let cache =
+            MediaCache::with_video_source(viewer.clone()).with_thumbnail_source(thumbs.clone());
+        assert_eq!(cache.thumbnail_generation(), 7);
+        cache.for_thumbnails().video_frame(MediaId(1), "a.mp4", 0);
+        assert_eq!(*thumbs.0.lock().unwrap(), [(THUMBNAIL_REDUCTION, false)]);
+        assert!(viewer.0.lock().unwrap().is_empty());
+    }
+
+    #[test]
+    fn thumbnails_without_their_own_source_wait_for_the_real_picture() {
+        let viewer = Arc::new(Asked(Default::default()));
+        let cache = MediaCache::with_video_source(viewer.clone());
+        // The viewer's pictures arriving must not remake the thumbnails.
+        assert_eq!(cache.thumbnail_generation(), 0);
+        cache.for_thumbnails().video_frame(MediaId(1), "a.mp4", 0);
+        assert_eq!(*viewer.0.lock().unwrap(), [(1, true)]);
     }
 
     #[test]

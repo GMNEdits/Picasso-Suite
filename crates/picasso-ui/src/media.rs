@@ -464,7 +464,8 @@ impl StudioApp {
             (rx(91.0), Icon::ChevRight, "Forward", None),
             (rx(124.0), Icon::LinkChain, "Link", None),
             (rx(160.0), Icon::ImportImage, "Import media", Some(rx(23.0))),
-            (rx(245.0), Icon::Sync, "Sync", None),
+            // Clear of the bins' divider at `STORAGE_RIGHT`.
+            (rx(230.0), Icon::Sync, "Sync", None),
         ] {
             let tool = if let Some(dx) = chev {
                 t(hint).chev(dx)
