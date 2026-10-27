@@ -11,6 +11,8 @@ use egui::{
     pos2, Align2, Color32, Context, Painter, Pos2, Rect, Stroke, StrokeKind, Ui, UiBuilder,
 };
 
+use picasso_core::Command;
+
 use crate::app::StudioApp;
 use crate::chrome::{Screen, Tool, ToolbarItem, R};
 use crate::icons::{paint_scaled, Icon};
@@ -136,6 +138,15 @@ impl<'a> Lay<'a> {
 /// A button the size of Resolve's, `w` reference pixels wide.
 fn t(hint: &'static str, w: f32) -> Tool {
     Tool::new(hint).wide(w * R).size(ICON)
+}
+
+/// A spot on the Cut page's track row: a pointer and a tip, and whether it was clicked.
+fn track_button(ui: &mut Ui, rect: Rect, id: egui::Id, tip: &str) -> bool {
+    let resp = ui.interact(rect, id, egui::Sense::click());
+    if resp.hovered() {
+        ui.ctx().set_cursor_icon(egui::CursorIcon::PointingHand);
+    }
+    resp.on_hover_text(tip).clicked()
 }
 
 impl StudioApp {
@@ -284,7 +295,7 @@ impl StudioApp {
             UiBuilder::new().max_rect(l.r(234.0, 616.0, 1919.0, bottom)),
             |ui| self.timeline_ui(ui, ctx, Mode::Detail),
         );
-        self.cut_track_controls(&painter, &l, bottom);
+        self.cut_track_controls(ui, &l, bottom);
         self.cut_dividers(ui, &l);
     }
 
@@ -321,9 +332,11 @@ impl StudioApp {
     }
 
     /// Beside the detail timeline's tracks, as Resolve: a column with the track names (V1, A1)
-    /// and, left of it, the track's buttons (height, lock, solo, mute, picture).
-    fn cut_track_controls(&self, painter: &Painter, l: &Lay, bottom: f32) {
-        let rows = &self.cut_rows_detail;
+    /// and, left of it, the track's buttons (height, lock, solo, mute, picture). The buttons
+    /// act on the track of the selected clip, or V1 when nothing is selected.
+    fn cut_track_controls(&mut self, ui: &mut Ui, l: &Lay, bottom: f32) {
+        let painter = ui.painter().clone();
+        let rows = self.cut_rows_detail.clone();
         let Some(first) = rows.first() else { return };
         let top = first.2 - 2.0 * R;
         let left = l.p(0.0, 0.0).x;
@@ -337,7 +350,7 @@ impl StudioApp {
             Stroke::new(1.0, Color32::from_rgb(8, 7, 12)),
         );
         let label_x = l.p(219.0, 0.0).x;
-        for (name, audio, row_top, h) in rows {
+        for (name, audio, row_top, h) in &rows {
             let y = if *audio {
                 row_top - 7.0 * R
             } else {
@@ -356,7 +369,25 @@ impl StudioApp {
                 TRACK_RED,
             );
         }
-        // One row of buttons, level with V1 (the lowest picture row).
+        // One row of buttons, level with V1 (the lowest picture row), acting on the track of
+        // the selected clip.
+        let Some((track, name, locked, solo, muted, picture, video)) =
+            self.cut_track_target().and_then(|id| {
+                self.project().track(id).map(|t| {
+                    (
+                        t.id,
+                        t.name.clone(),
+                        t.locked,
+                        t.solo,
+                        t.muted,
+                        t.picture,
+                        t.kind == picasso_core::TrackKind::Video,
+                    )
+                })
+            })
+        else {
+            return;
+        };
         let dim = Color32::from_rgb(92, 92, 98);
         if let Some((_, _, row_top, h)) = rows.iter().rfind(|r| !r.1) {
             let y = row_top + h / 2.0 + 9.0 * R;
@@ -374,9 +405,20 @@ impl StudioApp {
                     Stroke::NONE,
                 ));
             }
-            paint_scaled(painter, at(66.0), Icon::PositionLock, dim, ICON);
+            paint_scaled(
+                &painter,
+                at(66.0),
+                Icon::PositionLock,
+                if locked { theme::WARN } else { dim },
+                ICON,
+            );
             // Headphones: solo.
             let c = at(101.0);
+            let solo_color = if solo {
+                theme::ACCENT
+            } else {
+                dim
+            };
             painter.add(egui::Shape::line(
                 (0..=12)
                     .map(|i| {
@@ -384,7 +426,7 @@ impl StudioApp {
                         c + egui::vec2(5.5 * R * a.cos(), 5.5 * R * a.sin() + 1.5 * R)
                     })
                     .collect(),
-                Stroke::new(1.2, dim),
+                Stroke::new(1.2, solo_color),
             ));
             for dx in [-5.5, 3.5] {
                 painter.rect_filled(
@@ -393,18 +435,114 @@ impl StudioApp {
                         egui::vec2(2.0 * R, 5.0 * R),
                     ),
                     1.0,
-                    dim,
+                    solo_color,
                 );
             }
-            paint_scaled(painter, at(137.0), Icon::Speaker, theme::ICON_BRIGHT, ICON);
-            paint_scaled(
-                painter,
-                at(173.0),
-                Icon::FilmView,
-                Color32::from_rgb(150, 150, 156),
-                ICON,
-            );
+            paint_scaled(&painter, at(137.0), Icon::Speaker, theme::ICON_BRIGHT, ICON);
+            if muted {
+                // A slash across the speaker, as Resolve: the track is silent.
+                let c = at(137.0);
+                painter.line_segment(
+                    [
+                        c + egui::vec2(-7.0 * R, 7.0 * R),
+                        c + egui::vec2(7.0 * R, -7.0 * R),
+                    ],
+                    Stroke::new(1.8 * R, theme::WARN),
+                );
+            }
+            if video {
+                paint_scaled(
+                    &painter,
+                    at(173.0),
+                    Icon::FilmView,
+                    if picture {
+                        Color32::from_rgb(150, 150, 156)
+                    } else {
+                        dim
+                    },
+                    ICON,
+                );
+            }
+            let button = |ui: &mut Ui, x: f32, tip: String| {
+                let rect = Rect::from_center_size(at(x), egui::vec2(18.0 * R, 18.0 * R));
+                track_button(ui, rect, egui::Id::new(("cut track", track, x as i32)), &tip)
+            };
+            if button(
+                ui,
+                66.0,
+                if locked {
+                    format!("Unlock {name}")
+                } else {
+                    format!("Lock {name}")
+                },
+            ) {
+                self.run(Command::SetTrackLocked {
+                    track,
+                    locked: !locked,
+                });
+            }
+            if button(
+                ui,
+                101.0,
+                if solo {
+                    format!("Unsolo {name}")
+                } else {
+                    format!("Solo {name}: hear only the soloed tracks")
+                },
+            ) {
+                self.run(Command::SetTrackSolo {
+                    track,
+                    solo: !solo,
+                });
+            }
+            if button(
+                ui,
+                137.0,
+                if muted {
+                    format!("Unmute {name}")
+                } else {
+                    format!("Mute {name}")
+                },
+            ) {
+                self.run(Command::SetTrackMuted {
+                    track,
+                    muted: !muted,
+                });
+            }
+            // A sound track has no picture to show or hide.
+            if video
+                && button(
+                    ui,
+                    173.0,
+                    if picture {
+                        format!("Hide {name}'s picture")
+                    } else {
+                        format!("Show {name}'s picture")
+                    },
+                )
+            {
+                self.run(Command::SetTrackPicture {
+                    track,
+                    picture: !picture,
+                });
+            }
         }
+    }
+
+    /// The track the Cut page's track buttons act on: the track of the selected clip, or V1
+    /// when nothing is selected.
+    fn cut_track_target(&self) -> Option<picasso_core::TrackId> {
+        let project = self.project();
+        self.selection
+            .and_then(|id| project.clip(id))
+            .map(|(track, _)| track.id)
+            .or_else(|| {
+                project
+                    .tracks
+                    .iter()
+                    .find(|t| t.kind == picasso_core::TrackKind::Video)
+                    .map(|t| t.id)
+            })
     }
 
     /// The second toolbar: the browser's tools on the left, the viewer's on the right.

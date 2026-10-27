@@ -739,6 +739,11 @@ impl Clip {
     }
 }
 
+/// A track's picture is on unless the project was saved before the switch existed.
+fn picture_on() -> bool {
+    true
+}
+
 /// A row of clips, sorted by start and never overlapping.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Track {
@@ -748,6 +753,12 @@ pub struct Track {
     pub clips: Vec<Clip>,
     pub muted: bool,
     pub locked: bool,
+    /// When any track is soloed, only the soloed tracks are heard.
+    #[serde(default)]
+    pub solo: bool,
+    /// Whether the track's picture is drawn. Off keeps it out of the program.
+    #[serde(default = "picture_on")]
+    pub picture: bool,
     /// What the track adds to the mix of its clips, in decibels.
     #[serde(default)]
     pub gain_db: f32,
@@ -883,6 +894,8 @@ impl Project {
                 clips: Vec::new(),
                 muted: false,
                 locked: false,
+                solo: false,
+                picture: true,
                 gain_db: 0.0,
                 pan: 0.0,
                 fx: Default::default(),
@@ -903,6 +916,8 @@ impl Project {
             clips: Vec::new(),
             muted: false,
             locked: false,
+            solo: false,
+            picture: true,
             gain_db: 0.0,
             pan: 0.0,
             fx: Default::default(),
@@ -1039,6 +1054,11 @@ impl Project {
 
     pub fn track(&self, id: TrackId) -> Option<&Track> {
         self.tracks.iter().find(|t| t.id == id)
+    }
+
+    /// Whether any track is soloed: only the soloed tracks are heard then.
+    pub fn any_soloed(&self) -> bool {
+        self.tracks.iter().any(|t| t.solo)
     }
 
     pub(crate) fn track_mut(&mut self, id: TrackId) -> Option<&mut Track> {
