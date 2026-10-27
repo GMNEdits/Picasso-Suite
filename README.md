@@ -72,9 +72,9 @@ FFmpeg is included in all of them.
 | Fedora/openSUSE | `picasso-suite-0.2.1-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.2.1-x86_64.rpm` (openSUSE: `sudo zypper install`) |
 | Any Linux | `picasso-suite-0.2.1.flatpak` | `flatpak install ./picasso-suite-0.2.1.flatpak` |
 | Any Linux (glibc 2.35 or newer), no install | `picasso-suite-0.2.1-x86_64.AppImage` | `chmod +x picasso-suite-0.2.1-x86_64.AppImage`, then run it |
-| Linux on ARM64 | `picasso-suite-0.2.1-arm64.deb`, `-aarch64.rpm`, `-aarch64.AppImage` | as above |
+| Linux on ARM64 | `picasso-suite-0.2.1-arm64.deb`, `-aarch64.rpm`, `-aarch64.AppImage`, `-aarch64.flatpak` | as above |
 
-The ARM64 packages and the AppImage come with releases after 0.2.1.
+The ARM64 packages, the AppImage and the ARM64 Flatpak come with releases after 0.2.1.
 
 On Linux the packages add Picasso Suite to the applications menu, open `.picasso`, `.drp`, `.drt`
 and `.drb` files with it, and offer it under "Open With" for video files. On a Wayland desktop the
@@ -82,6 +82,13 @@ window opens through XWayland, because files dropped on a Wayland window do not 
 yet (a limit of winit, the window library); `PICASSO_WAYLAND=1 picasso-suite` opens a native
 Wayland window without drag and drop. The Flatpak can read your home folder and drives mounted
 under `/media` and `/run/media`.
+
+If the window stays black, is slow or shows picture errors, run `picasso-suite --graphics-check`: it
+lists the graphics cards and interfaces (Vulkan, DirectX 12, Metal, OpenGL) the computer offers and
+whether each one draws a test picture, and saves the answer as `picasso-graphics-report.txt` in the
+current folder (the Windows program has no console window to print to). Please
+[send it in](https://github.com/fabox-os/Picasso-Suite/issues/new?template=graphics-report.yml),
+working or not: only a few graphics cards have been tried.
 
 ## Build from source
 

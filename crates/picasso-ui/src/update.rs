@@ -50,6 +50,11 @@ impl Install {
     /// How this copy was installed, from where the program runs.
     pub(crate) fn detect() -> Self {
         if std::env::var_os("FLATPAK_ID").is_some() || Path::new("/.flatpak-info").exists() {
+            // The Flathub build is updated by Flathub (`flatpak update`), not by this program: it
+            // has no right to run the host's flatpak, and the release page is opened instead.
+            if Path::new("/app/share/picasso-suite/updates-by-flathub").exists() {
+                return Self::Unmanaged;
+            }
             return Self::Flatpak;
         }
         if cfg!(target_os = "linux") {
@@ -105,7 +110,9 @@ impl Install {
                 file.ends_with("-macos-universal.zip")
                     || (cfg!(target_arch = "aarch64") && file.ends_with("-macos-arm64.zip"))
             }
-            Self::Flatpak => file.ends_with(".flatpak"),
+            // The ARM64 bundle is `...-aarch64.flatpak`; the x86_64 one has no processor in its name.
+            Self::Flatpak if cfg!(target_arch = "aarch64") => file.ends_with("-aarch64.flatpak"),
+            Self::Flatpak => file.ends_with(".flatpak") && !file.ends_with("-aarch64.flatpak"),
             // Linux packages are built for x86_64 and aarch64; Debian calls them amd64 and arm64.
             Self::AppImage(_) => file.ends_with(&format!("-{}.AppImage", std::env::consts::ARCH)),
             Self::Deb if cfg!(target_arch = "aarch64") => file.ends_with("arm64.deb"),
@@ -773,7 +780,7 @@ mod tests {
             )
         };
         format!(
-            r#"{{"tag_name":"v0.2.0-hotfix","body":"New:\r\n- Preferences","assets":[{},{},{},{},{},{},{},{},{}]}}"#,
+            r#"{{"tag_name":"v0.2.0-hotfix","body":"New:\r\n- Preferences","assets":[{},{},{},{},{},{},{},{},{},{}]}}"#,
             asset("picasso-suite-0.2.0-hotfix-amd64.deb"),
             asset("picasso-suite-0.2.0-hotfix-arm64.deb"),
             asset("picasso-suite-0.2.0-hotfix-macos-universal.zip"),
@@ -782,6 +789,7 @@ mod tests {
             asset("picasso-suite-0.2.0-hotfix-aarch64.rpm"),
             asset("picasso-suite-0.2.0-hotfix-x86_64.AppImage"),
             asset("picasso-suite-0.2.0-hotfix-aarch64.AppImage"),
+            asset("picasso-suite-0.2.0-hotfix-aarch64.flatpak"),
             asset("picasso-suite-0.2.0-hotfix.flatpak"),
         )
     }
@@ -802,7 +810,12 @@ mod tests {
             pick(Install::MacApp(PathBuf::from("x"))).as_deref(),
             Some("picasso-suite-0.2.0-hotfix-macos-universal.zip")
         );
-        assert_eq!(pick(Install::Flatpak).as_deref(), Some("picasso-suite-0.2.0-hotfix.flatpak"));
+        let flatpak = if std::env::consts::ARCH == "aarch64" {
+            "picasso-suite-0.2.0-hotfix-aarch64.flatpak"
+        } else {
+            "picasso-suite-0.2.0-hotfix.flatpak"
+        };
+        assert_eq!(pick(Install::Flatpak).as_deref(), Some(flatpak));
         // The Linux packages are this computer's kind of processor.
         let arch = std::env::consts::ARCH;
         let deb = if arch == "aarch64" { "arm64" } else { "amd64" };

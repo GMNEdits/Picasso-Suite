@@ -1,0 +1,75 @@
+# Builds the Flathub manifest (packaging/flathub) from source on both processors, as Flathub's own
+# builders do, and runs Flathub's linter on it. It takes an hour or more (FFmpeg and the codecs
+# are compiled), so it runs only on `flathub-*` branches and by hand, not on every push.
+name: flathub
+
+on:
+  push:
+    branches: ['flathub-*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Pinned: the tool that turns Cargo.lock into the list of crates the offline build downloads.
+  CARGO_GENERATOR_COMMIT: 41c20aa10819cdb2a4f3ca171758a96d1955c018
+
+jobs:
+  flathub:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runner: ubuntu-latest, arch: x86_64 }
+          - { runner: ubuntu-24.04-arm, arch: aarch64 }
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the desktop entry and the appstream file
+        run: |
+          dnf_or_apt() { if command -v apt-get >/dev/null; then apt-get install -y "$@"; else dnf install -y "$@"; fi; }
+          command -v appstreamcli >/dev/null || dnf_or_apt appstream
+          command -v desktop-file-validate >/dev/null || dnf_or_apt desktop-file-utils
+          desktop-file-validate packaging/linux/io.github.fabox_os.PicassoSuite.desktop
+          appstreamcli validate --no-net --pedantic packaging/linux/io.github.fabox_os.PicassoSuite.metainfo.xml
+      - name: List the crates for the offline build
+        run: |
+          python3 -m pip install --quiet aiohttp PyYAML tomlkit || pip install --quiet aiohttp PyYAML tomlkit
+          curl -fsSL -o flatpak-cargo-generator.py \
+            "https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/$CARGO_GENERATOR_COMMIT/cargo/flatpak-cargo-generator.py"
+          python3 flatpak-cargo-generator.py Cargo.lock -o packaging/flathub/cargo-sources.json
+      # flatpak-builder is run here instead of through the action so that, when it fails, the
+      # part of its log with the error is put into the run's annotations (readable without logging in).
+      - name: Build
+        shell: bash
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          rc=0
+          flatpak-builder --user --arch=${{ matrix.arch }} --install-deps-from=flathub --disable-rofiles-fuse --force-clean --repo=repo build packaging/flathub/io.github.fabox_os.PicassoSuite.yml > build.log 2>&1 || rc=$?
+          tail -n 40 build.log
+          if [ "$rc" -ne 0 ]; then
+            echo "flatpak-builder exited with $rc. The first error:" > failure.txt
+            grep -n -i -m1 -B6 -A12 'error\|fatal\|failed' build.log >> failure.txt || true
+            echo "... and the end of the log:" >> failure.txt
+            tail -n 20 build.log >> failure.txt
+            python3 -c 'import sys; t=open("failure.txt", errors="replace").read()[:3500]; print("::error title=flatpak-builder failed::" + t.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
+            exit "$rc"
+          fi
+          flatpak build-bundle repo picasso-suite-flathub-${{ matrix.arch }}.flatpak io.github.fabox_os.PicassoSuite --arch=${{ matrix.arch }}
+      # Flathub's linter: what a reviewer there would see. The two X11/Wayland socket findings
+      # are expected (see packaging/flathub/README.md); anything else is for the submission.
+      - name: Flathub linter
+        continue-on-error: true
+        run: |
+          flatpak install -y --noninteractive flathub org.flatpak.Builder || true
+          flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest packaging/flathub/io.github.fabox_os.PicassoSuite.yml || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flathub-${{ matrix.arch }}
+          path: |
+            picasso-suite-flathub-${{ matrix.arch }}.flatpak
+            packaging/flathub/cargo-sources.json

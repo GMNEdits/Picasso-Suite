@@ -4,14 +4,19 @@
 
 **✨ New**
 - ✅ **Linux on ARM64:** .deb, .rpm and AppImage for 64-bit ARM computers (Raspberry Pi 5, ARM laptops and servers)
+- ✅ **Linux Flatpak on ARM64:** `picasso-suite-X-aarch64.flatpak` beside the x86_64 one; Help > Check for Updates installs the one for the computer's processor
+- ✅ **Graphics check:** `picasso-suite --graphics-check` lists the graphics cards and interfaces (Vulkan, DirectX 12, Metal, OpenGL), tells which ones draw a test picture and saves the report as `picasso-graphics-report.txt`; there is a "Graphics report" issue form for sending it in
 - ✅ **AppImage:** one file that runs on most Linux distributions without installing; Help > Check for Updates replaces it with the new version
 - ✅ **Cut page:** files dragged over the window show a drop target on the media pool, and 3GP, 3G2, F4V, VOB, DV, ASF and M2TS video can be imported
+- ✅ **Cut page:** the empty timeline before a track's first clip is grey, as in Resolve, so a clip that starts late is easy to see
 
 **🛠️ Fixed**
 - 🛠️ **Linux:** dragging video files from the file manager into the media pool works on Wayland desktops (Ubuntu's default); the window opens through XWayland, and `PICASSO_WAYLAND=1` keeps a native Wayland window
 - 🛠️ **Linux:** the dock shows Picasso Suite's icon and groups the window with its launcher
-- 🛠️ **Linux:** a per-user Flatpak installs its update per-user
-- 🛠️ **Media pool:** video thumbnails are made without holding up the window while the first frame decodes, by their own decoder, so the viewer no longer leaves them (and the clips on the timeline) black
+- 🛠️ **Linux:** a per-user Flatpak installs its update per-user, and the command shown when that fails says `--user`
+- 🛠️ **Linux:** programs started from Picasso Suite (the browser, the installer) still see the Wayland desktop; the window asks for X11 itself instead of hiding the Wayland display from everything
+- 🛠️ **Check for Updates:** a download that breaks off leaves no half-file behind
+- 🛠️ **Media pool:** video thumbnails are made without holding up the window while the first frame decodes, by their own decoder, so the viewer no longer leaves them (and the clips on the timeline) black; they are decoded at a quarter of the size and the decoder is closed once the picture is made, so a pool of 4K clips does not keep a full picture and a thread for each
 - 🛠️ **Timeline:** a disabled clip no longer shows through a transition (dissolve or dip) next to it
 - 🛠️ **Timeline:** dragging a clip, trim or roll no longer copies the whole project on every pointer move
 - 🛠️ **Stills:** shrinking a big picture uses less memory, and an image too big to show is refused from its header before it is decoded
@@ -23,6 +28,14 @@
 - ✅ **Linux packages:** the .deb and .rpm name the window libraries they need, so a minimal system gets them; the .rpm names them in a way both Fedora and openSUSE understand
 - ✅ **Flatpak:** footage on USB drives and memory cards (`/media`, `/run/media`) can be imported
 - ✅ **Linux:** icons in 16 to 256 pixels, so menus and docks show a sharp icon at every size
+- ✅ **Releases:** a release is only published when every package built and the Linux ones installed and started on seven systems, so a failed build can no longer leave a release with fewer packages
+- ✅ **Flathub:** a manifest that builds FFmpeg and its codecs from source (`packaging/flathub`), with a CI build of it and notes for the submission, which is not made yet; the screenshots and links in the app's appstream entry are filled in
+- ✅ **Development:** the tests run on every pull request, and a test checks `Menu-Status.md` against the menus' table
+
+**⚠️ Known limitations**
+- ❌ A native Wayland window takes no dropped files (winit 0.30 has no support and eframe 0.37 uses it), so the window opens through XWayland
+- ❌ The ARM64 and Flatpak packages are only started on GitHub's machines (containers with a virtual screen and a software Vulkan), not on real ARM or Linux desktops
+- ❌ Vulkan and the other graphics interfaces were only tried on an AMD card; run `picasso-suite --graphics-check` and send the report in
 
 ## 0.2.1
 

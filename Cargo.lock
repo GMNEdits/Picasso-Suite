@@ -2122,6 +2122,7 @@ dependencies = [
  "image",
  "log",
  "picasso-ui",
+ "pollster 0.4.0",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
