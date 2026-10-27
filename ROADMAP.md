@@ -48,7 +48,7 @@ Status at 0.4.0.
 - [x] Performance: the viewer's picture is put together on a thread of its own (1080p playback: Edit 3.0 to 1.35 ms a frame, Cut 2.2 to 0.66, Color 3.9 to 2.3); scrubbing drops a picture nobody wants any more and shows the key frame meanwhile (4K, 2-second GOP: 370 to 200 ms after letting go)
 - [x] Cut page: the height arrows of the track button row
 - [x] Color page: the mini timeline strip shows the clips of up to three picture tracks
-- [x] Playback: Playback > Hardware Decoding switches decoding on the graphics card off and on without opening System Preferences (a tester saw shaking and black pictures that do not happen on an AMD card; the cause is still being found)
+- [x] Playback: Playback > Hardware Decoding switches decoding on the graphics card off and on without opening System Preferences (the shaking and black pictures a tester saw came from the Edit page's source viewer sharing the timeline's decoder; fixed in 0.4.0 and confirmed on that computer)
 - [x] Playback: the timelines keep the width of a second at every frame rate (a 60 fps project ran 2.5 times faster across them); the Cut page's lower timeline keeps the playhead in the middle; the Edit page's source viewer decodes apart from the timeline, so it no longer blinks or slows playback of the same clip; long clips draw only their film strip and waveform on screen
 - [x] Interface: long clip names are cut with an ellipsis in the source viewer's header
 - [x] Help: Check for Updates installs as root without pkexec, and openSUSE's zypper is told the release's rpm is unsigned; `picasso-suite --update-from <package>` and `--version`

@@ -19,7 +19,7 @@ Picasso Suite 0.4.0 makes playback smoother and steadier: the viewer's picture i
 - ✅ **DaVinci Resolve files:** one still being read when another project is opened no longer replaces that project when it arrives.
 - ✅ **Playback with many stills:** the still images are shared with the viewer's thread instead of copied for every picture it puts together.
 - ✅ **Memory:** the key frames kept for scrubbing take at most 32 MB per video (96 before), so a multicam of nine angles stays under 300 MB for them.
-- ✅ **Edit page source viewer:** it no longer blinks black while the timeline plays the same clip, and playback no longer stutters for it. Both viewers asked one decoder for the clip, which then sought back and forth between their two moments, and the source viewer drew itself again on every frame. It now has a decoder of its own and draws again only when its own picture changes (Edit page with a 1080p clip: 1.04 to 0.49 ms of work a frame, the slowest frames 3.3 to 0.7 ms).
+- ✅ **Edit page source viewer:** it no longer blinks black while the timeline plays the same clip, and playback no longer stutters for it. Both viewers asked one decoder for the clip, which then sought back and forth between their two moments, and the source viewer drew itself again on every frame. It now has a decoder of its own and draws again only when its own picture changes (Edit page with a 1080p clip: 1.04 to 0.49 ms of work a frame, the slowest frames 3.3 to 0.7 ms). Confirmed on the computer where the choppy, blinking playback was seen.
 - ✅ **Long clip names:** the source viewer's header cuts a long name with “…” where it would run over the length beside it.
 - ✅ **Timelines at 60 fps:** a second was two and a half times wider in a 60 fps project than in a 24 fps one (600 points on the Cut page's lower timeline instead of 240), so the playhead raced across while the picture and the timecode played at the right speed. The timelines now keep the width of a second at every frame rate.
 - ✅ **Cut page:** the lower timeline keeps the playhead in the middle while playing, even after a drag of the playhead whose end it missed (it used to stay still and let the playhead run across).
@@ -41,7 +41,6 @@ Picasso Suite 0.4.0 makes playback smoother and steadier: the viewer's picture i
 - ✅ **Development:** CI fails when `docs/status.svg` or the README's Status numbers no longer match `Menu-Status.md` and `ROADMAP.md` (run `python3 scripts/status.py`). Thanks to GANESH NIKAM.
 
 ### ⚠️ Known limitations
-- ❌ A tester saw playback shake and go black on their computer, which could not be reproduced here; the Edit page's source viewer was one cause and is fixed. If it still happens, turn Playback > Hardware Decoding off and send your graphics card (`picasso-suite --graphics-check`).
 - ❌ Scrubbing video with very few key frames (one every 20 seconds of 4K) still takes seconds for the exact picture; that needs optimised media (proxies).
 - ❌ Check for Updates is tested by the release workflow on every package from this release on; before, it was only tried on Windows.
 - ❌ Not tried on real NVIDIA, Intel, Apple or ARM graphics cards, nor on a Raspberry Pi; the Color page's scopes still measure on the interface thread.
