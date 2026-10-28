@@ -283,10 +283,18 @@ jobs:
           manifest-path: packaging/linux/flatpak.yml
           arch: ${{ matrix.arch }}
           upload-artifact: false
+      # The bundle is kept before the update check below, which can fail on its own.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkg-flatpak-${{ matrix.arch }}
+          path: ${{ env.PKG }}.flatpak
       # Help > Check for Updates inside the sandbox: the bundle is installed for this user, then
       # the program installs it again through the host's flatpak (flatpak-spawn --host), as it
-      # does with a downloaded one. It needs a session bus for that.
+      # does with a downloaded one. It needs a session bus for that. On the runner the sandbox
+      # may not talk to org.freedesktop.Flatpak (the permission Flathub has to grant), so a
+      # failure here is shown in the run but does not keep the bundle out of the release.
       - name: Check for Updates reinstalls the Flatpak
+        continue-on-error: true
         run: |
           ID=io.github.fabox_os.PicassoSuite
           flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -297,10 +305,6 @@ jobs:
           flatpak list --user --app | grep "$ID"
           dbus-run-session -- flatpak run --user "$ID" --version | tee version.txt
           grep -q "(${GITHUB_SHA:0:12})" version.txt
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pkg-flatpak-${{ matrix.arch }}
-          path: ${{ env.PKG }}.flatpak
 
   # A universal app (Apple silicon and Intel) and the arm64 one, built and checked on both kinds of
   # Mac by the `macos` workflow (also used to add a universal app to an older release).

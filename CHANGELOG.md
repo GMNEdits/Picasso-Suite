@@ -24,6 +24,7 @@ Picasso Suite 0.5.0 opens the timeline to other editors: it writes Final Cut Pro
 - ❌ AAF: speed changes, reverse and freeze are written at normal speed. Generated media, titles and compound clips have no file and are left out of the XML and AAF (the app says how many).
 - ❌ OTIO import: a nested stack (a compound clip from another editor) is left out, keeping its time as a gap. XML and AAF files are not imported yet.
 - ❌ The IMF Generic and Pro Tools presets are still greyed out (they need an MXF writer and AAF with the sound in it).
+- ❌ Flatpak: Check for Updates installs the new version only where the Flatpak may use the host's `flatpak`; elsewhere it shows the command to run. The 0.5.0 Flatpaks are in the release again (0.4.0 shipped without them, as this check stopped their upload).
 
 ## 0.4.0
 
