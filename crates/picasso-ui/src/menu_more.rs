@@ -1,6 +1,6 @@
 //! More menu entries: Add Outside Node, Create Timeline Using Bin and Bounce Mix to Track.
 
-use picasso_core::{Command, Outcome, TrackKind};
+use picasso_core::{Command, Outcome, Project, TrackId, TrackKind};
 
 use crate::app::StudioApp;
 use crate::pool::BinView;
@@ -189,9 +189,50 @@ impl StudioApp {
             self.fail("there is nothing to bounce");
             return;
         }
+        self.start_bounce(ctx, self.project().clone(), "the mix");
+    }
+
+    /// Bounce Selected Tracks: the same, of the tracks the selected clips are on, and of nothing
+    /// else. A track is chosen by selecting a clip on it, since this timeline selects clips
+    /// rather than tracks; the sound of a picture track chosen this way comes along too.
+    pub(crate) fn bounce_tracks(&mut self, ctx: &egui::Context) {
+        let tracks = self.bounced_tracks();
+        if tracks.is_empty() {
+            self.fail("select a clip on the track or tracks to bounce");
+            return;
+        }
+        if self.project().duration() == 0 {
+            self.fail("there is nothing to bounce");
+            return;
+        }
+        let project = bounced(self.project(), &tracks);
+        self.start_bounce(ctx, project, "the selected tracks");
+    }
+
+    /// The tracks holding a selected clip, in the project's order and without repeats.
+    pub(crate) fn bounced_tracks(&self) -> Vec<TrackId> {
+        let mut tracks: Vec<TrackId> = self
+            .selected_ids()
+            .iter()
+            .filter_map(|id| self.project().clip(*id).map(|(t, _)| t.id))
+            .collect();
+        tracks.sort_by_key(|id| {
+            self.project()
+                .tracks
+                .iter()
+                .position(|t| t.id == *id)
+                .unwrap_or(usize::MAX)
+        });
+        tracks.dedup();
+        tracks
+    }
+
+    /// Renders `project`'s sound from its start to its end into a WAV file in the background; the
+    /// file comes back through the inbox, which imports it and lays it on a new sound track.
+    fn start_bounce(&mut self, ctx: &egui::Context, project: Project, what: &str) {
         #[cfg(target_arch = "wasm32")]
         {
-            let _ = ctx;
+            let _ = (ctx, project, what);
             self.fail("bouncing needs the desktop app");
         }
         #[cfg(not(target_arch = "wasm32"))]
@@ -211,7 +252,6 @@ impl StudioApp {
             else {
                 return;
             };
-            let project = self.project().clone();
             let settings = picasso_export::Settings {
                 preset: picasso_export::Preset::Wav,
                 path: path.clone(),
@@ -220,7 +260,7 @@ impl StudioApp {
                 options: picasso_export::Options::default(),
             };
             let (inbox, ctx) = (self.inbox.clone(), ctx.clone());
-            self.info("Bouncing the mix...");
+            self.info(format!("Bouncing {what}..."));
             std::thread::spawn(move || {
                 let cache = picasso_render::MediaCache::new();
                 let result = picasso_export::render(&project, &cache, &settings, &mut |_, _| true);
@@ -275,7 +315,19 @@ impl StudioApp {
             with_sound: false,
         });
         if placed.is_some() {
-            self.info("The mix is on a new sound track; mute the others to hear only it");
+            self.info("The bounce is on a new sound track");
         }
     }
+}
+
+/// `project` as the bounce of `tracks` hears it: every track but those is muted, and solo is
+/// cleared so a soloed track elsewhere cannot leak into the mix. What is left is exactly the
+/// chosen tracks' sound, which is what Bounce Selected Tracks means.
+pub(crate) fn bounced(project: &Project, tracks: &[TrackId]) -> Project {
+    let mut out = project.clone();
+    for track in &mut out.tracks {
+        track.solo = false;
+        track.muted = !tracks.contains(&track.id);
+    }
+    out
 }

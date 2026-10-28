@@ -2246,3 +2246,46 @@ fn an_otio_timeline_comes_back_as_a_new_timeline() {
     assert_eq!(media.length, Some(50));
     assert_eq!((clip.source_in, clip.duration), (5, 20));
 }
+
+#[test]
+fn bounce_selected_tracks_needs_a_selected_clip() {
+    let mut app = app();
+    assert!(!app.act_enabled(Act::BounceSelectedTracks));
+    let first = app.project().tracks[0].clips[0].id;
+    app.select_only(first);
+    assert!(app.act_enabled(Act::BounceSelectedTracks));
+}
+
+#[test]
+fn the_bounce_of_some_tracks_keeps_only_their_sound() {
+    let mut app = app();
+    let (v1, v2) = (app.project().tracks[0].id, app.project().tracks[1].id);
+    let Some(Outcome::Track(a1)) = app.run(Command::AddTrack {
+        kind: TrackKind::Audio,
+    }) else {
+        panic!()
+    };
+    // A solo on a track that is not bounced must not leak into the mix.
+    app.run(Command::SetTrackSolo {
+        track: v2,
+        solo: true,
+    });
+    app.run(Command::SetTrackMuted {
+        track: v1,
+        muted: true,
+    });
+    let bounced = crate::menu_more::bounced(app.project(), &[a1]);
+    let by_id = |id| bounced.tracks.iter().find(|t| t.id == id).unwrap();
+    assert!(!by_id(a1).muted, "the chosen track stays in");
+    assert!(by_id(v1).muted && by_id(v2).muted, "the others are muted");
+    assert!(!by_id(v2).solo, "a solo elsewhere is cleared");
+}
+
+#[test]
+fn bounce_selected_tracks_takes_the_tracks_of_the_selected_clips() {
+    let mut app = app();
+    let second = app.project().tracks[0].clips[1].id;
+    app.select_only(second);
+    let tracks = app.bounced_tracks();
+    assert_eq!(tracks, vec![app.project().tracks[0].id]);
+}
