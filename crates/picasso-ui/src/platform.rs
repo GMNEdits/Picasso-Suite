@@ -62,6 +62,14 @@ pub(crate) enum Incoming {
         /// The app's epoch when it was asked for: another project opened since wins.
         epoch: u64,
     },
+    /// An OpenTimelineIO timeline, with the media files it uses read in the background.
+    OtioRead {
+        name: String,
+        timeline: picasso_core::otio::OtioTimeline,
+        probed: Vec<crate::interchange::Probed>,
+        /// The app's epoch when it was asked for: another project opened since wins.
+        epoch: u64,
+    },
     /// The codec of a video, read from its file in the background (desktop only).
     CodecLabel {
         media: picasso_core::MediaId,
@@ -227,6 +235,14 @@ pub(crate) fn fit_picture(image: picasso_render::Decoded) -> picasso_render::Dec
     }
 }
 
+/// Timelines and subtitles from other programs, opened as the project's files are.
+pub(crate) fn is_timeline_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    [".otio", ".edl", ".srt", ".vtt"]
+        .iter()
+        .any(|e| lower.ends_with(e))
+}
+
 pub(crate) fn is_lut_name(name: &str) -> bool {
     name.to_ascii_lowercase().ends_with(".cube")
 }
@@ -239,6 +255,7 @@ pub(crate) fn pick_project(inbox: Inbox, ctx: egui::Context) {
             .add_filter("Picasso Suite project", &PROJECT_EXTENSIONS)
             .add_filter("DaVinci Resolve project", &RESOLVE_EXTENSIONS)
             .add_filter("Edit decision list", &["edl"])
+            .add_filter("OpenTimelineIO", &["otio"])
             .add_filter("Subtitles", &["srt", "vtt"])
             .pick_file()
             .await

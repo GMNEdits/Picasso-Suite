@@ -888,6 +888,8 @@ impl StudioApp {
             | Act::SelectNearestEdit
             | Act::ExportEdl
             | Act::ExportOtio
+            | Act::ExportXml(_)
+            | Act::ExportAaf
             | Act::StillToPool => project.duration() > 0,
             Act::PlayAroundMark => project.mark_in.is_some() || project.mark_out.is_some(),
             Act::TimelineFromSelection => !self.selected_ids().is_empty(),
@@ -1430,6 +1432,8 @@ impl StudioApp {
             Act::NormalizeAudio => self.extra.normalize = Some(-9.0),
             Act::ExportEdl => self.export_edl(ctx),
             Act::ExportOtio => self.export_otio(ctx),
+            Act::ExportXml(premiere) => self.export_xml(ctx, premiere),
+            Act::ExportAaf => self.export_aaf(ctx),
             Act::ImportTimeline => self.open_dialog(ctx),
             Act::ExportSubtitles => self.export_subtitles(ctx),
             Act::CreateSubtitleTrack => {

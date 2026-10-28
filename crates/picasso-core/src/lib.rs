@@ -18,6 +18,7 @@ pub mod otio;
 pub mod project;
 pub mod session;
 pub mod time;
+pub mod xmeml;
 
 pub use audio_fx::{Compressor, Equalizer, TrackFx, EQ_RANGE_DB};
 pub use command::{Command, Outcome, MAX_RAMP_STEPS};
@@ -26,11 +27,11 @@ pub use keyframe::{KeyParam, KeyTrack, Keyframe, MAX_KEYFRAMES};
 pub use multicam::{Angle, Multicam, MAX_ANGLES, MAX_MULTICAMS};
 pub use picasso_color::{ColorGrade, Effect, EffectKind, MAX_EFFECTS};
 pub use project::{
-    media_kind, transition_at, transition_frames, Bin, BlendMode, Clip, ClipAudio, ClipId, Marker,
-    MediaId, MediaItem, MediaSource, Project, SmartBin, Still, TextAlign, TextStyle, Timeline,
-    TitleText, Track, TrackId, TrackKind, Transform, Transition, TransitionKind, CLIP_COLORS,
-    MARKER_COLORS, MAX_BINS, MAX_GAIN_DB, MAX_SPEED, MAX_STILLS, MAX_TIMELINES, MAX_TITLE_CHARS,
-    MAX_TRANSITION, MIN_GAIN_DB, MIN_SPEED,
+    media_kind, transition_at, transition_frames, Bin, BlendMode, Clip, ClipAudio, ClipId,
+    ImportedClip, ImportedTrack, Marker, MediaId, MediaItem, MediaSource, Project, SmartBin, Still,
+    TextAlign, TextStyle, Timeline, TitleText, Track, TrackId, TrackKind, Transform, Transition,
+    TransitionKind, CLIP_COLORS, MARKER_COLORS, MAX_BINS, MAX_GAIN_DB, MAX_SPEED, MAX_STILLS,
+    MAX_TIMELINES, MAX_TITLE_CHARS, MAX_TRANSITION, MIN_GAIN_DB, MIN_SPEED,
 };
 pub use session::Session;
 pub use time::Fps;

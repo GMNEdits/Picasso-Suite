@@ -1,6 +1,7 @@
 //! The Render Settings presets of the Deliver page, as DaVinci Resolve lists them: each sets the
-//! format, codec, size and sound of the render. Some have a submenu of resolutions. The
-//! interchange presets (IMF, XML, AAF) are listed but not available yet.
+//! format, codec, size and sound of the render. Some have a submenu of resolutions. Final Cut
+//! Pro 7, Premiere XML and AVID AAF write the timeline for another editor instead of rendering;
+//! IMF and Pro Tools are listed but not available yet.
 
 use egui::{pos2, vec2, Align2, Color32, Painter, Pos2, Rect, Sense, Stroke, StrokeKind, Ui};
 use picasso_export::{AudioCodec, Options, Preset, Profile, Quality, Rate};
@@ -110,13 +111,13 @@ pub(crate) const ENTRIES: [Entry; 16] = [
         name: "Final Cut Pro 7",
         badge: Badge::FinalCut,
         sizes: &[],
-        available: false,
+        available: true,
     },
     Entry {
         name: "Premiere XML",
         badge: Badge::Premiere,
         sizes: &[],
-        available: false,
+        available: true,
     },
     Entry {
         name: "Audio Only",
@@ -128,7 +129,7 @@ pub(crate) const ENTRIES: [Entry; 16] = [
         name: "AVID AAF",
         badge: Badge::Avid,
         sizes: &[],
-        available: false,
+        available: true,
     },
     Entry {
         name: "Pro Tools",
@@ -512,6 +513,15 @@ impl StudioApp {
         if !entry.available {
             return;
         }
+        // The interchange presets write the timeline for another editor, pointing at the
+        // original media (nothing is rendered).
+        let ctx = self.ctx.clone();
+        match entry.name {
+            "Final Cut Pro 7" => return self.export_xml(&ctx, false),
+            "Premiere XML" => return self.export_xml(&ctx, true),
+            "AVID AAF" => return self.export_aaf(&ctx),
+            _ => {}
+        }
         self.deliver_ui.preset_name = title(entry, size);
         let Some(s) = settings(entry, size) else {
             return;
@@ -561,8 +571,14 @@ mod tests {
         assert_eq!(settings(audio, None).unwrap().preset, Preset::Wav);
         assert!(settings(&ENTRIES[0], None).is_none());
         assert_eq!(title(yt, Some("1080p")), "YouTube 1080p");
-        // Every entry that can be picked gives settings, except Custom Export.
-        for e in ENTRIES.iter().skip(1).filter(|e| e.available) {
+        // Every entry that can be picked gives settings, except Custom Export and the ones that
+        // write a timeline file.
+        let writes_timeline = ["Final Cut Pro 7", "Premiere XML", "AVID AAF"];
+        for e in ENTRIES
+            .iter()
+            .skip(1)
+            .filter(|e| e.available && !writes_timeline.contains(&e.name))
+        {
             assert!(
                 settings(e, e.sizes.first().copied()).is_some(),
                 "{}",

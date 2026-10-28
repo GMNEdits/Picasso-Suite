@@ -1,0 +1,16 @@
+[package]
+name = "picasso-aaf"
+description = "Writes Picasso Suite timelines as AAF files for Avid Media Composer, Pro Tools and others (pure Rust)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+picasso-core.workspace = true
+# An AAF file is a Microsoft compound file (structured storage) of objects and properties.
+cfb = "0.14"  # MIT
+uuid = { version = "1", default-features = false }  # MIT OR Apache-2.0
+
+[lints]
+workspace = true

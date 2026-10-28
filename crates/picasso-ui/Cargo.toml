@@ -11,6 +11,8 @@ picasso-core.workspace = true
 picasso-audio.workspace = true
 picasso-color.workspace = true
 picasso-render.workspace = true
+# Pure Rust, so the browser build writes AAF files too.
+picasso-aaf.workspace = true
 egui = { version = "0.36", default-features = false, features = ["default_fonts"] }  # MIT OR Apache-2.0
 # File dialogs: native on Windows and macOS, the desktop portal on Linux (no GTK needed), and the
 # browser's file picker and downloads on the web.

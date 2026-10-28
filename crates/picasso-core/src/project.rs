@@ -575,6 +575,33 @@ pub struct Transition {
 /// The longest transition, in frames.
 pub const MAX_TRANSITION: u64 = 100_000;
 
+/// A track of a timeline read from another program, for [`crate::Command::ImportTimeline`].
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct ImportedTrack {
+    pub kind: TrackKind,
+    pub muted: bool,
+    pub clips: Vec<ImportedClip>,
+}
+
+/// A clip of an imported timeline: media of the pool, where it sits and what of it it shows.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct ImportedClip {
+    pub media: MediaId,
+    pub name: String,
+    /// First frame on the timeline.
+    pub start: u64,
+    /// First frame of the media that is shown.
+    pub source_in: u64,
+    /// Frames on the timeline.
+    pub duration: u64,
+    pub speed: f32,
+    pub reverse: bool,
+    pub freeze: bool,
+    pub enabled: bool,
+    /// A transition from the clip before, centred on the cut.
+    pub transition: Option<Transition>,
+}
+
 /// How long the transition between `left` and the clip after it, `right`, plays: None when
 /// there is none, or the clips do not touch. It is never longer than twice either clip, since
 /// each gives at most its whole length to it.

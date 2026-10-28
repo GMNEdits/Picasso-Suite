@@ -469,6 +469,15 @@ pub enum Command {
         mark_in: Option<u64>,
         mark_out: Option<u64>,
     },
+    /// Starts a new timeline named `name` and puts the tracks, clips and markers of a timeline
+    /// read from another program on it (File > Import > Timeline), as one edit. A clip that
+    /// cannot be placed (its media is missing or does not fit the track, it overlaps the clip
+    /// before it, or it runs past the end of its media) is left out.
+    ImportTimeline {
+        name: String,
+        tracks: Vec<crate::ImportedTrack>,
+        markers: Vec<Marker>,
+    },
 }
 
 impl Command {
@@ -538,6 +547,7 @@ impl Command {
             Self::SetTransition { .. } => "clip.set_transition",
             Self::InsertGap { .. } => "track.insert_gap",
             Self::NewTimeline { .. } => "timeline.new",
+            Self::ImportTimeline { .. } => "timeline.import",
             Self::CreateCompound { .. } => "clip.create_compound",
             Self::DecomposeCompound { .. } => "clip.decompose_compound",
             Self::SwitchTimeline { .. } => "timeline.switch",
@@ -623,6 +633,7 @@ impl Command {
             Self::SetTransition { .. } => "Transition",
             Self::InsertGap { .. } => "Insert gap",
             Self::NewTimeline { .. } => "New timeline",
+            Self::ImportTimeline { .. } => "Import timeline",
             Self::CreateCompound { .. } => "Compound clip",
             Self::DecomposeCompound { .. } => "Decompose in place",
             Self::SwitchTimeline { .. } => "Switch timeline",
@@ -1210,6 +1221,11 @@ impl Command {
             }
             Self::SetFreeze { clip, frame } => set_freeze(p, clip, frame),
             Self::NewTimeline { name } => new_timeline(p, name),
+            Self::ImportTimeline {
+                name,
+                tracks,
+                markers,
+            } => import_timeline(p, name, tracks, markers),
             Self::CreateCompound { clips, name } => create_compound(p, &clips, name),
             Self::DecomposeCompound { clip } => decompose_compound(p, clip),
             Self::SwitchTimeline { id } => switch_timeline(p, id),
@@ -1833,6 +1849,35 @@ fn sort_clips(track: &mut Track) {
     track.clips.sort_by_key(|c| c.start);
 }
 
+/// A clip of `media` at normal speed, with no grade, effects or transition.
+fn plain_clip(id: ClipId, media: MediaId, name: String, start: u64, duration: u64) -> Clip {
+    Clip {
+        id,
+        media,
+        name,
+        start,
+        source_in: 0,
+        duration,
+        opacity: 1.0,
+        grade: ColorGrade::default(),
+        enabled: true,
+        audio: ClipAudio::default(),
+        speed: 1.0,
+        transform: Transform::default(),
+        blend: BlendMode::Normal,
+        link: None,
+        sound: true,
+        nodes: Vec::new(),
+        reverse: false,
+        freeze: false,
+        transition: None,
+        locked: false,
+        color: None,
+        keyframes: Vec::new(),
+        effects: Vec::new(),
+    }
+}
+
 fn add_clip(
     p: &mut Project,
     track: TrackId,
@@ -1865,31 +1910,7 @@ fn add_clip(
         );
     }
     let id = ClipId(p.fresh_id());
-    let clip = Clip {
-        id,
-        media,
-        name: item.name,
-        start,
-        source_in: 0,
-        duration,
-        opacity: 1.0,
-        grade: ColorGrade::default(),
-        enabled: true,
-        audio: ClipAudio::default(),
-        speed: 1.0,
-        transform: Transform::default(),
-        blend: BlendMode::Normal,
-        link: None,
-        sound: true,
-        nodes: Vec::new(),
-        reverse: false,
-        freeze: false,
-        transition: None,
-        locked: false,
-        color: None,
-        keyframes: Vec::new(),
-        effects: Vec::new(),
-    };
+    let clip = plain_clip(id, media, item.name, start, duration);
     if let Some(t) = p.track_mut(track) {
         t.clips.push(clip);
         sort_clips(t);
@@ -2382,6 +2403,92 @@ fn new_timeline(p: &mut Project, name: String) -> Result<Outcome, EditError> {
     }
     p.swap_timeline(&mut fresh);
     p.timelines.push(fresh);
+    Ok(Outcome::Nothing)
+}
+
+/// See [`Command::ImportTimeline`]. The timeline is built on a copy, so a refusal (too many
+/// timelines, a bad name) leaves the project as it was.
+fn import_timeline(
+    p: &mut Project,
+    name: String,
+    tracks: Vec<crate::ImportedTrack>,
+    markers: Vec<Marker>,
+) -> Result<Outcome, EditError> {
+    let mut q = p.clone();
+    new_timeline(&mut q, name)?;
+    // The n-th imported track of a kind goes on the n-th track of that kind.
+    let mut used = [0usize; 2];
+    for imported in tracks {
+        let slot = usize::from(imported.kind == TrackKind::Audio);
+        let n = used[slot];
+        used[slot] += 1;
+        let existing = q
+            .tracks
+            .iter()
+            .filter(|t| t.kind == imported.kind)
+            .nth(n)
+            .map(|t| t.id);
+        let track = match existing {
+            Some(id) => id,
+            None => match (Command::AddTrack {
+                kind: imported.kind,
+            })
+            .apply(&mut q)
+            {
+                Ok(Outcome::Track(id)) => id,
+                // Past the most tracks a timeline may have: the rest is left out.
+                _ => break,
+            },
+        };
+        for c in imported.clips {
+            let Some(item) = q.media(c.media) else {
+                continue;
+            };
+            let speed = if c.speed.is_finite()
+                && (crate::MIN_SPEED..=crate::MAX_SPEED).contains(&c.speed)
+            {
+                c.speed
+            } else {
+                1.0
+            };
+            let mut clip = plain_clip(ClipId(0), c.media, c.name, c.start, c.duration);
+            (clip.source_in, clip.speed) = (c.source_in, speed);
+            (clip.reverse, clip.freeze, clip.enabled) = (c.reverse, c.freeze, c.enabled);
+            let fits = item.source.fits(imported.kind)
+                && item
+                    .length
+                    .is_none_or(|l| c.source_in.saturating_add(clip.source_span()) <= l);
+            if !fits || !q.can_place(track, clip.start, clip.duration, None) {
+                continue;
+            }
+            clip.transition = c
+                .transition
+                .filter(|t| (2..=crate::MAX_TRANSITION).contains(&t.frames));
+            clip.id = ClipId(q.fresh_id());
+            if let Some(t) = q.track_mut(track) {
+                t.clips.push(clip);
+                sort_clips(t);
+            }
+        }
+        if imported.muted {
+            if let Some(t) = q.track_mut(track) {
+                t.muted = true;
+            }
+        }
+    }
+    let mut markers: Vec<Marker> = markers
+        .into_iter()
+        .filter(|m| m.frame < MAX_FRAMES)
+        .map(|m| Marker {
+            color: m.color % crate::MARKER_COLORS,
+            ..m
+        })
+        .collect();
+    markers.sort_by_key(|m| m.frame);
+    markers.dedup_by_key(|m| m.frame);
+    markers.truncate(MAX_MARKERS);
+    q.markers = markers;
+    *p = q;
     Ok(Outcome::Nothing)
 }
 

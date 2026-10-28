@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.5.0
+
+Picasso Suite 0.5.0 opens the timeline to other editors: it writes Final Cut Pro 7 / Premiere XML and AAF for Avid Media Composer and Pro Tools, and reads OpenTimelineIO timelines from Resolve, Premiere, Avid and others. The Deliver page's Final Cut Pro 7, Premiere XML and AVID AAF presets work, and timelines and subtitles dropped on the window open. Packages for Windows, macOS and Linux (x86_64 and ARM64).
+
+### ✨ New
+- ✅ **File > Export > Timeline: XML:** the timeline as an `xmeml` (version 5) sequence that Final Cut Pro 7, Premiere Pro and DaVinci Resolve import: every track, each clip pointing at its file, gaps, cross dissolves and dips (centred on the cut), speed changes, reverse and freeze frames (as Time Remap), disabled clips, muted tracks and markers. The Deliver page's **Final Cut Pro 7** and **Premiere XML** presets are no longer greyed out: they write the same file, pointing at the original media (nothing is rendered).
+- ✅ **File > Export > Timeline: AAF:** the timeline as an AAF file (AAF Edit Protocol) for Avid Media Composer, Pro Tools and others: a composition with a timecode track starting at 01:00:00:00, V and A tracks of clips, fillers and dissolves, and for each file a master clip and a file source with the file's address, so the editor links to the media where it is. A file keeps the same master clip from one export to the next. The **AVID AAF** preset on the Deliver page writes it too.
+- ✅ **OpenTimelineIO import:** File > Import > Timeline (or dropping an `.otio` file on the window) puts the timeline on a new timeline of the project, as one undo. Clips are matched to the media pool by file path, then by name; files that are not in the pool are imported first (read in the background), and files that are not on this computer are added as offline media so the clips keep their place. Gaps, dissolves, speed changes, reverse, freeze frames, disabled clips, muted tracks and markers come across, and times in other frame rates are converted. Solid colours, bars, gradients and text from generators are made here.
+
+### 🛠️ Fixed
+- ✅ **Dropped timelines and subtitles:** an `.edl`, `.otio`, `.srt` or `.vtt` file dropped on the window opens like the same file chosen in File > Import; it was read as a picture before and refused.
+
+### 🔄 Changed
+- ✅ **File > Export:** the planned "Timeline: AAF, XML..." entry is now two working entries, **Timeline: XML...** and **Timeline: AAF...**; the Open dialog lists OpenTimelineIO files.
+- ✅ **Development:** a new `picasso-aaf` crate writes AAF (an AAF file is a Microsoft compound file of objects and properties, through the MIT-licensed `cfb` crate), written from the AMWA's published AAF Object Specification and Low-Level Container Specification; `picasso-core` gains the XML writer (`xmeml`), the OTIO reader (`otio::read_otio`) and an `ImportTimeline` command that builds an imported timeline as one edit, leaving out clips that do not fit.
+
+### ⚠️ Known limitations
+- ❌ The AAF file has been read back with pyaaf2 (every clip resolves to its master clip, file source and address) but not yet opened in Media Composer, Pro Tools or Premiere; please send a report if one of them refuses it.
+- ❌ AAF: speed changes, reverse and freeze are written at normal speed. Generated media, titles and compound clips have no file and are left out of the XML and AAF (the app says how many).
+- ❌ OTIO import: a nested stack (a compound clip from another editor) is left out, keeping its time as a gap. XML and AAF files are not imported yet.
+- ❌ The IMF Generic and Pro Tools presets are still greyed out (they need an MXF writer and AAF with the sound in it).
+
 ## 0.4.0
 
 Picasso Suite 0.4.0 makes playback smoother and steadier: the viewer's picture is put together on a thread of its own, scrubbing camera video is faster, the timelines move at the right speed at every frame rate, and the Edit page's source viewer no longer blinks. It adds saved layouts, working track buttons and height arrows on the Cut page, a mini timeline on the Color page and a Hardware Decoding switch in the Playback menu, with security fixes for project and Resolve files. Packages for Windows, macOS and Linux (x86_64 and ARM64).

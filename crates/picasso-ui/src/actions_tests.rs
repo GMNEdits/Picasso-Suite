@@ -2179,3 +2179,70 @@ fn a_resolve_file_read_late_does_not_replace_a_project_opened_meanwhile() {
     );
     assert_eq!(app.project().name, opened, "the project opened meanwhile stays");
 }
+
+#[test]
+fn an_otio_timeline_comes_back_as_a_new_timeline() {
+    let mut app = app();
+    let Some(Outcome::Media(m)) = app.run(Command::AddMedia {
+        name: "shot".into(),
+        source: picasso_core::MediaSource::Video {
+            path: "/films/shot.mov".into(),
+        },
+        length: Some(1000),
+        default_duration: 96,
+    }) else {
+        panic!("media");
+    };
+    let v2 = app.project().tracks[1].id;
+    let Some(Outcome::Clip(c)) = app.run(Command::AddClip {
+        track: v2,
+        media: m,
+        start: 10,
+        duration: Some(40),
+        with_sound: false,
+    }) else {
+        panic!("clip");
+    };
+    app.run(Command::SlipClip {
+        clip: c,
+        source_in: 100,
+    });
+    let media_before = app.project().media.len();
+    let timelines = app.project().timelines.len();
+    let text = picasso_core::otio::to_otio(app.project());
+    app.open_bytes("Cut v3.otio", None, text.into_bytes());
+    assert!(!app.status.error, "{}", app.status.text);
+    assert_eq!(app.project().timelines.len(), timelines + 1);
+    assert_eq!(app.project().timeline_name, "Timeline 1");
+    // The file is matched by its path; the demo's generated clips are made again.
+    let v2 = &app.project().tracks[1];
+    let back: Vec<_> = v2
+        .clips
+        .iter()
+        .map(|c| (c.start, c.duration, c.source_in, c.media))
+        .collect();
+    assert_eq!(back, [(10, 40, 100, m)]);
+    assert_eq!(app.project().media.len(), media_before + 3);
+    // One undo takes the whole import away (the media made for it stays in the pool).
+    app.undo();
+    assert_eq!(app.project().timelines.len(), timelines);
+
+    // A file that is neither in the pool nor on this computer is added offline.
+    let otio = r#"{"OTIO_SCHEMA": "Timeline.1", "name": "Elsewhere", "tracks": {
+        "OTIO_SCHEMA": "Stack.1", "children": [{ "OTIO_SCHEMA": "Track.1", "kind": "Video",
+        "children": [{ "OTIO_SCHEMA": "Clip.1", "name": "far",
+          "source_range": { "start_time": { "value": 5, "rate": 24 },
+                            "duration": { "value": 20, "rate": 24 } },
+          "media_reference": { "OTIO_SCHEMA": "ExternalReference.1",
+            "target_url": "file:///nowhere/far%20away.mov",
+            "available_range": { "start_time": { "value": 0, "rate": 24 },
+                                 "duration": { "value": 50, "rate": 24 } } } }] }] } }"#;
+    app.open_bytes("far.otio", None, otio.as_bytes().to_vec());
+    assert!(!app.status.error, "{}", app.status.text);
+    assert!(app.status.text.contains("not found"), "{}", app.status.text);
+    let clip = &app.project().tracks[0].clips[0];
+    let media = app.project().media(clip.media).unwrap();
+    assert_eq!(media.name, "far away");
+    assert_eq!(media.length, Some(50));
+    assert_eq!((clip.source_in, clip.duration), (5, 20));
+}

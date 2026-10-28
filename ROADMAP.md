@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.4.0.
+Status at 0.5.0.
 
 ## Done
 
@@ -27,6 +27,10 @@ Status at 0.4.0.
 - [x] Decoding on the graphics card (D3D11, VideoToolbox, VA-API, CUDA) with a System Preferences switch, falling back to the processor
 - [x] Keyboard Customization: every command's keys can be changed, a taken key is moved after asking, saved in the preferences
 - [x] Interchange: OpenTimelineIO export (File > Export > Timeline: OpenTimelineIO)
+- [x] Interchange: Final Cut Pro 7 XML and Premiere XML export (`xmeml` 5: tracks, clips by file, gaps, dissolves, speed, reverse, freeze, markers), from File > Export > Timeline: XML and the Final Cut Pro 7 and Premiere XML presets
+- [x] Interchange: AAF export (`picasso-aaf`: composition with timecode, V/A tracks of clips, fillers and dissolves; a master clip and a linked file source for each file, with its address), from File > Export > Timeline: AAF and the AVID AAF preset; read back with pyaaf2, not yet tried in Media Composer, Pro Tools or Premiere
+- [x] Interchange: OpenTimelineIO import (File > Import > Timeline, or a dropped `.otio`): a new timeline, clips matched to the pool by path then name, missing files imported or kept offline, gaps, dissolves, speed, reverse, freeze, markers, any frame rate
+- [x] Import: `.edl`, `.otio`, `.srt` and `.vtt` files dropped on the window open as they do from File > Import
 - [x] Linux: files dragged from the file manager reach the media pool on Wayland desktops (the window opens through XWayland); the window is grouped with its launcher and icon; the packages open project files and offer "Open With" for video; .deb and .rpm name the window libraries they need; the Flatpak reads drives under `/media` and `/run/media`
 - [x] Linux: every release's .deb and .rpm are installed and started on Ubuntu 22.04 and 24.04, Debian 12, Fedora and openSUSE Tumbleweed, opening the window on all but openSUSE
 - [x] Linux: ARM64 (aarch64) .deb, .rpm and AppImage, installed and started on Ubuntu 24.04 and Fedora for ARM; an AppImage for x86_64 too, which Check for Updates replaces in place; icons from 16 to 256 pixels
@@ -56,10 +60,10 @@ Status at 0.4.0.
 ## To do
 
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
-- [ ] Deliver: IMF Generic, Final Cut Pro 7, Premiere XML, AVID AAF and Pro Tools presets (listed, greyed out) need interchange writers (XML, AAF, MXF)
+- [ ] Deliver: IMF Generic and Pro Tools presets (listed, greyed out) need an MXF writer and AAF with embedded or rendered sound
 - [ ] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
-- [ ] Editing: AAF/XML export, Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), Paste Mix, New Effects Clip, audio scrubbing, timeline in a new window, Bounce Selected Tracks
+- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), Paste Mix, New Effects Clip, audio scrubbing, timeline in a new window, Bounce Selected Tracks
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds; the Color page's scopes still measure on the interface thread (up to about 6 ms a frame)
@@ -70,4 +74,5 @@ Status at 0.4.0.
 - [ ] Linux: Flathub submission, for the project's owner: a pull request to flathub/flathub with the manifest. The linter's findings on it: the id `io.github.fabox_os.PicassoSuite` does not match the repository's name (`appid-url-not-reachable`: it looks for github.com/fabox-os/picassosuite, the repository is Picasso-Suite; changing the id would make it a new app for people with the current Flatpak, so the id stays and the request for an exception is written in `packaging/flathub/README.md`); the X11 + Wayland sockets (exception text in `packaging/flathub/README.md`); and a newer runtime (26.08)
 - [ ] Graphics: Vulkan on real cards: the check and the report form exist; the NVIDIA, Intel, AMD (Linux, Mesa), Apple and ARM GPUs need people to run `--graphics-check` and send it in
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
-- [ ] Interchange: OpenTimelineIO import, and OTIO export from `picasso-bridge`
+- [ ] Interchange: try the AAF in Media Composer, Pro Tools and Premiere, and the XML in Final Cut Pro 7, Premiere and Resolve (so far read back with pyaaf2 and checked for well-formed XML only)
+- [ ] Interchange: XML and AAF import; speed changes, reverse and freeze in AAF (written at normal speed for now); nested stacks in OTIO import; OTIO export from `picasso-bridge`

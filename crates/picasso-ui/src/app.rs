@@ -168,7 +168,10 @@ pub struct StudioApp {
 
 /// What a video or sound file says about itself (its media id is filled in when it is added).
 #[cfg(not(target_arch = "wasm32"))]
-fn probe_file(path: &str, sound_only: bool) -> Result<picasso_media::MediaMetadata, String> {
+pub(crate) fn probe_file(
+    path: &str,
+    sound_only: bool,
+) -> Result<picasso_media::MediaMetadata, String> {
     let path = std::path::Path::new(path);
     if sound_only {
         picasso_media::MediaMetadata::probe_audio(0, path)
@@ -776,6 +779,10 @@ impl StudioApp {
             self.import_edl(name, &String::from_utf8_lossy(&bytes));
             return;
         }
+        if lower.ends_with(".otio") {
+            self.import_otio(name, &String::from_utf8_lossy(&bytes));
+            return;
+        }
         if platform::is_resolve_name(name) {
             self.open_resolve_bytes(name, bytes);
             return;
@@ -843,7 +850,7 @@ impl StudioApp {
             self.open_resolve_bytes(&file.name, file.bytes);
             return;
         }
-        if platform::is_project_name(&file.name) {
+        if platform::is_project_name(&file.name) || platform::is_timeline_name(&file.name) {
             self.open_bytes(&file.name, file.path, file.bytes);
             return;
         }
@@ -919,12 +926,10 @@ impl StudioApp {
                 let (inbox, ctx) = (self.inbox.clone(), self.ctx.clone());
                 std::thread::spawn(move || {
                     for (file, sound_only) in rx {
-                        let probed = file
-                            .path
-                            .as_deref()
-                            .map_or_else(|| Err("the file has no path".to_string()), |p| {
-                                probe_file(p, sound_only)
-                            });
+                        let probed = file.path.as_deref().map_or_else(
+                            || Err("the file has no path".to_string()),
+                            |p| probe_file(p, sound_only),
+                        );
                         inbox.push(
                             &ctx,
                             Incoming::Probed {
@@ -1243,11 +1248,15 @@ impl StudioApp {
                 #[cfg(target_arch = "wasm32")]
                 Incoming::Probed { .. } => {}
                 #[cfg(not(target_arch = "wasm32"))]
-                Incoming::Resolved { name, read, epoch } => {
-                    self.finish_resolve(&name, read, epoch)
-                }
+                Incoming::Resolved { name, read, epoch } => self.finish_resolve(&name, read, epoch),
                 #[cfg(target_arch = "wasm32")]
                 Incoming::Resolved { .. } => {}
+                Incoming::OtioRead {
+                    name,
+                    timeline,
+                    probed,
+                    epoch,
+                } => self.finish_otio(&name, timeline, probed, epoch),
                 Incoming::CodecLabel { media, label } => {
                     self.codec_labels.insert(media, label);
                 }

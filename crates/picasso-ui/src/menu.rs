@@ -183,6 +183,10 @@ pub(crate) enum Act {
     NormalizeAudio,
     ExportEdl,
     ExportOtio,
+    /// The `xmeml` timeline format (true: named for the Premiere XML render preset, which
+    /// writes the same file).
+    ExportXml(bool),
+    ExportAaf,
     ImportTimeline,
     ExportSubtitles,
     CreateSubtitleTrack,
@@ -297,7 +301,8 @@ const FILE: &[Entry] = &[
         &[
             item("Timeline: EDL...", &[], Act::ExportEdl),
             item("Timeline: OpenTimelineIO...", &[], Act::ExportOtio),
-            planned("Timeline: AAF, XML...", ""),
+            item("Timeline: XML...", &[], Act::ExportXml(false)),
+            item("Timeline: AAF...", &[], Act::ExportAaf),
             item("Subtitle...", &[], Act::ExportSubtitles),
             planned("Bin...", ""),
             planned("Metadata from Media Pool...", ""),

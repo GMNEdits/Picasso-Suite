@@ -19,6 +19,7 @@ mod effects;
 mod fairlight;
 mod fps_prompt;
 mod icons;
+mod interchange;
 mod keyboard;
 mod keyframes_ui;
 mod layouts;

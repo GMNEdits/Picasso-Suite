@@ -343,6 +343,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "cfb"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a347dcabdae9c31b0825fd6a8bed285ec9c2acb89c47827126d52fa4f59cece3"
+dependencies = [
+ "fnv",
+ "uuid",
+ "web-time",
+]
+
+[[package]]
 name = "cfg-if"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -858,6 +869,12 @@ dependencies = [
  "miniz_oxide 0.9.1",
  "zlib-rs",
 ]
+
+[[package]]
+name = "fnv"
+version = "1.0.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
 
 [[package]]
 name = "foldhash"
@@ -2027,8 +2044,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
 
 [[package]]
+name = "picasso-aaf"
+version = "0.5.0"
+dependencies = [
+ "cfb",
+ "picasso-core",
+ "uuid",
+]
+
+[[package]]
 name = "picasso-audio"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "cpal",
  "picasso-core",
@@ -2038,14 +2064,14 @@ dependencies = [
 
 [[package]]
 name = "picasso-bridge"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "picasso-drp",
 ]
 
 [[package]]
 name = "picasso-color"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "serde",
  "serde_json",
@@ -2053,7 +2079,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-core"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "picasso-color",
  "serde",
@@ -2064,7 +2090,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-decode"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "ffmpeg-next",
  "thiserror 2.0.21",
@@ -2073,7 +2099,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-drp"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "flate2",
  "picasso-core",
@@ -2084,7 +2110,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-export"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "ffmpeg-next",
  "picasso-audio",
@@ -2097,7 +2123,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-media"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "picasso-decode",
  "rusqlite",
@@ -2106,7 +2132,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-render"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "ab_glyph",
  "image",
@@ -2116,7 +2142,7 @@ dependencies = [
 
 [[package]]
 name = "picasso-suite"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "eframe",
  "image",
@@ -2132,9 +2158,10 @@ dependencies = [
 
 [[package]]
 name = "picasso-ui"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "egui",
+ "picasso-aaf",
  "picasso-audio",
  "picasso-color",
  "picasso-core",
@@ -3001,6 +3028,10 @@ name = "uuid"
 version = "1.28.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7cc1186384beb7dd8eedea376413fd654937285ea6c9cfbb928dc3043ea4b606"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
+]
 
 [[package]]
 name = "vcpkg"
