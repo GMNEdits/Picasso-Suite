@@ -1374,6 +1374,13 @@ impl StudioApp {
 
             Act::About => self.show_about = true,
             #[cfg(not(target_arch = "wasm32"))]
+            Act::ExportLog => self.export_log(ctx),
+            // The browser build's messages are in the browser's console.
+            #[cfg(target_arch = "wasm32")]
+            Act::ExportLog => {
+                self.info("the browser's console (F12) holds this page's log")
+            }
+            #[cfg(not(target_arch = "wasm32"))]
             Act::CheckForUpdates => self.updater.check(ctx),
             // The browser build is the page itself: reloading it gets the latest version.
             #[cfg(target_arch = "wasm32")]

@@ -1,0 +1,39 @@
+name: macos-universal
+# Adds a universal macOS app (Apple silicon and Intel) to a release that has only the arm64 one:
+# the tag's own code is built by the `macos` workflow, and the zip is added to the release next
+# to its other packages, which stay as they are. Copies of 0.3.0 and later take it in Check for
+# Updates.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The release to add the universal app to (v0.4.0)
+        required: true
+      checks:
+        description: Run the Check for Updates and --version checks (0.4.0 and later have them)
+        type: boolean
+        default: true
+
+jobs:
+  macos:
+    uses: ./.github/workflows/macos.yml
+    with:
+      release_tag: ${{ inputs.tag }}
+      ref: ${{ inputs.tag }}
+      checks: ${{ inputs.checks }}
+
+  upload:
+    needs: macos
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pkg-macos-universal
+      - name: Add the universal app to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ls -l *-macos-universal.zip
+          gh release upload "${{ inputs.tag }}" *-macos-universal.zip --clobber -R "$GITHUB_REPOSITORY"

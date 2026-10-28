@@ -56,6 +56,8 @@ Status at 0.5.0.
 - [x] Playback: the timelines keep the width of a second at every frame rate (a 60 fps project ran 2.5 times faster across them); the Cut page's lower timeline keeps the playhead in the middle; the Edit page's source viewer decodes apart from the timeline, so it no longer blinks or slows playback of the same clip; long clips draw only their film strip and waveform on screen
 - [x] Interface: long clip names are cut with an ellipsis in the source viewer's header
 - [x] Help: Check for Updates installs as root without pkexec, and openSUSE's zypper is told the release's rpm is unsigned; `picasso-suite --update-from <package>` and `--version`
+- [x] Help: Help > Export Log File saves the session log, kept in memory (nothing written while the program runs); a crash writes a crash report, which the next export includes
+- [x] macOS: a universal app (Apple silicon and Intel, built on both and joined with lipo), from 0.5.0 and added to 0.3.0 and 0.4.0 (`macos-universal` workflow)
 
 ## To do
 
@@ -73,6 +75,6 @@ Status at 0.5.0.
 - [ ] Linux: native Wayland drag and drop: not possible yet. eframe 0.37 uses winit 0.30.13, which takes no files dropped on a Wayland window; winit's own work on it (rust-windowing/winit#4773 is open, #4009 was closed unmerged) is in no release, 0.31 is a beta. Until then the window opens through XWayland. Writing it here against Wayland's data device would be a second, untestable copy of what winit will do
 - [ ] Linux: Flathub submission, for the project's owner: a pull request to flathub/flathub with the manifest. The linter's findings on it: the id `io.github.fabox_os.PicassoSuite` does not match the repository's name (`appid-url-not-reachable`: it looks for github.com/fabox-os/picassosuite, the repository is Picasso-Suite; changing the id would make it a new app for people with the current Flatpak, so the id stays and the request for an exception is written in `packaging/flathub/README.md`); the X11 + Wayland sockets (exception text in `packaging/flathub/README.md`); and a newer runtime (26.08)
 - [ ] Graphics: Vulkan on real cards: the check and the report form exist; the NVIDIA, Intel, AMD (Linux, Mesa), Apple and ARM GPUs need people to run `--graphics-check` and send it in
-- [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried); an Intel Mac package
+- [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried)
 - [ ] Interchange: try the AAF in Media Composer, Pro Tools and Premiere, and the XML in Final Cut Pro 7, Premiere and Resolve (so far read back with pyaaf2 and checked for well-formed XML only)
 - [ ] Interchange: XML and AAF import; speed changes, reverse and freeze in AAF (written at normal speed for now); nested stacks in OTIO import; OTIO export from `picasso-bridge`

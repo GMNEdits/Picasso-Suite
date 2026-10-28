@@ -292,6 +292,8 @@ impl StudioApp {
             text: text.into(),
             error: false,
         };
+        #[cfg(not(target_arch = "wasm32"))]
+        crate::session_log::status(false, &self.status.text);
     }
 
     pub(crate) fn fail(&mut self, error: impl std::fmt::Display) {
@@ -299,6 +301,8 @@ impl StudioApp {
             text: error.to_string(),
             error: true,
         };
+        #[cfg(not(target_arch = "wasm32"))]
+        crate::session_log::status(true, &self.status.text);
     }
 
     // ----- commands -----

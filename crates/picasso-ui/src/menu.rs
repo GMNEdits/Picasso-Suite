@@ -205,6 +205,8 @@ pub(crate) enum Act {
     // Help
     About,
     CheckForUpdates,
+    /// Saves this session's log (see [`crate::session_log`]).
+    ExportLog,
     // Not in a menu
     LeaveViewer,
 }
@@ -860,6 +862,8 @@ const HELP: &[Entry] = &[
     item("Keyboard Customization", &[], Act::ShowShortcuts),
     SEP,
     item("Check for Updates...", &[], Act::CheckForUpdates),
+    SEP,
+    item("Export Log File...", &[], Act::ExportLog),
     SEP,
     item("About Picasso Suite", &[], Act::About),
 ];

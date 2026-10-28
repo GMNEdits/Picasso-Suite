@@ -302,58 +302,12 @@ jobs:
           name: pkg-flatpak-${{ matrix.arch }}
           path: ${{ env.PKG }}.flatpak
 
+  # A universal app (Apple silicon and Intel) and the arm64 one, built and checked on both kinds of
+  # Mac by the `macos` workflow (also used to add a universal app to an older release).
   macos:
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - run: brew install ffmpeg@7 dylibbundler
-      - run: |
-          export PKG_CONFIG_PATH="$(brew --prefix ffmpeg@7)/lib/pkgconfig"
-          cargo build --release -p picasso-suite -p picasso-bridge
-        env:
-          PICASSO_BUILD_COMMIT: ${{ github.sha }}
-      # Apple silicon only: Homebrew's FFmpeg on this runner is arm64.
-      - run: |
-          NAME="picasso-suite-${RELEASE_TAG#v}"
-          APP="Picasso Suite.app"
-          mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Frameworks"
-          cp target/release/picasso-suite target/release/picasso-bridge "$APP/Contents/MacOS/"
-          VERSION=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)
-          sed "s/0\.1\.0/$VERSION/g" packaging/macos/Info.plist > "$APP/Contents/Info.plist"
-          mkdir icon.iconset
-          for s in 16 32 64 128 256; do
-            sips -z $s $s assets/icon.png --out icon.iconset/icon_${s}x${s}.png
-          done
-          iconutil -c icns icon.iconset -o "$APP/Contents/Resources/icon.icns"
-          # FFmpeg and the libraries it needs go inside the app, so it runs without Homebrew.
-          dylibbundler -of -b -cd \
-            -x "$APP/Contents/MacOS/picasso-suite" \
-            -d "$APP/Contents/Frameworks" -p @executable_path/../Frameworks/
-          cp "$(brew --prefix ffmpeg@7)/LICENSE.md" "$APP/Contents/Resources/FFMPEG-LICENSE.md" || true
-          codesign --force --deep -s - "$APP"
-          otool -L "$APP/Contents/MacOS/picasso-suite"
-          if otool -L "$APP/Contents/MacOS/picasso-suite" | grep -E "/opt/homebrew|/usr/local/"; then exit 1; fi
-          ditto -c -k --keepParent "$APP" "$NAME-macos-arm64.zip"
-      # Help > Check for Updates replaces the app: a copy is unpacked and marked, then updated from
-      # the zip by the same code that installs a downloaded one. The marked app must be the one set
-      # aside (`.app.old`, deleted on the next start), and the new one must start.
-      - name: Check for Updates replaces the app
-        run: |
-          NAME="picasso-suite-${RELEASE_TAG#v}"
-          dir="$RUNNER_TEMP/installed"
-          mkdir -p "$dir"
-          ditto -x -k "$NAME-macos-arm64.zip" "$dir"
-          touch "$dir/Picasso Suite.app/Contents/Resources/old-copy"
-          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --update-from "$PWD/$NAME-macos-arm64.zip"
-          test -f "$dir/Picasso Suite.app.old/Contents/Resources/old-copy"
-          test ! -e "$dir/Picasso Suite.app/Contents/Resources/old-copy"
-          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --version | tee version.txt
-          grep -q "(${GITHUB_SHA:0:12})" version.txt
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pkg-macos
-          path: "*-macos-arm64.zip"
+    uses: ./.github/workflows/macos.yml
+    with:
+      release_tag: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.tag || 'check' }}
 
   windows:
     runs-on: windows-latest

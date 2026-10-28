@@ -1,0 +1,155 @@
+name: macos
+# The macOS app, called by `release` (every release) and `macos-universal` (an older tag): built
+# on Apple silicon and on Intel, each with its own Homebrew FFmpeg inside, then joined into one
+# universal app that runs natively on both. The arm64 zip is kept too: copies before 0.5.0 update
+# from it, and newer ones take the universal zip (see `crates/picasso-ui/src/update.rs`).
+on:
+  workflow_call:
+    inputs:
+      release_tag:
+        description: The tag the packages are named after (v0.5.0 gives picasso-suite-0.5.0-*)
+        type: string
+        required: true
+      ref:
+        description: The commit or tag to build (empty for the one that started the run)
+        type: string
+        default: ''
+      checks:
+        description: Run the Check for Updates and --version checks (0.4.0 and later have them)
+        type: boolean
+        default: true
+
+env:
+  RELEASE_TAG: ${{ inputs.release_tag }}
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-14
+          # The last Intel runner GitHub offers (until autumn 2027). Its Homebrew bottles are
+          # built for macOS 15, so the Intel half needs macOS 15 or later.
+          - arch: x86_64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: dtolnay/rust-toolchain@stable
+      - run: brew install ffmpeg@7 dylibbundler
+      - run: |
+          export PKG_CONFIG_PATH="$(brew --prefix ffmpeg@7)/lib/pkgconfig"
+          cargo build --release -p picasso-suite -p picasso-bridge
+        env:
+          PICASSO_BUILD_COMMIT: ${{ inputs.ref != '' && inputs.ref || github.sha }}
+      - name: Make the app
+        run: |
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          APP="Picasso Suite.app"
+          mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Frameworks"
+          cp target/release/picasso-suite target/release/picasso-bridge "$APP/Contents/MacOS/"
+          VERSION=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)
+          sed "s/0\.1\.0/$VERSION/g" packaging/macos/Info.plist > "$APP/Contents/Info.plist"
+          mkdir icon.iconset
+          for s in 16 32 64 128 256; do
+            sips -z $s $s assets/icon.png --out icon.iconset/icon_${s}x${s}.png
+          done
+          iconutil -c icns icon.iconset -o "$APP/Contents/Resources/icon.icns"
+          # FFmpeg and the libraries it needs go inside the app, so it runs without Homebrew.
+          dylibbundler -of -b -cd \
+            -x "$APP/Contents/MacOS/picasso-suite" \
+            -d "$APP/Contents/Frameworks" -p @executable_path/../Frameworks/
+          cp "$(brew --prefix ffmpeg@7)/LICENSE.md" "$APP/Contents/Resources/FFMPEG-LICENSE.md" || true
+          codesign --force --deep -s - "$APP"
+          otool -L "$APP/Contents/MacOS/picasso-suite"
+          if otool -L "$APP/Contents/MacOS/picasso-suite" | grep -E "/opt/homebrew|/usr/local/"; then exit 1; fi
+          ditto -c -k --keepParent "$APP" "$NAME-macos-${{ matrix.arch }}.zip"
+      # Help > Check for Updates replaces the app: a copy is unpacked and marked, then updated from
+      # the zip by the same code that installs a downloaded one. The marked app must be the one set
+      # aside (`.app.old`, deleted on the next start), and the new one must start.
+      - name: Check for Updates replaces the app
+        if: ${{ inputs.checks }}
+        run: |
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          dir="$RUNNER_TEMP/installed"
+          mkdir -p "$dir"
+          ditto -x -k "$NAME-macos-${{ matrix.arch }}.zip" "$dir"
+          touch "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --update-from "$PWD/$NAME-macos-${{ matrix.arch }}.zip"
+          test -f "$dir/Picasso Suite.app.old/Contents/Resources/old-copy"
+          test ! -e "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --version | tee version.txt
+          grep -q "(${GITHUB_SHA:0:12})" version.txt || [ -n "${{ inputs.ref }}" ]
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-macos-${{ matrix.arch }}
+          path: "*-macos-${{ matrix.arch }}.zip"
+
+  # The two apps joined: every program and library that both have becomes one file with both
+  # halves (lipo); one that only one of them has (Homebrew's builds can differ a little) is
+  # copied as it is, since only that half links to it.
+  universal:
+    needs: build
+    runs-on: macos-14
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: app-macos-*
+          merge-multiple: true
+      - name: Join the arm64 and x86_64 apps
+        run: |
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          mkdir arm x86
+          ditto -x -k "$NAME-macos-arm64.zip" arm
+          ditto -x -k "$NAME-macos-x86_64.zip" x86
+          A="arm/Picasso Suite.app"; X="x86/Picasso Suite.app"; U="Picasso Suite.app"
+          ditto "$A" "$U"
+          (cd "$X" && find . -type f) | while IFS= read -r f; do
+            u="$U/$f"; x="$X/$f"
+            if [ ! -e "$u" ]; then
+              mkdir -p "$(dirname "$u")"
+              cp -p "$x" "$u"
+            elif file -b "$x" | grep -q "Mach-O" && ! lipo -archs "$u" | grep -q x86_64; then
+              lipo -create "$u" "$x" -output "$u.joined"
+              mv "$u.joined" "$u"
+            fi
+          done
+          codesign --force --deep -s - "$U"
+          for f in "$U/Contents/MacOS/picasso-suite" "$U/Contents/MacOS/picasso-bridge"; do
+            echo "$f: $(lipo -archs "$f")"
+            lipo -archs "$f" | grep -q arm64
+            lipo -archs "$f" | grep -q x86_64
+          done
+          ditto -c -k --keepParent "$U" "$NAME-macos-universal.zip"
+      - name: The arm64 half starts
+        if: ${{ inputs.checks }}
+        run: |
+          ditto -x -k "picasso-suite-${RELEASE_TAG#v}-macos-universal.zip" check
+          "check/Picasso Suite.app/Contents/MacOS/picasso-suite" --version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkg-macos-universal
+          path: "*-macos-universal.zip"
+      # The arm64 zip is published too (copies before 0.5.0 on Apple silicon update from it).
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkg-macos-arm64
+          path: "*-macos-arm64.zip"
+
+  # The universal app on an Intel Mac: the x86_64 half starts and finds its libraries.
+  universal-on-intel:
+    needs: universal
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pkg-macos-universal
+      - run: |
+          ditto -x -k "picasso-suite-${RELEASE_TAG#v}-macos-universal.zip" check
+          BIN="check/Picasso Suite.app/Contents/MacOS/picasso-suite"
+          lipo -archs "$BIN"
+          otool -L "$BIN"
+          if [ "${{ inputs.checks }}" = "true" ]; then "$BIN" --version; fi

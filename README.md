@@ -24,12 +24,12 @@ Edit, Fusion, Color, Fairlight and Deliver pages. Windows, Linux and macOS.
 ## Status
 
 <!-- status:start -->
-![Status: 86.31% of the menu entries work, 75.36% of the roadmap is done](docs/status.svg)
+![Status: 86.36% of the menu entries work, 76.06% of the roadmap is done](docs/status.svg)
 
 | | Done | Total | |
 |---|---|---|---|
-| Menu entries | 227 | 263 | 86.31% |
-| Roadmap items* | 52 | 69 | 75.36% |
+| Menu entries | 228 | 264 | 86.36% |
+| Roadmap items* | 54 | 71 | 76.06% |
 
 Green is made, grey is not. Menu entries: every entry of every menu ([`Menu-Status.md`](Menu-Status.md)); the rest are shown disabled. \* Roadmap items ([`ROADMAP.md`](ROADMAP.md)): the to-do items are bigger than the done ones, so this share looks better than the work left. Made by `python3 scripts/status.py`.
 <!-- status:end -->
@@ -79,15 +79,16 @@ FFmpeg is included in all of them.
 
 | OS | Package | Install |
 |---|---|---|
-| Windows | `picasso-suite-0.2.1-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` |
-| macOS (Apple silicon) | `picasso-suite-0.2.1-macos-arm64.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) |
-| Debian/Ubuntu (22.04 or newer) | `picasso-suite-0.2.1-amd64.deb` | `sudo apt install ./picasso-suite-0.2.1-amd64.deb` |
-| Fedora/openSUSE | `picasso-suite-0.2.1-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.2.1-x86_64.rpm` (openSUSE: `sudo zypper install`) |
-| Any Linux | `picasso-suite-0.2.1.flatpak` | `flatpak install ./picasso-suite-0.2.1.flatpak` |
-| Any Linux (glibc 2.35 or newer), no install | `picasso-suite-0.2.1-x86_64.AppImage` | `chmod +x picasso-suite-0.2.1-x86_64.AppImage`, then run it |
-| Linux on ARM64 | `picasso-suite-0.2.1-arm64.deb`, `-aarch64.rpm`, `-aarch64.AppImage`, `-aarch64.flatpak` | as above |
+| Windows | `picasso-suite-0.5.0-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` |
+| macOS (Apple silicon and Intel) | `picasso-suite-0.5.0-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed); Intel Macs need macOS 15 or newer |
+| macOS (Apple silicon only) | `picasso-suite-0.5.0-macos-arm64.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) |
+| Debian/Ubuntu (22.04 or newer) | `picasso-suite-0.5.0-amd64.deb` | `sudo apt install ./picasso-suite-0.5.0-amd64.deb` |
+| Fedora/openSUSE | `picasso-suite-0.5.0-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.5.0-x86_64.rpm` (openSUSE: `sudo zypper install`) |
+| Any Linux | `picasso-suite-0.5.0.flatpak` | `flatpak install ./picasso-suite-0.5.0.flatpak` |
+| Any Linux (glibc 2.35 or newer), no install | `picasso-suite-0.5.0-x86_64.AppImage` | `chmod +x picasso-suite-0.5.0-x86_64.AppImage`, then run it |
+| Linux on ARM64 | `picasso-suite-0.5.0-arm64.deb`, `-aarch64.rpm`, `-aarch64.AppImage`, `-aarch64.flatpak` | as above |
 
-The ARM64 packages, the AppImage and the ARM64 Flatpak come with releases after 0.2.1.
+The ARM64 packages, the AppImage and the ARM64 Flatpak come with releases after 0.2.1; the universal macOS app with 0.3.0 and later.
 
 On Linux the packages add Picasso Suite to the applications menu, open `.picasso`, `.drp`, `.drt`
 and `.drb` files with it, and offer it under "Open With" for video files. On a Wayland desktop the
