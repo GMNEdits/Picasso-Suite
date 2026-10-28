@@ -820,7 +820,7 @@ impl StudioApp {
                 .iter()
                 .filter(|t| !t.locked)
                 .any(|t| t.clips.windows(2).any(|w| w[0].end() == w[1].start)),
-            Act::CreateCompound => self.has_selection(),
+            Act::CreateCompound | Act::BounceSelectedTracks => self.has_selection(),
             Act::DecomposeCompound => self.target_clip().is_some_and(|id| {
                 self.project()
                     .clip(id)
@@ -1425,6 +1425,7 @@ impl StudioApp {
             Act::AddOutsideNode => self.add_outside_node(),
             Act::TimelineFromBin => self.timeline_from_bin(),
             Act::BounceMix => self.bounce_mix(ctx),
+            Act::BounceSelectedTracks => self.bounce_tracks(ctx),
             Act::AddParallelNode => self.add_mode_node(picasso_color::NodeMode::Parallel),
             Act::AddLayerNode => self.add_mode_node(picasso_color::NodeMode::Layer),
             Act::LabelNode => self.open_label_dialog(),
