@@ -820,6 +820,7 @@ impl StudioApp {
         let mut lock = self.extra.position_lock;
         let mut follow = self.extra.selection_follows;
         let mut volume = self.monitor.volume;
+        let mut scrubbing = self.extra.prefs.audio_scrubbing;
         let mut hardware = self.extra.prefs.hardware_decoding;
         egui::Window::new("System Preferences")
             .open(&mut open)
@@ -841,6 +842,7 @@ impl StudioApp {
                     }
                 });
                 ui.add(egui::Slider::new(&mut volume, 0.0..=1.0).text("Monitor volume"));
+                ui.checkbox(&mut scrubbing, "Audio scrubbing (sound while the playhead is dragged)");
                 ui.separator();
                 ui.heading("Decode Options");
                 ui.checkbox(
@@ -874,8 +876,26 @@ impl StudioApp {
         if volume != self.monitor.volume {
             self.set_monitor(|m| m.volume = volume);
         }
+        self.set_audio_scrubbing(scrubbing);
         self.set_hardware_decoding(hardware);
         self.extra.preferences = open;
+    }
+
+    /// Turns audio scrubbing on or off (the Edit menu's entry, and System Preferences >
+    /// Playback), for this computer: with it on, dragging the playhead plays short pieces of the
+    /// sound as it moves.
+    pub(crate) fn set_audio_scrubbing(&mut self, on: bool) {
+        if on == self.extra.prefs.audio_scrubbing {
+            return;
+        }
+        self.extra.prefs.audio_scrubbing = on;
+        #[cfg(not(test))]
+        self.extra.prefs.save();
+        self.info(if on {
+            "Audio scrubbing is on: the sound follows the playhead as it is dragged"
+        } else {
+            "Audio scrubbing is off: dragging the playhead is silent"
+        });
     }
 
     /// Turns decoding on the graphics card on or off (System Preferences > Decode Options, and

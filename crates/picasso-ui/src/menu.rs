@@ -114,6 +114,7 @@ pub(crate) enum Act {
     LinkClips,
     UnlinkClips,
     ToggleLinkedSelection,
+    ToggleAudioScrubbing,
     AddSerialNode,
     ToggleNode,
     GoFirst,
@@ -516,7 +517,7 @@ const CLIP: &[Entry] = &[
     item("Link Clips", &["Ctrl+L"], Act::LinkClips),
     item("Unlink Audio and Video", &[], Act::UnlinkClips),
     SEP,
-    planned("Enable / Disable Audio Scrubbing", ""),
+    item("Enable / Disable Audio Scrubbing", &[], Act::ToggleAudioScrubbing),
     sub(
         "Auto Align Clips",
         &[

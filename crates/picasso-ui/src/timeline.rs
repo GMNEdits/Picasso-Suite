@@ -192,6 +192,12 @@ impl TimelineView {
         self.snap = on;
     }
 
+    /// Whether the playhead is being dragged by the ruler here: the sound follows it when Audio
+    /// Scrubbing is on.
+    pub(crate) fn scrubbing(&self) -> bool {
+        matches!(self.drag, Drag::Scrub { .. })
+    }
+
     /// The zoom as 0 (all the way out) to 1 (all the way in), for a slider.
     pub(crate) fn zoom_level(&self) -> f32 {
         (self.zoom.ln() - MIN_ZOOM.ln()) / (MAX_ZOOM.ln() - MIN_ZOOM.ln())
@@ -2364,6 +2370,25 @@ mod detail_tests {
         let mut drag = Drag::Scrub { scroll: 50.0 };
         assert_eq!(detail_scroll(&mut drag, true, true, 600.0, 100.0), 500.0);
         assert!(matches!(drag, Drag::None));
+    }
+
+    #[test]
+    fn the_ruler_drag_is_what_scrubs_the_sound() {
+        let mut view = TimelineView::new(Mode::Edit);
+        assert!(!view.scrubbing(), "nothing is being dragged");
+        view.drag = Drag::Scrub { scroll: 50.0 };
+        assert!(view.scrubbing(), "the ruler is being dragged");
+        view.drag = Drag::None;
+        assert!(!view.scrubbing());
+        // Moving a clip is not scrubbing.
+        view.drag = Drag::Move {
+            clip: ClipId(1),
+            grab: 0,
+            track: 0,
+            start: 10,
+            ok: true,
+        };
+        assert!(!view.scrubbing());
     }
 
     #[test]
