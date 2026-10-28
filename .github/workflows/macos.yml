@@ -69,9 +69,10 @@ jobs:
           ditto -c -k --keepParent "$APP" "$NAME-macos-${{ matrix.arch }}.zip"
       # Help > Check for Updates replaces the app: a copy is unpacked and marked, then updated from
       # the zip by the same code that installs a downloaded one. The marked app must be the one set
-      # aside (`.app.old`, deleted on the next start), and the new one must start.
+      # aside (`.app.old`, deleted on the next start), and the new one must start. Only the arm64
+      # zip is published as it is: an Intel Mac takes the universal zip (tried below).
       - name: Check for Updates replaces the app
-        if: ${{ inputs.checks }}
+        if: ${{ inputs.checks && matrix.arch == 'arm64' }}
         run: |
           NAME="picasso-suite-${RELEASE_TAG#v}"
           dir="$RUNNER_TEMP/installed"
@@ -124,11 +125,19 @@ jobs:
             lipo -archs "$f" | grep -q x86_64
           done
           ditto -c -k --keepParent "$U" "$NAME-macos-universal.zip"
-      - name: The arm64 half starts
+      # Check for Updates on Apple silicon installs the universal app, and its arm64 half starts.
+      - name: Check for Updates installs the universal app (Apple silicon)
         if: ${{ inputs.checks }}
         run: |
-          ditto -x -k "picasso-suite-${RELEASE_TAG#v}-macos-universal.zip" check
-          "check/Picasso Suite.app/Contents/MacOS/picasso-suite" --version
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          dir="$RUNNER_TEMP/installed"
+          mkdir -p "$dir"
+          ditto -x -k "$NAME-macos-universal.zip" "$dir"
+          touch "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --update-from "$PWD/$NAME-macos-universal.zip"
+          test -f "$dir/Picasso Suite.app.old/Contents/Resources/old-copy"
+          test ! -e "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --version
       - uses: actions/upload-artifact@v4
         with:
           name: pkg-macos-universal
@@ -139,7 +148,8 @@ jobs:
           name: pkg-macos-arm64
           path: "*-macos-arm64.zip"
 
-  # The universal app on an Intel Mac: the x86_64 half starts and finds its libraries.
+  # The universal app on an Intel Mac: Check for Updates installs it and the x86_64 half starts
+  # and finds its libraries (before 0.4.0 there is no --update-from or --version to try).
   universal-on-intel:
     needs: universal
     runs-on: macos-15-intel
@@ -147,9 +157,22 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: pkg-macos-universal
-      - run: |
-          ditto -x -k "picasso-suite-${RELEASE_TAG#v}-macos-universal.zip" check
-          BIN="check/Picasso Suite.app/Contents/MacOS/picasso-suite"
+      - name: The x86_64 half links only to the app's own libraries
+        run: |
+          ditto -x -k "picasso-suite-${RELEASE_TAG#v}-macos-universal.zip" look
+          BIN="look/Picasso Suite.app/Contents/MacOS/picasso-suite"
           lipo -archs "$BIN"
-          otool -L "$BIN"
-          if [ "${{ inputs.checks }}" = "true" ]; then "$BIN" --version; fi
+          otool -arch x86_64 -L "$BIN"
+          if otool -arch x86_64 -L "$BIN" | grep -E "/opt/homebrew|/usr/local/"; then exit 1; fi
+      - name: Check for Updates installs the universal app (Intel)
+        if: ${{ inputs.checks }}
+        run: |
+          NAME="picasso-suite-${RELEASE_TAG#v}"
+          dir="$RUNNER_TEMP/installed"
+          mkdir -p "$dir"
+          ditto -x -k "$NAME-macos-universal.zip" "$dir"
+          touch "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --update-from "$PWD/$NAME-macos-universal.zip"
+          test -f "$dir/Picasso Suite.app.old/Contents/Resources/old-copy"
+          test ! -e "$dir/Picasso Suite.app/Contents/Resources/old-copy"
+          "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --version
