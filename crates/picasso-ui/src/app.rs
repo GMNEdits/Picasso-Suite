@@ -1314,6 +1314,10 @@ impl StudioApp {
             ),
             self.playhead,
             normal_speed,
+            self.extra.prefs.audio_scrubbing
+                && (self.timeline.scrubbing()
+                    || self.cut_detail.scrubbing()
+                    || self.cut_overview.scrubbing()),
         );
         let (blocks, true_peak) = self.sound.loudness();
         if !self.loudness_paused {

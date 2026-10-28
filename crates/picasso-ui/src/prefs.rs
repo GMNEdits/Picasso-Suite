@@ -1,9 +1,10 @@
 //! The settings of this computer rather than of a project (System Preferences and Keyboard
-//! Customization), in `preferences.txt` in the data folder: a `hardware_decoding=on` line, and a
-//! `key<TAB>Undo<TAB>Ctrl+U` line for each command whose keys were changed, with the keys it has
-//! instead of the menus' (none: no key), and a `panels=147,457,1186,474,960,519` line with the sizes
-//! of the panels whose dividers were dragged (`crate::panels`). Lines that cannot be read are
-//! skipped, so a file from another version still opens.
+//! Customization), in `preferences.txt` in the data folder: `hardware_decoding=on` and
+//! `audio_scrubbing=on` lines, a `key<TAB>Undo<TAB>Ctrl+U` line for each command whose keys were
+//! changed, with the keys it has instead of the menus' (none: no key), and a
+//! `panels=147,457,1186,474,960,519` line with the sizes of the panels whose dividers were
+//! dragged (`crate::panels`). Lines that cannot be read are skipped, so a file from another
+//! version still opens.
 
 use std::collections::HashMap;
 
@@ -19,6 +20,9 @@ const MAX_LINES: usize = 4096;
 pub(crate) struct Preferences {
     /// Decode H.264, H.265, AV1, VP9, MPEG-2 and VC-1 on the graphics card where it can.
     pub hardware_decoding: bool,
+    /// Play short pieces of the sound while the playhead is dragged (the Edit menu's
+    /// "Enable / Disable Audio Scrubbing").
+    pub audio_scrubbing: bool,
     /// The commands whose keys were changed, and their keys.
     pub keys: HashMap<Act, Vec<String>>,
     /// The sizes of the panels on the pages.
@@ -29,6 +33,7 @@ impl Default for Preferences {
     fn default() -> Self {
         Self {
             hardware_decoding: true,
+            audio_scrubbing: true,
             keys: HashMap::new(),
             panels: Panels::default(),
         }
@@ -64,6 +69,7 @@ impl Preferences {
             } else if let Some((name, value)) = line.split_once('=') {
                 match name.trim() {
                     "hardware_decoding" => prefs.hardware_decoding = value.trim() != "off",
+                    "audio_scrubbing" => prefs.audio_scrubbing = value.trim() != "off",
                     "panels" => {
                         if let Some(panels) = parse_panels(value) {
                             let moved = std::mem::take(&mut prefs.panels.moved);
@@ -79,8 +85,9 @@ impl Preferences {
 
     pub(crate) fn text(&self) -> String {
         let mut out = format!(
-            "hardware_decoding={}\n",
-            if self.hardware_decoding { "on" } else { "off" }
+            "hardware_decoding={}\naudio_scrubbing={}\n",
+            if self.hardware_decoding { "on" } else { "off" },
+            if self.audio_scrubbing { "on" } else { "off" }
         );
         out.push_str(&panels_text(&self.panels));
         let mut keys: Vec<(String, &Vec<String>)> = self
@@ -184,6 +191,7 @@ mod tests {
     fn preferences_read_back_as_they_are_written() {
         let mut prefs = Preferences {
             hardware_decoding: false,
+            audio_scrubbing: false,
             ..Preferences::default()
         };
         prefs.keys.insert(Act::Undo, vec!["Ctrl+U".into()]);
@@ -195,7 +203,10 @@ mod tests {
             .keys
             .insert(Act::TogglePlay, vec!["K".into(), "Ctrl+[".into()]);
         let text = prefs.text();
-        assert!(text.starts_with("hardware_decoding=off\n"), "{text}");
+        assert!(
+            text.starts_with("hardware_decoding=off\naudio_scrubbing=off\n"),
+            "{text}"
+        );
         assert_eq!(Preferences::parse(&text), prefs);
         // Windows line ends, too.
         assert_eq!(Preferences::parse(&text.replace('\n', "\r\n")), prefs);

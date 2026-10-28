@@ -2164,6 +2164,25 @@ fn hardware_decoding_is_switched_from_the_playback_menu() {
 }
 
 #[test]
+fn audio_scrubbing_is_switched_from_the_edit_menu() {
+    let mut app = app();
+    assert_eq!(app.act_checked(Act::ToggleAudioScrubbing), Some(true));
+    act(&mut app, Act::ToggleAudioScrubbing);
+    assert_eq!(app.act_checked(Act::ToggleAudioScrubbing), Some(false));
+    assert!(!app.extra.prefs.audio_scrubbing);
+    assert!(app.status.text.contains("off"), "{}", app.status.text);
+    // It is a preference, so it is written down for the next run.
+    assert!(
+        app.extra.prefs.text().contains("audio_scrubbing=off"),
+        "{}",
+        app.extra.prefs.text()
+    );
+    act(&mut app, Act::ToggleAudioScrubbing);
+    assert!(app.extra.prefs.audio_scrubbing);
+    assert!(app.status.text.contains("on"), "{}", app.status.text);
+}
+
+#[test]
 fn a_resolve_file_read_late_does_not_replace_a_project_opened_meanwhile() {
     let mut app = app();
     let xml = r#"<?xml version="1.0"?><xmeml><sequence><name>Cut 1</name>
