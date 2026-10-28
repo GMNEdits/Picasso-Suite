@@ -70,6 +70,13 @@ pub(crate) enum Incoming {
         /// The app's epoch when it was asked for: another project opened since wins.
         epoch: u64,
     },
+    /// Another editor's timeline file, read in the background because it is large.
+    TimelineRead {
+        name: String,
+        read: Result<picasso_core::otio::OtioTimeline, String>,
+        /// The app's epoch when it was asked for: another project opened since wins.
+        epoch: u64,
+    },
     /// The codec of a video, read from its file in the background (desktop only).
     CodecLabel {
         media: picasso_core::MediaId,
@@ -238,7 +245,7 @@ pub(crate) fn fit_picture(image: picasso_render::Decoded) -> picasso_render::Dec
 /// Timelines and subtitles from other programs, opened as the project's files are.
 pub(crate) fn is_timeline_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
-    [".otio", ".edl", ".srt", ".vtt"]
+    [".otio", ".aaf", ".edl", ".srt", ".vtt"]
         .iter()
         .any(|e| lower.ends_with(e))
 }
@@ -256,6 +263,8 @@ pub(crate) fn pick_project(inbox: Inbox, ctx: egui::Context) {
             .add_filter("DaVinci Resolve project", &RESOLVE_EXTENSIONS)
             .add_filter("Edit decision list", &["edl"])
             .add_filter("OpenTimelineIO", &["otio"])
+            .add_filter("Final Cut Pro 7 / Premiere XML", &["xml"])
+            .add_filter("AAF", &["aaf"])
             .add_filter("Subtitles", &["srt", "vtt"])
             .pick_file()
             .await

@@ -10,6 +10,8 @@ rust-version.workspace = true
 picasso-color.workspace = true
 serde.workspace = true
 serde_json.workspace = true
+# Final Cut Pro 7 / Premiere XML import (`xmeml::read_xmeml`); picasso-drp uses the same.
+quick-xml = "0.41"  # MIT
 thiserror.workspace = true
 tracing.workspace = true
 

@@ -783,8 +783,21 @@ impl StudioApp {
             self.import_edl(name, &String::from_utf8_lossy(&bytes));
             return;
         }
+        use crate::interchange::TimelineFile;
         if lower.ends_with(".otio") {
-            self.import_otio(name, &String::from_utf8_lossy(&bytes));
+            self.import_timeline_file(name, TimelineFile::Otio, bytes);
+            return;
+        }
+        if lower.ends_with(".aaf") {
+            self.import_timeline_file(name, TimelineFile::Aaf, bytes);
+            return;
+        }
+        // A Final Cut Pro 7 / Premiere sequence (Resolve exports the same) is imported as a
+        // timeline; other XML files are read as Resolve's, for their media.
+        if lower.ends_with(".xml")
+            && picasso_core::xmeml::is_xmeml_timeline(&String::from_utf8_lossy(&bytes))
+        {
+            self.import_timeline_file(name, TimelineFile::Xml, bytes);
             return;
         }
         if platform::is_resolve_name(name) {
@@ -850,11 +863,10 @@ impl StudioApp {
             self.apply_lut(&file.name, &file.bytes);
             return;
         }
-        if platform::is_resolve_name(&file.name) {
-            self.open_resolve_bytes(&file.name, file.bytes);
-            return;
-        }
-        if platform::is_project_name(&file.name) || platform::is_timeline_name(&file.name) {
+        if platform::is_project_name(&file.name)
+            || platform::is_timeline_name(&file.name)
+            || platform::is_resolve_name(&file.name)
+        {
             self.open_bytes(&file.name, file.path, file.bytes);
             return;
         }
@@ -1261,6 +1273,15 @@ impl StudioApp {
                     probed,
                     epoch,
                 } => self.finish_otio(&name, timeline, probed, epoch),
+                Incoming::TimelineRead { name, read, epoch } => {
+                    if epoch == self.epoch {
+                        self.import_read_timeline(&name, read);
+                    } else {
+                        self.info(format!(
+                            "{name} was not imported: another project was opened while it was read"
+                        ));
+                    }
+                }
                 Incoming::CodecLabel { media, label } => {
                     self.codec_labels.insert(media, label);
                 }

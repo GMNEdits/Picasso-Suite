@@ -29,6 +29,9 @@ use cfb::CompoundFile;
 use picasso_core::{Clip, MediaId, MediaSource, Project, TrackKind};
 use uuid::Uuid;
 
+mod read;
+pub use read::read_aaf;
+
 /// The file, and what could not be carried.
 pub struct Written {
     pub bytes: Vec<u8>,

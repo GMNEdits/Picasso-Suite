@@ -2440,3 +2440,87 @@ fn bounce_selected_tracks_takes_the_tracks_of_the_selected_clips() {
     let tracks = app.bounced_tracks();
     assert_eq!(tracks, vec![app.project().tracks[0].id]);
 }
+
+#[test]
+fn xml_and_aaf_timelines_come_back_as_new_timelines() {
+    for format in ["xml", "aaf"] {
+        let mut app = app();
+        let Some(Outcome::Media(m)) = app.run(Command::AddMedia {
+            name: "shot".into(),
+            source: picasso_core::MediaSource::Video {
+                path: "/films/shot.mov".into(),
+            },
+            length: Some(1000),
+            default_duration: 96,
+        }) else {
+            panic!("media");
+        };
+        let v2 = app.project().tracks[1].id;
+        let Some(Outcome::Track(a1)) = app.run(Command::AddTrack {
+            kind: TrackKind::Audio,
+        }) else {
+            panic!("track");
+        };
+        // The video on V2 and its sound on A1, at the same place.
+        for track in [v2, a1] {
+            let Some(Outcome::Clip(c)) = app.run(Command::AddClip {
+                track,
+                media: m,
+                start: 10,
+                duration: Some(40),
+                with_sound: false,
+            }) else {
+                panic!("clip");
+            };
+            app.run(Command::SlipClip {
+                clip: c,
+                source_in: 100,
+            });
+        }
+        let timelines = app.project().timelines.len();
+        let bytes = match format {
+            "xml" => picasso_core::xmeml::to_xmeml(app.project()).text.into_bytes(),
+            _ => picasso_aaf::to_aaf(app.project()).unwrap().bytes,
+        };
+        app.open_bytes(&format!("Cut v3.{format}"), None, bytes);
+        assert!(!app.status.error, "{format}: {}", app.status.text);
+        assert_eq!(app.project().timelines.len(), timelines + 1, "{format}");
+        let place = |c: &picasso_core::Clip| (c.start, c.duration, c.source_in, c.media);
+        let v2 = &app.project().tracks[1];
+        assert_eq!(
+            v2.clips.iter().map(place).collect::<Vec<_>>(),
+            [(10, 40, 100, m)],
+            "{format}: the file is matched by its path"
+        );
+        let a1 = app
+            .project()
+            .tracks
+            .iter()
+            .find(|t| t.kind == TrackKind::Audio)
+            .unwrap();
+        let sound = a1.clips.iter().find(|c| c.media == m).unwrap();
+        assert_eq!(place(sound), (10, 40, 100, m), "{format}");
+        // The picture and its sound come back linked, so the sound is heard once.
+        assert!(v2.clips[0].link.is_some(), "{format}");
+        assert_eq!(v2.clips[0].link, sound.link, "{format}");
+        app.undo();
+        assert_eq!(app.project().timelines.len(), timelines, "{format}: one undo");
+    }
+}
+
+#[test]
+fn an_xml_file_that_is_not_a_sequence_is_not_imported_as_one() {
+    let mut app = app();
+    let timelines = app.project().timelines.len();
+    app.open_bytes(
+        "empty.xml",
+        None,
+        b"<?xml version=\"1.0\"?><xmeml version=\"5\"><sequence><name>S</name><media><video><track/></video></media></sequence></xmeml>"
+            .to_vec(),
+    );
+    assert_eq!(app.project().timelines.len(), timelines);
+    app.open_bytes("broken.aaf", None, b"not an aaf".to_vec());
+    assert!(app.status.error, "{}", app.status.text);
+    assert!(app.status.text.contains("AAF"), "{}", app.status.text);
+    assert_eq!(app.project().timelines.len(), timelines);
+}

@@ -279,7 +279,14 @@ pub fn path_of_url(url: &str) -> Option<String> {
         None => return (!url.is_empty()).then(|| url.to_string()),
     };
     // `file://localhost/x` and `file:///x` name the same file.
-    let rest = rest.strip_prefix("localhost").unwrap_or(rest);
+    let rest = match rest.strip_prefix("localhost") {
+        Some(r) if r.is_empty() || r.starts_with('/') => r,
+        _ => rest,
+    };
+    // `file://server/share/x` names another computer: it is the network path `//server/share/x`
+    // (which is not opened without asking), never `server/share/x` beside the program. A drive
+    // written without the slash (`file://C:/x`) is the drive.
+    let host = !rest.is_empty() && !rest.starts_with('/') && rest.as_bytes().get(1) != Some(&b':');
     let bytes = rest.as_bytes();
     let mut out = Vec::with_capacity(bytes.len());
     let mut i = 0;
@@ -301,6 +308,9 @@ pub fn path_of_url(url: &str) -> Option<String> {
         }
     }
     let path = String::from_utf8_lossy(&out).into_owned();
+    if host {
+        return Some(format!("//{path}"));
+    }
     // `/C:/x` is a Windows path.
     Some(match path.strip_prefix('/') {
         Some(win) if win.as_bytes().get(1) == Some(&b':') => win.to_string(),
@@ -844,6 +854,12 @@ mod tests {
             .unwrap();
         assert!(a1.muted);
         assert_eq!(a1.clips.len(), 1, "a video's sound fits an audio track");
+        // The picture on V3 and the sound on A1 are the same file at the same place: they are
+        // linked, so the picture's own sound is not heard as well.
+        let (picture, sound) = (&video[2].clips[0], &a1.clips[0]);
+        assert!(picture.link.is_some());
+        assert_eq!(picture.link, sound.link);
+        assert!(video[0].clips.iter().all(|c| c.link.is_none()), "nothing else is");
         let frames: Vec<u64> = p.markers.iter().map(|m| m.frame).collect();
         assert_eq!(frames, [3, 9]);
         assert!(p.markers.iter().all(|m| m.color < crate::MARKER_COLORS));
@@ -878,6 +894,17 @@ mod tests {
             path_of_url("file:///a/100%.mov").as_deref(),
             Some("/a/100%.mov")
         );
+        // A host is another computer: a network path, which the decoder refuses to open
+        // unasked, never a path relative to wherever the program runs.
+        assert_eq!(
+            path_of_url("file://server/share/x.mov").as_deref(),
+            Some("//server/share/x.mov")
+        );
+        assert_eq!(
+            path_of_url("file://localhostile/x.mov").as_deref(),
+            Some("//localhostile/x.mov")
+        );
+        assert_eq!(path_of_url("file://C:/x.mov").as_deref(), Some("C:/x.mov"));
     }
 
     #[test]

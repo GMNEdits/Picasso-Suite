@@ -290,9 +290,10 @@ jobs:
           path: ${{ env.PKG }}.flatpak
       # Help > Check for Updates inside the sandbox: the bundle is installed for this user, then
       # the program installs it again through the host's flatpak (flatpak-spawn --host), as it
-      # does with a downloaded one. It needs a session bus for that. On the runner the sandbox
-      # may not talk to org.freedesktop.Flatpak (the permission Flathub has to grant), so a
-      # failure here is shown in the run but does not keep the bundle out of the release.
+      # does with a downloaded one. flatpak-spawn --host asks org.freedesktop.Flatpak on the
+      # session bus, which a desktop session starts from flatpak-session-helper's D-Bus service
+      # file; the container has the helper but its session bus does not know the service, so
+      # the test's bus is given one. Until this has passed on a release it stays non-blocking.
       - name: Check for Updates reinstalls the Flatpak
         continue-on-error: true
         run: |
@@ -301,9 +302,15 @@ jobs:
           flatpak install --user -y --noninteractive "$PKG.flatpak"
           mkdir -p "$HOME/update-test"
           cp "$PKG.flatpak" "$HOME/update-test/"
-          dbus-run-session -- flatpak run --user "$ID" --update-from "$HOME/update-test/$PKG.flatpak"
+          helper=$(command -v flatpak-session-helper || ls /usr/libexec/flatpak-session-helper /usr/lib/flatpak/flatpak-session-helper /usr/lib/*/flatpak/flatpak-session-helper 2>/dev/null | head -n 1)
+          if [ -z "$helper" ]; then echo "flatpak-session-helper is not in this container"; exit 1; fi
+          mkdir -p "$HOME/dbus/services"
+          printf '[D-BUS Service]\nName=org.freedesktop.Flatpak\nExec=%s\n' "$helper" > "$HOME/dbus/services/org.freedesktop.Flatpak.service"
+          printf '<!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-Bus Bus Configuration 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">\n<busconfig><include>/usr/share/dbus-1/session.conf</include><servicedir>%s</servicedir></busconfig>\n' "$HOME/dbus/services" > "$HOME/dbus/session.conf"
+          bus="dbus-run-session --config-file=$HOME/dbus/session.conf --"
+          $bus flatpak run --user "$ID" --update-from "$HOME/update-test/$PKG.flatpak"
           flatpak list --user --app | grep "$ID"
-          dbus-run-session -- flatpak run --user "$ID" --version | tee version.txt
+          $bus flatpak run --user "$ID" --version | tee version.txt
           grep -q "(${GITHUB_SHA:0:12})" version.txt
 
   # A universal app (Apple silicon and Intel) and the arm64 one, built and checked on both kinds of

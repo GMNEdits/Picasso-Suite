@@ -2440,7 +2440,18 @@ fn import_timeline(
                 _ => break,
             },
         };
-        for c in imported.clips {
+        // The clips are taken in time order, and one fits when it starts at or after the end of
+        // the one kept before it: a sort for the track, rather than a search of the track and a
+        // sort for every clip, which a file of many clips made slow enough to hang the window.
+        // The track is the new timeline's, so it starts empty (anything on it is kept before).
+        let mut clips = imported.clips;
+        clips.sort_by_key(|c| c.start);
+        let mut end = q
+            .track(track)
+            .and_then(|t| t.clips.iter().map(Clip::end).max())
+            .unwrap_or(0);
+        let mut placed: Vec<Clip> = Vec::with_capacity(clips.len());
+        for c in clips {
             let Some(item) = q.media(c.media) else {
                 continue;
             };
@@ -2458,17 +2469,23 @@ fn import_timeline(
                 && item
                     .length
                     .is_none_or(|l| c.source_in.saturating_add(clip.source_span()) <= l);
-            if !fits || !q.can_place(track, clip.start, clip.duration, None) {
+            let clip_end = clip.start.checked_add(clip.duration);
+            let free = clip.duration > 0
+                && clip.start >= end
+                && clip_end.is_some_and(|e| e <= MAX_FRAMES);
+            if !fits || !free {
                 continue;
             }
+            end = clip_end.unwrap_or(end);
             clip.transition = c
                 .transition
                 .filter(|t| (2..=crate::MAX_TRANSITION).contains(&t.frames));
             clip.id = ClipId(q.fresh_id());
-            if let Some(t) = q.track_mut(track) {
-                t.clips.push(clip);
-                sort_clips(t);
-            }
+            placed.push(clip);
+        }
+        if let Some(t) = q.track_mut(track) {
+            t.clips.extend(placed);
+            sort_clips(t);
         }
         if imported.muted {
             if let Some(t) = q.track_mut(track) {
@@ -2476,6 +2493,7 @@ fn import_timeline(
             }
         }
     }
+    link_imported_sound(&mut q);
     let mut markers: Vec<Marker> = markers
         .into_iter()
         .filter(|m| m.frame < MAX_FRAMES)
@@ -2490,6 +2508,50 @@ fn import_timeline(
     q.markers = markers;
     *p = q;
     Ok(Outcome::Nothing)
+}
+
+/// Links each picture of an imported timeline to the sound clips of the same file at the same
+/// place (start, length and in point), as the timeline links a video and its sound: other
+/// editors keep a video's sound on a track of its own, and unlinked the picture would play its
+/// sound too, so it was heard twice.
+fn link_imported_sound(q: &mut Project) {
+    use std::collections::HashMap;
+    type Place = (MediaId, u64, u64, u64);
+    let place = |c: &Clip| -> Place { (c.media, c.start, c.duration, c.source_in) };
+    // The sound clips by place, then each picture takes those at its place: one pass over the
+    // clips each way, however many there are.
+    let mut sounds: HashMap<Place, Vec<ClipId>> = HashMap::new();
+    for c in q
+        .tracks
+        .iter()
+        .filter(|t| t.kind == TrackKind::Audio)
+        .flat_map(|t| &t.clips)
+        .filter(|c| c.link.is_none())
+    {
+        sounds.entry(place(c)).or_default().push(c.id);
+    }
+    let pictures: Vec<(ClipId, Place)> = q
+        .tracks
+        .iter()
+        .filter(|t| t.kind == TrackKind::Video)
+        .flat_map(|t| &t.clips)
+        .filter(|c| c.link.is_none())
+        .map(|c| (c.id, place(c)))
+        .collect();
+    let mut links: HashMap<ClipId, u64> = HashMap::new();
+    for (picture, at) in pictures {
+        let Some(partners) = sounds.remove(&at) else {
+            continue;
+        };
+        let link = q.fresh_id();
+        links.insert(picture, link);
+        links.extend(partners.into_iter().map(|id| (id, link)));
+    }
+    for c in q.tracks.iter_mut().flat_map(|t| t.clips.iter_mut()) {
+        if let Some(link) = links.get(&c.id) {
+            c.link = Some(*link);
+        }
+    }
 }
 
 fn switch_timeline(p: &mut Project, id: u64) -> Result<Outcome, EditError> {

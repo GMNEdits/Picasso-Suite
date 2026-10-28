@@ -1,6 +1,6 @@
-//! Timelines to and from other editors: OpenTimelineIO import (File > Import > Timeline with an
-//! `.otio` file) and the Final Cut Pro 7 / Premiere XML and AAF exports (File > Export, and the
-//! Deliver page's presets of the same names).
+//! Timelines to and from other editors: OpenTimelineIO, Final Cut Pro 7 / Premiere XML and AAF
+//! import (File > Import > Timeline, or a dropped `.otio`, `.xml` or `.aaf` file) and the XML
+//! and AAF exports (File > Export, and the Deliver page's presets of the same names).
 //!
 //! An imported timeline goes on a new timeline of the project, as one edit. Its clips are matched
 //! to the media pool by the path of their file, then by name; files that are not in the pool are
@@ -28,6 +28,19 @@ pub(crate) type Probed = (String, bool, Result<(), String>);
 
 /// The most files of one timeline imported into the pool (the rest are listed offline).
 const MAX_IMPORTED: usize = 200;
+
+/// Timeline files larger than this are read on a thread of their own (a feature-length edit's
+/// XML or AAF is several megabytes); smaller ones are read at once.
+#[cfg(not(target_arch = "wasm32"))]
+const READ_IN_BACKGROUND: usize = 1024 * 1024;
+
+/// The kinds of other editors' timeline files that are imported.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum TimelineFile {
+    Otio,
+    Xml,
+    Aaf,
+}
 
 /// A path as it is compared: forward slashes, any case.
 fn same_path(path: &str) -> String {
@@ -164,10 +177,50 @@ impl StudioApp {
         }
     }
 
-    /// Reads an OpenTimelineIO file onto a new timeline. The videos and sounds it uses that are
-    /// not in the pool are read in the background first; `finish_otio` goes on with them.
-    pub(crate) fn import_otio(&mut self, name: &str, text: &str) {
-        let timeline = match picasso_core::otio::read_otio(text, self.project().fps) {
+    /// Reads another editor's timeline file onto a new timeline: an OpenTimelineIO file, a Final
+    /// Cut Pro 7 / Premiere / Resolve XML sequence, or an AAF composition (Avid Media Composer,
+    /// Pro Tools, Premiere, Resolve). A large file is read on a thread of its own, so the window
+    /// does not wait for it; `import_read_timeline` goes on with what was read.
+    pub(crate) fn import_timeline_file(&mut self, name: &str, format: TimelineFile, bytes: Vec<u8>) {
+        let fps = self.project().fps;
+        let size = bytes.len();
+        let read = move || match format {
+            TimelineFile::Otio => {
+                picasso_core::otio::read_otio(&String::from_utf8_lossy(&bytes), fps)
+            }
+            TimelineFile::Xml => {
+                picasso_core::xmeml::read_xmeml(&String::from_utf8_lossy(&bytes), fps)
+            }
+            TimelineFile::Aaf => picasso_aaf::read_aaf(&bytes, fps),
+        };
+        #[cfg(not(target_arch = "wasm32"))]
+        if size > READ_IN_BACKGROUND {
+            self.info(format!("Reading {name}..."));
+            let (name, inbox, ctx, epoch) = (
+                name.to_string(),
+                self.inbox.clone(),
+                self.ctx.clone(),
+                self.epoch,
+            );
+            std::thread::spawn(move || {
+                let read = read();
+                inbox.push(&ctx, Incoming::TimelineRead { name, read, epoch });
+            });
+            return;
+        }
+        let _ = size;
+        self.import_read_timeline(name, read());
+    }
+
+    /// Puts a timeline read from another editor's file on a new timeline. The videos and sounds
+    /// it uses that are not in the pool are read in the background first; `finish_otio` goes on
+    /// with them.
+    pub(crate) fn import_read_timeline(&mut self, name: &str, read: Result<OtioTimeline, String>) {
+        let timeline = match read {
+            Ok(t) if t.tracks.iter().all(|t| t.clips.is_empty()) => {
+                self.fail(format!("{name}: the timeline has no clips to import"));
+                return;
+            }
             Ok(t) => t,
             Err(e) => {
                 self.fail(format!("{name}: {e}"));

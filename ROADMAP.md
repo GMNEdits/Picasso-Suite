@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.5.0, with what is on `main` since (see the changelog's Unreleased section).
+Status at 0.6.0.
 
 ## Done
 
@@ -62,7 +62,8 @@ Status at 0.5.0, with what is on `main` since (see the changelog's Unreleased se
 - [x] Audio: Clip > Enable / Disable Audio Scrubbing (a tenth of a second of the mix at each new place of a playhead dragged by the ruler, on every timeline; kept in the preferences); Audio > Bounce Selected Tracks
 - [x] Edit timeline: the track headers' lock, mute and solo buttons take clicks; bigger names and buttons; the tracks that do not fit are scrolled to (wheel and a bar at the right edge) instead of squeezed
 - [x] Color page: the mini timeline's ruler does not repeat a time on an empty or short timeline
-- [x] Graphics: `--graphics-check` says whether video decodes on the graphics card, and why not (on Linux, a missing VA-API driver); no false CUDA and VA-API errors at start; the .deb recommends Intel's VA-API driver too
+- [x] Graphics: `--graphics-check` says whether video decodes on the graphics card, and why not (on Linux, a missing VA-API driver); no false CUDA and VA-API errors at start; the .deb and .rpm recommend Intel's VA-API driver too
+- [x] Interchange: Final Cut Pro 7 / Premiere / Resolve XML and AAF import (File > Import > Timeline, or a dropped `.xml` or `.aaf`): a new timeline, clips matched to the pool by path then name, files imported or kept offline, gaps, dissolves, speed, reverse and freeze (XML), stereo pairs heard once, any frame rate; an imported picture and its sound are linked, so the sound is heard once (OTIO too)
 
 ## To do
 
@@ -81,5 +82,5 @@ Status at 0.5.0, with what is on `main` since (see the changelog's Unreleased se
 - [ ] Linux: Flathub submission, for the project's owner: a pull request to flathub/flathub with the manifest. The linter's findings on it: the id `io.github.fabox_os.PicassoSuite` does not match the repository's name (`appid-url-not-reachable`: it looks for github.com/fabox-os/picassosuite, the repository is Picasso-Suite; changing the id would make it a new app for people with the current Flatpak, so the id stays and the request for an exception is written in `packaging/flathub/README.md`); the X11 + Wayland sockets (exception text in `packaging/flathub/README.md`); and a newer runtime (26.08)
 - [ ] Graphics: Vulkan on real cards: the check and the report form exist; the NVIDIA, Intel, AMD (Linux, Mesa), Apple and ARM GPUs need people to run `--graphics-check` and send it in
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried)
-- [ ] Interchange: try the AAF in Media Composer, Pro Tools and Premiere, and the XML in Final Cut Pro 7, Premiere and Resolve (so far read back with pyaaf2 and checked for well-formed XML only)
-- [ ] Interchange: XML and AAF import; speed changes, reverse and freeze in AAF (written at normal speed for now); nested stacks in OTIO import; OTIO export from `picasso-bridge`
+- [ ] Interchange: try the AAF in Media Composer, Pro Tools and Premiere, and the XML in Final Cut Pro 7, Premiere and Resolve (CI checks every export with pyaaf2 and an XML parser, and the AAF reader reads an Avid-style file written by pyaaf2; the editors themselves need testers)
+- [ ] Interchange: speed changes, reverse and freeze in AAF (written at normal speed, read without them), markers in AAF, nested sequences in OTIO, XML and AAF imports; OTIO export from `picasso-bridge`

@@ -21,7 +21,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends \
-            build-essential ca-certificates curl git pkg-config python3 \
+            build-essential ca-certificates curl git pkg-config python3 python3-venv \
             clang-19 libclang-19-dev \
             libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libswresample-dev \
             libxkbcommon-dev libgl1-mesa-dev libwayland-dev libx11-dev \
@@ -45,3 +45,16 @@ jobs:
         env:
           LIBCLANG_PATH: /usr/lib/llvm-19/lib
         run: cargo test --workspace
+      - name: Other programs read the AAF and XML this one writes
+        # pyaaf2 (the AAF library OpenTimelineIO's adapter uses) follows every clip of the test
+        # timeline's AAF to its file, and Python's XML parser checks the XML the way Final Cut
+        # Pro 7 and Premiere read it (scripts/check_interchange.py).
+        env:
+          LIBCLANG_PATH: /usr/lib/llvm-19/lib
+        run: |
+          python3 -m venv /tmp/readers
+          /tmp/readers/bin/pip install --quiet pyaaf2==1.7.1
+          PICASSO_AAF_SAMPLE=/tmp/timeline.aaf cargo test -q -p picasso-aaf sample_for_other_readers
+          PICASSO_XML_SAMPLE=/tmp/timeline.xml cargo test -q -p picasso-core sample_for_other_readers
+          /tmp/readers/bin/python scripts/check_interchange.py aaf /tmp/timeline.aaf
+          python3 scripts/check_interchange.py xml /tmp/timeline.xml

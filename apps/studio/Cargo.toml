@@ -101,9 +101,15 @@ assets = [
     { source = "../../dist/icons/128.png", dest = "/usr/share/icons/hicolor/128x128/apps/io.github.fabox_os.PicassoSuite.png", mode = "644" },
 ]
 
+# Weak dependencies: dnf and zypper install them when they exist and skip a name the system does
+# not have, so each VA-API driver is named as each system calls it (Intel's: Fedora's
+# libva-intel-media-driver, openSUSE's intel-media-driver; AMD's: mesa-va-drivers).
 [package.metadata.generate-rpm.recommends]
 vulkan-loader = "*"
 libva = "*"
+libva-intel-media-driver = "*"
+intel-media-driver = "*"
+mesa-va-drivers = "*"
 curl = "*"
 
 # Required by library name (soname), which Fedora and openSUSE both provide under their own
