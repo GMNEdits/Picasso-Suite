@@ -724,6 +724,58 @@ impl StudioApp {
         out
     }
 
+    /// Remembers the track under a right click in the header column, for `track_header_menu`.
+    fn remember_for_menu(
+        &mut self,
+        ui: &mut Ui,
+        resp: &egui::Response,
+        geo: &Geo,
+        menu_id: egui::Id,
+    ) {
+        if resp.secondary_clicked() {
+            let under = resp
+                .interact_pointer_pos()
+                .and_then(|p| geo.track_at(p.y))
+                .and_then(|i| self.project().tracks.get(i).map(|t| t.id));
+            ui.data_mut(|d| d.insert_temp(menu_id, under));
+        }
+    }
+
+    /// The header column's menu: add a track, or delete the one that was right-clicked.
+    fn track_header_menu(&mut self, ui: &mut Ui, menu_id: egui::Id) {
+        for (label, kind) in [
+            ("Add Video Track", TrackKind::Video),
+            ("Add Audio Track", TrackKind::Audio),
+        ] {
+            if ui.button(label).clicked() {
+                self.run(Command::AddTrack { kind });
+                ui.close();
+            }
+        }
+        let under: Option<TrackId> = ui.data(|d| d.get_temp(menu_id)).flatten();
+        if let Some(track) = under {
+            let kind = self.project().track(track).map(|t| t.kind);
+            let label = match kind {
+                Some(TrackKind::Audio) => "Delete Audio Track",
+                _ => "Delete Video Track",
+            };
+            let others = self
+                .project()
+                .tracks
+                .iter()
+                .filter(|t| Some(t.kind) == kind)
+                .count();
+            ui.separator();
+            if ui
+                .add_enabled(others > 1, egui::Button::new(label))
+                .clicked()
+            {
+                self.run(Command::RemoveTrack { track });
+                ui.close();
+            }
+        }
+    }
+
     /// The bar under the Edit timeline: its thumb is the part of the timeline in view.
     fn scroll_bar(&mut self, ui: &mut Ui, view: &mut TimelineView, full: Rect, body: Rect) {
         let bar = Rect::from_min_max(
@@ -1149,12 +1201,30 @@ impl StudioApp {
         let column = Rect::from_min_size(avail.left_top(), vec2(header_w, avail.height()));
         let painter = ui.painter_at(column);
         painter.rect_filled(column, 0.0, Color32::from_rgb(40, 40, 45));
-        let tracks: Vec<(usize, picasso_core::TrackId, TrackKind, String, bool, bool)> = self
+        // The column's own click area and menu come first: of two widgets under the pointer the
+        // one made later gets the click, so this must be registered before the lock, solo and
+        // mute buttons or it takes their clicks instead.
+        // A right click in the column adds tracks, or deletes the track under the pointer.
+        let menu_id = ui.id().with("track_menu_track");
+        let column_resp = ui.interact(column, ui.id().with("track_column"), Sense::click());
+        self.remember_for_menu(ui, &column_resp, geo, menu_id);
+        column_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
+        let tracks: Vec<(usize, picasso_core::TrackId, TrackKind, String, bool, bool, bool)> = self
             .project()
             .tracks
             .iter()
             .enumerate()
-            .map(|(i, t)| (i, t.id, t.kind, t.name.clone(), t.locked, t.muted))
+            .map(|(i, t)| {
+                (
+                    i,
+                    t.id,
+                    t.kind,
+                    t.name.clone(),
+                    t.locked,
+                    t.muted,
+                    t.solo,
+                )
+            })
             .collect();
         let clip_counts: Vec<usize> = self
             .project()
@@ -1163,7 +1233,7 @@ impl StudioApp {
             .map(|t| t.clips.len())
             .collect();
         let mut counts = (0, 0);
-        for (i, id, kind, name, locked, muted) in tracks {
+        for (i, id, kind, name, locked, muted, solo) in tracks {
             let video = kind == TrackKind::Video;
             let label = if video {
                 counts.0 += 1;
@@ -1244,15 +1314,38 @@ impl StudioApp {
                 vec2(18.0 * r, 16.0 * r),
             );
             if !video {
-                let solo = Rect::from_center_size(at(159.0), vec2(18.0 * r, 16.0 * r));
-                painter.rect_filled(solo, 2.0, Color32::from_rgb(62, 62, 68));
+                let solo_btn = Rect::from_center_size(at(159.0), vec2(18.0 * r, 16.0 * r));
+                painter.rect_filled(
+                    solo_btn,
+                    2.0,
+                    if solo {
+                        theme::SOLO
+                    } else {
+                        Color32::from_rgb(62, 62, 68)
+                    },
+                );
                 painter.text(
-                    solo.center(),
+                    solo_btn.center(),
                     Align2::CENTER_CENTER,
                     "S",
                     regular(9.5 * r),
-                    Color32::from_rgb(140, 140, 146),
+                    if solo {
+                        Color32::BLACK
+                    } else {
+                        Color32::from_rgb(140, 140, 146)
+                    },
                 );
+                let solo_resp = ui
+                    .interact(solo_btn, ui.id().with(("track_solo", id)), Sense::click())
+                    .on_hover_text("Solo: hear only the soloed tracks");
+                if solo_resp.clicked() {
+                    self.run(Command::SetTrackSolo {
+                        track: id,
+                        solo: !solo,
+                    });
+                }
+                self.remember_for_menu(ui, &solo_resp, geo, menu_id);
+                solo_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
                 painter.rect_filled(
                     mute,
                     2.0,
@@ -1301,31 +1394,33 @@ impl StudioApp {
                 regular(10.0 * r),
                 Color32::from_rgb(150, 150, 156),
             );
-            if ui
+            let lock_resp = ui
                 .interact(lock, ui.id().with(("track_lock", id)), Sense::click())
-                .on_hover_text("Lock the track")
-                .clicked()
-            {
+                .on_hover_text("Lock the track");
+            if lock_resp.clicked() {
                 self.run(Command::SetTrackLocked {
                     track: id,
                     locked: !locked,
                 });
             }
+            self.remember_for_menu(ui, &lock_resp, geo, menu_id);
+            lock_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
             let mute_hint = if video {
                 "Turn the track off"
             } else {
                 "Mute the track"
             };
-            if ui
+            let mute_resp = ui
                 .interact(mute, ui.id().with(("track_mute", id)), Sense::click())
-                .on_hover_text(mute_hint)
-                .clicked()
-            {
+                .on_hover_text(mute_hint);
+            if mute_resp.clicked() {
                 self.run(Command::SetTrackMuted {
                     track: id,
                     muted: !muted,
                 });
             }
+            self.remember_for_menu(ui, &mute_resp, geo, menu_id);
+            mute_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
         }
         // The boundary between the video and the sound tracks.
         if geo.videos > 0 && geo.videos < geo.tracks {
@@ -1353,49 +1448,6 @@ impl StudioApp {
             [column.right_top(), column.right_bottom()],
             Stroke::new(1.0, Color32::from_rgb(26, 26, 30)),
         );
-        // A right click in the column adds tracks, or deletes the track under the pointer.
-        let menu_id = ui.id().with("track_menu_track");
-        let column_resp = ui.interact(column, ui.id().with("track_column"), Sense::click());
-        if column_resp.secondary_clicked() {
-            let under = column_resp
-                .interact_pointer_pos()
-                .and_then(|p| geo.track_at(p.y))
-                .and_then(|i| self.project().tracks.get(i).map(|t| t.id));
-            ui.data_mut(|d| d.insert_temp(menu_id, under));
-        }
-        column_resp.context_menu(|ui| {
-            for (label, kind) in [
-                ("Add Video Track", TrackKind::Video),
-                ("Add Audio Track", TrackKind::Audio),
-            ] {
-                if ui.button(label).clicked() {
-                    self.run(Command::AddTrack { kind });
-                    ui.close();
-                }
-            }
-            let under: Option<TrackId> = ui.data(|d| d.get_temp(menu_id)).flatten();
-            if let Some(track) = under {
-                let kind = self.project().track(track).map(|t| t.kind);
-                let label = match kind {
-                    Some(TrackKind::Audio) => "Delete Audio Track",
-                    _ => "Delete Video Track",
-                };
-                let others = self
-                    .project()
-                    .tracks
-                    .iter()
-                    .filter(|t| Some(t.kind) == kind)
-                    .count();
-                ui.separator();
-                if ui
-                    .add_enabled(others > 1, egui::Button::new(label))
-                    .clicked()
-                {
-                    self.run(Command::RemoveTrack { track });
-                    ui.close();
-                }
-            }
-        });
     }
 
     fn paint_timeline(

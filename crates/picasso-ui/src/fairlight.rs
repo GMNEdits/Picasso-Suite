@@ -905,7 +905,7 @@ impl StudioApp {
             c.p.rect_filled(
                 c.rect(1919.0, 428.0, 1981.0, 456.0),
                 14.0 * Q,
-                Color32::from_rgb(214, 170, 40),
+                theme::SOLO,
             );
         }
         c.outline(
@@ -1215,7 +1215,7 @@ impl StudioApp {
                 } else {
                     let fill = match (*what, lit) {
                         ("R", true) => Color32::from_rgb(214, 60, 50),
-                        ("S", true) => Color32::from_rgb(214, 170, 40),
+                        ("S", true) => theme::SOLO,
                         ("M", true) => Color32::from_rgb(200, 80, 60),
                         _ => Color32::from_rgb(64, 64, 70),
                     };
@@ -1463,7 +1463,7 @@ impl StudioApp {
                 };
                 let fill = match (*letter, lit) {
                     ("R", true) => Color32::from_rgb(214, 60, 50),
-                    ("S", true) => Color32::from_rgb(214, 170, 40),
+                    ("S", true) => theme::SOLO,
                     ("M", true) => Color32::from_rgb(200, 80, 60),
                     _ => Color32::from_rgb(64, 64, 70),
                 };
