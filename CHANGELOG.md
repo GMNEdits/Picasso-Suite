@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### ✨ New
+- ✅ **Help > Export Log File...:** saves a text file of what happened since Picasso Suite started, to attach to a bug report: the version, the system, the graphics card and driver, what the status line said (projects opened and saved, imports, renders, every error) and the warnings and errors of the program and of the graphics libraries. The log is kept in memory (the last 5000 lines), so nothing is written to disk while the program runs, and nothing is sent anywhere; it names the files that were opened. `PICASSO_LOG=info` (or `debug`) keeps more.
+- ✅ **Crash reports:** if the program crashes, the log and the crash (with where it happened) are written to `crash-<time>.txt` in the data folder's `logs` folder (`%APPDATA%\Picasso Suite\logs` on Windows); the last 5 are kept, and the next Export Log File adds the latest one to the file it saves.
+
 ## 0.4.0
 
 Picasso Suite 0.4.0 makes playback smoother and steadier: the viewer's picture is put together on a thread of its own, scrubbing camera video is faster, the timelines move at the right speed at every frame rate, and the Edit page's source viewer no longer blinks. It adds saved layouts, working track buttons and height arrows on the Cut page, a mini timeline on the Color page and a Hardware Decoding switch in the Playback menu, with security fixes for project and Resolve files. Packages for Windows, macOS and Linux (x86_64 and ARM64).

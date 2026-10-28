@@ -378,7 +378,17 @@ fn main() -> eframe::Result {
     };
     #[cfg(target_os = "linux")]
     let options = prefer_x11_for_drops(options);
-    eframe::run_native(
+    // This session's log, kept in memory (Help > Export Log File saves it).
+    picasso_ui::session_log::start();
+    // `PICASSO_CRASH_TEST=1` (development builds): crashes on purpose, to see the crash report.
+    #[cfg(debug_assertions)]
+    if std::env::var_os("PICASSO_CRASH_TEST").is_some() {
+        std::thread::spawn(|| {
+            std::thread::sleep(std::time::Duration::from_secs(1));
+            panic!("PICASSO_CRASH_TEST: a crash on purpose");
+        });
+    }
+    let result = eframe::run_native(
         "Picasso Suite",
         options,
         Box::new(|cc| {
@@ -389,6 +399,13 @@ fn main() -> eframe::Result {
                 let api = api_name(info.backend);
                 let software = info.device_type == eframe::wgpu::DeviceType::Cpu;
                 println!("Graphics: {} ({api}, {:?})", info.name, info.device_type);
+                picasso_ui::session_log::note(
+                    "INFO",
+                    &format!(
+                        "Graphics: {} ({api}, {:?}, driver {} {})",
+                        info.name, info.device_type, info.driver, info.driver_info
+                    ),
+                );
                 app.set_graphics(&info.name, &api, software);
             }
             // `picasso-suite [--place [--play]] [--page=audio] <file>...` opens projects and
@@ -412,7 +429,11 @@ fn main() -> eframe::Result {
             }
             Ok(Box::new(Window::new(app)))
         }),
-    )
+    );
+    if let Err(e) = &result {
+        picasso_ui::session_log::note("ERROR", &format!("the window could not run: {e}"));
+    }
+    result
 }
 
 #[cfg(target_arch = "wasm32")]

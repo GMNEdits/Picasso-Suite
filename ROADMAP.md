@@ -52,6 +52,7 @@ Status at 0.4.0.
 - [x] Playback: the timelines keep the width of a second at every frame rate (a 60 fps project ran 2.5 times faster across them); the Cut page's lower timeline keeps the playhead in the middle; the Edit page's source viewer decodes apart from the timeline, so it no longer blinks or slows playback of the same clip; long clips draw only their film strip and waveform on screen
 - [x] Interface: long clip names are cut with an ellipsis in the source viewer's header
 - [x] Help: Check for Updates installs as root without pkexec, and openSUSE's zypper is told the release's rpm is unsigned; `picasso-suite --update-from <package>` and `--version`
+- [x] Help: Help > Export Log File saves the session log, kept in memory (nothing written while the program runs); a crash writes a crash report, which the next export includes
 
 ## To do
 

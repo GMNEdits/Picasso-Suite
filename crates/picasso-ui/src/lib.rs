@@ -33,6 +33,8 @@ mod platform;
 mod pool;
 mod prefs;
 mod project_manager;
+#[cfg(not(target_arch = "wasm32"))]
+pub mod session_log;
 mod projectfile;
 mod queue;
 mod recording;
