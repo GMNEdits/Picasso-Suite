@@ -44,6 +44,7 @@ pub(crate) enum Act {
     FitToFill,
     PlaceOnTop,
     PasteInsert,
+    PasteMix,
     // Trim
     RippleStart,
     RippleEnd,
@@ -333,7 +334,7 @@ const EDIT: &[Entry] = &[
     item("Copy", &["Ctrl+C"], Act::Copy),
     item("Paste", &["Ctrl+V"], Act::Paste),
     item("Paste Insert", &["Ctrl+Shift+V"], Act::PasteInsert),
-    planned("Paste Mix to Current Track", ""),
+    item("Paste Mix to Current Track", &[], Act::PasteMix),
     item("Duplicate", &["Alt+C"], Act::Duplicate),
     // The edits of the viewer that need keys of their own.
     item("Fit to Fill", &["Shift+F11"], Act::FitToFill),

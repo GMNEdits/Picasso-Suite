@@ -473,6 +473,103 @@ impl StudioApp {
         }
     }
 
+    /// Paste Mix to Current Track: the sound of the copied clips, on the current sound track (the
+    /// one the selected clip is on, or the first) with the first clip at `at`. No picture is
+    /// pasted: a picture on the clipboard brings only its sound.
+    fn paste_mix(&mut self, at: u64) {
+        if self.clipboard.is_empty() {
+            self.fail("there is nothing to paste");
+            return;
+        }
+        let planned = {
+            let project = self.project();
+            let track = self
+                .selection
+                .and_then(|id| project.clip(id))
+                .map(|(track, _)| track)
+                .filter(|t| t.kind == TrackKind::Audio && !t.locked)
+                .or_else(|| {
+                    project
+                        .tracks
+                        .iter()
+                        .find(|t| t.kind == TrackKind::Audio && !t.locked)
+                });
+            track.map(|track| {
+                let commands: Vec<Command> = self
+                    .clipboard
+                    .iter()
+                    .filter(|c| {
+                        // A clip whose sound is off has none to paste, and a picture whose sound
+                        // has a clip of its own on an audio track is silent: that clip is on the
+                        // clipboard too, and is the one to paste.
+                        c.sound
+                            && matches!(
+                                project.media(c.media).map(|m| &m.source),
+                                Some(MediaSource::Video { .. } | MediaSource::Audio { .. })
+                            )
+                    })
+                    .filter_map(|c| {
+                        Some(Command::PasteClip {
+                            track: track.id,
+                            media: c.media,
+                            name: c.name.clone(),
+                            start: at.checked_add(c.offset)?,
+                            source_in: c.source_in,
+                            duration: c.duration,
+                            // A sound clip shows no picture: it keeps only how it sounds.
+                            opacity: 1.0,
+                            grade: ColorGrade::default(),
+                            enabled: c.enabled,
+                            audio: c.audio,
+                            speed: c.speed,
+                            transform: picasso_core::Transform::default(),
+                            blend: picasso_core::BlendMode::Normal,
+                            sound: true,
+                            nodes: Vec::new(),
+                            reverse: c.reverse,
+                            freeze: c.freeze,
+                        })
+                    })
+                    .collect();
+                (commands, track.name.clone())
+            })
+        };
+        let Some((commands, name)) = planned else {
+            // No sound track at all, or the ones there are are locked: the two are worth telling
+            // apart, since only the second can be undone by unlocking them.
+            let any = self
+                .project()
+                .tracks
+                .iter()
+                .any(|t| t.kind == TrackKind::Audio);
+            self.fail(if any {
+                "the sound tracks are locked"
+            } else {
+                "there is no sound track to paste onto"
+            });
+            return;
+        };
+        if commands.is_empty() {
+            self.fail("the copied clips have no sound");
+            return;
+        }
+        let count = commands.len();
+        match self.session.dispatch_all(commands) {
+            Ok(outcomes) => {
+                let ids = outcomes
+                    .into_iter()
+                    .filter_map(|outcome| match outcome {
+                        Outcome::Clip(id) => Some(id),
+                        _ => None,
+                    })
+                    .collect();
+                self.select_many(ids);
+                self.info(format!("Pasted the sound of {count} clip(s) on {name}"));
+            }
+            Err(e) => self.fail(e),
+        }
+    }
+
     pub(crate) fn delete_selected(&mut self, ripple: bool) {
         let mut ids = self.one_per_link(self.selected_ids());
         if ids.is_empty() {
@@ -798,7 +895,7 @@ impl StudioApp {
             | Act::Duplicate
             | Act::DeleteSelected
             | Act::RippleDeleteSelected => self.has_selection(),
-            Act::Paste | Act::PasteInsert => !self.clipboard.is_empty(),
+            Act::Paste | Act::PasteInsert | Act::PasteMix => !self.clipboard.is_empty(),
             Act::SelectAll | Act::SelectForward => {
                 project.tracks.iter().any(|t| !t.clips.is_empty())
             }
@@ -983,6 +1080,7 @@ impl StudioApp {
             }
             Act::Paste => self.paste_clips(at, false),
             Act::PasteInsert => self.paste_clips(at, true),
+            Act::PasteMix => self.paste_mix(at),
             Act::FitToFill => self.fit_to_fill_edit(),
             Act::PlaceOnTop => self.place_on_top_edit(),
             Act::Duplicate => {

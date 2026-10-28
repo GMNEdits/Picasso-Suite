@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Menu entries 86.36% done (228 of 264); roadmap items 76.06% done (54 of 71)">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Menu entries 86.74% done (229 of 264); roadmap items 76.06% done (54 of 71)">
 <rect width="900" height="420" rx="8" fill="#16181d"/>
-<g transform="translate(12,12)" font-size="11" font-weight="600"><rect width="100" height="20" rx="3" fill="#555"/><rect x="100" width="56" height="20" rx="3" fill="#97ca00"/><rect x="97" width="6" height="20" fill="#97ca00"/><text x="8" y="14" fill="#fff">menu entries</text><text x="107" y="14" fill="#fff">86.36%</text></g>
+<g transform="translate(12,12)" font-size="11" font-weight="600"><rect width="100" height="20" rx="3" fill="#555"/><rect x="100" width="56" height="20" rx="3" fill="#97ca00"/><rect x="97" width="6" height="20" fill="#97ca00"/><text x="8" y="14" fill="#fff">menu entries</text><text x="107" y="14" fill="#fff">86.74%</text></g>
 <g transform="translate(162,12)" font-size="11" font-weight="600"><rect width="65" height="20" rx="3" fill="#555"/><rect x="65" width="56" height="20" rx="3" fill="#97ca00"/><rect x="62" width="6" height="20" fill="#97ca00"/><text x="8" y="14" fill="#fff">roadmap</text><text x="72" y="14" fill="#fff">76.06%</text></g>
-<text x="12" y="70" font-size="13" fill="#e6e6ea">Menu entries: 86.36% (228/264)</text>
+<text x="12" y="70" font-size="13" fill="#e6e6ea">Menu entries: 86.74% (229/264)</text>
 <text x="458.0" y="70" font-size="13" fill="#e6e6ea">Roadmap items: 76.06% (54/71)</text>
 <rect x="12.0" y="78.0" width="22.1" height="24.3" fill="#2ea043" stroke="#1b7f32" stroke-width="1"/>
 <rect x="12.0" y="102.3" width="22.1" height="24.3" fill="#2ea043" stroke="#1b7f32" stroke-width="1"/>
@@ -235,7 +235,7 @@
 <rect x="315.6" y="259.5" width="18.3" height="29.3" fill="#2ea043" stroke="#1b7f32" stroke-width="1"/>
 <rect x="333.9" y="259.5" width="18.3" height="29.3" fill="#2ea043" stroke="#1b7f32" stroke-width="1"/>
 <rect x="315.6" y="288.8" width="18.3" height="29.3" fill="#2ea043" stroke="#1b7f32" stroke-width="1"/>
-<rect x="333.9" y="288.8" width="18.3" height="29.3" fill="#3a3d44" stroke="#2a2c31" stroke-width="1"/>
+<rect x="333.9" y="288.8" width="18.3" height="29.3" fill="#2ea043" stroke="#1b7f32" stroke-width="1"/>
 <rect x="262.5" y="210.4" width="89.8" height="107.8" fill="none" stroke="#16181d" stroke-width="2"/>
 <text x="267.5" y="223.4" font-size="11" fill="#fff" stroke="#16181d" stroke-width="2.5" paint-order="stroke">Edit</text>
 <rect x="352.2" y="210.4" width="22.4" height="24.0" fill="#2ea043" stroke="#1b7f32" stroke-width="1"/>
