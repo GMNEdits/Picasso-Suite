@@ -1819,7 +1819,7 @@ impl StudioApp {
             self.select_only(id);
         }
 
-        // The whole timeline: its ruler, the video track as a blue bar, and the playhead.
+        // The whole timeline: its ruler, a row of clips for each picture track, and the playhead.
         let duration = self.project().duration().max(1);
         let span = (1913.0 - 40.0) as f32;
         c.p.rect_filled(
@@ -1827,9 +1827,11 @@ impl StudioApp {
             0.0,
             Color32::from_rgb(36, 36, 40),
         );
-        for n in 0..10 {
+        let ticks = (0..10).map(|n| {
             let x = 40.0 + 200.0 * n as f32;
-            let frame = (x - 40.0) / span * duration as f32;
+            (x, ((x - 40.0) / span * duration as f32) as u64)
+        });
+        for (x, frame) in ruler_ticks(ticks) {
             c.p.line_segment(
                 [c.rv(x, 593.0), c.rv(x, 615.0)],
                 Stroke::new(1.0, Color32::from_rgb(70, 70, 76)),
@@ -3000,5 +3002,58 @@ impl StudioApp {
             node: self.node_for(id),
         });
         self.info(format!("Applied the LUT {shown}"));
+    }
+}
+
+/// The mini timeline's ruler ticks, `(x, frame)`, without the ones that repeat the time before
+/// them: an empty timeline, or one shorter than the strip, would otherwise show the same time
+/// all the way across.
+fn ruler_ticks(ticks: impl IntoIterator<Item = (f32, u64)>) -> Vec<(f32, u64)> {
+    let mut out: Vec<(f32, u64)> = Vec::new();
+    for tick in ticks {
+        if out.last().map(|&(_, frame)| frame) != Some(tick.1) {
+            out.push(tick);
+        }
+    }
+    out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::ruler_ticks;
+
+    /// The ticks the page draws for a timeline `duration` frames long: ten 200-point steps
+    /// from 40 across the strip's 1873 points.
+    fn ticks(duration: u64) -> Vec<(f32, u64)> {
+        let span = 1873.0;
+        ruler_ticks((0..10).map(|n| {
+            let x = 40.0 + 200.0 * n as f32;
+            (x, ((x - 40.0) / span * duration as f32) as u64)
+        }))
+    }
+
+    #[test]
+    fn a_timeline_long_enough_keeps_every_tick_where_it_was() {
+        let ticks = ticks(24_000);
+        assert_eq!(ticks.len(), 10);
+        assert_eq!(ticks.first().map(|&(x, _)| x), Some(40.0));
+        assert_eq!(ticks.last().map(|&(x, _)| x), Some(1840.0));
+        let frames: Vec<u64> = ticks.iter().map(|&(_, frame)| frame).collect();
+        assert!(frames.windows(2).all(|w| w[0] < w[1]));
+    }
+
+    #[test]
+    fn an_empty_timeline_has_one_tick_at_its_start() {
+        // The page takes an empty project's duration as 1 frame, so the ruler is a point.
+        assert_eq!(ticks(1), vec![(40.0, 0)]);
+    }
+
+    #[test]
+    fn a_timeline_of_a_few_frames_does_not_repeat_a_time() {
+        // Three frames over ten ticks: the times only move on three times.
+        let ticks = ticks(3);
+        assert_eq!(ticks.len(), 3);
+        let frames: Vec<u64> = ticks.iter().map(|&(_, frame)| frame).collect();
+        assert!(frames.windows(2).all(|w| w[0] < w[1]));
     }
 }

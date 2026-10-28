@@ -558,8 +558,6 @@ impl StudioApp {
         }
     }
 
-    /// The track the Cut page's track buttons act on: the track of the selected clip, or V1
-    /// when nothing is selected.
     /// The height of the lower timeline's picture rows, as the arrows beside the tracks set it.
     pub(crate) fn cut_detail_row_h(&self) -> f32 {
         let by = self
@@ -587,6 +585,8 @@ impl StudioApp {
         self.extra.prefs.save();
     }
 
+    /// The track the Cut page's track buttons act on: the track of the selected clip, or V1
+    /// when nothing is selected.
     fn cut_track_target(&self) -> Option<picasso_core::TrackId> {
         let project = self.project();
         self.selection
