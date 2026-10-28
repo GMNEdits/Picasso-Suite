@@ -253,14 +253,19 @@ struct Geo {
     vscroll: f32,
 }
 
-/// How far the rows can be scrolled: `min` is how far up (negative when the top rows start above
-/// the panel, as the video tracks above V1 do), `max` how far down. `content_top` and `content_h`
-/// are the first row's top and the height of all the rows together, `rows_top` and `bottom` the
-/// part of the panel they are seen in.
+/// How far the rows can be scrolled. `content_top` and `content_h` are the first row's top and
+/// the height of all the rows together, `rows_top` and `bottom` the part of the panel they sit in.
+/// Returns `(0.0, 0.0)` when they all fit, so `clamp(min, max)` leaves the scroll at 0 instead of
+/// panicking on `min > max`.
 fn scroll_range(content_top: f32, content_h: f32, rows_top: f32, bottom: f32) -> (f32, f32) {
-    let max = content_top + content_h - bottom;
-    // `min > max` means everything fits and `clamp` leaves vscroll at 0.
-    (content_top - rows_top, max)
+    let lo = content_top - rows_top;
+    let hi = content_top + content_h - bottom;
+    if content_h <= bottom - rows_top {
+        // Everything fits: nothing to scroll, and `clamp(0, 0)` keeps vscroll at 0.
+        (0.0, 0.0)
+    } else {
+        (lo.min(hi), lo.max(hi))
+    }
 }
 
 /// A project has at most 64 tracks (picasso-core refuses more).
@@ -517,7 +522,9 @@ impl StudioApp {
                     self.playing = false;
                     self.go_to((self.playhead as f32 - frames).max(0.0) as u64);
                 } else if scrolls && scroll.y != 0.0 {
-                    // The wheel scrolls the tracks; Shift + wheel pans the timeline.
+                    // The wheel scrolls the tracks; Shift + wheel pans the timeline. If the
+                    // tracks all fit, the scroll is clamped to 0 by the range below, so the
+                    // wheel becomes a no-op rather than a panic.
                     view.vscroll -= scroll.y;
                     view.scroll -= scroll.x / view.zoom;
                 } else {
@@ -2606,9 +2613,8 @@ mod detail_tests {
     fn the_tracks_that_do_not_fit_are_scrolled_to() {
         // Ten rows of 72 in a 300-tall panel: 720 of rows, so 420 of scrolling down.
         assert_eq!(scroll_range(0.0, 720.0, 0.0, 300.0), (0.0, 420.0));
-        // Rows that fit make `min > max`, and clamp() leaves the scroll at 0.
-        let (min, max) = scroll_range(0.0, 200.0, 0.0, 300.0);
-        assert!(min > max);
+        // Rows that fit leave a (0, 0) range: there is nothing to scroll.
+        assert_eq!(scroll_range(0.0, 200.0, 0.0, 300.0), (0.0, 0.0));
         // Video tracks stacked above V1 start above the panel: scroll down to reach them.
         assert_eq!(scroll_range(-200.0, 500.0, 0.0, 300.0), (-200.0, 0.0));
     }
