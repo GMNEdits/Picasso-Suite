@@ -260,8 +260,14 @@ struct Geo {
 fn scroll_range(content_top: f32, content_h: f32, rows_top: f32, bottom: f32) -> (f32, f32) {
     let lo = content_top - rows_top;
     let hi = content_top + content_h - bottom;
-    if content_h <= bottom - rows_top {
-        // Everything fits: nothing to scroll, and `clamp(0, 0)` keeps vscroll at 0.
+    // Everything fits when the first row starts at (or below) the panel top — `lo >= 0` — and
+    // the last row ends at (or above) the panel bottom — `hi <= 0`. Comparing only the total
+    // height (`content_h <= bottom - rows_top`) is not enough: the Edit page drops the first
+    // row below the ruler (`body_top > rows_top`), so rows that overflow the bottom by less than
+    // that offset still fail the height check and hide the scroll bar, leaving the overflow
+    // tracks unreachable.
+    if lo >= 0.0 && hi <= 0.0 {
+        // Nothing to scroll: `clamp(0, 0)` leaves vscroll at 0 without panicking.
         (0.0, 0.0)
     } else {
         (lo.min(hi), lo.max(hi))
@@ -2617,6 +2623,13 @@ mod detail_tests {
         assert_eq!(scroll_range(0.0, 200.0, 0.0, 300.0), (0.0, 0.0));
         // Video tracks stacked above V1 start above the panel: scroll down to reach them.
         assert_eq!(scroll_range(-200.0, 500.0, 0.0, 300.0), (-200.0, 0.0));
+        // The body can start below the panel top (V1 sits under the ruler), so the total height
+        // fitting is not enough: when the offset content overflows the bottom the bar shows.
+        // Here 590 of rows fits in 650 of panel by height, but body_top is 79 below rows_top,
+        // so the last row lands 19 points below the bottom and the bar must appear.
+        assert_eq!(scroll_range(79.0, 590.0, 0.0, 650.0), (19.0, 79.0));
+        // ...and when the offset content fits, it returns (0, 0).
+        assert_eq!(scroll_range(79.0, 560.0, 0.0, 650.0), (0.0, 0.0));
     }
 
     #[test]
