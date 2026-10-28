@@ -25,6 +25,29 @@ Picasso Suite 0.6.0 brings timelines in from other editors as well as out: Final
 - ✅ **Flatpak update test:** the release workflow's Check for Updates test inside the Flatpak failed because the build container's session bus had no service for org.freedesktop.Flatpak (`flatpak-session-helper`), not because of the program; the test's bus now has one. It stays non-blocking until a release has passed it.
 - ✅ **Development:** the workflows use the Node.js 24 versions of GitHub's checkout, cache and artifact actions, which removes the Node.js 20 warnings. Thanks to GANESH NIKAM for the first part.
 
+### 🚧 In progress
+- 🚧 **Tested in other editors:** every AAF and XML export is now opened by other programs in CI (pyaaf2 and an XML parser), and the AAF reader reads an Avid-style file written by pyaaf2; Media Composer, Pro Tools, Premiere and Final Cut Pro 7 themselves still need people to try them. Please send a report if one refuses a file.
+- 🚧 **Intel video decoding on Linux:** the packages now bring Intel's VA-API driver; waiting for confirmation on the Intel machine that reported it (issue #21).
+- 🚧 **Flatpak Check for Updates test:** the release build's test inside the Flatpak is fixed (its session bus lacked a service); it stays non-blocking until a release has passed it.
+
+### ⚠️ Known limitations
+- ❌ AAF: speed changes, reverse and freeze are written at normal speed and read without them; markers in an AAF file are not read; big-endian AAF files (some old Macs) are not read.
+- ❌ A nested sequence (a compound clip from another editor) is left out of OpenTimelineIO, XML and AAF imports, keeping its time as a gap; the app says how many.
+- ❌ The IMF Generic and Pro Tools presets are still greyed out (they need an MXF writer and AAF with the sound in it).
+- ❌ The macOS app is not signed or notarised (right-click > Open the first time).
+- ❌ The Flatpak is built on the freedesktop 24.08 runtime, which has reached its end of life; a newer one is next.
+
+### 🙏 Thanks
+- **GANESH NIKAM (@GMNEdits)** for most of this release:
+  - ✅ Paste Mix to Current Track (#20)
+  - ✅ Audio scrubbing (#22)
+  - ✅ Bounce Selected Tracks (#23)
+  - ✅ Clickable track header buttons and track scrolling on the Edit page (#24)
+  - ✅ No false graphics card errors at start (#25)
+  - ✅ The Node.js 24 GitHub actions (#26)
+  - ✅ The Color page ruler fix (#19)
+  - ✅ The Intel UHD graphics report (#21), which led to the graphics check's video decoding line and the Intel VA-API driver in the packages
+
 ## 0.5.0
 
 Picasso Suite 0.5.0 opens the timeline to other editors: it writes Final Cut Pro 7 / Premiere XML and AAF for Avid Media Composer and Pro Tools, and reads OpenTimelineIO timelines from Resolve, Premiere, Avid and others. The Deliver page's Final Cut Pro 7, Premiere XML and AVID AAF presets work, timelines and subtitles dropped on the window open, and Help > Export Log File saves a log of the session to send with a bug report. Packages for Windows, macOS and Linux (x86_64 and ARM64).
