@@ -29,6 +29,7 @@ fn nothing_is_enabled_that_has_nothing_to_act_on() {
         Act::Cut,
         Act::Copy,
         Act::Paste,
+        Act::PasteMix,
         Act::Duplicate,
         Act::DeleteSelected,
         Act::DeselectAll,
@@ -116,6 +117,137 @@ fn paste_keeps_what_the_clip_looked_like() {
         (0.4, false, 0.3)
     );
     assert_eq!(pasted.start, 288);
+}
+
+#[test]
+fn paste_mix_leaves_the_picture_alone_and_puts_the_sound_on_a1() {
+    let (mut app, picture, _sound) = app_with_linked_video();
+    let (v2, media) = {
+        let (track, clip) = app.project().clip(picture).unwrap();
+        (track.id, clip.media)
+    };
+    app.select_only(picture);
+    act(&mut app, Act::Copy);
+    app.go_to(200);
+    act(&mut app, Act::PasteMix);
+    assert!(!app.status.error, "{}", app.status.text);
+    // The picture is not pasted a second time, and its sound is where the playhead was.
+    assert_eq!(app.project().track(v2).unwrap().clips.len(), 1);
+    let (id, start, length) = {
+        let a1 = app
+            .project()
+            .tracks
+            .iter()
+            .find(|t| t.kind == TrackKind::Audio)
+            .unwrap();
+        let pasted = a1
+            .clips
+            .iter()
+            .find(|c| c.start == 200)
+            .expect("the sound at the playhead");
+        assert_eq!((pasted.media, pasted.duration, pasted.sound), (media, 96, true));
+        (pasted.id, pasted.start, pasted.duration)
+    };
+    assert_eq!((start, length), (200, 96));
+    assert_eq!(app.selected_ids(), vec![id], "the pasted sound is selected");
+    // And the mixer hears it there: the picture is silent, the two sound clips play.
+    let sounds = picasso_audio::plan(app.project()).clips;
+    assert_eq!(sounds.len(), 2);
+    assert!(sounds
+        .iter()
+        .any(|s| s.start == picasso_audio::frames_to_samples(app.project(), 200)));
+    assert!(app.session.undo());
+    assert!(
+        app.project()
+            .tracks
+            .iter()
+            .filter(|t| t.kind == TrackKind::Audio)
+            .all(|t| t.clips.iter().all(|c| c.id != id)),
+        "one undo takes the pasted sound back"
+    );
+}
+
+#[test]
+fn paste_mix_goes_on_the_sound_track_of_the_selected_clip() {
+    let (mut app, picture, _sound) = app_with_linked_video();
+    let Some(Outcome::Track(a2)) = app.run(Command::AddTrack {
+        kind: TrackKind::Audio,
+    }) else {
+        panic!("a second sound track")
+    };
+    let media = app.project().clip(picture).unwrap().1.media;
+    let Some(Outcome::Clip(on_a2)) = app.run(Command::AddClip {
+        track: a2,
+        media,
+        start: 400,
+        duration: None,
+        with_sound: false,
+    }) else {
+        panic!("a clip on A2")
+    };
+    app.select_only(picture);
+    act(&mut app, Act::Copy);
+    // The selected clip is on A2, so the sound goes there, not to the first sound track.
+    app.select_only(on_a2);
+    app.go_to(500);
+    let at = app.playhead;
+    act(&mut app, Act::PasteMix);
+    assert!(!app.status.error, "{}", app.status.text);
+    let on = |app: &StudioApp, track: TrackId| {
+        app.project()
+            .track(track)
+            .is_some_and(|t| t.clips.iter().any(|c| c.start == at))
+    };
+    assert!(on(&app, a2));
+    assert!(app
+        .project()
+        .tracks
+        .iter()
+        .filter(|t| t.kind == TrackKind::Audio && t.id != a2)
+        .all(|t| !on(&app, t.id)));
+}
+
+#[test]
+fn paste_mix_says_when_there_is_no_sound_track() {
+    let mut app = app();
+    let clip = app.project().tracks[0].clips[0].id;
+    app.select_only(clip);
+    act(&mut app, Act::Copy);
+    act(&mut app, Act::PasteMix);
+    assert!(app.status.error);
+    assert!(
+        app.status.text.contains("no sound track"),
+        "{}",
+        app.status.text
+    );
+    assert_eq!(app.project().duration(), 288, "nothing was changed");
+}
+
+#[test]
+fn paste_mix_says_so_when_every_sound_track_is_locked() {
+    let (mut app, picture, _sound) = app_with_linked_video();
+    let a1 = app
+        .project()
+        .tracks
+        .iter()
+        .find(|t| t.kind == TrackKind::Audio)
+        .unwrap()
+        .id;
+    app.run(Command::SetTrackLocked {
+        track: a1,
+        locked: true,
+    });
+    app.select_only(picture);
+    act(&mut app, Act::Copy);
+    let before = app.project().clone();
+    act(&mut app, Act::PasteMix);
+    assert!(app.status.error);
+    assert!(
+        app.status.text.contains("locked"),
+        "{}",
+        app.status.text
+    );
+    assert_eq!(*app.project(), before, "nothing was changed");
 }
 
 #[test]
