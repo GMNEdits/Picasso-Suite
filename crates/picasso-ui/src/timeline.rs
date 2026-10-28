@@ -128,6 +128,9 @@ pub(crate) struct TimelineView {
     fps: f32,
     /// The frame at the left edge.
     scroll: f32,
+    /// How far the tracks are scrolled up: 0 shows the rows from `Geo::body_top` down, and a
+    /// positive value moves them up to reach the ones that do not fit.
+    vscroll: f32,
     snap: bool,
     drag: Drag,
     /// The recent answers of [`StudioApp::would_work`], for the project they were asked of: its
@@ -164,6 +167,7 @@ impl TimelineView {
             },
             fps: 24.0,
             scroll: 0.0,
+            vscroll: 0.0,
             snap: true,
             drag: Drag::None,
             would: ((0, 0), Vec::new()),
@@ -245,6 +249,29 @@ struct Geo {
     /// The height of the audio rows: `row_h` except on the Cut page, where sound is a thin strip
     /// under the picture (and hidden in the overview).
     audio_h: f32,
+    /// How far the rows are scrolled up (see [`TimelineView::vscroll`]).
+    vscroll: f32,
+}
+
+/// How far the rows can be scrolled. `content_top` and `content_h` are the first row's top and
+/// the height of all the rows together, `rows_top` and `bottom` the part of the panel they sit in.
+/// Returns `(0.0, 0.0)` when they all fit, so `clamp(min, max)` leaves the scroll at 0 instead of
+/// panicking on `min > max`.
+fn scroll_range(content_top: f32, content_h: f32, rows_top: f32, bottom: f32) -> (f32, f32) {
+    let lo = content_top - rows_top;
+    let hi = content_top + content_h - bottom;
+    // Everything fits when the first row starts at (or below) the panel top — `lo >= 0` — and
+    // the last row ends at (or above) the panel bottom — `hi <= 0`. Comparing only the total
+    // height (`content_h <= bottom - rows_top`) is not enough: the Edit page drops the first
+    // row below the ruler (`body_top > rows_top`), so rows that overflow the bottom by less than
+    // that offset still fail the height check and hide the scroll bar, leaving the overflow
+    // tracks unreachable.
+    if lo >= 0.0 && hi <= 0.0 {
+        // Nothing to scroll: `clamp(0, 0)` leaves vscroll at 0 without panicking.
+        (0.0, 0.0)
+    } else {
+        (lo.min(hi), lo.max(hi))
+    }
 }
 
 /// A project has at most 64 tracks (picasso-core refuses more).
@@ -335,7 +362,9 @@ impl Geo {
     /// The top of row `row` (counted from the top).
     fn top_of_row(&self, row: usize) -> f32 {
         let videos = row.min(self.videos);
-        self.body_top + videos as f32 * self.row_h + (row - videos) as f32 * self.audio_h
+        self.body_top - self.vscroll
+            + videos as f32 * self.row_h
+            + (row - videos) as f32 * self.audio_h
     }
 
     /// The height of row `row`.
@@ -454,6 +483,9 @@ impl StudioApp {
         let mut view = std::mem::replace(self.view_mut(which), TimelineView::new(which));
         let mode = view.mode;
         let header_w = if headers { EDIT_HEADER_W } else { 0.0 };
+        // The Edit page's own timeline scrolls its tracks; the Audio page draws its own headers
+        // and keeps its rows in view.
+        let scrolls = mode == Mode::Edit && headers;
 
         let full = ui.available_rect_before_wrap();
         ui.allocate_rect(full, Sense::hover());
@@ -472,8 +504,14 @@ impl StudioApp {
         let fps = self.project().fps.nominal() as f32;
         view.follow_rate(fps);
 
-        // Zoom (Ctrl + scroll) around the pointer, pan with the scroll wheel.
-        if resp.hovered() && mode != Mode::Overview {
+        // Zoom (Ctrl + scroll) around the pointer, pan with the scroll wheel. The header column
+        // scrolls the tracks as the clips do, so the wheel works wherever the timeline is.
+        let over_headers = headers
+            && ui.rect_contains_pointer(Rect::from_min_size(
+                avail.left_top(),
+                vec2(header_w, avail.height()),
+            ));
+        if (resp.hovered() || over_headers) && mode != Mode::Overview {
             let (scroll, zoom) = ui.input(|i| (i.smooth_scroll_delta, i.zoom_delta()));
             if (zoom - 1.0).abs() > f32::EPSILON {
                 let anchor_x = if mode == Mode::Detail {
@@ -485,12 +523,18 @@ impl StudioApp {
                 view.zoom = (view.zoom * zoom).clamp(MIN_ZOOM, MAX_ZOOM);
                 view.scroll = anchor - (anchor_x - body.left()) / view.zoom;
             } else if scroll.x != 0.0 || scroll.y != 0.0 {
-                let frames = (scroll.x + scroll.y) / view.zoom;
                 if mode == Mode::Detail {
+                    let frames = (scroll.x + scroll.y) / view.zoom;
                     self.playing = false;
                     self.go_to((self.playhead as f32 - frames).max(0.0) as u64);
+                } else if scrolls && scroll.y != 0.0 {
+                    // The wheel scrolls the tracks; Shift + wheel pans the timeline. If the
+                    // tracks all fit, the scroll is clamped to 0 by the range below, so the
+                    // wheel becomes a no-op rather than a panic.
+                    view.vscroll -= scroll.y;
+                    view.scroll -= scroll.x / view.zoom;
                 } else {
-                    view.scroll -= frames;
+                    view.scroll -= (scroll.x + scroll.y) / view.zoom;
                 }
             }
         }
@@ -539,12 +583,10 @@ impl StudioApp {
         let row_h = if let Some(h) = self.audio_row_h {
             h
         } else if mode == Mode::Edit {
-            // Resolve's rows: 112 pixels for a picture track, 72 for a sound track, smaller
-            // when there are many.
-            let want = 112.0 * crate::chrome::R;
-            let audios = tracks.saturating_sub(videos.min(tracks)) as f32;
-            let room = avail.height() - mode.ruler_h() - audios * 72.0 * crate::chrome::R;
-            want.min(room / videos.max(1) as f32).max(36.0)
+            // Resolve's rows: 112 pixels for a picture track, 72 for a sound track. They keep
+            // that size and the tracks that do not fit are scrolled to, rather than squeezed
+            // until nothing can be read.
+            112.0 * crate::chrome::R
         } else if mode == Mode::Detail {
             // The height the arrows beside the tracks set (`crate::cut`).
             self.cut_detail_row_h()
@@ -564,6 +606,7 @@ impl StudioApp {
             videos,
             body_top: 0.0,
             audio_h: row_h,
+            vscroll: 0.0,
         };
         let mut geo = geo;
         geo.body_top = geo.top + geo.ruler_h;
@@ -591,13 +634,31 @@ impl StudioApp {
                 geo.audio_h = (72.0 * crate::chrome::R).min(geo.row_h);
                 let v1_top = geo.top + geo.ruler_h + 81.0 * crate::chrome::R;
                 let up = videos.saturating_sub(1) as f32 * geo.row_h;
+                // V1 sits 81 pixels under the ruler and the tracks above it stack up from
+                // there, past the top of the panel when there are many: they are scrolled to.
                 geo.body_top = if videos == 0 {
                     geo.top + geo.ruler_h
                 } else {
-                    (v1_top - up).max(geo.top + geo.ruler_h)
+                    v1_top - up
                 };
             }
         }
+        // The tracks that do not fit are scrolled to: the wheel moves them, and the bar at the
+        // right edge shows where they are. The Audio page draws its own headers, so it keeps its
+        // own rows in view and is left out.
+        let mut range = (0.0f32, 0.0f32);
+        if scrolls {
+            let audios = tracks.saturating_sub(videos.min(tracks)) as f32;
+            let rows_top = geo.top + geo.ruler_h;
+            let content_top = geo.body_top;
+            let content_bottom = geo.body_top + videos as f32 * geo.row_h + audios * geo.audio_h;
+            range = scroll_range(content_top, content_bottom - content_top, rows_top, avail.bottom());
+            view.vscroll = view.vscroll.clamp(range.0, range.1);
+            geo.vscroll = view.vscroll;
+        } else {
+            view.vscroll = 0.0;
+        }
+
         // The Cut page labels the rows beside the timeline (V1, A1).
         if mode != Mode::Edit {
             let rows: Vec<(String, bool, f32, f32)> = (0..geo.tracks.min(MAX_ROWS))
@@ -696,6 +757,9 @@ impl StudioApp {
         }
         if mode == Mode::Edit {
             self.scroll_bar(ui, &mut view, full, body);
+            if scrolls {
+                self.vscroll_bar(ui, &mut view, &geo, avail, range);
+            }
         }
         *self.view_mut(which) = view;
     }
@@ -722,6 +786,58 @@ impl StudioApp {
             }
         }
         out
+    }
+
+    /// Remembers the track under a right click in the header column, for `track_header_menu`.
+    fn remember_for_menu(
+        &mut self,
+        ui: &mut Ui,
+        resp: &egui::Response,
+        geo: &Geo,
+        menu_id: egui::Id,
+    ) {
+        if resp.secondary_clicked() {
+            let under = resp
+                .interact_pointer_pos()
+                .and_then(|p| geo.track_at(p.y))
+                .and_then(|i| self.project().tracks.get(i).map(|t| t.id));
+            ui.data_mut(|d| d.insert_temp(menu_id, under));
+        }
+    }
+
+    /// The header column's menu: add a track, or delete the one that was right-clicked.
+    fn track_header_menu(&mut self, ui: &mut Ui, menu_id: egui::Id) {
+        for (label, kind) in [
+            ("Add Video Track", TrackKind::Video),
+            ("Add Audio Track", TrackKind::Audio),
+        ] {
+            if ui.button(label).clicked() {
+                self.run(Command::AddTrack { kind });
+                ui.close();
+            }
+        }
+        let under: Option<TrackId> = ui.data(|d| d.get_temp(menu_id)).flatten();
+        if let Some(track) = under {
+            let kind = self.project().track(track).map(|t| t.kind);
+            let label = match kind {
+                Some(TrackKind::Audio) => "Delete Audio Track",
+                _ => "Delete Video Track",
+            };
+            let others = self
+                .project()
+                .tracks
+                .iter()
+                .filter(|t| Some(t.kind) == kind)
+                .count();
+            ui.separator();
+            if ui
+                .add_enabled(others > 1, egui::Button::new(label))
+                .clicked()
+            {
+                self.run(Command::RemoveTrack { track });
+                ui.close();
+            }
+        }
     }
 
     /// The bar under the Edit timeline: its thumb is the part of the timeline in view.
@@ -760,6 +876,62 @@ impl StudioApp {
             if let Some(p) = response.interact_pointer_pos() {
                 let at = (p.x - track.left()) / track.width() * total;
                 view.scroll = (at - visible / 2.0).max(0.0);
+            }
+        }
+    }
+
+    /// The bar at the right edge of the Edit timeline: where the tracks are, of those that do
+    /// not fit in the panel.
+    fn vscroll_bar(
+        &mut self,
+        ui: &mut Ui,
+        view: &mut TimelineView,
+        geo: &Geo,
+        avail: Rect,
+        range: (f32, f32),
+    ) {
+        let (min, max) = range;
+        if max <= min {
+            return;
+        }
+        let w = 7.0 * crate::chrome::R;
+        let track = Rect::from_min_max(
+            pos2(avail.right() - w, avail.top() + geo.ruler_h),
+            avail.max,
+        );
+        let painter = ui.painter_at(track);
+        painter.rect_filled(track, 0.0, Color32::from_rgb(36, 36, 41));
+        let visible = track.height();
+        let span = max - min;
+        let thumb_h = (visible * visible / (visible + span)).clamp(24.0, visible);
+        let frac = if span > 0.0 {
+            ((view.vscroll - min) / span).clamp(0.0, 1.0)
+        } else {
+            0.0
+        };
+        let y0 = track.top() + (visible - thumb_h) * frac;
+        let thumb = Rect::from_min_size(pos2(track.left() + 1.0, y0), vec2(w - 2.0, thumb_h));
+        let response = ui
+            .interact(
+                track,
+                ui.id().with("timeline_vscroll"),
+                Sense::click_and_drag(),
+            )
+            .on_hover_text("Drag to scroll the tracks");
+        painter.rect_filled(
+            thumb,
+            3.0,
+            if response.dragged() || response.hovered() {
+                Color32::from_rgb(92, 92, 98)
+            } else {
+                Color32::from_rgb(72, 72, 78)
+            },
+        );
+        if response.dragged() || response.clicked() {
+            if let Some(p) = response.interact_pointer_pos() {
+                let travel = (visible - thumb_h).max(1.0);
+                let frac = ((p.y - track.top() - thumb_h / 2.0) / travel).clamp(0.0, 1.0);
+                view.vscroll = min + frac * span;
             }
         }
     }
@@ -1147,14 +1319,41 @@ impl StudioApp {
     fn track_headers(&mut self, ui: &mut Ui, avail: Rect, geo: &Geo) {
         let header_w = EDIT_HEADER_W;
         let column = Rect::from_min_size(avail.left_top(), vec2(header_w, avail.height()));
-        let painter = ui.painter_at(column);
-        painter.rect_filled(column, 0.0, Color32::from_rgb(40, 40, 45));
-        let tracks: Vec<(usize, picasso_core::TrackId, TrackKind, String, bool, bool)> = self
+        ui.painter_at(column)
+            .rect_filled(column, 0.0, Color32::from_rgb(40, 40, 45));
+        // The column's own click area and menu come first: of two widgets under the pointer the
+        // one made later gets the click, so this must be registered before the lock, solo and
+        // mute buttons or it takes their clicks instead.
+        // A right click in the column adds tracks, or deletes the track under the pointer.
+        let menu_id = ui.id().with("track_menu_track");
+        let column_resp = ui.interact(column, ui.id().with("track_column"), Sense::click());
+        self.remember_for_menu(ui, &column_resp, geo, menu_id);
+        column_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
+        // The rows are drawn and clicked only below the timecode ruler: a track scrolled under it
+        // would otherwise still answer clicks while it cannot be seen.
+        let rows_area = Rect::from_min_max(
+            pos2(column.left(), (avail.top() + geo.ruler_h).min(column.bottom())),
+            column.max,
+        );
+        let painter = ui.painter_at(rows_area);
+        let clip = ui.clip_rect();
+        ui.set_clip_rect(clip.intersect(rows_area));
+        let tracks: Vec<(usize, picasso_core::TrackId, TrackKind, String, bool, bool, bool)> = self
             .project()
             .tracks
             .iter()
             .enumerate()
-            .map(|(i, t)| (i, t.id, t.kind, t.name.clone(), t.locked, t.muted))
+            .map(|(i, t)| {
+                (
+                    i,
+                    t.id,
+                    t.kind,
+                    t.name.clone(),
+                    t.locked,
+                    t.muted,
+                    t.solo,
+                )
+            })
             .collect();
         let clip_counts: Vec<usize> = self
             .project()
@@ -1163,7 +1362,7 @@ impl StudioApp {
             .map(|t| t.clips.len())
             .collect();
         let mut counts = (0, 0);
-        for (i, id, kind, name, locked, muted) in tracks {
+        for (i, id, kind, name, locked, muted, solo) in tracks {
             let video = kind == TrackKind::Video;
             let label = if video {
                 counts.0 += 1;
@@ -1190,11 +1389,11 @@ impl StudioApp {
             );
             // Positions are Resolve's pixels at 1080p from the header's left edge and the row's top.
             let r = crate::chrome::R;
-            let row_y = top + 13.0 * r;
+            let row_y = top + 15.0 * r;
             let at = |x: f32| pos2(rect.left() + x * r, row_y);
             // The track's patch: the source and the destination, each its name in a red frame.
-            for x in [31.0, 70.0] {
-                let badge = Rect::from_center_size(at(x), vec2(25.0 * r, 16.0 * r));
+            for x in [33.0, 75.0] {
+                let badge = Rect::from_center_size(at(x), vec2(28.0 * r, 18.0 * r));
                 painter.rect_filled(badge, 2.0, Color32::from_rgb(62, 36, 36));
                 painter.rect_stroke(
                     badge,
@@ -1206,12 +1405,12 @@ impl StudioApp {
                     badge.center(),
                     Align2::CENTER_CENTER,
                     &label,
-                    theme::semibold(10.5 * r),
+                    theme::semibold(12.5 * r),
                     theme::WHITE,
                 );
             }
             // Lock, link and (for video) the film strip, or (for sound) solo and mute.
-            let lock = Rect::from_center_size(at(105.0), vec2(20.0 * r, 20.0 * r));
+            let lock = Rect::from_center_size(at(112.0), vec2(26.0 * r, 26.0 * r));
             crate::icons::paint_scaled(
                 &painter,
                 lock.center(),
@@ -1221,38 +1420,61 @@ impl StudioApp {
                 } else {
                     Color32::from_rgb(110, 110, 116)
                 },
-                0.52,
+                0.66,
             );
             crate::icons::paint_scaled(
                 &painter,
-                at(131.0),
+                at(142.0),
                 crate::icons::Icon::TrimTool,
                 Color32::from_rgb(170, 170, 176),
-                0.5,
+                0.62,
             );
             if video {
                 crate::icons::paint_scaled(
                     &painter,
-                    at(159.0),
+                    at(172.0),
                     crate::icons::Icon::FilmView,
                     Color32::from_rgb(170, 170, 176),
-                    0.55,
+                    0.68,
                 );
             }
             let mute = Rect::from_center_size(
-                at(if video { 159.0 } else { 187.0 }),
-                vec2(18.0 * r, 16.0 * r),
+                at(if video { 172.0 } else { 204.0 }),
+                vec2(24.0 * r, 20.0 * r),
             );
             if !video {
-                let solo = Rect::from_center_size(at(159.0), vec2(18.0 * r, 16.0 * r));
-                painter.rect_filled(solo, 2.0, Color32::from_rgb(62, 62, 68));
+                let solo_btn = Rect::from_center_size(at(172.0), vec2(24.0 * r, 20.0 * r));
+                painter.rect_filled(
+                    solo_btn,
+                    2.0,
+                    if solo {
+                        theme::SOLO
+                    } else {
+                        Color32::from_rgb(62, 62, 68)
+                    },
+                );
                 painter.text(
-                    solo.center(),
+                    solo_btn.center(),
                     Align2::CENTER_CENTER,
                     "S",
-                    regular(9.5 * r),
-                    Color32::from_rgb(140, 140, 146),
+                    regular(12.0 * r),
+                    if solo {
+                        Color32::BLACK
+                    } else {
+                        Color32::from_rgb(140, 140, 146)
+                    },
                 );
+                let solo_resp = ui
+                    .interact(solo_btn, ui.id().with(("track_solo", id)), Sense::click())
+                    .on_hover_text("Solo: hear only the soloed tracks");
+                if solo_resp.clicked() {
+                    self.run(Command::SetTrackSolo {
+                        track: id,
+                        solo: !solo,
+                    });
+                }
+                self.remember_for_menu(ui, &solo_resp, geo, menu_id);
+                solo_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
                 painter.rect_filled(
                     mute,
                     2.0,
@@ -1266,7 +1488,7 @@ impl StudioApp {
                     mute.center(),
                     Align2::CENTER_CENTER,
                     "M",
-                    regular(9.5 * r),
+                    regular(12.0 * r),
                     if muted {
                         Color32::BLACK
                     } else {
@@ -1274,10 +1496,10 @@ impl StudioApp {
                     },
                 );
                 painter.text(
-                    at(235.0),
+                    at(240.0),
                     Align2::CENTER_CENTER,
                     "2.0",
-                    regular(10.0 * r),
+                    regular(11.5 * r),
                     Color32::from_rgb(140, 140, 146),
                 );
             }
@@ -1286,46 +1508,52 @@ impl StudioApp {
             } else {
                 name
             };
+            // A row squeezed by many tracks has room for one line only.
+            let tall = geo.track_h(i) >= 50.0 * r;
             painter.text(
-                pos2(rect.left() + 18.0 * r, top + 38.0 * r),
+                pos2(rect.left() + 16.0 * r, top + if tall { 38.0 } else { 32.0 } * r),
                 Align2::LEFT_CENTER,
                 &shown_name,
-                theme::semibold(10.5 * r),
+                theme::semibold(14.0 * r),
                 theme::WHITE,
             );
-            let n = clip_counts.get(i).copied().unwrap_or(0);
-            painter.text(
-                pos2(rect.left() + 18.0 * r, top + 53.0 * r),
-                Align2::LEFT_CENTER,
-                format!("{n} Clip{}", if n == 1 { "" } else { "s" }),
-                regular(10.0 * r),
-                Color32::from_rgb(150, 150, 156),
-            );
-            if ui
+            if tall {
+                let n = clip_counts.get(i).copied().unwrap_or(0);
+                painter.text(
+                    pos2(rect.left() + 16.0 * r, top + 58.0 * r),
+                    Align2::LEFT_CENTER,
+                    format!("{n} Clip{}", if n == 1 { "" } else { "s" }),
+                    regular(11.5 * r),
+                    Color32::from_rgb(150, 150, 156),
+                );
+            }
+            let lock_resp = ui
                 .interact(lock, ui.id().with(("track_lock", id)), Sense::click())
-                .on_hover_text("Lock the track")
-                .clicked()
-            {
+                .on_hover_text("Lock the track");
+            if lock_resp.clicked() {
                 self.run(Command::SetTrackLocked {
                     track: id,
                     locked: !locked,
                 });
             }
+            self.remember_for_menu(ui, &lock_resp, geo, menu_id);
+            lock_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
             let mute_hint = if video {
                 "Turn the track off"
             } else {
                 "Mute the track"
             };
-            if ui
+            let mute_resp = ui
                 .interact(mute, ui.id().with(("track_mute", id)), Sense::click())
-                .on_hover_text(mute_hint)
-                .clicked()
-            {
+                .on_hover_text(mute_hint);
+            if mute_resp.clicked() {
                 self.run(Command::SetTrackMuted {
                     track: id,
                     muted: !muted,
                 });
             }
+            self.remember_for_menu(ui, &mute_resp, geo, menu_id);
+            mute_resp.context_menu(|ui| self.track_header_menu(ui, menu_id));
         }
         // The boundary between the video and the sound tracks.
         if geo.videos > 0 && geo.videos < geo.tracks {
@@ -1335,67 +1563,27 @@ impl StudioApp {
                 Stroke::new(1.5, Color32::from_rgb(58, 58, 58)),
             );
         }
+        // The rows are done; the ruler and the column's edge go over the whole column again.
+        ui.set_clip_rect(clip);
+        let over = ui.painter_at(column);
         // The playhead's timecode over the ruler.
         let ruler = Rect::from_min_size(avail.left_top(), vec2(header_w, geo.ruler_h));
-        painter.rect_filled(ruler, 0.0, Color32::from_rgb(40, 40, 45));
-        painter.line_segment(
+        over.rect_filled(ruler, 0.0, Color32::from_rgb(40, 40, 45));
+        over.line_segment(
             [ruler.left_bottom(), ruler.right_bottom()],
             Stroke::new(1.0, Color32::from_rgb(30, 30, 34)),
         );
-        painter.text(
+        over.text(
             ruler.center() + vec2(0.0, 2.0),
             Align2::CENTER_CENTER,
             self.tc(self.playhead as i64),
             theme::semibold(20.0 * crate::chrome::R),
             theme::WHITE,
         );
-        painter.line_segment(
+        over.line_segment(
             [column.right_top(), column.right_bottom()],
             Stroke::new(1.0, Color32::from_rgb(26, 26, 30)),
         );
-        // A right click in the column adds tracks, or deletes the track under the pointer.
-        let menu_id = ui.id().with("track_menu_track");
-        let column_resp = ui.interact(column, ui.id().with("track_column"), Sense::click());
-        if column_resp.secondary_clicked() {
-            let under = column_resp
-                .interact_pointer_pos()
-                .and_then(|p| geo.track_at(p.y))
-                .and_then(|i| self.project().tracks.get(i).map(|t| t.id));
-            ui.data_mut(|d| d.insert_temp(menu_id, under));
-        }
-        column_resp.context_menu(|ui| {
-            for (label, kind) in [
-                ("Add Video Track", TrackKind::Video),
-                ("Add Audio Track", TrackKind::Audio),
-            ] {
-                if ui.button(label).clicked() {
-                    self.run(Command::AddTrack { kind });
-                    ui.close();
-                }
-            }
-            let under: Option<TrackId> = ui.data(|d| d.get_temp(menu_id)).flatten();
-            if let Some(track) = under {
-                let kind = self.project().track(track).map(|t| t.kind);
-                let label = match kind {
-                    Some(TrackKind::Audio) => "Delete Audio Track",
-                    _ => "Delete Video Track",
-                };
-                let others = self
-                    .project()
-                    .tracks
-                    .iter()
-                    .filter(|t| Some(t.kind) == kind)
-                    .count();
-                ui.separator();
-                if ui
-                    .add_enabled(others > 1, egui::Button::new(label))
-                    .clicked()
-                {
-                    self.run(Command::RemoveTrack { track });
-                    ui.close();
-                }
-            }
-        });
     }
 
     fn paint_timeline(
@@ -2428,6 +2616,23 @@ mod detail_tests {
     }
 
     #[test]
+    fn the_tracks_that_do_not_fit_are_scrolled_to() {
+        // Ten rows of 72 in a 300-tall panel: 720 of rows, so 420 of scrolling down.
+        assert_eq!(scroll_range(0.0, 720.0, 0.0, 300.0), (0.0, 420.0));
+        // Rows that fit leave a (0, 0) range: there is nothing to scroll.
+        assert_eq!(scroll_range(0.0, 200.0, 0.0, 300.0), (0.0, 0.0));
+        // Video tracks stacked above V1 start above the panel: scroll down to reach them.
+        assert_eq!(scroll_range(-200.0, 500.0, 0.0, 300.0), (-200.0, 0.0));
+        // The body can start below the panel top (V1 sits under the ruler), so the total height
+        // fitting is not enough: when the offset content overflows the bottom the bar shows.
+        // Here 590 of rows fits in 650 of panel by height, but body_top is 79 below rows_top,
+        // so the last row lands 19 points below the bottom and the bar must appear.
+        assert_eq!(scroll_range(79.0, 590.0, 0.0, 650.0), (19.0, 79.0));
+        // ...and when the offset content fits, it returns (0, 0).
+        assert_eq!(scroll_range(79.0, 560.0, 0.0, 650.0), (0.0, 0.0));
+    }
+
+    #[test]
     fn a_second_is_as_wide_at_every_frame_rate() {
         // Pixels a second, as a playing project moves past the playhead.
         let per_second = |fps: f32| {
@@ -2482,6 +2687,7 @@ mod drop_tests {
             videos: 1,
             body_top: 500.0,
             audio_h: 30.0,
+            vscroll: 0.0,
         }
     }
 

@@ -53,6 +53,8 @@ pub const TEXT: Color32 = Color32::from_rgb(214, 216, 220);
 pub const TEXT_DIM: Color32 = Color32::from_rgb(128, 128, 134);
 pub const ACCENT: Color32 = Color32::from_rgb(58, 138, 226);
 pub const WARN: Color32 = Color32::from_rgb(232, 168, 56);
+/// A soloed track's button, as Resolve lights it.
+pub const SOLO: Color32 = Color32::from_rgb(214, 170, 40);
 /// The active timeline tool (the selection arrow), as in DaVinci Resolve.
 pub const TOOL_RED: Color32 = Color32::from_rgb(230, 75, 61);
 pub const ERROR: Color32 = Color32::from_rgb(235, 96, 96);
