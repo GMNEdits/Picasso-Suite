@@ -42,7 +42,7 @@ const CODECS: [ff::codec::Id; 6] = [
 ];
 
 /// The kinds of device tried, best first. D3D11 and VA-API work with every vendor's card; CUDA is
-/// NVIDIA's own.
+/// NVIDIA's own, so it is only asked for when NVIDIA's driver is the one in charge.
 fn device_kinds() -> &'static [ffi::AVHWDeviceType] {
     use ffi::AVHWDeviceType::*;
     if cfg!(windows) {
@@ -53,9 +53,19 @@ fn device_kinds() -> &'static [ffi::AVHWDeviceType] {
         ]
     } else if cfg!(target_os = "macos") {
         &[AV_HWDEVICE_TYPE_VIDEOTOOLBOX]
-    } else {
+    } else if nvidia_driver() {
         &[AV_HWDEVICE_TYPE_VAAPI, AV_HWDEVICE_TYPE_CUDA]
+    } else {
+        &[AV_HWDEVICE_TYPE_VAAPI]
     }
+}
+
+/// Whether NVIDIA's driver is loaded, which is the only way a CUDA device can open. On a machine
+/// with an Intel or AMD card (or with NVIDIA's card on the free driver) asking for CUDA fails with
+/// "Cannot load libcuda.so.1" on stderr, which reads like a fault when it is only a card that was
+/// never there.
+fn nvidia_driver() -> bool {
+    std::path::Path::new("/dev/nvidiactl").exists() || std::path::Path::new("/dev/nvidia0").exists()
 }
 
 /// A reference to an FFmpeg hardware device or frame pool.
@@ -80,13 +90,42 @@ impl Drop for BufferRef {
     }
 }
 
-/// Opens a device of `kind` on the default card.
-fn create_device(kind: ffi::AVHWDeviceType) -> Option<BufferRef> {
+/// Opens a device of `kind` on the default card, or says why FFmpeg would not.
+fn open_device_of(kind: ffi::AVHWDeviceType) -> Result<BufferRef, i32> {
     let mut device: *mut ffi::AVBufferRef = ptr::null_mut();
     // SAFETY: FFmpeg fills `device` on success and leaves it null otherwise.
     let made =
         unsafe { ffi::av_hwdevice_ctx_create(&mut device, kind, ptr::null(), ptr::null_mut(), 0) };
-    (made >= 0 && !device.is_null()).then_some(BufferRef(device))
+    if made >= 0 && !device.is_null() {
+        Ok(BufferRef(device))
+    } else {
+        Err(made)
+    }
+}
+
+/// Opens a device of `kind` on the default card.
+fn create_device(kind: ffi::AVHWDeviceType) -> Option<BufferRef> {
+    open_device_of(kind).ok()
+}
+
+/// The first of [`device_kinds`] that opens, if any.
+///
+/// FFmpeg's log is held quiet while this runs: a computer without a VA-API driver, or with a card
+/// that cannot decode the codec, is the ordinary case, and FFmpeg reports every failed attempt as
+/// an error on stderr that reads like the program is broken. Why each kind failed is still said,
+/// at debug level, for whoever is looking into it.
+fn open_device() -> Option<(ffi::AVHWDeviceType, BufferRef)> {
+    let level = ff::util::log::get_level().unwrap_or(ff::util::log::Level::Error);
+    ff::util::log::set_level(ff::util::log::Level::Quiet);
+    let found = device_kinds().iter().find_map(|kind| match open_device_of(*kind) {
+        Ok(device) => Some((*kind, device)),
+        Err(code) => {
+            tracing::debug!("no {kind:?} device: {}", ff::Error::from(code));
+            None
+        }
+    });
+    ff::util::log::set_level(level);
+    found
 }
 
 /// The device the decoders share: opened the first time one asks, once for the whole run. `None`
@@ -145,9 +184,7 @@ pub(crate) fn attach(ctx: &mut ff::codec::context::Context) -> bool {
         return false;
     };
     let device = shared.get_or_insert_with(|| {
-        let found = device_kinds()
-            .iter()
-            .find_map(|kind| create_device(*kind).map(|d| (*kind, d)));
+        let found = open_device();
         match &found {
             Some((kind, _)) => tracing::info!("hardware decoding with {kind:?}"),
             None => tracing::info!("no hardware decoder: decoding on the processor"),
@@ -283,5 +320,25 @@ mod tests {
         };
         let mut ctx = ff::codec::context::Context::new_with_codec(codec);
         assert!(!attach(&mut ctx), "ProRes stays on the processor");
+    }
+
+    #[test]
+    fn the_probe_leaves_the_log_where_it_found_it() {
+        crate::init();
+        let before = ff::util::log::get_level().unwrap_or(ff::util::log::Level::Error);
+        let _ = open_device();
+        let after = ff::util::log::get_level().unwrap_or(ff::util::log::Level::Error);
+        assert_eq!(before, after, "the probe must not leave FFmpeg quiet");
+    }
+
+    #[test]
+    fn cuda_is_only_asked_for_when_nvidia_drives_the_card() {
+        #[cfg(all(unix, not(target_os = "macos")))]
+        {
+            use ffi::AVHWDeviceType::*;
+            let kinds = device_kinds();
+            assert_eq!(kinds[0], AV_HWDEVICE_TYPE_VAAPI);
+            assert_eq!(kinds.contains(&AV_HWDEVICE_TYPE_CUDA), nvidia_driver());
+        }
     }
 }
