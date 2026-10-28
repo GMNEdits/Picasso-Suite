@@ -30,7 +30,7 @@ jobs:
           - { runner: ubuntu-22.04-arm, ffmpeg: linuxarm64, deb: arm64, arch: aarch64 }
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - run: |
           sudo apt-get update
@@ -96,7 +96,7 @@ jobs:
           cargo generate-rpm -p apps/studio -s 'release = "2"' -o "update-test/$NAME-${{ matrix.arch }}.rpm"
           dpkg-deb -f "update-test/$NAME-${{ matrix.deb }}.deb" Version
           test "$(rpm -qp --qf '%{RELEASE}' "update-test/$NAME-${{ matrix.arch }}.rpm")" = 2
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: update-test-linux-${{ matrix.deb }}
           path: update-test/*
@@ -127,7 +127,7 @@ jobs:
           install -m755 packaging/linux/AppRun $D/AppRun
           ARCH=$ARCH ./appimagetool $D "$NAME-$ARCH.AppImage"
           "./$NAME-$ARCH.AppImage" --menu-status > /dev/null
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: pkg-linux-${{ matrix.deb }}
           path: |
@@ -135,7 +135,7 @@ jobs:
             *.rpm
             *.AppImage
       # The Flatpak job packs these same files.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: linux-binaries-${{ matrix.deb }}
           path: |
@@ -166,7 +166,7 @@ jobs:
           - { image: 'fedora:latest', window: false, runner: ubuntu-24.04-arm, deb: arm64 }
     container: ${{ matrix.image }}
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: pkg-linux-${{ matrix.deb }}
           path: pkg
@@ -194,7 +194,7 @@ jobs:
       # Help > Check for Updates, from the place the package installed it: the same code installs
       # the copy marked newer (the download is the only step left out), as root, as here, or
       # through pkexec for everyone else. The package manager must then have the newer one.
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: update-test-linux-${{ matrix.deb }}
           path: update-test
@@ -244,7 +244,7 @@ jobs:
           DISPLAY=:99 PICASSO_SCREENSHOT=$PWD/cut.png timeout 180 picasso-suite --page=cut
           test -s cut.png
       - if: matrix.window
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: linux-window-${{ matrix.deb }}-${{ strategy.job-index }}
           path: |
@@ -269,8 +269,8 @@ jobs:
       image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-24.08
       options: --privileged
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v7
         with:
           name: linux-binaries-${{ matrix.deb }}
           path: .
@@ -284,7 +284,7 @@ jobs:
           arch: ${{ matrix.arch }}
           upload-artifact: false
       # The bundle is kept before the update check below, which can fail on its own.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: pkg-flatpak-${{ matrix.arch }}
           path: ${{ env.PKG }}.flatpak
@@ -316,7 +316,7 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       # bindgen reads FFmpeg's headers with libclang; LLVM 20 and later produce empty structs
       # for them, so LLVM 19 is installed.
@@ -374,7 +374,7 @@ jobs:
           $version = Get-Content out.txt
           $version
           if ($version -notmatch [regex]::Escape($env:GITHUB_SHA.Substring(0, 12))) { throw "this is not the new build" }
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: pkg-windows
           path: "*-windows.zip"
@@ -388,8 +388,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v7
         with:
           path: out
           pattern: pkg-*

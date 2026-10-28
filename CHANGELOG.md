@@ -1,5 +1,26 @@
 # Changelog
 
+## Unreleased
+
+Changes since 0.5.0, on `main`: three planned menu entries now work (Paste Mix to Current Track, audio scrubbing and Bounce Selected Tracks), the Edit page's track headers can be clicked and the tracks that do not fit are scrolled to, and the graphics check says whether video decodes on the graphics card. Most of it is GANESH NIKAM's work (pull requests #19 to #26).
+
+### ✨ New
+- ✅ **Edit > Paste Mix to Current Track:** pastes only the sound of the copied clips onto the current sound track (the one the selected clip is on, or the first unlocked one), the first clip at the playhead and the others at their offsets, as one undo. A video brings its sound and not its picture; a video whose sound is a linked clip of its own brings that clip only, so it is not heard twice. Thanks to GANESH NIKAM.
+- ✅ **Clip > Enable / Disable Audio Scrubbing:** with it on, dragging the playhead by a ruler (Edit, both Cut timelines, Fairlight) plays a tenth of a second of the mix at each new place, through the same mix as playback (volume, mute, solo, levels). It is on by default, kept in the preferences, and also in System Preferences > Playback. A scrub is heard but not counted by the loudness meter. Thanks to GANESH NIKAM.
+- ✅ **Audio > Bounce Selected Tracks:** bounces only the tracks the selected clips are on (a video track's sound included) to a new sound track, like Bounce Mix to Track; the other tracks and any solo are left out of it. Thanks to GANESH NIKAM.
+- ✅ **Edit timeline, track scrolling:** tracks keep their size instead of being squeezed until they cannot be read; when they do not all fit, the mouse wheel scrolls them (Shift + wheel pans) and a bar at the right edge shows where they are. When they fit, the wheel pans the timeline as before. Thanks to GANESH NIKAM.
+- ✅ **Graphics check:** `picasso-suite --graphics-check` also says whether video decodes on the graphics card (D3D11, VA-API, CUDA or VideoToolbox), and when it does not, why: on Linux, a card whose VA-API driver is not installed is named, with the package to install.
+
+### 🛠️ Fixed
+- ✅ **Edit page track headers:** the lock, mute and solo buttons never took a click (the column's right-click area was on top of them); they work now, solo lights amber, and a right click anywhere in the header still opens the Add / Delete Track menu. The names and buttons are bigger, so they can be read and hit in a small window. Thanks to GANESH NIKAM.
+- ✅ **No false graphics card errors at start (Linux):** the program no longer prints "Cannot load libcuda.so.1" and "Failed to initialise VAAPI connection" when it looks for a decoder the computer does not have: CUDA is only tried with NVIDIA's driver, and the attempts are logged at debug level instead (`PICASSO_LOG=debug`). Thanks to GANESH NIKAM.
+- ✅ **Intel graphics on Linux:** the .deb recommends `va-driver-all` (every VA-API driver, Intel's included) as well as `mesa-va-drivers`, which covers AMD but not Intel, so a new install decodes on an Intel card too. An install that has no VA-API driver for its card decodes on the processor; the graphics check now says so.
+- ✅ **Color page:** the mini timeline's ruler no longer shows the same time ten times on an empty or very short timeline. Thanks to GANESH NIKAM.
+- ✅ **Fixes to the above before release:** the scroll bar could panic in a very short panel, and showed up with nothing to scroll when the tracks fit but started low; the scrub's sound was counted by the loudness meter the next time the timeline played; a ruler drag let go over another panel could keep scrubbing; the decoder check could leave FFmpeg's messages silenced for the whole run; and the bounce's message says again to mute the tracks it came from.
+
+### 🔄 Changed
+- ✅ **Development:** the workflows use the Node.js 24 versions of GitHub's checkout, cache and artifact actions, which removes the Node.js 20 warnings. Thanks to GANESH NIKAM for the first part.
+
 ## 0.5.0
 
 Picasso Suite 0.5.0 opens the timeline to other editors: it writes Final Cut Pro 7 / Premiere XML and AAF for Avid Media Composer and Pro Tools, and reads OpenTimelineIO timelines from Resolve, Premiere, Avid and others. The Deliver page's Final Cut Pro 7, Premiere XML and AVID AAF presets work, timelines and subtitles dropped on the window open, and Help > Export Log File saves a log of the session to send with a bug report. Packages for Windows, macOS and Linux (x86_64 and ARM64).

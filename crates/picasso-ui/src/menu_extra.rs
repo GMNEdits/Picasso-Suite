@@ -881,7 +881,7 @@ impl StudioApp {
         self.extra.preferences = open;
     }
 
-    /// Turns audio scrubbing on or off (the Edit menu's entry, and System Preferences >
+    /// Turns audio scrubbing on or off (the Clip menu's entry, and System Preferences >
     /// Playback), for this computer: with it on, dragging the playhead plays short pieces of the
     /// sound as it moves.
     pub(crate) fn set_audio_scrubbing(&mut self, on: bool) {

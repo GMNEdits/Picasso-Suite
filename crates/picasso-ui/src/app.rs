@@ -1314,7 +1314,10 @@ impl StudioApp {
             ),
             self.playhead,
             normal_speed,
+            // A ruler drag let go over another panel is not heard of by its timeline, which
+            // would still think it is being dragged: the button must be down too.
             self.extra.prefs.audio_scrubbing
+                && ctx.input(|i| i.pointer.primary_down())
                 && (self.timeline.scrubbing()
                     || self.cut_detail.scrubbing()
                     || self.cut_overview.scrubbing()),

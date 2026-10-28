@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.5.0.
+Status at 0.5.0, with what is on `main` since (see the changelog's Unreleased section).
 
 ## Done
 
@@ -58,6 +58,11 @@ Status at 0.5.0.
 - [x] Help: Check for Updates installs as root without pkexec, and openSUSE's zypper is told the release's rpm is unsigned; `picasso-suite --update-from <package>` and `--version`
 - [x] Help: Help > Export Log File saves the session log, kept in memory (nothing written while the program runs); a crash writes a crash report, which the next export includes
 - [x] macOS: a universal app (Apple silicon and Intel, built on both and joined with lipo), from 0.5.0 and added to 0.3.0 and 0.4.0 (`macos-universal` workflow)
+- [x] Editing: Edit > Paste Mix to Current Track (the sound of the copied clips on the current sound track, at the playhead, as one undo)
+- [x] Audio: Clip > Enable / Disable Audio Scrubbing (a tenth of a second of the mix at each new place of a playhead dragged by the ruler, on every timeline; kept in the preferences); Audio > Bounce Selected Tracks
+- [x] Edit timeline: the track headers' lock, mute and solo buttons take clicks; bigger names and buttons; the tracks that do not fit are scrolled to (wheel and a bar at the right edge) instead of squeezed
+- [x] Color page: the mini timeline's ruler does not repeat a time on an empty or short timeline
+- [x] Graphics: `--graphics-check` says whether video decodes on the graphics card, and why not (on Linux, a missing VA-API driver); no false CUDA and VA-API errors at start; the .deb recommends Intel's VA-API driver too
 
 ## To do
 
@@ -65,7 +70,7 @@ Status at 0.5.0.
 - [ ] Deliver: IMF Generic and Pro Tools presets (listed, greyed out) need an MXF writer and AAF with embedded or rendered sound
 - [ ] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
-- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), Paste Mix, New Effects Clip, audio scrubbing, timeline in a new window, Bounce Selected Tracks
+- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), New Effects Clip, timeline in a new window
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds; the Color page's scopes still measure on the interface thread (up to about 6 ms a frame)

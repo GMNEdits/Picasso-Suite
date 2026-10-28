@@ -116,6 +116,20 @@ fn report() -> (String, bool) {
         }
     }
 
+    // Decoding video on the card is FFmpeg's, not wgpu's: a card can draw and still decode on the
+    // processor, when its VA-API driver is missing.
+    match picasso_decode::hw::check() {
+        Ok(kind) => {
+            let _ = writeln!(out, "\nVideo decoding on the card: yes, with {kind}");
+        }
+        Err(why) => {
+            let _ = writeln!(out, "\nVideo decoding on the card: no, on the processor");
+            for line in why {
+                let _ = writeln!(out, "  {line}");
+            }
+        }
+    }
+
     let _ = writeln!(out);
     let cards: Vec<&str> = drawing
         .iter()

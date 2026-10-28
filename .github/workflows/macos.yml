@@ -35,7 +35,7 @@ jobs:
             runner: macos-15-intel
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref }}
       - uses: dtolnay/rust-toolchain@stable
@@ -84,7 +84,7 @@ jobs:
           test ! -e "$dir/Picasso Suite.app/Contents/Resources/old-copy"
           "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --version | tee version.txt
           grep -q "(${GITHUB_SHA:0:12})" version.txt || [ -n "${{ inputs.ref }}" ]
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: app-macos-${{ matrix.arch }}
           path: "*-macos-${{ matrix.arch }}.zip"
@@ -96,7 +96,7 @@ jobs:
     needs: build
     runs-on: macos-14
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           pattern: app-macos-*
           merge-multiple: true
@@ -138,12 +138,12 @@ jobs:
           test -f "$dir/Picasso Suite.app.old/Contents/Resources/old-copy"
           test ! -e "$dir/Picasso Suite.app/Contents/Resources/old-copy"
           "$dir/Picasso Suite.app/Contents/MacOS/picasso-suite" --version
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: pkg-macos-universal
           path: "*-macos-universal.zip"
       # The arm64 zip is published too (copies before 0.5.0 on Apple silicon update from it).
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: pkg-macos-arm64
           path: "*-macos-arm64.zip"
@@ -154,7 +154,7 @@ jobs:
     needs: universal
     runs-on: macos-15-intel
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: pkg-macos-universal
       - name: The x86_64 half links only to the app's own libraries

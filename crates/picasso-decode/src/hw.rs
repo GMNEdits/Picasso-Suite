@@ -108,24 +108,88 @@ fn create_device(kind: ffi::AVHWDeviceType) -> Option<BufferRef> {
     open_device_of(kind).ok()
 }
 
-/// The first of [`device_kinds`] that opens, if any.
+/// The name people know a kind of device by.
+fn kind_name(kind: ffi::AVHWDeviceType) -> &'static str {
+    use ffi::AVHWDeviceType::*;
+    match kind {
+        AV_HWDEVICE_TYPE_D3D11VA => "D3D11",
+        AV_HWDEVICE_TYPE_DXVA2 => "DXVA2",
+        AV_HWDEVICE_TYPE_CUDA => "CUDA",
+        AV_HWDEVICE_TYPE_VAAPI => "VA-API",
+        AV_HWDEVICE_TYPE_VIDEOTOOLBOX => "VideoToolbox",
+        _ => "another kind",
+    }
+}
+
+/// The first of [`device_kinds`] that opens, if any, and why each one before it did not.
 ///
 /// FFmpeg's log is held quiet while this runs: a computer without a VA-API driver, or with a card
 /// that cannot decode the codec, is the ordinary case, and FFmpeg reports every failed attempt as
 /// an error on stderr that reads like the program is broken. Why each kind failed is still said,
 /// at debug level, for whoever is looking into it.
-fn open_device() -> Option<(ffi::AVHWDeviceType, BufferRef)> {
-    let level = ff::util::log::get_level().unwrap_or(ff::util::log::Level::Error);
+///
+/// The level is put back to `Error`, the one [`crate::init`] sets, rather than to the level found
+/// here: the encoder check (`picasso_export::check_hardware`) quiets FFmpeg on a thread of its own
+/// at start, and a level saved while it runs would be Quiet, leaving FFmpeg silent for the rest
+/// of the run.
+fn open_device() -> (Option<(ffi::AVHWDeviceType, BufferRef)>, Vec<String>) {
+    let _probing = PROBING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    probe_devices()
+}
+
+/// Held while devices are probed: FFmpeg's log level is one for the whole program, so two probes
+/// at once (the decoders' and [`check`]'s) would put it back under each other.
+static PROBING: Mutex<()> = Mutex::new(());
+
+/// [`open_device`]'s work, with [`PROBING`] held.
+fn probe_devices() -> (Option<(ffi::AVHWDeviceType, BufferRef)>, Vec<String>) {
     ff::util::log::set_level(ff::util::log::Level::Quiet);
+    let mut failed = Vec::new();
     let found = device_kinds().iter().find_map(|kind| match open_device_of(*kind) {
         Ok(device) => Some((*kind, device)),
         Err(code) => {
-            tracing::debug!("no {kind:?} device: {}", ff::Error::from(code));
+            let why = format!("{}: {}", kind_name(*kind), ff::Error::from(code));
+            tracing::debug!("no hardware decoding with {why}");
+            failed.push(why);
             None
         }
     });
-    ff::util::log::set_level(level);
-    found
+    ff::util::log::set_level(ff::util::log::Level::Error);
+    (found, failed)
+}
+
+/// Whether video can be decoded on the graphics card here, for `picasso-suite --graphics-check`:
+/// the kind of device that opens, or a line for each kind that did not (with what to look at on
+/// Linux, where a missing VA-API driver is the usual reason). Opens a device of its own and lets
+/// it go; the decoders' shared one is not touched.
+pub fn check() -> Result<&'static str, Vec<String>> {
+    crate::init();
+    if !hardware_decoding() {
+        return Err(vec![
+            "turned off (System Preferences > Decode Options, or PICASSO_NO_HWACCEL)".into(),
+        ]);
+    }
+    let (found, mut failed) = open_device();
+    if let Some((kind, _device)) = found {
+        return Ok(kind_name(kind));
+    }
+    if cfg!(target_os = "linux") {
+        let render_node = std::fs::read_dir("/dev/dri").is_ok_and(|dir| {
+            dir.flatten()
+                .any(|e| e.file_name().to_string_lossy().starts_with("renderD"))
+        });
+        failed.push(if render_node {
+            "VA-API opens the card's render node (/dev/dri/renderD*) but its driver did not start: \
+             it is usually not installed (Intel: intel-media-va-driver, or i965-va-driver for \
+             cards before 2014; AMD: mesa-va-drivers). `vainfo` says which driver it looks for."
+                .into()
+        } else {
+            "there is no render node in /dev/dri: the graphics driver is not loaded, or this \
+             sandbox cannot see it"
+                .into()
+        });
+    }
+    Err(failed)
 }
 
 /// The device the decoders share: opened the first time one asks, once for the whole run. `None`
@@ -184,10 +248,13 @@ pub(crate) fn attach(ctx: &mut ff::codec::context::Context) -> bool {
         return false;
     };
     let device = shared.get_or_insert_with(|| {
-        let found = open_device();
+        let (found, failed) = open_device();
         match &found {
-            Some((kind, _)) => tracing::info!("hardware decoding with {kind:?}"),
-            None => tracing::info!("no hardware decoder: decoding on the processor"),
+            Some((kind, _)) => tracing::info!("hardware decoding with {}", kind_name(*kind)),
+            None => tracing::info!(
+                "no hardware decoder: decoding on the processor ({})",
+                failed.join("; ")
+            ),
         }
         found
     });
@@ -323,12 +390,27 @@ mod tests {
     }
 
     #[test]
-    fn the_probe_leaves_the_log_where_it_found_it() {
+    fn the_probe_leaves_the_log_at_error_even_if_it_starts_quiet() {
         crate::init();
-        let before = ff::util::log::get_level().unwrap_or(ff::util::log::Level::Error);
-        let _ = open_device();
-        let after = ff::util::log::get_level().unwrap_or(ff::util::log::Level::Error);
-        assert_eq!(before, after, "the probe must not leave FFmpeg quiet");
+        // The other tests probe too, so the probes are kept out while this one looks.
+        let _probing = PROBING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+        // The encoder check may have FFmpeg quiet when the probe starts; the probe must not keep
+        // it that way.
+        ff::util::log::set_level(ff::util::log::Level::Quiet);
+        let _ = probe_devices();
+        assert_eq!(
+            ff::util::log::get_level().ok(),
+            Some(ff::util::log::Level::Error),
+            "the probe must not leave FFmpeg quiet"
+        );
+    }
+
+    #[test]
+    fn the_check_names_the_device_or_says_why_there_is_none() {
+        match check() {
+            Ok(kind) => assert!(!kind.is_empty()),
+            Err(why) => assert!(!why.is_empty() && why.iter().all(|w| !w.is_empty())),
+        }
     }
 
     #[test]

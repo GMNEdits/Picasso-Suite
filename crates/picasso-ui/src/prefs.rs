@@ -20,7 +20,7 @@ const MAX_LINES: usize = 4096;
 pub(crate) struct Preferences {
     /// Decode H.264, H.265, AV1, VP9, MPEG-2 and VC-1 on the graphics card where it can.
     pub hardware_decoding: bool,
-    /// Play short pieces of the sound while the playhead is dragged (the Edit menu's
+    /// Play short pieces of the sound while the playhead is dragged (the Clip menu's
     /// "Enable / Disable Audio Scrubbing").
     pub audio_scrubbing: bool,
     /// The commands whose keys were changed, and their keys.

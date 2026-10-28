@@ -315,7 +315,7 @@ impl StudioApp {
             with_sound: false,
         });
         if placed.is_some() {
-            self.info("The bounce is on a new sound track");
+            self.info("The bounce is on a new sound track; mute the tracks it came from to hear only it");
         }
     }
 }

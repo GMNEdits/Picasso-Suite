@@ -5,31 +5,36 @@ Edit, Fusion, Color, Fairlight and Deliver pages. Windows, Linux and macOS.
 
 - **Edit:** media pool and bins, multi-track timeline, linked picture and sound, blade, trim,
   ripple, roll, slip and slide, Dynamic Trim, compound clips, multicam, speed changes and ramps,
-  keyframes, transitions, titles, undo/redo.
+  keyframes, transitions, titles, Paste Mix to Current Track, undo/redo.
 - **Color:** serial, parallel and layer nodes; lift, gamma, gain and offset wheels; custom curves
   (Y, R, G, B, intensity and soft clip); qualifier and power windows; LUTs; gallery stills;
   parade, waveform, vectorscope and histogram scopes.
 - **Fairlight:** per-track EQ and compressor, meters, loudness (BS.1770), recording from the
-  microphone, voice-over, Bounce Mix to Track.
+  microphone, voice-over, Bounce Mix to Track and Bounce Selected Tracks, audio scrubbing.
 - **Any format FFmpeg reads:** H.264, H.265/HEVC, ProRes, DNxHR, AV1, VP9 and more, images and
   sound, decoded on the graphics card where it can. FFmpeg comes with every package.
 - **Deliver:** H.264, H.265 and AV1 (8 or 10-bit, on the processor or an NVIDIA, Intel, AMD,
   Apple or VA-API encoder), VP9, ProRes, DNxHR, lossless FFV1, WAV, MP3 and PNG sequences, a
   render queue and Resolve's render presets.
 - **DaVinci Resolve files:** opens `.drp` projects, `.drt` timelines, `.drb` bins and XML exports
-  (name, frame rate, picture size and media); exports timelines as EDL and OpenTimelineIO.
+  (name, frame rate, picture size and media).
+- **Other editors:** exports timelines as Final Cut Pro 7 / Premiere XML, AAF (Avid Media
+  Composer, Pro Tools), OpenTimelineIO and EDL; imports OpenTimelineIO timelines and EDL.
 - **Keyboard Customization:** any command's keys can be changed.
 - **Updates:** Help > Check for Updates installs the latest release.
+- **Bug reports:** Help > Export Log File saves the session's log (kept in memory, nothing
+  written while you work); `picasso-suite --graphics-check` reports what the graphics card draws
+  and whether it decodes video.
 
 ## Status
 
 <!-- status:start -->
-![Status: 86.74% of the menu entries work, 76.06% of the roadmap is done](docs/status.svg)
+![Status: 87.50% of the menu entries work, 77.63% of the roadmap is done](docs/status.svg)
 
 | | Done | Total | |
 |---|---|---|---|
-| Menu entries | 229 | 264 | 86.74% |
-| Roadmap items* | 54 | 71 | 76.06% |
+| Menu entries | 231 | 264 | 87.50% |
+| Roadmap items* | 59 | 76 | 77.63% |
 
 Green is made, grey is not. Menu entries: every entry of every menu ([`Menu-Status.md`](Menu-Status.md)); the rest are shown disabled. \* Roadmap items ([`ROADMAP.md`](ROADMAP.md)): the to-do items are bigger than the done ones, so this share looks better than the work left. Made by `python3 scripts/status.py`.
 <!-- status:end -->

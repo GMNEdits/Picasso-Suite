@@ -2296,7 +2296,7 @@ fn hardware_decoding_is_switched_from_the_playback_menu() {
 }
 
 #[test]
-fn audio_scrubbing_is_switched_from_the_edit_menu() {
+fn audio_scrubbing_is_switched_from_the_clip_menu() {
     let mut app = app();
     assert_eq!(app.act_checked(Act::ToggleAudioScrubbing), Some(true));
     act(&mut app, Act::ToggleAudioScrubbing);

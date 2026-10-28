@@ -28,7 +28,7 @@ jobs:
       image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
       options: --privileged
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check the desktop entry and the appstream file
         run: |
           dnf_or_apt() { if command -v apt-get >/dev/null; then apt-get install -y "$@"; else dnf install -y "$@"; fi; }
@@ -77,7 +77,7 @@ jobs:
           cat lint-manifest.txt lint-repo.txt
           # Also as a run annotation, readable without logging in.
           python3 -c 'import sys; t="manifest:\n"+open("lint-manifest.txt", errors="replace").read()+"\nrepo:\n"+open("lint-repo.txt", errors="replace").read(); print("::notice title=Flathub linter::" + t[:3500].replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: flathub-${{ matrix.arch }}
           path: |

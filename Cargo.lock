@@ -2153,6 +2153,7 @@ dependencies = [
  "eframe",
  "image",
  "log",
+ "picasso-decode",
  "picasso-ui",
  "pollster 0.4.0",
  "wasm-bindgen",

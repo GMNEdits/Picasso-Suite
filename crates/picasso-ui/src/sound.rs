@@ -199,8 +199,7 @@ mod native {
             )
             .unwrap_or(0);
             if playing {
-                self.scrub = None;
-                self.scrubbing = false;
+                self.end_scrub();
                 self.open();
                 let Some(out) = &self.output else { return };
                 if !self.active {
@@ -227,14 +226,13 @@ mod native {
                     return;
                 }
             }
-            self.scrub = None;
-            self.scrubbing = false;
             if self.active {
                 if let Some(out) = &self.output {
                     out.pause();
                 }
                 self.active = false;
             }
+            self.end_scrub();
             // Decode what the next play will need, so it starts at once.
             if self.warmed != Some(at) && !self.plan.clips.is_empty() {
                 self.pool.prefetch(&self.plan, at, AHEAD);
@@ -279,6 +277,7 @@ mod native {
                 self.warmed = Some(at);
             }
             self.scrubbing = true;
+            self.drop_loudness();
             // A piece must be stopped even when the pointer stops moving and egui goes idle: ask
             // for a frame just after the piece is due to end.
             if self.active {
@@ -287,6 +286,25 @@ mod native {
                 ));
             }
             self.read_levels();
+        }
+
+        /// Leaves a scrub, if one was going: what the sound card measured of it is dropped.
+        fn end_scrub(&mut self) {
+            if self.scrubbing {
+                self.drop_loudness();
+            }
+            self.scrub = None;
+            self.scrubbing = false;
+        }
+
+        /// Drops the loudness blocks and the peak the sound card measured since they were last
+        /// read. A scrub is heard but not counted: what it played would otherwise be counted the
+        /// next time the timeline plays, since the blocks wait until they are read.
+        fn drop_loudness(&mut self) {
+            if let Some(out) = &self.output {
+                let _ = out.take_loudness(&mut self.loudness_seen);
+                let _ = out.take_true_peak();
+            }
         }
 
         /// Opens the sound device the first time it is needed; one failure is enough.
@@ -320,7 +338,8 @@ mod native {
 
         pub(super) fn loudness(&mut self) -> (Vec<f64>, f32) {
             match &self.output {
-                // A scrub is not playback: it is heard, but it does not count towards loudness.
+                // A scrub is not playback: it is heard, but it does not count towards loudness
+                // (what it played is dropped as it goes, see `drop_loudness`).
                 Some(out) if self.active && !self.scrubbing => (
                     out.take_loudness(&mut self.loudness_seen),
                     out.take_true_peak(),
