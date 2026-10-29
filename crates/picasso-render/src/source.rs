@@ -215,6 +215,7 @@ mod tests {
             length: None,
             default_duration: 10,
             bin: None,
+            timecode: None,
         }
     }
 

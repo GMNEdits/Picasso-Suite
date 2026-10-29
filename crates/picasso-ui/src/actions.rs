@@ -605,6 +605,15 @@ impl StudioApp {
         }
     }
 
+    /// Audio > Auto Align Clips > Based on Timecode: lines the selected clips up by the start
+    /// timecode their files carry.
+    fn align_by_timecode(&mut self) {
+        let clips = self.selected_ids();
+        if self.run(Command::AlignClips { clips }).is_some() {
+            self.info("Aligned the clips by their timecode");
+        }
+    }
+
     // ----- trimming -----
 
     fn trim_to_playhead(&mut self, start: bool) {
@@ -981,6 +990,16 @@ impl StudioApp {
             | Act::MulticamViewer
             | Act::SetClipColor(_)
             | Act::NormalizeAudio => self.target_clip().is_some(),
+            Act::AutoAlignTimecode => {
+                let ids = self.selected_ids();
+                ids.len() >= 2
+                    && ids.iter().all(|id| {
+                        project
+                            .clip(*id)
+                            .and_then(|(_, c)| project.media(c.media))
+                            .is_some_and(|m| m.timecode.is_some())
+                    })
+            }
             Act::MarkTimeline
             | Act::SelectNearestEdit
             | Act::ExportEdl
@@ -1541,6 +1560,7 @@ impl StudioApp {
             Act::MulticamViewer => self.toggle_multicam_viewer(),
             Act::SetClipColor(color) => self.set_clip_color(color),
             Act::NormalizeAudio => self.extra.normalize = Some(-9.0),
+            Act::AutoAlignTimecode => self.align_by_timecode(),
             Act::ExportEdl => self.export_edl(ctx),
             Act::ExportOtio => self.export_otio(ctx),
             Act::ExportXml(premiere) => self.export_xml(ctx, premiere),

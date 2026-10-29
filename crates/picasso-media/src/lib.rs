@@ -59,6 +59,8 @@ pub struct MediaMetadata {
     pub video_codec: Option<String>,
     pub audio_codec: Option<String>,
     pub file_size: Option<u64>,
+    /// The start timecode the file carries ("01:00:00:00"), when it has one.
+    pub timecode: Option<String>,
 }
 
 fn size_of_file(path: &Path) -> Option<u64> {
@@ -80,6 +82,7 @@ impl MediaMetadata {
             video_codec: Some(info.video_codec),
             audio_codec: info.audio_codec,
             file_size: size_of_file(path),
+            timecode: info.timecode,
         })
     }
 
@@ -124,6 +127,9 @@ impl MediaMetadata {
                 format!("{fps:.2} fps")
             });
         }
+        if let Some(tc) = &self.timecode {
+            parts.push(format!("TC {tc}"));
+        }
         match (&self.video_codec, &self.audio_codec) {
             (Some(v), Some(a)) => parts.push(format!("{v} + {a}")),
             (Some(v), None) => parts.push(v.clone()),
@@ -160,7 +166,8 @@ pub fn to_bytes(project_json: &str, media: &[MediaMetadata]) -> Result<Vec<u8>, 
              fps_num INTEGER, fps_den INTEGER,
              duration_us INTEGER,
              video_codec TEXT, audio_codec TEXT,
-             file_size INTEGER
+             file_size INTEGER,
+             timecode TEXT
          );",
     )?;
     let tx = db.transaction()?;
@@ -174,7 +181,7 @@ pub fn to_bytes(project_json: &str, media: &[MediaMetadata]) -> Result<Vec<u8>, 
     )?;
     for m in media {
         tx.execute(
-            "INSERT OR REPLACE INTO media VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)",
+            "INSERT OR REPLACE INTO media VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
             params![
                 i64::try_from(m.media).unwrap_or(i64::MAX),
                 m.kind,
@@ -187,6 +194,7 @@ pub fn to_bytes(project_json: &str, media: &[MediaMetadata]) -> Result<Vec<u8>, 
                 m.video_codec,
                 m.audio_codec,
                 m.file_size.and_then(|s| i64::try_from(s).ok()),
+                m.timecode,
             ],
         )?;
     }
@@ -252,11 +260,29 @@ fn read_project(db: &Connection) -> Result<(String, Vec<MediaMetadata>), MediaEr
     let json: String = db
         .query_row("SELECT json FROM project WHERE id = 1", [], |r| r.get(0))
         .map_err(|_| not_project("it holds no project"))?;
-    let mut stmt = db.prepare(
+    // Databases written before the timecode column existed have no `timecode`; they read as
+    // having none, so an older project still opens.
+    let has_timecode = {
+        let mut probe = db.prepare("PRAGMA table_info(media)")?;
+        let mut found = false;
+        for name in probe.query_map([], |r| r.get::<_, String>(1))?.flatten() {
+            if name == "timecode" {
+                found = true;
+                break;
+            }
+        }
+        found
+    };
+    let sql = if has_timecode {
         "SELECT id, kind, path, width, height, fps_num, fps_den, duration_us,
-                video_codec, audio_codec, file_size FROM media ORDER BY id
-         LIMIT 100000", // no real project has more media than that
-    )?;
+                video_codec, audio_codec, file_size, timecode FROM media ORDER BY id
+         LIMIT 100000" // no real project has more media than that
+    } else {
+        "SELECT id, kind, path, width, height, fps_num, fps_den, duration_us,
+                video_codec, audio_codec, file_size, NULL FROM media ORDER BY id
+         LIMIT 100000"
+    };
+    let mut stmt = db.prepare(sql)?;
     let media = stmt
         .query_map([], |r| {
             let (n, d): (Option<u32>, Option<u32>) = (r.get(5)?, r.get(6)?);
@@ -273,6 +299,7 @@ fn read_project(db: &Connection) -> Result<(String, Vec<MediaMetadata>), MediaEr
                 file_size: r
                     .get::<_, Option<i64>>(10)?
                     .and_then(|s| u64::try_from(s).ok()),
+                timecode: r.get(11)?,
             })
         })?
         .collect::<Result<Vec<_>, _>>()?;
@@ -296,6 +323,7 @@ mod tests {
                 video_codec: Some("h264".into()),
                 audio_codec: Some("aac".into()),
                 file_size: Some(5_242_880),
+                timecode: Some("01:00:00:00".into()),
             },
             MediaMetadata::image(7, "no-such-file.png", 64, 48),
         ]
@@ -386,10 +414,37 @@ mod tests {
     }
 
     #[test]
+    fn a_database_without_a_timecode_column_still_opens() {
+        // The layout written before timecodes were kept: the same tables without `timecode`.
+        let db = Connection::open_in_memory().unwrap();
+        db.execute_batch(
+            "CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+             INSERT INTO meta VALUES ('format', 'picasso-project'), ('version', '1');
+             CREATE TABLE project (id INTEGER PRIMARY KEY CHECK (id = 1), json TEXT NOT NULL);
+             INSERT INTO project VALUES (1, '{\"name\":\"old\"}');
+             CREATE TABLE media (
+                 id INTEGER PRIMARY KEY, kind TEXT NOT NULL, path TEXT NOT NULL,
+                 width INTEGER, height INTEGER, fps_num INTEGER, fps_den INTEGER,
+                 duration_us INTEGER, video_codec TEXT, audio_codec TEXT, file_size INTEGER
+             );
+             INSERT INTO media VALUES (1, 'video', 'a.mp4', 1920, 1080, 24, 1,
+                                      2000000, 'h264', 'aac', 1000);",
+        )
+        .unwrap();
+        let bytes = db.serialize(MAIN_DB).unwrap().to_vec();
+        drop(db);
+        let (json, media) = from_bytes(&bytes).unwrap();
+        assert_eq!(json, r#"{"name":"old"}"#);
+        assert_eq!(media.len(), 1);
+        assert_eq!(media[0].width, Some(1920));
+        assert_eq!(media[0].timecode, None);
+    }
+
+    #[test]
     fn the_summary_reads_like_a_tooltip() {
         assert_eq!(
             sample()[0].summary(),
-            "1920 x 1080, 29.97 fps, h264 + aac, 4.0 s, 5.0 MB"
+            "1920 x 1080, 29.97 fps, TC 01:00:00:00, h264 + aac, 4.0 s, 5.0 MB"
         );
         assert_eq!(sample()[1].summary(), "64 x 48");
         assert_eq!(MediaMetadata::default().summary(), "");
