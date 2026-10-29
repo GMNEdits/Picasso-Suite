@@ -69,6 +69,18 @@ impl Fps {
         )
     }
 
+    /// A start timecode counted at the frame rate `from` (a file's own), written at this rate:
+    /// the same moment in seconds, to the nearest frame. `None` when the text is not a timecode
+    /// at `from`.
+    pub fn retimed_timecode(self, text: &str, from: Fps) -> Option<String> {
+        let frames = from.parse_timecode(text)?;
+        if from == self || !from.is_valid() || !self.is_valid() {
+            return Some(text.to_string());
+        }
+        let seconds = frames as f64 / from.as_f64();
+        Some(self.timecode(self.frames_in(seconds)))
+    }
+
     /// The frame number of a timecode `HH:MM:SS:FF`. A `;` before the frames marks drop-frame
     /// timecode (29.97 and 59.94), whose minute boundaries skip two or four frame numbers; it is
     /// read the way broadcast files count it. `None` when the text is not a timecode.
@@ -77,6 +89,10 @@ impl Fps {
         let drop_frame = text.contains(';');
         let mut parts = text.split([':', ';']);
         let h: u64 = parts.next()?.trim().parse().ok()?;
+        // A file can say anything: hours past two digits are no timecode, and would overflow.
+        if h > 99 {
+            return None;
+        }
         let m: u64 = parts.next()?.trim().parse().ok()?;
         let s: u64 = parts.next()?.trim().parse().ok()?;
         let f: u64 = parts.next()?.trim().parse().ok()?;
@@ -152,6 +168,11 @@ mod tests {
         );
         assert_eq!(Fps::FPS_2997.parse_timecode("00:01:00;02"), Some(1800));
         assert_eq!(Fps::FPS_2997.parse_timecode("00:10:00;00"), Some(17982));
+        // Hours that would overflow are refused, not wrapped.
+        assert_eq!(f.parse_timecode("99999999999999999999:00:00:00"), None);
+        assert_eq!(f.parse_timecode("18446744073709551615:00:00:00"), None);
+        assert_eq!(f.parse_timecode("100:00:00:00"), None);
+        assert_eq!(f.parse_timecode("99:59:59:23"), Some(24 * 359_999 + 23));
         // Not a timecode.
         assert_eq!(f.parse_timecode(""), None);
         assert_eq!(f.parse_timecode("01:00:00"), None);
@@ -159,4 +180,29 @@ mod tests {
         assert_eq!(f.parse_timecode("00:00:00:24"), None);
         assert_eq!(f.parse_timecode("a:b:c:d"), None);
     }
+
+    #[test]
+    fn a_timecode_is_retimed_to_the_project_rate() {
+        // A 25 fps camera's 01:00:00:12 is half a second past the hour, whatever the project.
+        assert_eq!(
+            Fps::FPS_24.retimed_timecode("01:00:00:12", Fps::FPS_25),
+            Some("01:00:00:12".to_string())
+        );
+        assert_eq!(
+            Fps::FPS_24.retimed_timecode("01:00:01:00", Fps::FPS_25),
+            Some("01:00:01:00".to_string())
+        );
+        // 25 fps frame 24 is a frame short of a second: 23 or 24 frames at 24 fps.
+        assert_eq!(
+            Fps::FPS_24.retimed_timecode("00:00:00:24", Fps::FPS_25),
+            Some("00:00:00:23".to_string())
+        );
+        // The same rate is left as written; a text that is no timecode there is refused.
+        assert_eq!(
+            Fps::FPS_25.retimed_timecode("01:00:00:24", Fps::FPS_25),
+            Some("01:00:00:24".to_string())
+        );
+        assert_eq!(Fps::FPS_24.retimed_timecode("01:00:00:24", Fps::FPS_24), None);
+    }
+
 }

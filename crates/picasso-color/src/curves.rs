@@ -32,6 +32,8 @@ pub const SAT_VS_SAT: usize = 4;
 pub const SAT_VS_LUM: usize = 5;
 /// How many hue/sat/lum curves there are.
 pub const HUE_MODES: usize = 6;
+/// The colourfulness at which a pixel's hue counts in full for the curves keyed on hue.
+const HUE_FULL_CHROMA: f32 = 0.1;
 
 /// The most points one curve keeps.
 pub const MAX_POINTS: usize = 32;
@@ -156,42 +158,35 @@ impl Curves {
         if self.hue_is_identity() {
             return rgb;
         }
-        let (h, s, l) = (hue_of(rgb), chroma_of(rgb), luma_of(rgb));
-        let delta = |mode: usize, x: f32| -> f32 {
-            let k = self.hue_intensity.get(mode).copied().unwrap_or(0.0) / 100.0;
-            if k <= 0.0 || self.is_hue_straight(mode) {
-                0.0
-            } else {
-                (self.eval_hue(mode, x) - x) * k
-            }
-        };
-        // Half a turn each way over the height of the graph.
-        let turn = delta(HUE_VS_HUE, h) * std::f32::consts::PI;
-        let sat = (1.0
-            + delta(HUE_VS_SAT, h)
-            + delta(LUM_VS_SAT, l)
-            + delta(SAT_VS_SAT, s))
-        .max(0.0);
-        let lum = (1.0 + delta(HUE_VS_LUM, h) + delta(SAT_VS_LUM, s)).max(0.0);
-        let mut out = rgb;
-        if (sat - 1.0).abs() > 1e-6 {
-            out = out.map(|v| l + (v - l) * sat);
+        hue_modes(rgb, |mode, x| self.hue_delta(mode, x))
+    }
+
+    /// How far hue/sat/lum curve `mode` is from the straight line at `x`, by its intensity.
+    fn hue_delta(&self, mode: usize, x: f32) -> f32 {
+        let k = self.hue_intensity.get(mode).copied().unwrap_or(0.0) / 100.0;
+        if k <= 0.0 || self.is_hue_straight(mode) {
+            0.0
+        } else {
+            (self.eval_hue(mode, x) - x) * k
         }
-        if (lum - 1.0).abs() > 1e-6 {
-            out = out.map(|v| v * lum);
-        }
-        if turn != 0.0 {
-            out = rotate_hue(out, turn);
-        }
-        out.map(|v| v.clamp(0.0, 1.0))
     }
 
     /// The curves of the three channels as tables, for grading many pixels.
     pub fn tables(&self) -> CurveTables {
+        let hue_active = !self.hue_is_identity();
         CurveTables {
             steps: std::array::from_fn(|c| {
                 (0..=TABLE_STEPS)
                     .map(|i| self.apply_channel(c, i as f32 / TABLE_STEPS as f32))
+                    .collect()
+            }),
+            hue_active,
+            hue_deltas: std::array::from_fn(|m| {
+                if !hue_active || self.is_hue_straight(m) || self.hue_intensity[m] <= 0.0 {
+                    return Vec::new();
+                }
+                (0..=TABLE_STEPS)
+                    .map(|i| self.hue_delta(m, i as f32 / TABLE_STEPS as f32))
                     .collect()
             }),
         }
@@ -348,6 +343,10 @@ pub fn luma_of(rgb: [f32; 3]) -> f32 {
 /// The three channels' curves sampled in fine steps; a value reads the nearest step.
 pub struct CurveTables {
     steps: [Vec<f32>; 3],
+    hue_active: bool,
+    /// Each hue/sat/lum curve's distance from straight, by its intensity; empty when it does
+    /// nothing.
+    hue_deltas: [Vec<f32>; HUE_MODES],
 }
 
 impl CurveTables {
@@ -360,6 +359,48 @@ impl CurveTables {
         let i = (v.clamp(0.0, 1.0) * TABLE_STEPS as f32 + 0.5) as usize;
         table.get(i).copied().unwrap_or(v)
     }
+
+    /// A pixel through the hue/sat/lum curves, like [`Curves::apply_hue_modes`].
+    #[inline]
+    pub fn apply_hue_modes(&self, rgb: [f32; 3]) -> [f32; 3] {
+        if !self.hue_active {
+            return rgb;
+        }
+        hue_modes(rgb, |mode, x| {
+            let i = (x.clamp(0.0, 1.0) * TABLE_STEPS as f32 + 0.5) as usize;
+            self.hue_deltas
+                .get(mode)
+                .and_then(|t| t.get(i))
+                .copied()
+                .unwrap_or(0.0)
+        })
+    }
+}
+
+/// A pixel through the hue/sat/lum curves, given how far each curve is from straight at a place
+/// on its graph: the hue turns, and the saturation and luminance scale.
+#[inline]
+fn hue_modes(rgb: [f32; 3], delta: impl Fn(usize, f32) -> f32) -> [f32; 3] {
+    let (h, s, l) = (hue_of(rgb), chroma_of(rgb), luma_of(rgb));
+    // A grey pixel has no hue (it reads as 0, red), so the curves keyed on hue count for
+    // less the less colour a pixel has, and not at all for a grey.
+    let hue_weight = (s / HUE_FULL_CHROMA).min(1.0);
+    // Half a turn each way over the height of the graph.
+    let turn = delta(HUE_VS_HUE, h) * hue_weight * std::f32::consts::PI;
+    let sat = (1.0 + delta(HUE_VS_SAT, h) * hue_weight + delta(LUM_VS_SAT, l) + delta(SAT_VS_SAT, s))
+        .max(0.0);
+    let lum = (1.0 + delta(HUE_VS_LUM, h) * hue_weight + delta(SAT_VS_LUM, s)).max(0.0);
+    let mut out = rgb;
+    if (sat - 1.0).abs() > 1e-6 {
+        out = out.map(|v| l + (v - l) * sat);
+    }
+    if (lum - 1.0).abs() > 1e-6 {
+        out = out.map(|v| v * lum);
+    }
+    if turn != 0.0 {
+        out = rotate_hue(out, turn);
+    }
+    out.map(|v| v.clamp(0.0, 1.0))
 }
 
 /// The monotone cubic through `points` (sorted by input) at `x`.
@@ -622,9 +663,54 @@ mod tests {
         c.move_hue_point(LUM_VS_SAT, 0, 0.0, 1.0); // delta = 1 - x
         c.move_hue_point(SAT_VS_SAT, 0, 0.0, 1.0);
         let pale = [0.5, 0.45, 0.45]; // low chroma, low luma
-        let vivid = [0.9, 0.1, 0.1]; // high chroma, high luma
+        let vivid = [0.5, 0.2, 0.2]; // high chroma, high luma
         let gain_chroma = |p: [f32; 3]| chroma_of(c.apply_hue_modes(p)) / chroma_of(p);
         assert!(gain_chroma(pale) > gain_chroma(vivid));
+    }
+
+    #[test]
+    fn hue_keyed_curves_leave_greys_alone() {
+        for mode in [HUE_VS_HUE, HUE_VS_SAT, HUE_VS_LUM] {
+            let mut c = Curves::default();
+            // Red (hue 0) is pushed all the way up; a grey must not be taken for red.
+            c.move_hue_point(mode, 0, 0.0, 1.0);
+            for grey in [[0.0; 3], [0.5; 3], [1.0; 3]] {
+                assert_eq!(c.apply_hue_modes(grey), grey, "mode {mode}");
+            }
+            // A barely coloured pixel moves less than a vivid one.
+            let faint = [0.52, 0.5, 0.5];
+            let vivid = [0.5, 0.2, 0.2];
+            let moved = |p: [f32; 3]| {
+                let q = c.apply_hue_modes(p);
+                (0..3).map(|i| (q[i] - p[i]).abs()).sum::<f32>()
+            };
+            assert!(moved(faint) < moved(vivid), "mode {mode}");
+        }
+    }
+
+    #[test]
+    fn tables_agree_with_the_direct_hue_curves() {
+        let mut c = Curves::default();
+        for m in 0..HUE_MODES {
+            c.add_hue_point(m, 0.3, 0.7);
+            c.add_hue_point(m, 0.7, 0.4);
+        }
+        c.hue_intensity[HUE_VS_LUM] = 60.0;
+        let tables = c.tables();
+        for i in 0..2000u32 {
+            let rgb = [
+                (i % 17) as f32 / 16.0,
+                (i % 29) as f32 / 28.0,
+                (i % 13) as f32 / 12.0,
+            ];
+            let (a, b) = (c.apply_hue_modes(rgb), tables.apply_hue_modes(rgb));
+            for k in 0..3 {
+                assert!((a[k] - b[k]).abs() < 0.01, "{rgb:?}: {a:?} vs {b:?}");
+            }
+        }
+        // Curves that do nothing leave the tables doing nothing.
+        let none = Curves::default().tables();
+        assert_eq!(none.apply_hue_modes([0.2, 0.5, 0.8]), [0.2, 0.5, 0.8]);
     }
 
     #[test]

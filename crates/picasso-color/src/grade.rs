@@ -308,14 +308,19 @@ impl ColorGrade {
             rgb = rgb.map(|v| v + back);
         }
         let mut rgb = rgb.map(|v| v.clamp(0.0, 1.0));
-        match curves {
-            CurveStep::Off => {}
-            CurveStep::Table(t) => rgb = [0, 1, 2].map(|c| t.apply(c, rgb[c])),
-            CurveStep::Direct => rgb = [0, 1, 2].map(|c| self.curves.apply_channel(c, rgb[c])),
-        }
         // The hue/sat/lum curves act on the whole pixel: they key a hue, a saturation or a
         // luminance and turn or scale what is there.
-        rgb = self.curves.apply_hue_modes(rgb);
+        match curves {
+            CurveStep::Off => {}
+            CurveStep::Table(t) => {
+                rgb = [0, 1, 2].map(|c| t.apply(c, rgb[c]));
+                rgb = t.apply_hue_modes(rgb);
+            }
+            CurveStep::Direct => {
+                rgb = [0, 1, 2].map(|c| self.curves.apply_channel(c, rgb[c]));
+                rgb = self.curves.apply_hue_modes(rgb);
+            }
+        }
         match &self.lut {
             Some(lut) => lut.apply(rgb).map(|v| v.clamp(0.0, 1.0)),
             None => rgb,

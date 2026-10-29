@@ -7,8 +7,13 @@
 - ✅ **Color page hue/sat/lum curves:** the six Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve buttons in the Curves panel now work. Drag on the graph to bend hue, saturation or luminance by how far the curve is from straight; the histogram behind it keys the same value, and the curves are saved per node.
 
 ### 🛠️ Fixed
-- ✅ **Color > Curves > Based on Timecode:** the drop-frame rule counts two (or four at 60 fps) skipped frame numbers every minute but every tenth, the way broadcast files do, so aligning clips keeps their frames.
+- ✅ **Audio > Auto Align Clips > Based on Timecode, drop-frame:** the drop-frame rule counts two (or four at 60 fps) skipped frame numbers every minute but every tenth, the way broadcast files do, so aligning clips keeps their frames.
 - ✅ **Color page scopes no longer block the interface:** the histogram, waveform, vectorscope and parade are measured on a background thread, so the 6 ms a frame of pixel reads no longer stalls clicks, drags and scrolling.
+- ✅ **Color page scopes and curve histogram:** a scope or the histogram behind the curves could stay empty or out of date, because each of the two threw away the other's finished measurement; they are kept now, and the page redraws as soon as one is ready.
+- ✅ **Hue vs Lum, Hue vs Sat and Hue vs Hue leave greys alone:** a grey pixel has no hue and was treated as red, so a bump at red also changed greys, white and black. Hue curves now count for less the less colour a pixel has.
+- ✅ **Hue/sat/lum curves are about twice as fast:** they are sampled once for a picture instead of being worked out again for every pixel.
+- ✅ **Auto align by timecode, other frame rates:** a start timecode counted at the file's own frame rate (25 fps footage in a 24 fps project) is turned into the project's rate on import instead of being refused or read wrongly.
+- ✅ **Auto align by timecode, bad files:** a timecode with an absurd hour count is refused instead of overflowing.
 
 ## 0.6.0
 

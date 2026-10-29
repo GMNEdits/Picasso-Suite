@@ -1035,7 +1035,14 @@ impl StudioApp {
         let place = self.place_paths.iter().position(|p| *p == path).map(|i| {
             self.place_paths.remove(i);
         });
-        let timecode = facts.timecode.clone();
+        // Its start timecode counts frames at the file's rate; the project reads it at its own.
+        let timecode = facts.timecode.as_deref().and_then(|tc| match facts.fps {
+            Some((num, den)) if den > 0 => {
+                let own = picasso_core::Fps { num, den };
+                fps.retimed_timecode(tc, own)
+            }
+            _ => Some(tc.to_string()),
+        });
         let made = self.session.dispatch_all_then(
             vec![Command::AddMedia {
                 name,

@@ -153,12 +153,14 @@ enum ScopeTask {
         frame: Arc<Frame>,
         kind: ScopeKind,
         generation: u64,
+        ctx: Context,
     },
     /// Measure a curve's backing histogram (mode 0) or hue/sat/lum input (1..=6).
     Curve {
         frame: Arc<Frame>,
         mode: usize,
         generation: u64,
+        ctx: Context,
     },
 }
 
@@ -185,41 +187,64 @@ fn spawn_scope_worker() -> Option<(Sender<ScopeTask>, Receiver<ScopeResult>)> {
     let (task_tx, task_rx) = channel::<ScopeTask>();
     let (result_tx, result_rx) = channel::<ScopeResult>();
     std::thread::spawn(move || {
-        while let Ok(task) = task_rx.recv() {
-            // Skip superseded frames: if more tasks arrived, use the latest one.
-            let task = task_rx.try_iter().last().unwrap_or(task);
-            let result = match task {
-                ScopeTask::Scope {
-                    frame,
-                    kind,
-                    generation,
-                } => {
-                    let (image, histogram) = measure_scope_pixels(&frame, kind);
-                    ScopeResult::Scope {
-                        kind,
-                        generation,
-                        image: image.map(Box::new),
-                        histogram,
-                    }
+        while let Ok(first) = task_rx.recv() {
+            // Skip superseded frames: keep the latest task of each kind, so a scope waiting
+            // behind a curve histogram (or the other way round) is not thrown away.
+            let (mut scope, mut curve) = (None, None);
+            for task in std::iter::once(first).chain(task_rx.try_iter()) {
+                match task {
+                    t @ ScopeTask::Scope { .. } => scope = Some(t),
+                    t @ ScopeTask::Curve { .. } => curve = Some(t),
                 }
-                ScopeTask::Curve {
-                    frame,
-                    mode,
-                    generation,
-                } => {
-                    let (histogram, input) = measure_curve_pixels(&frame, mode);
-                    ScopeResult::Curve {
-                        mode,
-                        generation,
-                        histogram,
-                        input: input.map(Box::new),
-                    }
+            }
+            for task in [scope, curve].into_iter().flatten() {
+                let (result, ctx) = run_scope_task(task);
+                if result_tx.send(result).is_err() {
+                    return;
                 }
-            };
-            let _ = result_tx.send(result);
+                // The page only looks for results when it is drawn.
+                ctx.request_repaint();
+            }
         }
     });
     Some((task_tx, result_rx))
+}
+
+/// Measures one task, on the worker thread; also hands back the context to redraw.
+#[cfg(not(target_arch = "wasm32"))]
+fn run_scope_task(task: ScopeTask) -> (ScopeResult, Context) {
+    match task {
+        ScopeTask::Scope {
+            frame,
+            kind,
+            generation,
+            ctx,
+        } => {
+            let (image, histogram) = measure_scope_pixels(&frame, kind);
+            let result = ScopeResult::Scope {
+                kind,
+                generation,
+                image: image.map(Box::new),
+                histogram,
+            };
+            (result, ctx)
+        }
+        ScopeTask::Curve {
+            frame,
+            mode,
+            generation,
+            ctx,
+        } => {
+            let (histogram, input) = measure_curve_pixels(&frame, mode);
+            let result = ScopeResult::Curve {
+                mode,
+                generation,
+                histogram,
+                input: input.map(Box::new),
+            };
+            (result, ctx)
+        }
+    }
 }
 
 /// The curve mode buttons: an x position, an icon and a name. Index 0 is the custom curves;
@@ -403,26 +428,26 @@ fn measure_curve_pixels(frame: &Frame, mode: usize) -> (Option<Histogram>, Optio
 }
 
 impl ColorPage {
-    /// Picks up finished scope measurements from the worker thread and applies them (creates the
-    /// texture, stores the histogram). Non-blocking: drains whatever is ready.
-    fn apply_scope_results(&mut self, ctx: &Context) {
+    /// Picks up finished measurements from the worker thread and applies them (creates the
+    /// texture, stores the histograms). Non-blocking: drains whatever is ready, scopes and
+    /// curve histograms alike, so neither reader throws away the other's results.
+    fn apply_worker_results(&mut self, ctx: &Context) {
         #[cfg(not(target_arch = "wasm32"))]
+        while let Some(result) = self
+            .scope_worker
+            .as_ref()
+            .and_then(|(_, rx)| rx.try_recv().ok())
         {
-            loop {
-                let result = self
-                    .scope_worker
-                    .as_ref()
-                    .and_then(|(_, rx)| rx.try_recv().ok());
-                let Some(ScopeResult::Scope {
+            match result {
+                ScopeResult::Scope {
                     kind,
                     generation,
                     image,
                     histogram,
-                }) = result
-                else {
-                    break;
-                };
-                if kind == self.kind {
+                } => {
+                    if kind != self.kind {
+                        continue;
+                    }
                     if let Some(h) = histogram {
                         self.histogram = Some(h);
                     }
@@ -430,37 +455,22 @@ impl ColorPage {
                         match &mut self.texture {
                             Some(t) => t.set(*img, TextureOptions::LINEAR),
                             None => {
-                                self.texture = Some(
-                                    ctx.load_texture("scope", *img, TextureOptions::LINEAR),
-                                )
+                                self.texture =
+                                    Some(ctx.load_texture("scope", *img, TextureOptions::LINEAR))
                             }
                         }
                     }
                     self.measured = Some((generation, self.kind));
                 }
-            }
-        }
-    }
-
-    /// Picks up finished curve measurements from the worker thread.
-    fn apply_curve_results(&mut self) {
-        #[cfg(not(target_arch = "wasm32"))]
-        {
-            loop {
-                let result = self
-                    .scope_worker
-                    .as_ref()
-                    .and_then(|(_, rx)| rx.try_recv().ok());
-                let Some(ScopeResult::Curve {
+                ScopeResult::Curve {
                     mode,
                     generation,
                     histogram,
                     input,
-                }) = result
-                else {
-                    break;
-                };
-                if mode == self.curve_mode {
+                } => {
+                    if mode != self.curve_mode {
+                        continue;
+                    }
                     if let Some(h) = histogram {
                         self.curve_histogram = Some(h);
                         self.curve_input = None;
@@ -473,6 +483,8 @@ impl ColorPage {
                 }
             }
         }
+        #[cfg(target_arch = "wasm32")]
+        let _ = ctx;
     }
 
     /// Measures the histogram behind the curves once for each new picture, so it follows
@@ -485,7 +497,7 @@ impl ColorPage {
         mode: usize,
     ) {
         // Picks up finished results from the worker thread.
-        self.apply_curve_results();
+        self.apply_worker_results(ctx);
         if self.curve_measured == Some((generation, mode)) || !scope_due(ctx, self.curve_time) {
             return;
         }
@@ -496,6 +508,7 @@ impl ColorPage {
                 frame: frame.clone(),
                 mode,
                 generation,
+                ctx: ctx.clone(),
             });
             return;
         }
@@ -518,7 +531,7 @@ impl ColorPage {
 
     fn measure(&mut self, ctx: &Context, frame: Option<Arc<Frame>>, generation: u64) {
         // Picks up finished results from the worker thread.
-        self.apply_scope_results(ctx);
+        self.apply_worker_results(ctx);
         if self.measured == Some((generation, self.kind)) {
             return;
         }
@@ -536,6 +549,7 @@ impl ColorPage {
                 frame: frame.clone(),
                 kind: self.kind,
                 generation,
+                ctx: ctx.clone(),
             });
             return;
         }
