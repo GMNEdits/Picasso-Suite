@@ -349,13 +349,50 @@ impl StudioApp {
             self.open_new_multicam();
             ui.close();
         }
-        if ui.button("Relink Missing Media...").clicked() {
+        self.relink_entry(ui);
+    }
+
+    /// "Relink Missing Media" in a menu. Off when nothing is missing, so a click always does
+    /// something: the same rule as the button in Media Management.
+    fn relink_entry(&mut self, ui: &mut Ui) {
+        let missing = self.missing_media().len();
+        let label = if missing == 0 {
+            "Relink Missing Media".to_string()
+        } else {
+            format!("Relink {missing} Missing Media...")
+        };
+        let button = ui.add_enabled(missing > 0, egui::Button::new(label));
+        if missing == 0 {
+            button.clone().on_disabled_hover_text("Every media file is where the project says it is");
+        }
+        if button.clicked() {
             self.relink_missing(ui.ctx());
             ui.close();
         }
     }
 
+    /// The right-click menu of the empty part of the pool: what can be done with no clip chosen.
+    pub(crate) fn pool_background_menu(&mut self, ui: &mut Ui) {
+        if ui.button("Import Media...").clicked() {
+            self.do_act(ui.ctx(), crate::menu::Act::ImportMedia);
+            ui.close();
+        }
+        if ui.button("New Bin").clicked() {
+            self.new_bin();
+            ui.close();
+        }
+        self.relink_entry(ui);
+    }
+
     pub(crate) fn pool_grid(&mut self, ui: &mut Ui, ctx: &Context) {
+        // Right-clicking the empty part of the pool: the clips drawn over this take their own
+        // right-click first, so this only answers where there is no clip.
+        let background = ui.interact(
+            ui.max_rect(),
+            ui.id().with("pool_background"),
+            Sense::click(),
+        );
+        background.context_menu(|ui| self.pool_background_menu(ui));
         if self.pool.searching {
             ui.horizontal(|ui| {
                 ui.label("Search");

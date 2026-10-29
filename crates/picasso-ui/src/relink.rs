@@ -482,4 +482,17 @@ mod tests {
         );
         let _ = std::fs::remove_dir_all(&dir);
     }
+
+    #[test]
+    fn relink_with_nothing_missing_says_so_and_asks_for_no_folder() {
+        let ctx = egui::Context::default();
+        let mut app = StudioApp::new(&ctx);
+        assert!(app.project().media.is_empty());
+        app.relink_missing(&ctx);
+        assert!(!app.status.error);
+        assert_eq!(
+            app.status.text,
+            "Every media file is where the project says it is"
+        );
+    }
 }

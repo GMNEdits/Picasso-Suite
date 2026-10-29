@@ -1369,6 +1369,9 @@ impl StudioApp {
                     y1,
                 );
             }
+            // Right-clicking the empty pool offers the same menu as the clips do.
+            let response = ui.interact(area, ui.id().with("empty_pool"), Sense::click());
+            response.context_menu(|ui| self.pool_background_menu(ui));
             return;
         }
         ui.scope_builder(UiBuilder::new().max_rect(area.shrink(8.0)), |ui| {
