@@ -117,6 +117,31 @@ fn readable(_path: &str) -> bool {
 }
 
 impl StudioApp {
+    /// What an export says about the clips it leaves out for having no file: generated and
+    /// compound clips, and with them an effects clip's grade and effects, which no other editor
+    /// is given.
+    pub(crate) fn left_out_note(&self, what: &str, skipped: usize) -> String {
+        let project = self.project();
+        let effects = project
+            .tracks
+            .iter()
+            .flat_map(|t| &t.clips)
+            .filter(|c| {
+                project
+                    .media(c.media)
+                    .is_some_and(|m| matches!(m.source, picasso_core::MediaSource::EffectsClip))
+            })
+            .count();
+        let mut note =
+            format!("{what}: {skipped} generated or compound clip(s) have no file and are left out");
+        if effects > 0 {
+            note.push_str(&format!(
+                " ({effects} effects clip(s): their grade and effects are not carried)"
+            ));
+        }
+        note
+    }
+
     /// The timeline's name as a file name: letters and digits, the rest `_`.
     fn timeline_file_stem(&self) -> String {
         self.project()
@@ -144,10 +169,8 @@ impl StudioApp {
             false,
         );
         if written.skipped > 0 {
-            self.info(format!(
-                "{kind}: {} generated or compound clip(s) have no file and are left out",
-                written.skipped
-            ));
+            let note = self.left_out_note(kind, written.skipped);
+            self.info(note);
         }
     }
 
@@ -170,10 +193,8 @@ impl StudioApp {
             false,
         );
         if written.skipped > 0 {
-            self.info(format!(
-                "AAF: {} generated or compound clip(s) have no file and are left out",
-                written.skipped
-            ));
+            let note = self.left_out_note("AAF", written.skipped);
+            self.info(note);
         }
     }
 

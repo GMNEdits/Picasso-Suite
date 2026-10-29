@@ -537,7 +537,8 @@ const CLIP: &[Entry] = &[
     SEP,
     item("Normalize Audio Levels...", &[], Act::NormalizeAudio),
     item("Render in Place", &[], Act::RenderInPlace),
-    item("New Effects Clip", &["Alt+Shift+E"], Act::CreateEffectsClip),
+    // The shortcut is on the Timeline menu's entry; one key is not given to two entries.
+    item("New Effects Clip", &[], Act::CreateEffectsClip),
     item("New Compound Clip", &[], Act::CreateCompound),
     item("Clip Attributes...", &[], Act::ClipAttributes),
 ];

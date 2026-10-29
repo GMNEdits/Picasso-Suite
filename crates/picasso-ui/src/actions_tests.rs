@@ -2524,3 +2524,25 @@ fn an_xml_file_that_is_not_a_sequence_is_not_imported_as_one() {
     assert!(app.status.text.contains("AAF"), "{}", app.status.text);
     assert_eq!(app.project().timelines.len(), timelines);
 }
+
+#[test]
+fn an_export_says_an_effects_clips_grade_is_not_carried() {
+    let mut app = app();
+    // A clip with no file is left out of an export; without an effects clip that is all it says.
+    let plain = app.left_out_note("AAF", 1);
+    assert_eq!(
+        plain,
+        "AAF: 1 generated or compound clip(s) have no file and are left out"
+    );
+    let Some(Outcome::Clip(_)) = app.run(Command::CreateEffectsClip {
+        start: 0,
+        name: "Effects Clip 1".into(),
+    }) else {
+        panic!("an effects clip");
+    };
+    let note = app.left_out_note("XML", 1);
+    assert!(
+        note.contains("1 effects clip(s): their grade and effects are not carried"),
+        "{note}"
+    );
+}

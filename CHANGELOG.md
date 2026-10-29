@@ -20,6 +20,7 @@ Picasso Suite 0.6.1 plays smoother on Windows and in 4K and at 60 fps, adds Auto
 - ✅ **Auto align by timecode, other frame rates:** a start timecode counted at the file's own frame rate (25 fps footage in a 24 fps project) is turned into the project's rate on import instead of being refused or read wrongly.
 - ✅ **Auto align by timecode, bad files:** a timecode with an absurd hour count is refused instead of overflowing.
 - ✅ **Auto align by timecode, linked sound:** a clip's linked sound moves with it, so lining pictures up by timecode no longer leaves their sound behind. A reversed clip lines up by the frame it shows first.
+- ✅ **New Effects Clip, one shortcut and a clearer export note:** `Alt+Shift+E` was given to two menu entries (Timeline and Clip); it is on the Timeline entry only. Exporting XML or AAF says that an effects clip's grade and effects are not carried, as no other editor is given them.
 
 ### 🔒 Security
 - ✅ **Checked, nothing found to fix:** media paths still refuse `http:`, `concat:`, `subfile` and network paths in every decode and audio open, the updater downloads only from this project's GitHub releases, the render queue's script setting is not saved in project files, and Resolve zips, projects and images are read within size and count limits. The one gap found, a timecode with an absurd hour count, is closed (see Fixed).
