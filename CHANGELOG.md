@@ -15,6 +15,7 @@
 - ✅ **Hue/sat/lum curves are about twice as fast:** they are sampled once for a picture instead of being worked out again for every pixel.
 - ✅ **Auto align by timecode, other frame rates:** a start timecode counted at the file's own frame rate (25 fps footage in a 24 fps project) is turned into the project's rate on import instead of being refused or read wrongly.
 - ✅ **Auto align by timecode, bad files:** a timecode with an absurd hour count is refused instead of overflowing.
+- ✅ **Auto align by timecode, linked sound:** a clip's linked sound moves with it, so lining pictures up by timecode no longer leaves their sound behind. A reversed clip lines up by the frame it shows first.
 
 ## 0.6.0
 

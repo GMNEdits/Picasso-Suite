@@ -178,8 +178,21 @@ fn compose_tracks(
         // effects, and blends the result back. It has no footprint of its own.
         if matches!(item.source, MediaSource::EffectsClip) {
             layer.copy_from_slice(&out);
-            for px in layer.chunks_exact_mut(4) {
-                px[3] = 255;
+            if alpha {
+                // What is below is kept over black; straighten it so the grade and the effects
+                // see the colours themselves, and hand its coverage on as the alpha.
+                for (px, c) in layer.chunks_exact_mut(4).zip(&coverage) {
+                    if *c > 0.0 && *c < 1.0 {
+                        for v in &mut px[..3] {
+                            *v = (f32::from(*v) / c).round().min(255.0) as u8;
+                        }
+                    }
+                    px[3] = (c * 255.0).round() as u8;
+                }
+            } else {
+                for px in layer.chunks_exact_mut(4) {
+                    px[3] = 255;
+                }
             }
             clip.apply_nodes(&mut layer, w, h);
             picasso_color::apply_effects(&clip.effects, &mut layer, w, h, at);
@@ -189,11 +202,9 @@ fn compose_tracks(
                 transform::apply(&layer, &mut moved, (w, h), &placed);
                 layer.copy_from_slice(&moved);
             }
-            transform::blend(&mut out, &layer, opacity, clip.blend);
-            for (c, px) in coverage.iter_mut().zip(layer.chunks_exact(4)) {
-                let a = f32::from(px[3]) / 255.0 * opacity;
-                *c += a * (1.0 - *c);
-            }
+            // It replaces the composite below rather than painting over it, so a transform moves
+            // the picture instead of leaving a copy of it behind.
+            transform::cover(&mut out, &layer, opacity, clip.blend, &mut coverage);
         } else {
             // A compound clip's own timeline is drawn with what it leaves empty transparent.
             exact &= draw_clip(
@@ -1159,22 +1170,9 @@ mod tests {
     #[test]
     fn an_effects_clip_applies_its_effect_to_clips_below() {
         let (mut p, red) = project_with([200, 0, 0]);
-        let blue = {
-            let Outcome::Media(m) = (Command::AddMedia {
-                name: "b".into(),
-                source: MediaSource::Solid { rgb: [0, 0, 100] },
-                length: None,
-                default_duration: 10,
-            })
-            .apply(&mut p)
-            .unwrap() else {
-                panic!()
-            };
-            m
-        };
         // Red clip on V1.
         place(&mut p, 0, red, 0);
-        // Blue effects clip on V2, above red.
+        // An effects clip on V2, above red.
         let Outcome::Clip(effects) = (Command::CreateEffectsClip {
             start: 0,
             name: "Effects Clip 1".into(),
@@ -1184,7 +1182,7 @@ mod tests {
         else {
             panic!()
         };
-        // An invert effect on the effects clip: 200 -> 55, 0 -> 255, 100 -> 155.
+        // An invert effect on the effects clip: 200 -> 55, 0 -> 255.
         Command::AddEffect {
             clip: effects,
             kind: picasso_core::EffectKind::Invert,
@@ -1193,7 +1191,7 @@ mod tests {
         .unwrap();
         let cache = MediaCache::new();
         let f = render_frame(&p, &cache, 0, 2, 2).unwrap();
-        // Red 200 inverts to ~55; blue 0 inverts to 255.
+        // Red 200 inverts to ~55; the empty blue channel inverts to 255.
         assert_eq!(f.rgba[0], 55, "red channel inverted");
         assert_eq!(f.rgba[2], 255, "blue channel inverted");
     }
@@ -1215,6 +1213,67 @@ mod tests {
         let cache = MediaCache::new();
         let f = render_frame(&p, &cache, 0, 2, 2).unwrap();
         assert_eq!(px(&f, 0, 0), [200, 0, 0, 255]);
+    }
+
+    #[test]
+    fn an_effects_clip_moves_the_composite_instead_of_doubling_it() {
+        let (mut p, red) = project_with([200, 0, 0]);
+        place(&mut p, 0, red, 0);
+        let Outcome::Clip(effects) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap()
+        else {
+            panic!()
+        };
+        // Moved half the frame to the right: the left half is empty, not the picture again.
+        Command::SetClipTransform {
+            clip: effects,
+            transform: picasso_core::Transform {
+                x: 0.5,
+                ..picasso_core::Transform::default()
+            },
+        }
+        .apply(&mut p)
+        .unwrap();
+        let f = render_frame(&p, &MediaCache::new(), 0, 4, 2).unwrap();
+        assert_eq!(px(&f, 0, 0), [0, 0, 0, 255], "the gap is empty");
+        assert_eq!(px(&f, 3, 0), [200, 0, 0, 255], "the picture moved");
+    }
+
+    #[test]
+    fn an_effects_clip_with_no_grade_changes_nothing_in_the_alpha_viewer() {
+        let (mut p, red) = project_with([200, 0, 0]);
+        let clip = place(&mut p, 0, red, 0);
+        // Half transparent: the viewer keeps it over black until the coverage is divided out.
+        Command::SetOpacity {
+            clip,
+            opacity: 0.5,
+        }
+        .apply(&mut p)
+        .unwrap();
+        let cache = MediaCache::new();
+        let before = render_frame_alpha(&p, &cache, 0, 2, 2, true).unwrap().0;
+        let Outcome::Clip(_effects) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap()
+        else {
+            panic!()
+        };
+        let after = render_frame_alpha(&p, &cache, 0, 2, 2, true).unwrap().0;
+        let (was, now) = (px(&before, 0, 0), px(&after, 0, 0));
+        assert_eq!(now[3], was[3], "the coverage stays");
+        for c in 0..3 {
+            assert!(
+                i16::from(now[c]).abs_diff(i16::from(was[c])) <= 1,
+                "a clip with no grade leaves the colour alone: {was:?} {now:?}"
+            );
+        }
     }
 
     #[test]
