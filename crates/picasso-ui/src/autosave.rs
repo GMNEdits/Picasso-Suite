@@ -134,7 +134,7 @@ impl StudioApp {
         };
         let lines = [
             "A copy of this project was kept when the program last stopped.".to_string(),
-            format!("It has work from {}, that the project file does not.", found.when),
+            format!("It was written {}, and has work the project file does not.", found.when),
         ];
         let answer = prompt_box(
             ctx,
@@ -277,25 +277,32 @@ pub(crate) fn clear(project: Option<&Path>, name: &str) {
     let _ = std::fs::remove_file(PathBuf::from(format!("{}.tmp", base.display())));
 }
 
-/// A time for the question: "at 14:32", or the date when it was another day.
+/// How long ago the copy was written, in words. Relative on purpose: a clock time would have to
+/// be turned into the reader's own time zone, and this way it reads right in every one of them.
 fn when_text(when: Option<SystemTime>) -> String {
     let Some(when) = when else {
         return "the last time it ran".into();
     };
-    let secs = when
-        .duration_since(SystemTime::UNIX_EPOCH)
+    let ago = SystemTime::now()
+        .duration_since(when)
         .map(|d| d.as_secs())
         .unwrap_or(0);
-    let now = SystemTime::now()
-        .duration_since(SystemTime::UNIX_EPOCH)
-        .map(|d| d.as_secs())
-        .unwrap_or(0);
-    let (h, m) = ((secs / 3600) % 24, (secs / 60) % 60);
-    if now.saturating_sub(secs) < 20 * 3600 {
-        format!("{h:02}:{m:02}")
+    ago_text(ago)
+}
+
+/// `secs` seconds ago, in words: "a moment ago", "5 minutes ago", "yesterday", "3 days ago".
+fn ago_text(secs: u64) -> String {
+    let (n, one, many) = match secs {
+        0..60 => return "a moment ago".into(),
+        60..3_600 => (secs / 60, "a minute", "minutes"),
+        3_600..86_400 => (secs / 3_600, "an hour", "hours"),
+        86_400..172_800 => return "yesterday".into(),
+        _ => (secs / 86_400, "a day", "days"),
+    };
+    if n == 1 {
+        format!("{one} ago")
     } else {
-        let days = (now / 86_400).saturating_sub(secs / 86_400);
-        format!("{days} day(s) ago, at {h:02}:{m:02}")
+        format!("{n} {many} ago")
     }
 }
 
@@ -356,6 +363,24 @@ mod tests {
         assert_eq!(slug("New Project 1"), "new_project_1");
         assert_eq!(slug("../../etc/passwd"), "etc_passwd");
         assert_eq!(slug("   "), "untitled");
+    }
+
+    #[test]
+    fn the_question_says_how_long_ago_in_words() {
+        // A clock time would have to be turned into the reader's time zone; these cannot be wrong.
+        assert_eq!(ago_text(0), "a moment ago");
+        assert_eq!(ago_text(59), "a moment ago");
+        assert_eq!(ago_text(60), "a minute ago");
+        assert_eq!(ago_text(119), "a minute ago");
+        assert_eq!(ago_text(120), "2 minutes ago");
+        assert_eq!(ago_text(3_600), "an hour ago");
+        assert_eq!(ago_text(7_200), "2 hours ago");
+        assert_eq!(ago_text(86_400), "yesterday");
+        assert_eq!(ago_text(172_800), "2 days ago");
+        assert_eq!(ago_text(30 * 86_400), "30 days ago");
+        // A file from the future (a clock that moved) still reads as something.
+        assert_eq!(when_text(Some(SystemTime::now() + Duration::from_secs(60))), "a moment ago");
+        assert_eq!(when_text(None), "the last time it ran");
     }
 
     #[test]
