@@ -85,6 +85,7 @@ fn media_reference(project: &Project, clip: &Clip, rate: f64) -> Value {
             "name": media.name,
             "metadata": { "picasso": { "compound_timeline": timeline } },
         }),
+        MediaSource::EffectsClip => generator("EffectsClip", json!({})),
     }
 }
 

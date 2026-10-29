@@ -174,22 +174,43 @@ fn compose_tracks(
         if opacity <= 0.0 || !clip.enabled {
             continue;
         }
-        let _ = item;
-        // A compound clip's own timeline is drawn with what it leaves empty transparent.
-        exact &= draw_clip(
-            project,
-            clip,
-            cache,
-            at,
-            (w, h),
-            depth,
-            &mut layer,
-            &mut moved,
-        );
-        transform::blend(&mut out, &layer, opacity, clip.blend);
-        for (c, px) in coverage.iter_mut().zip(layer.chunks_exact(4)) {
-            let a = f32::from(px[3]) / 255.0 * opacity;
-            *c += a * (1.0 - *c);
+        // An effects clip takes what has been composited below it, applies its own grade and
+        // effects, and blends the result back. It has no footprint of its own.
+        if matches!(item.source, MediaSource::EffectsClip) {
+            layer.copy_from_slice(&out);
+            for px in layer.chunks_exact_mut(4) {
+                px[3] = 255;
+            }
+            clip.apply_nodes(&mut layer, w, h);
+            picasso_color::apply_effects(&clip.effects, &mut layer, w, h, at);
+            let placed = clip.transform_at(at);
+            if !placed.is_identity() {
+                moved.resize(w * h * 4, 0);
+                transform::apply(&layer, &mut moved, (w, h), &placed);
+                layer.copy_from_slice(&moved);
+            }
+            transform::blend(&mut out, &layer, opacity, clip.blend);
+            for (c, px) in coverage.iter_mut().zip(layer.chunks_exact(4)) {
+                let a = f32::from(px[3]) / 255.0 * opacity;
+                *c += a * (1.0 - *c);
+            }
+        } else {
+            // A compound clip's own timeline is drawn with what it leaves empty transparent.
+            exact &= draw_clip(
+                project,
+                clip,
+                cache,
+                at,
+                (w, h),
+                depth,
+                &mut layer,
+                &mut moved,
+            );
+            transform::blend(&mut out, &layer, opacity, clip.blend);
+            for (c, px) in coverage.iter_mut().zip(layer.chunks_exact(4)) {
+                let a = f32::from(px[3]) / 255.0 * opacity;
+                *c += a * (1.0 - *c);
+            }
         }
     }
     // Drawn over black, the colours are the covered colour times its coverage: dividing by the
@@ -1133,5 +1154,82 @@ mod tests {
         // At 24 fps and twice the speed, timeline frame 12 shows footage frame 24: one second in.
         let f = render_frame(&p, &cache, 12, 2, 2).unwrap();
         assert_eq!(px(&f, 0, 0)[0], 10, "one second is ten tenths");
+    }
+
+    #[test]
+    fn an_effects_clip_applies_its_effect_to_clips_below() {
+        let (mut p, red) = project_with([200, 0, 0]);
+        let blue = {
+            let Outcome::Media(m) = (Command::AddMedia {
+                name: "b".into(),
+                source: MediaSource::Solid { rgb: [0, 0, 100] },
+                length: None,
+                default_duration: 10,
+            })
+            .apply(&mut p)
+            .unwrap() else {
+                panic!()
+            };
+            m
+        };
+        // Red clip on V1.
+        place(&mut p, 0, red, 0);
+        // Blue effects clip on V2, above red.
+        let Outcome::Clip(effects) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap()
+        else {
+            panic!()
+        };
+        // An invert effect on the effects clip: 200 -> 55, 0 -> 255, 100 -> 155.
+        Command::AddEffect {
+            clip: effects,
+            kind: picasso_core::EffectKind::Invert,
+        }
+        .apply(&mut p)
+        .unwrap();
+        let cache = MediaCache::new();
+        let f = render_frame(&p, &cache, 0, 2, 2).unwrap();
+        // Red 200 inverts to ~55; blue 0 inverts to 255.
+        assert_eq!(f.rgba[0], 55, "red channel inverted");
+        assert_eq!(f.rgba[2], 255, "blue channel inverted");
+    }
+
+    #[test]
+    fn an_effects_clip_with_no_effect_leaves_clips_below_unchanged() {
+        let (mut p, red) = project_with([200, 0, 0]);
+        place(&mut p, 0, red, 0);
+        let Outcome::Clip(effects) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap()
+        else {
+            panic!()
+        };
+        let _ = effects;
+        let cache = MediaCache::new();
+        let f = render_frame(&p, &cache, 0, 2, 2).unwrap();
+        assert_eq!(px(&f, 0, 0), [200, 0, 0, 255]);
+    }
+
+    #[test]
+    fn an_effects_clip_does_not_make_its_own_timeline() {
+        let (mut p, _red) = project_with([200, 0, 0]);
+        let before = p.timelines.len();
+        let Outcome::Clip(_) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap()
+        else {
+            panic!()
+        };
+        assert_eq!(p.timelines.len(), before, "no timeline added");
     }
 }

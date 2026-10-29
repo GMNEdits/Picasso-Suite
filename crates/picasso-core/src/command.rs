@@ -321,6 +321,13 @@ pub enum Command {
         clips: Vec<ClipId>,
         name: String,
     },
+    /// Creates an effects clip named `name` at `start` on a free video track above the clips
+    /// there. Like a compound clip it is made by a command so the whole edit is one undo step,
+    /// but it is transparent: its grade and effects apply to the composite below.
+    CreateEffectsClip {
+        start: u64,
+        name: String,
+    },
     /// Puts the clips of a compound clip back on the timeline in its place.
     DecomposeCompound {
         clip: ClipId,
@@ -562,6 +569,7 @@ impl Command {
             Self::SetMediaTimecode { .. } => "media.set_timecode",
             Self::AlignClips { .. } => "clip.align",
             Self::CreateCompound { .. } => "clip.create_compound",
+            Self::CreateEffectsClip { .. } => "clip.create_effects_clip",
             Self::DecomposeCompound { .. } => "clip.decompose_compound",
             Self::SwitchTimeline { .. } => "timeline.switch",
             Self::RenameTimeline { .. } => "timeline.rename",
@@ -650,6 +658,7 @@ impl Command {
             Self::SetMediaTimecode { .. } => "Media timecode",
             Self::AlignClips { .. } => "Align by timecode",
             Self::CreateCompound { .. } => "Compound clip",
+            Self::CreateEffectsClip { .. } => "Effects clip",
             Self::DecomposeCompound { .. } => "Decompose in place",
             Self::SwitchTimeline { .. } => "Switch timeline",
             Self::RenameTimeline { .. } => "Rename timeline",
@@ -1253,6 +1262,7 @@ impl Command {
             }
             Self::AlignClips { clips } => align_clips(p, &clips),
             Self::CreateCompound { clips, name } => create_compound(p, &clips, name),
+            Self::CreateEffectsClip { start, name } => create_effects_clip(p, start, name),
             Self::DecomposeCompound { clip } => decompose_compound(p, clip),
             Self::SwitchTimeline { id } => switch_timeline(p, id),
             Self::RenameTimeline { id, name } => {
@@ -2315,6 +2325,41 @@ fn create_compound(p: &mut Project, ids: &[ClipId], name: String) -> Result<Outc
         timecode: None,
     });
     let out = add_clip(&mut q, base, media, start, Some(length))?;
+    *p = q;
+    Ok(out)
+}
+
+/// Creates an effects clip: a transparent clip whose grade and effects apply to the composite
+/// below. The clip is placed at `start` on a free video track above the clips there, and lasts
+/// for the current timeline's duration (or five seconds if the timeline is empty).
+fn create_effects_clip(p: &mut Project, start: u64, name: String) -> Result<Outcome, EditError> {
+    let name = timeline_name(&name)?;
+    // The effects clip has no media timeline of its own, so it does not add a timeline.
+    if p.timelines.len() >= crate::MAX_TIMELINES {
+        return Err(EditError::Invalid("too many timelines"));
+    }
+    let mut q = p.clone();
+    let duration = q.duration().max(start).saturating_sub(start).max(
+        q.tracks
+            .iter()
+            .flat_map(|t| t.clips.iter().filter(|c| c.start >= start))
+            .map(|c| c.end().saturating_sub(start))
+            .max()
+            .unwrap_or(0),
+    );
+    let duration = duration.max(q.fps.nominal().max(1) * 5);
+    let media = MediaId(q.fresh_id());
+    q.media.push(MediaItem {
+        id: media,
+        name,
+        source: MediaSource::EffectsClip,
+        length: None,
+        default_duration: 1,
+        bin: None,
+        timecode: None,
+    });
+    let track = top_free_track(&mut q, media, start)?;
+    let out = add_clip(&mut q, track, media, start, Some(duration))?;
     *p = q;
     Ok(out)
 }
@@ -6126,6 +6171,46 @@ mod tests {
         assert_eq!(
             refused(&mut p, Command::AlignClips { clips: vec![a] }),
             EditError::Invalid("aligning needs two clips or more")
+        );
+    }
+
+    #[test]
+    fn an_effects_clip_is_placed_above_clips_and_is_transparent() {
+        let (mut p, _, _, _) = demo();
+        let timeline_before = p.timelines.len();
+        let Outcome::Clip(clip) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!()
+        };
+        // The clip is on its own track, above the video tracks.
+        let (track, c) = p.clip(clip).unwrap();
+        assert_eq!(c.name, "Effects Clip 1");
+        assert_eq!(c.start, 0);
+        assert!(c.duration > 0);
+        assert!(track.kind == TrackKind::Video);
+        let item = p.media(c.media).unwrap();
+        assert_eq!(item.source, MediaSource::EffectsClip);
+        // It does not add a timeline (unlike a compound clip).
+        assert_eq!(p.timelines.len(), timeline_before);
+        // It is listed as an effects clip, not a generator.
+        assert_eq!(crate::media_kind(&item.source), "Effects Clip");
+        // Saved and opened again, it is the same.
+        assert_eq!(Project::from_json(&p.to_json().unwrap()).unwrap(), p);
+    }
+
+    #[test]
+    fn an_effects_clip_name_is_validated() {
+        let (mut p, _, _, _) = demo();
+        refused(
+            &mut p,
+            Command::CreateEffectsClip {
+                start: 0,
+                name: "".into(),
+            },
         );
     }
 }
