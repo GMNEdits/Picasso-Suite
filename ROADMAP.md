@@ -64,19 +64,23 @@ Status at 0.6.1.
 - [x] Color page: the mini timeline's ruler does not repeat a time on an empty or short timeline
 - [x] Graphics: `--graphics-check` says whether video decodes on the graphics card, and why not (on Linux, a missing VA-API driver); no false CUDA and VA-API errors at start; the .deb and .rpm recommend Intel's VA-API driver too
 - [x] Interchange: Final Cut Pro 7 / Premiere / Resolve XML and AAF import (File > Import > Timeline, or a dropped `.xml` or `.aaf`): a new timeline, clips matched to the pool by path then name, files imported or kept offline, gaps, dissolves, speed, reverse and freeze (XML), stereo pairs heard once, any frame rate; an imported picture and its sound are linked, so the sound is heard once (OTIO too)
+- [x] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curves (drag on the graph; a histogram of the keyed value behind it, an intensity and a reset for each; saved per node, old projects load straight); hue-keyed curves leave greys alone
+- [x] Editing: Audio > Auto Align Clips > Based on Timecode (the start timecode read from the file, drop-frame counted, turned to the project's frame rate; one undo)
+- [x] Performance: the Color page's scopes and curve histogram are measured on a thread of their own
+- [x] Performance: a decoded picture is no longer copied twice, a picture asked for again is not converted again (footage slower than the project), the hue/sat/lum curves are sampled once a picture; 4K 60 fps pictures take 7 ms, not 15 (Ryzen 9 5950X)
+- [x] Playback: the graphics card is used for a file only when it is faster than the processor (timed while the file plays, kept for the run); Direct3D 11 was slower than the processor for 10-bit 4K HEVC
 
 ## To do
 
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
 - [ ] Deliver: IMF Generic and Pro Tools presets (listed, greyed out) need an MXF writer and AAF with embedded or rendered sound
-- [x] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
 - [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, New Effects Clip, timeline in a new window (auto align by timecode landed in 0.6.1)
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds
 - [ ] Project: libraries, archives, media management, metadata import/export, Lightbox, dual screen, clean feed
-- [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates: the release workflow now updates the .deb, .rpm, macOS app, Windows folder and Flatpak in place on every build (`--update-from`), and its first run is still to come; the download from GitHub itself is only tried on Windows
+- [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates: the release workflow now updates the .deb, .rpm, macOS app, Windows folder and Flatpak in place on every build (`--update-from`), and its first run is still to come (0.6.0's Flatpak test failed because the build container has no `flatpak-session-helper`); the download from GitHub itself is only tried on Windows
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits
 - [ ] Linux: native Wayland drag and drop: not possible yet. eframe 0.37 uses winit 0.30.13, which takes no files dropped on a Wayland window; winit's own work on it (rust-windowing/winit#4773 is open, #4009 was closed unmerged) is in no release, 0.31 is a beta. Until then the window opens through XWayland. Writing it here against Wayland's data device would be a second, untestable copy of what winit will do
 - [ ] Linux: Flathub submission, for the project's owner: a pull request to flathub/flathub with the manifest. The linter's findings on it: the id `io.github.fabox_os.PicassoSuite` does not match the repository's name (`appid-url-not-reachable`: it looks for github.com/fabox-os/picassosuite, the repository is Picasso-Suite; changing the id would make it a new app for people with the current Flatpak, so the id stays and the request for an exception is written in `packaging/flathub/README.md`); the X11 + Wayland sockets (exception text in `packaging/flathub/README.md`); and a newer runtime (26.08)

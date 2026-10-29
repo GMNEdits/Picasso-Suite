@@ -19,6 +19,25 @@ Picasso Suite 0.6.1 plays smoother on Windows and in 4K and at 60 fps, adds Auto
 - ✅ **Auto align by timecode, other frame rates:** a start timecode counted at the file's own frame rate (25 fps footage in a 24 fps project) is turned into the project's rate on import instead of being refused or read wrongly.
 - ✅ **Auto align by timecode, bad files:** a timecode with an absurd hour count is refused instead of overflowing.
 
+### 🔒 Security
+- ✅ **Checked, nothing found to fix:** media paths still refuse `http:`, `concat:`, `subfile` and network paths in every decode and audio open, the updater downloads only from this project's GitHub releases, the render queue's script setting is not saved in project files, and Resolve zips, projects and images are read within size and count limits. The one gap found, a timecode with an absurd hour count, is closed (see Fixed).
+
+### 🚧 In progress
+- 🚧 **Tested in other editors:** Media Composer, Pro Tools, Premiere and Final Cut Pro 7 themselves still need people to try the AAF and XML files; send a report if one refuses a file.
+- 🚧 **Intel VA-API decoding on Linux:** waiting for confirmation on the Intel machine that reported it (issue [#21](https://github.com/fabox-os/Picasso-Suite/issues/21)).
+- 🚧 **Flatpak Check for Updates test:** the release container has no `flatpak-session-helper`; it stays non-blocking until a release has passed it.
+- 🚧 **Playback on other computers:** the 0.6.1 timings are from a Ryzen 9 5950X with a Radeon RX 7800 XT; reports from other Windows computers, above all with NVIDIA or Intel cards, are welcome.
+
+### ⚠️ Known limitations
+- ❌ **Auto align by waveform** is not made yet; only timecode is.
+- ❌ **A file switching from the graphics card to the processor** stutters once, for 0.1 to 0.3 seconds, the first time it plays in a run.
+- ❌ AAF speed changes and markers, nested sequences from other editors, the IMF and Pro Tools presets, a signed macOS app and the newer Flatpak runtime are still to do (see 0.6.0).
+
+### 🙏 Thanks
+- Thanks to GANESH NIKAM ([@GMNEdits](https://github.com/GMNEdits)) for:
+  - ✅ Audio > Auto Align Clips > Based on Timecode ([#27](https://github.com/fabox-os/Picasso-Suite/pull/27))
+  - ✅ The six Hue/Sat/Lum curves on the Color page, with the clippy cleanups and the Color page scopes measured on a background thread ([#28](https://github.com/fabox-os/Picasso-Suite/pull/28))
+
 ## 0.6.0
 
 Picasso Suite 0.6.0 brings timelines in from other editors as well as out: Final Cut Pro 7 / Premiere / Resolve XML and Avid AAF files open on a new timeline, with their clips matched to the media. Paste Mix to Current Track, audio scrubbing and Bounce Selected Tracks work, the Edit page's track buttons take clicks and its tracks scroll, and the graphics check says whether video decodes on the graphics card. Much of it is GANESH NIKAM's work (pull requests #19 to #26). Packages for Windows, macOS and Linux (x86_64 and ARM64).
@@ -41,13 +60,13 @@ Picasso Suite 0.6.0 brings timelines in from other editors as well as out: Final
 
 ### 🔄 Changed
 - ✅ **Exports checked by other programs:** CI opens the AAF this program writes with pyaaf2 (the library OpenTimelineIO's AAF adapter uses), which follows every clip to its file, and reads the XML with Python's XML parser, checking it the way Final Cut Pro 7 and Premiere read it (`scripts/check_interchange.py`). The AAF reader is tested on an Avid-style edit written by pyaaf2 (`crates/picasso-aaf/tests/data`).
-- ✅ **Flatpak update test:** the release workflow's Check for Updates test inside the Flatpak failed because the build container's session bus had no service for org.freedesktop.Flatpak (`flatpak-session-helper`), not because of the program; the test's bus now has one. It stays non-blocking until a release has passed it.
+- 🚧 **Flatpak update test:** the release workflow's Check for Updates test inside the Flatpak failed because the build container's session bus had no service for org.freedesktop.Flatpak; a service was added for 0.6.0, and the test still failed there: the container has no `flatpak-session-helper` to start. It stays non-blocking until a release has passed it.
 - ✅ **Development:** the workflows use the Node.js 24 versions of GitHub's checkout, cache and artifact actions, which removes the Node.js 20 warnings. Thanks to GANESH NIKAM for the first part.
 
 ### 🚧 In progress
 - 🚧 **Tested in other editors:** every AAF and XML export is now opened by other programs in CI (pyaaf2 and an XML parser), and the AAF reader reads an Avid-style file written by pyaaf2; Media Composer, Pro Tools, Premiere and Final Cut Pro 7 themselves still need people to try them. Please send a report if one refuses a file.
 - 🚧 **Intel video decoding on Linux:** the packages now bring Intel's VA-API driver; waiting for confirmation on the Intel machine that reported it (issue #21).
-- 🚧 **Flatpak Check for Updates test:** the release build's test inside the Flatpak is fixed (its session bus lacked a service); it stays non-blocking until a release has passed it.
+- 🚧 **Flatpak Check for Updates test:** failed again in the 0.6.0 release build (the container has no `flatpak-session-helper`); it stays non-blocking until a release has passed it.
 
 ### ⚠️ Known limitations
 - ❌ AAF: speed changes, reverse and freeze are written at normal speed and read without them; markers in an AAF file are not read; big-endian AAF files (some old Macs) are not read.
