@@ -3,6 +3,7 @@
 //! Every function checks that the pixel buffer is as long as `width * height * 4` and returns an
 //! empty scope when it is not. Sizes of the output are capped.
 
+use crate::curves::{chroma_of, hue_of, luma_of};
 use crate::LUMA;
 
 /// Most columns a waveform may have.
@@ -59,6 +60,41 @@ pub fn histogram(rgba: &[u8], width: usize, height: usize) -> Histogram {
         h.luma[luma8(px)] += 1;
     }
     h
+}
+
+/// What a hue/sat/lum curve is drawn over.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum CurveInput {
+    Hue,
+    Saturation,
+    Luminance,
+}
+
+/// Counts the hue, saturation or luminance of every pixel, 256 bins.
+pub fn curve_histogram(
+    rgba: &[u8],
+    width: usize,
+    height: usize,
+    input: CurveInput,
+) -> [u32; 256] {
+    let mut bins = [0u32; 256];
+    let Some(data) = pixels(rgba, width, height) else {
+        return bins;
+    };
+    for px in data.chunks_exact(4) {
+        let rgb = [
+            f32::from(px[0]) / 255.0,
+            f32::from(px[1]) / 255.0,
+            f32::from(px[2]) / 255.0,
+        ];
+        let v = match input {
+            CurveInput::Hue => hue_of(rgb),
+            CurveInput::Saturation => chroma_of(rgb),
+            CurveInput::Luminance => luma_of(rgb),
+        };
+        bins[((v.clamp(0.0, 1.0) * 255.0) + 0.5) as usize] += 1;
+    }
+    bins
 }
 
 /// Luma against picture column: `counts[column * 256 + level]`.
@@ -255,5 +291,22 @@ mod tests {
         assert_eq!(p.max, 4);
         // A frame too small for its size is measured as empty, not read past its end.
         assert_eq!(parade(&[1, 2, 3], 4, 4, 8).max, 0);
+    }
+
+    #[test]
+    fn curve_histograms_key_hue_saturation_and_luminance() {
+        let red = solid(2, 2, [255, 0, 0]);
+        assert_eq!(
+            curve_histogram(&red, 2, 2, CurveInput::Hue).iter().sum::<u32>(),
+            4
+        );
+        assert_eq!(curve_histogram(&red, 2, 2, CurveInput::Hue)[0], 4);
+        assert_eq!(curve_histogram(&red, 2, 2, CurveInput::Saturation)[255], 4);
+        // 0.2126 * 255 = 54.2 -> bin 54.
+        assert_eq!(curve_histogram(&red, 2, 2, CurveInput::Luminance)[54], 4);
+        assert_eq!(
+            curve_histogram(&[1, 2, 3], 4, 4, CurveInput::Hue).iter().sum::<u32>(),
+            0
+        );
     }
 }

@@ -688,7 +688,7 @@ impl StudioApp {
                     .size()
                     .x;
             let room = e.at(1000.0, 162.0).x - tc_end - 14.0 * SZ;
-            let shown = crate::media::elided(&e.p, &name, &theme::regular(16.0 * SZ), room);
+            let shown = crate::media::elided(e.p, &name, theme::regular(16.0 * SZ), room);
             e.label(
                 1000.0,
                 162.0,
