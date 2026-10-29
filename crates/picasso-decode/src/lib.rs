@@ -284,6 +284,81 @@ pub struct Scrub<'a> {
     pub preview: &'a mut dyn FnMut(Frame),
 }
 
+/// Pictures read at the start of a trial before it counts: the first ones after opening carry
+/// the decoder's start-up.
+const TRIAL_SKIP: u32 = 5;
+/// Pictures each way is timed over.
+const TRIAL_PICTURES: u32 = 30;
+/// A card this fast (ms a picture, read and converted) is kept without trying the processor.
+const CARD_FAST_MS: f64 = 6.0;
+/// The processor is kept only when it is this much faster than the card (it uses more power).
+const PROCESSOR_MARGIN: f64 = 0.85;
+
+/// Which way each file decodes faster, learnt while it played (true: the graphics card), so it
+/// is learnt once a run.
+static FASTER: std::sync::Mutex<Option<std::collections::HashMap<PathBuf, bool>>> =
+    std::sync::Mutex::new(None);
+
+fn faster_way(path: &Path) -> Option<bool> {
+    let known = FASTER.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    known.as_ref()?.get(path).copied()
+}
+
+fn learn_faster_way(path: &Path, card: bool) {
+    let mut known = FASTER.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    known
+        .get_or_insert_with(Default::default)
+        .insert(path.to_path_buf(), card);
+}
+
+/// What a [`Trial`] says after a picture.
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum TrialStep {
+    /// Still timing.
+    Timing,
+    /// The card was timed and is slow: time the processor now.
+    TryProcessor,
+    /// Decided: the card (true) or the processor.
+    Use(bool),
+}
+
+/// Times how long the pictures of a file take while it plays, first on the graphics card and,
+/// when that is slow, on the processor, to keep the faster way. Copying a picture off the card
+/// costs more on some systems (Direct3D 11 on Windows, 10-bit pictures above all) than decoding
+/// it on a processor with many cores; on others the card is far ahead.
+#[derive(Clone, Debug, Default)]
+struct Trial {
+    /// The card's time, ms a picture, once measured.
+    card_ms: Option<f64>,
+    sum_ms: f64,
+    count: u32,
+}
+
+impl Trial {
+    /// Counts one picture read while playing forward, `ms` long, read the way `on_card` says.
+    fn record(&mut self, ms: f64, on_card: bool) -> TrialStep {
+        self.count += 1;
+        if self.count <= TRIAL_SKIP {
+            return TrialStep::Timing;
+        }
+        self.sum_ms += ms;
+        if self.count < TRIAL_SKIP + TRIAL_PICTURES {
+            return TrialStep::Timing;
+        }
+        let average = self.sum_ms / f64::from(TRIAL_PICTURES);
+        (self.count, self.sum_ms) = (0, 0.0);
+        if on_card {
+            if average <= CARD_FAST_MS {
+                return TrialStep::Use(true);
+            }
+            self.card_ms = Some(average);
+            return TrialStep::TryProcessor;
+        }
+        let card = self.card_ms.unwrap_or(f64::INFINITY);
+        TrialStep::Use(average >= card * PROCESSOR_MARGIN)
+    }
+}
+
 /// Decodes the pictures of one file, on request.
 pub struct VideoDecoder {
     path: PathBuf,
@@ -303,6 +378,14 @@ pub struct VideoDecoder {
     at_end: bool,
     /// The converter to RGBA, kept while the pictures keep their format and size.
     scaler: Option<Scaler>,
+    /// Timing the card against the processor while the file plays ([`Trial`]); `None` once
+    /// decided, or when there is nothing to choose.
+    trial: Option<Trial>,
+    /// Whether the last read had to seek (it is not counted by the trial).
+    sought: bool,
+    /// The converter's output, kept so each picture is not written into a fresh allocation of
+    /// several megabytes (which costs page faults, more of them on Windows).
+    rgba: ff::frame::Video,
 }
 
 impl VideoDecoder {
@@ -322,7 +405,9 @@ impl VideoDecoder {
             (s.index(), s.parameters(), s.time_base())
         };
         let mut context = ff::codec::context::Context::from_parameters(params)?;
-        let on_card = hardware && hw::attach(&mut context);
+        // A file found to decode faster on the processor stays there for the rest of the run.
+        let learnt = if hardware { faster_way(path) } else { None };
+        let on_card = hardware && learnt != Some(false) && hw::attach(&mut context);
         // Decode on every core: pictures of a 1080p or 4K file do not arrive in time on one. The
         // card needs no threads, and each would hold more of its memory.
         context.set_threading(ff::threading::Config {
@@ -342,6 +427,9 @@ impl VideoDecoder {
             ahead: None,
             at_end: false,
             scaler: None,
+            trial: (on_card && learnt.is_none()).then(Trial::default),
+            sought: false,
+            rgba: ff::frame::Video::empty(),
         })
     }
 
@@ -381,18 +469,25 @@ impl VideoDecoder {
                 out_h,
                 Flags::FAST_BILINEAR,
             )?);
+            self.rgba = ff::frame::Video::empty();
         }
         let scaler = self.scaler.as_mut().ok_or(DecodeError::NoFrame)?;
-        let mut rgba = ff::frame::Video::empty();
-        scaler.run(decoded, &mut rgba)?;
+        let rgba = &mut self.rgba;
+        scaler.run(decoded, rgba)?;
         let (w, h) = (rgba.width() as usize, rgba.height() as usize);
         let stride = rgba.stride(0);
         let data = rgba.data(0);
-        let mut out = Vec::with_capacity(w * h * 4);
-        for row in 0..h {
-            let start = row * stride;
-            out.extend_from_slice(data.get(start..start + w * 4).ok_or(DecodeError::NoFrame)?);
-        }
+        let row = w * 4;
+        let out = if stride == row {
+            data.get(..row * h).ok_or(DecodeError::NoFrame)?.to_vec()
+        } else {
+            let mut out = Vec::with_capacity(row * h);
+            for y in 0..h {
+                let start = y * stride;
+                out.extend_from_slice(data.get(start..start + row).ok_or(DecodeError::NoFrame)?);
+            }
+            out
+        };
         Ok(Frame {
             width: rgba.width(),
             height: rgba.height(),
@@ -434,6 +529,62 @@ impl VideoDecoder {
         &mut self,
         pts_us: i64,
         reduce: u32,
+        scrub: Option<&mut Scrub<'_>>,
+    ) -> Result<Frame, DecodeError> {
+        let started = std::time::Instant::now();
+        let read = self.read_or_fall_back(pts_us, reduce, scrub);
+        if read.is_ok() && !self.sought {
+            self.time_picture(started.elapsed().as_secs_f64() * 1000.0);
+        }
+        read
+    }
+
+    /// Counts a picture read while playing forward, and acts on what the trial says: the
+    /// processor is tried, or the faster way is kept for this file. A change opens the file
+    /// again; the next read seeks to its picture.
+    fn time_picture(&mut self, ms: f64) {
+        let on_card = self.on_card;
+        let Some(step) = self.trial.as_mut().map(|t| t.record(ms, on_card)) else {
+            return;
+        };
+        let reopen = |this: &Self, hardware: bool| {
+            let asked = this.asked;
+            Self::open_with(&this.path, hardware).map(|mut d| {
+                d.asked = asked;
+                d
+            })
+        };
+        match step {
+            TrialStep::Timing => {}
+            TrialStep::TryProcessor => {
+                let trial = self.trial.take();
+                if let Ok(d) = reopen(self, false) {
+                    *self = d;
+                }
+                self.trial = trial;
+            }
+            TrialStep::Use(card) => {
+                let card_ms = self.trial.take().and_then(|t| t.card_ms);
+                tracing::info!(
+                    "{}: decoding on the {} (the card took {} ms a picture)",
+                    self.path.display(),
+                    if card { "graphics card" } else { "processor" },
+                    card_ms.map_or_else(|| format!("at most {CARD_FAST_MS}"), |m| format!("{m:.1}")),
+                );
+                learn_faster_way(&self.path, card);
+                if card != self.on_card {
+                    if let Ok(d) = reopen(self, true) {
+                        *self = d;
+                    }
+                }
+            }
+        }
+    }
+
+    fn read_or_fall_back(
+        &mut self,
+        pts_us: i64,
+        reduce: u32,
         mut scrub: Option<&mut Scrub<'_>>,
     ) -> Result<Frame, DecodeError> {
         match self.read(pts_us, reduce, scrub.as_deref_mut()) {
@@ -450,6 +601,17 @@ impl VideoDecoder {
             }
             other => other,
         }
+    }
+
+    /// The time of the picture that `frame_at_reduced(pts_us, ..)` would answer with, when the
+    /// decoder already holds it and needs to decode nothing more for it. A project that plays
+    /// faster than its video (24 fps footage in a 60 fps project) asks for the same picture
+    /// several times in a row; the caller can keep the answer it made and skip the conversion.
+    pub fn held_picture_at(&self, pts_us: i64) -> Option<i64> {
+        let target = pts_us.max(0);
+        let (_, held) = self.best.as_ref()?;
+        let (_, next) = self.ahead.as_ref()?;
+        (*held <= target && target < *next).then_some(*held)
     }
 
     /// Whether System Preferences turned hardware decoding on or off since the file was opened,
@@ -469,6 +631,7 @@ impl VideoDecoder {
             .best
             .as_ref()
             .is_some_and(|(_, t)| target >= *t && target - *t <= 2 * MICROS);
+        self.sought = !continuing;
         // Only a read that starts from a key frame has one to hand over.
         let mut preview_due = !continuing && scrub.is_some();
         if !continuing {
@@ -520,7 +683,8 @@ impl VideoDecoder {
                 let picture = if hw::on_card(&decoded) {
                     hw::download(&decoded)?
                 } else {
-                    decoded.clone()
+                    // Moved, not copied: the decoder fills a fresh frame for the next picture.
+                    std::mem::replace(&mut decoded, ff::frame::Video::empty())
                 };
                 if t <= target {
                     // The first picture after a seek is the key frame.
@@ -543,12 +707,20 @@ impl VideoDecoder {
             }
         }
         // Before the first picture of the file, show the first one.
+        // Taken out and put back, not copied: the held picture is a whole decoded frame.
+        let from_best = self.best.is_some();
         let (frame, t) = self
             .best
-            .clone()
-            .or_else(|| self.ahead.clone())
+            .take()
+            .or_else(|| self.ahead.take())
             .ok_or(DecodeError::NoFrame)?;
-        self.convert(&frame, t, reduce)
+        let converted = self.convert(&frame, t, reduce);
+        if from_best {
+            self.best = Some((frame, t));
+        } else {
+            self.ahead = Some((frame, t));
+        }
+        converted
     }
 }
 
@@ -683,6 +855,76 @@ mod tests {
         )
         .map_err(|e| e.to_string())?;
         assert_eq!(previews, 0);
+        let _ = std::fs::remove_file(path);
+        Ok(())
+    }
+
+    /// Feeds a trial `n` pictures of `ms` each, read the way `on_card` says; the last step.
+    fn feed(trial: &mut Trial, n: u32, ms: f64, on_card: bool) -> TrialStep {
+        let mut step = TrialStep::Timing;
+        for _ in 0..n {
+            step = trial.record(ms, on_card);
+            if step != TrialStep::Timing {
+                break;
+            }
+        }
+        step
+    }
+
+    #[test]
+    fn a_fast_card_is_kept_without_trying_the_processor() {
+        let mut t = Trial::default();
+        assert_eq!(feed(&mut t, 100, 3.0, true), TrialStep::Use(true));
+    }
+
+    #[test]
+    fn a_slow_card_is_timed_against_the_processor_and_the_faster_kept() {
+        // The start-up pictures do not count, however slow.
+        let mut t = Trial::default();
+        for _ in 0..TRIAL_SKIP {
+            assert_eq!(t.record(500.0, true), TrialStep::Timing);
+        }
+        assert_eq!(feed(&mut t, 100, 20.0, true), TrialStep::TryProcessor);
+        // The processor is clearly faster: kept.
+        let mut faster = t.clone();
+        assert_eq!(feed(&mut faster, 100, 9.0, false), TrialStep::Use(false));
+        // About as fast: the card is kept, it costs less power.
+        let mut same = t.clone();
+        assert_eq!(feed(&mut same, 100, 18.0, false), TrialStep::Use(true));
+        // Slower: the card.
+        assert_eq!(feed(&mut t, 100, 40.0, false), TrialStep::Use(true));
+    }
+
+    #[test]
+    fn the_way_learnt_for_a_file_is_used_when_it_is_opened_again() -> Result<(), String> {
+        let Some(path) = test_clip("picasso_decode_learnt.mp4") else {
+            return Ok(());
+        };
+        learn_faster_way(&path, false);
+        let d = VideoDecoder::open_with(&path, true).map_err(|e| e.to_string())?;
+        // Asked for the card, but the processor was found faster for this file: no trial again.
+        assert!(!d.on_card);
+        assert!(d.trial.is_none());
+        assert!(!d.is_stale());
+        let _ = std::fs::remove_file(path);
+        Ok(())
+    }
+
+    #[test]
+    fn the_picture_held_answers_the_next_requests_without_decoding() -> Result<(), String> {
+        let Some(path) = test_clip("picasso_decode_held.mp4") else {
+            return Ok(());
+        };
+        let mut d = VideoDecoder::open_with(&path, false).map_err(|e| e.to_string())?;
+        // Nothing is held before the first read.
+        assert_eq!(d.held_picture_at(0), None);
+        let first = d.frame_at_reduced(0, 1).map_err(|e| e.to_string())?;
+        // 24 fps footage: a 60 fps project asks at 0, 16.7 and 33.3 ms; the picture at 0 lasts
+        // until 41.7 ms.
+        assert_eq!(d.held_picture_at(16_667), Some(first.pts_us));
+        assert_eq!(d.held_picture_at(33_333), Some(first.pts_us));
+        // Not the next picture, and not a time before the held one.
+        assert_eq!(d.held_picture_at(50_000), None);
         let _ = std::fs::remove_file(path);
         Ok(())
     }

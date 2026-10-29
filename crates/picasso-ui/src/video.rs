@@ -272,6 +272,8 @@ mod native {
         let mut reduce = 1;
         // How many decodes in a row were dropped for a newer request.
         let mut dropped: u8 = 0;
+        // The last picture made: its time in the file, its size and the converted picture.
+        let mut last: Option<(i64, u32, Arc<Decoded>)> = None;
         loop {
             // Whether this picture is only read ahead (nobody asked for it yet).
             let mut reading_ahead = false;
@@ -333,6 +335,21 @@ mod native {
                 }
             }
             let Some(d) = decoder.as_mut() else { return };
+            // The same picture as the last one (a project that plays faster than its video asks
+            // for each picture several times): keep that answer, convert nothing.
+            if let (Some(held), Some((at, size, image))) = (d.held_picture_at(time_us), &last) {
+                if *at == held && *size == reduce {
+                    let mut state = shared.lock();
+                    let queue = state.frames.entry(media).or_default();
+                    queue.push_back((time_us, reduce, image.clone()));
+                    while queue.len() > shared.keep {
+                        queue.pop_front();
+                    }
+                    drop(state);
+                    shared.announce();
+                    continue;
+                }
+            }
             // A newer request replaces this one: stop at once instead of decoding on to a
             // picture nobody wants any more. On the way, the key frame it starts from is shown
             // while the rest is decoded.
@@ -411,11 +428,13 @@ mod native {
             }
             match decoded {
                 Ok(frame) => {
+                    let pts_us = frame.pts_us;
                     let image = Arc::new(Decoded {
                         width: frame.width,
                         height: frame.height,
                         rgba: frame.rgba,
                     });
+                    last = Some((pts_us, reduce, image.clone()));
                     let mut state = shared.lock();
                     let queue = state.frames.entry(media).or_default();
                     queue.push_back((time_us, reduce, image));
