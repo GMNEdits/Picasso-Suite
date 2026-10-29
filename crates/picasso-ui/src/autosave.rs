@@ -53,6 +53,11 @@ impl StudioApp {
             ctx.request_repaint_after(due);
             return;
         }
+        if self.playing {
+            // Writing the project takes a moment on a large one: not in the middle of playback.
+            ctx.request_repaint_after(Duration::from_secs(5));
+            return;
+        }
         self.autosave_at = std::time::Instant::now();
         let text = match self.project().to_json() {
             Ok(text) => text,
@@ -151,8 +156,9 @@ impl StudioApp {
             }
             Some(false) => {
                 self.recover = None;
-                // Chosen by name: the project file itself is untouched.
-                let _ = std::fs::remove_file(&found.file);
+                // All the copies go, not only the newest: an older one would ask again. The
+                // project file itself is untouched.
+                clear_base(&base_of(&found.file));
             }
             None => {}
         }
@@ -167,8 +173,14 @@ impl StudioApp {
                 return;
             }
         };
+        // A project that was never saved has no file the copy could be compared with, so once
+        // it is open the copy goes: it would be offered again with every start.
+        let readable = found.project.is_none() && crate::projectfile::decode(bytes.clone()).is_ok();
         self.recovering = true;
         self.open_bytes("Recovered project.picasso", found.project.clone(), bytes);
+        if readable {
+            clear_base(&base_of(&found.file));
+        }
         self.recovering = false;
         // It is now the work being edited: it has changes the file does not.
         self.session.mark_dirty();
@@ -181,9 +193,12 @@ impl StudioApp {
 fn base(project: Option<&Path>, name: &str) -> Option<PathBuf> {
     match project {
         Some(path) => Some(PathBuf::from(format!("{}{SUFFIX}", path.display()))),
+        // The run's number is in the name: two programs open at once, each with a project
+        // called "New Project", would otherwise write over each other's copy.
         None => Some(crate::project_manager::data_dir()?.join("autosave").join(format!(
-            "{}{SUFFIX}",
-            slug(name)
+            "{}-{}{SUFFIX}",
+            slug(name),
+            std::process::id()
         ))),
     }
 }
@@ -271,6 +286,25 @@ pub(crate) fn clear(project: Option<&Path>, name: &str) {
     let Some(base) = base(project, name) else {
         return;
     };
+    clear_base(&base);
+}
+
+/// The first place of an autosave: `shot.picasso.autosave.1` is slot 1 of `shot.picasso.autosave`.
+fn base_of(file: &Path) -> PathBuf {
+    let text = file.to_string_lossy();
+    for i in 1..KEEP {
+        if let Some(base) = text.strip_suffix(&format!(".{i}")) {
+            if base.ends_with(SUFFIX) {
+                return PathBuf::from(base);
+            }
+        }
+    }
+    file.to_path_buf()
+}
+
+/// Deletes every copy kept at `base`.
+fn clear_base(base: &Path) {
+    let base = base.to_path_buf();
     for i in 0..KEEP {
         let _ = std::fs::remove_file(slot(&base, i));
     }
@@ -354,8 +388,32 @@ mod tests {
     #[test]
     fn a_project_never_saved_keeps_its_autosave_in_the_data_folder() {
         let base = base(None, "My Untitled Project").unwrap();
-        assert!(base.to_string_lossy().ends_with("my_untitled_project.autosave"));
+        let text = base.to_string_lossy().into_owned();
+        assert!(text.contains("my_untitled_project-"), "named for the project and this run");
+        assert!(text.ends_with(".autosave"));
+        assert_eq!(text, crate::autosave::base(None, "My Untitled Project").unwrap().to_string_lossy());
         assert!(base.to_string_lossy().contains("autosave"));
+    }
+
+    #[test]
+    fn discarding_removes_every_copy_not_only_the_newest() {
+        let dir = scratch("discard");
+        let project = dir.join("shot.picasso");
+        for i in 0..3u8 {
+            write(Some(&project), "shot", &[i]).unwrap();
+            std::thread::sleep(std::time::Duration::from_millis(12));
+        }
+        let newest = newest(Some(&project), "shot").unwrap();
+        // From any slot, the first place is found again.
+        let base = base(Some(&project), "shot").unwrap();
+        assert_eq!(base_of(&newest), base);
+        assert_eq!(base_of(&slot(&base, 2)), base);
+        clear_base(&base_of(&newest));
+        assert!(
+            (0..KEEP).all(|i| !slot(&base, i).exists()),
+            "no older copy is left to ask again"
+        );
+        let _ = std::fs::remove_dir_all(&dir);
     }
 
     #[test]

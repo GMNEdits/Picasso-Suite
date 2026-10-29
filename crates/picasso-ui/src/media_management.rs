@@ -346,12 +346,11 @@ mod tests {
             MediaSource::Video { path } => path.clone(),
             other => panic!("the media changed kind: {other:?}"),
         };
-        let expected = out
-            .join(&name)
-            .join("media/clip.mov")
-            .to_string_lossy()
-            .into_owned();
-        assert_eq!(path, expected);
+        // Compared as paths: where the separators are `\` the text of them differs from `/`.
+        assert_eq!(
+            PathBuf::from(&path),
+            out.join(&name).join("media").join("clip.mov")
+        );
         assert!(std::path::Path::new(&path).is_file());
         let _ = std::fs::remove_dir_all(&dir);
     }

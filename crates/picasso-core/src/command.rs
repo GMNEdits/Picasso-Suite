@@ -2474,7 +2474,6 @@ fn decompose_compound(p: &mut Project, clip: ClipId) -> Result<Outcome, EditErro
     Ok(Outcome::Nothing)
 }
 
-/// A timeline name: trimmed, not empty, at most 200 characters.
 /// The longest path a media item keeps.
 const MAX_PATH_CHARS: usize = 4096;
 
@@ -2493,6 +2492,7 @@ fn relink_path(path: &str) -> Result<String, EditError> {
     Ok(path.to_string())
 }
 
+/// A timeline name: trimmed, not empty, at most 200 characters.
 fn timeline_name(name: &str) -> Result<String, EditError> {
     let name = name.trim();
     if name.is_empty() || name.chars().count() > 200 {

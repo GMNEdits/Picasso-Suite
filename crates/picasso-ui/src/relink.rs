@@ -316,16 +316,15 @@ mod tests {
         std::fs::create_dir_all(dir.join("day 2/cards")).unwrap();
         std::fs::write(dir.join("day 2/cards/A001.mov"), b"x").unwrap();
         let search = find(&[missing(1, "/old/cards/A001.mov")], &dir);
+        // Compared as paths: where the separators are `\` the text of them differs from `/`.
+        assert_eq!(search.found.len(), 1);
         assert_eq!(
-            search.found,
-            vec![FoundFile {
-                media: MediaId(1),
-                path: dir
-                    .join("day 2/cards/A001.mov")
-                    .to_string_lossy()
-                    .into_owned(),
-                audio: false,
-            }]
+            (search.found[0].media, search.found[0].audio),
+            (MediaId(1), false)
+        );
+        assert_eq!(
+            PathBuf::from(&search.found[0].path),
+            dir.join("day 2/cards/A001.mov")
         );
         assert!(search.absent.is_empty() && search.ambiguous.is_empty());
         let _ = std::fs::remove_dir_all(&dir);
