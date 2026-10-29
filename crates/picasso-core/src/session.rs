@@ -51,6 +51,12 @@ impl Session {
         self.dirty = false;
     }
 
+    /// Says the project differs from what is on disk without running a command: work recovered
+    /// from an autosave has not been saved to the project's file.
+    pub fn mark_dirty(&mut self) {
+        self.dirty = true;
+    }
+
     /// Runs a command as one undo step.
     pub fn dispatch(&mut self, command: Command) -> Result<Outcome, EditError> {
         self.gesture_open = false;

@@ -491,6 +491,13 @@ pub enum Command {
         media: MediaId,
         timecode: Option<String>,
     },
+    /// Points media with a file at `path` instead, for when the file moved or the project was
+    /// opened on another computer. Every clip of it follows: they share the media, not the path.
+    /// Generated media (a title, a solid, a compound clip) has no file to point at.
+    RelinkMedia {
+        media: MediaId,
+        path: String,
+    },
     /// Moves the clips so that the same source timecode falls on the same timeline frame. The
     /// clip with the earliest timecode stays where it is and the others line up with it.
     AlignClips {
@@ -567,6 +574,7 @@ impl Command {
             Self::NewTimeline { .. } => "timeline.new",
             Self::ImportTimeline { .. } => "timeline.import",
             Self::SetMediaTimecode { .. } => "media.set_timecode",
+            Self::RelinkMedia { .. } => "media.relink",
             Self::AlignClips { .. } => "clip.align",
             Self::CreateCompound { .. } => "clip.create_compound",
             Self::CreateEffectsClip { .. } => "clip.create_effects_clip",
@@ -656,6 +664,7 @@ impl Command {
             Self::NewTimeline { .. } => "New timeline",
             Self::ImportTimeline { .. } => "Import timeline",
             Self::SetMediaTimecode { .. } => "Media timecode",
+            Self::RelinkMedia { .. } => "Relink media",
             Self::AlignClips { .. } => "Align by timecode",
             Self::CreateCompound { .. } => "Compound clip",
             Self::CreateEffectsClip { .. } => "Effects clip",
@@ -1258,6 +1267,25 @@ impl Command {
                     .find(|m| m.id == media)
                     .ok_or(EditError::NoSuchMedia)?;
                 item.timecode = timecode;
+                Ok(Outcome::Nothing)
+            }
+            Self::RelinkMedia { media, path } => {
+                let path = relink_path(&path)?;
+                let item = p
+                    .media
+                    .iter_mut()
+                    .find(|m| m.id == media)
+                    .ok_or(EditError::NoSuchMedia)?;
+                match &mut item.source {
+                    MediaSource::Video { path: at }
+                    | MediaSource::Audio { path: at }
+                    | MediaSource::Image { path: at } => *at = path,
+                    _ => {
+                        return Err(EditError::Invalid(
+                            "that media is made by the program and has no file to relink",
+                        ))
+                    }
+                }
                 Ok(Outcome::Nothing)
             }
             Self::AlignClips { clips } => align_clips(p, &clips),
@@ -2447,6 +2475,24 @@ fn decompose_compound(p: &mut Project, clip: ClipId) -> Result<Outcome, EditErro
 }
 
 /// A timeline name: trimmed, not empty, at most 200 characters.
+/// The longest path a media item keeps.
+const MAX_PATH_CHARS: usize = 4096;
+
+/// A path to relink media to: the one given, trimmed, when it is a path this program can keep.
+fn relink_path(path: &str) -> Result<String, EditError> {
+    let path = path.trim();
+    if path.is_empty() {
+        return Err(EditError::Invalid("the file to relink to"));
+    }
+    if path.chars().count() > MAX_PATH_CHARS {
+        return Err(EditError::Invalid("the file to relink to"));
+    }
+    if path.contains(['\n', '\r', '\0']) {
+        return Err(EditError::Invalid("the file to relink to"));
+    }
+    Ok(path.to_string())
+}
+
 fn timeline_name(name: &str) -> Result<String, EditError> {
     let name = name.trim();
     if name.is_empty() || name.chars().count() > 200 {
@@ -6251,6 +6297,108 @@ mod tests {
         assert_eq!(
             refused(&mut p, Command::AlignClips { clips: vec![a] }),
             EditError::Invalid("aligning needs two clips or more")
+        );
+    }
+
+    #[test]
+    fn relinking_points_every_clip_of_the_media_at_another_file() {
+        let mut p = Project::new("relink");
+        let v1 = p.tracks[0].id;
+        let Outcome::Media(media) = (Command::AddMedia {
+            name: "shot".into(),
+            source: MediaSource::Video {
+                path: "/cards/a/shot.mov".into(),
+            },
+            length: Some(100),
+            default_duration: 50,
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!()
+        };
+        let Outcome::Clip(clip) = (Command::AddClip {
+            track: v1,
+            media,
+            start: 0,
+            duration: Some(50),
+            with_sound: false,
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!()
+        };
+        Command::RelinkMedia {
+            media,
+            path: "  /backup/shot.mov  ".into(),
+        }
+        .apply(&mut p)
+        .unwrap();
+        let moved = MediaSource::Video {
+            path: "/backup/shot.mov".into(),
+        };
+        assert_eq!(p.media(media).unwrap().source, moved, "trimmed and kept");
+        // A relink changes no timing: the clip still shows that media where it was.
+        let (_, c) = p.clip(clip).unwrap();
+        assert_eq!((c.media, c.start, c.duration), (media, 0, 50));
+        // Saved and opened again, the new path is what is kept.
+        let again = Project::from_json(&p.to_json().unwrap()).unwrap();
+        assert_eq!(again.media(media).unwrap().source, moved);
+    }
+
+    #[test]
+    fn relinking_refuses_generated_media_and_bad_paths() {
+        let mut p = Project::new("relink");
+        let Outcome::Media(title) = (Command::AddMedia {
+            name: "Title".into(),
+            source: MediaSource::Title(crate::TitleText::default()),
+            length: None,
+            default_duration: 48,
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!()
+        };
+        assert_eq!(
+            refused(
+                &mut p,
+                Command::RelinkMedia {
+                    media: title,
+                    path: "/x.mov".into(),
+                }
+            ),
+            EditError::Invalid("that media is made by the program and has no file to relink")
+        );
+        let Outcome::Media(video) = (Command::AddMedia {
+            name: "v".into(),
+            source: MediaSource::Video {
+                path: "/a.mov".into(),
+            },
+            length: Some(10),
+            default_duration: 10,
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!()
+        };
+        assert_eq!(
+            refused(
+                &mut p,
+                Command::RelinkMedia {
+                    media: video,
+                    path: "   ".into(),
+                }
+            ),
+            EditError::Invalid("the file to relink to")
+        );
+        assert_eq!(
+            refused(
+                &mut p,
+                Command::RelinkMedia {
+                    media: MediaId(9999),
+                    path: "/x.mov".into(),
+                }
+            ),
+            EditError::NoSuchMedia
         );
     }
 

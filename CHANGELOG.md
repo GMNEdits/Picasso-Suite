@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### ✨ New
+- ✅ **Autosave and recovery:** while a project has changes that were not saved, a copy of it is written every minute beside the project file (`shot.picasso.autosave`, with the two before it), or in the data folder for a project that was never saved. Opening a project whose copy is newer asks "Recover unsaved changes?"; **Recover** opens it with the project's own file kept as the place it saves to, and **Discard** deletes the copy and leaves the project file alone. A save, or Exit without saving, deletes the copies. A crash or a power cut now costs at most a minute of work.
+
 ## 0.6.1
 
 Picasso Suite 0.6.1 plays smoother on Windows and in 4K and at 60 fps, adds Auto Align Clips by timecode and the six Hue/Sat/Lum curves on the Color page, and fixes what the pull requests since 0.6.0 left open. Much of it is GANESH NIKAM's work. Packages for Windows, macOS and Linux (x86_64 and ARM64).

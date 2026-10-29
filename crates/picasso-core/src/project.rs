@@ -1144,6 +1144,22 @@ impl Project {
             .collect()
     }
 
+    /// The media that clips on the timeline and on every other timeline use, without repeats and
+    /// in pool order. Media that no clip uses is left out, and so is a clip whose media is gone.
+    pub fn media_used(&self) -> Vec<MediaId> {
+        let mut used: Vec<MediaId> = self
+            .tracks
+            .iter()
+            .chain(self.timelines.iter().flat_map(|t| t.tracks.iter()))
+            .flat_map(|t| t.clips.iter())
+            .map(|c| c.media)
+            .collect();
+        used.sort_by_key(|m| m.0);
+        used.dedup();
+        used.retain(|m| self.media(*m).is_some());
+        used
+    }
+
     /// The first frame after the last clip.
     pub fn duration(&self) -> u64 {
         self.tracks
@@ -1442,6 +1458,37 @@ mod tests {
         assert_eq!(p.duration(), 24 * 12);
         let text = p.to_json().unwrap();
         assert_eq!(Project::from_json(&text).unwrap(), p);
+    }
+
+    #[test]
+    fn media_used_is_what_clips_use_on_every_timeline() {
+        let mut p = Project::demo();
+        let all: Vec<MediaId> = p.media.iter().map(|m| m.id).collect();
+        assert_eq!(p.media_used(), all, "the demo uses all three");
+        // Media that no clip uses is left out.
+        p.media.push(MediaItem {
+            id: MediaId(9999),
+            name: "unused".into(),
+            source: MediaSource::Solid { rgb: [0, 0, 0] },
+            length: None,
+            default_duration: 24,
+            bin: None,
+            timecode: None,
+        });
+        assert_eq!(p.media_used(), all, "nothing uses the fourth");
+        // A clip on another timeline counts too.
+        let first = p.tracks.remove(0);
+        let id = p.fresh_id();
+        p.timelines.push(Timeline {
+            id,
+            name: "T2".into(),
+            tracks: vec![first],
+            markers: Vec::new(),
+            mark_in: None,
+            mark_out: None,
+            compound: false,
+        });
+        assert_eq!(p.media_used(), all, "the other timeline's clips count");
     }
 
     #[test]

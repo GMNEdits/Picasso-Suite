@@ -6,6 +6,7 @@
 
 mod actions;
 mod app;
+mod autosave;
 mod capture;
 mod chrome;
 mod clip_more;
