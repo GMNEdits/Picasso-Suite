@@ -43,6 +43,33 @@ pub(crate) enum Incoming {
     ExportFile(String),
     /// A folder to import as a bin was chosen (desktop only).
     BinFolder(String),
+    /// A folder to look in for media whose files moved was chosen (desktop only).
+    RelinkFolder(String),
+    /// The media found in that folder, read in the background (desktop only).
+    Relinked {
+        found: Vec<crate::relink::FoundFile>,
+        /// Names no file under the folder has.
+        absent: Vec<String>,
+        /// Names more than one file has.
+        ambiguous: Vec<String>,
+        /// What each found file says about itself.
+        facts: Vec<(picasso_core::MediaId, Option<crate::projectfile::MediaMetadata>)>,
+        folder: String,
+    },
+    /// A folder to archive the project into was chosen (desktop only).
+    ArchiveFolder(String),
+    /// How far the archive has got: files copied of the total.
+    ArchiveProgress {
+        done: usize,
+        total: usize,
+    },
+    /// The archive was written: what was copied, what was not there, and what failed.
+    Archived {
+        folder: String,
+        copied: usize,
+        missing: Vec<String>,
+        failed: Vec<String>,
+    },
     /// The bounced mix was written to this file (desktop only).
     Bounced(String),
     /// A clip was rendered to this file, to take its place (desktop only).
@@ -370,6 +397,40 @@ pub(crate) fn pick_bin_folder(inbox: Inbox, ctx: egui::Context) {
             inbox.push(
                 &ctx,
                 Incoming::BinFolder(handle.path().to_string_lossy().into_owned()),
+            );
+        }
+    });
+}
+
+/// Lets the user pick a folder to look in for media whose files moved.
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) fn pick_relink_folder(inbox: Inbox, ctx: egui::Context) {
+    spawn(async move {
+        if let Some(handle) = rfd::AsyncFileDialog::new()
+            .set_title("Find the media in")
+            .pick_folder()
+            .await
+        {
+            inbox.push(
+                &ctx,
+                Incoming::RelinkFolder(handle.path().to_string_lossy().into_owned()),
+            );
+        }
+    });
+}
+
+/// Lets the user pick the folder the archive of the project goes into.
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) fn pick_archive_folder(inbox: Inbox, ctx: egui::Context) {
+    spawn(async move {
+        if let Some(handle) = rfd::AsyncFileDialog::new()
+            .set_title("Archive project in")
+            .pick_folder()
+            .await
+        {
+            inbox.push(
+                &ctx,
+                Incoming::ArchiveFolder(handle.path().to_string_lossy().into_owned()),
             );
         }
     });

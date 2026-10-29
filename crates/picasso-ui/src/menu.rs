@@ -26,6 +26,7 @@ pub(crate) enum Act {
     Revert,
     ImportMedia,
     ProjectSettings,
+    MediaManagement,
     QuickExport,
     Quit,
     // Edit
@@ -315,7 +316,7 @@ const FILE: &[Entry] = &[
             planned("Metadata from Media Pool...", ""),
         ],
     ),
-    planned("Media Management...", "Ctrl+M"),
+    item("Media Management...", &["Ctrl+M"], Act::MediaManagement),
     SEP,
     item("Project Settings...", &["Shift+9"], Act::ProjectSettings),
     item("System Preferences...", &["Ctrl+,"], Act::Preferences),
@@ -1535,9 +1536,14 @@ mod tests {
             && r.label == "Undo"
             && r.default == "Ctrl+Z"
             && r.act == Some(Act::Undo)));
-        assert!(list
-            .iter()
-            .any(|r| r.label == "Media Management..." && r.act.is_none()));
+        assert!(list.iter().any(|r| r.menu == "File"
+            && r.label == "Media Management..."
+            && r.default == "Ctrl+M"
+            && r.act == Some(Act::MediaManagement)));
+        // A planned entry with no key is no key binding, so it is not listed.
+        assert!(!list.iter().any(|r| r.label == "Restore Project Archive..."));
+        // The report still says it is planned.
+        assert!(status_markdown().contains("| Restore Project Archive... | - | planned |"));
     }
 }
 

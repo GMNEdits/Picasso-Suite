@@ -94,6 +94,10 @@ impl StudioApp {
     /// "Exit without saving".
     pub(crate) fn exit_without_saving(&mut self, ctx: &Context) {
         self.exit_prompt = false;
+        // The changes were given up on purpose: a copy kept for a crash would only ask again.
+        let path = self.project_path.clone().map(std::path::PathBuf::from);
+        let title = self.project().name.clone();
+        crate::autosave::clear(path.as_deref(), &title);
         allow_exit();
         #[cfg(not(target_arch = "wasm32"))]
         ctx.send_viewport_cmd(ViewportCommand::Close);

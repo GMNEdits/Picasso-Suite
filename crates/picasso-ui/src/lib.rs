@@ -6,6 +6,7 @@
 
 mod actions;
 mod app;
+mod autosave;
 mod capture;
 mod chrome;
 mod clip_more;
@@ -25,6 +26,7 @@ mod keyboard;
 mod keyframes_ui;
 mod layouts;
 mod media;
+mod media_management;
 mod menu;
 mod menu_extra;
 mod menu_more;
@@ -40,6 +42,7 @@ pub mod session_log;
 mod projectfile;
 mod queue;
 mod recording;
+mod relink;
 mod composer;
 mod render_cache;
 #[cfg(not(target_arch = "wasm32"))]

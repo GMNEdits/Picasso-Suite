@@ -66,6 +66,14 @@ pub struct StudioApp {
     pub(crate) exit_after_save: bool,
     /// The project was written for the exit: the window closes on the next frame.
     pub(crate) exit_now: bool,
+    /// When the last autosave was written.
+    pub(crate) autosave_at: std::time::Instant,
+    /// An autosave could not be written: said once, not every minute.
+    pub(crate) autosave_failed: bool,
+    /// An autosave newer than its project was found: "Recover unsaved changes?" is on screen.
+    pub(crate) recover: Option<crate::autosave::Found>,
+    /// An autosave is being opened: it must not ask about itself.
+    pub(crate) recovering: bool,
     pub(crate) playhead: u64,
     pub(crate) playing: bool,
     pub(crate) play_accum: f64,
@@ -205,6 +213,9 @@ impl StudioApp {
         // Which graphics cards' encoders work here, for the Deliver page.
         #[cfg(not(target_arch = "wasm32"))]
         picasso_export::check_hardware();
+        // Work that was never saved and is still here from a crash.
+        #[cfg(not(test))]
+        app.look_for_orphan_autosave();
         app
     }
 
@@ -271,6 +282,10 @@ impl StudioApp {
             exit_prompt: false,
             exit_after_save: false,
             exit_now: false,
+            autosave_at: std::time::Instant::now(),
+            autosave_failed: false,
+            recover: None,
+            recovering: false,
             multicam: crate::multicam_ui::MulticamUi::default(),
             color_node: 0,
             render_cache: crate::render_cache::RenderCache::new(),
@@ -757,6 +772,8 @@ impl StudioApp {
         self.playhead = 0;
         self.playing = false;
         self.project_path = path;
+        // A copy offered for the project before this one does not belong to it.
+        self.recover = None;
     }
 
     pub(crate) fn open_text(&mut self, name: &str, path: Option<String>, text: &str) -> bool {
@@ -772,6 +789,8 @@ impl StudioApp {
                         "Opened {name}; {offline} image(s) could not be found and show as offline"
                     )
                 });
+                // Work the project file does not have, kept when the program last stopped.
+                self.look_for_autosave();
                 true
             }
             Err(e) => {
@@ -840,7 +859,7 @@ impl StudioApp {
 
     /// Reads the images of the project again from where they were imported. Returns how many
     /// could not be read (every one of them, in the browser, which cannot read paths).
-    fn reload_media(&mut self) -> usize {
+    pub(crate) fn reload_media(&mut self) -> usize {
         let wanted: Vec<(MediaId, String)> = self
             .project()
             .media
@@ -1281,6 +1300,13 @@ impl StudioApp {
                     project,
                 } => {
                     if project {
+                        // The work is in the project file now: the copies go, both at the place
+                        // the project was and at the one it is at now.
+                        let before = self.project_path.clone().map(std::path::PathBuf::from);
+                        let title = self.project().name.clone();
+                        let after = path.clone().map(std::path::PathBuf::from);
+                        crate::autosave::clear(before.as_deref(), &title);
+                        crate::autosave::clear(after.as_deref(), &title);
                         self.project_path = path;
                         self.session.mark_saved();
                         self.saved_text = self.pending_saved.take();
@@ -1297,6 +1323,24 @@ impl StudioApp {
                 }
                 Incoming::Folder(path) | Incoming::ExportFile(path) => self.enqueue_export(path),
                 Incoming::BinFolder(path) => self.import_folder_as_bin(&path),
+                Incoming::RelinkFolder(folder) => self.search_for_media(folder),
+                Incoming::Relinked {
+                    found,
+                    absent,
+                    ambiguous,
+                    facts,
+                    folder,
+                } => self.apply_relink(found, absent, ambiguous, facts, folder),
+                Incoming::ArchiveFolder(folder) => self.start_archive(folder),
+                Incoming::ArchiveProgress { done, total } => {
+                    self.info(format!("Archiving {done} of {total} file(s)..."));
+                }
+                Incoming::Archived {
+                    folder,
+                    copied,
+                    missing,
+                    failed,
+                } => self.finish_archive(folder, copied, missing, failed),
                 Incoming::Bounced(path) => self.finish_bounce(&path),
                 Incoming::Rendered { clip, path } => self.finish_render_in_place(clip, &path),
                 Incoming::Lut { name, bytes } => self.apply_lut(&name, &bytes),
@@ -1361,6 +1405,8 @@ impl StudioApp {
         let ctx = ui.ctx().clone();
         self.process_inbox();
         self.watch_for_close(&ctx);
+        self.tick_autosave(&ctx);
+        self.recover_window(&ctx);
         self.start_play_when_placed();
         self.dynamic_trim_tick();
         self.take_dropped_files(&ctx);

@@ -8,7 +8,7 @@
 //! below the transport row, can be dragged (`crate::panels`).
 
 use egui::{
-    pos2, Align2, Color32, Context, Painter, Pos2, Rect, Stroke, StrokeKind, Ui, UiBuilder,
+    pos2, Align2, Color32, Context, Painter, Pos2, Rect, Sense, Stroke, StrokeKind, Ui, UiBuilder,
 };
 
 use picasso_core::Command;
@@ -896,6 +896,13 @@ impl StudioApp {
                 fitting(&painter, sub, 14.0 * R * k, room),
                 theme::EMPTY_SUB,
             );
+            // Right-clicking the empty pool offers the same menu as the clips do.
+            let area = ui.interact(
+                l.r(0.0, 100.0, 960.0, 478.0),
+                ui.id().with("empty_pool"),
+                Sense::click(),
+            );
+            area.context_menu(|ui| self.pool_background_menu(ui));
         } else {
             ui.scope_builder(
                 UiBuilder::new().max_rect(l.r(12.0, 106.0, 950.0, 472.0)),

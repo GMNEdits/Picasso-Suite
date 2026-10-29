@@ -27,6 +27,8 @@ pub(crate) struct Extra {
     pub normalize: Option<f32>,
     /// The System Preferences window is open.
     pub preferences: bool,
+    /// The Media Management window is open.
+    pub media_management: bool,
     /// Trim mode: dragging a clip slips it, dragging an edge ripples the track.
     pub trim_mode: bool,
     /// Dynamic trim: the chosen edit follows the playhead when playback stops or a scrub ends.
@@ -1341,6 +1343,7 @@ impl StudioApp {
         self.load_layout_window(ctx);
         self.normalize_window(ctx);
         self.preferences_window(ctx);
+        self.media_management_window(ctx);
         self.speed_window(ctx);
         self.duration_window(ctx);
         self.label_window(ctx);
