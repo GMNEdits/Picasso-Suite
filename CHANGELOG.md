@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.6.1
+
+Picasso Suite 0.6.1 plays smoother on Windows and in 4K and at 60 fps, adds Auto Align Clips by timecode and the six Hue/Sat/Lum curves on the Color page, and fixes what the pull requests since 0.6.0 left open. Much of it is GANESH NIKAM's work. Packages for Windows, macOS and Linux (x86_64 and ARM64).
 
 ### ✨ New
 - ✅ **Audio > Auto Align Clips > Based on Timecode:** select two or more clips and choose *Audio > Auto Align Clips > Based on Timecode*. The clips move so that the same source timecode falls on the same timeline frame: the clip with the earliest timecode stays where it is, and the others line up with it. A clip's first shown frame counts from the file's start timecode plus its source in, so slipped clips still line up. The start timecode is read from the video stream's metadata (the `tmcd` track of a QuickTime file) or the file's metadata, kept on the media item, and counted the way drop-frame files do at every tenth minute. Thanks to GANESH NIKAM for the pull request.

@@ -80,14 +80,14 @@ FFmpeg is included in all of them.
 
 | OS | Package | Install |
 |---|---|---|
-| Windows | `picasso-suite-0.6.0-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` |
-| macOS (Apple silicon and Intel) | `picasso-suite-0.6.0-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed); Intel Macs need macOS 15 or newer |
-| macOS (Apple silicon only) | `picasso-suite-0.6.0-macos-arm64.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) |
-| Debian/Ubuntu (22.04 or newer) | `picasso-suite-0.6.0-amd64.deb` | `sudo apt install ./picasso-suite-0.6.0-amd64.deb` |
-| Fedora/openSUSE | `picasso-suite-0.6.0-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.6.0-x86_64.rpm` (openSUSE: `sudo zypper install`) |
-| Any Linux | `picasso-suite-0.6.0.flatpak` | `flatpak install ./picasso-suite-0.6.0.flatpak` |
-| Any Linux (glibc 2.35 or newer), no install | `picasso-suite-0.6.0-x86_64.AppImage` | `chmod +x picasso-suite-0.6.0-x86_64.AppImage`, then run it |
-| Linux on ARM64 | `picasso-suite-0.6.0-arm64.deb`, `-aarch64.rpm`, `-aarch64.AppImage`, `-aarch64.flatpak` | as above |
+| Windows | `picasso-suite-0.6.1-windows.zip` | Unzip the whole folder and run `picasso-suite.exe` |
+| macOS (Apple silicon and Intel) | `picasso-suite-0.6.1-macos-universal.zip` | Unzip, move to Applications, right-click → Open (the app is not signed); Intel Macs need macOS 15 or newer |
+| macOS (Apple silicon only) | `picasso-suite-0.6.1-macos-arm64.zip` | Unzip, move to Applications, right-click → Open (the app is not signed) |
+| Debian/Ubuntu (22.04 or newer) | `picasso-suite-0.6.1-amd64.deb` | `sudo apt install ./picasso-suite-0.6.1-amd64.deb` |
+| Fedora/openSUSE | `picasso-suite-0.6.1-x86_64.rpm` | `sudo dnf install ./picasso-suite-0.6.1-x86_64.rpm` (openSUSE: `sudo zypper install`) |
+| Any Linux | `picasso-suite-0.6.1.flatpak` | `flatpak install ./picasso-suite-0.6.1.flatpak` |
+| Any Linux (glibc 2.35 or newer), no install | `picasso-suite-0.6.1-x86_64.AppImage` | `chmod +x picasso-suite-0.6.1-x86_64.AppImage`, then run it |
+| Linux on ARM64 | `picasso-suite-0.6.1-arm64.deb`, `-aarch64.rpm`, `-aarch64.AppImage`, `-aarch64.flatpak` | as above |
 
 The ARM64 packages, the AppImage and the ARM64 Flatpak come with releases after 0.2.1; the universal macOS app with 0.3.0 and later.
 

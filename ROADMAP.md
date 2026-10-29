@@ -1,6 +1,6 @@
 # Roadmap
 
-Status at 0.6.0.
+Status at 0.6.1.
 
 ## Done
 
