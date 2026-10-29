@@ -3,8 +3,8 @@
 //!
 //! A file is matched by its name, and only when exactly one file under the chosen folder has
 //! it: relinking to the wrong take is worse than not relinking, so a name that appears twice is
-//! reported rather than guessed. Every match is one undo step, and the picture the decoders
-//! hold is dropped so the new file is what plays.
+//! reported rather than guessed. Every match is one undo step, and the pictures are read again
+//! from the files that were found, so what plays and what the pool shows is the new file.
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
@@ -149,9 +149,12 @@ impl StudioApp {
                 self.fail(format!("could not relink: {e}"));
                 return;
             }
-            // What the decoders hold is the old file.
+            // What the decoders and the picture cache hold is the old file — and a file that
+            // was not there is remembered as not there. Start them again, as opening the
+            // project does, and read the pictures from where they are now.
+            self.cache = crate::video::new_cache(&self.ctx);
+            self.reload_media();
             for f in &found {
-                self.cache.remove(f.media);
                 self.media_facts.remove(&f.media);
             }
             for (media, read) in facts {
@@ -159,7 +162,6 @@ impl StudioApp {
                     self.media_facts.insert(media, read);
                 }
             }
-            self.media_generation += 1;
         }
         let mut note = if found.is_empty() {
             format!("Nothing was relinked from {folder}")
@@ -289,6 +291,7 @@ fn fits(audio: bool, path: &Path) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use picasso_core::Outcome;
 
     fn scratch(name: &str) -> PathBuf {
         let dir =
@@ -480,6 +483,54 @@ mod tests {
             "and said so: {}",
             app.status.text
         );
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn relinking_reads_the_picture_back_from_the_file_it_found() {
+        let dir = scratch("picture");
+        let moved = dir.join("moved");
+        std::fs::create_dir_all(&moved).unwrap();
+        let png = moved.join("pic.png");
+        let frame = picasso_render::Frame {
+            width: 2,
+            height: 1,
+            rgba: vec![255, 0, 0, 255, 0, 0, 255, 255],
+        };
+        std::fs::write(&png, picasso_render::encode_png(&frame).unwrap()).unwrap();
+
+        let ctx = egui::Context::default();
+        let mut app = StudioApp::new(&ctx);
+        let gone = dir.join("gone/pic.png");
+        let Some(Outcome::Media(id)) = app.run(Command::AddMedia {
+            name: "pic".into(),
+            source: MediaSource::Image {
+                path: gone.to_string_lossy().into_owned(),
+            },
+            length: None,
+            default_duration: 120,
+        }) else {
+            panic!("the media was not added");
+        };
+        assert!(!app.cache.contains(id), "the file is not there to read");
+        assert_eq!(app.missing_media().len(), 1);
+
+        app.apply_relink(
+            vec![FoundFile {
+                media: id,
+                path: png.to_string_lossy().into_owned(),
+                audio: false,
+            }],
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+            moved.to_string_lossy().into_owned(),
+        );
+
+        assert!(app.missing_media().is_empty(), "the project points at it");
+        // Without this the pool, the timeline and the monitor keep drawing the offline
+        // pattern over a file that is right there.
+        assert!(app.cache.contains(id), "and the picture is read back");
         let _ = std::fs::remove_dir_all(&dir);
     }
 

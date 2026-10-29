@@ -859,7 +859,7 @@ impl StudioApp {
 
     /// Reads the images of the project again from where they were imported. Returns how many
     /// could not be read (every one of them, in the browser, which cannot read paths).
-    fn reload_media(&mut self) -> usize {
+    pub(crate) fn reload_media(&mut self) -> usize {
         let wanted: Vec<(MediaId, String)> = self
             .project()
             .media
