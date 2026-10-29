@@ -187,7 +187,7 @@ pub(crate) fn fitting(p: &Painter, text: &str, size: f32, room: f32) -> egui::Fo
 
 /// `text` cut to fit in `room` points in `font`, ending in "…" when it was cut. A name from a
 /// file can be as long as a sentence; drawn whole it runs over whatever is beside it.
-pub(crate) fn elided(p: &Painter, text: &str, font: &egui::FontId, room: f32) -> String {
+pub(crate) fn elided(p: &Painter, text: &str, font: egui::FontId, room: f32) -> String {
     let width = |t: &str| {
         p.layout_no_wrap(t.to_string(), font.clone(), Color32::WHITE)
             .size()
