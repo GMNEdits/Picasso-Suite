@@ -35,12 +35,15 @@ Picasso Suite 0.6.1 plays smoother on Windows and in 4K and at 60 fps, adds Auto
 ### ⚠️ Known limitations
 - ❌ **Auto align by waveform** is not made yet; only timecode is.
 - ❌ **A file switching from the graphics card to the processor** stutters once, for 0.1 to 0.3 seconds, the first time it plays in a run.
+- ❌ **An effects clip's grade and effects are not carried** to XML or AAF (the export says so); OpenTimelineIO keeps the clip.
+- ❌ **Exit Picasso Suite?** is asked only when there are unsaved changes; a project with nothing to save closes at once.
 - ❌ AAF speed changes and markers, nested sequences from other editors, the IMF and Pro Tools presets, a signed macOS app and the newer Flatpak runtime are still to do (see 0.6.0).
 
 ### 🙏 Thanks
 - Thanks to GANESH NIKAM ([@GMNEdits](https://github.com/GMNEdits)) for:
   - ✅ Audio > Auto Align Clips > Based on Timecode ([#27](https://github.com/fabox-os/Picasso-Suite/pull/27))
   - ✅ The six Hue/Sat/Lum curves on the Color page, with the clippy cleanups and the Color page scopes measured on a background thread ([#28](https://github.com/fabox-os/Picasso-Suite/pull/28))
+  - ✅ New Effects Clip, and auto align taking a clip's linked sound with it ([#29](https://github.com/fabox-os/Picasso-Suite/pull/29))
 
 ## 0.6.0
 
