@@ -69,13 +69,14 @@ Status at 0.6.1.
 - [x] Performance: the Color page's scopes and curve histogram are measured on a thread of their own
 - [x] Performance: a decoded picture is no longer copied twice, a picture asked for again is not converted again (footage slower than the project), the hue/sat/lum curves are sampled once a picture; 4K 60 fps pictures take 7 ms, not 15 (Ryzen 9 5950X)
 - [x] Playback: the graphics card is used for a file only when it is faster than the processor (timed while the file plays, kept for the run); Direct3D 11 was slower than the processor for 10-bit 4K HEVC
+- [x] Editing: Timeline > New Effects Clip (`Alt+Shift+E`; a transparent clip on a free video track whose grade, effects, transform, opacity and blend mode apply to the composite of the tracks below; one undo, adds no timeline; written to OpenTimelineIO, left out of XML and AAF)
 
 ## To do
 
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
 - [ ] Deliver: IMF Generic and Pro Tools presets (listed, greyed out) need an MXF writer and AAF with embedded or rendered sound
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
-- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, New Effects Clip, timeline in a new window (auto align by timecode landed in 0.6.1)
+- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, timeline in a new window
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds

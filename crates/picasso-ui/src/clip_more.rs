@@ -113,6 +113,15 @@ impl StudioApp {
             self.fail("the clip is locked");
             return;
         }
+        // An effects clip has no picture of its own: what it shows is the tracks below it.
+        if self
+            .project()
+            .media(clip.media)
+            .is_some_and(|m| matches!(m.source, picasso_core::MediaSource::EffectsClip))
+        {
+            self.fail("Render in Place cannot render an effects clip: it has no picture of its own");
+            return;
+        }
         #[cfg(target_arch = "wasm32")]
         {
             let _ = ctx;

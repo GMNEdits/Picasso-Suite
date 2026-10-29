@@ -45,6 +45,9 @@ pub(crate) fn draw(
         }
         // A compound clip is drawn from its timeline by the compositor, which knows the project.
         MediaSource::Compound { .. } => fill(out, [0, 0, 0, 0]),
+        // An effects clip is transparent; its picture is whatever the tracks below compose,
+        // processed by the clip's own grade and effects in `compose_tracks`.
+        MediaSource::EffectsClip => fill(out, [0, 0, 0, 0]),
         MediaSource::Video { path } => match cache.video_frame(item.id, path, time_us) {
             VideoFrame::Ready(image) => fit_image(out, w, h, &image),
             VideoFrame::StandIn(image) => {

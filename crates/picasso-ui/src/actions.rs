@@ -197,6 +197,29 @@ impl StudioApp {
         }
     }
 
+    /// Adds an effects clip at the playhead on a free video track above the clips there: a
+    /// transparent clip whose grade and effects apply to the composite below.
+    pub(crate) fn create_effects_clip(&mut self) {
+        let start = self.playhead;
+        let taken: Vec<String> = self
+            .project()
+            .media
+            .iter()
+            .map(|m| m.name.clone())
+            .collect();
+        let name = (1..)
+            .map(|n| format!("Effects Clip {n}"))
+            .find(|n| !taken.contains(n))
+            .unwrap_or_default();
+        if let Some(Outcome::Clip(id)) = self.run(Command::CreateEffectsClip {
+            start,
+            name: name.clone(),
+        }) {
+            self.select_only(id);
+            self.info(format!("Created {name}"));
+        }
+    }
+
     /// The clip after the cut nearest the playhead, on the selected clip's track when it is of
     /// `kind`, else on any unlocked track of `kind`: a cut between two clips that touch.
     /// With `with_transition`, only cuts that have a transition count.
@@ -927,6 +950,7 @@ impl StudioApp {
                 .filter(|t| !t.locked)
                 .any(|t| t.clips.windows(2).any(|w| w[0].end() == w[1].start)),
             Act::CreateCompound | Act::BounceSelectedTracks => self.has_selection(),
+            Act::CreateEffectsClip => true,
             Act::DecomposeCompound => self.target_clip().is_some_and(|id| {
                 self.project()
                     .clip(id)
@@ -1193,6 +1217,7 @@ impl StudioApp {
                 }
             }
             Act::CreateCompound => self.create_compound(),
+            Act::CreateEffectsClip => self.create_effects_clip(),
             Act::DecomposeCompound => {
                 if let Some(clip) = self.target_clip() {
                     if self.run(Command::DecomposeCompound { clip }).is_some() {
