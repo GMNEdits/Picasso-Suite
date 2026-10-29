@@ -240,6 +240,10 @@ pub struct MediaItem {
     /// The bin it is kept in (None: the Master bin).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bin: Option<u64>,
+    /// The start timecode the file carries ("01:00:00:00"), when it has one. Used by
+    /// Audio > Auto Align Clips.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub timecode: Option<String>,
 }
 
 /// A bin of the media pool: a folder that media can be kept in.
@@ -982,6 +986,7 @@ impl Project {
                 length: None,
                 default_duration: fps * 4,
                 bin: None,
+                timecode: None,
             });
             ids.push(id);
         }

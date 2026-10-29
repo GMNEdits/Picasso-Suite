@@ -1035,28 +1035,52 @@ impl StudioApp {
         let place = self.place_paths.iter().position(|p| *p == path).map(|i| {
             self.place_paths.remove(i);
         });
-        if let Some(Outcome::Media(id)) = self.run(Command::AddMedia {
-            name,
-            source: if sound_only {
-                MediaSource::Audio { path }
-            } else {
-                MediaSource::Video { path }
+        let timecode = facts.timecode.clone();
+        let made = self.session.dispatch_all_then(
+            vec![Command::AddMedia {
+                name,
+                source: if sound_only {
+                    MediaSource::Audio { path }
+                } else {
+                    MediaSource::Video { path }
+                },
+                length: Some(length),
+                default_duration: length,
+            }],
+            |outcomes| match outcomes.first() {
+                Some(Outcome::Media(id)) => timecode
+                    .clone()
+                    .map(|tc| {
+                        vec![Command::SetMediaTimecode {
+                            media: *id,
+                            timecode: Some(tc),
+                        }]
+                    })
+                    .unwrap_or_default(),
+                _ => Vec::new(),
             },
-            length: Some(length),
-            default_duration: length,
-        }) {
-            facts.media = id.0;
-            self.media_facts.insert(id, facts);
-            self.media_generation += 1;
-            self.selected_media = Some(id);
-            self.info(if sound_only {
-                "Imported sound"
-            } else {
-                "Imported video"
-            });
-            if place.is_some() {
-                self.place_after_import();
+        );
+        let id = match made {
+            Ok(outcomes) => match outcomes.first() {
+                Some(Outcome::Media(id)) => *id,
+                _ => return,
+            },
+            Err(e) => {
+                self.fail(e);
+                return;
             }
+        };
+        facts.media = id.0;
+        self.media_facts.insert(id, facts);
+        self.media_generation += 1;
+        self.selected_media = Some(id);
+        self.info(if sound_only {
+            "Imported sound"
+        } else {
+            "Imported video"
+        });
+        if place.is_some() {
+            self.place_after_import();
         }
     }
 

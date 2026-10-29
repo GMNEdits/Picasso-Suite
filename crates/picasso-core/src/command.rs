@@ -478,6 +478,17 @@ pub enum Command {
         tracks: Vec<crate::ImportedTrack>,
         markers: Vec<Marker>,
     },
+    /// Records the start timecode a media file carries, so clips of it can be aligned by
+    /// timecode (Audio > Auto Align Clips).
+    SetMediaTimecode {
+        media: MediaId,
+        timecode: Option<String>,
+    },
+    /// Moves the clips so that the same source timecode falls on the same timeline frame. The
+    /// clip with the earliest timecode stays where it is and the others line up with it.
+    AlignClips {
+        clips: Vec<ClipId>,
+    },
 }
 
 impl Command {
@@ -548,6 +559,8 @@ impl Command {
             Self::InsertGap { .. } => "track.insert_gap",
             Self::NewTimeline { .. } => "timeline.new",
             Self::ImportTimeline { .. } => "timeline.import",
+            Self::SetMediaTimecode { .. } => "media.set_timecode",
+            Self::AlignClips { .. } => "clip.align",
             Self::CreateCompound { .. } => "clip.create_compound",
             Self::DecomposeCompound { .. } => "clip.decompose_compound",
             Self::SwitchTimeline { .. } => "timeline.switch",
@@ -634,6 +647,8 @@ impl Command {
             Self::InsertGap { .. } => "Insert gap",
             Self::NewTimeline { .. } => "New timeline",
             Self::ImportTimeline { .. } => "Import timeline",
+            Self::SetMediaTimecode { .. } => "Media timecode",
+            Self::AlignClips { .. } => "Align by timecode",
             Self::CreateCompound { .. } => "Compound clip",
             Self::DecomposeCompound { .. } => "Decompose in place",
             Self::SwitchTimeline { .. } => "Switch timeline",
@@ -705,6 +720,7 @@ impl Command {
                     length,
                     default_duration,
                     bin: None,
+                    timecode: None,
                 });
                 Ok(Outcome::Media(id))
             }
@@ -1226,6 +1242,16 @@ impl Command {
                 tracks,
                 markers,
             } => import_timeline(p, name, tracks, markers),
+            Self::SetMediaTimecode { media, timecode } => {
+                let item = p
+                    .media
+                    .iter_mut()
+                    .find(|m| m.id == media)
+                    .ok_or(EditError::NoSuchMedia)?;
+                item.timecode = timecode;
+                Ok(Outcome::Nothing)
+            }
+            Self::AlignClips { clips } => align_clips(p, &clips),
             Self::CreateCompound { clips, name } => create_compound(p, &clips, name),
             Self::DecomposeCompound { clip } => decompose_compound(p, clip),
             Self::SwitchTimeline { id } => switch_timeline(p, id),
@@ -2286,6 +2312,7 @@ fn create_compound(p: &mut Project, ids: &[ClipId], name: String) -> Result<Outc
         length: Some(length),
         default_duration: length,
         bin: None,
+        timecode: None,
     });
     let out = add_clip(&mut q, base, media, start, Some(length))?;
     *p = q;
@@ -2710,6 +2737,71 @@ fn move_clip(
         sort_clips(t);
     }
     Ok(Outcome::Clip(clip))
+}
+
+/// Moves clips so that the same source timecode falls on the same timeline frame: the clip with
+/// the earliest timecode stays where it is and the others line up with it.
+fn align_clips(p: &mut Project, clips: &[ClipId]) -> Result<Outcome, EditError> {
+    let mut ids: Vec<ClipId> = clips.to_vec();
+    ids.sort_by_key(|c| c.0);
+    ids.dedup();
+    if ids.len() < 2 {
+        return Err(EditError::Invalid("aligning needs two clips or more"));
+    }
+    // The source timecode of each clip's first frame, in project frames.
+    let mut timed: Vec<(ClipId, u64)> = Vec::with_capacity(ids.len());
+    for id in &ids {
+        let (ti, ci) = editable(p, *id)?;
+        let clip = &p.tracks[ti].clips[ci];
+        let item = p.media(clip.media).ok_or(EditError::NoSuchMedia)?;
+        let start_tc = item
+            .timecode
+            .as_deref()
+            .ok_or(EditError::Invalid("a clip's media has no timecode"))?;
+        let base = p
+            .fps
+            .parse_timecode(start_tc)
+            .ok_or(EditError::Invalid("the media's timecode"))?;
+        let abs = base
+            .checked_add(clip.source_in)
+            .ok_or(EditError::OutOfRange)?;
+        timed.push((*id, abs));
+    }
+    // The earliest timecode anchors; the others take the same distance from it on the timeline.
+    let (anchor_abs, anchor_start) = timed
+        .iter()
+        .map(|(id, abs)| (*abs, p.clip(*id).map_or(0, |(_, c)| c.start)))
+        .min_by_key(|(abs, _)| *abs)
+        .ok_or(EditError::Invalid("aligning needs two clips or more"))?;
+    let mut q = p.clone();
+    // Take every clip out first, so one on its way cannot overlap one still to move.
+    let mut moving: Vec<(TrackId, Clip, u64)> = Vec::with_capacity(timed.len());
+    for (id, abs) in &timed {
+        let (ti, ci) = q.locate(*id).ok_or(EditError::NoSuchClip)?;
+        let clip = q.tracks[ti].clips.remove(ci);
+        let start = anchor_start
+            .checked_add(abs - anchor_abs)
+            .ok_or(EditError::OutOfRange)?;
+        moving.push((q.tracks[ti].id, clip, start));
+    }
+    for (track, mut clip, start) in moving {
+        if start
+            .checked_add(clip.duration)
+            .is_none_or(|e| e > MAX_FRAMES)
+        {
+            return Err(EditError::OutOfRange);
+        }
+        if !q.can_place(track, start, clip.duration, None) {
+            return Err(EditError::Overlap);
+        }
+        clip.start = start;
+        if let Some(t) = q.track_mut(track) {
+            t.clips.push(clip);
+            sort_clips(t);
+        }
+    }
+    *p = q;
+    Ok(Outcome::Nothing)
 }
 
 /// The most pieces a speed ramp makes.
@@ -5622,6 +5714,7 @@ mod tests {
                 length: Some(1000),
                 default_duration: 240,
                 bin: None,
+                timecode: None,
             });
             media.push((id, offset));
         }
@@ -5726,6 +5819,7 @@ mod tests {
             length: Some(96),
             default_duration: 96,
             bin: None,
+            timecode: None,
         });
         Command::SetClipSpeed {
             clip: a,
@@ -5767,6 +5861,7 @@ mod tests {
             length: Some(10),
             default_duration: 10,
             bin: None,
+            timecode: None,
         });
         refused(
             &mut p,
@@ -5936,5 +6031,101 @@ mod tests {
         json["tracks"][0]["clips"][0]["nodes"] = serde_json::Value::Array(vec![node; 500]);
         let read = Project::from_json(&json.to_string()).unwrap();
         assert_eq!(nodes(&read).node_count(), MAX_NODES);
+    }
+
+    /// A media item of a colour with a timecode, and a clip of it on `track`.
+    fn timed_clip(
+        p: &mut Project,
+        track: TrackId,
+        tc: Option<&str>,
+        start: u64,
+        source_in: u64,
+    ) -> ClipId {
+        let Outcome::Media(media) = (Command::AddMedia {
+            name: "m".into(),
+            source: MediaSource::ColorBars,
+            length: Some(1000),
+            default_duration: 100,
+        })
+        .apply(p)
+        .unwrap() else {
+            panic!("expected media")
+        };
+        Command::SetMediaTimecode {
+            media,
+            timecode: tc.map(str::to_string),
+        }
+        .apply(p)
+        .unwrap();
+        let Outcome::Clip(id) = (Command::AddClip {
+            track,
+            media,
+            start,
+            duration: Some(100),
+            with_sound: false,
+        })
+        .apply(p)
+        .unwrap() else {
+            panic!("expected a clip")
+        };
+        if source_in > 0 {
+            Command::SlipClip {
+                clip: id,
+                source_in,
+            }
+            .apply(p)
+            .unwrap();
+        }
+        id
+    }
+
+    #[test]
+    fn clips_align_to_the_earliest_timecode() {
+        let mut p = Project::new("align");
+        let v1 = p.tracks[0].id;
+        let v2 = p.tracks[1].id;
+        let early = timed_clip(&mut p, v1, Some("01:00:00:00"), 500, 0);
+        let late = timed_clip(&mut p, v2, Some("01:00:01:00"), 10, 0);
+        Command::AlignClips {
+            clips: vec![early, late],
+        }
+        .apply(&mut p)
+        .unwrap();
+        // The earliest clip stays; the later one moves a second (24 frames) after it.
+        assert_eq!(p.clip(early).unwrap().1.start, 500);
+        assert_eq!(p.clip(late).unwrap().1.start, 524);
+    }
+
+    #[test]
+    fn source_in_counts_toward_a_clips_timecode() {
+        let mut p = Project::new("align");
+        let v1 = p.tracks[0].id;
+        let v2 = p.tracks[1].id;
+        // The second clip's media starts a second earlier, but it is slipped a second forward,
+        // so the frames both clips show begin at the same timecode.
+        let a = timed_clip(&mut p, v1, Some("01:00:01:00"), 100, 0);
+        let b = timed_clip(&mut p, v2, Some("01:00:00:00"), 400, 24);
+        Command::AlignClips { clips: vec![a, b] }
+            .apply(&mut p)
+            .unwrap();
+        assert_eq!(p.clip(a).unwrap().1.start, 100);
+        assert_eq!(p.clip(b).unwrap().1.start, 100);
+    }
+
+    #[test]
+    fn aligning_needs_two_clips_with_timecode() {
+        let mut p = Project::new("align");
+        let v1 = p.tracks[0].id;
+        let v2 = p.tracks[1].id;
+        let a = timed_clip(&mut p, v1, Some("01:00:00:00"), 0, 0);
+        let b = timed_clip(&mut p, v2, None, 0, 0);
+        assert_eq!(
+            refused(&mut p, Command::AlignClips { clips: vec![a, b] }),
+            EditError::Invalid("a clip's media has no timecode")
+        );
+        assert_eq!(
+            refused(&mut p, Command::AlignClips { clips: vec![a] }),
+            EditError::Invalid("aligning needs two clips or more")
+        );
     }
 }

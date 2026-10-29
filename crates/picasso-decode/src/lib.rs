@@ -56,6 +56,8 @@ pub struct MediaInfo {
     pub profile: Option<String>,
     /// Its level ("4.0", "5.1"), read from the codec's configuration in the file.
     pub level: Option<String>,
+    /// The start timecode the file carries ("01:00:00:00"), when it has one.
+    pub timecode: Option<String>,
 }
 
 impl MediaInfo {
@@ -245,6 +247,10 @@ pub fn probe(path: &Path) -> Result<MediaInfo, DecodeError> {
         }
     };
     let duration = input.duration();
+    // A camera writes its start timecode in the video stream's metadata (the `tmcd` track of a
+    // QuickTime file); some containers keep it on the file instead.
+    let stream_timecode = video.metadata().get("timecode").map(str::to_string);
+    let timecode = stream_timecode.or_else(|| input.metadata().get("timecode").map(str::to_string));
     Ok(MediaInfo {
         width: decoder.width(),
         height: decoder.height(),
@@ -253,6 +259,7 @@ pub fn probe(path: &Path) -> Result<MediaInfo, DecodeError> {
         level: level_of(path, &codec_name),
         profile,
         video_codec: codec_name,
+        timecode,
         audio_codec: input.streams().best(Type::Audio).and_then(|a| {
             ff::codec::context::Context::from_parameters(a.parameters())
                 .ok()
@@ -568,6 +575,30 @@ mod tests {
             .status()
             .is_ok_and(|s| s.success());
         ok.then_some(path)
+    }
+
+    /// A test clip that carries a start timecode, as a camera writes it.
+    fn test_clip_with_timecode(name: &str) -> Option<std::path::PathBuf> {
+        let path = std::env::temp_dir().join(name);
+        let ok = std::process::Command::new("ffmpeg")
+            .args(["-y", "-v", "error", "-f", "lavfi", "-i"])
+            .arg("testsrc=duration=2:size=320x180:rate=24")
+            .args(["-pix_fmt", "yuv420p", "-timecode", "01:00:00:00"])
+            .arg(&path)
+            .status()
+            .is_ok_and(|s| s.success());
+        ok.then_some(path)
+    }
+
+    #[test]
+    fn the_start_timecode_is_read_from_the_file() -> Result<(), String> {
+        let Some(path) = test_clip_with_timecode("picasso_decode_timecode.mp4") else {
+            return Ok(());
+        };
+        let info = probe(&path).map_err(|e| e.to_string())?;
+        assert_eq!(info.timecode.as_deref(), Some("01:00:00:00"));
+        let _ = std::fs::remove_file(path);
+        Ok(())
     }
 
     /// Eight seconds with a key frame only every 250 pictures, as cameras write long GOPs.

@@ -68,6 +68,35 @@ impl Fps {
             ff
         )
     }
+
+    /// The frame number of a timecode `HH:MM:SS:FF`. A `;` before the frames marks drop-frame
+    /// timecode (29.97 and 59.94), whose minute boundaries skip two or four frame numbers; it is
+    /// read the way broadcast files count it. `None` when the text is not a timecode.
+    pub fn parse_timecode(self, text: &str) -> Option<u64> {
+        let text = text.trim();
+        let drop_frame = text.contains(';');
+        let mut parts = text.split([':', ';']);
+        let h: u64 = parts.next()?.trim().parse().ok()?;
+        let m: u64 = parts.next()?.trim().parse().ok()?;
+        let s: u64 = parts.next()?.trim().parse().ok()?;
+        let f: u64 = parts.next()?.trim().parse().ok()?;
+        if parts.next().is_some() || m >= 60 || s >= 60 || f >= self.nominal() {
+            return None;
+        }
+        let nominal = self.nominal();
+        let mut frame = ((h * 60 + m) * 60 + s) * nominal + f;
+        if drop_frame {
+            // Two frame numbers are skipped every minute but every tenth (four at 59.94).
+            let skipped = match nominal {
+                30 => 2,
+                60 => 4,
+                _ => 0,
+            };
+            let minutes = h * 60 + m;
+            frame = frame.saturating_sub(skipped * (minutes - minutes / 10));
+        }
+        Some(frame)
+    }
 }
 
 impl Default for Fps {
@@ -105,5 +134,29 @@ mod tests {
         assert_eq!(Fps::FPS_25.frames_in(2.0), 50);
         assert_eq!(Fps::FPS_25.frames_in(f64::NAN), 0);
         assert_eq!(Fps { num: 1, den: 0 }.nominal(), 1);
+    }
+
+    #[test]
+    fn timecodes_parse_back_to_frames() {
+        let f = Fps::FPS_24;
+        assert_eq!(f.parse_timecode("00:00:00:00"), Some(0));
+        assert_eq!(f.parse_timecode("00:00:00:23"), Some(23));
+        assert_eq!(f.parse_timecode("00:00:01:00"), Some(24));
+        assert_eq!(f.parse_timecode("00:01:00:05"), Some(24 * 60 + 5));
+        assert_eq!(f.parse_timecode("01:00:00:00"), Some(24 * 3600));
+        // Drop-frame files write a semicolon before the frames; two frame numbers are skipped
+        // every minute except every tenth.
+        assert_eq!(
+            Fps::FPS_2997.parse_timecode("01:00:00;00"),
+            Some(30 * 3600 - 2 * (60 - 6))
+        );
+        assert_eq!(Fps::FPS_2997.parse_timecode("00:01:00;02"), Some(1800));
+        assert_eq!(Fps::FPS_2997.parse_timecode("00:10:00;00"), Some(17982));
+        // Not a timecode.
+        assert_eq!(f.parse_timecode(""), None);
+        assert_eq!(f.parse_timecode("01:00:00"), None);
+        assert_eq!(f.parse_timecode("00:60:00:00"), None);
+        assert_eq!(f.parse_timecode("00:00:00:24"), None);
+        assert_eq!(f.parse_timecode("a:b:c:d"), None);
     }
 }
