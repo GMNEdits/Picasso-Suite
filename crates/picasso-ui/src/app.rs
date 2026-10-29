@@ -60,6 +60,12 @@ pub struct StudioApp {
     pub(crate) page: Page,
     /// "Change Project Frame Rate?", while it waits for an answer.
     pub(crate) fps_prompt: Option<crate::fps_prompt::FpsPrompt>,
+    /// "Exit Picasso Suite?" is on screen: the window was asked to close with unsaved changes.
+    pub(crate) exit_prompt: bool,
+    /// "Save Project" was chosen in it: the window closes once the project is written.
+    pub(crate) exit_after_save: bool,
+    /// The project was written for the exit: the window closes on the next frame.
+    pub(crate) exit_now: bool,
     pub(crate) playhead: u64,
     pub(crate) playing: bool,
     pub(crate) play_accum: f64,
@@ -262,6 +268,9 @@ impl StudioApp {
             recording: crate::recording::Recording::default(),
             extra: crate::menu_extra::Extra::default(),
             fps_prompt: None,
+            exit_prompt: false,
+            exit_after_save: false,
+            exit_now: false,
             multicam: crate::multicam_ui::MulticamUi::default(),
             color_node: 0,
             render_cache: crate::render_cache::RenderCache::new(),
@@ -1277,6 +1286,11 @@ impl StudioApp {
                         self.saved_text = self.pending_saved.take();
                         self.remember_project();
                         self.info(format!("Saved {name}"));
+                        // Saved for the exit: the window closes (see `exit_prompt`).
+                        if self.exit_after_save {
+                            self.exit_after_save = false;
+                            self.exit_now = true;
+                        }
                     } else {
                         self.info(format!("Exported {name}"));
                     }
@@ -1316,7 +1330,13 @@ impl StudioApp {
                 Incoming::CodecLabel { media, label } => {
                     self.codec_labels.insert(media, label);
                 }
-                Incoming::Error(e) => self.fail(e),
+                Incoming::Error(e) => {
+                    // A failed save is not followed by an exit.
+                    self.exit_after_save = false;
+                    self.fail(e);
+                }
+                // The place to save to was not chosen: the program stays open.
+                Incoming::SaveCancelled => self.exit_after_save = false,
             }
         }
         self.read_wanted_codecs();
@@ -1340,6 +1360,7 @@ impl StudioApp {
     pub fn ui(&mut self, ui: &mut Ui) {
         let ctx = ui.ctx().clone();
         self.process_inbox();
+        self.watch_for_close(&ctx);
         self.start_play_when_placed();
         self.dynamic_trim_tick();
         self.take_dropped_files(&ctx);

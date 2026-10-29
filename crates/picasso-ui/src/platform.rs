@@ -24,6 +24,8 @@ pub(crate) enum Incoming {
         path: Option<String>,
         bytes: Vec<u8>,
     },
+    /// The place to save to was not chosen.
+    SaveCancelled,
     /// A file was written; `project` says whether it was the project.
     Saved {
         name: String,
@@ -322,6 +324,7 @@ pub(crate) fn save_as(
             .save_file()
             .await
         else {
+            inbox.push(&ctx, Incoming::SaveCancelled);
             return;
         };
         match handle.write(&bytes).await {

@@ -17,6 +17,7 @@ mod deliver_form;
 mod edit_page;
 mod effects;
 mod fairlight;
+mod exit_prompt;
 mod fps_prompt;
 mod icons;
 mod interchange;
@@ -59,6 +60,7 @@ mod wheel;
 mod widgets;
 
 pub use app::{Page, StudioApp};
+pub use exit_prompt::allow_exit;
 
 /// A Markdown report of every menu entry and whether it works yet.
 pub fn menu_status_markdown() -> String {

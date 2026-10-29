@@ -159,6 +159,7 @@ impl Window {
             if !matches!(saved, Some(Ok(()))) {
                 eprintln!("could not save the screenshot to {}", path.display());
             }
+            picasso_ui::allow_exit();
             ctx.send_viewport_cmd(ViewportCommand::Close);
         }
     }
@@ -192,6 +193,7 @@ impl eframe::App for Window {
                 if let Some(pages) = self.pages.take() {
                     pages.print();
                 }
+                picasso_ui::allow_exit();
                 ui.ctx()
                     .send_viewport_cmd(eframe::egui::ViewportCommand::Close);
             }
@@ -244,6 +246,7 @@ impl eframe::App for Window {
                             g.iter().filter(|&&x| x > 50.0).count()
                         );
                     }
+                    picasso_ui::allow_exit();
                     ui.ctx()
                         .send_viewport_cmd(eframe::egui::ViewportCommand::Close);
                 }

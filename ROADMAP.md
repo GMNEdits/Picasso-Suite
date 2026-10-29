@@ -70,6 +70,7 @@ Status at 0.6.1.
 - [x] Performance: a decoded picture is no longer copied twice, a picture asked for again is not converted again (footage slower than the project), the hue/sat/lum curves are sampled once a picture; 4K 60 fps pictures take 7 ms, not 15 (Ryzen 9 5950X)
 - [x] Playback: the graphics card is used for a file only when it is faster than the processor (timed while the file plays, kept for the run); Direct3D 11 was slower than the processor for 10-bit 4K HEVC
 - [x] Editing: Timeline > New Effects Clip (`Alt+Shift+E`; a transparent clip on a free video track whose grade, effects, transform, opacity and blend mode apply to the composite of the tracks below; one undo, adds no timeline; written to OpenTimelineIO, left out of XML and AAF)
+- [x] Interface: "Exit Picasso Suite?" when the window is closed with unsaved changes (Exit without saving, or Save Project and then exit), in the same box as the frame rate question
 
 ## To do
 

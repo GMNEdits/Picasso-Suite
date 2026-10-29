@@ -2546,3 +2546,75 @@ fn an_export_says_an_effects_clips_grade_is_not_carried() {
         "{note}"
     );
 }
+
+/// Runs the inbox until `done` says so (up to five seconds): a save is written on a thread.
+fn process_until(app: &mut StudioApp, done: impl Fn(&StudioApp) -> bool) -> bool {
+    let end = std::time::Instant::now() + std::time::Duration::from_secs(5);
+    while std::time::Instant::now() < end {
+        app.process_inbox();
+        if done(app) {
+            return true;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(5));
+    }
+    false
+}
+
+#[test]
+fn saving_from_the_exit_box_writes_the_project_and_then_closes() {
+    let mut app = app();
+    let ctx = egui::Context::default();
+    let path = std::env::temp_dir().join("picasso_exit_save_test.picasso");
+    let _ = std::fs::remove_file(&path);
+    app.project_path = Some(path.to_string_lossy().into_owned());
+    assert!(app.run(Command::AddTrack { kind: TrackKind::Audio }).is_some());
+    assert!(app.session.is_dirty());
+    app.exit_prompt = true;
+    app.save_and_exit(&ctx);
+    // The box is gone and the exit waits for the file; the window does not close yet.
+    assert!(!app.exit_prompt);
+    assert!(app.exit_after_save);
+    assert!(!app.exit_now);
+    assert!(
+        process_until(&mut app, |a| a.exit_now),
+        "the window was not told to close after the save"
+    );
+    assert!(!app.exit_after_save);
+    assert!(path.is_file(), "the project was not written");
+    assert!(!app.session.is_dirty());
+    let _ = std::fs::remove_file(&path);
+}
+
+#[test]
+fn a_cancelled_or_failed_save_does_not_close_the_window() {
+    let mut app = app();
+    let ctx = egui::Context::default();
+    // The place to save to was not chosen.
+    app.exit_after_save = true;
+    app.inbox.push(&ctx, crate::platform::Incoming::SaveCancelled);
+    app.process_inbox();
+    assert!(!app.exit_after_save && !app.exit_now);
+    // The file could not be written.
+    app.exit_after_save = true;
+    app.inbox
+        .push(&ctx, crate::platform::Incoming::Error("disk full".into()));
+    app.process_inbox();
+    assert!(!app.exit_after_save && !app.exit_now);
+    // A later save of the user's own does not close the window.
+    let path = std::env::temp_dir().join("picasso_exit_later_save_test.picasso");
+    let _ = std::fs::remove_file(&path);
+    app.project_path = Some(path.to_string_lossy().into_owned());
+    app.save(&ctx, false);
+    assert!(process_until(&mut app, |a| a.saved_text.is_some()));
+    assert!(!app.exit_now);
+    let _ = std::fs::remove_file(&path);
+}
+
+#[test]
+fn exiting_without_saving_lets_the_window_close() {
+    let mut app = app();
+    let ctx = egui::Context::default();
+    app.exit_prompt = true;
+    app.exit_without_saving(&ctx);
+    assert!(!app.exit_prompt);
+}

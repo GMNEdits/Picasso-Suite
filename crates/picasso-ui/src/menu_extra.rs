@@ -1348,6 +1348,7 @@ impl StudioApp {
         self.edit_index_window(ctx);
         self.manual_window(ctx);
         self.fps_prompt_window(ctx);
+        self.exit_prompt_window(ctx);
     }
 
     fn speed_window(&mut self, ctx: &Context) {

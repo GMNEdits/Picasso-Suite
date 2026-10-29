@@ -836,6 +836,8 @@ impl Updater {
         }
         if restart {
             relaunch(&install);
+            // The program closes itself for the new version: no question about unsaved changes.
+            crate::exit_prompt::allow_exit();
             ctx.send_viewport_cmd(egui::ViewportCommand::Close);
         }
         // Closing the window while it works lets the work finish in the background.
