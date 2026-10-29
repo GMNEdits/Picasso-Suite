@@ -31,8 +31,8 @@ fn luma(rgb: [f32; 3]) -> f32 {
 /// Then for the whole pixel: hue rotation around the grey axis, saturation (with colour boost
 /// adding more to pixels that have little colour), luma mix (below 100 the luma of the input
 /// comes back), midtone detail (local contrast in the midtones, frames only, see
-/// [`ColorGrade::apply_frame`]), the custom curves ([`Curves`]) and last the look-up table, if
-/// there is one.
+/// [`ColorGrade::apply_frame`]), the custom curves ([`Curves`]), the hue/sat/lum curves and last
+/// the look-up table, if there is one.
 /// The default grade changes nothing.
 /// How a node takes its input and hands on its result.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -313,20 +313,24 @@ impl ColorGrade {
             CurveStep::Table(t) => rgb = [0, 1, 2].map(|c| t.apply(c, rgb[c])),
             CurveStep::Direct => rgb = [0, 1, 2].map(|c| self.curves.apply_channel(c, rgb[c])),
         }
+        // The hue/sat/lum curves act on the whole pixel: they key a hue, a saturation or a
+        // luminance and turn or scale what is there.
+        rgb = self.curves.apply_hue_modes(rgb);
         match &self.lut {
             Some(lut) => lut.apply(rgb).map(|v| v.clamp(0.0, 1.0)),
             None => rgb,
         }
     }
 
-    /// Whether a step needs the whole pixel (hue, saturation, colour boost, luma mix or the
-    /// table), so the channels cannot be graded each on its own.
+    /// Whether a step needs the whole pixel (hue, saturation, colour boost, luma mix, the
+    /// hue/sat/lum curves or the table), so the channels cannot be graded each on its own.
     fn mixes_channels(&self) -> bool {
         self.hue != 50.0
             || self.saturation != 1.0
             || self.color_boost != 0.0
             || self.luma_mix < 100.0
             || self.lut.is_some()
+            || !self.curves.hue_is_identity()
     }
 
     /// Grades one pixel, `rgb` in 0..1. Midtone detail needs the pixels around, so it is left
@@ -436,7 +440,7 @@ impl ColorGrade {
 }
 
 /// Turns the hue of `rgb` by `angle` radians around the grey axis.
-fn rotate_hue(rgb: [f32; 3], angle: f32) -> [f32; 3] {
+pub(crate) fn rotate_hue(rgb: [f32; 3], angle: f32) -> [f32; 3] {
     let (s, c) = angle.sin_cos();
     let third = (1.0 - c) / 3.0;
     let root = s / 3f32.sqrt();
@@ -816,5 +820,25 @@ mod tests {
         assert_eq!(grey, [100, 100, 100, 255]);
         let back = serde_json::to_string(&g).unwrap();
         assert_eq!(serde_json::from_str::<ColorGrade>(&back).unwrap(), g);
+    }
+
+    #[test]
+    fn a_hue_curve_changes_the_picture_and_survives_a_round_trip() {
+        let mut g = ColorGrade::default();
+        g.curves
+            .add_hue_point(crate::curves::HUE_VS_SAT, 0.5, 0.8);
+        assert!(g.has_effect());
+        // A cyan pixel gets more colourful; a grey one is unchanged.
+        let mut px = [51u8, 128, 128, 255];
+        g.apply_rgba8(&mut px);
+        assert!(px[0] < 51, "{px:?}");
+        let mut grey = [128u8, 128, 128, 255];
+        g.apply_rgba8(&mut grey);
+        assert_eq!(grey, [128, 128, 128, 255]);
+        let json = serde_json::to_string(&g).unwrap();
+        assert_eq!(
+            serde_json::from_str::<ColorGrade>(&json).unwrap(),
+            g
+        );
     }
 }

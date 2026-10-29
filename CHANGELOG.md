@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### ✨ New
+- ✅ **Audio > Auto Align Clips > Based on Timecode:** select two or more clips and choose *Audio > Auto Align Clips > Based on Timecode*. The clips move so that the same source timecode falls on the same timeline frame: the clip with the earliest timecode stays where it is, and the others line up with it. A clip's first shown frame counts from the file's start timecode plus its source in, so slipped clips still line up. The start timecode is read from the video stream's metadata (the `tmcd` track of a QuickTime file) or the file's metadata, kept on the media item, and counted the way drop-frame files do at every tenth minute. Thanks to GANESH NIKAM for the pull request.
+- ✅ **Color page hue/sat/lum curves:** the six Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve buttons in the Curves panel now work. Drag on the graph to bend hue, saturation or luminance by how far the curve is from straight; the histogram behind it keys the same value, and the curves are saved per node.
+
+### 🛠️ Fixed
+- ✅ **Color > Curves > Based on Timecode:** the drop-frame rule counts two (or four at 60 fps) skipped frame numbers every minute but every tenth, the way broadcast files do, so aligning clips keeps their frames.
+- ✅ **Color page scopes no longer block the interface:** the histogram, waveform, vectorscope and parade are measured on a background thread, so the 6 ms a frame of pixel reads no longer stalls clicks, drags and scrolling.
+
 ## 0.6.0
 
 Picasso Suite 0.6.0 brings timelines in from other editors as well as out: Final Cut Pro 7 / Premiere / Resolve XML and Avid AAF files open on a new timeline, with their clips matched to the media. Paste Mix to Current Track, audio scrubbing and Bounce Selected Tracks work, the Edit page's track buttons take clicks and its tracks scroll, and the graphics check says whether video decodes on the graphics card. Much of it is GANESH NIKAM's work (pull requests #19 to #26). Packages for Windows, macOS and Linux (x86_64 and ARM64).
