@@ -200,7 +200,7 @@ pub(crate) fn elided(p: &Painter, text: &str, font: &egui::FontId, room: f32) ->
     let chars: Vec<char> = text.chars().collect();
     let (mut lo, mut hi) = (0, chars.len());
     while lo < hi {
-        let mid = (lo + hi + 1) / 2;
+        let mid = (lo + hi + 1).div_ceil(2);
         let candidate: String = chars[..mid].iter().collect::<String>() + "…";
         if width(&candidate) <= room {
             lo = mid;

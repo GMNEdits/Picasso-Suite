@@ -32,6 +32,9 @@ use secondary::{Palette, WindowDrag};
 /// Points per reference pixel.
 const K: f32 = 0.936;
 
+/// A video track row in the mini timeline: name, picture on, and its clips' (id, in, out).
+type TimelineRow = (String, bool, Vec<(picasso_core::ClipId, u64, u64)>);
+
 const BG: Color32 = Color32::from_rgb(40, 40, 45);
 const BAR: Color32 = Color32::from_rgb(33, 33, 37);
 const TOOLBAR2: Color32 = Color32::from_rgb(30, 30, 34);
@@ -1946,7 +1949,7 @@ impl StudioApp {
         // bottom as on the Edit page; up to three rows share the strip. The clip being graded
         // has a red edge, and a track whose picture is off is dimmed.
         let to_x = |frame: u64| 40.0 + (frame as f32 / duration as f32).clamp(0.0, 1.0) * span;
-        let videos: Vec<(String, bool, Vec<(picasso_core::ClipId, u64, u64)>)> = self
+        let videos: Vec<TimelineRow> = self
             .project()
             .tracks
             .iter()
