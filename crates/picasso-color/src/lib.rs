@@ -19,7 +19,7 @@ pub use fx::{apply_effects, Effect, EffectKind, MAX_EFFECTS};
 pub use grade::{ColorGrade, NodeMode};
 pub use lut::{Lut, LutError, LutKind};
 pub use mask::{PowerWindow, Qualifier, WindowShape, MAX_WINDOWS};
-pub use scopes::{Histogram, Parade, Vectorscope, Waveform};
+pub use scopes::{curve_histogram, CurveInput, Histogram, Parade, Vectorscope, Waveform};
 
 /// Rec. 709 luma weights.
 pub const LUMA: [f32; 3] = [0.2126, 0.7152, 0.0722];

@@ -12,9 +12,9 @@ use egui::{
     pos2, vec2, Align2, Color32, ColorImage, Context, Painter, Pos2, Rect, Sense, Stroke,
     StrokeKind, TextureHandle, TextureOptions, Ui,
 };
-use picasso_color::scopes::{histogram, parade, vectorscope, waveform};
-use picasso_color::curves::{Curves, SOFT_CLIP_NONE};
-use picasso_color::{ColorGrade, Histogram, Lut};
+use picasso_color::curves::{Curves, HUE_MODES, SOFT_CLIP_NONE};
+use picasso_color::scopes::{curve_histogram, histogram, parade, vectorscope, waveform};
+use picasso_color::{ColorGrade, CurveInput, Histogram, Lut};
 use picasso_core::Command;
 
 use crate::app::StudioApp;
@@ -111,7 +111,11 @@ pub(crate) struct ColorPage {
     window_drag: Option<WindowDrag>,
     /// The histogram behind the curves, and the viewer picture it was measured from.
     curve_histogram: Option<Histogram>,
-    curve_measured: Option<u64>,
+    /// The hue/sat/lum histogram behind the curve graph, measured with the curve being edited.
+    curve_input: Option<[u32; 256]>,
+    /// The viewer picture and mode the data above was measured from, so a new picture or a
+    /// changed mode is measured again.
+    curve_measured: Option<(u64, usize)>,
     /// When (egui's clock, seconds) the scope and the curves' histogram were last measured.
     /// While a clip plays they are measured at most [`SCOPE_RATE`] times a second, not once per
     /// picture: each measure reads every pixel, and the eye cannot follow faster.
@@ -122,12 +126,56 @@ pub(crate) struct ColorPage {
     /// soft clip are in the node's grade.
     curve_channels: [bool; 4],
     curve_link: bool,
+    /// The curve being edited: 0 is the custom Y/R/G/B curves, 1 to 6 the hue/sat/lum ones.
+    curve_mode: usize,
     /// The point of the edited curve being dragged.
     curve_drag: Option<usize>,
 }
 
 /// How many times a second the scopes follow a playing picture.
 const SCOPE_RATE: f64 = 20.0;
+
+/// The curve mode buttons: an x position, an icon and a name. Index 0 is the custom curves;
+/// 1..=`HUE_MODES` are the hue/sat/lum curves, with `HUE_MODES[i - 1]` the curve they edit.
+const CURVE_MODES: [(f32, Icon, &str); 7] = [
+    (1140.0, Icon::FxCurves, "Custom"),
+    (1168.0, Icon::WheelDot, "Hue vs Hue"),
+    (1196.0, Icon::WheelHdr, "Hue vs Sat"),
+    (1224.0, Icon::WheelLog, "Hue vs Lum"),
+    (1252.0, Icon::Spline, "Lum vs Sat"),
+    (1280.0, Icon::Circles3, "Sat vs Sat"),
+    (1308.0, Icon::Hexagon, "Sat vs Lum"),
+];
+/// The names of the hue/sat/lum curves, in the order of the buttons that edit them.
+const HUE_MODE_NAMES: [&str; HUE_MODES] = [
+    "Hue vs Hue",
+    "Hue vs Sat",
+    "Hue vs Lum",
+    "Lum vs Sat",
+    "Sat vs Sat",
+    "Sat vs Lum",
+];
+
+/// The input a hue/sat/lum curve keys on, for a mode button index 1..=`HUE_MODES`.
+fn curve_input_of(mode: usize) -> CurveInput {
+    match mode {
+        1..=3 => CurveInput::Hue,
+        4 => CurveInput::Luminance,
+        _ => CurveInput::Saturation,
+    }
+}
+
+/// The colour a hue/sat/lum curve is drawn in.
+fn hue_curve_color(mode: usize) -> Color32 {
+    match mode {
+        0 => Color32::from_rgb(120, 210, 235),
+        1 => Color32::from_rgb(235, 210, 80),
+        2 => Color32::from_rgb(235, 140, 60),
+        3 => Color32::from_rgb(235, 90, 160),
+        4 => Color32::from_rgb(60, 210, 130),
+        _ => Color32::from_rgb(150, 90, 235),
+    }
+}
 
 /// Whether a measure made at `last` (egui seconds) is due again; when it is not, a repaint is
 /// asked for when it will be, so the last picture of a playback is still measured.
@@ -156,11 +204,13 @@ impl Default for ColorPage {
             window: 0,
             window_drag: None,
             curve_histogram: None,
+            curve_input: None,
             curve_measured: None,
             scope_time: f64::NEG_INFINITY,
             curve_time: f64::NEG_INFINITY,
             curve_channels: [true; 4],
             curve_link: true,
+            curve_mode: 0,
             curve_drag: None,
         }
     }
@@ -168,24 +218,38 @@ impl Default for ColorPage {
 
 impl ColorPage {
     /// Measures the histogram behind the curves once for each new picture, so it follows
-    /// playback.
+    /// playback. `mode` is the curve being edited (0 the custom one, 1..=6 a hue/sat/lum one).
     fn measure_curve(
         &mut self,
         ctx: &Context,
         frame: Option<&picasso_render::Frame>,
         generation: u64,
+        mode: usize,
     ) {
-        if self.curve_measured == Some(generation) || !scope_due(ctx, self.curve_time) {
+        if self.curve_measured == Some((generation, mode)) || !scope_due(ctx, self.curve_time) {
             return;
         }
-        let Some(frame) = frame else { return };
+        let Some(frame) = frame else {
+            return;
+        };
         self.curve_time = ctx.input(|i| i.time);
-        self.curve_histogram = Some(histogram(
-            &frame.rgba,
-            frame.width as usize,
-            frame.height as usize,
-        ));
-        self.curve_measured = Some(generation);
+        if mode == 0 {
+            self.curve_histogram = Some(histogram(
+                &frame.rgba,
+                frame.width as usize,
+                frame.height as usize,
+            ));
+            self.curve_input = None;
+        } else {
+            self.curve_input = Some(curve_histogram(
+                &frame.rgba,
+                frame.width as usize,
+                frame.height as usize,
+                curve_input_of(mode),
+            ));
+            self.curve_histogram = None;
+        }
+        self.curve_measured = Some((generation, mode));
     }
 
     fn measure(&mut self, ctx: &Context, frame: Option<&picasso_render::Frame>, generation: u64) {
@@ -700,6 +764,40 @@ fn paint_curve_histogram(p: &Painter, graph: Rect, h: &Histogram) {
         edge,
         Stroke::new(1.2, Color32::from_rgb(196, 196, 200)),
     ));
+}
+
+/// The distribution of a hue, saturation or luminance as a filled bar, drawn behind a
+/// hue/sat/lum curve whose x-axis is that same value.
+fn paint_curve_input_histogram(p: &Painter, graph: Rect, bins: &[u32; 256], color: Color32) {
+    let top = bins.iter().copied().max().unwrap_or(0).max(1) as f32;
+    let smooth = |i: usize| -> f32 {
+        let a = bins[i.max(1) - 1] as f32;
+        let b = bins[i] as f32;
+        let c = bins[(i + 1).min(255)] as f32;
+        (a + 2.0 * b + c) / 4.0 / top
+    };
+    let point = |i: usize, v: f32| {
+        pos2(
+            graph.left() + graph.width() * i as f32 / 255.0,
+            graph.bottom() - graph.height() * (v / top).min(1.0) * 0.98,
+        )
+    };
+    let mut mesh = egui::Mesh::default();
+    let fill = color.gamma_multiply(0.5);
+    let fill = Color32::from_rgba_unmultiplied(fill.r(), fill.g(), fill.b(), 180);
+    for i in 0..256 {
+        let v = smooth(i);
+        mesh.colored_vertex(point(i, v), fill);
+        mesh.colored_vertex(pos2(point(i, 0.0).x, graph.bottom()), fill);
+    }
+    for i in 0..255u32 {
+        let k = i * 2;
+        mesh.add_triangle(k, k + 1, k + 2);
+        mesh.add_triangle(k + 1, k + 3, k + 2);
+    }
+    p.add(egui::Shape::mesh(mesh));
+    let edge: Vec<Pos2> = (0..256).map(|i| point(i, smooth(i))).collect();
+    p.add(egui::Shape::line(edge, Stroke::new(1.2, Color32::from_rgb(236, 236, 238))));
 }
 
 /// One wheel: its name, the value of an untouched channel, how far the puck reaches and how
@@ -2426,43 +2524,42 @@ impl StudioApp {
             .unwrap_or_default();
         let mut curves = before.clone();
         c.band(720.0, 693.0, 1439.0, 717.0, BAR);
+        // The mode being edited: 0 the custom curves, 1..=`HUE_MODES` a hue/sat/lum curve.
+        let mode = self.color.curve_mode.min(HUE_MODES);
+        let hue_mode = (1..=HUE_MODES).contains(&mode).then_some(mode - 1);
+        let title = match hue_mode {
+            None => "Curves - Custom".to_string(),
+            Some(m) => format!("Curves - {}", HUE_MODE_NAMES[m]),
+        };
         c.label(
             731.0,
             705.0,
             Align2::LEFT_CENTER,
-            "Curves - Custom",
+            &title,
             11.5,
             theme::WHITE,
             true,
         );
-        let modes = [
-            (1140.0, Icon::FxCurves, "Custom"),
-            (1168.0, Icon::WheelDot, "Hue vs Hue"),
-            (1196.0, Icon::WheelHdr, "Hue vs Sat"),
-            (1224.0, Icon::WheelLog, "Hue vs Lum"),
-            (1252.0, Icon::Spline, "Lum vs Sat"),
-            (1280.0, Icon::Circles3, "Sat vs Sat"),
-            (1308.0, Icon::Hexagon, "Sat vs Lum"),
-        ];
-        for (i, (x, icon, name)) in modes.into_iter().enumerate() {
+        for (i, (x, icon, name)) in CURVE_MODES.iter().enumerate() {
+            let selected = i == mode;
             c.icon(
-                x,
+                *x,
                 705.0,
-                icon,
-                if i == 0 { theme::WHITE } else { GREY },
-                0.45,
+                *icon,
+                if selected { theme::WHITE } else { GREY },
+                if selected { 0.55 } else { 0.45 },
             );
-            if i > 0
-                && ui
-                    .interact(
-                        c.rect(x - 11.0, 695.0, x + 11.0, 715.0),
-                        ui.id().with(("curve_mode", i)),
-                        Sense::click(),
-                    )
-                    .on_hover_text(name)
-                    .clicked()
+            if ui
+                .interact(
+                    c.rect(x - 11.0, 695.0, x + 11.0, 715.0),
+                    ui.id().with(("curve_mode", i)),
+                    Sense::click(),
+                )
+                .on_hover_text(*name)
+                .clicked()
             {
-                self.planned(name);
+                self.color.curve_mode = i;
+                self.color.curve_drag = None;
             }
         }
         c.icon(1347.0, 705.0, Icon::Expand, GREY, 0.45);
@@ -2497,9 +2594,13 @@ impl StudioApp {
         }
         if self.current_clip().is_some() {
             self.color
-                .measure_curve(ui.ctx(), self.viewer.frame.as_deref(), self.viewer.generation);
-            if let Some(h) = &self.color.curve_histogram {
-                paint_curve_histogram(c.p, graph, h);
+                .measure_curve(ui.ctx(), self.viewer.frame.as_deref(), self.viewer.generation, mode);
+            match (hue_mode, &self.color.curve_input, &self.color.curve_histogram) {
+                (Some(m), Some(bins), _) => {
+                    paint_curve_input_histogram(c.p, graph, bins, hue_curve_color(m));
+                }
+                (None, _, Some(h)) => paint_curve_histogram(c.p, graph, h),
+                _ => {}
             }
         }
         c.p.rect_filled(
@@ -2542,16 +2643,39 @@ impl StudioApp {
             .on_hover_text(
                 "Click to add a point, drag a point to move it, right-click a point to remove it",
             );
-        if let (Some(k), Some(_)) = (main, id) {
+        let editing = id.is_some() && (hue_mode.is_some() || main.is_some());
+        if editing {
             let aspect = area.width() / area.height().max(1.0);
             let radius = 9.0 / area.height().max(1.0);
-            let near = |curves: &Curves, p: egui::Pos2| {
+            let k = main.unwrap_or(0);
+            let near = |curves: &Curves, p: egui::Pos2| -> Option<usize> {
                 let (x, y) = to_curve(p);
-                curves.point_near(k, x, y, radius, aspect)
+                match hue_mode {
+                    Some(m) => curves.hue_point_near(m, x, y, radius, aspect),
+                    None => curves.point_near(k, x, y, radius, aspect),
+                }
+            };
+            let push = |curves: &mut Curves, x: f32, y: f32| -> Option<usize> {
+                match hue_mode {
+                    Some(m) => curves.add_hue_point(m, x, y),
+                    None => curves.add_point(k, x, y),
+                }
+            };
+            let drag = |curves: &mut Curves, i: usize, x: f32, y: f32| {
+                match hue_mode {
+                    Some(m) => curves.move_hue_point(m, i, x, y),
+                    None => curves.move_point(k, i, x, y),
+                }
+            };
+            let pop = |curves: &mut Curves, i: usize| {
+                match hue_mode {
+                    Some(m) => curves.remove_hue_point(m, i),
+                    None => curves.remove_point(k, i),
+                }
             };
             // Curves edited together take the edited curve's points.
             let sync = |curves: &mut Curves| {
-                if together {
+                if hue_mode.is_none() && together {
                     for &t in &targets {
                         if t != k {
                             curves.points[t] = curves.points[k].clone();
@@ -2562,16 +2686,14 @@ impl StudioApp {
             if response.drag_started() {
                 if let Some(p) = response.interact_pointer_pos() {
                     let (x, y) = to_curve(p);
-                    self.color.curve_drag =
-                        near(&curves, p).or_else(|| curves.add_point(k, x, y));
+                    self.color.curve_drag = near(&curves, p).or_else(|| push(&mut curves, x, y));
                     sync(&mut curves);
                 }
             }
             if response.dragged() {
-                if let (Some(i), Some(p)) = (self.color.curve_drag, response.interact_pointer_pos())
-                {
+                if let (Some(i), Some(p)) = (self.color.curve_drag, response.interact_pointer_pos()) {
                     let (x, y) = to_curve(p);
-                    curves.move_point(k, i, x, y);
+                    drag(&mut curves, i, x, y);
                     sync(&mut curves);
                 }
             }
@@ -2582,14 +2704,14 @@ impl StudioApp {
                 if let Some(p) = response.interact_pointer_pos() {
                     if near(&curves, p).is_none() {
                         let (x, y) = to_curve(p);
-                        curves.add_point(k, x, y);
+                        push(&mut curves, x, y);
                         sync(&mut curves);
                     }
                 }
             }
             if response.secondary_clicked() {
                 if let Some(i) = response.interact_pointer_pos().and_then(|p| near(&curves, p)) {
-                    curves.remove_point(k, i);
+                    pop(&mut curves, i);
                     sync(&mut curves);
                 }
             }
@@ -2608,35 +2730,70 @@ impl StudioApp {
                 })
                 .collect()
         };
-        for (k, color) in colors.iter().enumerate() {
-            if Some(k) == main || curves.is_straight(k) {
-                continue;
+        // The custom page shows the other bent channels faintly; the hue/sat/lum graphs show
+        // only the one being edited.
+        if hue_mode.is_none() {
+            for (k, color) in colors.iter().enumerate() {
+                if Some(k) == main || curves.is_straight(k) {
+                    continue;
+                }
+                painter.add(egui::Shape::line(
+                    line(k),
+                    Stroke::new(1.0, color.gamma_multiply(0.6)),
+                ));
             }
-            painter.add(egui::Shape::line(
-                line(k),
-                Stroke::new(1.0, color.gamma_multiply(0.6)),
-            ));
         }
-        let k = main.unwrap_or(0);
-        let bright = if main.is_some() {
-            colors[k]
-        } else {
-            colors[0].gamma_multiply(0.5)
+        let bright = match hue_mode {
+            None => {
+                let k = main.unwrap_or(0);
+                if main.is_some() {
+                    colors[k]
+                } else {
+                    colors[0].gamma_multiply(0.5)
+                }
+            }
+            Some(m) => hue_curve_color(m),
         };
-        painter.add(egui::Shape::line(line(k), Stroke::new(1.5, bright)));
-        if main.is_some() {
-            for (i, p) in curves.points[k].iter().enumerate() {
-                let at = to_screen(p[0], p[1]);
-                let held = self.color.curve_drag == Some(i);
-                painter.circle_filled(at, if held { 5.0 } else { 4.0 } * R, bright);
-                painter.circle_stroke(
-                    at,
-                    4.0 * R,
-                    Stroke::new(1.0, Color32::from_rgb(30, 30, 34)),
-                );
+        let bright_line: Vec<Pos2> = match hue_mode {
+            None => line(main.unwrap_or(0)),
+            Some(m) => (0..=96)
+                .map(|i| {
+                    let x = i as f32 / 96.0;
+                    to_screen(x, curves.eval_hue(m, x))
+                })
+                .collect(),
+        };
+        painter.add(egui::Shape::line(bright_line, Stroke::new(1.5, bright)));
+        match hue_mode {
+            None => {
+                if main.is_some() {
+                    let k = main.unwrap_or(0);
+                    for (i, p) in curves.points[k].iter().enumerate() {
+                        let at = to_screen(p[0], p[1]);
+                        let held = self.color.curve_drag == Some(i);
+                        painter.circle_filled(at, if held { 5.0 } else { 4.0 } * R, bright);
+                        painter.circle_stroke(
+                            at,
+                            4.0 * R,
+                            Stroke::new(1.0, Color32::from_rgb(30, 30, 34)),
+                        );
+                    }
+                }
+            }
+            Some(m) => {
+                for (i, p) in curves.hue_points[m].iter().enumerate() {
+                    let at = to_screen(p[0], p[1]);
+                    let held = self.color.curve_drag == Some(i);
+                    painter.circle_filled(at, if held { 5.0 } else { 4.0 } * R, bright);
+                    painter.circle_stroke(
+                        at,
+                        4.0 * R,
+                        Stroke::new(1.0, Color32::from_rgb(30, 30, 34)),
+                    );
+                }
             }
         }
-
+        if hue_mode.is_none() {
         // Edit: which channels a drag on the curve changes, and how strongly each curve acts.
         c.label(
             1208.0,
@@ -2812,6 +2969,49 @@ impl StudioApp {
                 SOFT_CLIP_NONE[slot] * 100.0,
             ) {
                 curves.soft_clip[slot] = (v / 100.0).clamp(0.0, 1.0);
+            }
+        }
+        }
+        else {
+            // Hue/sat/lum curves get one intensity slider for the curve being edited.
+            let m = hue_mode.unwrap_or(0);
+            c.label(
+                1208.0,
+                770.0,
+                Align2::LEFT_CENTER,
+                HUE_MODE_NAMES[m],
+                10.5,
+                TEXT,
+                false,
+            );
+            let value = curves.hue_intensity[m];
+            c.line((1211.0, 770.0), (1332.0, 770.0), 1.0, Color32::from_rgb(70, 70, 76));
+            let kx = 1211.0 + 115.0 * (value / 100.0).clamp(0.0, 1.0);
+            c.p.circle_filled(c.at(kx, 770.0), 3.6 * R, hue_curve_color(m));
+            if let Some(v) = value_box(
+                ui,
+                c,
+                ("hue_intensity", m),
+                (1342.0, 761.0, 1390.0, 779.0),
+                value,
+                &format!("{value:.0}"),
+                0.5,
+                100.0,
+            ) {
+                curves.hue_intensity[m] = v.clamp(0.0, 100.0);
+            }
+            c.icon(1421.0, 770.0, Icon::Reset, GREY, 0.5);
+            if ui
+                .interact(
+                    c.rect(1411.0, 760.0, 1431.0, 780.0),
+                    ui.id().with(("hue_intensity_reset", m)),
+                    Sense::click(),
+                )
+                .clicked()
+            {
+                let straight = Curves::default();
+                curves.hue_points[m] = straight.hue_points[m].clone();
+                curves.hue_intensity[m] = 100.0;
             }
         }
 

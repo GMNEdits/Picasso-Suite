@@ -69,9 +69,9 @@ Status at 0.6.0.
 
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
 - [ ] Deliver: IMF Generic and Pro Tools presets (listed, greyed out) need an MXF writer and AAF with embedded or rendered sound
-- [ ] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
+- [x] Color: the Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve modes
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
-- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align (timecode, waveform), New Effects Clip, timeline in a new window
+- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, New Effects Clip, timeline in a new window (auto align by timecode landed in 0.6.1)
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds; the Color page's scopes still measure on the interface thread (up to about 6 ms a frame)
