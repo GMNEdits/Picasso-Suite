@@ -1106,6 +1106,7 @@ impl StudioApp {
             Act::Revert => self.revert(),
             Act::ImportMedia => self.import_dialog(ctx),
             Act::ProjectSettings => self.show_settings = true,
+            Act::MediaManagement => self.show_media_management(),
             Act::QuickExport => {
                 self.page = Page::Deliver;
                 self.export_frame(ctx);
@@ -1861,6 +1862,10 @@ impl StudioApp {
             self.fail("this project has not been saved yet");
             return;
         };
+        // The changes are given up on purpose: a copy kept for a crash would only offer them back.
+        let path = self.project_path.clone().map(std::path::PathBuf::from);
+        let title = self.project().name.clone();
+        crate::autosave::clear(path.as_deref(), &title);
         let name = self.project().name.clone();
         let path = self.project_path.clone();
         self.open_text(&name, path, &text);

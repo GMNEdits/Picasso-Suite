@@ -772,6 +772,8 @@ impl StudioApp {
         self.playhead = 0;
         self.playing = false;
         self.project_path = path;
+        // A copy offered for the project before this one does not belong to it.
+        self.recover = None;
     }
 
     pub(crate) fn open_text(&mut self, name: &str, path: Option<String>, text: &str) -> bool {
@@ -1321,6 +1323,24 @@ impl StudioApp {
                 }
                 Incoming::Folder(path) | Incoming::ExportFile(path) => self.enqueue_export(path),
                 Incoming::BinFolder(path) => self.import_folder_as_bin(&path),
+                Incoming::RelinkFolder(folder) => self.search_for_media(folder),
+                Incoming::Relinked {
+                    found,
+                    absent,
+                    ambiguous,
+                    facts,
+                    folder,
+                } => self.apply_relink(found, absent, ambiguous, facts, folder),
+                Incoming::ArchiveFolder(folder) => self.start_archive(folder),
+                Incoming::ArchiveProgress { done, total } => {
+                    self.info(format!("Archiving {done} of {total} file(s)..."));
+                }
+                Incoming::Archived {
+                    folder,
+                    copied,
+                    missing,
+                    failed,
+                } => self.finish_archive(folder, copied, missing, failed),
                 Incoming::Bounced(path) => self.finish_bounce(&path),
                 Incoming::Rendered { clip, path } => self.finish_render_in_place(clip, &path),
                 Incoming::Lut { name, bytes } => self.apply_lut(&name, &bytes),

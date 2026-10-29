@@ -4,6 +4,8 @@
 
 ### ✨ New
 - ✅ **Autosave and recovery:** while a project has changes that were not saved, a copy of it is written every minute beside the project file (`shot.picasso.autosave`, with the two before it), or in the data folder for a project that was never saved. Opening a project whose copy is newer asks "Recover unsaved changes?"; **Recover** opens it with the project's own file kept as the place it saves to, and **Discard** deletes the copy and leaves the project file alone. A save, or Exit without saving, deletes the copies. A crash or a power cut now costs at most a minute of work.
+- ✅ **Relink missing media:** right-click a clip in the Media Pool and choose **Relink Missing Media...** (or use **File > Media Management...**) to choose the folder the files moved to. Files are matched by name, and only when exactly one file under the folder has that name: a name that appears twice is reported, never guessed, because relinking to the wrong take is worse than not relinking. A relink is one undo step, and the new file is what plays.
+- ✅ **Archive a project:** **File > Media Management... > Archive Project...** copies the files the timelines use into a folder (`<chosen>/<project>/media/`) and writes a copy of the project there that points at them, so the folder can be moved, handed over or backed up as one thing. The project you are editing is not changed. Files that are missing are reported and the rest are still archived.
 
 ## 0.6.1
 

@@ -189,7 +189,7 @@ fn base(project: Option<&Path>, name: &str) -> Option<PathBuf> {
 }
 
 /// The name as a file name: letters, digits, `-` and `_`, lowercased.
-fn slug(name: &str) -> String {
+pub(crate) fn slug(name: &str) -> String {
     let s: String = name
         .chars()
         .map(|c| {

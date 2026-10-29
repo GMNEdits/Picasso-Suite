@@ -349,6 +349,10 @@ impl StudioApp {
             self.open_new_multicam();
             ui.close();
         }
+        if ui.button("Relink Missing Media...").clicked() {
+            self.relink_missing(ui.ctx());
+            ui.close();
+        }
     }
 
     pub(crate) fn pool_grid(&mut self, ui: &mut Ui, ctx: &Context) {
