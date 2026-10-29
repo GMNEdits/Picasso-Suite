@@ -432,4 +432,54 @@ mod tests {
         assert_eq!(old, "/gone/cards/A001.mov");
         let _ = std::fs::remove_dir_all(&dir);
     }
+
+    #[test]
+    fn the_background_search_relinks_through_the_inbox() {
+        use picasso_core::Outcome;
+
+        let dir = scratch("background");
+        let folder = dir.join("found");
+        std::fs::create_dir_all(&folder).unwrap();
+        let file = folder.join("A001.mov");
+        std::fs::write(&file, b"x").unwrap();
+
+        let ctx = egui::Context::default();
+        let mut app = StudioApp::new(&ctx);
+        let media = match app.run(Command::AddMedia {
+            name: "A001".into(),
+            source: MediaSource::Video {
+                path: "/gone/cards/A001.mov".into(),
+            },
+            length: Some(100),
+            default_duration: 50,
+        }) {
+            Some(Outcome::Media(id)) => id,
+            _ => panic!("the media was not added"),
+        };
+        // The folder is chosen, and the search runs on its own thread.
+        app.search_for_media(folder.to_string_lossy().into_owned());
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(20);
+        while std::time::Instant::now() < deadline {
+            app.process_inbox();
+            let path = match &app.project().media(media).unwrap().source {
+                MediaSource::Video { path } => path.clone(),
+                _ => panic!("the media changed kind"),
+            };
+            if path == file.to_string_lossy() {
+                break;
+            }
+            std::thread::sleep(std::time::Duration::from_millis(5));
+        }
+        let path = match &app.project().media(media).unwrap().source {
+            MediaSource::Video { path } => path.clone(),
+            _ => panic!("the media changed kind"),
+        };
+        assert_eq!(path, file.to_string_lossy(), "the inbox relinked it");
+        assert!(
+            app.status.text.contains("Relinked"),
+            "and said so: {}",
+            app.status.text
+        );
+        let _ = std::fs::remove_dir_all(&dir);
+    }
 }

@@ -393,6 +393,47 @@ mod tests {
     }
 
     #[test]
+    fn recovering_opens_the_copy_and_keeps_the_project_file_as_the_place_it_saves() {
+        use picasso_core::Command;
+
+        let dir = scratch("recover");
+        let project = dir.join("shot.picasso");
+        let ctx = egui::Context::default();
+        let mut app = StudioApp::new(&ctx);
+        app.load_demo();
+        app.project_path = Some(project.to_string_lossy().into_owned());
+        std::fs::write(&project, b"{}").unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(20));
+        app.run(Command::RenameProject {
+            name: "Recovered".into(),
+        });
+        app.autosave_at = std::time::Instant::now() - EVERY - Duration::from_secs(1);
+        app.tick_autosave(&ctx);
+
+        // A fresh program opens the project and is offered the copy.
+        let mut again = StudioApp::new(&ctx);
+        again.project_path = Some(project.to_string_lossy().into_owned());
+        again.look_for_autosave();
+        let found = again.recover.clone().expect("the copy is offered");
+        again.recover_from(&found);
+
+        // The work is back, and it is unsaved work on the project's own file.
+        assert_eq!(again.project().name, "Recovered");
+        assert!(again.session.is_dirty(), "the file does not have it yet");
+        assert_eq!(
+            again.project_path.as_deref(),
+            Some(project.to_string_lossy().as_ref())
+        );
+        // The project file itself still has the old bytes.
+        assert_eq!(std::fs::read(&project).unwrap(), b"{}");
+
+        // Saving is what clears the copies (the inbox arm does this).
+        clear(Some(&project), "Recovered");
+        assert!(newest(Some(&project), "Recovered").is_none());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
     fn an_autosave_older_than_the_project_is_not_offered() {
         let dir = scratch("stale");
         let project = dir.join("shot.picasso");

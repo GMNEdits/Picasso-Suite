@@ -291,6 +291,72 @@ mod tests {
     }
 
     #[test]
+    fn archiving_in_the_background_writes_the_copy_and_says_so() {
+        use picasso_core::Outcome;
+
+        let dir = scratch("background");
+        let file = dir.join("clip.mov");
+        std::fs::write(&file, b"x").unwrap();
+
+        let ctx = egui::Context::default();
+        let mut app = StudioApp::new(&ctx);
+        let media = match app.run(Command::AddMedia {
+            name: "clip".into(),
+            source: MediaSource::Video {
+                path: file.to_string_lossy().into_owned(),
+            },
+            length: Some(10),
+            default_duration: 10,
+        }) {
+            Some(Outcome::Media(id)) => id,
+            _ => panic!("the media was not added"),
+        };
+        app.run(Command::AddClip {
+            track: app.project().tracks[0].id,
+            media,
+            start: 0,
+            duration: Some(10),
+            with_sound: false,
+        });
+
+        let out = dir.join("out");
+        let name = crate::autosave::slug(&app.project().name);
+        let project_file = out.join(&name).join(format!("{name}.picasso"));
+        // The folder is chosen, and the copy is written on its own thread.
+        app.start_archive(out.to_string_lossy().into_owned());
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(20);
+        while std::time::Instant::now() < deadline {
+            app.process_inbox();
+            if project_file.is_file() && app.status.text.starts_with("Archived") {
+                break;
+            }
+            std::thread::sleep(std::time::Duration::from_millis(5));
+        }
+        assert!(project_file.is_file(), "the project copy was written");
+        assert!(
+            app.status.text.starts_with("Archived"),
+            "and said so: {}",
+            app.status.text
+        );
+        // The copy points at the file beside it.
+        let (text, _) =
+            crate::projectfile::decode(std::fs::read(&project_file).unwrap()).unwrap();
+        let archived = picasso_core::Project::from_json(&text).unwrap();
+        let path = match &archived.media(media).unwrap().source {
+            MediaSource::Video { path } => path.clone(),
+            other => panic!("the media changed kind: {other:?}"),
+        };
+        let expected = out
+            .join(&name)
+            .join("media/clip.mov")
+            .to_string_lossy()
+            .into_owned();
+        assert_eq!(path, expected);
+        assert!(std::path::Path::new(&path).is_file());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
     fn a_name_taken_by_another_file_gets_a_number() {
         let mut taken = HashSet::new();
         assert_eq!(unique_name("A001.mov", &mut taken), "A001.mov");
