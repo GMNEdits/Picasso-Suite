@@ -74,7 +74,7 @@ Status at 0.6.0.
 - [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, New Effects Clip, timeline in a new window (auto align by timecode landed in 0.6.1)
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
-- [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds; the Color page's scopes still measure on the interface thread (up to about 6 ms a frame)
+- [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds
 - [ ] Project: libraries, archives, media management, metadata import/export, Lightbox, dual screen, clean feed
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates: the release workflow now updates the .deb, .rpm, macOS app, Windows folder and Flatpak in place on every build (`--update-from`), and its first run is still to come; the download from GitHub itself is only tried on Windows
 - [ ] Platforms: macOS (Metal), Linux (Vulkan), browser limits

@@ -8,6 +8,9 @@
 
 #![allow(clippy::too_many_arguments)]
 
+use std::sync::mpsc::{channel, Receiver, Sender};
+use std::sync::Arc;
+
 use egui::{
     pos2, vec2, Align2, Color32, ColorImage, Context, Painter, Pos2, Rect, Sense, Stroke,
     StrokeKind, TextureHandle, TextureOptions, Ui,
@@ -16,6 +19,7 @@ use picasso_color::curves::{Curves, HUE_MODES, SOFT_CLIP_NONE};
 use picasso_color::scopes::{curve_histogram, histogram, parade, vectorscope, waveform};
 use picasso_color::{ColorGrade, CurveInput, Histogram, Lut};
 use picasso_core::Command;
+use picasso_render::Frame;
 
 use crate::app::StudioApp;
 use crate::capture::fit;
@@ -133,10 +137,90 @@ pub(crate) struct ColorPage {
     curve_mode: usize,
     /// The point of the edited curve being dragged.
     curve_drag: Option<usize>,
+    /// The background thread that measures scopes, so the interface thread is not blocked by
+    /// pixel reads. `None` on WASM (where threads are unavailable and measurement is synchronous).
+    scope_worker: Option<(Sender<ScopeTask>, Receiver<ScopeResult>)>,
 }
 
 /// How many times a second the scopes follow a playing picture.
 const SCOPE_RATE: f64 = 20.0;
+
+/// A measurement task for the scope worker thread: measure one frame for a scope or a curve
+/// histogram, so the pixel reads don't block the interface thread.
+enum ScopeTask {
+    /// Measure a scope (parade, waveform, vectorscope, or histogram).
+    Scope {
+        frame: Arc<Frame>,
+        kind: ScopeKind,
+        generation: u64,
+    },
+    /// Measure a curve's backing histogram (mode 0) or hue/sat/lum input (1..=6).
+    Curve {
+        frame: Arc<Frame>,
+        mode: usize,
+        generation: u64,
+    },
+}
+
+/// A completed measurement from the scope worker thread.
+enum ScopeResult {
+    Scope {
+        kind: ScopeKind,
+        generation: u64,
+        image: Option<Box<ColorImage>>,
+        histogram: Option<Histogram>,
+    },
+    Curve {
+        mode: usize,
+        generation: u64,
+        histogram: Option<Histogram>,
+        input: Option<Box<[u32; 256]>>,
+    },
+}
+
+/// Spawns the background thread that measures scopes, returning the task sender and result
+/// receiver. On WASM (no threads) returns `None`.
+#[cfg(not(target_arch = "wasm32"))]
+fn spawn_scope_worker() -> Option<(Sender<ScopeTask>, Receiver<ScopeResult>)> {
+    let (task_tx, task_rx) = channel::<ScopeTask>();
+    let (result_tx, result_rx) = channel::<ScopeResult>();
+    std::thread::spawn(move || {
+        while let Ok(task) = task_rx.recv() {
+            // Skip superseded frames: if more tasks arrived, use the latest one.
+            let task = task_rx.try_iter().last().unwrap_or(task);
+            let result = match task {
+                ScopeTask::Scope {
+                    frame,
+                    kind,
+                    generation,
+                } => {
+                    let (image, histogram) = measure_scope_pixels(&frame, kind);
+                    ScopeResult::Scope {
+                        kind,
+                        generation,
+                        image: image.map(Box::new),
+                        histogram,
+                    }
+                }
+                ScopeTask::Curve {
+                    frame,
+                    mode,
+                    generation,
+                } => {
+                    let (histogram, input) = measure_curve_pixels(&frame, mode);
+                    ScopeResult::Curve {
+                        mode,
+                        generation,
+                        histogram,
+                        input: input.map(Box::new),
+                    }
+                }
+            };
+            let _ = result_tx.send(result);
+        }
+    });
+    Some((task_tx, result_rx))
+}
 
 /// The curve mode buttons: an x position, an icon and a name. Index 0 is the custom curves;
 /// 1..=`HUE_MODES` are the hue/sat/lum curves, with `HUE_MODES[i - 1]` the curve they edit.
@@ -215,47 +299,226 @@ impl Default for ColorPage {
             curve_link: true,
             curve_mode: 0,
             curve_drag: None,
+            scope_worker: spawn_scope_worker(),
         }
     }
 }
 
+/// Builds the scope image and/or histogram from a frame. This is the pixel-heavy work that runs on
+/// the worker thread so it doesn't block the interface.
+fn measure_scope_pixels(frame: &Frame, kind: ScopeKind) -> (Option<ColorImage>, Option<Histogram>) {
+    let (w, h) = (frame.width as usize, frame.height as usize);
+    let glow = |v: f32, base: [f32; 3], top: [f32; 3]| {
+        Color32::from_rgb(
+            (base[0] + v * top[0]) as u8,
+            (base[1] + v * top[1]) as u8,
+            (base[2] + v * top[2]) as u8,
+        )
+    };
+    match kind {
+        ScopeKind::Parade => {
+            let p = parade(&frame.rgba, w, h, w.min(512));
+            let columns = p.columns;
+            // A narrow black gap between the three channels.
+            let gap = (columns / 60).max(2);
+            let width = columns * 3 + gap * 2;
+            let mut pixels = vec![Color32::BLACK; width * 256];
+            // Faint traces stay visible (a log scale) and dense ones burn towards white.
+            let tints: [[f32; 3]; 3] = [
+                [255.0, 62.0, 62.0],
+                [60.0, 245.0, 82.0],
+                [72.0, 92.0, 255.0],
+            ];
+            let top = (1.0 + p.max.max(1) as f32).ln();
+            for (c, counts) in p.counts.iter().enumerate() {
+                let left = c * (columns + gap);
+                for column in 0..columns {
+                    for level in 0..256 {
+                        let count = counts[column * 256 + level];
+                        if count == 0 {
+                            continue;
+                        }
+                        let v = ((1.0 + count as f32).ln() / top).clamp(0.0, 1.0);
+                        let light = 0.32 + 0.68 * v.powf(0.65);
+                        let white = ((v - 0.55) / 0.45).clamp(0.0, 1.0) * 0.55;
+                        let px = tints[c].map(|t| {
+                            ((t * light) * (1.0 - white) + 255.0 * white).min(255.0) as u8
+                        });
+                        pixels[(255 - level) * width + left + column] =
+                            Color32::from_rgb(px[0], px[1], px[2]);
+                    }
+                }
+            }
+            (Some(ColorImage::new([width, 256], pixels)), None)
+        }
+        ScopeKind::Waveform => {
+            let wf = waveform(&frame.rgba, w, h, w.min(512));
+            let mut pixels = vec![Color32::BLACK; wf.columns * 256];
+            for column in 0..wf.columns {
+                for level in 0..256 {
+                    let count = wf.counts[column * 256 + level];
+                    if count > 0 {
+                        let v = (count as f32 / wf.max.max(1) as f32).sqrt();
+                        pixels[(255 - level) * wf.columns + column] =
+                            glow(v, [30.0, 60.0, 50.0], [70.0, 195.0, 90.0]);
+                    }
+                }
+            }
+            (Some(ColorImage::new([wf.columns, 256], pixels)), None)
+        }
+        ScopeKind::Vectorscope => {
+            let vs = vectorscope(&frame.rgba, w, h, 256);
+            let mut pixels = vec![Color32::BLACK; vs.size * vs.size];
+            for (px, count) in pixels.iter_mut().zip(&vs.counts) {
+                if *count > 0 {
+                    let v = (*count as f32 / vs.max.max(1) as f32).sqrt();
+                    *px = glow(v, [70.0, 140.0, 130.0], [150.0, 115.0, 110.0]);
+                }
+            }
+            (Some(ColorImage::new([vs.size, vs.size], pixels)), None)
+        }
+        ScopeKind::Histogram => {
+            (None, Some(histogram(&frame.rgba, w, h)))
+        }
+    }
+}
+
+/// Measures the curve histogram (mode 0) or hue/sat/lum input (1..=6) from a frame. Runs on the
+/// worker thread.
+fn measure_curve_pixels(frame: &Frame, mode: usize) -> (Option<Histogram>, Option<[u32; 256]>) {
+    let (w, h) = (frame.width as usize, frame.height as usize);
+    if mode == 0 {
+        (Some(histogram(&frame.rgba, w, h)), None)
+    } else {
+        (
+            None,
+            Some(curve_histogram(
+                &frame.rgba,
+                w,
+                h,
+                curve_input_of(mode),
+            )),
+        )
+    }
+}
+
 impl ColorPage {
+    /// Picks up finished scope measurements from the worker thread and applies them (creates the
+    /// texture, stores the histogram). Non-blocking: drains whatever is ready.
+    fn apply_scope_results(&mut self, ctx: &Context) {
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            loop {
+                let result = self
+                    .scope_worker
+                    .as_ref()
+                    .and_then(|(_, rx)| rx.try_recv().ok());
+                let Some(ScopeResult::Scope {
+                    kind,
+                    generation,
+                    image,
+                    histogram,
+                }) = result
+                else {
+                    break;
+                };
+                if kind == self.kind {
+                    if let Some(h) = histogram {
+                        self.histogram = Some(h);
+                    }
+                    if let Some(img) = image {
+                        match &mut self.texture {
+                            Some(t) => t.set(*img, TextureOptions::LINEAR),
+                            None => {
+                                self.texture = Some(
+                                    ctx.load_texture("scope", *img, TextureOptions::LINEAR),
+                                )
+                            }
+                        }
+                    }
+                    self.measured = Some((generation, self.kind));
+                }
+            }
+        }
+    }
+
+    /// Picks up finished curve measurements from the worker thread.
+    fn apply_curve_results(&mut self) {
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            loop {
+                let result = self
+                    .scope_worker
+                    .as_ref()
+                    .and_then(|(_, rx)| rx.try_recv().ok());
+                let Some(ScopeResult::Curve {
+                    mode,
+                    generation,
+                    histogram,
+                    input,
+                }) = result
+                else {
+                    break;
+                };
+                if mode == self.curve_mode {
+                    if let Some(h) = histogram {
+                        self.curve_histogram = Some(h);
+                        self.curve_input = None;
+                    }
+                    if let Some(input) = input {
+                        self.curve_input = Some(*input);
+                        self.curve_histogram = None;
+                    }
+                    self.curve_measured = Some((generation, mode));
+                }
+            }
+        }
+    }
+
     /// Measures the histogram behind the curves once for each new picture, so it follows
     /// playback. `mode` is the curve being edited (0 the custom one, 1..=6 a hue/sat/lum one).
     fn measure_curve(
         &mut self,
         ctx: &Context,
-        frame: Option<&picasso_render::Frame>,
+        frame: Option<Arc<Frame>>,
         generation: u64,
         mode: usize,
     ) {
+        // Picks up finished results from the worker thread.
+        self.apply_curve_results();
         if self.curve_measured == Some((generation, mode)) || !scope_due(ctx, self.curve_time) {
             return;
         }
-        let Some(frame) = frame else {
+        #[cfg(not(target_arch = "wasm32"))]
+        if let (Some((send, _)), Some(frame)) = (&self.scope_worker, &frame) {
+            self.curve_time = ctx.input(|i| i.time);
+            let _ = send.send(ScopeTask::Curve {
+                frame: frame.clone(),
+                mode,
+                generation,
+            });
+            return;
+        }
+        // Fallback (WASM, or the worker thread has ended): measure here, on the interface thread.
+        let Some(frame) = frame.as_deref() else {
             return;
         };
         self.curve_time = ctx.input(|i| i.time);
-        if mode == 0 {
-            self.curve_histogram = Some(histogram(
-                &frame.rgba,
-                frame.width as usize,
-                frame.height as usize,
-            ));
+        let (histogram, input) = measure_curve_pixels(frame, mode);
+        if let Some(h) = histogram {
+            self.curve_histogram = Some(h);
             self.curve_input = None;
-        } else {
-            self.curve_input = Some(curve_histogram(
-                &frame.rgba,
-                frame.width as usize,
-                frame.height as usize,
-                curve_input_of(mode),
-            ));
+        }
+        if let Some(input) = input {
+            self.curve_input = Some(input);
             self.curve_histogram = None;
         }
         self.curve_measured = Some((generation, mode));
     }
 
-    fn measure(&mut self, ctx: &Context, frame: Option<&picasso_render::Frame>, generation: u64) {
+    fn measure(&mut self, ctx: &Context, frame: Option<Arc<Frame>>, generation: u64) {
+        // Picks up finished results from the worker thread.
+        self.apply_scope_results(ctx);
         if self.measured == Some((generation, self.kind)) {
             return;
         }
@@ -264,88 +527,32 @@ impl ColorPage {
         if same_kind && !scope_due(ctx, self.scope_time) {
             return;
         }
-        let Some(frame) = frame else { return };
+        // On native, hand the frame to the worker thread so the pixel reads don't block the
+        // interface. On WASM (or if the worker has ended), measure here.
+        #[cfg(not(target_arch = "wasm32"))]
+        if let (Some((send, _)), Some(frame)) = (&self.scope_worker, &frame) {
+            self.scope_time = ctx.input(|i| i.time);
+            let _ = send.send(ScopeTask::Scope {
+                frame: frame.clone(),
+                kind: self.kind,
+                generation,
+            });
+            return;
+        }
+        let Some(frame) = frame.as_deref() else {
+            return;
+        };
         self.scope_time = ctx.input(|i| i.time);
-        let (w, h) = (frame.width as usize, frame.height as usize);
-        let glow = |v: f32, base: [f32; 3], top: [f32; 3]| {
-            Color32::from_rgb(
-                (base[0] + v * top[0]) as u8,
-                (base[1] + v * top[1]) as u8,
-                (base[2] + v * top[2]) as u8,
-            )
-        };
-        let image = match self.kind {
-            ScopeKind::Parade => {
-                let p = parade(&frame.rgba, w, h, w.min(512));
-                let columns = p.columns;
-                // A narrow black gap between the three channels.
-                let gap = (columns / 60).max(2);
-                let width = columns * 3 + gap * 2;
-                let mut pixels = vec![Color32::BLACK; width * 256];
-                // Faint traces stay visible (a log scale) and dense ones burn towards white.
-                let tints: [[f32; 3]; 3] = [
-                    [255.0, 62.0, 62.0],
-                    [60.0, 245.0, 82.0],
-                    [72.0, 92.0, 255.0],
-                ];
-                let top = (1.0 + p.max.max(1) as f32).ln();
-                for (c, counts) in p.counts.iter().enumerate() {
-                    let left = c * (columns + gap);
-                    for column in 0..columns {
-                        for level in 0..256 {
-                            let count = counts[column * 256 + level];
-                            if count == 0 {
-                                continue;
-                            }
-                            let v = ((1.0 + count as f32).ln() / top).clamp(0.0, 1.0);
-                            let light = 0.32 + 0.68 * v.powf(0.65);
-                            let white = ((v - 0.55) / 0.45).clamp(0.0, 1.0) * 0.55;
-                            let px = tints[c].map(|t| {
-                                ((t * light) * (1.0 - white) + 255.0 * white).min(255.0) as u8
-                            });
-                            pixels[(255 - level) * width + left + column] =
-                                Color32::from_rgb(px[0], px[1], px[2]);
-                        }
-                    }
-                }
-                Some(ColorImage::new([width, 256], pixels))
-            }
-            ScopeKind::Waveform => {
-                let wf = waveform(&frame.rgba, w, h, w.min(512));
-                let mut pixels = vec![Color32::BLACK; wf.columns * 256];
-                for column in 0..wf.columns {
-                    for level in 0..256 {
-                        let count = wf.counts[column * 256 + level];
-                        if count > 0 {
-                            let v = (count as f32 / wf.max.max(1) as f32).sqrt();
-                            pixels[(255 - level) * wf.columns + column] =
-                                glow(v, [30.0, 60.0, 50.0], [70.0, 195.0, 90.0]);
-                        }
-                    }
-                }
-                Some(ColorImage::new([wf.columns, 256], pixels))
-            }
-            ScopeKind::Vectorscope => {
-                let vs = vectorscope(&frame.rgba, w, h, 256);
-                let mut pixels = vec![Color32::BLACK; vs.size * vs.size];
-                for (px, count) in pixels.iter_mut().zip(&vs.counts) {
-                    if *count > 0 {
-                        let v = (*count as f32 / vs.max.max(1) as f32).sqrt();
-                        *px = glow(v, [70.0, 140.0, 130.0], [150.0, 115.0, 110.0]);
-                    }
-                }
-                Some(ColorImage::new([vs.size, vs.size], pixels))
-            }
-            ScopeKind::Histogram => {
-                self.histogram = Some(histogram(&frame.rgba, w, h));
-                None
-            }
-        };
-        if let Some(image) = image {
+        let (image, histogram) = measure_scope_pixels(frame, self.kind);
+        if let Some(h) = histogram {
+            self.histogram = Some(h);
+        }
+        if let Some(img) = image {
             match &mut self.texture {
-                Some(t) => t.set(image, TextureOptions::LINEAR),
+                Some(t) => t.set(img, TextureOptions::LINEAR),
                 None => {
-                    self.texture = Some(ctx.load_texture("scope", image, TextureOptions::LINEAR))
+                    self.texture =
+                        Some(ctx.load_texture("scope", img, TextureOptions::LINEAR))
                 }
             }
         }
@@ -2597,7 +2804,7 @@ impl StudioApp {
         }
         if self.current_clip().is_some() {
             self.color
-                .measure_curve(ui.ctx(), self.viewer.frame.as_deref(), self.viewer.generation, mode);
+                .measure_curve(ui.ctx(), self.viewer.frame.clone(), self.viewer.generation, mode);
             match (hue_mode, &self.color.curve_input, &self.color.curve_histogram) {
                 (Some(m), Some(bins), _) => {
                     paint_curve_input_histogram(c.p, graph, bins, hue_curve_color(m));
@@ -3124,7 +3331,7 @@ impl StudioApp {
 
         let generation = self.viewer.generation;
         self.color
-            .measure(ctx, self.viewer.frame.as_deref(), generation);
+            .measure(ctx, self.viewer.frame.clone(), generation);
         if self.current_clip().is_none() {
             return;
         }

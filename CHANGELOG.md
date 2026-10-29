@@ -8,6 +8,7 @@
 
 ### 🛠️ Fixed
 - ✅ **Color > Curves > Based on Timecode:** the drop-frame rule counts two (or four at 60 fps) skipped frame numbers every minute but every tenth, the way broadcast files do, so aligning clips keeps their frames.
+- ✅ **Color page scopes no longer block the interface:** the histogram, waveform, vectorscope and parade are measured on a background thread, so the 6 ms a frame of pixel reads no longer stalls clicks, drags and scrolling.
 
 ## 0.6.0
 
