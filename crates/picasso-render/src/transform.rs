@@ -68,6 +68,43 @@ fn mix(mode: BlendMode, d: f32, s: f32) -> f32 {
     }
 }
 
+/// Draws an effects clip's picture over `out`. `layer` is the picture in straight colour, with how
+/// much of each pixel it covers in its alpha; `out` is the composite below it, kept over black,
+/// and `coverage` (empty when no alpha was asked for) says how much of each pixel that covers. The
+/// clip covers the frame at `opacity`, mixed as `mode` says, and what its transform leaves empty
+/// stays empty rather than showing the picture again.
+pub(crate) fn cover(
+    out: &mut [u8],
+    layer: &[u8],
+    opacity: f32,
+    mode: BlendMode,
+    coverage: &mut [f32],
+) {
+    let tracked = !coverage.is_empty();
+    for (i, (dst, src)) in out
+        .chunks_exact_mut(4)
+        .zip(layer.chunks_exact(4))
+        .enumerate()
+    {
+        let below = if tracked { coverage[i] } else { 1.0 };
+        let pic = f32::from(src[3]) / 255.0;
+        for c in 0..3 {
+            let d = if below > 0.0 {
+                (f32::from(dst[c]) / 255.0 / below).min(1.0)
+            } else {
+                0.0
+            };
+            let s = f32::from(src[c]) / 255.0;
+            let mixed = mix(mode, d, s);
+            let v = d * below * (1.0 - opacity) + mixed * pic * opacity;
+            dst[c] = (v * 255.0 + 0.5).min(255.0) as u8;
+        }
+        if tracked {
+            coverage[i] = below * (1.0 - opacity) + pic * opacity;
+        }
+    }
+}
+
 /// Draws `layer` over `out` with its alpha times `opacity`, mixing colours as `mode` says.
 pub(crate) fn blend(out: &mut [u8], layer: &[u8], opacity: f32, mode: BlendMode) {
     let opaque = mode == BlendMode::Normal && opacity >= 0.999;

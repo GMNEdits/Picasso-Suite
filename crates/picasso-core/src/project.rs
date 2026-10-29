@@ -61,6 +61,9 @@ pub enum MediaSource {
     /// A compound clip: the clips of timeline `timeline` (one of the project's timelines that
     /// is kept for it), shown and heard as one clip.
     Compound { timeline: u64 },
+    /// An effects clip: transparent, with no picture of its own. Its grade and effects apply to
+    /// the composite of the tracks below it, like Resolve's Effects Clip.
+    EffectsClip,
     /// Text over the picture (a title): transparent where there is no text.
     Title(TitleText),
 }
@@ -278,6 +281,7 @@ pub fn media_kind(source: &MediaSource) -> &'static str {
         MediaSource::Image { .. } => "Still",
         MediaSource::Title(_) => "Title",
         MediaSource::Compound { .. } => "Compound Clip",
+        MediaSource::EffectsClip => "Effects Clip",
         _ => "Generator",
     }
 }

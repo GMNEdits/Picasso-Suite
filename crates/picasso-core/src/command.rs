@@ -321,6 +321,13 @@ pub enum Command {
         clips: Vec<ClipId>,
         name: String,
     },
+    /// Creates an effects clip named `name` at `start` on a free video track above the clips
+    /// there. Like a compound clip it is made by a command so the whole edit is one undo step,
+    /// but it is transparent: its grade and effects apply to the composite below.
+    CreateEffectsClip {
+        start: u64,
+        name: String,
+    },
     /// Puts the clips of a compound clip back on the timeline in its place.
     DecomposeCompound {
         clip: ClipId,
@@ -562,6 +569,7 @@ impl Command {
             Self::SetMediaTimecode { .. } => "media.set_timecode",
             Self::AlignClips { .. } => "clip.align",
             Self::CreateCompound { .. } => "clip.create_compound",
+            Self::CreateEffectsClip { .. } => "clip.create_effects_clip",
             Self::DecomposeCompound { .. } => "clip.decompose_compound",
             Self::SwitchTimeline { .. } => "timeline.switch",
             Self::RenameTimeline { .. } => "timeline.rename",
@@ -650,6 +658,7 @@ impl Command {
             Self::SetMediaTimecode { .. } => "Media timecode",
             Self::AlignClips { .. } => "Align by timecode",
             Self::CreateCompound { .. } => "Compound clip",
+            Self::CreateEffectsClip { .. } => "Effects clip",
             Self::DecomposeCompound { .. } => "Decompose in place",
             Self::SwitchTimeline { .. } => "Switch timeline",
             Self::RenameTimeline { .. } => "Rename timeline",
@@ -822,7 +831,7 @@ impl Command {
                 with_sound,
             } => {
                 let mut q = p.clone();
-                let track = top_free_track(&mut q, media, start)?;
+                let track = top_free_track(&mut q, media, start, None)?;
                 let out = with_linked_sound(&mut q, with_sound, SoundEdit::Place, |r| {
                     add_clip(r, track, media, start, None)
                 })?;
@@ -1253,6 +1262,7 @@ impl Command {
             }
             Self::AlignClips { clips } => align_clips(p, &clips),
             Self::CreateCompound { clips, name } => create_compound(p, &clips, name),
+            Self::CreateEffectsClip { start, name } => create_effects_clip(p, start, name),
             Self::DecomposeCompound { clip } => decompose_compound(p, clip),
             Self::SwitchTimeline { id } => switch_timeline(p, id),
             Self::RenameTimeline { id, name } => {
@@ -2140,11 +2150,18 @@ fn fit_to_fill(
     place_over(p, track, clip)
 }
 
-/// The track Place on Top uses for `media` at `start`: the first unlocked track of its kind
-/// above every clip there, added when there is none.
-fn top_free_track(p: &mut Project, media: MediaId, start: u64) -> Result<TrackId, EditError> {
+/// The track Place on Top and an effects clip use for `media` at `start`: the first unlocked track
+/// of its kind above every clip there that is free for all `duration` frames (the media's own
+/// default when it is `None`), added when there is none.
+fn top_free_track(
+    p: &mut Project,
+    media: MediaId,
+    start: u64,
+    duration: Option<u64>,
+) -> Result<TrackId, EditError> {
     let item = p.media(media).ok_or(EditError::NoSuchMedia)?;
-    let (kind, duration) = (item.source.track_kind(), item.default_duration.max(1));
+    let kind = item.source.track_kind();
+    let duration = duration.unwrap_or(item.default_duration).max(1);
     let end = start.saturating_add(duration);
     let busy = |t: &Track| t.clips.iter().any(|c| c.start < end && c.end() > start);
     let above = p
@@ -2315,6 +2332,38 @@ fn create_compound(p: &mut Project, ids: &[ClipId], name: String) -> Result<Outc
         timecode: None,
     });
     let out = add_clip(&mut q, base, media, start, Some(length))?;
+    *p = q;
+    Ok(out)
+}
+
+/// Creates an effects clip: a transparent clip whose grade and effects apply to the composite
+/// below. The clip is placed at `start` on a free video track above the clips there, and lasts
+/// for the current timeline's duration (or five seconds if the timeline is empty).
+fn create_effects_clip(p: &mut Project, start: u64, name: String) -> Result<Outcome, EditError> {
+    let name = timeline_name(&name)?;
+    // The effects clip has no media timeline of its own, so it does not add a timeline.
+    let mut q = p.clone();
+    let duration = q.duration().max(start).saturating_sub(start).max(
+        q.tracks
+            .iter()
+            .flat_map(|t| t.clips.iter().filter(|c| c.start >= start))
+            .map(|c| c.end().saturating_sub(start))
+            .max()
+            .unwrap_or(0),
+    );
+    let duration = duration.max(q.fps.nominal().max(1) * 5);
+    let media = MediaId(q.fresh_id());
+    q.media.push(MediaItem {
+        id: media,
+        name,
+        source: MediaSource::EffectsClip,
+        length: None,
+        default_duration: 1,
+        bin: None,
+        timecode: None,
+    });
+    let track = top_free_track(&mut q, media, start, Some(duration))?;
+    let out = add_clip(&mut q, track, media, start, Some(duration))?;
     *p = q;
     Ok(out)
 }
@@ -2762,8 +2811,10 @@ fn align_clips(p: &mut Project, clips: &[ClipId]) -> Result<Outcome, EditError> 
             .fps
             .parse_timecode(start_tc)
             .ok_or(EditError::Invalid("the media's timecode"))?;
+        // The source frame the clip shows first, so a slipped, reversed or frozen clip lines up
+        // by the frame it really shows.
         let abs = base
-            .checked_add(clip.source_in)
+            .checked_add(clip.source_frame_at(clip.start))
             .ok_or(EditError::OutOfRange)?;
         timed.push((*id, abs));
     }
@@ -2774,15 +2825,33 @@ fn align_clips(p: &mut Project, clips: &[ClipId]) -> Result<Outcome, EditError> 
         .min_by_key(|(abs, _)| *abs)
         .ok_or(EditError::Invalid("aligning needs two clips or more"))?;
     let mut q = p.clone();
-    // Take every clip out first, so one on its way cannot overlap one still to move.
+    // Take every clip out first, so one on its way cannot overlap one still to move. A clip's
+    // linked sound goes with it, by the same distance.
     let mut moving: Vec<(TrackId, Clip, u64)> = Vec::with_capacity(timed.len());
+    let mut taken: Vec<ClipId> = Vec::new();
     for (id, abs) in &timed {
-        let (ti, ci) = q.locate(*id).ok_or(EditError::NoSuchClip)?;
-        let clip = q.tracks[ti].clips.remove(ci);
+        let Some((_, c)) = q.clip(*id) else {
+            continue;
+        };
+        let from = c.start;
         let start = anchor_start
             .checked_add(abs - anchor_abs)
             .ok_or(EditError::OutOfRange)?;
-        moving.push((q.tracks[ti].id, clip, start));
+        let mut group = vec![*id];
+        group.extend(q.partners(*id));
+        for cid in group {
+            if taken.contains(&cid) {
+                continue;
+            }
+            let (ti, ci) = q.locate(cid).ok_or(EditError::NoSuchClip)?;
+            if q.tracks[ti].locked {
+                return Err(EditError::Locked);
+            }
+            let clip = q.tracks[ti].clips.remove(ci);
+            let to = shifted(clip.start, from, start).ok_or(EditError::OutOfRange)?;
+            taken.push(cid);
+            moving.push((q.tracks[ti].id, clip, to));
+        }
     }
     for (track, mut clip, start) in moving {
         if start
@@ -6113,6 +6182,62 @@ mod tests {
     }
 
     #[test]
+    fn aligning_takes_the_linked_sound_with_the_picture() {
+        let mut p = Project::new("align");
+        let v1 = p.tracks[0].id;
+        let v2 = p.tracks[1].id;
+        // Two video clips with their own sound, the second a second later in its file.
+        let clip = |p: &mut Project, track: TrackId, tc: &str, start: u64| {
+            let Outcome::Media(media) = (Command::AddMedia {
+                name: "m".into(),
+                source: MediaSource::Video {
+                    path: "/media/m.mov".into(),
+                },
+                length: Some(1000),
+                default_duration: 100,
+            })
+            .apply(p)
+            .unwrap() else {
+                panic!("expected media")
+            };
+            Command::SetMediaTimecode {
+                media,
+                timecode: Some(tc.to_string()),
+            }
+            .apply(p)
+            .unwrap();
+            let Outcome::Clip(id) = (Command::AddClip {
+                track,
+                media,
+                start,
+                duration: Some(100),
+                with_sound: true,
+            })
+            .apply(p)
+            .unwrap() else {
+                panic!("expected a clip")
+            };
+            id
+        };
+        let early = clip(&mut p, v1, "01:00:00:00", 0);
+        let late = clip(&mut p, v2, "01:00:01:00", 0);
+        // The sound of the late clip, which has to travel with it.
+        let sound = p.linked_to(late);
+        assert_eq!(sound.len(), 1, "the picture has its own sound");
+        let (_, before) = p.clip(sound[0]).unwrap();
+        assert_eq!(before.start, 0);
+        Command::AlignClips {
+            clips: vec![early, late],
+        }
+        .apply(&mut p)
+        .unwrap();
+        let (_, picture) = p.clip(late).unwrap();
+        let (_, sound) = p.clip(sound[0]).unwrap();
+        assert_eq!(picture.start, 24, "a second later than the early clip");
+        assert_eq!(sound.start, picture.start, "the sound moved with the picture");
+    }
+
+    #[test]
     fn aligning_needs_two_clips_with_timecode() {
         let mut p = Project::new("align");
         let v1 = p.tracks[0].id;
@@ -6126,6 +6251,80 @@ mod tests {
         assert_eq!(
             refused(&mut p, Command::AlignClips { clips: vec![a] }),
             EditError::Invalid("aligning needs two clips or more")
+        );
+    }
+
+    #[test]
+    fn an_effects_clip_is_placed_above_clips_and_is_transparent() {
+        let (mut p, _, _, _) = demo();
+        let timeline_before = p.timelines.len();
+        let Outcome::Clip(clip) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!()
+        };
+        // The clip is on its own track, above the video tracks.
+        let (track, c) = p.clip(clip).unwrap();
+        assert_eq!(c.name, "Effects Clip 1");
+        assert_eq!(c.start, 0);
+        assert!(c.duration > 0);
+        assert!(track.kind == TrackKind::Video);
+        let item = p.media(c.media).unwrap();
+        assert_eq!(item.source, MediaSource::EffectsClip);
+        // It does not add a timeline (unlike a compound clip).
+        assert_eq!(p.timelines.len(), timeline_before);
+        // It is listed as an effects clip, not a generator.
+        assert_eq!(crate::media_kind(&item.source), "Effects Clip");
+        // Saved and opened again, it is the same.
+        assert_eq!(Project::from_json(&p.to_json().unwrap()).unwrap(), p);
+    }
+
+    #[test]
+    fn an_effects_clip_goes_where_it_fits_for_all_its_frames() {
+        let (mut p, _, v2, _) = demo();
+        let media = p.media[0].id;
+        let fps = p.fps.nominal();
+        // A clip later on V2, inside the span the effects clip will take.
+        Command::AddClip {
+            track: v2,
+            media,
+            start: fps * 8,
+            duration: None,
+            with_sound: false,
+        }
+        .apply(&mut p)
+        .unwrap();
+        let Outcome::Clip(clip) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap() else {
+            panic!("an effects clip should still be made")
+        };
+        let (track, c) = p.clip(clip).unwrap();
+        assert_ne!(track.id, v2, "V2 is busy later on");
+        assert!(
+            track
+                .clips
+                .iter()
+                .all(|o| o.id == c.id || o.end() <= c.start || o.start >= c.end()),
+            "it overlaps nothing on its track"
+        );
+    }
+
+    #[test]
+    fn an_effects_clip_name_is_validated() {
+        let (mut p, _, _, _) = demo();
+        refused(
+            &mut p,
+            Command::CreateEffectsClip {
+                start: 0,
+                name: "".into(),
+            },
         );
     }
 }

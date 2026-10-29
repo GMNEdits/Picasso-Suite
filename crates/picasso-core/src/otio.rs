@@ -85,6 +85,7 @@ fn media_reference(project: &Project, clip: &Clip, rate: f64) -> Value {
             "name": media.name,
             "metadata": { "picasso": { "compound_timeline": timeline } },
         }),
+        MediaSource::EffectsClip => generator("EffectsClip", json!({})),
     }
 }
 
@@ -388,6 +389,7 @@ fn media_of(reference: &Value) -> OtioMedia {
                     .collect(),
                 ..crate::TitleText::default()
             })),
+            "effectsclip" => Some(MediaSource::EffectsClip),
             _ => None,
         };
         if let Some(source) = source {
@@ -688,6 +690,28 @@ mod tests {
             OtioMedia::File {
                 path: "C:/Media/a b.mov".into()
             }
+        );
+    }
+
+    #[test]
+    fn an_effects_clip_reads_back_as_one() {
+        let mut p = project();
+        let Outcome::Clip(_) = (Command::CreateEffectsClip {
+            start: 0,
+            name: "Effects Clip 1".into(),
+        })
+        .apply(&mut p)
+        .unwrap_or_else(|e| panic!("{e}"))
+        else {
+            panic!("expected a clip")
+        };
+        let read = read_otio(&to_otio(&p), p.fps).unwrap_or_else(|e| panic!("{e}"));
+        assert!(
+            read.tracks
+                .iter()
+                .flat_map(|t| &t.clips)
+                .any(|c| c.media == OtioMedia::Generated(MediaSource::EffectsClip)),
+            "an effects clip is written and read as one, not as missing media"
         );
     }
 

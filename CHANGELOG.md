@@ -5,6 +5,7 @@
 ### ✨ New
 - ✅ **Audio > Auto Align Clips > Based on Timecode:** select two or more clips and choose *Audio > Auto Align Clips > Based on Timecode*. The clips move so that the same source timecode falls on the same timeline frame: the clip with the earliest timecode stays where it is, and the others line up with it. A clip's first shown frame counts from the file's start timecode plus its source in, so slipped clips still line up. The start timecode is read from the video stream's metadata (the `tmcd` track of a QuickTime file) or the file's metadata, kept on the media item, and counted the way drop-frame files do at every tenth minute. Thanks to GANESH NIKAM for the pull request.
 - ✅ **Color page hue/sat/lum curves:** the six Hue vs Hue, Hue vs Sat, Hue vs Lum, Lum vs Sat, Sat vs Sat and Sat vs Lum curve buttons in the Curves panel now work. Drag on the graph to bend hue, saturation or luminance by how far the curve is from straight; the histogram behind it keys the same value, and the curves are saved per node.
+- ✅ **New Effects Clip:** a transparent clip whose color grade and effects apply to the composite of all tracks below it, like DaVinci Resolve's Effects Clip. Add one from the Timeline menu (`Alt+Shift+E`) or the Clip toolbar; it lands on a free video track above the clips at the playhead. Drag on its grade in the Color page or add effects in the Inspector to process everything underneath.
 
 ### 🛠️ Fixed
 - ✅ **Audio > Auto Align Clips > Based on Timecode, drop-frame:** the drop-frame rule counts two (or four at 60 fps) skipped frame numbers every minute but every tenth, the way broadcast files do, so aligning clips keeps their frames.
@@ -14,6 +15,7 @@
 - ✅ **Hue/sat/lum curves are about twice as fast:** they are sampled once for a picture instead of being worked out again for every pixel.
 - ✅ **Auto align by timecode, other frame rates:** a start timecode counted at the file's own frame rate (25 fps footage in a 24 fps project) is turned into the project's rate on import instead of being refused or read wrongly.
 - ✅ **Auto align by timecode, bad files:** a timecode with an absurd hour count is refused instead of overflowing.
+- ✅ **Auto align by timecode, linked sound:** a clip's linked sound moves with it, so lining pictures up by timecode no longer leaves their sound behind. A reversed clip lines up by the frame it shows first.
 
 ## 0.6.0
 

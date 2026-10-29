@@ -78,6 +78,7 @@ impl StudioApp {
             Some(MediaSource::Audio { .. }) => "Audio".into(),
             Some(MediaSource::Title(_)) => "Text".into(),
             Some(MediaSource::Compound { .. }) => "Compound Clip".into(),
+            Some(MediaSource::EffectsClip) => "Effects Clip".into(),
             Some(_) => "Generator".into(),
             None => String::new(),
         };

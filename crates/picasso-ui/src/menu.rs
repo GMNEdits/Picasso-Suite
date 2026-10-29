@@ -60,6 +60,7 @@ pub(crate) enum Act {
     SwitchTimeline,
     DeleteTimeline,
     CreateCompound,
+    CreateEffectsClip,
     DecomposeCompound,
     AddCrossDissolve,
     AddDipToBlack,
@@ -425,6 +426,11 @@ const TIMELINE: &[Entry] = &[
         &["Alt+G"],
         Act::CreateCompound,
     ),
+    item(
+        "New Effects Clip...",
+        &["Alt+Shift+E"],
+        Act::CreateEffectsClip,
+    ),
     sub(
         "Decompose in Place",
         &[
@@ -531,7 +537,7 @@ const CLIP: &[Entry] = &[
     SEP,
     item("Normalize Audio Levels...", &[], Act::NormalizeAudio),
     item("Render in Place", &[], Act::RenderInPlace),
-    planned("New Effects Clip", ""),
+    item("New Effects Clip", &["Alt+Shift+E"], Act::CreateEffectsClip),
     item("New Compound Clip", &[], Act::CreateCompound),
     item("Clip Attributes...", &[], Act::ClipAttributes),
 ];
@@ -1533,3 +1539,4 @@ mod tests {
             .any(|r| r.label == "Media Management..." && r.act.is_none()));
     }
 }
+
