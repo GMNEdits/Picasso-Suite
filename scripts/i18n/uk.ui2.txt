@@ -1,0 +1,180 @@
+Clips|Кліпи
+60 frames per second|60 к/с
+Add Job|Дод.
+Add to Render Queue|До черги
+Advanced Settings|Розшир.
+Archive Project|Архів проєкту
+Archive Project...|Архів проєкту...
+Auto|Авто
+Automatic|Авто
+Balanced|Баланс
+Bins|Біни
+Browse|Огляд
+Bus Sends|Відпр. bus
+Capture|Запис
+Chapters from Markers|Розділи з міток
+Choose a folder|Вибрати теку
+Clip Name|Ім'я кліпа
+Clone|Клон
+Clone Tool|Клон
+Codec|Кодек
+Col Boost|Буст кол.
+Collections|Колекції
+Contrast|Контраст
+Control Room|Апаратна
+Create an Album|Створити альбом
+Curves - Custom|Криві - Свої
+Custom Export|Експ. власний
+Decode Options|Декодування
+Demo Project|Демопроєкт
+Drag photos into the Photo Album to start editing|Перетягніть фото в альбом, щоб почати
+Drawn with|Малює
+Editing|Монтаж
+Effects In|Ефекти вкл
+Embedded Audio|Вбуд. звук
+Encoder|Кодер
+Encoding Profile|Профіль кодув.
+Entire Timeline|Весь таймлайн
+Estimated File Size|Оцінка розміру
+Every|Кожні
+Export Video|Експорт відео
+Fairlight|Fairlight
+File Name|Ім'я файлу
+Format|Формат
+Frame rate|Кадр/с
+Frame reordering|Порядок кадрів
+Full Frames|Повні кадри
+Full Screen|Весь екран
+Fusion|Fusion
+Gain|Гейн
+Gamma|Гама
+Generator|Генератор
+Graphics card|Відеокарта
+Groups|Групи
+Hi/Light|Світла
+High|Вис.
+Hue|Тон
+Image|Образ
+Index|Індекс
+Individual clips|Окремі кліпи
+Input|Вхід
+Integrated|Загальна
+Key Frames|Ключ. кадри
+Keywords|Теги
+L. Mix|Мікс
+Layer|Шар
+Local|Лок.
+Location|Місце
+Loop playback|Відтв. у циклі
+Loudness|Гучність
+Low|Низ
+Mark|Мітка
+Media Management|Керування медіа
+Media Source|Джерело
+Media Storage|Сховище медіа
+Meters|Вимір.
+Mid/Detail|Сер./Дет.
+Modifiers|Модиф.
+Monitor|Монітор
+Monitor volume|Гучн. монітора
+Native|Нат.
+Network Optimization|Опт. мережі
+No jobs in Queue|Немає завдань
+No jobs in queue|Немає завдань
+No stills created|Немає стоп-кадрів
+Not reported|Не вказано
+Nothing to inspect|Нічого дивитись
+Offset|Зсув
+Open|Відкр.
+Order|Поряд.
+Parade|Parade
+Pause|Пауза
+Photo|Фото
+Photo Album|Фотоальбом
+Playback|Відтв.
+Position lock|Блок. позиції
+Preset|Пресет
+Primaries - Color Wheels|Первинна - Кольорові кола
+Process Mode|Режим обробки
+Project settings|Налашт. проєкту
+Projects|Проєкти
+Quality|Якість
+Quick Export|Експ. швидко
+Range|Діап.
+Rate Control|Бітрейт
+Relink Missing Media|Перепідключити медіа
+Relink Missing Media...|Перепідключити медіа...
+Remove|Приб.
+Render|Рендер
+Render All|Рендер усіх
+Render Queue|Черга рендера
+Render Settings|Налашт. рендера
+Render Settings - Custom Export|Рендер - Власний експорт
+Reset|Скид.
+Reset All|Скид.
+Resolution|Розділ.
+Search|Пошук
+Settings|Налашт.
+Shad|Тіні
+Short|Кор.
+Short Max|Кор. макс.
+Single clip|Один кліп
+Smart Bins|Розум. біни
+Source Color Space|Вих. колір. простір
+Source Gamma Space|Вих. гама-простір
+Subtitle Settings|Налашт. субтитрів
+System|Система
+System Preferences|Налаштування
+Timeline Resolution|Роздільн. таймлайна
+Timeline proxy|Проксі
+Tint|Тон
+Tools|Інс.
+Track FX|FX дор.
+Transitions|Переходи
+Untitled|Без назв.
+Use vertical resolution|Верт. роздільність
+Version 0.6.1|Версія 0.6.1
+Video|Відео
+Waveform|Хвиля
+Workspace|Область
+No clips in media pool|Немає кліпів
+Add clips with Import, or drop files here|Імпортуйте кліпи або перетягніть сюди
+Add clips from Media Storage to get started|Додайте кліпи зі сховища медіа
+No sound to show|Немає звуку
+No clip to grade|Немає кліпа
+No Input|Нема вх.
+DURATION|ТРИВАЛ.
+Export Audio|Експорт звуку
+Data Rate|Бітрейт
+Output Track 1|Вих. доріжка 1
+Use unique filename|Унікальне ім'я
+Adds (1), (2) ... to the name instead of writing over a file.|Додає (1), (2)... замість перезапису.
+File type|Тип
+Whole timeline|Весь таймлайн
+In to out marks|Мітки In-Out
+Pixel aspect ratio|Пропорції пікселя
+Square|Квадрат
+Cinemascope|Cinemascope
+Data Levels|Рівні даних
+Retain sub-black and super-white data|Зберегти суб-чорне й супер-біле
+Color Space Tag|Тег кол. простору
+Gamma Tag|Тег гами
+Data burn-in|Дані
+Same as project|Як проєкт
+Bypass re-encode when possible|Не перекодовувати, якщо можна
+Use optimized media|Оптиміз. медіа
+Use proxy media|Проксі-медіа
+Use render cached images|Кеш рендера
+Force sizing to highest quality|Масштаб у макс. якості
+Force debayer to highest quality|Дебаєр у макс. якості
+Render All Video Tracks|Рендер усіх відеодоріжок
+Enable Flat Pass|Увімк. Flat Pass
+visionOS Bypass|Обхід visionOS
+Disable sizing and blanking output|Вимк. масштаб/обрізання
+Trigger script at|Скрипт при
+Start|Старт
+of render job|завдання
+Export Subtitle|Експ. субтитрів
+As a separate file|Окремий файл
+Export As|Експорт як
+frames|кадрів

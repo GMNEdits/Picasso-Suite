@@ -1,0 +1,40 @@
+No clips in media pool|Aucun clip
+Add clips with Import, or drop files here|Ajoutez des clips via Importer ou glissez-les
+Add clips from Media Storage to get started|Ajoutez des clips depuis Stockage
+No sound to show|Aucun son
+No clip to grade|Aucun clip actif
+No Input|Sans ent.
+DURATION|DURÉE
+Export Audio|Export audio
+Data Rate|Débit
+Output Track 1|Piste de sortie 1
+Use unique filename|Nom unique
+Adds (1), (2) ... to the name instead of writing over a file.|Ajoute (1), (2)... au nom au lieu d'écraser un fichier.
+File type|Type
+Whole timeline|Tout le montage
+In to out marks|Repères E/S
+Pixel aspect ratio|Rapport de pixel
+Square|Carré
+Cinemascope|Cinemascope
+Data Levels|Niv. données
+Retain sub-black and super-white data|Garder données sous-noir et sur-blanc
+Color Space Tag|Balise couleur
+Gamma Tag|Balise gamma
+Data burn-in|Incrustation
+Same as project|Comme le projet
+Bypass re-encode when possible|Éviter le réencodage
+Use optimized media|Médias optimisés
+Use proxy media|Médias proxy
+Use render cached images|Utiliser images en cache
+Force sizing to highest quality|Forcer redim. qualité max.
+Force debayer to highest quality|Forcer débayer qualité max.
+Render All Video Tracks|Rendre toutes pistes vidéo
+Enable Flat Pass|Activer Flat Pass
+visionOS Bypass|Bypass visionOS
+Disable sizing and blanking output|Désactiver redim. et masquage
+Trigger script at|Lancer script au
+of render job|du rendu
+Export Subtitle|Exp. sous-titre
+As a separate file|Fichier séparé
+Export As|Export en
+frames|images

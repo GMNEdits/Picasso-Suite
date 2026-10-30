@@ -8,11 +8,11 @@ Archive Project|Archiver le projet
 Archive Project...|Archiver le projet...
 Audio scrubbing (sound while the playhead is dragged)|Scrubbing audio (son pendant le glissement)
 Auto|Auto
-Automatic|Automatique
+Automatic|Auto.
 Balanced|Équilibré
 Best|Top
 Bins|Bacs
-Browse|Parcourir
+Browse|Buscar
 Bus Sends|Envois bus
 Capture|Capture
 Changing the frame rate keeps every clip on the same frames.|Changer la cadence garde chaque clip sur les mêmes images.
@@ -36,7 +36,7 @@ Decode supported video using hardware acceleration|Décoder la vidéo avec l'acc
 Demo Project|Projet démo
 Drag photos into the Photo Album to start editing|Glissez des photos dans l'album pour commencer
 Drawn with|Dessiné avec
-Editing|Montage
+Editing|Edit.
 Effects In|Effets ent.
 Embedded Audio|Audio intégré
 Encoder|Encodeur
@@ -73,13 +73,13 @@ Input|Entrée
 Integrated|Intégré
 Key Frames|Keyframes
 Keywords|Mots-clés
-L. Mix|Mixage
-Layer|Calque
+L. Mix|Mix
+Layer|Cal.
 Linked selection (picture and sound together)|Sélection liée (image et son)
 Loaded the demo project|Projet démo chargé
 Local|Local
 Location|Lieu
-Loop playback|Lecture en boucle
+Loop playback|Lecture boucle
 Loudness|Sonie
 Low|Bas
 Mark|Rep.
@@ -107,10 +107,10 @@ Photo|Photo
 Photo Album|Album photo
 Pivot|Pivot
 Playback|Lecture
-Position lock|Verrou position
+Position lock|Verrou pos.
 Preset|Préréc.
 Primaries - Color Wheels|Primaires - Roues
-Process Mode|Mode traitement
+Process Mode|Mode traitem.
 Project settings|Réglages projet
 Projects|Projets
 Quality|Qualité
@@ -126,9 +126,9 @@ Render Queue|File de rendu
 Render Settings|Réglages rendu
 Render Settings - Custom Export|Rendu - Export perso.
 Reset|Réinit.
-Reset All|Tout réinit.
+Reset All|Tt réinit.
 Resolution|Résolution
-Search|Chercher
+Search|Cherch.
 Selection follows the playhead|Sélection suit la tête
 Settings|Réglages
 Shad|Omb.
@@ -139,15 +139,15 @@ Smart Bins|Bacs smart
 Snap to clips, markers and the playhead|Aimant clips et repères
 Source Color Space|Espace coul. source
 Source Gamma Space|Espace gamma source
-Subtitle Settings|Réglages sous-titres
+Subtitle Settings|Régl. sous-titres
 System|Système
 System Preferences|Préférences
-Tape|Bande
+Tape|Band.
 Timeline Resolution|Résolution montage
-Timeline proxy|Proxy du montage
+Timeline proxy|Proxy montage
 Tint|Ton
 Tools|Outils
-Track FX|FX de piste
+Track FX|FX piste
 Transitions|Transitions
 Trim|Ajust.
 Untitled|Sans titre
@@ -155,5 +155,5 @@ Use vertical resolution|Utiliser résol. verticale
 Version 0.6.1|Version 0.6.1
 Video|Vidéo
 View|Vue
-Waveform|Forme d'onde
+Waveform|Onde
 Workspace|Espace

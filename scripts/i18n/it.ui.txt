@@ -13,7 +13,7 @@ Balanced|Bilanciato
 Best|Top
 Bins|Bin
 Browse|Sfoglia
-Bus Sends|Mandate bus
+Bus Sends|Mand. bus
 Capture|Cattura
 Changing the frame rate keeps every clip on the same frames.|Cambiare i fps tiene ogni clip sugli stessi fotogrammi.
 Chapters from Markers|Capitoli dai marcatori
@@ -35,7 +35,7 @@ Decode Options|Decodifica
 Decode supported video using hardware acceleration|Decodifica video con accelerazione hardware
 Demo Project|Progetto demo
 Drag photos into the Photo Album to start editing|Trascina foto nell'album per iniziare
-Drawn with|Disegnato con
+Drawn with|Disegn. con
 Editing|Edit
 Effects In|Effetti in
 Embedded Audio|Audio incorp.
@@ -54,7 +54,7 @@ Frame rate|Fotogr./s
 Frame reordering|Riordino fotogr.
 Free software under the GPL, version 3 or later.|Software libero sotto GPL, versione 3 o successiva.
 Full Frames|Completi
-Full Screen|A schermo int.
+Full Screen|Schermo int.
 Fusion|Fusion
 Gain|Gain
 Gamma|Gamma
@@ -97,7 +97,7 @@ No jobs in Queue|Coda vuota
 No jobs in queue|Coda vuota
 No stills created|Nessun fermo
 Not reported|Non indicato
-Nothing to inspect|Niente da ispezionare
+Nothing to inspect|Niente da vedere
 Offset|Scarto
 Open|Apri
 Order|Ordine
@@ -121,17 +121,17 @@ Relink Missing Media|Ricollega media
 Relink Missing Media...|Ricollega media...
 Remove|Rimuovi
 Render|Render
-Render All|Render tutto
+Render All|Render tutti
 Render Queue|Coda di render
 Render Settings|Impost. render
 Render Settings - Custom Export|Render - Export person.
 Reset|Reset
-Reset All|Reset tutto
+Reset All|Reset tutti
 Resolution|Risoluzione
 Search|Cerca
 Selection follows the playhead|Selez. segue la testina
 Settings|Impostaz.
-Shad|Ombre
+Shad|Omb.
 Short|Corto
 Short Max|Corto max.
 Single clip|Un clip
@@ -142,11 +142,11 @@ Source Gamma Space|Spazio gamma orig.
 Subtitle Settings|Impost. sottotitoli
 System|Sistema
 System Preferences|Preferenze
-Tape|Nastro
+Tape|Nast.
 Timeline Resolution|Risoluz. timeline
 Timeline proxy|Proxy timeline
-Tint|Tinta
-Tools|Strum.
+Tint|Tin.
+Tools|Str.
 Track FX|FX traccia
 Transitions|Transizioni
 Trim|Trim
@@ -155,5 +155,5 @@ Use vertical resolution|Usa risoluz. verticale
 Version 0.6.1|Versione 0.6.1
 Video|Video
 View|Vista
-Waveform|Forma d'onda
+Waveform|Onda
 Workspace|Spazio

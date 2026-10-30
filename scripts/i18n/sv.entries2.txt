@@ -1,0 +1,289 @@
+New Project Library...|Nytt projektbibliotek...
+Open Project Library...|Öppna projektbibliotek...
+Show Current Project Library in File Explorer|Visa bibliotek i Utforskaren
+Project Manager|Projekthanterare
+New Project|Nytt projekt
+Open Project...|Öppna projekt...
+Import Project...|Importera projekt...
+Export Project...|Exportera projekt...
+Restore Project Archive...|Återställ projektarkiv...
+Save Project|Spara projekt
+Save Project As...|Spara projekt som...
+Save Copy As...|Spara kopia som...
+Revert to Last Saved Version|Återgå till senast sparade
+Import|Importera
+Media...|Media...
+Folder as Bin...|Mapp som bin...
+Timeline: AAF, EDL, XML...|Tidslinje: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Tidslinje: förkonf. EDL...
+Subtitle...|Undertext...
+Metadata to Media Pool...|Metadata till mediapool...
+Bin...|Bin...
+Export|Exportera
+Timeline: EDL...|Tidslinje: EDL...
+Timeline: OpenTimelineIO...|Tidslinje: OpenTimelineIO...
+Timeline: XML...|Tidslinje: XML...
+Timeline: AAF...|Tidslinje: AAF...
+Metadata from Media Pool...|Metadata från mediapool...
+Media Management...|Mediahantering...
+Project Settings...|Projektinställningar...
+System Preferences...|Systeminställningar...
+Quick Export...|Snabbexport...
+Quit|Avsluta
+Undo|Ångra
+Redo|Gör om
+Cut|Klipp ut
+Copy|Kopiera
+Paste|Klistra in
+Paste Insert|Klistra och infoga
+Paste Mix to Current Track|Klistra in mix på spår
+Duplicate|Duplicera
+Fit to Fill|Fyll luckan
+Place on Top|Placera överst
+Delete Selected|Ta bort markering
+Delete Selected with Ripple|Ta bort markering (ripple)
+Select All|Markera allt
+Deselect All|Avmarkera allt
+Select Clips Forward|Markera följande klipp
+Find...|Sök...
+Recent Projects|Senaste projekt
+Project Manager...|Projekthanterare...
+Keyboard Customization|Anpassa kortkommandon
+Select Nearest Edit Point|Markera närmaste klipp
+Selection Mode|Markeringsläge
+Trim Mode|Trimläge
+Dynamic Trim Mode|Dynamiskt trimläge
+Ripple Start|Ripple start
+Ripple End|Ripple slut
+Ripple Trim Previous / Next|Ripple föreg. / nästa
+Ripple Trim Previous Edit to Playhead|Ripple föreg. klipp till huvud
+Ripple Trim Next Edit to Playhead|Ripple nästa klipp till huvud
+Trim Start to Playhead|Trimma start till huvud
+Trim End to Playhead|Trimma slut till huvud
+Extend Edit|Förläng klipp
+Slip Clip|Slip-klipp
+Slip One Frame Earlier|Slip 1 ruta tidigare
+Slip One Frame Later|Slip 1 ruta senare
+Slide Clip|Slide-klipp
+Slide One Frame Left|Slide 1 ruta vänster
+Slide One Frame Right|Slide 1 ruta höger
+Loop Trim|Trimma i loop
+Asymmetric Trimming|Asymmetrisk trimning
+Trim Editor|Trimredigerare
+New Timeline...|Ny tidslinje...
+New Timeline Using Selected Clips|Ny tidslinje från markering
+Create New Compound Clip...|Skapa sammansatt klipp...
+New Effects Clip...|Nytt effektklipp...
+Decompose in Place|Dela upp på plats
+Decompose Compound Clip|Dela upp sammansatt klipp
+Decompose Nested Timeline|Dela upp nästlad tidslinje
+Split Clip|Dela klipp
+Create Timeline Using Bin...|Skapa tidslinje från bin...
+Import Timeline...|Importera tidslinje...
+Export Timeline...|Exportera tidslinje...
+Timeline Resolution and Frame Rate...|Upplösning och fps...
+Timeline Settings|Tidslinjeinställningar
+Snap|Magnet
+Linked Selection|Länkad markering
+Position Lock|Positionslås
+Selection Follows Playhead|Markering följer huvudet
+Add Marker|Lägg till markör
+Add Marker and Show Dialog|Lägg till markör och dialog
+Delete All Markers|Ta bort alla markörer
+Create Subtitle Track|Skapa undertextspår
+Create Subtitle Region|Skapa undertextområde
+Add Transition to All Edits|Övergång på alla klipp
+Switch Timeline|Byt tidslinje
+Open Timeline in New Window|Öppna tidslinje i nytt fönster
+Delete Timeline|Ta bort tidslinje
+Enable Clip|Aktivera klipp
+Match Frame|Matcha bildruta
+Lock Clip|Lås klipp
+New Multicam Clip...|Nytt multicamklipp...
+Multicam Viewer|Multicam-visare
+Add to Media Pool as Stills|Lägg till som stillbilder
+Change Clip Speed...|Ändra klipphastighet...
+Change Clip Duration...|Ändra klipplängd...
+Retime Controls|Retime-kontroller
+Retime Clip|Retime-klipp
+Freeze Frame|Frys bildruta
+Speed Ramp...|Hastighetsramp...
+Reverse Clip|Vänd klipp
+Create New Compound Clip|Skapa sammansatt klipp
+Link Clips|Länka klipp
+Unlink Audio and Video|Koppla bort ljud och bild
+Enable / Disable Audio Scrubbing|Ljudscrubbing på/av
+Auto Align Clips|Justera klipp auto
+Based on Timecode|Efter timecode
+Based on Waveform|Efter vågform
+Normalize Audio Levels...|Normalisera ljudnivåer...
+Render in Place|Rendera på plats
+New Effects Clip|Nytt effektklipp
+New Compound Clip|Nytt sammansatt klipp
+Clip Attributes...|Klippegenskaper...
+Mark In|Markera In
+Mark Out|Markera Ut
+Mark Clip|Markera klipp
+Mark Timeline In/Out|In/Ut för tidslinje
+Clear In|Rensa In
+Clear Out|Rensa Ut
+Clear In and Out|Rensa In och Ut
+Modify Marker...|Ändra markör...
+Delete Marker at Current Position|Ta bort markör här
+Delete All Markers in Timeline|Ta bort markörer i tidslinjen
+Go to Previous Marker|Till föregående markör
+Go to Next Marker|Till nästa markör
+Set Clip Color|Klippfärg
+Default|Standard
+Orange|Orange
+Apricot|Aprikos
+Yellow|Gul
+Lime|Lime
+Olive|Oliv
+Green|Grön
+Teal|Blågrön
+Navy|Marinblå
+Blue|Blå
+Purple|Lila
+Violet|Violett
+Pink|Rosa
+Tan|Sandbrun
+Beige|Beige
+Brown|Brun
+Chocolate|Choklad
+Show Current Frame on Playback|Aktuell bild vid uppspelning
+Safe Area Overlay|Säkert område-lager
+Show Grid / Guides|Rutnät / hjälplinjer
+Show Toolbar|Visa verktygsfält
+Show Full Screen Viewer|Helskärmsvisare
+Show Cinema Viewer|Visa biovisare
+Viewer Overlays|Visarlager
+Transform / Crop / Dynamic Zoom|Transf. / Beskär / Zoom
+Safe Area|Säkert område
+Center Crosshair|Mittkors
+Checkerboard Background (Alpha)|Rutigt bakgr. (alfa)
+Show All Overlays|Visa alla lager
+Timecode Window|Timecode-fönster
+Show Scopes|Visa scopes
+Show Audio Meters|Visa ljudmätare
+Show Audio Mixer|Visa ljudmixer
+Show Inspector|Visa inspektör
+Play Forward|Spela framåt
+Play Reverse|Spela bakåt
+Stop|Stopp
+Play Around Current Frame|Spela runt aktuell bild
+Play In to Out|Spela In till Ut
+Play Around In / Around Out|Spela runt In / Ut
+Loop Playback|Loopa uppspelning
+Go to First Frame|Till första bilden
+Go to Last Frame|Till sista bilden
+Go to In|Till In
+Go to Out|Till Ut
+Previous Frame|Föregående bild
+Next Frame|Nästa bild
+Previous Edit Point|Föregående klipp
+Next Edit Point|Nästa klipp
+Timeline Playback Resolution|Uppspelningsupplösning
+Half|Hälften
+Quarter|Fjärdedel
+Effects Memory Cache|Effektcache
+Timeline Proxy Mode|Proxyläge
+Off|Av
+Eighth|Åttondel
+Hardware Decoding|Hårdvaruavkodning
+Delete Render Cache|Rensa rendercache
+Video Transitions|Videoövergångar
+Cross Dissolve|Toning
+Dip to Color|Dip till färg
+Audio Transitions|Ljudövergångar
+Cross Fade|Korstoning
+Remove Transition|Ta bort övergång
+OpenFX|OpenFX
+Blur|Oskärpa
+Gaussian Blur|Gaussisk oskärpa
+Sharpen|Skärpa
+Color|Färg
+Invert Colors|Invertera färger
+Black and White|Svartvit
+Distort|Förvräng
+Mosaic|Mosaik
+Audio FX|Ljudeffekter
+EQ|EQ
+Dynamics|Dynamik
+Picasso FX|Picasso FX
+Sepia|Sepia
+Soft Blur|Mjuk oskärpa
+Light|Ljus
+Glow|Glöd
+Stylize|Stilisera
+Vignette|Vinjett
+Film Grain|Filmkorn
+Compositing Effects|Kompositeffekter
+Nodes|Noder
+Generators|Generatorer
+Solid Color|Enfärgad
+Color Bars|Färgstaplar
+Gradient|Gradient
+Titles|Titlar
+Text|Text
+Text+|Text+
+Effects Library Search|Sök effekter
+Add Tool (Compositing)|Lägg till verktyg
+Reset All Grades and Nodes|Återställ alla gradueringar
+Reset Current Node Grade|Återställ aktuell nod
+Enable/Disable Current Node|Aktuell nod på/av
+Grab Still|Ta stillbild
+Play Still|Spela stillbild
+Add Serial Node|Seriell nod
+Add Serial Before|Seriell före
+Add Parallel Node|Parallell nod
+Add Layer Mixer|Lagermixer
+Add Splitter / Combiner|Delare / kombinerare
+Add Outside Node|Yttre nod
+Label Node|Namnge nod
+Timeline|Tidslinje
+Previous Node Graph|Föregående nodgraf
+Next Node Graph|Nästa nodgraf
+LUT|LUT
+Apply LUT from list|Använd LUT från lista
+Gallery|Galleri
+Scopes On/Off|Scopes på/av
+Highlight|Högdagrar
+Lightbox|Ljusbord
+ADR|ADR
+Automated Dialogue Replacement|Automatisk dialogersättning
+Bounce Mix to Track|Bounce mix till spår
+Bounce Selected Tracks|Bounce valda spår
+Cache Audio Effects|Ljudeffektcache
+Audio Link|Ljudlänk
+Link Group|Länkgrupp
+Decompose|Dela upp
+Loop Jog|Jog i loop
+Show Audio Timeline / Mixer|Ljudtidslinje / mixer
+Full Screen Viewer|Helskärmsvisare
+Show Panel in Workspace|Visa panel
+Media Pool|Mediapool
+Effects Library|Effektbibliotek
+Inspector|Inspektör
+Mixer|Mixer
+Metadata|Metadata
+Edit Index|Redigeringsindex
+Sound Library|Ljudbibliotek
+Layout|Layout
+Reset UI Layout|Återställ layout
+Save Layout|Spara layout
+Load Layout|Ladda layout
+Switch to Page|Gå till sida
+Media|Media
+Edit|Redigera
+Effects|Effekter
+Audio|Ljud
+Deliver|Leverans
+Dual Screen On/Off|Dubbel skärm på/av
+Video Clean Feed|Ren videosignal
+Picasso Suite Manual|Picasso Suite-manual
+Picasso Suite Tutorials|Picasso Suite-guider
+Check for Updates...|Sök efter uppdateringar...
+Export Log File...|Exportera loggfil...
+About Picasso Suite|Om Picasso Suite
+Language|Språk

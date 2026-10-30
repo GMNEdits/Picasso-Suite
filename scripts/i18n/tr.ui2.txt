@@ -1,0 +1,186 @@
+Clips|Klip
+60 frames per second|60 kare/sn
+Add Job|Ekle
+Add to Render Queue|Kuyruğa ekle
+Advanced Settings|Gelişmiş
+Archive Project|Projeyi arşivle
+Archive Project...|Projeyi arşivle...
+Auto|Oto
+Automatic|Otomatik
+Balanced|Dengeli
+Best|En iyi
+Bins|Bin
+Browse|Gözat
+Bus Sends|Bus gönd.
+Capture|Yakalama
+Chapters from Markers|İşaretlerden bölüm
+Choose a folder|Klasör seç
+Clip Name|Klip adı
+Clone|Klonla
+Clone Tool|Klonla
+Codec|Kodek
+Col Boost|Renk artışı
+Collections|Koleksiyon
+Contrast|Kontrast
+Control Room|Kontrol odası
+Create an Album|Albüm oluştur
+Curves - Custom|Eğriler - Özel
+Custom Export|Özel aktarım
+Decode Options|Çözme
+Demo Project|Demo proje
+Drag photos into the Photo Album to start editing|Başlamak için fotoğrafları albüme sürükleyin
+Drawn with|Çizen
+Editing|Düzen
+Effects In|Efekt girişi
+Embedded Audio|Gömülü ses
+Encoder|Kodlayıcı
+Encoding Profile|Kodlama profili
+Entire Timeline|Tüm çizelge
+Estimated File Size|Tahmini boyut
+Every|Her
+Export Video|Video aktar
+Fairlight|Fairlight
+File Name|Dosya adı
+Filters|Filtre
+Format|Biçim
+Frame rate|Kare hızı
+Frame reordering|Kare yeniden sıra
+Full Frames|Tam kareler
+Full Screen|Tam ekran
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Üreteç
+Graphics card|Ekran kartı
+Groups|Gruplar
+Hi/Light|Parlak
+High|Yük.
+Hue|Ton
+Image|Görsel
+Index|Dizin
+Individual clips|Tek klipler
+Input|Giriş
+Integrated|Entegre
+Key Frames|Anahtar kare
+Keywords|Anahtar
+L. Mix|L. Mix
+Layer|Kat.
+Local|Yerel
+Location|Konum
+Loop playback|Döngüde oynat
+Loudness|Yüksek ses
+Low|Düş.
+Mark|İşaret
+Media Management|Medya yönetimi
+Media Source|Kaynak
+Media Storage|Medya depolama
+Meters|Ölçerler
+Mid/Detail|Orta/Ayrıntı
+Modifiers|Değiştir.
+Monitor|Monitör
+Monitor volume|Monitör ses
+Native|Yerel
+Network Optimization|Ağ iyileştirme
+No jobs in Queue|Görev yok
+No jobs in queue|Görev yok
+No stills created|Duran kare yok
+Not reported|Bildirilmedi
+Nothing to inspect|İncelenecek yok
+Offset|Offset
+Open|Aç
+Order|Sıra
+Parade|Parade
+Pause|Dur
+Photo|Foto
+Photo Album|Foto albümü
+Pivot|Pivot
+Playback|Oynatma
+Position lock|Konum kilidi
+Preset|Hazır
+Primaries - Color Wheels|Birincil - Renk çarkları
+Process Mode|İşlem modu
+Project settings|Proje ayarı
+Projects|Projeler
+Quality|Kalite
+Quick Export|Hızlı dışa aktar
+Range|Aralık
+Rate Control|Bit hızı
+Relink Missing Media|Medyayı yeniden bağla
+Relink Missing Media...|Medyayı yeniden bağla...
+Remove|Kaldır
+Render|Render
+Render All|Tümü
+Render Queue|Render kuyruğu
+Render Settings|Render ayarı
+Render Settings - Custom Export|Render - Özel dışa aktarım
+Reset|Sıfırla
+Reset All|Tümü
+Resolution|Çözünürlük
+Search|Ara
+Settings|Ayarlar
+Shad|Gölge
+Short|Kısa
+Short Max|Kısa maks.
+Single clip|Tek klip
+Smart Bins|Akıllı binler
+Source Color Space|Kaynak renk uzayı
+Source Gamma Space|Kaynak gama uzayı
+Subtitle Settings|Altyazı ayarı
+System|Sistem
+System Preferences|Tercihler
+Tape|Teyp
+Timeline Resolution|Çizelge çözünürlüğü
+Timeline proxy|Çizelge proxy
+Tint|Ton
+Tools|Araç
+Track FX|Parça FX
+Transitions|Geçişler
+Trim|Kırp
+Untitled|Adsız
+Use vertical resolution|Dikey çözünürlük
+Version 0.6.1|Sürüm 0.6.1
+Video|Video
+View|Gör.
+Waveform|Dalga
+Workspace|Alan
+No clips in media pool|Klip yok
+Add clips with Import, or drop files here|İçe aktar veya buraya sürükle
+Add clips from Media Storage to get started|Medya depolamadan klip ekle
+No sound to show|Ses yok
+No clip to grade|Klip yok
+No Input|Giriş yok
+DURATION|SÜRE
+Export Audio|Ses dışa aktar
+Data Rate|Veri hızı
+Output Track 1|Çıkış parçası 1
+Use unique filename|Benzersiz ad
+Adds (1), (2) ... to the name instead of writing over a file.|Üzerine yazmak yerine (1), (2)... ekler.
+File type|Tür
+Whole timeline|Tüm çizelge
+In to out marks|Giriş-çıkış işareti
+Pixel aspect ratio|Piksel oranı
+Square|Kare
+Cinemascope|Cinemascope
+Data Levels|Veri düzeyi
+Retain sub-black and super-white data|Alt-siyah ve üst-beyazı koru
+Color Space Tag|Renk uzayı etiketi
+Gamma Tag|Gama etiketi
+Data burn-in|Veri yazısı
+Same as project|Proje gibi
+Bypass re-encode when possible|Mümkünse yeniden kodlama
+Use optimized media|Optimize medya
+Use proxy media|Proxy medya
+Use render cached images|Render önbelleği
+Force sizing to highest quality|En yüksek kalitede ölçekle
+Force debayer to highest quality|En yüksek kalitede debayer
+Render All Video Tracks|Video parçalarını render et
+Enable Flat Pass|Flat Pass aç
+visionOS Bypass|visionOS bypass
+Disable sizing and blanking output|Ölçek/kırpmayı kapat
+Trigger script at|Betik çalıştır
+Start|Başla
+of render job|render işinde
+Export Subtitle|Altyazı dışa aktar
+As a separate file|Ayrı dosya
+Export As|Şu olarak
+frames|kare

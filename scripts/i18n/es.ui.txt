@@ -9,10 +9,10 @@ Archive Project...|Archivar proyecto...
 Audio scrubbing (sound while the playhead is dragged)|Scrubbing de audio (sonido al arrastrar el cabezal)
 Auto|Auto
 Automatic|Automático
-Balanced|Equilibrado
-Best|Mejor
+Balanced|Equil.
+Best|Top
 Bins|Bins
-Browse|Examinar
+Browse|Buscar
 Bus Sends|Envíos a bus
 Capture|Captura
 Changing the frame rate keeps every clip on the same frames.|Cambiar los fps mantiene cada clip en los mismos fotogramas.
@@ -38,10 +38,10 @@ Demo Project|Proyecto demo
 Drag photos into the Photo Album to start editing|Arrastra fotos al álbum para empezar
 Drawn with|Dibujado con
 Editing|Edición
-Effects In|Efectos ent.
+Effects In|Efect. ent.
 Embedded Audio|Audio incrustado
 Encoder|Codific.
-Encoding Profile|Perfil de codificación
+Encoding Profile|Perfil codific.
 Entire Timeline|Cronología entera
 Estimated File Size|Tamaño estimado
 Every|Cada
@@ -51,8 +51,8 @@ Fairlight|Fairlight
 File Name|Nombre
 Filters|Filtros
 Format|Formato
-Frame rate|Fotogramas/s
-Frame reordering|Reordenar fotogramas
+Frame rate|Fps
+Frame reordering|Reorden. fotog.
 Free software under the GPL, version 3 or later.|Software libre bajo la GPL, versión 3 o posterior.
 Full Frames|Completos
 Full Screen|Pant. compl.
@@ -63,7 +63,6 @@ Generator|Generador
 Graphics card|Tarjeta gráfica
 Groups|Grupos
 H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 y VC-1 se decodifican en la tarjeta gráfica si su controlador puede. Desactívalo si los clips salen verdes o rotos. PICASSO_NO_HWACCEL=1 lo desactiva una vez.
-Help|Ayuda
 Hi/Light|Luces
 High|Alto
 Hue|Tono
@@ -89,21 +88,20 @@ Low|Bajo
 Mark|Marca
 Master|Master
 Media Management|Gestión de medios
-Media Source|Origen de medios
+Media Source|Origen
 Media Storage|Almacenamiento
 Meters|Medid.
 Mid/Detail|Med/Detalle
 Modifiers|Modific.
 Monitor|Monitor
-Monitor volume|Volumen del monitor
+Monitor volume|Vol. monitor
 Native|Nativo
 Network Optimization|Optimización de red
 No jobs in Queue|Sin tareas en la cola
 No jobs in queue|Sin tareas en la cola
 No stills created|Sin fotos fijas
 Not reported|No indicado
-Nothing to inspect|Nada que inspeccionar
-Offset|Desfase
+Nothing to inspect|Sin selección
 Open|Abrir
 Order|Orden
 Pan|Pan
@@ -116,13 +114,13 @@ Playback|Reprod.
 Position lock|Bloq. posición
 Preset|Preaj.
 Primaries - Color Wheels|Primarios - Ruedas de color
-Process Mode|Modo de proceso
-Project settings|Ajustes del proyecto
+Process Mode|Modo proceso
+Project settings|Ajustes proyecto
 Projects|Proyectos
 Quality|Calidad
 Quick Export|Export. rápida
 Range|Rango
-Rate Control|Control de tasa
+Rate Control|Control tasa
 Relink Missing Media|Reenlazar medios
 Relink Missing Media...|Reenlazar medios...
 Remove|Quitar
@@ -132,7 +130,7 @@ Render Queue|Cola de render
 Render Settings|Ajustes de render
 Render Settings - Custom Export|Ajustes - Exportación personal.
 Reset|Reset
-Reset All|Reset todo
+Reset All|Reset tod.
 Resolution|Resolución
 Sat|Sat
 Scopes|Scopes
@@ -146,18 +144,18 @@ Single clip|Un clip
 Smart Bins|Bins intelig.
 Snap to clips, markers and the playhead|Imán a clips, marcadores y cabezal
 Soft Clip|Soft clip
-Source Color Space|Espacio de color origen
+Source Color Space|Espacio color orig.
 Source Gamma Space|Espacio gamma origen
 Spline|Spline
-Subtitle Settings|Ajustes de subtítulos
+Subtitle Settings|Ajustes subtít.
 Sync Bin|Sync bin
 System|Sistema
-System Preferences|Preferencias del sistema
+System Preferences|Preferencias
 Tape|Cinta
 Temp|Temp
-Timeline Resolution|Resolución de cronología
-Timeline proxy|Proxy de cronología
-Tint|Tinte
+Timeline Resolution|Resol. cronología
+Timeline proxy|Proxy cronol.
+Tint|Tono
 Tools|Herr.
 Track FX|FX pista
 Transitions|Transiciones

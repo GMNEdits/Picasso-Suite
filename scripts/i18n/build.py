@@ -27,7 +27,7 @@ def width(text):
 def fits_page(english, shown):
     # Text on a page is made smaller down to 3/4 when it is wider than the English; wider than that
     # (a third more) would run into its neighbour.
-    return width(shown) <= width(english) * 1.33 + 2
+    return width(shown) <= width(english) * 1.15 + 4
 
 
 def entry_max(english):
@@ -47,21 +47,36 @@ def build(code):
             problems.append(f'menu {name} -> {short!r} is {len(short)} > {most}')
     pairs = []
     seen = set()
-    for l in lines[i + 1:u]:
-        if not l.strip():
-            continue
-        en, tr = l.split('|', 1)
+    entry_lines = list(lines[i + 1:u])
+    for extra in sorted(HERE.glob(f'{code}.entries*.txt')):
+        entry_lines += extra.read_text(encoding='utf-8').split('\n')
+    latest = {}
+    for l in entry_lines:
+        if '|' in l:
+            en, tr = l.split('|', 1)
+            latest[en] = tr
+    for en, tr in latest.items():
         assert en in ENGLISH, (code, en)
-        assert en not in seen, (code, 'twice', en)
         seen.add(en)
         if tr != en and len(tr) > entry_max(en):
             problems.append(f'{en!r} -> {tr!r} is {len(tr)} > {entry_max(en)}')
         pairs.append((en, tr))
     missing = [e for e in ENGLISH if e not in seen]
     ui = []
-    ui_file = HERE / f'{code}.ui.txt'
-    ui_lines = ui_file.read_text(encoding='utf-8').split('\n') if ui_file.exists() else lines[u + 1:]
+    ui_lines = []
+    for extra in sorted(HERE.glob(f'{code}.ui*.txt')):
+        ui_lines += extra.read_text(encoding='utf-8').split('\n')
+    if not ui_lines:
+        ui_lines = lines[u + 1:]
+    latest_ui = {}
+    for l in ui_lines:
+        if '|' in l:
+            en, tr = l.split('|', 1)
+            latest_ui[en] = tr
+    ui_lines = [f'{en}|{tr}' for en, tr in latest_ui.items()]
     collected = set((HERE / 'ui_labels.txt').read_text(encoding='utf-8').split('\n'))
+    collected |= set((HERE / 'ui_more.txt').read_text(encoding='utf-8').split('\n'))
+    collected |= set(ENGLISH)
     for l in ui_lines:
         if not l.strip():
             continue

@@ -1,0 +1,43 @@
+No clips in media pool
+Add clips with Import, or drop files here
+Add clips from Media Storage to get started
+No sound to show
+No clip to grade
+No Input
+DURATION
+File
+Export Audio
+Data Rate
+Output Track 1
+Use unique filename
+Adds (1), (2) ... to the name instead of writing over a file.
+File type
+Whole timeline
+In to out marks
+Pixel aspect ratio
+Square
+Cinemascope
+Data Levels
+Full
+Retain sub-black and super-white data
+Color Space Tag
+Gamma Tag
+Data burn-in
+Same as project
+Bypass re-encode when possible
+Use optimized media
+Use proxy media
+Use render cached images
+Force sizing to highest quality
+Force debayer to highest quality
+Render All Video Tracks
+Enable Flat Pass
+visionOS Bypass
+Disable sizing and blanking output
+Trigger script at
+Start
+of render job
+Export Subtitle
+As a separate file
+Export As
+frames

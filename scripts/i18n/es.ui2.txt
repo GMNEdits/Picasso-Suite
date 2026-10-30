@@ -1,0 +1,41 @@
+No clips in media pool|Sin clips en el panel
+Add clips with Import, or drop files here|Añade clips con Importar o arrástralos aquí
+Add clips from Media Storage to get started|Añade clips desde Almacenamiento para empezar
+No sound to show|Sin sonido
+No clip to grade|Sin clip activo
+No Input|Sin ent.
+DURATION|DURACIÓN
+Export Audio|Exportar audio
+Data Rate|Tasa datos
+Output Track 1|Pista de salida 1
+Use unique filename|Nombre único
+Adds (1), (2) ... to the name instead of writing over a file.|Añade (1), (2)... al nombre en vez de sobrescribir un archivo.
+File type|Tipo
+Whole timeline|Toda cronología
+In to out marks|Marcas E/S
+Pixel aspect ratio|Proporción de píxel
+Square|Cuadr.
+Cinemascope|Cinemascope
+Data Levels|Niv. datos
+Retain sub-black and super-white data|Conservar datos sub-negro y super-blanco
+Color Space Tag|Etiqueta de color
+Gamma Tag|Tag gamma
+Data burn-in|Burn-in datos
+Same as project|Como el proyecto
+Bypass re-encode when possible|Evitar recodificar si es posible
+Use optimized media|Medios optimiz.
+Use proxy media|Usar medios proxy
+Use render cached images|Usar imágenes en caché
+Force sizing to highest quality|Forzar escalado máx. calidad
+Force debayer to highest quality|Forzar debayer máx. calidad
+Render All Video Tracks|Render pistas vídeo
+Enable Flat Pass|Activar Flat Pass
+visionOS Bypass|Bypass visionOS
+Disable sizing and blanking output|Desactivar escalado y recorte
+Trigger script at|Ejecutar script al
+Start|Inicio
+of render job|del render
+Export Subtitle|Exp. subtítulo
+As a separate file|Archivo aparte
+Export As|Exp. como
+frames|fotog.

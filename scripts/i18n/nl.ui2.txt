@@ -1,0 +1,184 @@
+Clips|Clips
+60 frames per second|60 frames/s
+Add Job|Toev.
+Add to Render Queue|Aan wachtrij toev.
+Advanced Settings|Geavanc. instell.
+Archive Project|Archiveren
+Archive Project...|Archiveren...
+Auto|Auto
+Automatic|Auto.
+Balanced|Gebalan.
+Best|Beste
+Bins|Bins
+Browse|Zoek
+Bus Sends|Bus-sends
+Capture|Opname
+Chapters from Markers|Hoofdstukken uit markers
+Choose a folder|Map kiezen
+Clip Name|Clipnaam
+Clone|Klonen
+Clone Tool|Klonen
+Codec|Codec
+Col Boost|Kleurboost
+Collections|Collecties
+Contrast|Contrast
+Control Room|Regiekamer
+Create an Album|Album maken
+Curves - Custom|Curves - Eigen
+Custom Export|Eigen export
+Decode Options|Decodering
+Demo Project|Demoproject
+Drag photos into the Photo Album to start editing|Sleep foto's naar het album om te beginnen
+Drawn with|Met
+Editing|Edit
+Effects In|Effecten in
+Embedded Audio|Ingebed audio
+Encoder|Encoder
+Encoding Profile|Coderingsprofiel
+Entire Timeline|Hele tijdlijn
+Estimated File Size|Geschatte grootte
+Every|Elke
+Export Video|Videoexport
+Fairlight|Fairlight
+File Name|Naam
+Filters|Filters
+Format|Formaat
+Frame rate|Framerate
+Frame reordering|Frames herordenen
+Full Frames|Hele frames
+Full Screen|Volledig
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Grafische kaart
+Groups|Groepen
+Help|Hulp
+Hi/Light|Hi/Light
+High|Hoog
+Hue|Tint
+Image|Beeld
+Index|Index
+Individual clips|Losse clips
+Integrated|Totaal
+Key Frames|Keyframes
+Keywords|Tags
+L. Mix|L. Mix
+Layer|Laag
+Local|Lokaal
+Location|Locatie
+Loop playback|Afspelen in lus
+Loudness|Luidheid
+Low|Laag
+Mark|Merk
+Media Management|Mediabeheer
+Media Source|Mediabron
+Media Storage|Mediaopslag
+Meters|Meters
+Mid/Detail|Mid/Detail
+Modifiers|Modifiers
+Monitor|Monitor
+Monitor volume|Monitorvolume
+Native|Native
+Network Optimization|Netwerkopt.
+No jobs in Queue|Geen taken
+No jobs in queue|Geen taken
+No stills created|Geen stills
+Not reported|Niet vermeld
+Nothing to inspect|Niets te inspecteren
+Offset|Offset
+Open|Open
+Order|Volgr.
+Parade|Parade
+Pause|Pauze
+Photo|Foto
+Photo Album|Fotoalbum
+Pivot|Pivot
+Playback|Afspelen
+Position lock|Positie vergr.
+Preset|Preset
+Primaries - Color Wheels|Primaries - Kleurwielen
+Process Mode|Procesmodus
+Project settings|Projectinstell.
+Projects|Projecten
+Quality|Kwaliteit
+Quick Export|Snelexport
+Range|Bereik
+Rate Control|Bitratebeheer
+Relink Missing Media|Media koppelen
+Relink Missing Media...|Media opnieuw koppelen...
+Remove|Wissen
+Render|Render
+Render All|Alles
+Render Queue|Renderwachtrij
+Render Settings|Renderinstell.
+Render Settings - Custom Export|Render - Eigen export
+Reset|Reset
+Reset All|Alles
+Resolution|Resolutie
+Search|Zoeken
+Settings|Instell.
+Short|Kort
+Short Max|Kort max.
+Single clip|Eén clip
+Smart Bins|Slimme bins
+Source Color Space|Bronkleurruimte
+Source Gamma Space|Brongammaruimte
+Subtitle Settings|Ondertitelinstell.
+System|Systeem
+System Preferences|Voorkeuren
+Tape|Tape
+Timeline Resolution|Tijdlijnresolutie
+Timeline proxy|Tijdlijnproxy
+Tint|Tint
+Tools|Tools
+Track FX|Spoor-FX
+Transitions|Overgangen
+Trim|Trim
+Use vertical resolution|Verticale resolutie
+Version 0.6.1|Versie 0.6.1
+Video|Video
+View|Beeld
+Waveform|Golfvorm
+Workspace|Werkruimte
+No clips in media pool|Geen clips
+Add clips with Import, or drop files here|Importeer clips of sleep ze hierheen
+Add clips from Media Storage to get started|Voeg clips toe uit Mediaopslag
+No sound to show|Geen geluid
+No clip to grade|Geen clip actief
+No Input|Geen ing.
+DURATION|DUUR
+Export Audio|Audio-export
+Data Rate|Datarate
+Output Track 1|Uitvoerspoor 1
+Use unique filename|Unieke naam
+Adds (1), (2) ... to the name instead of writing over a file.|Voegt (1), (2)... toe in plaats van te overschrijven.
+File type|Type
+Whole timeline|Hele tijdlijn
+In to out marks|In/uit-markers
+Pixel aspect ratio|Pixelverhouding
+Square|Vierkant
+Cinemascope|Cinemascope
+Data Levels|Dataniveaus
+Retain sub-black and super-white data|Sub-zwart en super-wit behouden
+Color Space Tag|Kleurruimtetag
+Gamma Tag|Gammatag
+Data burn-in|Data burn-in
+Same as project|Zoals project
+Bypass re-encode when possible|Niet hercoderen indien mogelijk
+Use optimized media|Geoptimaliseerde media
+Use proxy media|Proxymedia
+Use render cached images|Rendercache gebruiken
+Force sizing to highest quality|Schalen op hoogste kwaliteit
+Force debayer to highest quality|Debayer hoogste kwaliteit
+Render All Video Tracks|Alle videosporen renderen
+Enable Flat Pass|Flat Pass aan
+visionOS Bypass|visionOS-bypass
+Disable sizing and blanking output|Schalen/uitsnede uit
+Trigger script at|Script starten bij
+Start|Start
+of render job|van renderjob
+Export Subtitle|Ondertitelexport
+As a separate file|Apart bestand
+Export As|Export als
+frames|frames

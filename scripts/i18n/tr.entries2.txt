@@ -1,0 +1,289 @@
+New Project Library...|Yeni proje kitaplığı...
+Open Project Library...|Proje kitaplığı aç...
+Show Current Project Library in File Explorer|Kitaplığı Gezgin'de göster
+Project Manager|Proje yöneticisi
+New Project|Yeni proje
+Open Project...|Proje aç...
+Import Project...|Proje içe aktar...
+Export Project...|Proje dışa aktar...
+Restore Project Archive...|Proje arşivini geri yükle...
+Save Project|Projeyi kaydet
+Save Project As...|Projeyi farklı kaydet...
+Save Copy As...|Kopyayı kaydet...
+Revert to Last Saved Version|Son kaydedilene dön
+Import|İçe aktar
+Media...|Medya...
+Folder as Bin...|Klasörü bin olarak...
+Timeline: AAF, EDL, XML...|Zaman çizelgesi: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Zaman çizelgesi: ön EDL...
+Subtitle...|Altyazı...
+Metadata to Media Pool...|Meta verileri havuza...
+Bin...|Bin...
+Export|Dışa aktar
+Timeline: EDL...|Çizelge: EDL...
+Timeline: OpenTimelineIO...|Zaman çizelgesi: OpenTimelineIO...
+Timeline: XML...|Çizelge: XML...
+Timeline: AAF...|Çizelge: AAF...
+Metadata from Media Pool...|Meta verileri havuzdan...
+Media Management...|Medya yönetimi...
+Project Settings...|Proje ayarları...
+System Preferences...|Sistem tercihleri...
+Quick Export...|Hızlı dışa aktar...
+Quit|Çık
+Undo|Geri al
+Redo|Yinele
+Cut|Kes
+Copy|Kopyala
+Paste|Yapıştır
+Paste Insert|Yapıştır ve ekle
+Paste Mix to Current Track|Miksi parçaya yapıştır
+Duplicate|Çoğalt
+Fit to Fill|Boşluğa sığdır
+Place on Top|Üste yerleştir
+Delete Selected|Seçileni sil
+Delete Selected with Ripple|Seçileni sil (ripple)
+Select All|Tümünü seç
+Deselect All|Seçimi kaldır
+Select Clips Forward|Sonraki klipleri seç
+Find...|Bul...
+Recent Projects|Son projeler
+Project Manager...|Proje yöneticisi...
+Keyboard Customization|Klavye özelleştirme
+Select Nearest Edit Point|En yakın kesimi seç
+Selection Mode|Seçim modu
+Trim Mode|Kırpma modu
+Dynamic Trim Mode|Dinamik kırpma
+Ripple Start|Ripple başlangıç
+Ripple End|Ripple bitiş
+Ripple Trim Previous / Next|Ripple önceki / sonraki
+Ripple Trim Previous Edit to Playhead|Ripple önceki kesim → kafa
+Ripple Trim Next Edit to Playhead|Ripple sonraki kesim → kafa
+Trim Start to Playhead|Başlangıcı kafaya kırp
+Trim End to Playhead|Bitişi kafaya kırp
+Extend Edit|Kesimi uzat
+Slip Clip|Klibi kaydır (slip)
+Slip One Frame Earlier|1 kare erken kaydır
+Slip One Frame Later|1 kare geç kaydır
+Slide Clip|Klibi kaydır
+Slide One Frame Left|1 kare sola
+Slide One Frame Right|1 kare sağa
+Loop Trim|Döngüde kırp
+Asymmetric Trimming|Asimetrik kırpma
+Trim Editor|Kırpma editörü
+New Timeline...|Yeni çizelge...
+New Timeline Using Selected Clips|Seçimden yeni çizelge
+Create New Compound Clip...|Birleşik klip oluştur...
+New Effects Clip...|Yeni efekt klibi...
+Decompose in Place|Yerinde ayrıştır
+Decompose Compound Clip|Birleşik klibi ayrıştır
+Decompose Nested Timeline|İç içe çizelgeyi ayrıştır
+Split Clip|Klibi böl
+Create Timeline Using Bin...|Bin'den çizelge oluştur...
+Import Timeline...|Çizelge içe aktar...
+Export Timeline...|Çizelge dışa aktar...
+Timeline Resolution and Frame Rate...|Çizelge çözünürlüğü ve fps...
+Timeline Settings|Çizelge ayarları
+Snap|Yakala
+Linked Selection|Bağlı seçim
+Position Lock|Konum kilidi
+Selection Follows Playhead|Seçim kafayı izler
+Add Marker|İşaret ekle
+Add Marker and Show Dialog|İşaret ekle ve diyalog
+Delete All Markers|Tüm işaretleri sil
+Create Subtitle Track|Altyazı parçası oluştur
+Create Subtitle Region|Altyazı bölgesi oluştur
+Add Transition to All Edits|Tüm kesimlere geçiş
+Switch Timeline|Çizelge değiştir
+Open Timeline in New Window|Çizelgeyi yeni pencerede aç
+Delete Timeline|Çizelgeyi sil
+Enable Clip|Klibi etkinleştir
+Match Frame|Kareyi eşleştir
+Lock Clip|Klibi kilitle
+New Multicam Clip...|Yeni multicam klip...
+Multicam Viewer|Multicam izleyici
+Add to Media Pool as Stills|Duran kare olarak ekle
+Change Clip Speed...|Klip hızını değiştir...
+Change Clip Duration...|Klip süresini değiştir...
+Retime Controls|Retime denetimleri
+Retime Clip|Klibi retime et
+Freeze Frame|Kareyi dondur
+Speed Ramp...|Hız rampası...
+Reverse Clip|Klibi ters çevir
+Create New Compound Clip|Birleşik klip oluştur
+Link Clips|Klipleri bağla
+Unlink Audio and Video|Ses ve görüntüyü ayır
+Enable / Disable Audio Scrubbing|Ses scrubbing aç/kapa
+Auto Align Clips|Otomatik hizala
+Based on Timecode|Timecode'a göre
+Based on Waveform|Dalga biçimine göre
+Normalize Audio Levels...|Ses seviyelerini normalleştir...
+Render in Place|Yerinde render et
+New Effects Clip|Yeni efekt klibi
+New Compound Clip|Yeni birleşik klip
+Clip Attributes...|Klip öznitelikleri...
+Mark In|Giriş işaretle
+Mark Out|Çıkış işaretle
+Mark Clip|Klibi işaretle
+Mark Timeline In/Out|Çizelge giriş/çıkış
+Clear In|Girişi temizle
+Clear Out|Çıkışı temizle
+Clear In and Out|Giriş/çıkışı temizle
+Modify Marker...|İşareti değiştir...
+Delete Marker at Current Position|Konumdaki işareti sil
+Delete All Markers in Timeline|Çizelgedeki işaretleri sil
+Go to Previous Marker|Önceki işarete git
+Go to Next Marker|Sonraki işarete git
+Set Clip Color|Klip rengi
+Default|Varsayılan
+Orange|Turuncu
+Apricot|Kayısı
+Yellow|Sarı
+Lime|Limon
+Olive|Zeytin
+Green|Yeşil
+Teal|Deniz mavisi
+Navy|Lacivert
+Blue|Mavi
+Purple|Mor
+Violet|Menekşe
+Pink|Pembe
+Tan|Ten
+Beige|Bej
+Brown|Kahverengi
+Chocolate|Çikolata
+Show Current Frame on Playback|Oynatırken geçerli kare
+Safe Area Overlay|Güvenli alan katmanı
+Show Grid / Guides|Izgara / kılavuz
+Show Toolbar|Araç çubuğunu göster
+Show Full Screen Viewer|Tam ekran görüntüleyici
+Show Cinema Viewer|Sinema görüntüleyici
+Viewer Overlays|İzleyici katmanları
+Transform / Crop / Dynamic Zoom|Dönüş. / Kırp / Zoom
+Safe Area|Güvenli alan
+Center Crosshair|Merkez artı
+Checkerboard Background (Alpha)|Dama zemin (alfa)
+Show All Overlays|Tüm katmanları göster
+Timecode Window|Timecode penceresi
+Show Scopes|Skopları göster
+Show Audio Meters|Ses ölçerleri göster
+Show Audio Mixer|Ses mikserini göster
+Show Inspector|Denetçiyi göster
+Play Forward|İleri oynat
+Play Reverse|Geri oynat
+Stop|Dur
+Play Around Current Frame|Kare çevresinde oynat
+Play In to Out|Girişten çıkışa
+Play Around In / Around Out|Giriş / çıkış çevresinde
+Loop Playback|Döngüde oynat
+Go to First Frame|İlk kareye git
+Go to Last Frame|Son kareye git
+Go to In|Girişe git
+Go to Out|Çıkışa git
+Previous Frame|Önceki kare
+Next Frame|Sonraki kare
+Previous Edit Point|Önceki kesim
+Next Edit Point|Sonraki kesim
+Timeline Playback Resolution|Oynatma çözünürlüğü
+Half|Yarım
+Quarter|Çeyrek
+Effects Memory Cache|Efekt önbelleği
+Timeline Proxy Mode|Proxy modu
+Off|Kapalı
+Eighth|Sekizde bir
+Hardware Decoding|Donanım çözme
+Delete Render Cache|Render önbelleğini sil
+Video Transitions|Video geçişleri
+Cross Dissolve|Çapraz geçiş
+Dip to Color|Renge geçiş
+Audio Transitions|Ses geçişleri
+Cross Fade|Çapraz karartma
+Remove Transition|Geçişi kaldır
+OpenFX|OpenFX
+Blur|Bulanıklık
+Gaussian Blur|Gauss bulanıklığı
+Sharpen|Keskinleştir
+Color|Renk
+Invert Colors|Renkleri ters çevir
+Black and White|Siyah beyaz
+Distort|Bozma
+Mosaic|Mozaik
+Audio FX|Ses efektleri
+EQ|EQ
+Dynamics|Dinamikler
+Picasso FX|Picasso FX
+Sepia|Sepya
+Soft Blur|Yumuşak bulanıklık
+Light|Işık
+Glow|Parıltı
+Stylize|Biçemlendir
+Vignette|Vinyet
+Film Grain|Film greni
+Compositing Effects|Kompozit efektler
+Nodes|Düğümler
+Generators|Üreteçler
+Solid Color|Düz renk
+Color Bars|Renk çubukları
+Gradient|Gradyan
+Titles|Başlıklar
+Text|Metin
+Text+|Metin+
+Effects Library Search|Efekt ara
+Add Tool (Compositing)|Araç ekle
+Reset All Grades and Nodes|Tüm düzeltmeleri sıfırla
+Reset Current Node Grade|Geçerli düğümü sıfırla
+Enable/Disable Current Node|Geçerli düğüm aç/kapa
+Grab Still|Duran kare al
+Play Still|Duran kareyi oynat
+Add Serial Node|Seri düğüm
+Add Serial Before|Önüne seri
+Add Parallel Node|Paralel düğüm
+Add Layer Mixer|Katman mikseri
+Add Splitter / Combiner|Bölücü / birleştirici
+Add Outside Node|Dış düğüm
+Label Node|Düğümü etiketle
+Timeline|Zaman çizelgesi
+Previous Node Graph|Önceki düğüm grafiği
+Next Node Graph|Sonraki düğüm grafiği
+LUT|LUT
+Apply LUT from list|Listeden LUT uygula
+Gallery|Galeri
+Scopes On/Off|Skoplar aç/kapa
+Highlight|Parlak
+Lightbox|Işık masası
+ADR|ADR
+Automated Dialogue Replacement|Otomatik diyalog değiştirme
+Bounce Mix to Track|Miksi parçaya bounce et
+Bounce Selected Tracks|Seçili parçaları bounce et
+Cache Audio Effects|Ses efekti önbelleği
+Audio Link|Ses bağlantısı
+Link Group|Bağlantı grubu
+Decompose|Ayrıştır
+Loop Jog|Döngüde jog
+Show Audio Timeline / Mixer|Ses çizelgesi / mikser
+Full Screen Viewer|Tam ekran görüntüleyici
+Show Panel in Workspace|Paneli göster
+Media Pool|Medya havuzu
+Effects Library|Efekt kitaplığı
+Inspector|Denetçi
+Mixer|Mikser
+Metadata|Meta veri
+Edit Index|Düzenleme dizini
+Sound Library|Ses kitaplığı
+Layout|Yerleşim
+Reset UI Layout|Yerleşimi sıfırla
+Save Layout|Yerleşimi kaydet
+Load Layout|Yerleşimi yükle
+Switch to Page|Sayfaya geç
+Media|Medya
+Edit|Düzen
+Effects|Efektler
+Audio|Ses
+Deliver|Teslim
+Dual Screen On/Off|Çift ekran aç/kapa
+Video Clean Feed|Temiz video çıkışı
+Picasso Suite Manual|Picasso Suite kılavuzu
+Picasso Suite Tutorials|Picasso Suite eğitimleri
+Check for Updates...|Güncellemeleri denetle...
+Export Log File...|Günlüğü dışa aktar...
+About Picasso Suite|Picasso Suite hakkında
+Language|Dil

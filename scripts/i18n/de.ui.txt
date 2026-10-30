@@ -4,17 +4,17 @@ A video editor written in Rust for Windows, Linux, macOS and the web.|Ein in Rus
 Add Job|Hinzu
 Add to Render Queue|Zur Warteschlange
 Advanced Settings|Erw. Einstell.
-Archive Project|Projekt archivieren
-Archive Project...|Projekt archivieren...
+Archive Project|Projekt archiv.
+Archive Project...|Projekt archiv....
 Audio scrubbing (sound while the playhead is dragged)|Audio-Scrubbing (Ton beim Ziehen des Abspielkopfs)
 Auto|Auto
-Automatic|Automatisch
+Automatic|Autom.
 Balanced|Mittel
 Best|Beste
 Bins|Bins
 Browse|Suchen
 Bus Sends|Bus-Sends
-Capture|Aufnahme
+Capture|Aufn.
 Changing the frame rate keeps every clip on the same frames.|Beim Ändern der Bildrate bleibt jeder Clip auf denselben Bildern.
 Chapters from Markers|Kapitel aus Markern
 Choose a folder|Ordner wählen
@@ -24,7 +24,7 @@ Clone|Klonen
 Clone Tool|Klonen
 Codec|Codec
 Col Boost|Farb-Boost
-Collections|Sammlungen
+Collections|Sammlung
 Contrast|Kontrast
 Control Room|Regie
 Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Kopiert die von den Timelines benutzten Dateien in einen Ordner und schreibt dort eine Projektkopie, die auf sie zeigt. Das bearbeitete Projekt bleibt unverändert.
@@ -35,7 +35,7 @@ Decode Options|Dekodierung
 Decode supported video using hardware acceleration|Video per Hardwarebeschleunigung dekodieren
 Demo Project|Demoprojekt
 Drag photos into the Photo Album to start editing|Fotos ins Album ziehen, um zu beginnen
-Drawn with|Gezeichnet mit
+Drawn with|Gezeichn. mit
 Editing|Schnitt
 Effects In|Effekte ein
 Embedded Audio|Eingebett. Audio
@@ -44,7 +44,7 @@ Encoding Profile|Kodierprofil
 Entire Timeline|Ganze Timeline
 Estimated File Size|Geschätzte Größe
 Every|Jede
-Every media file is where the project says it is.|Alle Mediendateien liegen, wo das Projekt sie erwartet.
+Every media file is where the project says it is.|Alle Mediendateien liegen am richtigen Ort.
 Export Video|Videoexport
 Fairlight|Fairlight
 File Name|Dateiname
@@ -69,7 +69,7 @@ Hue|Ton
 Image|Bild
 Index|Index
 Individual clips|Einzelne Clips
-Input|Eingab.
+Input|Eing.
 Integrated|Integriert
 Key Frames|Keyframes
 Keywords|Stichwörter
@@ -96,10 +96,10 @@ Network Optimization|Netzwerkopt.
 No jobs in Queue|Keine Jobs
 No jobs in queue|Keine Jobs
 No stills created|Keine Standbilder
-Not reported|Nicht angegeben
+Not reported|Nicht angeg.
 Nothing to inspect|Nichts zu prüfen
 Offset|Versatz
-Open|Öffnen
+Open|Öffn.
 Order|Folge
 Parade|Parade
 Pause|Pause
@@ -107,7 +107,7 @@ Photo|Foto
 Photo Album|Fotoalbum
 Pivot|Pivot
 Playback|Wiederg.
-Position lock|Positionssperre
+Position lock|Positionssp.
 Preset|Preset
 Primaries - Color Wheels|Primär - Farbräder
 Process Mode|Prozessmodus
@@ -116,17 +116,17 @@ Projects|Projekte
 Quality|Qualität
 Quick Export|Schnellexport
 Range|Bereich
-Rate Control|Ratensteuerung
+Rate Control|Ratensteuer.
 Relink Missing Media|Medien neu verkn.
 Relink Missing Media...|Medien neu verkn....
-Remove|Entfernen
+Remove|Entfern.
 Render|Rendern
 Render All|Alle rendern
 Render Queue|Render-Liste
 Render Settings|Render-Einst.
 Render Settings - Custom Export|Render - Eigener Export
 Reset|Zurück
-Reset All|Alle zurück
+Reset All|Alle zur.
 Resolution|Auflösung
 Search|Suchen
 Selection follows the playhead|Auswahl folgt Abspielkopf
@@ -151,7 +151,7 @@ Tools|Tools
 Track FX|Spur-FX
 Transitions|Übergänge
 Trim|Trim
-Untitled|Ohne Titel
+Untitled|Ohne Tit.
 Use vertical resolution|Vertikale Auflösung
 Version 0.6.1|Version 0.6.1
 Video|Video

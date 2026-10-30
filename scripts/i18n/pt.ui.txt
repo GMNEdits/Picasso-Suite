@@ -1,7 +1,7 @@
 Clips|Clipes
 60 frames per second|60 fotogramas/s
 A video editor written in Rust for Windows, Linux, macOS and the web.|Um editor de vídeo escrito em Rust para Windows, Linux, macOS e web.
-Add Job|Adicionar
+Add Job|Adic.
 Add to Render Queue|Adic. à fila
 Advanced Settings|Def. avançadas
 Archive Project|Arquivar projeto
@@ -9,7 +9,7 @@ Archive Project...|Arquivar projeto...
 Audio scrubbing (sound while the playhead is dragged)|Scrubbing áudio (som ao arrastar o cursor)
 Auto|Auto
 Automatic|Automático
-Balanced|Equilibrado
+Balanced|Equil.
 Best|Top
 Bins|Bins
 Browse|Procurar
@@ -40,7 +40,7 @@ Editing|Edição
 Effects In|Efeitos ent.
 Embedded Audio|Áudio incorp.
 Encoder|Codific.
-Encoding Profile|Perfil de codificação
+Encoding Profile|Perfil codific.
 Entire Timeline|Toda a linha
 Estimated File Size|Tamanho estimado
 Every|Cada
@@ -50,8 +50,8 @@ Fairlight|Fairlight
 File Name|Nome
 Filters|Filtros
 Format|Formato
-Frame rate|Fotogramas/s
-Frame reordering|Reordenar fotogramas
+Frame rate|Fps
+Frame reordering|Reorden. fotog.
 Free software under the GPL, version 3 or later.|Software livre sob a GPL, versão 3 ou posterior.
 Full Frames|Completos
 Full Screen|Ecrã inteiro
@@ -65,15 +65,15 @@ H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when it
 Help|Ajuda
 Hi/Light|Luzes
 High|Alto
-Hue|Matiz
-Image|Imagem
+Hue|Ton
+Image|Imag.
 Index|Índice
 Individual clips|Clipes soltos
 Input|Entr.
 Integrated|Integrado
 Key Frames|Keyframes
 Keywords|Palavras
-L. Mix|Mistura
+L. Mix|Mist.
 Layer|Cam.
 Linked selection (picture and sound together)|Seleção ligada (imagem e som)
 Loaded the demo project|Projeto demo carregado
@@ -81,7 +81,7 @@ Local|Local
 Location|Local
 Loop playback|Repr. em ciclo
 Loudness|Sonoridade
-Low|Baixo
+Low|Bas.
 Mark|Marca
 Media Management|Gestão de mídia
 Media Source|Origem
@@ -126,11 +126,11 @@ Render Queue|Fila de render
 Render Settings|Def. de render
 Render Settings - Custom Export|Def. - Export. person.
 Reset|Repor
-Reset All|Repor tudo
+Reset All|Repor
 Resolution|Resolução
-Search|Procurar
+Search|Busca
 Selection follows the playhead|Seleção segue o cursor
-Settings|Definições
+Settings|Defin.
 Shad|Somb.
 Short|Curto
 Short Max|Curto máx.
@@ -147,10 +147,10 @@ Timeline Resolution|Resolução da linha
 Timeline proxy|Proxy da linha
 Tint|Tom
 Tools|Ferr.
-Track FX|FX da faixa
+Track FX|FX faixa
 Transitions|Transições
 Trim|Corte
-Untitled|Sem título
+Untitled|S/ título
 Use vertical resolution|Usar resolução vertical
 Version 0.6.1|Versão 0.6.1
 Video|Vídeo

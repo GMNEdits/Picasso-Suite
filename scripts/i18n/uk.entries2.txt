@@ -1,0 +1,289 @@
+New Project Library...|Нова бібліотека проєктів...
+Open Project Library...|Відкрити бібліотеку проєктів...
+Show Current Project Library in File Explorer|Показати бібліотеку в Провіднику
+Project Manager|Менеджер проєктів
+New Project|Новий проєкт
+Open Project...|Відкрити проєкт...
+Import Project...|Імпорт проєкту...
+Export Project...|Експорт проєкту...
+Restore Project Archive...|Відновити архів проєкту...
+Save Project|Зберегти проєкт
+Save Project As...|Зберегти проєкт як...
+Save Copy As...|Зберегти копію як...
+Revert to Last Saved Version|Повернути збережену версію
+Import|Імпорт
+Media...|Медіа...
+Folder as Bin...|Тека як бін...
+Timeline: AAF, EDL, XML...|Таймлайн: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Таймлайн: попередній EDL...
+Subtitle...|Субтитри...
+Metadata to Media Pool...|Метадані в пул медіа...
+Bin...|Бін...
+Export|Експорт
+Timeline: EDL...|Таймлайн: EDL...
+Timeline: OpenTimelineIO...|Таймлайн: OpenTimelineIO...
+Timeline: XML...|Таймлайн: XML...
+Timeline: AAF...|Таймлайн: AAF...
+Metadata from Media Pool...|Метадані з пулу медіа...
+Media Management...|Керування медіа...
+Project Settings...|Налаштування проєкту...
+System Preferences...|Системні налаштування...
+Quick Export...|Швидкий експорт...
+Quit|Вихід
+Undo|Скасувати
+Redo|Повторити
+Cut|Вирізати
+Copy|Копіювати
+Paste|Вставити
+Paste Insert|Вставити зі вставкою
+Paste Mix to Current Track|Вставити мікс на доріжку
+Duplicate|Дублювати
+Fit to Fill|Заповнити проміжок
+Place on Top|Поставити зверху
+Delete Selected|Видалити вибране
+Delete Selected with Ripple|Видалити вибране (ripple)
+Select All|Вибрати все
+Deselect All|Зняти виділення
+Select Clips Forward|Вибрати наступні кліпи
+Find...|Знайти...
+Recent Projects|Нещодавні проєкти
+Project Manager...|Менеджер проєктів...
+Keyboard Customization|Налаштування клавіш
+Select Nearest Edit Point|Вибрати найближчий стик
+Selection Mode|Режим вибору
+Trim Mode|Режим підрізання
+Dynamic Trim Mode|Динамічне підрізання
+Ripple Start|Ripple початок
+Ripple End|Ripple кінець
+Ripple Trim Previous / Next|Ripple попер. / наст.
+Ripple Trim Previous Edit to Playhead|Ripple попер. стик до маркера
+Ripple Trim Next Edit to Playhead|Ripple наст. стик до маркера
+Trim Start to Playhead|Підрізати початок до маркера
+Trim End to Playhead|Підрізати кінець до маркера
+Extend Edit|Продовжити стик
+Slip Clip|Зсув вмісту
+Slip One Frame Earlier|Зсув на 1 кадр раніше
+Slip One Frame Later|Зсув на 1 кадр пізніше
+Slide Clip|Переміщення кліпа
+Slide One Frame Left|Ліворуч на 1 кадр
+Slide One Frame Right|Праворуч на 1 кадр
+Loop Trim|Підрізання в циклі
+Asymmetric Trimming|Асиметричне підрізання
+Trim Editor|Редактор підрізання
+New Timeline...|Новий таймлайн...
+New Timeline Using Selected Clips|Таймлайн із вибраного
+Create New Compound Clip...|Створити складений кліп...
+New Effects Clip...|Новий кліп ефектів...
+Decompose in Place|Розкласти на місці
+Decompose Compound Clip|Розкласти складений кліп
+Decompose Nested Timeline|Розкласти вкладений таймлайн
+Split Clip|Розділити кліп
+Create Timeline Using Bin...|Таймлайн із біна...
+Import Timeline...|Імпорт таймлайна...
+Export Timeline...|Експорт таймлайна...
+Timeline Resolution and Frame Rate...|Роздільність і fps таймлайна...
+Timeline Settings|Налаштування таймлайна
+Snap|Прив'язка
+Linked Selection|Пов'язаний вибір
+Position Lock|Блокування позиції
+Selection Follows Playhead|Вибір слідує за маркером
+Add Marker|Додати мітку
+Add Marker and Show Dialog|Додати мітку з діалогом
+Delete All Markers|Видалити всі мітки
+Create Subtitle Track|Створити доріжку субтитрів
+Create Subtitle Region|Створити область субтитрів
+Add Transition to All Edits|Перехід на всіх стиках
+Switch Timeline|Змінити таймлайн
+Open Timeline in New Window|Таймлайн у новому вікні
+Delete Timeline|Видалити таймлайн
+Enable Clip|Увімкнути кліп
+Match Frame|Знайти кадр
+Lock Clip|Заблокувати кліп
+New Multicam Clip...|Новий мультикам-кліп...
+Multicam Viewer|Мультикам-перегляд
+Add to Media Pool as Stills|Додати як стоп-кадри
+Change Clip Speed...|Змінити швидкість кліпа...
+Change Clip Duration...|Змінити тривалість...
+Retime Controls|Керування ретаймом
+Retime Clip|Ретайм кліпа
+Freeze Frame|Стоп-кадр
+Speed Ramp...|Рампа швидкості...
+Reverse Clip|Обернути кліп
+Create New Compound Clip|Створити складений кліп
+Link Clips|Зв'язати кліпи
+Unlink Audio and Video|Роз'єднати звук і відео
+Enable / Disable Audio Scrubbing|Скраббінг звуку вкл/вимк
+Auto Align Clips|Автовирівнювання
+Based on Timecode|За таймкодом
+Based on Waveform|За формою хвилі
+Normalize Audio Levels...|Нормалізувати рівні звуку...
+Render in Place|Рендер на місці
+New Effects Clip|Новий кліп ефектів
+New Compound Clip|Новий складений кліп
+Clip Attributes...|Атрибути кліпа...
+Mark In|Мітка In
+Mark Out|Мітка Out
+Mark Clip|Позначити кліп
+Mark Timeline In/Out|In/Out таймлайна
+Clear In|Скинути In
+Clear Out|Скинути Out
+Clear In and Out|Скинути In і Out
+Modify Marker...|Змінити мітку...
+Delete Marker at Current Position|Видалити мітку тут
+Delete All Markers in Timeline|Видалити мітки таймлайна
+Go to Previous Marker|До попередньої мітки
+Go to Next Marker|До наступної мітки
+Set Clip Color|Колір кліпа
+Default|Типовий
+Orange|Помаранчевий
+Apricot|Абрикосовий
+Yellow|Жовтий
+Lime|Лайм
+Olive|Оливковий
+Green|Зелений
+Teal|Бірюзовий
+Navy|Темно-синій
+Blue|Синій
+Purple|Пурпуровий
+Violet|Фіолетовий
+Pink|Рожевий
+Tan|Рудий
+Beige|Бежевий
+Brown|Коричневий
+Chocolate|Шоколадний
+Show Current Frame on Playback|Поточний кадр під час відтв.
+Safe Area Overlay|Накладка безпечної зони
+Show Grid / Guides|Сітка / напрямні
+Show Toolbar|Показати панель
+Show Full Screen Viewer|Повноекранний перегляд
+Show Cinema Viewer|Кіноперегляд
+Viewer Overlays|Накладки перегляду
+Transform / Crop / Dynamic Zoom|Перетв. / Кадр. / Зум
+Safe Area|Безпечна зона
+Center Crosshair|Центральний хрест
+Checkerboard Background (Alpha)|Шаховий фон (альфа)
+Show All Overlays|Показати всі накладки
+Timecode Window|Вікно таймкоду
+Show Scopes|Показати скопи
+Show Audio Meters|Показати індикатори
+Show Audio Mixer|Показати мікшер
+Show Inspector|Показати інспектор
+Play Forward|Відтворити вперед
+Play Reverse|Відтворити назад
+Stop|Стоп
+Play Around Current Frame|Відтв. навколо кадру
+Play In to Out|Відтв. від In до Out
+Play Around In / Around Out|Відтв. навколо In / Out
+Loop Playback|Відтв. у циклі
+Go to First Frame|До першого кадру
+Go to Last Frame|До останнього кадру
+Go to In|До In
+Go to Out|До Out
+Previous Frame|Попередній кадр
+Next Frame|Наступний кадр
+Previous Edit Point|Попередній стик
+Next Edit Point|Наступний стик
+Timeline Playback Resolution|Роздільність відтворення
+Half|Половина
+Quarter|Чверть
+Effects Memory Cache|Кеш ефектів
+Timeline Proxy Mode|Режим проксі
+Off|Вимк
+Eighth|Восьма
+Hardware Decoding|Апаратне декодування
+Delete Render Cache|Видалити кеш рендера
+Video Transitions|Відеопереходи
+Cross Dissolve|Накладання
+Dip to Color|Через колір
+Audio Transitions|Аудіопереходи
+Cross Fade|Кросфейд
+Remove Transition|Прибрати перехід
+OpenFX|OpenFX
+Blur|Розмиття
+Gaussian Blur|Розмиття за Гауссом
+Sharpen|Різкість
+Color|Колір
+Invert Colors|Інвертувати кольори
+Black and White|Чорно-біле
+Distort|Спотворення
+Mosaic|Мозаїка
+Audio FX|Аудіоефекти
+EQ|EQ
+Dynamics|Динаміка
+Picasso FX|Picasso FX
+Sepia|Сепія
+Soft Blur|М'яке розмиття
+Light|Світло
+Glow|Сяйво
+Stylize|Стилізація
+Vignette|Віньєтка
+Film Grain|Плівкове зерно
+Compositing Effects|Ефекти композитингу
+Nodes|Ноди
+Generators|Генератори
+Solid Color|Суцільний колір
+Color Bars|Кольорові смуги
+Gradient|Градієнт
+Titles|Титри
+Text|Текст
+Text+|Текст+
+Effects Library Search|Пошук ефектів
+Add Tool (Compositing)|Додати інструмент
+Reset All Grades and Nodes|Скинути всі градації
+Reset Current Node Grade|Скинути поточну ноду
+Enable/Disable Current Node|Поточна нода вкл/вимк
+Grab Still|Зняти стоп-кадр
+Play Still|Відтв. стоп-кадр
+Add Serial Node|Послідовна нода
+Add Serial Before|Послід. перед
+Add Parallel Node|Паралельна нода
+Add Layer Mixer|Мікшер шарів
+Add Splitter / Combiner|Роздільник / об'єднувач
+Add Outside Node|Зовнішня нода
+Label Node|Мітка ноди
+Timeline|Таймлайн
+Previous Node Graph|Поперед. граф нод
+Next Node Graph|Наст. граф нод
+LUT|LUT
+Apply LUT from list|Застосувати LUT зі списку
+Gallery|Галерея
+Scopes On/Off|Скопи вкл/вимк
+Highlight|Світла
+Lightbox|Світловий стіл
+ADR|ADR
+Automated Dialogue Replacement|Автозаміна діалогу
+Bounce Mix to Track|Бонс міксу на доріжку
+Bounce Selected Tracks|Бонс вибраних доріжок
+Cache Audio Effects|Кеш аудіоефектів
+Audio Link|Аудіозв'язок
+Link Group|Група зв'язку
+Decompose|Розкласти
+Loop Jog|Джог у циклі
+Show Audio Timeline / Mixer|Аудіотаймлайн / мікшер
+Full Screen Viewer|Повноекранний перегляд
+Show Panel in Workspace|Показати панель
+Media Pool|Пул медіа
+Effects Library|Бібліотека ефектів
+Inspector|Інспектор
+Mixer|Мікшер
+Metadata|Метадані
+Edit Index|Індекс монтажу
+Sound Library|Бібліотека звуків
+Layout|Розкладка
+Reset UI Layout|Скинути розкладку
+Save Layout|Зберегти розкладку
+Load Layout|Завантажити розкл.
+Switch to Page|Перейти на сторінку
+Media|Медіа
+Edit|Монтаж
+Effects|Ефекти
+Audio|Аудіо
+Deliver|Видача
+Dual Screen On/Off|Два екрани вкл/вимк
+Video Clean Feed|Чистий відеосигнал
+Picasso Suite Manual|Посібник Picasso Suite
+Picasso Suite Tutorials|Уроки Picasso Suite
+Check for Updates...|Перевірити оновлення...
+Export Log File...|Експорт файлу журналу...
+About Picasso Suite|Про Picasso Suite
+Language|Мова

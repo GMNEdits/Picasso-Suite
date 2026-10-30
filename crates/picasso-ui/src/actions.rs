@@ -1643,7 +1643,7 @@ impl StudioApp {
                 crate::i18n::set(language);
                 #[cfg(not(test))]
                 self.extra.prefs.save();
-                self.info(format!("Language: {}", language.name()));
+                self.info(format!("{}: {}", crate::i18n::tr("Language"), language.name()));
             }
         }
     }

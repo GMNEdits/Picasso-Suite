@@ -1,0 +1,188 @@
+Clips
+60 frames per second
+Add Job
+Add to Render Queue
+Advanced Settings
+Archive Project
+Archive Project...
+Auto
+Automatic
+Balanced
+Best
+Bins
+Browse
+Bus Sends
+Capture
+Chapters from Markers
+Choose a folder
+Clip Name
+Clone
+Clone Tool
+Codec
+Col Boost
+Collections
+Contrast
+Control Room
+Create an Album
+Curves - Custom
+Custom Export
+Decode Options
+Demo Project
+Drag photos into the Photo Album to start editing
+Drawn with
+Editing
+Effects In
+Embedded Audio
+Encoder
+Encoding Profile
+Entire Timeline
+Estimated File Size
+Every
+Export Video
+Fairlight
+File Name
+Filters
+Format
+Frame rate
+Frame reordering
+Full Frames
+Full Screen
+Fusion
+Gain
+Gamma
+Generator
+Graphics card
+Groups
+Help
+Hi/Light
+High
+Hue
+Image
+Index
+Individual clips
+Input
+Integrated
+Key Frames
+Keywords
+L. Mix
+Layer
+Local
+Location
+Loop playback
+Loudness
+Low
+Mark
+Media Management
+Media Source
+Media Storage
+Meters
+Mid/Detail
+Modifiers
+Monitor
+Monitor volume
+Native
+Network Optimization
+No jobs in Queue
+No jobs in queue
+No stills created
+Not reported
+Nothing to inspect
+Offset
+Open
+Order
+Parade
+Pause
+Photo
+Photo Album
+Pivot
+Playback
+Position lock
+Preset
+Primaries - Color Wheels
+Process Mode
+Project settings
+Projects
+Quality
+Quick Export
+Range
+Rate Control
+Relink Missing Media
+Relink Missing Media...
+Remove
+Render
+Render All
+Render Queue
+Render Settings
+Render Settings - Custom Export
+Reset
+Reset All
+Resolution
+Search
+Settings
+Shad
+Short
+Short Max
+Single clip
+Smart Bins
+Source Color Space
+Source Gamma Space
+Subtitle Settings
+System
+System Preferences
+Tape
+Timeline Resolution
+Timeline proxy
+Tint
+Tools
+Track FX
+Transitions
+Trim
+Untitled
+Use vertical resolution
+Version 0.6.1
+Video
+View
+Waveform
+Workspace
+No clips in media pool
+Add clips with Import, or drop files here
+Add clips from Media Storage to get started
+No sound to show
+No clip to grade
+No Input
+DURATION
+File
+Export Audio
+Data Rate
+Output Track 1
+Use unique filename
+Adds (1), (2) ... to the name instead of writing over a file.
+File type
+Whole timeline
+In to out marks
+Pixel aspect ratio
+Square
+Cinemascope
+Data Levels
+Retain sub-black and super-white data
+Color Space Tag
+Gamma Tag
+Data burn-in
+Same as project
+Bypass re-encode when possible
+Use optimized media
+Use proxy media
+Use render cached images
+Force sizing to highest quality
+Force debayer to highest quality
+Render All Video Tracks
+Enable Flat Pass
+visionOS Bypass
+Disable sizing and blanking output
+Trigger script at
+Start
+of render job
+Export Subtitle
+As a separate file
+Export As
+frames

@@ -1,0 +1,186 @@
+Clips|Klipy
+60 frames per second|60 kl./s
+Add Job|Dodaj
+Add to Render Queue|Do kolejki
+Advanced Settings|Zaawans.
+Archive Project|Archiwizuj
+Archive Project...|Archiwizuj...
+Auto|Auto
+Automatic|Automat.
+Balanced|Zrównow.
+Best|Top
+Bins|Biny
+Browse|Szukaj
+Bus Sends|Wysyłki bus
+Capture|Zapis
+Chapters from Markers|Rozdziały ze znaczników
+Choose a folder|Wybierz folder
+Clip Name|Nazwa klipu
+Clone|Klonuj
+Clone Tool|Klonuj
+Codec|Kodek
+Col Boost|Boost kol.
+Collections|Kolekcje
+Contrast|Kontrast
+Control Room|Reżyserka
+Create an Album|Utwórz album
+Curves - Custom|Krzywe - Własne
+Custom Export|Eksport własny
+Decode Options|Dekodowanie
+Demo Project|Projekt demo
+Drag photos into the Photo Album to start editing|Przeciągnij zdjęcia do albumu, aby zacząć
+Drawn with|Rysuje
+Editing|Edycja
+Effects In|Efekty wł.
+Embedded Audio|Audio wbud.
+Encoder|Koder
+Encoding Profile|Profil kodowania
+Entire Timeline|Cała oś czasu
+Estimated File Size|Szac. rozmiar
+Every|Co
+Export Video|Eksport wideo
+Fairlight|Fairlight
+File Name|Nazwa
+Filters|Filtry
+Format|Format
+Frame rate|Klatki/s
+Frame reordering|Kolejn. klatek
+Full Frames|Pełne klatki
+Full Screen|Pełny ekran
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Karta graficzna
+Groups|Grupy
+Hi/Light|Światła
+High|Wys.
+Hue|Ton
+Image|Obraz
+Index|Indeks
+Individual clips|Pojedyncze klipy
+Input|Wej.
+Integrated|Całość
+Key Frames|Klatki kl.
+Keywords|Tagi
+L. Mix|Miks L.
+Layer|Warst
+Local|Lokal.
+Location|Miejsce
+Loop playback|Odtw. w pętli
+Loudness|Głośność
+Low|Niski
+Mark|Znak
+Media Management|Zarządzanie mediami
+Media Source|Źródło
+Media Storage|Dysk mediów
+Meters|Mierniki
+Mid/Detail|Śr./Szcz.
+Modifiers|Modyfik.
+Monitor|Monitor
+Monitor volume|Głośność monitora
+Native|Natyw.
+Network Optimization|Optym. sieci
+No jobs in Queue|Brak zadań
+No jobs in queue|Brak zadań
+No stills created|Brak stopklatek
+Not reported|Nie podano
+Nothing to inspect|Brak do sprawdzenia
+Offset|Offset
+Open|Otw.
+Order|Kolej.
+Parade|Parade
+Pause|Pauza
+Photo|Foto
+Photo Album|Album zdjęć
+Pivot|Pivot
+Playback|Odtw.
+Position lock|Blok. pozycji
+Preset|Preset
+Primaries - Color Wheels|Główne - Koła kolorów
+Process Mode|Tryb przetw.
+Project settings|Ustaw. projektu
+Projects|Projekty
+Quality|Jakość
+Quick Export|Szybki eksport
+Range|Zakres
+Rate Control|Kontrola bitr.
+Relink Missing Media|Połącz brakujące media
+Relink Missing Media...|Połącz brakujące media...
+Remove|Usuń
+Render|Render
+Render All|Renderuj
+Render Queue|Kolejka renderu
+Render Settings|Ustaw. renderu
+Render Settings - Custom Export|Render - Eksport własny
+Reset|Reset
+Reset All|Reset
+Resolution|Rozdz.
+Search|Szukaj
+Settings|Ustaw.
+Shad|Cienie
+Short|Krótki
+Short Max|Krótki maks.
+Single clip|Jeden klip
+Smart Bins|Smart biny
+Source Color Space|Przestrzeń kolorów źr.
+Source Gamma Space|Przestrzeń gamma źr.
+Subtitle Settings|Ustaw. napisów
+System|System
+System Preferences|Preferencje
+Tape|Taśm
+Timeline Resolution|Rozdz. osi czasu
+Timeline proxy|Proxy osi czasu
+Tint|Ton
+Tools|Narz.
+Track FX|FX ścieżki
+Transitions|Przejścia
+Trim|Przyc.
+Use vertical resolution|Pionowa rozdzielczość
+Version 0.6.1|Wersja 0.6.1
+Video|Wideo
+View|Wid.
+Waveform|Kształt fali
+Workspace|Obszar
+No clips in media pool|Brak klipów
+Add clips with Import, or drop files here|Importuj klipy lub przeciągnij tutaj
+Add clips from Media Storage to get started|Dodaj klipy z magazynu mediów
+No sound to show|Brak dźwięku
+No clip to grade|Brak klipu
+No Input|Brak wej.
+DURATION|CZAS
+File|Plik
+Export Audio|Eksport audio
+Data Rate|Bitrate
+Output Track 1|Ścieżka wyjścia 1
+Use unique filename|Unikalna nazwa
+Adds (1), (2) ... to the name instead of writing over a file.|Dodaje (1), (2)... zamiast nadpisywać.
+File type|Typ
+Whole timeline|Cała oś czasu
+In to out marks|Znaczniki In-Out
+Pixel aspect ratio|Proporcje pikseli
+Square|Kwadrat
+Cinemascope|Cinemascope
+Data Levels|Poz. danych
+Retain sub-black and super-white data|Zachowaj sub-czerń i super-biel
+Color Space Tag|Tag kolorów
+Gamma Tag|Tag gamma
+Data burn-in|Nakł. danych
+Same as project|Jak projekt
+Bypass re-encode when possible|Unikaj ponownego kodowania
+Use optimized media|Media zoptymalizowane
+Use proxy media|Media proxy
+Use render cached images|Użyj pamięci renderu
+Force sizing to highest quality|Skalowanie: najw. jakość
+Force debayer to highest quality|Debayer: najw. jakość
+Render All Video Tracks|Rend. ścieżki wideo
+Enable Flat Pass|Włącz Flat Pass
+visionOS Bypass|Bypass visionOS
+Disable sizing and blanking output|Wyłącz skalowanie i kadr.
+Trigger script at|Skrypt przy
+Start|Start
+of render job|zadania
+Export Subtitle|Eksport napisów
+As a separate file|Osobny plik
+Export As|Eksp. jako
+frames|klatki

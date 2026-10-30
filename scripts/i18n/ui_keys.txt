@@ -1,0 +1,201 @@
+Clips
+60 frames per second
+A video editor written in Rust for Windows, Linux, macOS and the web.
+Add Job
+Add to Render Queue
+Advanced Settings
+Archive Project
+Archive Project...
+Audio scrubbing (sound while the playhead is dragged)
+Auto
+Automatic
+Balanced
+Best
+Bins
+Browse
+Bus Sends
+Capture
+Changing the frame rate keeps every clip on the same frames.
+Chapters from Markers
+Choose a folder
+Click a command's keys, then press the key it should have. Escape gives up.
+Clip Name
+Clone
+Clone Tool
+Codec
+Col Boost
+Collections
+Contrast
+Control Room
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.
+Create an Album
+Curves - Custom
+Custom Export
+Decode Options
+Decode supported video using hardware acceleration
+Demo Project
+Drag photos into the Photo Album to start editing
+Drawn with
+Editing
+Effects In
+Embedded Audio
+Encoder
+Encoding Profile
+Entire Timeline
+Estimated File Size
+Every
+Every media file is where the project says it is.
+Export Video
+Fairlight
+File Name
+Filters
+Format
+Frame rate
+Frame reordering
+Free software under the GPL, version 3 or later.
+Full Frames
+Full Screen
+Fusion
+Gain
+Gamma
+Generator
+Graphics card
+Groups
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.
+Help
+Hi/Light
+High
+Hue
+Image
+Index
+Individual clips
+Input
+Integrated
+Key Frames
+Keywords
+L. Mix
+Layer
+Linked selection (picture and sound together)
+Loaded the demo project
+Local
+Location
+Loop playback
+Loudness
+Low
+Mark
+Media Management
+Media Source
+Media Storage
+Meters
+Mid/Detail
+Modifiers
+Monitor
+Monitor volume
+Native
+Network Optimization
+No jobs in Queue
+No jobs in queue
+No stills created
+Not reported
+Nothing to inspect
+Offset
+Open
+Order
+Parade
+Pause
+Photo
+Photo Album
+Pivot
+Playback
+Position lock
+Preset
+Primaries - Color Wheels
+Process Mode
+Project settings
+Projects
+Quality
+Quick Export
+Range
+Rate Control
+Relink Missing Media
+Relink Missing Media...
+Remove
+Render
+Render All
+Render Queue
+Render Settings
+Render Settings - Custom Export
+Reset
+Reset All
+Resolution
+Search
+Selection follows the playhead
+Settings
+Shad
+Short
+Short Max
+Single clip
+Smart Bins
+Snap to clips, markers and the playhead
+Source Color Space
+Source Gamma Space
+Subtitle Settings
+System
+System Preferences
+Tape
+Timeline Resolution
+Timeline proxy
+Tint
+Tools
+Track FX
+Transitions
+Trim
+Untitled
+Use vertical resolution
+Version 0.6.1
+Video
+View
+Waveform
+Workspace
+No clips in media pool
+Add clips with Import, or drop files here
+Add clips from Media Storage to get started
+No sound to show
+No clip to grade
+No Input
+DURATION
+File
+Export Audio
+Data Rate
+Output Track 1
+Use unique filename
+Adds (1), (2) ... to the name instead of writing over a file.
+File type
+Whole timeline
+In to out marks
+Pixel aspect ratio
+Square
+Cinemascope
+Data Levels
+Retain sub-black and super-white data
+Color Space Tag
+Gamma Tag
+Data burn-in
+Same as project
+Bypass re-encode when possible
+Use optimized media
+Use proxy media
+Use render cached images
+Force sizing to highest quality
+Force debayer to highest quality
+Render All Video Tracks
+Enable Flat Pass
+visionOS Bypass
+Disable sizing and blanking output
+Trigger script at
+Start
+of render job
+Export Subtitle
+As a separate file
+Export As
+frames

@@ -10,9 +10,8 @@
 //!
 //! The menus are translated where they are drawn (`tr`); the text of the pages, panels and windows
 //! is translated where it is painted (`paint`), once a frame, for the text that has a translation.
-//! Spanish, Portuguese, French, German and Italian have every menu entry and the text the pages show
-//! first (about 160 pieces of text); the other languages have the menu names and the Help menu so
-//! far, and what has no translation (yet) shows in English. The languages here are those the bundled
+//! Every language has every menu entry and the text the pages show first (about 190 pieces of text
+//! each); what has no translation (yet), such as a dialog or a tooltip, shows in English. The languages here are those the bundled
 //! font draws (Latin, Greek and Cyrillic scripts): Chinese, Japanese, Korean, Arabic, Hindi and the
 //! like need a font of their own first.
 
@@ -247,8 +246,9 @@ mod tests {
         assert_eq!(translate(Language::English, "Save Project"), "Save Project");
         assert_eq!(translate(Language::Spanish, "Save Project"), "Guardar proyecto");
         assert_eq!(translate(Language::French, "Quit"), "Quitter");
-        // Not in the table (yet): English, not blank.
-        assert_eq!(translate(Language::Dutch, "Save Project"), "Save Project");
+        assert_eq!(translate(Language::Dutch, "Save Project"), "Project opslaan");
+        // Not in the table: English, not blank.
+        assert_eq!(translate(Language::Dutch, "A new label"), "A new label");
         assert_eq!(translate(Language::Spanish, "No such label"), "No such label");
         assert_eq!(menu_name_in(Language::Spanish, "File"), "Arch.");
         assert_eq!(menu_name_in(Language::English, "File"), "File");

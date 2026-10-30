@@ -1,0 +1,188 @@
+Clips|Klipp
+60 frames per second|60 bilder/s
+Add Job|Lägg till
+Add to Render Queue|Till kön
+Advanced Settings|Avancerat
+Archive Project|Arkivera projekt
+Archive Project...|Arkivera projekt...
+Auto|Auto
+Automatic|Automatisk
+Balanced|Balans
+Best|Bäst
+Bins|Bins
+Browse|Bläddra
+Bus Sends|Bus-sändn.
+Capture|Inspel.
+Chapters from Markers|Kapitel från markörer
+Choose a folder|Välj mapp
+Clip Name|Klippnamn
+Clone|Klona
+Clone Tool|Klona
+Codec|Kodek
+Col Boost|Färgboost
+Collections|Samlingar
+Contrast|Kontrast
+Control Room|Kontrollrum
+Create an Album|Skapa album
+Curves - Custom|Kurvor - Egen
+Custom Export|Egen export
+Decode Options|Avkodning
+Demo Project|Demoprojekt
+Drag photos into the Photo Album to start editing|Dra foton till albumet för att börja
+Drawn with|Ritad med
+Editing|Edit
+Effects In|Effekter in
+Embedded Audio|Inbäddat ljud
+Encoder|Kodare
+Encoding Profile|Kodningsprofil
+Entire Timeline|Hela tidslinjen
+Estimated File Size|Uppsk. storlek
+Every|Var
+Export Video|Videoexport
+Fairlight|Fairlight
+File Name|Filnamn
+Filters|Filter
+Format|Format
+Frame rate|Bildfrekvens
+Frame reordering|Omordna bilder
+Full Frames|Hela bilder
+Full Screen|Helskärm
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Grafikkort
+Groups|Grupper
+Help|Hjälp
+Hi/Light|Högd.
+High|Hög
+Hue|Ton
+Image|Bild
+Index|Index
+Individual clips|Enskilda klipp
+Input|Ing.
+Integrated|Integrerad
+Key Frames|Nyckelbilder
+Keywords|Nyckelord
+L. Mix|L. Mix
+Layer|Lager
+Local|Lokal
+Location|Plats
+Loop playback|Loopa uppsp.
+Loudness|Ljudstyrka
+Low|Låg
+Mark|Mark.
+Media Management|Mediahantering
+Media Source|Mediekälla
+Media Storage|Medialagring
+Meters|Mätare
+Mid/Detail|Mitt/Det.
+Modifiers|Modif.
+Monitor|Monitor
+Monitor volume|Monitorvolym
+Native|Nativ
+Network Optimization|Nätverksopt.
+No jobs in Queue|Inga jobb
+No jobs in queue|Inga jobb
+No stills created|Inga stillbilder
+Not reported|Ej angivet
+Nothing to inspect|Inget att granska
+Offset|Offset
+Open|Öppna
+Order|Ordn.
+Parade|Parade
+Pause|Paus
+Photo|Foto
+Photo Album|Fotoalbum
+Pivot|Pivot
+Playback|Uppsp.
+Position lock|Positionslås
+Preset|Förinst.
+Primaries - Color Wheels|Primär - Färghjul
+Process Mode|Processläge
+Project settings|Projektinst.
+Projects|Projekt
+Quality|Kvalitet
+Quick Export|Snabbexport
+Range|Omr.
+Rate Control|Bitratekontroll
+Relink Missing Media|Länka om media
+Relink Missing Media...|Länka om media...
+Remove|Ta bort
+Render|Render
+Render All|Rendera allt
+Render Queue|Renderkö
+Render Settings|Renderinst.
+Render Settings - Custom Export|Render - Egen export
+Reset|Nollst.
+Reset All|Nollst. allt
+Resolution|Upplösning
+Search|Sök
+Settings|Inställn.
+Shad|Skug.
+Short|Kort
+Short Max|Kort max.
+Single clip|Enskilt klipp
+Smart Bins|Smarta bins
+Source Color Space|Källfärgrymd
+Source Gamma Space|Källgammarymd
+Subtitle Settings|Undertextinst.
+System|System
+System Preferences|Inställningar
+Tape|Band
+Timeline Resolution|Tidslinjeupplösning
+Timeline proxy|Tidslinjeproxy
+Tint|Ton
+Tools|Verkt.
+Track FX|Spår-FX
+Transitions|Övergångar
+Trim|Trim
+Untitled|Namnlös
+Use vertical resolution|Vertikal upplösning
+Version 0.6.1|Version 0.6.1
+Video|Video
+View|Visa
+Waveform|Vågform
+Workspace|Arbetsyta
+No clips in media pool|Inga klipp
+Add clips with Import, or drop files here|Importera klipp eller dra hit
+Add clips from Media Storage to get started|Lägg till klipp från Medialagring
+No sound to show|Inget ljud
+No clip to grade|Inget klipp
+No Input|Ingen ing.
+DURATION|LÄNGD
+File|Fil
+Export Audio|Exportera ljud
+Data Rate|Datahast.
+Output Track 1|Utgångsspår 1
+Use unique filename|Unikt namn
+Adds (1), (2) ... to the name instead of writing over a file.|Lägger till (1), (2)... i stället för att skriva över.
+File type|Typ
+Whole timeline|Hela tidslinjen
+In to out marks|In-Ut-markörer
+Pixel aspect ratio|Pixelproportion
+Square|Kvadrat
+Cinemascope|Cinemascope
+Data Levels|Datanivåer
+Retain sub-black and super-white data|Behåll sub-svart och super-vitt
+Color Space Tag|Färgrymdstagg
+Gamma Tag|Gammatagg
+Data burn-in|Inbränning
+Same as project|Som projektet
+Bypass re-encode when possible|Undvik omkodning
+Use optimized media|Optimerad media
+Use proxy media|Proxymedia
+Use render cached images|Använd rendercache
+Force sizing to highest quality|Skala i högsta kvalitet
+Force debayer to highest quality|Debayer högsta kvalitet
+Render All Video Tracks|Rendera alla videospår
+Enable Flat Pass|Aktivera Flat Pass
+visionOS Bypass|visionOS-bypass
+Disable sizing and blanking output|Stäng av skalning/beskärn.
+Trigger script at|Kör skript vid
+Start|Start
+of render job|av renderjobb
+Export Subtitle|Undertextexp.
+As a separate file|Separat fil
+Export As|Exp. som
+frames|bilder
