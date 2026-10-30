@@ -8,16 +8,24 @@
 //! tests here check what it wrote). The tables in this folder are made from
 //! `scripts/i18n/<code>.txt`; change those and run `python scripts/i18n/build.py <code>`.
 //!
-//! Only the menus are translated so far. Spanish, Portuguese, French, German and Italian have all
-//! their entries; the other languages have the menu names and the Help menu. The languages here
-//! are those the bundled font draws (Latin, Greek and Cyrillic scripts): Chinese, Japanese,
-//! Korean, Arabic, Hindi and the like need a font of their own first.
+//! The menus are translated where they are drawn (`tr`); the text of the pages, panels and windows
+//! is translated where it is painted (`paint`), once a frame, for the text that has a translation.
+//! Spanish, Portuguese, French, German and Italian have every menu entry and the text the pages show
+//! first (about 160 pieces of text); the other languages have the menu names and the Help menu so
+//! far, and what has no translation (yet) shows in English. The languages here are those the bundled
+//! font draws (Latin, Greek and Cyrillic scripts): Chinese, Japanese, Korean, Arabic, Hindi and the
+//! like need a font of their own first.
 
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicU8, Ordering};
 use std::sync::OnceLock;
 
+pub(crate) use paint::translate_frame;
+
+#[cfg(test)]
+mod collect;
 mod de;
+mod paint;
 mod es;
 mod fr;
 mod it;
@@ -111,20 +119,20 @@ impl Language {
     }
 
     /// The menu names (File, Edit, ...) and the entries, when it is not English.
-    fn data(self) -> Option<(&'static [&'static str; 13], Entries)> {
+    fn data(self) -> Option<(&'static [&'static str; 13], Entries, Entries)> {
         Some(match self {
             Self::English => return None,
-            Self::Spanish => (&es::MENUS, es::ENTRIES),
-            Self::Portuguese => (&pt::MENUS, pt::ENTRIES),
-            Self::French => (&fr::MENUS, fr::ENTRIES),
-            Self::German => (&de::MENUS, de::ENTRIES),
-            Self::Italian => (&it::MENUS, it::ENTRIES),
-            Self::Dutch => (&nl::MENUS, nl::ENTRIES),
-            Self::Polish => (&pl::MENUS, pl::ENTRIES),
-            Self::Turkish => (&tr::MENUS, tr::ENTRIES),
-            Self::Swedish => (&sv::MENUS, sv::ENTRIES),
-            Self::Russian => (&ru::MENUS, ru::ENTRIES),
-            Self::Ukrainian => (&uk::MENUS, uk::ENTRIES),
+            Self::Spanish => (&es::MENUS, es::ENTRIES, es::UI),
+            Self::Portuguese => (&pt::MENUS, pt::ENTRIES, pt::UI),
+            Self::French => (&fr::MENUS, fr::ENTRIES, fr::UI),
+            Self::German => (&de::MENUS, de::ENTRIES, de::UI),
+            Self::Italian => (&it::MENUS, it::ENTRIES, it::UI),
+            Self::Dutch => (&nl::MENUS, nl::ENTRIES, nl::UI),
+            Self::Polish => (&pl::MENUS, pl::ENTRIES, pl::UI),
+            Self::Turkish => (&tr::MENUS, tr::ENTRIES, tr::UI),
+            Self::Swedish => (&sv::MENUS, sv::ENTRIES, sv::UI),
+            Self::Russian => (&ru::MENUS, ru::ENTRIES, ru::UI),
+            Self::Ukrainian => (&uk::MENUS, uk::ENTRIES, uk::UI),
         })
     }
 }
@@ -175,7 +183,7 @@ pub(crate) fn translate(language: Language, label: &'static str) -> &'static str
 }
 
 pub(crate) fn menu_name_in(language: Language, name: &'static str) -> &'static str {
-    let Some((menus, _)) = language.data() else {
+    let Some((menus, _, _)) = language.data() else {
         return name;
     };
     MENU_NAMES
@@ -189,11 +197,27 @@ pub(crate) fn menu_name_in(language: Language, name: &'static str) -> &'static s
 fn table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
     static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 12] =
         [const { OnceLock::new() }; 12];
-    let (_, entries) = language.data()?;
+    let (_, entries, _) = language.data()?;
     Some(
         TABLES[usize::from(language.index())]
             .get_or_init(|| entries.iter().copied().collect()),
     )
+}
+
+/// The text of the pages and windows of a language by its English text, made once.
+fn ui_table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
+    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 12] =
+        [const { OnceLock::new() }; 12];
+    let (_, menus, ui) = language.data()?;
+    Some(TABLES[usize::from(language.index())].get_or_init(|| {
+        // A menu label is also text on a page ("Media", "Color"): one table for both.
+        menus.iter().chain(ui).copied().collect()
+    }))
+}
+
+/// Text painted on a page or in a window, in the language; `None` when it has no translation.
+pub(crate) fn translate_ui(language: Language, text: &str) -> Option<&'static str> {
+    ui_table(language)?.get(text).copied()
 }
 
 #[cfg(test)]
@@ -246,7 +270,7 @@ mod tests {
     #[test]
     fn every_translation_fits_where_the_english_label_sits() {
         for language in Language::ALL {
-            let Some((menus, entries)) = language.data() else {
+            let Some((menus, entries, _)) = language.data() else {
                 continue;
             };
             for (i, name) in menus.iter().enumerate() {
@@ -292,7 +316,7 @@ mod tests {
             collect(entries, &mut labels);
         }
         for language in Language::ALL {
-            let Some((_, entries)) = language.data() else {
+            let Some((_, entries, _)) = language.data() else {
                 continue;
             };
             for (english, _) in entries {
@@ -332,7 +356,7 @@ mod tests {
     #[test]
     fn a_translation_is_for_a_label_that_exists_once() {
         for language in Language::ALL {
-            let Some((_, entries)) = language.data() else {
+            let Some((_, entries, _)) = language.data() else {
                 continue;
             };
             let mut seen = std::collections::HashSet::new();

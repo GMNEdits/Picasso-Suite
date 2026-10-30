@@ -1,0 +1,159 @@
+Clips|Clip
+60 frames per second|60 fotogrammi/s
+A video editor written in Rust for Windows, Linux, macOS and the web.|Un editor video scritto in Rust per Windows, Linux, macOS e web.
+Add Job|Aggiungi
+Add to Render Queue|Aggiungi alla coda
+Advanced Settings|Impost. avanzate
+Archive Project|Archivia progetto
+Archive Project...|Archivia progetto...
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing audio (suono mentre trascini la testina)
+Auto|Auto
+Automatic|Automatico
+Balanced|Bilanciato
+Best|Top
+Bins|Bin
+Browse|Sfoglia
+Bus Sends|Mandate bus
+Capture|Cattura
+Changing the frame rate keeps every clip on the same frames.|Cambiare i fps tiene ogni clip sugli stessi fotogrammi.
+Chapters from Markers|Capitoli dai marcatori
+Choose a folder|Scegli cartella
+Click a command's keys, then press the key it should have. Escape gives up.|Clicca i tasti di un comando, poi premi il nuovo tasto. Esc annulla.
+Clip Name|Nome
+Clone|Clona
+Clone Tool|Clona
+Codec|Codec
+Col Boost|Boost col.
+Collections|Raccolte
+Contrast|Contrasto
+Control Room|Regia
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Copia i file usati dalle timeline in una cartella e vi scrive una copia del progetto che punta ad essi. Il progetto in modifica non cambia.
+Create an Album|Crea album
+Curves - Custom|Curve - Person.
+Custom Export|Export person.
+Decode Options|Decodifica
+Decode supported video using hardware acceleration|Decodifica video con accelerazione hardware
+Demo Project|Progetto demo
+Drag photos into the Photo Album to start editing|Trascina foto nell'album per iniziare
+Drawn with|Disegnato con
+Editing|Edit
+Effects In|Effetti in
+Embedded Audio|Audio incorp.
+Encoder|Encoder
+Encoding Profile|Profilo codifica
+Entire Timeline|Tutta timeline
+Estimated File Size|Dimensione stimata
+Every|Ogni
+Every media file is where the project says it is.|Tutti i media sono dove indica il progetto.
+Export Video|Esporta video
+Fairlight|Fairlight
+File Name|Nome file
+Filters|Filtri
+Format|Formato
+Frame rate|Fotogr./s
+Frame reordering|Riordino fotogr.
+Free software under the GPL, version 3 or later.|Software libero sotto GPL, versione 3 o successiva.
+Full Frames|Completi
+Full Screen|A schermo int.
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generatore
+Graphics card|Scheda video
+Groups|Gruppi
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 e VC-1 sono decodificati sulla scheda video se il driver può. Disattiva se i clip appaiono verdi o rotti. PICASSO_NO_HWACCEL=1 disattiva per una volta.
+Help|Aiuto
+Hi/Light|Luci
+High|Alto
+Hue|Tinta
+Image|Imm.
+Index|Indice
+Individual clips|Clip singoli
+Input|Ingr.
+Integrated|Integrato
+Key Frames|Keyframe
+Keywords|Parole
+L. Mix|Mix
+Layer|Livello
+Linked selection (picture and sound together)|Selezione collegata (immagine e suono)
+Loaded the demo project|Progetto demo caricato
+Local|Locale
+Location|Posizione
+Loop playback|Riprod. in loop
+Loudness|Loudness
+Low|Min.
+Mark|Segna
+Media Management|Gestione media
+Media Source|Origine
+Media Storage|Archivio
+Meters|Misur.
+Mid/Detail|Medi/Dett.
+Modifiers|Modific.
+Monitor|Monitor
+Monitor volume|Volume monitor
+Native|Nativo
+Network Optimization|Ottimiz. rete
+No jobs in Queue|Coda vuota
+No jobs in queue|Coda vuota
+No stills created|Nessun fermo
+Not reported|Non indicato
+Nothing to inspect|Niente da ispezionare
+Offset|Scarto
+Open|Apri
+Order|Ordine
+Parade|Parade
+Pause|Pausa
+Photo|Foto
+Photo Album|Album foto
+Pivot|Perno
+Playback|Riprod.
+Position lock|Blocco posiz.
+Preset|Preset
+Primaries - Color Wheels|Primari - Ruote colore
+Process Mode|Modo processo
+Project settings|Impost. progetto
+Projects|Progetti
+Quality|Qualità
+Quick Export|Export rapido
+Range|Range
+Rate Control|Controllo rate
+Relink Missing Media|Ricollega media
+Relink Missing Media...|Ricollega media...
+Remove|Rimuovi
+Render|Render
+Render All|Render tutto
+Render Queue|Coda di render
+Render Settings|Impost. render
+Render Settings - Custom Export|Render - Export person.
+Reset|Reset
+Reset All|Reset tutto
+Resolution|Risoluzione
+Search|Cerca
+Selection follows the playhead|Selez. segue la testina
+Settings|Impostaz.
+Shad|Ombre
+Short|Corto
+Short Max|Corto max.
+Single clip|Un clip
+Smart Bins|Bin smart
+Snap to clips, markers and the playhead|Aggancio a clip e marcatori
+Source Color Space|Spazio colore orig.
+Source Gamma Space|Spazio gamma orig.
+Subtitle Settings|Impost. sottotitoli
+System|Sistema
+System Preferences|Preferenze
+Tape|Nastro
+Timeline Resolution|Risoluz. timeline
+Timeline proxy|Proxy timeline
+Tint|Tinta
+Tools|Strum.
+Track FX|FX traccia
+Transitions|Transizioni
+Trim|Trim
+Untitled|Senza tit.
+Use vertical resolution|Usa risoluz. verticale
+Version 0.6.1|Versione 0.6.1
+Video|Video
+View|Vista
+Waveform|Forma d'onda
+Workspace|Spazio

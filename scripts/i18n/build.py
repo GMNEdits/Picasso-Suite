@@ -6,6 +6,7 @@ crates/picasso-ui/src/i18n/<code>.rs, and checks the fit rules the menus need:
   menu is that wide before it has a label), and never over 48.
 """
 import sys, pathlib
+from PIL import ImageFont
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = ROOT / 'scripts' / 'i18n'
@@ -16,6 +17,19 @@ MENU_NAMES = ['File', 'Edit', 'Trim', 'Timeline', 'Clip', 'Mark', 'View', 'Playb
               'Effects', 'Color', 'Audio', 'Workspace', 'Help']
 
 
+FONT = ImageFont.truetype(str(ROOT / 'crates' / 'picasso-ui' / 'assets' / 'fonts' / 'NotoSans-Regular.ttf'), 14)
+
+
+def width(text):
+    return FONT.getlength(text)
+
+
+def fits_page(english, shown):
+    # Text on a page is made smaller down to 3/4 when it is wider than the English; wider than that
+    # (a third more) would run into its neighbour.
+    return width(shown) <= width(english) * 1.33 + 2
+
+
 def entry_max(english):
     return min(max(len(english) + 6, -(-len(english) * 135 // 100), 20), 48)
 
@@ -24,6 +38,7 @@ def build(code):
     lines = (HERE / f'{code}.txt').read_text(encoding='utf-8').split('\n')
     assert lines[0] == '#menus', code
     i = lines.index('#entries')
+    u = lines.index('#ui') if '#ui' in lines else len(lines)
     menus = [l for l in lines[1:i] if l]
     assert len(menus) == 13, (code, len(menus))
     problems = []
@@ -32,7 +47,7 @@ def build(code):
             problems.append(f'menu {name} -> {short!r} is {len(short)} > {most}')
     pairs = []
     seen = set()
-    for l in lines[i + 1:]:
+    for l in lines[i + 1:u]:
         if not l.strip():
             continue
         en, tr = l.split('|', 1)
@@ -43,10 +58,23 @@ def build(code):
             problems.append(f'{en!r} -> {tr!r} is {len(tr)} > {entry_max(en)}')
         pairs.append((en, tr))
     missing = [e for e in ENGLISH if e not in seen]
-    return menus, pairs, problems, missing
+    ui = []
+    ui_file = HERE / f'{code}.ui.txt'
+    ui_lines = ui_file.read_text(encoding='utf-8').split('\n') if ui_file.exists() else lines[u + 1:]
+    collected = set((HERE / 'ui_labels.txt').read_text(encoding='utf-8').split('\n'))
+    for l in ui_lines:
+        if not l.strip():
+            continue
+        en, tr = l.split('|', 1)
+        if not fits_page(en, tr):
+            problems.append(f'ui text {en!r} -> {tr!r} is {width(tr):.0f}px, the English {width(en):.0f}px')
+        if en not in collected:
+            problems.append(f'ui text {en!r} is not shown anywhere (scripts/i18n/ui_labels.txt)')
+        ui.append((en, tr))
+    return menus, pairs, ui, problems, missing
 
 
-def rust(code, menus, pairs):
+def rust(code, menus, pairs, ui):
     esc = lambda s: s.replace(chr(92), chr(92) * 2).replace(chr(34), chr(92) + chr(34))
     out = [f'//! The menus in {code}. Made from scripts/i18n/{code}.txt by scripts/i18n/build.py.', '']
     out.append('pub(super) const MENUS: [&str; 13] = [')
@@ -54,6 +82,9 @@ def rust(code, menus, pairs):
     out.append('];\n')
     out.append('pub(super) const ENTRIES: &[(&str, &str)] = &[')
     out += [f'    ("{esc(e)}", "{esc(t)}"),' for e, t in pairs]
+    out.append('];\n')
+    out.append('pub(super) const UI: &[(&str, &str)] = &[')
+    out += [f'    ("{esc(e)}", "{esc(t)}"),' for e, t in ui]
     out.append('];')
     return '\n'.join(out) + '\n'
 
@@ -62,10 +93,10 @@ if __name__ == '__main__':
     bad = False
     OUT.mkdir(parents=True, exist_ok=True)
     for code in sys.argv[1:]:
-        menus, pairs, problems, missing = build(code)
-        print(code, len(pairs), 'entries,', len(missing), 'not translated')
+        menus, pairs, ui, problems, missing = build(code)
+        print(code, len(pairs), 'entries,', len(missing), 'not translated,', len(ui), 'texts of the pages')
         for p in problems:
             print('  TOO LONG:', p)
             bad = True
-        (OUT / f'{code}.rs').write_text(rust(code, menus, pairs), encoding='utf-8', newline='\n')
+        (OUT / f'{code}.rs').write_text(rust(code, menus, pairs, ui), encoding='utf-8', newline='\n')
     sys.exit(1 if bad else 0)

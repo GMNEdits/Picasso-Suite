@@ -2750,7 +2750,8 @@ impl StudioApp {
         c.band(720.0, 693.0, 1439.0, 717.0, BAR);
         // The mode being edited: 0 the custom curves, 1..=`HUE_MODES` a hue/sat/lum curve.
         let mode = self.color.curve_mode.min(HUE_MODES);
-        let hue_mode = (1..=HUE_MODES).contains(&mode).then_some(mode - 1);
+        // (`then_some` would subtract first, and mode 0 has nothing to subtract from.)
+        let hue_mode = mode.checked_sub(1);
         let title = match hue_mode {
             None => "Curves - Custom".to_string(),
             Some(m) => format!("Curves - {}", HUE_MODE_NAMES[m]),

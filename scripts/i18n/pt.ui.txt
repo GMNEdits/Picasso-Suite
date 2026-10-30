@@ -1,0 +1,159 @@
+Clips|Clipes
+60 frames per second|60 fotogramas/s
+A video editor written in Rust for Windows, Linux, macOS and the web.|Um editor de vídeo escrito em Rust para Windows, Linux, macOS e web.
+Add Job|Adicionar
+Add to Render Queue|Adic. à fila
+Advanced Settings|Def. avançadas
+Archive Project|Arquivar projeto
+Archive Project...|Arquivar projeto...
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing áudio (som ao arrastar o cursor)
+Auto|Auto
+Automatic|Automático
+Balanced|Equilibrado
+Best|Top
+Bins|Bins
+Browse|Procurar
+Bus Sends|Envios a bus
+Capture|Captura
+Changing the frame rate keeps every clip on the same frames.|Mudar os fps mantém cada clipe nos mesmos fotogramas.
+Chapters from Markers|Capítulos de marcadores
+Choose a folder|Escolher pasta
+Click a command's keys, then press the key it should have. Escape gives up.|Clique nas teclas de um comando e prima a nova tecla. Esc cancela.
+Clip Name|Nome
+Clone|Clonar
+Clone Tool|Clonar
+Codec|Codec
+Col Boost|Realce cor
+Collections|Coleções
+Contrast|Contraste
+Control Room|Sala controlo
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Copia os ficheiros que as linhas do tempo usam para uma pasta e escreve lá uma cópia do projeto que aponta para eles. O projeto em edição não muda.
+Create an Album|Criar álbum
+Curves - Custom|Curvas - Person.
+Custom Export|Export. person.
+Decode Options|Descodificação
+Decode supported video using hardware acceleration|Descodificar vídeo com aceleração por hardware
+Demo Project|Projeto demo
+Drag photos into the Photo Album to start editing|Arraste fotos para o álbum para começar
+Drawn with|Feito com
+Editing|Edição
+Effects In|Efeitos ent.
+Embedded Audio|Áudio incorp.
+Encoder|Codific.
+Encoding Profile|Perfil de codificação
+Entire Timeline|Toda a linha
+Estimated File Size|Tamanho estimado
+Every|Cada
+Every media file is where the project says it is.|Todos os ficheiros estão onde o projeto indica.
+Export Video|Exportar vídeo
+Fairlight|Fairlight
+File Name|Nome
+Filters|Filtros
+Format|Formato
+Frame rate|Fotogramas/s
+Frame reordering|Reordenar fotogramas
+Free software under the GPL, version 3 or later.|Software livre sob a GPL, versão 3 ou posterior.
+Full Frames|Completos
+Full Screen|Ecrã inteiro
+Fusion|Fusion
+Gain|Gan.
+Gamma|Gama
+Generator|Gerador
+Graphics card|Placa gráfica
+Groups|Grupos
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 e VC-1 são descodificados na placa gráfica se o controlador puder. Desligue se os clipes saírem verdes ou partidos. PICASSO_NO_HWACCEL=1 desliga uma vez.
+Help|Ajuda
+Hi/Light|Luzes
+High|Alto
+Hue|Matiz
+Image|Imagem
+Index|Índice
+Individual clips|Clipes soltos
+Input|Entr.
+Integrated|Integrado
+Key Frames|Keyframes
+Keywords|Palavras
+L. Mix|Mistura
+Layer|Cam.
+Linked selection (picture and sound together)|Seleção ligada (imagem e som)
+Loaded the demo project|Projeto demo carregado
+Local|Local
+Location|Local
+Loop playback|Repr. em ciclo
+Loudness|Sonoridade
+Low|Baixo
+Mark|Marca
+Media Management|Gestão de mídia
+Media Source|Origem
+Media Storage|Armazenamento
+Meters|Medid.
+Mid/Detail|Médios
+Modifiers|Modific.
+Monitor|Monitor
+Monitor volume|Volume monitor
+Native|Nativo
+Network Optimization|Otimiz. de rede
+No jobs in Queue|Fila vazia
+No jobs in queue|Fila vazia
+No stills created|Sem imagens fixas
+Not reported|Não indicado
+Nothing to inspect|Nada a inspecionar
+Offset|Desvio
+Open|Abrir
+Order|Ordem
+Parade|Parade
+Pause|Pausa
+Photo|Foto
+Photo Album|Álbum de fotos
+Pivot|Pivô
+Playback|Reprod.
+Position lock|Bloq. posição
+Preset|Predef.
+Primaries - Color Wheels|Primárias - Rodas de cor
+Process Mode|Modo processo
+Project settings|Def. do projeto
+Projects|Projetos
+Quality|Qualid.
+Quick Export|Export. rápida
+Range|Faixa
+Rate Control|Controlo taxa
+Relink Missing Media|Religar mídia
+Relink Missing Media...|Religar mídia...
+Remove|Remover
+Render|Render
+Render All|Render tudo
+Render Queue|Fila de render
+Render Settings|Def. de render
+Render Settings - Custom Export|Def. - Export. person.
+Reset|Repor
+Reset All|Repor tudo
+Resolution|Resolução
+Search|Procurar
+Selection follows the playhead|Seleção segue o cursor
+Settings|Definições
+Shad|Somb.
+Short|Curto
+Short Max|Curto máx.
+Single clip|Um clipe
+Smart Bins|Bins intelig.
+Snap to clips, markers and the playhead|Ímã a clipes e marcadores
+Source Color Space|Espaço cor origem
+Source Gamma Space|Espaço gama origem
+Subtitle Settings|Def. de legendas
+System|Sistema
+System Preferences|Preferências
+Tape|Fita
+Timeline Resolution|Resolução da linha
+Timeline proxy|Proxy da linha
+Tint|Tom
+Tools|Ferr.
+Track FX|FX da faixa
+Transitions|Transições
+Trim|Corte
+Untitled|Sem título
+Use vertical resolution|Usar resolução vertical
+Version 0.6.1|Versão 0.6.1
+Video|Vídeo
+View|Ver
+Waveform|Onda
+Workspace|Espaço

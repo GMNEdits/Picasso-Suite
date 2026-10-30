@@ -25,3 +25,6 @@ pub(super) const ENTRIES: &[(&str, &str)] = &[
     ("About Picasso Suite", "Om Picasso Suite"),
     ("Language", "Språk"),
 ];
+
+pub(super) const UI: &[(&str, &str)] = &[
+];

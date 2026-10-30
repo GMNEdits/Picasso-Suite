@@ -1,0 +1,390 @@
++
++9
+-
+--
+---
+-10
+-100
+-15
+-18
+-20
+-30
+-40
+-5
+-50
+-9
+...
+0
+0 Clips
+0.0
+0.00
+0.435
+00:00:00:00
+00:00:04:00
+00:00:12:00
+00:59:58:00
+01
+01:00:00:00
+01:00:01:06
+01:00:02:00
+01:00:02:13
+01:00:03:20
+01:00:05:03
+01:00:06:09
+01:00:07:16
+01:00:08:00
+01:00:08:23
+01:00:10:00
+01:00:10:06
+01:00:11:12
+01:00:12:00
+01:00:16:00
+01:00:20:00
+01:00:24:00
+01:00:30:00
+01:00:32:00
+01:00:40:00
+01:00:48:00
+02
+03
+1
+1.00
+1.000
+10
+100
+100%
+100.00
+1023
+1080
+11
+12
+128
+13
+14
+15
+16
+1920
+2
+20
+22%
+24
+25.00
+256
+26%
+27%
+3
+3 Clips
+30
+32%
+33%
+384
+3D
+4
+40
+5
+5% - 1637 MB
+50
+50.0
+50.00
+512
+5m
+6
+60
+60 frames per second
+640
+7
+70
+75.48 MB
+768
+8
+80
+81%
+896
+9
+90
+95.0
+>
+A
+A video editor written in Rust for Windows, Linux, macOS and the web.
+ADR
+About Picasso Suite
+Add Job
+Add to Render Queue
+Advanced Settings
+Archive Project
+Archive Project...
+Audio
+Audio scrubbing (sound while the playhead is dragged)
+Auto
+Automatic
+B
+B1
+BS.1770-1 (LU)
+Balanced
+Best
+Bins
+Browse
+Bus 1
+Bus Sends
+Bus1
+C:\
+C:\Users\Utilizador
+Capture
+Changing the frame rate keeps every clip on the same frames.
+Chapters from Markers
+Choose a folder
+Click a command's keys, then press the key it should have. Escape gives up.
+Clip
+Clip Name
+Clips
+Clone
+Clone Tool
+Codec
+Col Boost
+Collections
+Color
+Color Bars
+Color Bars  00:04:00
+Contrast
+Control Room
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.
+Create an Album
+Ctrl+I
+Ctrl+N
+Ctrl+O
+Ctrl+S
+Ctrl+Shift+I
+Ctrl+Shift+S
+Curves - Custom
+Custom Export
+Cut
+D:\
+DIM
+DURATION
+Decode Options
+Decode supported video using hardware acceleration
+Default
+Deliver
+Demo Project
+Discord_Demo
+Drag photos into the Photo Album to start editing
+Drawn with
+Dynamics
+E:\
+EQ
+Edit
+Editing
+Effects
+Effects In
+Eighth
+Embedded Audio
+Encoder
+Encoding Profile
+Entire Timeline
+Estimated File Size
+Every
+Every media file is where the project says it is.
+Export
+Export Project...
+Export Video
+F:\
+FORMAT
+Fairlight
+File
+File Name
+Filters
+Fit
+Folder as Bin...
+Format
+Frame rate
+Frame reordering
+Free software under the GPL, version 3 or later.
+Full Frames
+Full HD 1920 x 1080
+Full Screen
+Fusion
+G
+G:\
+Gain
+Gallery
+Gamma
+Generator
+Graphics card
+Groups
+H.264
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.
+H.S.
+HDR
+HQ
+Half
+Help
+Hi/Light
+High
+Hue
+IN
+Image
+Import
+Import Project...
+In
+Index
+Individual clips
+Input
+Inspector
+Integrated
+Key Frames
+Keyboard Customization
+Keyframes
+Keywords
+L. Mix
+L.S.
+LOG
+LUTs
+Layer
+Lift
+Lightbox
+Linked selection (picture and sound together)
+Loaded the demo project
+Local
+Location
+Loop playback
+Loudness
+Low
+M
+M...
+MP4
+Mark
+Master
+Media
+Media Management
+Media Pool
+Media Source
+Media Storage
+Media...
+MediaIn1: Color Bars
+MediaOut1
+Metadata
+Meters
+Mid/Detail
+Mixer
+Modifiers
+Monitor
+Monitor volume
+Native
+Network Optimization
+New Project
+No jobs in Queue
+No jobs in queue
+No stills created
+Nodes
+Not reported
+Nothing to inspect
+OUT
+Off
+Offset
+Open
+Open Project...
+Order
+POI
+Pan
+Parade
+Pause
+Photo
+Photo Album
+Picasso Suite
+Picasso Suite 0.6.1
+Pivot
+Playback
+Playback: 24 frames/sec
+Position lock
+Preset
+Primaries - Color Wheels
+Process Mode
+Project Manager
+Project settings
+Projects
+Quality
+Quarter
+Quick Export
+R
+RAW
+Range
+Rate Control
+Relink Missing Media
+Relink Missing Media...
+Remove
+Render
+Render All
+Render Queue
+Render Settings
+Render Settings - Custom Export
+Reset
+Reset All
+Resolution
+Revert to Last Saved Version
+Sat
+Save Copy As...
+Save Project
+Save Project As...
+Scopes
+Search
+Selection follows the playhead
+Settings
+Shad
+Shift+1
+Short
+Short Max
+Single clip
+Smart Bins
+Snap to clips, markers and the playhead
+Soft Clip
+Sound Library
+Source Color Space
+Source Gamma Space
+Spline
+Subtitle Settings
+Subtitle...
+Sunset
+Sunset  00:04:00
+Sync Bin
+System
+System Preferences
+T
+TCG 01:00:00:00
+TP
+Tape
+Teal
+Teal  00:04:00
+Temp
+Tim...e 1
+Timeline
+Timeline 1
+Timeline Resolution
+Timeline proxy
+Timeline: AAF, EDL, XML...
+Timeline: EDL...
+Timeline: OpenTimelineIO...
+Timeline: XML...
+Tint
+Titles
+Tools
+Track FX
+Transitions
+Trim
+Untitled
+Use vertical resolution
+V1
+V2
+Version 0.6.1
+Video
+Video 1
+Video 2
+View
+Waveform
+Workspace
+Y
+[Main]: 1920x1080 float16
+frames
+fx
+i
+px
+x

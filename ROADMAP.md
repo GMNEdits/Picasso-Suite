@@ -71,7 +71,7 @@ Status at 0.6.1.
 - [x] Playback: the graphics card is used for a file only when it is faster than the processor (timed while the file plays, kept for the run); Direct3D 11 was slower than the processor for 10-bit 4K HEVC
 - [x] Editing: Timeline > New Effects Clip (`Alt+Shift+E`; a transparent clip on a free video track whose grade, effects, transform, opacity and blend mode apply to the composite of the tracks below; one undo, adds no timeline; written to OpenTimelineIO, left out of XML and AAF)
 - [x] Interface: "Exit Picasso Suite?" when the window is closed with unsaved changes (Exit without saving, or Save Project and then exit), in the same box as the frame rate question
-- [x] Interface: Help > Language: the menus in Español, Português, Français, Deutsch, Italiano, Nederlands, Polski, Türkçe, Svenska, Русский and Українська, English (Default) first, kept for the next start; a translation too long for its place is a short form (`scripts/i18n`)
+- [x] Interface: Help > Language: the menus and pages in Español, Português, Français, Deutsch, Italiano, Nederlands, Polski, Türkçe, Svenska, Русский and Українська, English (Default) first, kept for the next start; a translation too long for its place is a short form (`scripts/i18n`)
 
 ## To do
 
@@ -93,4 +93,4 @@ Status at 0.6.1.
 - [ ] Hardware: try the NVIDIA, Intel, Apple and VA-API encoders and decoding on those cards (only AMD on Windows is tried)
 - [ ] Interchange: try the AAF in Media Composer, Pro Tools and Premiere, and the XML in Final Cut Pro 7, Premiere and Resolve (CI checks every export with pyaaf2 and an XML parser, and the AAF reader reads an Avid-style file written by pyaaf2; the editors themselves need testers)
 - [ ] Interchange: speed changes, reverse and freeze in AAF (written at normal speed, read without them), markers in AAF, nested sequences in OTIO, XML and AAF imports; OTIO export from `picasso-bridge`
-- [ ] Interface: translate the windows and the pages (only the menus are), finish the entries of Nederlands, Polski, Türkçe, Svenska, Русский and Українська, and add Chinese, Japanese, Korean, Arabic and Hindi (they need a font of their own)
+- [ ] Interface: more translations: the text of dialogs, tooltips and the rest of the pages (about 160 pieces of text of the pages are done in Español, Português, Français, Deutsch and Italiano), the other six languages, and Chinese, Japanese, Korean, Arabic and Hindi (they need a font of their own)

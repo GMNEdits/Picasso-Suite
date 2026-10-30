@@ -1481,6 +1481,8 @@ impl StudioApp {
         if !ctx.input(|i| i.pointer.any_down()) {
             self.session.end_gesture();
         }
+        // The text of the pages and windows, in the language chosen (Help > Language).
+        crate::i18n::translate_frame(&ctx);
     }
 
     /// Lays out the window: the rows measured from the reference, then the page in the middle.
