@@ -17,6 +17,7 @@ pub mod multicam;
 pub mod otio;
 pub mod project;
 pub mod session;
+pub mod sync;
 pub mod time;
 pub mod xmeml;
 

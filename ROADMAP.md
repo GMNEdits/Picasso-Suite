@@ -73,13 +73,14 @@ Status at 0.6.2.
 - [x] Interface: "Exit Picasso Suite?" when the window is closed with unsaved changes (Exit without saving, or Save Project and then exit), in the same box as the frame rate question
 - [x] Interface: Help > Language: the menus and the pages in Español, Português, Français, Deutsch, Italiano, Nederlands, Polski, Türkçe, Svenska, Norsk, Русский, Українська, Ελληνικά, Dansk, Suomi, Bahasa Indonesia, Čeština, Slovenčina, Română, Magyar, Hrvatski, Bosanski, Српски, Català, Eesti, Latviešu, Lietuvių, Íslenska, Lëtzebuergesch, Shqip, Filipino, Tiếng Việt, 한국어, বাংলা, ไทย, 中文, 日本語, العربية and हिन्दी, English (Default) first, kept for the next start; a translation is never wider than the English, a long word is a short form (`scripts/i18n`)
 - [x] Performance: Optimised Media: small H.264 copies of video files (1280 px, a key frame every 8 pictures) in the data folder, used by the viewer and the timeline with Playback > Use Optimised Media; File > Media Management lists, makes and deletes them
+- [x] Editing: Clip > Auto Align Clips > Based on Waveform (GCC-PHAT on the voice band; the earliest clip stays, one undo step, refused when no sound is clearly shared)
 
 ## To do
 
 - [ ] Interface density: finish the pages measured on the 1080p screenshots (`docs/reference/resolve-1080p`). Done: page bar, labelled top toolbars, Cut, Edit, Fusion, Fairlight, Photo, Color, Media, Deliver. Every page is at Resolve's 1080p size; next, check the same pages at 4K and at small windows
 - [ ] Deliver: IMF Generic and Pro Tools presets (listed, greyed out) need an MXF writer and AAF with embedded or rendered sound
 - [ ] Color: splitter/combiner nodes, viewer split/wipe, window tracking, magic mask, polygon and B-spline masks, Paint and particle tools
-- [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, timeline in a new window
+- [ ] Editing: Trim Editor window, JKL in dynamic trim, timeline in a new window, auto align by waveform for clips at another speed, reversed or frozen
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
 - [ ] Performance: optimised media's menu items and Media Management section are translated (the Cancel button and the "Read as it is" state are done: a copy can be stopped, and a variable frame rate file is read as it is)

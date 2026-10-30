@@ -1014,6 +1014,7 @@ impl StudioApp {
             | Act::MulticamViewer
             | Act::SetClipColor(_)
             | Act::NormalizeAudio => self.target_clip().is_some(),
+            Act::AutoAlignWaveform => self.can_align_by_waveform(),
             Act::AutoAlignTimecode => {
                 let ids = self.selected_ids();
                 ids.len() >= 2
@@ -1590,6 +1591,7 @@ impl StudioApp {
             Act::SetClipColor(color) => self.set_clip_color(color),
             Act::NormalizeAudio => self.extra.normalize = Some(-9.0),
             Act::AutoAlignTimecode => self.align_by_timecode(),
+            Act::AutoAlignWaveform => self.align_by_waveform(),
             Act::ExportEdl => self.export_edl(ctx),
             Act::ExportOtio => self.export_otio(ctx),
             Act::ExportXml(premiere) => self.export_xml(ctx, premiere),

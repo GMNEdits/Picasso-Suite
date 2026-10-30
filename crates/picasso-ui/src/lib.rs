@@ -56,6 +56,7 @@ mod source_viewer;
 mod subtitles;
 mod theme;
 mod timeline;
+mod waveform_align;
 mod track_fx;
 #[cfg(not(target_arch = "wasm32"))]
 mod update;

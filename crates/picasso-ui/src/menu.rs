@@ -188,6 +188,7 @@ pub(crate) enum Act {
     SetClipColor(Option<u8>),
     NormalizeAudio,
     AutoAlignTimecode,
+    AutoAlignWaveform,
     ExportEdl,
     ExportOtio,
     /// The `xmeml` timeline format (true: named for the Premiere XML render preset, which
@@ -535,7 +536,7 @@ const CLIP: &[Entry] = &[
         "Auto Align Clips",
         &[
             item("Based on Timecode", &[], Act::AutoAlignTimecode),
-            planned("Based on Waveform", ""),
+            item("Based on Waveform", &[], Act::AutoAlignWaveform),
         ],
     ),
     SEP,

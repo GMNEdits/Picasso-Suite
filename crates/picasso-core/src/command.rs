@@ -503,6 +503,11 @@ pub enum Command {
     AlignClips {
         clips: Vec<ClipId>,
     },
+    /// Moves each clip to the frame given, and its linked sound by the same distance: what
+    /// Auto Align by waveform decides from the sound, which the project does not hear.
+    PlaceClips {
+        starts: Vec<(ClipId, u64)>,
+    },
 }
 
 impl Command {
@@ -576,6 +581,7 @@ impl Command {
             Self::SetMediaTimecode { .. } => "media.set_timecode",
             Self::RelinkMedia { .. } => "media.relink",
             Self::AlignClips { .. } => "clip.align",
+            Self::PlaceClips { .. } => "clip.place",
             Self::CreateCompound { .. } => "clip.create_compound",
             Self::CreateEffectsClip { .. } => "clip.create_effects_clip",
             Self::DecomposeCompound { .. } => "clip.decompose_compound",
@@ -666,6 +672,7 @@ impl Command {
             Self::SetMediaTimecode { .. } => "Media timecode",
             Self::RelinkMedia { .. } => "Relink media",
             Self::AlignClips { .. } => "Align by timecode",
+            Self::PlaceClips { .. } => "Align by waveform",
             Self::CreateCompound { .. } => "Compound clip",
             Self::CreateEffectsClip { .. } => "Effects clip",
             Self::DecomposeCompound { .. } => "Decompose in place",
@@ -1289,6 +1296,7 @@ impl Command {
                 Ok(Outcome::Nothing)
             }
             Self::AlignClips { clips } => align_clips(p, &clips),
+            Self::PlaceClips { starts } => place_clips(p, &starts),
             Self::CreateCompound { clips, name } => create_compound(p, &clips, name),
             Self::CreateEffectsClip { start, name } => create_effects_clip(p, start, name),
             Self::DecomposeCompound { clip } => decompose_compound(p, clip),
@@ -2870,19 +2878,44 @@ fn align_clips(p: &mut Project, clips: &[ClipId]) -> Result<Outcome, EditError> 
         .map(|(id, abs)| (*abs, p.clip(*id).map_or(0, |(_, c)| c.start)))
         .min_by_key(|(abs, _)| *abs)
         .ok_or(EditError::Invalid("aligning needs two clips or more"))?;
+    let mut targets: Vec<(ClipId, u64)> = Vec::with_capacity(timed.len());
+    for (id, abs) in &timed {
+        let start = anchor_start
+            .checked_add(abs - anchor_abs)
+            .ok_or(EditError::OutOfRange)?;
+        targets.push((*id, start));
+    }
+    move_groups(p, &targets)
+}
+
+/// Moves each clip to the frame given and its linked sound by the same distance, all or nothing.
+fn place_clips(p: &mut Project, starts: &[(ClipId, u64)]) -> Result<Outcome, EditError> {
+    let mut ids: Vec<ClipId> = starts.iter().map(|(id, _)| *id).collect();
+    ids.sort_by_key(|c| c.0);
+    ids.dedup();
+    if ids.len() < 2 || ids.len() != starts.len() {
+        return Err(EditError::Invalid("placing needs two clips or more, each once"));
+    }
+    for id in &ids {
+        editable(p, *id)?;
+    }
+    move_groups(p, starts)
+}
+
+/// The moving of [`align_clips`] and [`place_clips`]: every clip goes to its frame, with the
+/// clips it is linked to, or none moves.
+fn move_groups(p: &mut Project, targets: &[(ClipId, u64)]) -> Result<Outcome, EditError> {
     let mut q = p.clone();
     // Take every clip out first, so one on its way cannot overlap one still to move. A clip's
     // linked sound goes with it, by the same distance.
-    let mut moving: Vec<(TrackId, Clip, u64)> = Vec::with_capacity(timed.len());
+    let mut moving: Vec<(TrackId, Clip, u64)> = Vec::with_capacity(targets.len());
     let mut taken: Vec<ClipId> = Vec::new();
-    for (id, abs) in &timed {
+    for (id, start) in targets {
+        let start = *start;
         let Some((_, c)) = q.clip(*id) else {
             continue;
         };
         let from = c.start;
-        let start = anchor_start
-            .checked_add(abs - anchor_abs)
-            .ok_or(EditError::OutOfRange)?;
         let mut group = vec![*id];
         group.extend(q.partners(*id));
         for cid in group {
@@ -6298,6 +6331,59 @@ mod tests {
             refused(&mut p, Command::AlignClips { clips: vec![a] }),
             EditError::Invalid("aligning needs two clips or more")
         );
+    }
+
+    #[test]
+    fn clips_are_placed_where_the_sound_says_and_the_linked_sound_goes_along() {
+        let mut p = Project::new("place");
+        let v1 = p.tracks[0].id;
+        let v2 = p.tracks[1].id;
+        let a = timed_clip(&mut p, v1, None, 100, 0);
+        let b = timed_clip(&mut p, v2, None, 400, 0);
+        Command::PlaceClips {
+            starts: vec![(a, 100), (b, 130)],
+        }
+        .apply(&mut p)
+        .unwrap();
+        assert_eq!(p.clip(a).unwrap().1.start, 100);
+        assert_eq!(p.clip(b).unwrap().1.start, 130);
+        // One undo step brings it back.
+        let mut q = Project::new("place");
+        let (w1, w2) = (q.tracks[0].id, q.tracks[1].id);
+        let a = timed_clip(&mut q, w1, None, 0, 0);
+        let b = timed_clip(&mut q, w2, None, 50, 0);
+        let mut session = crate::session::Session::new(q);
+        session
+            .dispatch(Command::PlaceClips {
+                starts: vec![(a, 0), (b, 10)],
+            })
+            .unwrap();
+        assert_eq!(session.project().clip(b).unwrap().1.start, 10);
+        assert!(session.undo());
+        assert_eq!(session.project().clip(b).unwrap().1.start, 50);
+    }
+
+    #[test]
+    fn placing_needs_two_different_clips_and_overlaps_are_refused() {
+        let mut p = Project::new("place");
+        let v1 = p.tracks[0].id;
+        let a = timed_clip(&mut p, v1, None, 0, 0);
+        let b = timed_clip(&mut p, v1, None, 200, 0);
+        assert_eq!(
+            refused(&mut p, Command::PlaceClips { starts: vec![(a, 5)] }),
+            EditError::Invalid("placing needs two clips or more, each once")
+        );
+        assert_eq!(
+            refused(&mut p, Command::PlaceClips { starts: vec![(a, 5), (a, 9)] }),
+            EditError::Invalid("placing needs two clips or more, each once")
+        );
+        // On one track the second would land on the first: nothing moves at all.
+        assert_eq!(
+            refused(&mut p, Command::PlaceClips { starts: vec![(a, 0), (b, 10)] }),
+            EditError::Overlap
+        );
+        assert_eq!(p.clip(a).unwrap().1.start, 0);
+        assert_eq!(p.clip(b).unwrap().1.start, 200);
     }
 
     #[test]
