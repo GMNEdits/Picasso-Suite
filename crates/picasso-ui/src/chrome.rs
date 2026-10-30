@@ -297,9 +297,15 @@ impl StudioApp {
                 let room = s.r(0.0, 0.0, room, 0.0).width();
                 menu_name_size(ui, shown, room)
             };
+            // In a layer above the pages: the Media and Deliver pages are layers of their own, and
+            // a layer over the title row would take the clicks the menus are meant to get.
             ui.scope_builder(
                 UiBuilder::new()
                     .max_rect(rect)
+                    .layer_id(egui::LayerId::new(
+                        egui::Order::Foreground,
+                        egui::Id::new(("menu_row", n)),
+                    ))
                     .layout(Layout::left_to_right(Align::Center)),
                 |ui| {
                     let style = ui.style_mut();

@@ -468,3 +468,49 @@ fn every_character_of_every_language_has_a_glyph_in_the_fonts_bundled() {
     }
     assert!(missing.is_empty(), "characters no bundled font draws:\n{missing}");
 }
+
+#[test]
+fn every_menu_of_the_title_row_opens_on_every_page() {
+    use crate::i18n::{CHANGING, Language};
+    let _only = CHANGING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    let pages = [Page::Media, Page::Cut, Page::Edit, Page::Capture, Page::Color, Page::Effects, Page::Audio, Page::Deliver];
+    for language in [Language::English, Language::Spanish] {
+        for page in pages {
+            let ctx = Context::default();
+            let mut app = StudioApp::new(&ctx);
+            app.manager.open = false;
+            app.load_demo();
+            app.page = page;
+            crate::i18n::set(language);
+            crate::i18n::sync_fonts(&ctx);
+            let size = egui::vec2(1920.0, 1080.0);
+            let mut t = 0.0f64;
+            let mut run = |app: &mut StudioApp, events: Vec<egui::Event>| {
+                t += 0.016;
+                let input = RawInput { screen_rect: Some(Rect::from_min_size(Pos2::ZERO, size)), events, time: Some(t), ..RawInput::default() };
+                let mut out = ctx.run_ui(input, |ui| app.ui(ui));
+                out.textures_delta.clear();
+            };
+            for _ in 0..4 { run(&mut app, vec![]); }
+            let mut bad = vec![];
+            for (n, x) in [216.0f32, 267.0, 322.0, 384.0, 480.0, 535.0, 601.0, 665.0, 763.0, 842.0, 911.0, 1003.0, 1122.0].into_iter().enumerate() {
+                let p = Pos2::new(x + 14.0, 19.0);
+                let before = ctx.memory(|m| m.layer_ids().count());
+                for _ in 0..2 { run(&mut app, vec![egui::Event::PointerMoved(p)]); }
+                run(&mut app, vec![egui::Event::PointerButton { pos: p, button: egui::PointerButton::Primary, pressed: true, modifiers: Default::default() }]);
+                run(&mut app, vec![egui::Event::PointerButton { pos: p, button: egui::PointerButton::Primary, pressed: false, modifiers: Default::default() }]);
+                for _ in 0..2 { run(&mut app, vec![]); }
+                let after = ctx.memory(|m| m.layer_ids().count());
+                if after <= before { bad.push(n); }
+                // click away to close
+                let away = Pos2::new(1500.0, 600.0);
+                run(&mut app, vec![egui::Event::PointerMoved(away)]);
+                run(&mut app, vec![egui::Event::PointerButton { pos: away, button: egui::PointerButton::Primary, pressed: true, modifiers: Default::default() }]);
+                run(&mut app, vec![egui::Event::PointerButton { pos: away, button: egui::PointerButton::Primary, pressed: false, modifiers: Default::default() }]);
+                for _ in 0..2 { run(&mut app, vec![]); }
+            }
+            assert!(bad.is_empty(), "{language:?} {page:?}: menus {bad:?} do not open");
+        }
+    }
+    crate::i18n::set(Language::English);
+}
