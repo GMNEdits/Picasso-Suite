@@ -1046,4 +1046,45 @@ mod tests {
         assert_eq!(again.path_for(&source), Some(place));
         let _ = std::fs::remove_dir_all(&dir);
     }
+
+    /// End to end, with ffmpeg: queue a file, let the worker render a real copy, take it in
+    /// through the inbox, and check the viewer now reads the copy. Ignored by default: it takes
+    /// a few seconds and needs the `ffmpeg` program.
+    #[test]
+    #[ignore]
+    #[cfg(not(target_arch = "wasm32"))]
+    fn optimise_media_makes_the_copy_the_viewer_reads() {
+        // A real 1080p two-second file; bail without one.
+        let dir = scratch("e2e");
+        let source = video(&dir, "A001.mp4", "1920x1080")
+            .map(|p| p.to_string_lossy().into_owned())
+            .or(None);
+        let Some(source) = source else { return };
+        let mut app = app_with_video(&source);
+        let store_dir = dir.join("store");
+        std::fs::create_dir_all(&store_dir).unwrap();
+        app.proxies = Store::load_from(Some(store_dir.clone()));
+        assert!(app.optimise_wanted().contains(&source), "it has no copy yet");
+        app.optimise_media();
+
+        // The worker runs; drain the inbox until the copy is reported made.
+        let until = std::time::Instant::now() + std::time::Duration::from_secs(120);
+        while std::time::Instant::now() < until {
+            std::thread::sleep(std::time::Duration::from_millis(100));
+            app.process_inbox();
+            if app.cache.copy_for(&source).is_some() {
+                break;
+            }
+        }
+        let copy = app.cache.copy_for(&source);
+        assert!(copy.is_some(), "the viewer now reads a copy: {}", app.status.text);
+        let copy = std::path::PathBuf::from(copy.unwrap());
+        assert!(copy.is_file());
+        // ...and so does the next start.
+        let again = Store::load_from(Some(store_dir.clone()));
+        assert_eq!(again.path_for(&source), Some(copy.clone()));
+        let info = picasso_decode::probe(&copy).unwrap();
+        assert_eq!((info.width, info.height), (1280, 720));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
 }
