@@ -569,6 +569,9 @@ impl StudioApp {
             return;
         }
         self.use_optimised = on;
+        self.extra.prefs.optimised_media = on;
+        #[cfg(not(test))]
+        self.extra.prefs.save();
         self.refresh_proxies();
         if on {
             if self.cache.uses_copies() {

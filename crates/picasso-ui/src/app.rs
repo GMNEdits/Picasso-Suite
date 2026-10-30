@@ -219,6 +219,8 @@ impl StudioApp {
         {
             app.extra.prefs = crate::prefs::Preferences::load();
             app.extra.prefs.apply();
+            // "Use Optimised Media" is a preference for this computer, like hardware decoding.
+            app.use_optimised = app.extra.prefs.optimised_media;
         }
         // Which graphics cards' encoders work here, for the Deliver page.
         #[cfg(not(target_arch = "wasm32"))]
