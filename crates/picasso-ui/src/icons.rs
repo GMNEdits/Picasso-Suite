@@ -1754,7 +1754,9 @@ pub(crate) fn paint_scaled(p: &Painter, c: Pos2, icon: Icon, col: Color32, mult:
                 .enumerate()
             {
                 let x = -12.0 + i as f32 * 4.0;
-                s.fill(x, 12.0 - h, 2.6, h, 0.4);
+                // The bars stand on a line 6.5 below the middle, so the tallest (13) is centred on it
+                // like the other icons of the row (they ran from -1 to 12, lower than the others).
+                s.fill(x, 6.5 - h, 2.6, h, 0.4);
             }
         }
         Icon::SkipStartSmall => {
