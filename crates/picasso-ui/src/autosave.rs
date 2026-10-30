@@ -173,15 +173,30 @@ impl StudioApp {
                 return;
             }
         };
+        // A copy that cannot be read is not work that can be recovered. Saying it was would
+        // hide the failure and leave a project marked as changed that never changed. The file
+        // is not deleted either: a later version may read it, and Discard removes it.
+        if crate::projectfile::decode(bytes.clone()).is_err() {
+            self.fail(format!(
+                "{}: the copy kept when the program stopped cannot be read; Discard removes it",
+                found.file.display()
+            ));
+            return;
+        }
         // A project that was never saved has no file the copy could be compared with, so once
         // it is open the copy goes: it would be offered again with every start.
-        let readable = found.project.is_none() && crate::projectfile::decode(bytes.clone()).is_ok();
+        let readable = found.project.is_none();
+        let before = self.epoch;
         self.recovering = true;
         self.open_bytes("Recovered project.picasso", found.project.clone(), bytes);
+        self.recovering = false;
+        if self.epoch == before {
+            // It did not open, and the message `open_bytes` left says why.
+            return;
+        }
         if readable {
             clear_base(&base_of(&found.file));
         }
-        self.recovering = false;
         // It is now the work being edited: it has changes the file does not.
         self.session.mark_dirty();
         self.info("Recovered the unsaved changes");
@@ -513,6 +528,33 @@ mod tests {
         // Saving is what clears the copies (the inbox arm does this).
         clear(Some(&project), "Recovered");
         assert!(newest(Some(&project), "Recovered").is_none());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_copy_that_cannot_be_read_is_not_reported_as_recovered() {
+        let dir = scratch("corrupt");
+        let project = dir.join("shot.picasso");
+        std::fs::write(&project, b"{}").unwrap();
+        let file = base(Some(&project), "shot").unwrap();
+        std::fs::write(&file, b"not a project at all").unwrap();
+
+        let ctx = egui::Context::default();
+        let mut app = StudioApp::new(&ctx);
+        app.load_demo();
+        app.project_path = Some(project.to_string_lossy().into_owned());
+        let found = Found {
+            file: file.clone(),
+            project: Some(project.to_string_lossy().into_owned()),
+            when: "a moment ago".into(),
+        };
+        let epoch = app.epoch;
+        app.recover_from(&found);
+
+        assert!(app.status.error, "it says it failed: {}", app.status.text);
+        assert_eq!(app.epoch, epoch, "nothing was opened");
+        assert!(!app.session.is_dirty(), "and no change is invented");
+        assert!(file.is_file(), "the copy is left for Discard to remove");
         let _ = std::fs::remove_dir_all(&dir);
     }
 
