@@ -38,6 +38,7 @@ mod platform;
 mod pool;
 mod prefs;
 mod project_manager;
+mod proxy;
 #[cfg(not(target_arch = "wasm32"))]
 pub mod session_log;
 mod projectfile;

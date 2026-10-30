@@ -1234,9 +1234,8 @@ mod native {
             let r = row(ui, 14.0);
             rule(&p, r);
             // What is used.
-            let boxes: [(&str, &str); 6] = [
+            let boxes: [(&str, &str); 5] = [
                 ("bypass", "Bypass re-encode when possible"),
-                ("optimized", "Use optimized media"),
                 ("proxy", "Use proxy media"),
                 ("cached", "Use render cached images"),
                 ("sizing", "Force sizing to highest quality"),
@@ -1246,7 +1245,6 @@ mod native {
                 let r = row(ui, 52.0);
                 let value = match id {
                     "bypass" => self.deliver_ui.bypass_reencode,
-                    "optimized" => self.deliver_ui.optimized_media,
                     "proxy" => self.deliver_ui.proxy_media,
                     "cached" => self.deliver_ui.cached_images,
                     "sizing" => self.deliver_ui.force_sizing,
@@ -1255,7 +1253,6 @@ mod native {
                 if let Some(v) = check(ui, r, id, x, text, value, true) {
                     match id {
                         "bypass" => self.deliver_ui.bypass_reencode = v,
-                        "optimized" => self.deliver_ui.optimized_media = v,
                         "proxy" => self.deliver_ui.proxy_media = v,
                         "cached" => self.deliver_ui.cached_images = v,
                         "sizing" => self.deliver_ui.force_sizing = v,

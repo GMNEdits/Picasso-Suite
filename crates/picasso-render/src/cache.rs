@@ -130,6 +130,9 @@ pub struct MediaCache {
     wait_for_video: bool,
     /// How much smaller video pictures are asked for (a proxy); 0 and 1 mean whole.
     reduction: u32,
+    /// The copies of video files to read in place of the files, by the file's path: what
+    /// "Use Optimised Media" turns on. `None` reads the originals.
+    copies: Option<Arc<HashMap<String, String>>>,
 }
 
 impl MediaCache {
@@ -146,6 +149,7 @@ impl MediaCache {
             source: None,
             wait_for_video: false,
             reduction: 1,
+            copies: None,
         }
     }
 
@@ -226,8 +230,38 @@ impl MediaCache {
         }
     }
 
+    /// The same cache, reading the copies of video files in `copies` (a file's path to its
+    /// optimised copy) instead of the files themselves. An empty map reads the originals.
+    pub fn with_copies(&self, copies: HashMap<String, String>) -> Self {
+        Self {
+            copies: (!copies.is_empty()).then(|| Arc::new(copies)),
+            ..self.clone()
+        }
+    }
+
+    /// The same cache, reading the original files: what an export does unless it was told to use
+    /// the copies, and what the viewer does with "Use Optimised Media" off.
+    pub fn originals(&self) -> Self {
+        Self {
+            copies: None,
+            ..self.clone()
+        }
+    }
+
+    /// The copy to read in place of `path`, when optimised media is in use and there is one.
+    pub fn copy_for<'a>(&'a self, path: &'a str) -> Option<&'a str> {
+        self.copies.as_ref()?.get(path).map(String::as_str)
+    }
+
+    /// Whether pictures are read from copies at all.
+    pub fn uses_copies(&self) -> bool {
+        self.copies.is_some()
+    }
+
     /// The picture of a video at a time.
     pub fn video_frame(&self, media: MediaId, path: &str, time_us: i64) -> VideoFrame {
+        // The optimised copy, when there is one: the same pictures, quick to find.
+        let path = self.copy_for(path).unwrap_or(path);
         match &self.video {
             Some(source) => source.video_frame(
                 media,
@@ -306,6 +340,57 @@ mod tests {
         fn generation(&self) -> u64 {
             7
         }
+    }
+
+    /// Notes the file each picture was asked for.
+    #[derive(Debug, Default)]
+    struct Paths(std::sync::Mutex<Vec<String>>);
+
+    impl FrameSource for Paths {
+        fn video_frame(&self, _: MediaId, path: &str, _: i64, _: u32, _: bool) -> VideoFrame {
+            self.0.lock().unwrap().push(path.to_string());
+            VideoFrame::Pending
+        }
+    }
+
+    #[test]
+    fn a_copy_is_read_in_place_of_the_file() {
+        let source = Arc::new(Paths::default());
+        let cache = MediaCache::with_video_source(source.clone()).with_copies(HashMap::from([(
+            "A001.mov".to_string(),
+            "A001-1a2b3c4d.mp4".to_string(),
+        )]));
+        assert!(cache.uses_copies());
+        assert_eq!(cache.copy_for("A001.mov"), Some("A001-1a2b3c4d.mp4"));
+        cache.video_frame(MediaId(1), "A001.mov", 0);
+        // A file with no copy of its own is read where it is.
+        cache.video_frame(MediaId(2), "B002.mov", 0);
+        assert_eq!(
+            *source.0.lock().unwrap(),
+            ["A001-1a2b3c4d.mp4", "B002.mov"]
+        );
+    }
+
+    #[test]
+    fn the_originals_are_read_when_the_copies_are_not_wanted() {
+        let source = Arc::new(Paths::default());
+        let cache = MediaCache::with_video_source(source.clone()).with_copies(HashMap::from([(
+            "A001.mov".to_string(),
+            "A001-1a2b3c4d.mp4".to_string(),
+        )]));
+        let originals = cache.originals();
+        assert!(!originals.uses_copies());
+        assert_eq!(originals.copy_for("A001.mov"), None);
+        originals.video_frame(MediaId(1), "A001.mov", 0);
+        // An export waits for the exact picture and still reads the file.
+        cache.blocking().video_frame(MediaId(1), "A001.mov", 0);
+        assert_eq!(*source.0.lock().unwrap(), ["A001.mov", "A001-1a2b3c4d.mp4"]);
+    }
+
+    #[test]
+    fn an_empty_map_leaves_the_files_alone() {
+        let cache = MediaCache::new().with_copies(HashMap::new());
+        assert!(!cache.uses_copies(), "nothing to read, so nothing changed");
     }
 
     #[test]

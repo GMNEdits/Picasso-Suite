@@ -814,6 +814,30 @@ mod tests {
         }
     }
 
+    #[test]
+    fn the_last_frame_keeps_its_duration() {
+        // Video only: no audio to mask a short last frame. 24 frames at 24 fps must be one
+        // second long, including the picture ffmpeg would otherwise write without a duration.
+        let Some(p) = project(false) else { return };
+        let s = settings(Preset::H264Web, "picasso_export_last_frame.mp4", 24);
+        render(&p, &MediaCache::new(), &s, &mut |_, _| true).unwrap();
+        let Some(lines) = probe(&s.path) else { return };
+        let frame_count = lines
+            .iter()
+            .find(|l| l.starts_with("h264,video,"))
+            .and_then(|l| l.split(',').nth(4).and_then(|n| n.parse::<u64>().ok()));
+        assert_eq!(frame_count, Some(24), "all pictures read back: {lines:?}");
+        let duration = lines
+            .last()
+            .and_then(|l| l.parse::<f64>().ok())
+            .unwrap_or(0.0);
+        assert!(
+            (0.99..1.02).contains(&duration),
+            "the last frame is counted in the duration: {duration} {lines:?}"
+        );
+        let _ = std::fs::remove_file(&s.path);
+    }
+
     /// One `codec,profile,type,pixel format` line per stream (ffprobe's order).
     fn streams(path: &Path) -> Option<String> {
         let out = std::process::Command::new("ffprobe")

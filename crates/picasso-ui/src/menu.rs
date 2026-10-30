@@ -112,6 +112,7 @@ pub(crate) enum Act {
     ProxyHalf,
     ProxyQuarter,
     ProxyEighth,
+    ToggleOptimisedMedia,
     ToggleHardwareDecoding,
     DeleteRenderCache,
     LinkClips,
@@ -665,6 +666,8 @@ const PLAYBACK: &[Entry] = &[
             item("Eighth", &[], Act::ProxyEighth),
         ],
     ),
+    // The copies made in File > Media Management: smaller, and quick to find a picture in.
+    item("Use Optimised Media", &[], Act::ToggleOptimisedMedia),
     // The same switch as System Preferences > Decode Options, where playback is judged.
     item("Hardware Decoding", &[], Act::ToggleHardwareDecoding),
     item("Delete Render Cache", &[], Act::DeleteRenderCache),

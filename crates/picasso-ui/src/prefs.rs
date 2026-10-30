@@ -26,6 +26,8 @@ pub(crate) struct Preferences {
     pub audio_scrubbing: bool,
     /// The language of the menus (Help > Language); English until another is chosen.
     pub language: Language,
+    /// Playback > Use Optimised Media was switched on: read the small copies when there are any.
+    pub optimised_media: bool,
     /// The commands whose keys were changed, and their keys.
     pub keys: HashMap<Act, Vec<String>>,
     /// The sizes of the panels on the pages.
@@ -38,6 +40,7 @@ impl Default for Preferences {
             hardware_decoding: true,
             audio_scrubbing: true,
             language: Language::English,
+            optimised_media: true,
             keys: HashMap::new(),
             panels: Panels::default(),
         }
@@ -76,6 +79,7 @@ impl Preferences {
                     "audio_scrubbing" => prefs.audio_scrubbing = value.trim() != "off",
                     // A language this version does not have stays English.
                     "language" => prefs.language = Language::from_code(value).unwrap_or_default(),
+                    "optimised_media" => prefs.optimised_media = value.trim() != "off",
                     "panels" => {
                         if let Some(panels) = parse_panels(value) {
                             let moved = std::mem::take(&mut prefs.panels.moved);
@@ -91,10 +95,15 @@ impl Preferences {
 
     pub(crate) fn text(&self) -> String {
         let mut out = format!(
-            "hardware_decoding={}\naudio_scrubbing={}\nlanguage={}\n",
+            "hardware_decoding={}
+audio_scrubbing={}
+language={}
+optimised_media={}
+",
             if self.hardware_decoding { "on" } else { "off" },
             if self.audio_scrubbing { "on" } else { "off" },
-            self.language.code()
+            self.language.code(),
+            if self.optimised_media { "on" } else { "off" }
         );
         out.push_str(&panels_text(&self.panels));
         let mut keys: Vec<(String, &Vec<String>)> = self
