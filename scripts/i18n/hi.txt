@@ -1,0 +1,304 @@
+#menus
+फ़ाइल
+एडिट
+ट्रिम
+टाइमलाइन
+क्लिप
+मार्क
+दृश्य
+प्लेबैक
+इफ़ेक्ट
+रंग
+ऑडियो
+वर्कस्पेस
+मदद
+#entries
+New Project Library...|नई प्रोजेक्ट लाइब्रेरी...
+Open Project Library...|प्रोजेक्ट लाइब्रेरी खोलें...
+Show Current Project Library in File Explorer|लाइब्रेरी एक्सप्लोरर में दिखाएँ
+Project Manager|प्रोजेक्ट मैनेजर
+New Project|नया प्रोजेक्ट
+Open Project...|प्रोजेक्ट खोलें...
+Import Project...|प्रोजेक्ट इम्पोर्ट...
+Export Project...|प्रोजेक्ट एक्सपोर्ट...
+Restore Project Archive...|प्रोजेक्ट आर्काइव बहाल करें...
+Save Project|प्रोजेक्ट सहेजें
+Save Project As...|प्रोजेक्ट इस नाम से सहेजें...
+Save Copy As...|कॉपी इस नाम से सहेजें...
+Revert to Last Saved Version|पिछले सहेजे पर लौटें
+Import|इम्पोर्ट
+Media...|मीडिया...
+Folder as Bin...|फ़ोल्डर बिन के रूप में...
+Timeline: AAF, EDL, XML...|टाइमलाइन: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|टाइमलाइन: प्री-EDL...
+Subtitle...|उपशीर्षक...
+Metadata to Media Pool...|मीडिया पूल में मेटाडेटा...
+Bin...|बिन...
+Export|एक्सपोर्ट
+Timeline: EDL...|टाइमलाइन: EDL...
+Timeline: OpenTimelineIO...|टाइमलाइन: OpenTimelineIO...
+Timeline: XML...|टाइमलाइन: XML...
+Timeline: AAF...|टाइमलाइन: AAF...
+Metadata from Media Pool...|मीडिया पूल से मेटाडेटा...
+Media Management...|मीडिया प्रबंधन...
+Project Settings...|प्रोजेक्ट सेटिंग...
+System Preferences...|सिस्टम पसंद...
+Quick Export...|त्वरित एक्सपोर्ट...
+Quit|बाहर निकलें
+Undo|पूर्ववत
+Redo|फिर करें
+Cut|काटें
+Copy|कॉपी
+Paste|चिपकाएँ
+Paste Insert|चिपकाकर जोड़ें
+Paste Mix to Current Track|मिक्स वर्तमान ट्रैक में चिपकाएँ
+Duplicate|डुप्लिकेट
+Fit to Fill|फ़िट टू फ़िल
+Place on Top|ऊपर रखें
+Delete Selected|चयनित हटाएँ
+Delete Selected with Ripple|चयनित रिपल से हटाएँ
+Select All|सभी चुनें
+Deselect All|सभी चयन हटाएँ
+Select Clips Forward|आगे के क्लिप चुनें
+Find...|खोजें...
+Recent Projects|हाल के प्रोजेक्ट
+Project Manager...|प्रोजेक्ट मैनेजर...
+Keyboard Customization|कीबोर्ड शॉर्टकट
+Select Nearest Edit Point|निकटतम एडिट पॉइंट चुनें
+Selection Mode|चयन मोड
+Trim Mode|ट्रिम मोड
+Dynamic Trim Mode|डायनामिक ट्रिम मोड
+Ripple Start|रिपल आरंभ
+Ripple End|रिपल अंत
+Ripple Trim Previous / Next|रिपल ट्रिम पिछला / अगला
+Ripple Trim Previous Edit to Playhead|पिछला एडिट प्लेहेड तक रिपल
+Ripple Trim Next Edit to Playhead|अगला एडिट प्लेहेड तक रिपल
+Trim Start to Playhead|आरंभ प्लेहेड तक ट्रिम
+Trim End to Playhead|अंत प्लेहेड तक ट्रिम
+Extend Edit|एडिट बढ़ाएँ
+Slip Clip|क्लिप स्लिप
+Slip One Frame Earlier|एक फ़्रेम पहले स्लिप
+Slip One Frame Later|एक फ़्रेम बाद स्लिप
+Slide Clip|क्लिप स्लाइड
+Slide One Frame Left|एक फ़्रेम बाएँ स्लाइड
+Slide One Frame Right|एक फ़्रेम दाएँ स्लाइड
+Loop Trim|लूप ट्रिम
+Asymmetric Trimming|असममित ट्रिमिंग
+Trim Editor|ट्रिम एडिटर
+New Timeline...|नई टाइमलाइन...
+New Timeline Using Selected Clips|चयनित क्लिप से नई टाइमलाइन
+Create New Compound Clip...|नया कंपाउंड क्लिप...
+New Effects Clip...|नया इफ़ेक्ट क्लिप...
+Decompose in Place|यहीं विघटित करें
+Decompose Compound Clip|कंपाउंड क्लिप विघटित करें
+Decompose Nested Timeline|नेस्टेड टाइमलाइन विघटित
+Split Clip|क्लिप बाँटें
+Create Timeline Using Bin...|बिन से टाइमलाइन बनाएँ...
+Import Timeline...|टाइमलाइन इम्पोर्ट...
+Export Timeline...|टाइमलाइन एक्सपोर्ट...
+Timeline Resolution and Frame Rate...|रेज़ोल्यूशन और फ़्रेम दर...
+Timeline Settings|टाइमलाइन सेटिंग
+Snap|स्नैप
+Linked Selection|जुड़ा चयन
+Position Lock|स्थिति लॉक
+Selection Follows Playhead|चयन प्लेहेड के साथ
+Add Marker|मार्कर जोड़ें
+Add Marker and Show Dialog|मार्कर जोड़ें और डायलॉग
+Delete All Markers|सभी मार्कर हटाएँ
+Create Subtitle Track|उपशीर्षक ट्रैक बनाएँ
+Create Subtitle Region|उपशीर्षक क्षेत्र बनाएँ
+Add Transition to All Edits|सभी कट पर ट्रांज़िशन
+Switch Timeline|टाइमलाइन बदलें
+Open Timeline in New Window|टाइमलाइन नई विंडो में
+Delete Timeline|टाइमलाइन हटाएँ
+Enable Clip|क्लिप सक्रिय करें
+Match Frame|मैच फ़्रेम
+Lock Clip|क्लिप लॉक करें
+New Multicam Clip...|नया मल्टीकैम क्लिप...
+Multicam Viewer|मल्टीकैम व्यूअर
+Add to Media Pool as Stills|स्टिल के रूप में जोड़ें
+Change Clip Speed...|क्लिप गति बदलें...
+Change Clip Duration...|क्लिप अवधि बदलें...
+Retime Controls|रीटाइम नियंत्रण
+Retime Clip|क्लिप रीटाइम
+Freeze Frame|फ़्रीज़ फ़्रेम
+Speed Ramp...|स्पीड रैंप...
+Reverse Clip|क्लिप उलटें
+Create New Compound Clip|नया कंपाउंड क्लिप
+Link Clips|क्लिप जोड़ें
+Unlink Audio and Video|ऑडियो-वीडियो अलग करें
+Enable / Disable Audio Scrubbing|ऑडियो स्क्रबिंग चालू/बंद
+Auto Align Clips|क्लिप स्वतः संरेखित
+Based on Timecode|टाइमकोड के आधार पर
+Based on Waveform|वेवफ़ॉर्म के आधार पर
+Normalize Audio Levels...|ऑडियो स्तर सामान्य...
+Render in Place|यहीं रेंडर करें
+New Effects Clip|नया इफ़ेक्ट क्लिप
+New Compound Clip|नया कंपाउंड क्लिप
+Clip Attributes...|क्लिप गुण...
+Mark In|मार्क इन
+Mark Out|मार्क आउट
+Mark Clip|क्लिप मार्क करें
+Mark Timeline In/Out|टाइमलाइन इन/आउट मार्क
+Clear In|इन हटाएँ
+Clear Out|आउट हटाएँ
+Clear In and Out|इन और आउट हटाएँ
+Modify Marker...|मार्कर बदलें...
+Delete Marker at Current Position|यहाँ का मार्कर हटाएँ
+Delete All Markers in Timeline|सभी मार्कर हटाएँ
+Go to Previous Marker|पिछले मार्कर पर जाएँ
+Go to Next Marker|अगले मार्कर पर जाएँ
+Set Clip Color|क्लिप का रंग
+Default|डिफ़ॉल्ट
+Orange|नारंगी
+Apricot|खुबानी
+Yellow|पीला
+Lime|नींबू
+Olive|जैतून
+Green|हरा
+Teal|टील
+Navy|नेवी
+Blue|नीला
+Purple|बैंगनी
+Violet|जामुनी
+Pink|गुलाबी
+Tan|भूरा-पीला
+Beige|बेज
+Brown|भूरा
+Chocolate|चॉकलेटी
+Show Current Frame on Playback|प्लेबैक में वर्तमान फ़्रेम
+Safe Area Overlay|सुरक्षित क्षेत्र ओवरले
+Show Grid / Guides|ग्रिड / गाइड दिखाएँ
+Show Toolbar|टूलबार दिखाएँ
+Show Full Screen Viewer|फ़ुल स्क्रीन व्यूअर दिखाएँ
+Show Cinema Viewer|सिनेमा व्यूअर दिखाएँ
+Viewer Overlays|व्यूअर ओवरले
+Transform / Crop / Dynamic Zoom|ट्रांसफ़ॉर्म / क्रॉप / ज़ूम
+Safe Area|सुरक्षित क्षेत्र
+Center Crosshair|केंद्र क्रॉसहेयर
+Checkerboard Background (Alpha)|चेकरबोर्ड (अल्फ़ा)
+Show All Overlays|सभी ओवरले दिखाएँ
+Timecode Window|टाइमकोड विंडो
+Show Scopes|स्कोप दिखाएँ
+Show Audio Meters|ऑडियो मीटर दिखाएँ
+Show Audio Mixer|ऑडियो मिक्सर दिखाएँ
+Show Inspector|इंस्पेक्टर दिखाएँ
+Play Forward|आगे चलाएँ
+Play Reverse|पीछे चलाएँ
+Stop|रोकें
+Play Around Current Frame|फ़्रेम के आसपास चलाएँ
+Play In to Out|इन से आउट तक चलाएँ
+Play Around In / Around Out|इन/आउट के आसपास चलाएँ
+Loop Playback|लूप प्लेबैक
+Go to First Frame|पहले फ़्रेम पर
+Go to Last Frame|अंतिम फ़्रेम पर
+Go to In|इन पर जाएँ
+Go to Out|आउट पर जाएँ
+Previous Frame|पिछला फ़्रेम
+Next Frame|अगला फ़्रेम
+Previous Edit Point|पिछला एडिट पॉइंट
+Next Edit Point|अगला एडिट पॉइंट
+Timeline Playback Resolution|प्लेबैक रेज़ोल्यूशन
+Half|आधा
+Quarter|चौथाई
+Effects Memory Cache|इफ़ेक्ट मेमोरी कैश
+Timeline Proxy Mode|प्रॉक्सी मोड
+Off|बंद
+Eighth|आठवाँ
+Hardware Decoding|हार्डवेयर डिकोडिंग
+Delete Render Cache|रेंडर कैश हटाएँ
+Video Transitions|वीडियो ट्रांज़िशन
+Cross Dissolve|क्रॉस डिज़ॉल्व
+Dip to Color|डिप टू कलर
+Audio Transitions|ऑडियो ट्रांज़िशन
+Cross Fade|क्रॉस फ़ेड
+Remove Transition|ट्रांज़िशन हटाएँ
+OpenFX|OpenFX
+Blur|ब्लर
+Gaussian Blur|गाउसियन ब्लर
+Sharpen|शार्पन
+Color|रंग
+Invert Colors|रंग उलटें
+Black and White|श्वेत-श्याम
+Distort|विकृत
+Mosaic|मोज़ेक
+Audio FX|ऑडियो इफ़ेक्ट
+EQ|EQ
+Dynamics|डायनामिक्स
+Picasso FX|Picasso FX
+Sepia|सेपिया
+Soft Blur|सॉफ़्ट ब्लर
+Light|प्रकाश
+Glow|ग्लो
+Stylize|स्टाइलाइज़
+Vignette|विनेट
+Film Grain|फ़िल्म ग्रेन
+Compositing Effects|कंपोज़िट इफ़ेक्ट
+Nodes|नोड
+Generators|जनरेटर
+Solid Color|एकल रंग
+Color Bars|कलर बार
+Gradient|ग्रेडिएंट
+Titles|शीर्षक
+Text|टेक्स्ट
+Text+|टेक्स्ट+
+Effects Library Search|इफ़ेक्ट खोजें
+Add Tool (Compositing)|टूल जोड़ें (कंपोज़िट)
+Reset All Grades and Nodes|सभी ग्रेड व नोड रीसेट
+Reset Current Node Grade|वर्तमान नोड रीसेट
+Enable/Disable Current Node|वर्तमान नोड चालू/बंद
+Grab Still|स्टिल लें
+Play Still|स्टिल चलाएँ
+Add Serial Node|सीरियल नोड जोड़ें
+Add Serial Before|पहले सीरियल जोड़ें
+Add Parallel Node|पैरेलल नोड जोड़ें
+Add Layer Mixer|लेयर मिक्सर जोड़ें
+Add Splitter / Combiner|स्प्लिटर / कंबाइनर जोड़ें
+Add Outside Node|आउटसाइड नोड जोड़ें
+Label Node|नोड लेबल
+Timeline|टाइमलाइन
+Previous Node Graph|पिछला नोड ग्राफ़
+Next Node Graph|अगला नोड ग्राफ़
+LUT|LUT
+Apply LUT from list|सूची से LUT लगाएँ
+Gallery|गैलरी
+Scopes On/Off|स्कोप चालू/बंद
+Highlight|हाइलाइट
+Lightbox|लाइटबॉक्स
+ADR|ADR
+Automated Dialogue Replacement|स्वचालित संवाद प्रतिस्थापन
+Bounce Mix to Track|मिक्स ट्रैक में बाउंस
+Bounce Selected Tracks|चयनित ट्रैक बाउंस
+Cache Audio Effects|ऑडियो इफ़ेक्ट कैश
+Audio Link|ऑडियो लिंक
+Link Group|लिंक समूह
+Decompose|विघटित
+Loop Jog|लूप जॉग
+Show Audio Timeline / Mixer|ऑडियो टाइमलाइन / मिक्सर
+Full Screen Viewer|फ़ुल स्क्रीन व्यूअर
+Show Panel in Workspace|पैनल दिखाएँ
+Media Pool|मीडिया पूल
+Effects Library|इफ़ेक्ट लाइब्रेरी
+Inspector|इंस्पेक्टर
+Mixer|मिक्सर
+Metadata|मेटाडेटा
+Edit Index|एडिट इंडेक्स
+Sound Library|साउंड लाइब्रेरी
+Layout|लेआउट
+Reset UI Layout|लेआउट रीसेट
+Save Layout|लेआउट सहेजें
+Load Layout|लेआउट लोड करें
+Switch to Page|पेज पर जाएँ
+Media|मीडिया
+Edit|एडिट
+Effects|इफ़ेक्ट
+Audio|ऑडियो
+Deliver|डिलीवर
+Dual Screen On/Off|दोहरी स्क्रीन चालू/बंद
+Video Clean Feed|क्लीन वीडियो फ़ीड
+Picasso Suite Manual|Picasso Suite मैनुअल
+Picasso Suite Tutorials|Picasso Suite ट्यूटोरियल
+Check for Updates...|अपडेट जाँचें...
+Export Log File...|लॉग फ़ाइल एक्सपोर्ट...
+About Picasso Suite|Picasso Suite के बारे में
+Language|भाषा

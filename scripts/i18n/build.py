@@ -6,6 +6,7 @@ crates/picasso-ui/src/i18n/<code>.rs, and checks the fit rules the menus need:
   menu is that wide before it has a label), and never over 48.
 """
 import sys, pathlib, unicodedata
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from PIL import ImageFont
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -26,7 +27,7 @@ LATIN = ImageFont.truetype(str(FONT_DIR / 'NotoSans-Regular.ttf'), 14, layout_en
 # Languages whose script the bundled Latin font does not draw: their width is measured per character
 # (a Chinese or Japanese character is as wide as it is tall; the Arabic ones come from the Arabic font),
 # and their entries are held to a width in pixels, since a character count says little there.
-OTHER = {'zh', 'ja', 'ar'}
+OTHER = {'zh', 'ja', 'ar', 'hi'}
 CODE = ''
 _latin_cmap = None
 
@@ -34,6 +35,9 @@ _latin_cmap = None
 def shape(text):
     """Arabic is drawn letter by letter, left to right (the toolkit does not join or turn it): the text is
     joined into its presentation forms and put in the order it is seen, here, once."""
+    if CODE == 'hi':
+        import devanagari
+        return devanagari.to_pua(text)
     if CODE != 'ar':
         return text
     import arabic_reshaper
@@ -49,6 +53,15 @@ def width(text):
         from fontTools.ttLib import TTFont
         _latin_cmap = set(TTFont(str(FONT_DIR / 'NotoSans-Regular.ttf')).getBestCmap())
     total = 0.0
+    if CODE == 'hi':
+        import re
+        import devanagari
+        for part in re.split('([ऀ-ॿ‌‍]+)', text):
+            if part and devanagari.RUN.fullmatch(part):
+                total += devanagari.run_width(part)
+            else:
+                total += sum(LATIN.getlength(c) for c in part)
+        return total
     for c in shape(text):
         if ord(c) in _latin_cmap:
             total += LATIN.getlength(c)
@@ -90,6 +103,11 @@ def entry_max(english):
     return min(max(len(english) + 6, -(-len(english) * 135 // 100), 20), 48)
 
 
+def clen(text):
+    """Characters as the toolkit sets them: a word of Hindi is one."""
+    return len(shape(text)) if CODE == 'hi' else len(text)
+
+
 def entry_px(english):
     return min(max((len(english) + 6) * 7.0, width_en(english) * 1.35, 140), 336)
 
@@ -109,8 +127,8 @@ def build(code):
     assert len(menus) == 13, (code, len(menus))
     problems = []
     for name, short, most in zip(MENU_NAMES, menus, MENU_MAX):
-        if len(short) > most:
-            problems.append(f'menu {name} -> {short!r} is {len(short)} > {most}')
+        if clen(short) > most:
+            problems.append(f'menu {name} -> {short!r} is {clen(short)} > {most}')
         if code in OTHER and width(short) > most * 7.2:
             problems.append(f'menu {name} -> {short!r} is {width(short):.0f}px > {most * 7.2:.0f}px')
     pairs = []
@@ -126,8 +144,8 @@ def build(code):
     for en, tr in latest.items():
         assert en in ENGLISH, (code, en)
         seen.add(en)
-        if tr != en and len(tr) > entry_max(en):
-            problems.append(f'{en!r} -> {tr!r} is {len(tr)} > {entry_max(en)}')
+        if tr != en and clen(tr) > entry_max(en):
+            problems.append(f'{en!r} -> {tr!r} is {clen(tr)} > {entry_max(en)}')
         if code in OTHER and tr != en and width(tr) > entry_px(en):
             problems.append(f'{en!r} -> {tr!r} is {width(tr):.0f}px > {entry_px(en):.0f}px')
         pairs.append((en, tr))
@@ -192,8 +210,14 @@ if __name__ == '__main__':
     for code in sys.argv[1:]:
         menus, pairs, ui, problems, missing = build(code)
         print(code, len(pairs), 'entries,', len(missing), 'not translated,', len(ui), 'texts of the pages')
+        if code == 'hi':
+            import devanagari
+            devanagari.to_pua('हिन्दी')
         for p in problems:
             print('  TOO LONG:', p)
             bad = True
         (OUT / f'{code}.rs').write_text(rust(code, menus, pairs, ui), encoding='utf-8', newline='\n')
+    if 'hi' in sys.argv[1:]:
+        import devanagari
+        print('  font of', devanagari.write_font(str(FONT_DIR / 'NotoSansDevanagari-Regular.subset.ttf')), 'words written')
     sys.exit(1 if bad else 0)

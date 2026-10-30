@@ -1,0 +1,222 @@
+Clips|क्लिप
+60 frames per second|60 फ़्रेम/सेकंड
+Add Job|जोड़ें
+Add to Render Queue|रेंडर कतार में जोड़ें
+Advanced Settings|उन्नत सेटिंग
+Archive Project|आर्काइव
+Archive Project...|आर्काइव...
+Auto|ऑटो
+Automatic|स्वचालित
+Balanced|संतुलित
+Bins|बिन
+Browse|ब्राउज़
+Bus Sends|बस सेंड
+Capture|कैप्चर
+Chapters from Markers|अध्याय
+Choose a folder|फ़ोल्डर चुनें
+Clip Name|क्लिप नाम
+Clone|क्लोन
+Clone Tool|क्लोन टूल
+Codec|कोडेक
+Col Boost|रंग+
+Collections|संग्रह
+Contrast|कंट्रास्ट
+Control Room|कंट्रोल रूम
+Create an Album|एल्बम बनाएँ
+Curves - Custom|कर्व - कस्टम
+Custom Export|कस्टम एक्सपोर्ट
+Decode Options|डिकोड विकल्प
+Demo Project|डेमो
+Drag photos into the Photo Album to start editing|एडिट के लिए फ़ोटो एल्बम में खींचें
+Drawn with|बनाया गया
+Editing|एडिटिंग
+Effects In|इफ़ेक्ट इन
+Embedded Audio|एम्बेडेड ऑडियो
+Encoder|एनकोडर
+Encoding Profile|एनकोडिंग प्रोफ़ाइल
+Entire Timeline|पूरी टाइमलाइन
+Estimated File Size|अनुमानित आकार
+Every|हर
+Export Video|वीडियो निर्यात
+Fairlight|Fairlight
+File Name|फ़ाइल नाम
+Format|प्रारूप
+Frame rate|फ़्रेम दर
+Frame reordering|फ़्रेम क्रम
+Full Frames|पूरे फ़्रेम
+Full Screen|फ़ुल स्क्रीन
+Fusion|Fusion
+Gain|गेन
+Gamma|गामा
+Generator|जनरेटर
+Graphics card|ग्राफ़िक्स कार्ड
+Groups|समूह
+Hi/Light|हाइलाइट
+High|उच्च
+Hue|ह्यू
+Image|चित्र
+Index|सूची
+Individual clips|अलग क्लिप
+Input|इनपुट
+Integrated|एकीकृत
+Key Frames|की फ़्रेम
+Keywords|कीवर्ड
+L. Mix|बायाँ मिक्स
+Layer|लेयर
+Local|स्थानीय
+Location|स्थान
+Loop playback|लूप प्लेबैक
+Loudness|लाउडनेस
+Low|निम्न
+Mark|मार्क
+Media Management|मीडिया प्रबंधन
+Media Source|मीडिया स्रोत
+Media Storage|मीडिया स्टोरेज
+Meters|मीटर
+Mid/Detail|मिड/डिटेल
+Modifiers|मॉडिफ़ायर
+Monitor|मॉनिटर
+Monitor volume|मॉनिटर वॉल्यूम
+Native|नेटिव
+Network Optimization|नेटवर्क अनुकूलन
+No jobs in Queue|कतार में कोई काम नहीं
+No jobs in queue|कतार में कोई काम नहीं
+No stills created|कोई स्टिल नहीं
+Not reported|अज्ञात
+Nothing to inspect|कुछ नहीं
+Offset|ऑफ़सेट
+Open|खोलें
+Order|क्रम
+Parade|परेड
+Pause|विराम
+Photo|फ़ोटो
+Photo Album|एल्बम
+Playback|प्लेबैक
+Position lock|स्थिति लॉक
+Preset|प्रीसेट
+Primaries - Color Wheels|प्राइमरी - कलर व्हील
+Process Mode|प्रोसेस मोड
+Project settings|प्रोजेक्ट सेटिंग
+Projects|प्रोजेक्ट
+Quality|गुणवत्ता
+Quick Export|त्वरित निर्यात
+Range|सीमा
+Rate Control|रेट नियंत्रण
+Relink Missing Media|मीडिया फिर जोड़ें
+Relink Missing Media...|मीडिया फिर जोड़ें...
+Remove|हटाएँ
+Render|रेंडर
+Render All|सब रेंडर
+Render Queue|रेंडर कतार
+Render Settings|रेंडर सेटिंग
+Render Settings - Custom Export|रेंडर सेटिंग - कस्टम
+Reset|रीसेट
+Reset All|सब रीसेट
+Resolution|रेज़ोल्यूशन
+Search|खोज
+Settings|सेटिंग
+Shad|छाया
+Short|छोटा
+Short Max|छोटा अधिकतम
+Single clip|एक क्लिप
+Smart Bins|स्मार्ट बिन
+Source Color Space|स्रोत कलर स्पेस
+Source Gamma Space|स्रोत गामा स्पेस
+Subtitle Settings|उपशीर्षक सेटिंग
+System|सिस्टम
+Timeline Resolution|टाइमलाइन रेज़ोल्यूशन
+Timeline proxy|टाइमलाइन प्रॉक्सी
+Tint|टिंट
+Tools|टूल
+Track FX|ट्रैक FX
+Transitions|ट्रांज़िशन
+Untitled|बिना नाम
+Use vertical resolution|ऊर्ध्वाधर रेज़ोल्यूशन
+Version 0.6.1|संस्करण 0.6.1
+Video|वीडियो
+Waveform|वेवफ़ॉर्म
+Workspace|वर्कस्पेस
+No clips in media pool|मीडिया पूल में क्लिप नहीं
+Add clips with Import, or drop files here|इम्पोर्ट से जोड़ें या फ़ाइलें यहाँ डालें
+Add clips from Media Storage to get started|शुरू करने को स्टोरेज से क्लिप जोड़ें
+No sound to show|दिखाने को कोई ध्वनि नहीं
+No clip to grade|ग्रेड के लिए क्लिप नहीं
+No Input|कोई इनपुट नहीं
+DURATION|अवधि
+Export Audio|ऑडियो निर्यात
+Data Rate|डेटा दर
+Output Track 1|आउटपुट ट्रैक 1
+Use unique filename|अलग फ़ाइल नाम
+Adds (1), (2) ... to the name instead of writing over a file.|फ़ाइल बदलने के बजाय नाम में (1), (2) जोड़ता है।
+File type|फ़ाइल प्रकार
+Whole timeline|पूरी टाइमलाइन
+In to out marks|इन से आउट
+Pixel aspect ratio|पिक्सेल अनुपात
+Square|वर्ग
+Cinemascope|सिनेमास्कोप
+Data Levels|डेटा स्तर
+Retain sub-black and super-white data|सब-ब्लैक/सुपर-व्हाइट रखें
+Color Space Tag|कलर स्पेस टैग
+Gamma Tag|गामा टैग
+Data burn-in|डेटा बर्न-इन
+Same as project|प्रोजेक्ट जैसा
+Bypass re-encode when possible|संभव हो तो री-एनकोड छोड़ें
+Use optimized media|ऑप्टिमाइज़्ड मीडिया
+Use proxy media|प्रॉक्सी मीडिया
+Use render cached images|रेंडर कैश चित्र
+Force sizing to highest quality|साइज़िंग उच्चतम गुणवत्ता
+Force debayer to highest quality|डीबेयर उच्चतम गुणवत्ता
+Render All Video Tracks|सभी वीडियो ट्रैक
+Enable Flat Pass|फ़्लैट पास चालू
+visionOS Bypass|visionOS बायपास
+Disable sizing and blanking output|साइज़िंग/ब्लैंकिंग बंद
+Trigger script at|स्क्रिप्ट चलाएँ
+Start|शुरू
+of render job|रेंडर जॉब का
+Export Subtitle|उपशीर्षक निर्यात
+As a separate file|अलग फ़ाइल
+Export As|ऐसे निर्यात
+frames|फ़्रेम
+Cut|कट
+Teal|टील
+Half|आधा
+Color Bars|कलर बार
+Lightbox|लाइटबॉक्स
+Edit|एडिट
+Mixer|मिक्सर
+Sound Library|साउंड
+Timeline: AAF, EDL, XML...|टाइमलाइन: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|टाइमलाइन: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rust में लिखा वीडियो एडिटर: Windows, Linux, macOS और वेब।
+Audio scrubbing (sound while the playhead is dragged)|ऑडियो स्क्रबिंग (खींचते समय ध्वनि)
+Best|सर्वोत्तम
+Changing the frame rate keeps every clip on the same frames.|फ़्रेम दर बदलने पर हर क्लिप उन्हीं फ़्रेमों पर रहता है।
+Click a command's keys, then press the key it should have. Escape gives up.|कमांड की कुंजी चुनें, फिर नई कुंजी दबाएँ। Esc रद्द।
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|टाइमलाइन की फ़ाइलें फ़ोल्डर में कॉपी करता है और उन्हें दर्शाती प्रोजेक्ट कॉपी लिखता है। खुला प्रोजेक्ट नहीं बदलता।
+Decode supported video using hardware acceleration|हार्डवेयर त्वरण से वीडियो डिकोड करें
+Every media file is where the project says it is.|हर मीडिया फ़ाइल प्रोजेक्ट के बताए स्थान पर है।
+Filters|फ़िल्टर
+Free software under the GPL, version 3 or later.|GPL संस्करण 3 या बाद का मुक्त सॉफ़्टवेयर।
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|ड्राइवर समर्थन हो तो H.264, H.265, AV1, VP9, MPEG-2 और VC-1 ग्राफ़िक्स कार्ड पर डिकोड होते हैं। क्लिप हरे या टूटे दिखें तो बंद करें। PICASSO_NO_HWACCEL=1 एक बार के लिए बंद करता है।
+Help|मदद
+Linked selection (picture and sound together)|जुड़ा चयन (चित्र व ध्वनि साथ)
+Loaded the demo project|डेमो लोड हुआ
+Pivot|पिवट
+Selection follows the playhead|चयन प्लेहेड के साथ चलता है
+Snap to clips, markers and the playhead|क्लिप, मार्कर, प्लेहेड से स्नैप
+Soft Clip|सॉफ़्ट क्लिप
+Tape|टेप
+Trim|ट्रिम
+View|दृश्य
+Full|पूर्ण
+Clip|क्लिप
+Keyframes|कीफ़्रेम
+LUTs|LUT
+Lift|लिफ़्ट
+Master|मास्टर
+Pan|पैन
+Sat|सैट
+Scopes|स्कोप
+Spline|स्प्लाइन
+Sync Bin|सिंक बिन
+Temp|तापमान

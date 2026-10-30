@@ -68,7 +68,7 @@ pub fn regular(size: f32) -> FontId {
 }
 
 /// The fonts for a language: Noto Sans for the Latin, Greek and Cyrillic scripts, and behind it the
-/// Chinese, Japanese and Arabic ones (the characters those languages need: `assets/fonts`), so a
+/// Chinese, Japanese, Arabic and Hindi ones (the characters those languages need: `assets/fonts`), so a
 /// language name or a file name in any of them is drawn. The Han characters of the Chinese and the
 /// Japanese font differ in shape: the one of the language in use comes first.
 pub fn fonts_for(language: crate::i18n::Language) -> FontDefinitions {
@@ -83,12 +83,13 @@ pub fn fonts_for(language: crate::i18n::Language) -> FontDefinitions {
     add("noto-sc", include_bytes!("../assets/fonts/NotoSansSC-Regular.subset.ttf"));
     add("noto-jp", include_bytes!("../assets/fonts/NotoSansJP-Regular.subset.ttf"));
     add("noto-arabic", include_bytes!("../assets/fonts/NotoSansArabic-Regular.subset.ttf"));
+    add("noto-deva", include_bytes!("../assets/fonts/NotoSansDevanagari-Regular.subset.ttf"));
     let han: [&str; 2] = if crate::i18n::japanese_fonts(language) {
         ["noto-jp", "noto-sc"]
     } else {
         ["noto-sc", "noto-jp"]
     };
-    let behind = [han[0], han[1], "noto-arabic"];
+    let behind = [han[0], han[1], "noto-arabic", "noto-deva"];
     if let Some(family) = fonts.families.get_mut(&FontFamily::Proportional) {
         family.insert(0, "noto-regular".into());
         for (i, name) in behind.iter().enumerate() {

@@ -18,7 +18,9 @@
 //! made with `scripts/i18n/subset.py`); the Han characters come from the Japanese font while Japanese
 //! is the language and from the Chinese one otherwise. Arabic is joined and put in the order it is
 //! read when the table is made (the text drawing here sets letters one by one, left to right), so the
-//! tables hold it as it is to be drawn. Korean, Hindi and the like are still to come.
+//! tables hold it as it is to be drawn. Hindi is shaped the same way: each word is one glyph of a font
+//! made for it (`scripts/i18n/devanagari.py`), and the tables hold the character of that glyph. Korean
+//! and the like are still to come.
 
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicU8, Ordering};
@@ -34,6 +36,7 @@ mod el;
 mod paint;
 mod es;
 mod fr;
+mod hi;
 mod it;
 mod ja;
 mod nl;
@@ -67,11 +70,12 @@ pub(crate) enum Language {
     Chinese,
     Japanese,
     Arabic,
+    Hindi,
 }
 
 impl Language {
     /// Every language, in the order of the Help > Language menu.
-    pub(crate) const ALL: [Language; 17] = [
+    pub(crate) const ALL: [Language; 18] = [
         Language::English,
         Language::Spanish,
         Language::Portuguese,
@@ -89,6 +93,7 @@ impl Language {
         Language::Chinese,
         Language::Japanese,
         Language::Arabic,
+        Language::Hindi,
     ];
 
     /// The short code kept in `preferences.txt`.
@@ -111,6 +116,7 @@ impl Language {
             Self::Chinese => "zh",
             Self::Japanese => "ja",
             Self::Arabic => "ar",
+            Self::Hindi => "hi",
         }
     }
 
@@ -135,6 +141,8 @@ impl Language {
             Self::Japanese => "日本語",
             // "العربية" as it is drawn (joined, and in the order seen).
             Self::Arabic => "ﺔﻴﺑﺮﻌﻟﺍ",
+            // "हिन्दी" as one glyph of the Hindi font (`scripts/i18n/devanagari.py`).
+            Self::Hindi => "\u{E112}",
         }
     }
 
@@ -168,6 +176,7 @@ impl Language {
             Self::Chinese => (&zh::MENUS, zh::ENTRIES, zh::UI),
             Self::Japanese => (&ja::MENUS, ja::ENTRIES, ja::UI),
             Self::Arabic => (&ar::MENUS, ar::ENTRIES, ar::UI),
+            Self::Hindi => (&hi::MENUS, hi::ENTRIES, hi::UI),
         })
     }
 }
@@ -251,8 +260,8 @@ pub(crate) fn menu_name_in(language: Language, name: &'static str) -> &'static s
 
 /// The entries of a language by their English label, made once.
 fn table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
-    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 17] =
-        [const { OnceLock::new() }; 17];
+    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 18] =
+        [const { OnceLock::new() }; 18];
     let (_, entries, _) = language.data()?;
     Some(
         TABLES[usize::from(language.index())]
@@ -262,8 +271,8 @@ fn table(language: Language) -> Option<&'static HashMap<&'static str, &'static s
 
 /// The text of the pages and windows of a language by its English text, made once.
 fn ui_table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
-    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 17] =
-        [const { OnceLock::new() }; 17];
+    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 18] =
+        [const { OnceLock::new() }; 18];
     let (_, menus, ui) = language.data()?;
     Some(TABLES[usize::from(language.index())].get_or_init(|| {
         // A menu label is also text on a page ("Media", "Color"): one table for both.
@@ -299,7 +308,7 @@ pub(crate) fn paint_text(
     };
     // A sentence (a hint in the middle of a panel) that is wider than the English one is drawn smaller,
     // not over the panel beside it. A short label is never drawn smaller than the ones around it.
-    let font = if shown.chars().count() >= LONG && !shown.contains('\n') {
+    let font = if text.chars().count() >= LONG && !shown.contains('\n') {
         let width = |t: &str| painter.layout_no_wrap(t.to_string(), font.clone(), color).size().x;
         let (was, now) = (width(&text), width(&shown));
         match smaller(was, now) {
@@ -354,6 +363,7 @@ mod tests {
         assert_eq!(Language::German.name(), "Deutsch");
         assert_eq!(Language::Norwegian.name(), "Norsk");
         assert_eq!(Language::Greek.name(), "Ελληνικά");
+        assert_eq!(Language::Hindi.name(), "\u{E112}");
         assert_eq!(Language::Chinese.name(), "中文");
         assert_eq!(Language::Japanese.name(), "日本語");
     }
