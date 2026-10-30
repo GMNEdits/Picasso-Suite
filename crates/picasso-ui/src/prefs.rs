@@ -23,6 +23,8 @@ pub(crate) struct Preferences {
     /// Play short pieces of the sound while the playhead is dragged (the Clip menu's
     /// "Enable / Disable Audio Scrubbing").
     pub audio_scrubbing: bool,
+    /// Playback > Use Optimised Media was switched on: read the small copies when there are any.
+    pub optimised_media: bool,
     /// The commands whose keys were changed, and their keys.
     pub keys: HashMap<Act, Vec<String>>,
     /// The sizes of the panels on the pages.
@@ -34,6 +36,7 @@ impl Default for Preferences {
         Self {
             hardware_decoding: true,
             audio_scrubbing: true,
+            optimised_media: true,
             keys: HashMap::new(),
             panels: Panels::default(),
         }
@@ -70,6 +73,7 @@ impl Preferences {
                 match name.trim() {
                     "hardware_decoding" => prefs.hardware_decoding = value.trim() != "off",
                     "audio_scrubbing" => prefs.audio_scrubbing = value.trim() != "off",
+                    "optimised_media" => prefs.optimised_media = value.trim() != "off",
                     "panels" => {
                         if let Some(panels) = parse_panels(value) {
                             let moved = std::mem::take(&mut prefs.panels.moved);
@@ -85,9 +89,10 @@ impl Preferences {
 
     pub(crate) fn text(&self) -> String {
         let mut out = format!(
-            "hardware_decoding={}\naudio_scrubbing={}\n",
+            "hardware_decoding={}\naudio_scrubbing={}\noptimised_media={}\n",
             if self.hardware_decoding { "on" } else { "off" },
-            if self.audio_scrubbing { "on" } else { "off" }
+            if self.audio_scrubbing { "on" } else { "off" },
+            if self.optimised_media { "on" } else { "off" }
         );
         out.push_str(&panels_text(&self.panels));
         let mut keys: Vec<(String, &Vec<String>)> = self

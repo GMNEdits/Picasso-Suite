@@ -111,6 +111,17 @@ pub(crate) enum Incoming {
         media: picasso_core::MediaId,
         label: String,
     },
+    /// How far the optimised copy of a file has got: pictures written of the total.
+    ProxyProgress {
+        source: String,
+        done: u64,
+        total: u64,
+    },
+    /// The optimised copy of a file was made (where it is), or could not be.
+    ProxyDone {
+        source: String,
+        made: Result<String, String>,
+    },
     Error(String),
 }
 

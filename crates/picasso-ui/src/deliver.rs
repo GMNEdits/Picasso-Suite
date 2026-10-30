@@ -138,7 +138,6 @@ pub(crate) struct DeliverUi {
     pub(crate) gamma_tag: usize,
     pub(crate) burn: usize,
     pub(crate) bypass_reencode: bool,
-    pub(crate) optimized_media: bool,
     pub(crate) proxy_media: bool,
     pub(crate) cached_images: bool,
     pub(crate) force_sizing: bool,
@@ -184,7 +183,6 @@ impl Default for DeliverUi {
             gamma_tag: 0,
             burn: 0,
             bypass_reencode: true,
-            optimized_media: false,
             proxy_media: false,
             cached_images: false,
             force_sizing: false,
@@ -1235,9 +1233,11 @@ impl StudioApp {
 
     pub(crate) fn export_frame(&mut self, ctx: &Context) {
         let (w, h) = (self.project().width, self.project().height);
+        // What an export would read: the files themselves, unless the page was told to use the
+        // optimised copies.
         let frame = match render_frame(
             self.session.project(),
-            &self.cache.blocking(),
+            &self.export_cache().blocking(),
             self.playhead,
             w,
             h,

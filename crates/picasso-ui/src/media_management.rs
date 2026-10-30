@@ -5,6 +5,8 @@
 //! - Archive Project: copy the files the timelines use into a folder, and write a copy of the
 //!   project there that points at them, so that folder can be moved, handed over or backed up
 //!   as one thing. The project being edited is not touched: the archive is a copy.
+//! - Optimised Media: make small copies of the video files that decode quickly, for smooth
+//!   editing; the copies themselves are in [`crate::proxy`].
 
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
@@ -62,9 +64,15 @@ impl StudioApp {
     /// File > Media Management opens the window.
     pub(crate) fn show_media_management(&mut self) {
         self.extra.media_management = true;
+        // Copies whose file changed or went are of no use to anyone: they go when the window
+        // that manages them opens.
+        if self.proxies.prune() > 0 {
+            self.proxies.save();
+            self.refresh_proxies();
+        }
     }
 
-    /// The Media Management window: relink, and archive.
+    /// The Media Management window: relink, archive, and optimised media.
     pub(crate) fn media_management_window(&mut self, ctx: &Context) {
         if !self.extra.media_management {
             return;
@@ -105,9 +113,97 @@ impl StudioApp {
                 if ui.button("Archive Project...").clicked() {
                     self.archive_project(ui.ctx());
                 }
+                ui.separator();
+                self.optimised_media_section(ui);
             });
         if !open {
             self.extra.media_management = false;
+        }
+    }
+
+    /// The window's Optimised Media part: which files have a copy, and the buttons for them.
+    fn optimised_media_section(&mut self, ui: &mut egui::Ui) {
+        ui.heading("Optimised Media");
+        ui.label(
+            "Small copies of the video files that decode quickly, so the timeline and the viewer \
+             keep up. They are kept in the data folder and shared by every project; exports read \
+             the originals unless the Deliver page says otherwise.",
+        );
+        let mut use_them = self.use_optimised;
+        if ui
+            .checkbox(&mut use_them, "Use optimised media")
+            .on_hover_text("The viewer plays the copies when there are any")
+            .changed()
+        {
+            self.set_optimised(use_them);
+        }
+
+        let videos = self.project_videos();
+        if videos.is_empty() {
+            ui.label("The timelines use no video files.");
+            return;
+        }
+        let mut rows: Vec<(String, String, String)> = Vec::new();
+        for path in &videos {
+            let state = if let Some(done) = self.proxy_jobs.fraction(path) {
+                format!("Optimising... {:.0}%", done * 100.0)
+            } else if self.proxy_jobs.holds(path) {
+                "Waiting".to_string()
+            } else if self.proxies.path_for(path).is_some() {
+                "Optimised".to_string()
+            } else {
+                "Not optimised".to_string()
+            };
+            rows.push((crate::proxy::name_of(path), state, path.clone()));
+        }
+        egui::ScrollArea::vertical()
+            .max_height(140.0)
+            .show(ui, |ui| {
+                for (name, state, path) in &rows {
+                    ui.horizontal(|ui| {
+                        ui.label(name).on_hover_text(path);
+                        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                            ui.label(egui::RichText::new(state).color(if state == "Optimised" {
+                                crate::theme::TEXT_DIM
+                            } else {
+                                crate::theme::TEXT
+                            }));
+                        });
+                    });
+                }
+            });
+
+        let waiting = self.optimise_wanted().len();
+        ui.horizontal(|ui| {
+            if ui
+                .add_enabled(waiting > 0, egui::Button::new("Optimise All"))
+                .on_hover_text("Makes a copy of every video the timelines use")
+                .clicked()
+            {
+                self.optimise_media();
+            }
+            let made = rows.iter().any(|(_, state, _)| state == "Optimised");
+            if ui
+                .add_enabled(made, egui::Button::new("Delete Copies"))
+                .on_hover_text("Deletes the copies of this project's video files")
+                .clicked()
+            {
+                self.forget_proxies();
+            }
+            if ui
+                .add_enabled(!self.proxies.copies().is_empty(), egui::Button::new("Delete All"))
+                .on_hover_text("Deletes every optimised copy, for every project")
+                .clicked()
+            {
+                self.delete_all_copies();
+            }
+        });
+        if let Some(folder) = self.proxies.folder() {
+            ui.label(
+                egui::RichText::new(format!("Kept in {}", folder.display()))
+                    .color(crate::theme::TEXT_DIM)
+                    .size(12.0),
+            );
         }
     }
 

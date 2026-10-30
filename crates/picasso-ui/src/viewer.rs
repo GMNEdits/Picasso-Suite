@@ -57,6 +57,8 @@ pub(crate) struct Viewer {
     /// The project as the compositing thread sees it, by its content hash: copied only when
     /// the project changes, not on every frame that plays.
     snapshot: Option<(u64, Arc<Project>)>,
+    /// Whether the picture on screen was put together from optimised copies, for the badge.
+    optimised: bool,
 }
 
 impl Viewer {
@@ -72,6 +74,7 @@ impl Viewer {
         frame_key: FrameKey,
     ) {
         self.receive(ctx, frames);
+        self.optimised = cache.uses_copies();
         if self.key.as_ref() == Some(&key) {
             return;
         }
@@ -171,6 +174,18 @@ impl Viewer {
             );
         }
         draw_overlays(&painter, rect, overlays);
+        if self.optimised {
+            // Says so, so a softer picture is never mistaken for the file's own.
+            let at = rect.left_top() + vec2(10.0, 10.0);
+            let text = painter.layout_no_wrap(
+                "OPTIMISED".to_string(),
+                egui::FontId::proportional(11.0),
+                Color32::from_rgb(235, 235, 235),
+            );
+            let box_rect = egui::Rect::from_min_size(at, text.size()).expand2(vec2(6.0, 3.0));
+            painter.rect_filled(box_rect, 3.0, Color32::from_black_alpha(150));
+            painter.galley(at + vec2(6.0, 3.0), text, Color32::WHITE);
+        }
         rect
     }
 }

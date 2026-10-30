@@ -1065,6 +1065,7 @@ impl StudioApp {
             Act::ProxyHalf => Some(self.proxy == 2),
             Act::ProxyQuarter => Some(self.proxy == 4),
             Act::ProxyEighth => Some(self.proxy == 8),
+            Act::ToggleOptimisedMedia => Some(self.use_optimised),
             Act::ToggleHardwareDecoding => Some(self.extra.prefs.hardware_decoding),
             Act::ToggleAudioScrubbing => Some(self.extra.prefs.audio_scrubbing),
             Act::OverlaySafeArea => Some(self.overlays.safe_area),
@@ -1388,6 +1389,7 @@ impl StudioApp {
             Act::ProxyHalf => self.set_proxy(2),
             Act::ProxyQuarter => self.set_proxy(4),
             Act::ProxyEighth => self.set_proxy(8),
+            Act::ToggleOptimisedMedia => self.set_optimised(!self.use_optimised),
             Act::ToggleHardwareDecoding => {
                 let on = !self.extra.prefs.hardware_decoding;
                 self.set_hardware_decoding(on);
