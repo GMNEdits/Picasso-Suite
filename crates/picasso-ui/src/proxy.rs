@@ -45,7 +45,42 @@ impl Store {
     /// The store in the data folder, as it is on disk.
     pub(crate) fn load() -> Store {
         let root = crate::project_manager::data_dir().map(|d| d.join("optimised"));
-        Self::load_from(root)
+        let store = Self::load_from(root);
+        store.sweep();
+        store
+    }
+
+    /// Removes the files of copies that were never finished: a copy that was being made when the
+    /// program was closed leaves a file the index does not name. Only files an hour old or more go,
+    /// so a copy another running program is still making is left alone.
+    pub(crate) fn sweep(&self) -> usize {
+        let Some(root) = &self.root else {
+            return 0;
+        };
+        let Ok(dir) = std::fs::read_dir(root) else {
+            return 0;
+        };
+        let known: std::collections::HashSet<&str> =
+            self.entries.values().map(|e| e.file.as_str()).collect();
+        let hour = std::time::Duration::from_secs(3600);
+        let mut gone = 0;
+        for item in dir.flatten() {
+            let path = item.path();
+            let name = item.file_name().to_string_lossy().into_owned();
+            if path.extension().is_none_or(|e| e != "mp4") || known.contains(name.as_str()) {
+                continue;
+            }
+            let old = item
+                .metadata()
+                .and_then(|m| m.modified())
+                .ok()
+                .and_then(|t| t.elapsed().ok())
+                .is_some_and(|age| age >= hour);
+            if old && std::fs::remove_file(&path).is_ok() {
+                gone += 1;
+            }
+        }
+        gone
     }
 
     /// The store kept under `root` (a test says where).
@@ -69,7 +104,12 @@ impl Store {
             let (Ok(size), Ok(modified)) = (size.parse(), modified.parse()) else {
                 continue;
             };
-            if source.is_empty() || file.is_empty() {
+            // The index is a file anyone can edit: a copy is a plain file name in the folder, never a
+            // path out of it (deleting copies would delete whatever the path names).
+            if source.is_empty()
+                || file.is_empty()
+                || Path::new(file).file_name() != Some(std::ffi::OsStr::new(file))
+            {
                 continue;
             }
             store.entries.insert(
@@ -92,6 +132,11 @@ impl Store {
     /// its whole path, so two files of one name in different folders do not share a copy.
     pub(crate) fn place_for(&self, source: &str) -> Option<PathBuf> {
         let root = self.root.as_ref()?;
+        // The index has a line for each file: a name with a tab or a line break in it cannot be
+        // written there, so such a file keeps no copy.
+        if source.contains(['\t', '\n', '\r']) {
+            return None;
+        }
         let stem: String = Path::new(source)
             .file_stem()
             .map(|s| s.to_string_lossy().into_owned())
@@ -103,7 +148,15 @@ impl Store {
             .collect();
         let stem = stem.trim_matches('_');
         let stem = if stem.is_empty() { "media" } else { stem };
-        Some(root.join(format!("{stem}-{:08x}.mp4", hash(source))))
+        // Two paths with one hash (rare, but then the wrong picture would show, silently) never
+        // share a name: the next free one is taken.
+        let mut name = format!("{stem}-{:016x}.mp4", hash(source));
+        let mut n = 2;
+        while self.entries.iter().any(|(other, e)| e.file == name && other != source) {
+            name = format!("{stem}-{:016x}-{n}.mp4", hash(source));
+            n += 1;
+        }
+        Some(root.join(name))
     }
 
     /// The copy to decode for `source`, when there is one and the file has not changed since.
@@ -245,11 +298,11 @@ fn stamp(path: &Path) -> Option<(u64, u64)> {
 }
 
 /// FNV-1a of the path's bytes: short, stable, and no dependency.
-fn hash(text: &str) -> u32 {
-    let mut h: u32 = 0x811c_9dc5;
+fn hash(text: &str) -> u64 {
+    let mut h: u64 = 0xcbf2_9ce4_8422_2325;
     for b in text.as_bytes() {
-        h ^= u32::from(*b);
-        h = h.wrapping_mul(0x0100_0193);
+        h ^= u64::from(*b);
+        h = h.wrapping_mul(0x0000_0100_0000_01b3);
     }
     h
 }
@@ -738,6 +791,84 @@ mod tests {
         // A later start reads the index back.
         let again = Store::load_from(Some(store_dir));
         assert_eq!(again.path_for(&source), Some(place));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn an_index_cannot_name_a_file_outside_the_folder() {
+        let dir = scratch("proxy_index_escape");
+        let store_dir = dir.join("store");
+        std::fs::create_dir_all(&store_dir).unwrap();
+        let outside = dir.join("precious.txt");
+        std::fs::write(&outside, b"keep me").unwrap();
+        let source = source(&dir, "a.mov");
+        let (size, modified) = stamp(Path::new(&source)).unwrap();
+        std::fs::write(
+            store_dir.join(INDEX),
+            format!(
+                "{source}\t../precious.txt\t{size}\t{modified}\n{source}2\t{}\t{size}\t{modified}\n",
+                outside.display()
+            ),
+        )
+        .unwrap();
+        let mut store = Store::load_from(Some(store_dir));
+        assert!(store.copies().is_empty(), "a path is not a file name: {:?}", store.copies());
+        store.clear();
+        assert!(outside.exists(), "nothing outside the folder was deleted");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn two_paths_with_one_hash_do_not_share_a_name() {
+        let dir = scratch("proxy_same_name");
+        let mut store = Store::load_from(Some(dir.join("store")));
+        let one = source(&dir, "x.mov");
+        let first = store.place_for(&one).unwrap();
+        // Another file whose entry already holds that name.
+        store.entries.insert(
+            "another".into(),
+            Entry {
+                file: first.file_name().unwrap().to_string_lossy().into_owned(),
+                size: 1,
+                modified: 1,
+            },
+        );
+        let second = store.place_for(&one).unwrap();
+        assert_ne!(first, second, "the name is taken, so the next is used");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_file_name_the_index_cannot_hold_keeps_no_copy() {
+        let store = Store::load_from(Some(std::env::temp_dir().join("picasso_proxy_odd")));
+        assert!(store.place_for("a\tb.mov").is_none());
+        assert!(store.place_for("a\nb.mov").is_none());
+        assert!(store.place_for("ab.mov").is_some());
+    }
+
+    #[test]
+    fn a_copy_never_finished_is_swept_when_it_is_old_enough() {
+        let dir = scratch("proxy_sweep");
+        let store_dir = dir.join("store");
+        std::fs::create_dir_all(&store_dir).unwrap();
+        let source = source(&dir, "a.mov");
+        let mut store = Store::load_from(Some(store_dir.clone()));
+        let place = store.place_for(&source).unwrap();
+        std::fs::write(&place, b"the copy").unwrap();
+        store.record(&source, &place);
+        let partial = store_dir.join("half-0000000000000001.mp4");
+        std::fs::write(&partial, b"half").unwrap();
+        // Just written: another program may be making it, so it stays.
+        assert_eq!(store.sweep(), 0);
+        let old = std::time::SystemTime::now() - std::time::Duration::from_secs(2 * 3600);
+        std::fs::File::options()
+            .write(true)
+            .open(&partial)
+            .unwrap()
+            .set_modified(old)
+            .unwrap();
+        assert_eq!(store.sweep(), 1);
+        assert!(!partial.exists() && place.exists(), "the unfinished one went, the copy stayed");
         let _ = std::fs::remove_dir_all(&dir);
     }
 

@@ -72,6 +72,7 @@ Status at 0.6.1.
 - [x] Editing: Timeline > New Effects Clip (`Alt+Shift+E`; a transparent clip on a free video track whose grade, effects, transform, opacity and blend mode apply to the composite of the tracks below; one undo, adds no timeline; written to OpenTimelineIO, left out of XML and AAF)
 - [x] Interface: "Exit Picasso Suite?" when the window is closed with unsaved changes (Exit without saving, or Save Project and then exit), in the same box as the frame rate question
 - [x] Interface: Help > Language: the menus and the pages in Español, Português, Français, Deutsch, Italiano, Nederlands, Polski, Türkçe, Svenska, Norsk, Русский, Українська, Ελληνικά, Dansk, Suomi, Bahasa Indonesia, Čeština, Slovenčina, Română, Magyar, Hrvatski, Bosanski, Српски, Català, Eesti, Latviešu, Lietuvių, Íslenska, Lëtzebuergesch, Shqip, Filipino, Tiếng Việt, 한국어, বাংলা, ไทย, 中文, 日本語, العربية and हिन्दी, English (Default) first, kept for the next start; a translation is never wider than the English, a long word is a short form (`scripts/i18n`)
+- [x] Performance: Optimised Media: small H.264 copies of video files (1280 px, a key frame every 8 pictures) in the data folder, used by the viewer and the timeline with Playback > Use Optimised Media; File > Media Management lists, makes and deletes them
 
 ## To do
 
@@ -81,7 +82,7 @@ Status at 0.6.1.
 - [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, timeline in a new window
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
-- [ ] Performance: instant scrubbing on video with few key frames needs optimised media (proxies): with one key frame every 20 seconds of 4K, the exact picture still takes 2 to 3.5 seconds
+- [ ] Performance: optimised media can be cancelled while a copy is made, and copes with variable frame rate sources (a copy is made at a constant frame rate, so a picture may be a frame off), and its menu items and Media Management section are translated
 - [ ] Project: libraries, archives, media management, metadata import/export, Lightbox, dual screen, clean feed
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates: the release workflow now updates the .deb, .rpm, macOS app, Windows folder and Flatpak in place on every build (`--update-from`), and its first run is still to come (0.6.0's Flatpak test failed because the build container has no `flatpak-session-helper`); the download from GitHub itself is only tried on Windows
 - [ ] Plugins: OpenFX (OFX) image effect plugins, the open standard: find and load plugins from the standard folders, show their parameters in the inspector, run them on a clip and in an export, on the processor first and then the graphics card
