@@ -79,6 +79,9 @@ mod native {
         workers: HashSet<MediaId>,
         /// Videos that could not be opened or decoded; they show the offline picture.
         broken: HashSet<MediaId>,
+        /// The file each media was most recently asked for (the original or its optimised copy),
+        /// so a switch between them can drop the now-stale cached frames and reopen the decoder.
+        last_path: HashMap<MediaId, String>,
         closed: bool,
     }
 
@@ -201,6 +204,19 @@ mod native {
             if state.broken.contains(&media) {
                 return VideoFrame::Offline;
             }
+            // The file backing this media changed (the original swapped for its optimised copy,
+            // or back): the key frames and last pictures cached for the old file are not right
+            // for the new one, so they are dropped and the worker is told to reopen the decoder.
+            if let Some(prev) = state.last_path.get(&media) {
+                if prev.as_str() != path {
+                    state.frames.remove(&media);
+                    state.keys.remove(&media);
+                    state.last_path.insert(media, path.to_string());
+                    shared.generation.fetch_add(1, Ordering::Relaxed);
+                }
+            } else {
+                state.last_path.insert(media, path.to_string());
+            }
             if let Some(hit) = exact(&state, media, time_us, reduce) {
                 return VideoFrame::Ready(hit);
             }
@@ -322,6 +338,14 @@ mod native {
             }
             // Hardware decoding was turned on or off: open the file again the new way.
             if decoder.as_ref().is_some_and(VideoDecoder::is_stale) {
+                decoder = None;
+            }
+            // The file this media reads from changed (a copy was made, or "Use Optimised Media"
+            // was toggled) since the decoder was opened: reopen it so the right file is decoded.
+            if decoder
+                .as_ref()
+                .is_some_and(|d| d.path() != Path::new(&path))
+            {
                 decoder = None;
             }
             if decoder.is_none() {
@@ -475,6 +499,19 @@ mod native {
                 .status()
                 .is_ok_and(|s| s.success())
                 .then(|| path.to_string_lossy().into_owned())
+        }
+
+        /// Two seconds of `size` at 25 fps; `None` when `ffmpeg` is not installed.
+        fn video_size(name: &str, size: &str) -> Option<String> {
+            let path = std::env::temp_dir().join(name);
+            std::process::Command::new("ffmpeg")
+                .args(["-y", "-v", "error", "-f", "lavfi", "-i"])
+                .arg(format!("testsrc2=duration=2:size={size}:rate=25"))
+                .args(["-pix_fmt", "yuv420p", "-g", "25"])
+                .arg(&path)
+                .status()
+                .is_ok_and(|s| s.success())
+                .then_some(path.to_string_lossy().into_owned())
         }
 
         /// Asks for the picture until it is the exact one (up to ten seconds).
@@ -656,6 +693,40 @@ mod native {
             let blocking = pool.video_frame(media, &path, 2_000_000, 1, true);
             assert!(matches!(blocking, VideoFrame::Ready(_)));
             let _ = std::fs::remove_file(path);
+        }
+
+        /// Swapping the file a media reads from (the original for its optimised copy, or back)
+        /// must reopen the decoder and drop the old file's cached frames, not keep serving them.
+        #[test]
+        fn switching_the_backing_file_rereads_the_new_one() {
+            let big = video_size("picasso_pool_switch_big.mp4", "1280x720");
+            let small = video_size("picasso_pool_switch_small.mp4", "320x180");
+            let (Some(big), Some(small)) = (big, small) else {
+                return; // no ffmpeg here
+            };
+            let pool = VideoPool::new(egui::Context::default());
+            let media = MediaId(9);
+            // Prime the cache with the big file; the worker opens a decoder on it.
+            assert!(
+                until_ready_at(&pool, media, &big, 0, 1),
+                "the big file decoded"
+            );
+            // Now the small file backs the same media: an optimised copy, in effect.
+            assert!(
+                until_ready_at(&pool, media, &small, 0, 1),
+                "the small file decoded after the switch"
+            );
+            // The exact picture asked for must be the small file's, not the cached big one.
+            match pool.video_frame(media, &small, 0, 1, true) {
+                VideoFrame::Ready(f) => assert_eq!(
+                    (f.width, f.height),
+                    (320, 180),
+                    "the switch read the new file, not the cached old one"
+                ),
+                other => panic!("expected a ready frame, got {other:?}"),
+            }
+            let _ = std::fs::remove_file(&big);
+            let _ = std::fs::remove_file(&small);
         }
     }
 }

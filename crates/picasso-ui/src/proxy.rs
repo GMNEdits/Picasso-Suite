@@ -464,11 +464,20 @@ pub(crate) fn start(
             }
             true
         });
+        // A failed render leaves a truncated file behind; remove it so a retry makes a fresh one
+        // and no orphan is left in the data folder.
+        let made = match result {
+            Ok(()) => Ok(dest.to_string_lossy().into_owned()),
+            Err(e) => {
+                let _ = std::fs::remove_file(&dest);
+                Err(e)
+            }
+        };
         inbox.push(
             &ctx,
             crate::platform::Incoming::ProxyDone {
                 source,
-                made: result.map(|()| dest.to_string_lossy().into_owned()),
+                made,
             },
         );
     });
@@ -562,16 +571,27 @@ impl StudioApp {
         self.use_optimised = on;
         self.refresh_proxies();
         if on {
-            self.info("Playing from optimised media");
+            if self.cache.uses_copies() {
+                self.info("Playing from optimised media");
+            } else {
+                // It is on, but there is nothing to read as a copy yet: don't claim there is.
+                self.info(
+                    "Use Optimised Media is on, but no copy exists yet; make one in Media \
+                     Management",
+                );
+            }
         } else {
             self.info("Playing from the original media");
         }
     }
 
     /// The video files the timelines use that have no copy yet, and are not being made.
+    /// Files that are not on disk (offline) are skipped: there is nothing to read a copy from,
+    /// and Optimised Media is only for files that play.
     pub(crate) fn optimise_wanted(&self) -> Vec<String> {
         self.project_videos()
             .into_iter()
+            .filter(|path| Path::new(path).is_file())
             .filter(|path| self.proxies.path_for(path).is_none())
             .filter(|path| !self.proxy_jobs.holds(path))
             .collect()
@@ -670,11 +690,12 @@ impl StudioApp {
         self.info(format!("Deleted {gone} optimised copy(ies)"));
     }
 
-    /// The cache an export reads: the originals, unless the Deliver page was told to use the
-    /// copies. A copy is smaller than its file, so an export must ask for it.
+    /// The cache an export reads: the originals, unless the Deliver page's "Use proxy media"
+    /// checkbox (the "draft at proxy resolution" switch) is ticked. A copy is smaller than its
+    /// file, so an export must not read one unless it was told to.
     #[cfg(not(target_arch = "wasm32"))]
     pub(crate) fn export_cache(&self) -> picasso_render::MediaCache {
-        if self.deliver_ui.optimized_media {
+        if self.deliver_ui.proxy_media {
             self.cache.clone()
         } else {
             self.cache.originals()
@@ -943,7 +964,7 @@ mod tests {
             !app.export_cache().uses_copies(),
             "an export reads the file, whole"
         );
-        app.deliver_ui.optimized_media = true;
+        app.deliver_ui.proxy_media = true;
         assert!(
             app.export_cache().uses_copies(),
             "ticked on the Deliver page, it reads the copy"

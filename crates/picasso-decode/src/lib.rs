@@ -620,6 +620,13 @@ impl VideoDecoder {
         self.asked != hw::hardware_decoding()
     }
 
+    /// The file the decoder is reading. A caller uses it to tell when the file has switched
+    /// (the optimised copy standing in for the original it was opened on) and the decoder must
+    /// be reopened to read the new one.
+    pub fn path(&self) -> &Path {
+        &self.path
+    }
+
     fn read(
         &mut self,
         pts_us: i64,
