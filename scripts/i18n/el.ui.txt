@@ -1,0 +1,222 @@
+Clips|Κλιπ
+60 frames per second|60 καρέ/δλ
+Add Job|Προσθ.
+Add to Render Queue|Προσθήκη στην ουρά
+Advanced Settings|Προχωρημένα
+Archive Project|Αρχειοθέτηση
+Archive Project...|Αρχειοθ....
+Auto|Αυτό
+Automatic|Αυτόματο
+Balanced|Ισορροπ.
+Bins|Κάδοι
+Browse|Αναζ.
+Bus Sends|Αποστολές
+Capture|Λήψη
+Chapters from Markers|Κεφάλαια
+Choose a folder|Επιλογή φακέλου
+Clip Name|Όνομα κλιπ
+Clone|Κλώνος
+Clone Tool|Κλωνοποίηση
+Codec|Codec
+Col Boost|Έντ.χρ.
+Collections|Συλλογές
+Contrast|Αντίθεση
+Control Room|Έλεγχος
+Create an Album|Νέο άλμπουμ
+Curves - Custom|Καμπύλες
+Custom Export|Προσαρμ. εξαγωγή
+Decode Options|Αποκωδικ.
+Demo Project|Δοκιμαστικό
+Drag photos into the Photo Album to start editing|Σύρετε φωτογραφίες στο άλμπουμ
+Drawn with|Σχεδ. με
+Editing|Επεξεργ.
+Effects In|Εφέ εισ.
+Embedded Audio|Ενσωμ. ήχος
+Encoder|Κωδικοπ.
+Encoding Profile|Προφίλ κωδικ.
+Entire Timeline|Όλο το χρονολ.
+Estimated File Size|Μέγεθος
+Every|Κάθε
+Export Video|Εξαγ. βίντεο
+Fairlight|Fairlight
+File Name|Όνομα αρχείου
+Format|Μορφή
+Frame rate|Καρέ/δλ
+Frame reordering|Αναδιάταξη καρέ
+Full Frames|Πλήρη καρέ
+Full Screen|Πλήρης οθόνη
+Fusion|Fusion
+Gain|Κέρδος
+Gamma|Gamma
+Generator|Γεννήτρια
+Graphics card|Κάρτα γραφικών
+Groups|Ομάδες
+Hi/Light|Φωτ.
+High|Υψηλό
+Hue|Απόχρ.
+Image|Εικόνα
+Index|Ευρετήριο
+Individual clips|Μεμονωμ. κλιπ
+Input|Είσοδος
+Integrated|Ενσωματ.
+Key Frames|Καρέ-κλειδιά
+Keywords|Λέξεις-κλειδιά
+L. Mix|Μίξη Α
+Layer|Επίπεδο
+Local|Τοπικό
+Location|Θέση
+Loop playback|Αναπ. σε βρόχο
+Loudness|Ένταση
+Low|Χαμηλό
+Mark|Σήμα
+Media Management|Διαχ. πολυμέσων
+Media Source|Πηγή
+Media Storage|Αποθήκη
+Meters|Μετρητές
+Mid/Detail|Μέσα/Λεπτ.
+Modifiers|Τροποπ.
+Monitor|Οθόνη
+Monitor volume|Ένταση οθόνης
+Native|Αρχικό
+Network Optimization|Βελτ. δικτύου
+No jobs in Queue|Καμία εργασία
+No jobs in queue|Καμία εργασία
+No stills created|Κανένα στατικό
+Not reported|Άγνωστο
+Nothing to inspect|Τίποτα
+Offset|Μετατόπ.
+Open|Άνοιγμα
+Order|Σειρά
+Parade|Parade
+Pause|Παύση
+Photo|Φωτό
+Photo Album|Άλμπουμ
+Playback|Αναπαρ.
+Position lock|Κλείδ. θέσης
+Preset|Προρύθμιση
+Primaries - Color Wheels|Πρωτεύοντα
+Process Mode|Λειτ. επεξ.
+Project settings|Ρυθμίσεις
+Projects|Έργα
+Quality|Ποιότητα
+Quick Export|Γρήγορη εξαγ.
+Range|Εύρος
+Rate Control|Έλεγχος ρυθμού
+Relink Missing Media|Επανασύνδεση
+Relink Missing Media...|Επανασύνδεση...
+Remove|Αφαίρεση
+Render|Render
+Render All|Όλα
+Render Queue|Ουρά render
+Render Settings|Ρυθμ. render
+Render Settings - Custom Export|Ρυθμ. render - προσαρμ.
+Reset|Επαναφ.
+Reset All|Όλα
+Resolution|Ανάλυση
+Search|Αναζήτηση
+Settings|Ρυθμίσεις
+Shad|Σκιές
+Short|Σύντομο
+Short Max|Σύντ. μέγ.
+Single clip|Ένα κλιπ
+Smart Bins|Έξυπνοι κάδοι
+Source Color Space|Χρωματ. χώρος πηγής
+Source Gamma Space|Gamma πηγής
+Subtitle Settings|Ρυθμ. υποτίτλων
+System|Σύστημα
+Timeline Resolution|Ανάλυση χρονολ.
+Timeline proxy|Proxy χρονολ.
+Tint|Απόχρ.
+Tools|Εργαλεία
+Track FX|Εφέ καναλιού
+Transitions|Μεταβάσεις
+Untitled|Χωρίς τίτλο
+Use vertical resolution|Κάθετη ανάλυση
+Version 0.6.1|Έκδοση 0.6.1
+Video|Βίντεο
+Waveform|Κυματομορφή
+Workspace|Χώρος
+No clips in media pool|Δεν υπάρχουν κλιπ
+Add clips with Import, or drop files here|Εισαγωγή ή απόθεση αρχείων εδώ
+Add clips from Media Storage to get started|Προσθέστε κλιπ από την αποθήκη
+No sound to show|Κανένας ήχος
+No clip to grade|Κανένα κλιπ
+No Input|Χωρίς είσοδο
+DURATION|ΔΙΑΡΚΕΙΑ
+Export Audio|Εξαγωγή ήχου
+Data Rate|Ρυθμός
+Output Track 1|Έξοδος 1
+Use unique filename|Μοναδικό όνομα
+Adds (1), (2) ... to the name instead of writing over a file.|Προσθέτει (1), (2) ... αντί για αντικατάσταση.
+File type|Τύπος
+Whole timeline|Όλο το χρονολ.
+In to out marks|Είσοδος-έξοδος
+Pixel aspect ratio|Αναλογία pixel
+Square|Τετράγωνο
+Cinemascope|Cinemascope
+Data Levels|Επίπεδα
+Retain sub-black and super-white data|Διατήρ. υπερ-μαύρου/λευκού
+Color Space Tag|Ετικ. χρ. χώρου
+Gamma Tag|Ετικ. gamma
+Data burn-in|Ενσωμ. δεδομένων
+Same as project|Όπως το έργο
+Bypass re-encode when possible|Χωρίς επανακωδικ.
+Use optimized media|Βελτιστοπ. πολυμέσα
+Use proxy media|Χρήση proxy
+Use render cached images|Εικόνες render cache
+Force sizing to highest quality|Μέγ. ποιότ. μεγέθους
+Force debayer to highest quality|Μέγ. ποιότ. debayer
+Render All Video Tracks|Όλα τα κανάλια
+Enable Flat Pass|Flat Pass
+visionOS Bypass|Παράκαμψη visionOS
+Disable sizing and blanking output|Χωρίς μέγεθος/blanking
+Trigger script at|Σενάριο σε
+Start|Έναρξη
+of render job|του render
+Export Subtitle|Εξαγ. υποτίτλων
+As a separate file|Ξεχωριστό αρχείο
+Export As|Εξαγωγή ως
+frames|καρέ
+Cut|Κοπή
+Teal|Τιρκουάζ
+Half|Μισή
+Color Bars|Μπάρες χρώματος
+Lightbox|Lightbox
+Edit|Επεξ.
+Mixer|Μίκτης
+Sound Library|Ήχοι
+Timeline: AAF, EDL, XML...|Χρονολ.: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Χρονολ.: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Πρόγραμμα βίντεο σε Rust για Windows, Linux, macOS και web.
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing ήχου (ήχος κατά τη μετακίνηση)
+Best|Άριστο
+Changing the frame rate keeps every clip on the same frames.|Η αλλαγή καρέ/δλ κρατά τα κλιπ στα ίδια καρέ.
+Click a command's keys, then press the key it should have. Escape gives up.|Πατήστε στις συντομεύσεις και μετά το νέο πλήκτρο. Esc ακυρώνει.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Αντιγράφει τα αρχεία των χρονολογίων σε φάκελο και γράφει αντίγραφο του έργου που δείχνει σε αυτά. Το ανοιχτό έργο δεν αλλάζει.
+Decode supported video using hardware acceleration|Αποκωδ. βίντεο με επιτάχυνση υλικού
+Every media file is where the project says it is.|Κάθε αρχείο βρίσκεται όπου λέει το έργο.
+Filters|Φίλτρα
+Free software under the GPL, version 3 or later.|Ελεύθερο λογισμικό GPL, έκδοση 3 ή νεότερη.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|Τα H.264, H.265, AV1, VP9, MPEG-2 και VC-1 αποκωδικοποιούνται στην κάρτα γραφικών όταν ο οδηγός μπορεί. Απενεργοποιήστε αν τα κλιπ βγαίνουν πράσινα ή χαλασμένα. Το PICASSO_NO_HWACCEL=1 το απενεργοποιεί για μία εκτέλεση.
+Help|Βοήθ.
+Linked selection (picture and sound together)|Συνδεδεμένη επιλογή (εικόνα και ήχος)
+Loaded the demo project|Φορτώθηκε το δοκιμαστικό
+Pivot|Άξονας
+Selection follows the playhead|Επιλογή ακολουθεί τον δείκτη
+Snap to clips, markers and the playhead|Κούμπωμα σε κλιπ, σήματα, δείκτη
+Soft Clip|Απαλό clip
+Tape|Ταινία
+Trim|Κοπή
+View|Προβολή
+Full|Πλήρες
+Clip|Κλιπ
+Keyframes|Keyframes
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Κορ.
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Συγχ.
+Temp|Θερμ.

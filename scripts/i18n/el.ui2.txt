@@ -1,0 +1,63 @@
+Bins|Κάδ.
+Clone|Κλών.
+Clone Tool|Κλωνοπ.
+Custom Export|Προσαρμ. εξαγ.
+File Name|Όνομα
+Full Screen|Πλήρ. οθόνη
+Gain|Gain
+High|Υψηλ.
+Hue|Hue
+Tint|Tint
+Index|Ευρετ.
+Input|Είσ.
+Keywords|Λέξεις
+Layer|Επίπ.
+Local|Τοπ.
+Low|Χαμ.
+Meters|Μετρ.
+Offset|Μετατ.
+Open|Άνοιγ.
+Preset|Preset
+Quality|Ποιότ.
+Rate Control|Έλεγχος
+Remove|Αφαίρ.
+Reset|Επαν.
+Search|Αναζ.
+Short|Σύντ.
+Smart Bins|Έξυπνοι
+Source Color Space|Χρ. χώρος πηγής
+Tools|Εργ.
+Track FX|Εφέ καν.
+Untitled|Ανώνυμο
+Waveform|Κυματ.
+No Input|Χωρίς είσ.
+Square|Τετρ.
+Data burn-in|Ενσωμ. δεδ.
+visionOS Bypass|visionOS: παράκ.
+Start|Αρχή
+As a separate file|Χωριστό αρχείο
+Export As|Εξαγ. ως
+Teal|Κυανό
+Color Bars|Μπάρες χρωμ.
+Mixer|Μίκτ.
+Best|Μέγ.
+Loaded the demo project|Φορτώθηκε το demo
+Pivot|Pivot
+Soft Clip|Soft Clip
+Tape|Tape
+View|Προβ.
+Full|Full
+Sat|Sat
+Save Project|Αποθήκευση
+Save Project As...|Αποθ. ως...
+Save Copy As...|Αντίγραφο ως...
+Import|Εισαγ.
+Media...|Πολυμ...
+Folder as Bin...|Φάκελος...
+Subtitle...|Υπότιτ...
+Export|Εξαγ.
+Timeline|Χρονολ.
+Media Pool|Δεξαμενή
+Inspector|Επιθεωρ.
+Metadata|Μεταδ.
+About Picasso Suite|Περί Picasso Suite

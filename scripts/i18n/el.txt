@@ -1,0 +1,304 @@
+#menus
+Αρχ.
+Επεξ.
+Κοπή
+Χρονολ.
+Κλιπ
+Σήμα
+Προβ.
+Αναπαρ.
+Εφέ
+Χρώμα
+Ήχος
+Χώρος
+Βοήθεια
+#entries
+New Project Library...|Νέα βιβλ. έργων...
+Open Project Library...|Άνοιγμα βιβλ. έργων...
+Show Current Project Library in File Explorer|Εμφάνιση βιβλιοθήκης στον Explorer
+Project Manager|Διαχείριση έργων
+New Project|Νέο έργο
+Open Project...|Άνοιγμα έργου...
+Import Project...|Εισαγωγή έργου...
+Export Project...|Εξαγωγή έργου...
+Restore Project Archive...|Επαναφορά αρχείου έργου...
+Save Project|Αποθήκευση έργου
+Save Project As...|Αποθήκ. έργου ως...
+Save Copy As...|Αποθήκ. αντιγράφου ως...
+Revert to Last Saved Version|Επαναφορά αποθήκευσης
+Import|Εισαγωγή
+Media...|Πολυμέσα...
+Folder as Bin...|Φάκελος ως κάδος...
+Timeline: AAF, EDL, XML...|Χρονολ.: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Χρονολ.: προ-EDL...
+Subtitle...|Υπότιτλος...
+Metadata to Media Pool...|Μεταδεδομένα στη δεξαμενή...
+Bin...|Κάδος...
+Export|Εξαγωγή
+Timeline: EDL...|Χρονολ.: EDL...
+Timeline: OpenTimelineIO...|Χρονολ.: OpenTimelineIO...
+Timeline: XML...|Χρονολ.: XML...
+Timeline: AAF...|Χρονολ.: AAF...
+Metadata from Media Pool...|Μεταδεδομένα δεξαμενής...
+Media Management...|Διαχείριση πολυμέσων...
+Project Settings...|Ρυθμίσεις έργου...
+System Preferences...|Προτιμήσεις συστήματος...
+Quick Export...|Γρήγορη εξαγωγή...
+Quit|Έξοδος
+Undo|Αναίρεση
+Redo|Επανάληψη
+Cut|Αποκοπή
+Copy|Αντιγραφή
+Paste|Επικόλληση
+Paste Insert|Επικόλληση-εισαγωγή
+Paste Mix to Current Track|Επικόλληση μίξης στο κανάλι
+Duplicate|Διπλασιασμός
+Fit to Fill|Προσαρμογή γεμίσματος
+Place on Top|Τοποθ. από πάνω
+Delete Selected|Διαγραφή επιλεγμένων
+Delete Selected with Ripple|Διαγραφή με ripple
+Select All|Επιλογή όλων
+Deselect All|Αποεπιλογή όλων
+Select Clips Forward|Επιλογή κλιπ προς τα εμπρός
+Find...|Εύρεση...
+Recent Projects|Πρόσφατα έργα
+Project Manager...|Διαχείριση έργων...
+Keyboard Customization|Συντομεύσεις
+Select Nearest Edit Point|Επιλογή κοντινού σημείου
+Selection Mode|Λειτ. επιλογής
+Trim Mode|Λειτ. κοπής
+Dynamic Trim Mode|Δυναμική κοπή
+Ripple Start|Ripple αρχής
+Ripple End|Ripple τέλους
+Ripple Trim Previous / Next|Ripple προηγ. / επόμ.
+Ripple Trim Previous Edit to Playhead|Ripple προηγ. έως δείκτη
+Ripple Trim Next Edit to Playhead|Ripple επόμ. έως δείκτη
+Trim Start to Playhead|Κοπή αρχής στον δείκτη
+Trim End to Playhead|Κοπή τέλους στον δείκτη
+Extend Edit|Επέκταση επεξεργασίας
+Slip Clip|Slip κλιπ
+Slip One Frame Earlier|Slip 1 καρέ νωρίτερα
+Slip One Frame Later|Slip 1 καρέ αργότερα
+Slide Clip|Slide κλιπ
+Slide One Frame Left|Slide 1 καρέ αριστερά
+Slide One Frame Right|Slide 1 καρέ δεξιά
+Loop Trim|Κοπή σε βρόχο
+Asymmetric Trimming|Ασύμμετρη κοπή
+Trim Editor|Επεξεργαστής κοπής
+New Timeline...|Νέα χρονολ....
+New Timeline Using Selected Clips|Νέα χρονολ. από επιλεγμένα
+Create New Compound Clip...|Νέο σύνθετο κλιπ...
+New Effects Clip...|Νέο κλιπ εφέ...
+Decompose in Place|Αποσύνθεση επιτόπου
+Decompose Compound Clip|Αποσύνθεση σύνθετου κλιπ
+Decompose Nested Timeline|Αποσύνθεση ένθετης χρονολ.
+Split Clip|Διαίρεση κλιπ
+Create Timeline Using Bin...|Χρονολ. από κάδο...
+Import Timeline...|Εισαγωγή χρονολ....
+Export Timeline...|Εξαγωγή χρονολ....
+Timeline Resolution and Frame Rate...|Ανάλυση και ρυθμός καρέ...
+Timeline Settings|Ρυθμίσεις χρονολ.
+Snap|Κούμπωμα
+Linked Selection|Συνδεδεμένη επιλογή
+Position Lock|Κλείδωμα θέσης
+Selection Follows Playhead|Επιλογή ακολουθεί δείκτη
+Add Marker|Προσθήκη σήματος
+Add Marker and Show Dialog|Προσθήκη σήματος + διάλογος
+Delete All Markers|Διαγραφή όλων των σημάτων
+Create Subtitle Track|Δημιουργία καναλιού υποτίτλων
+Create Subtitle Region|Δημιουργία περιοχής υποτίτλων
+Add Transition to All Edits|Μετάβαση σε όλες τις κοπές
+Switch Timeline|Αλλαγή χρονολ.
+Open Timeline in New Window|Χρονολ. σε νέο παράθυρο
+Delete Timeline|Διαγραφή χρονολ.
+Enable Clip|Ενεργοπ. κλιπ
+Match Frame|Αντιστοίχιση καρέ
+Lock Clip|Κλείδωμα κλιπ
+New Multicam Clip...|Νέο κλιπ multicam...
+Multicam Viewer|Προβολή multicam
+Add to Media Pool as Stills|Προσθήκη ως στατικά
+Change Clip Speed...|Αλλαγή ταχύτητας κλιπ...
+Change Clip Duration...|Αλλαγή διάρκειας κλιπ...
+Retime Controls|Έλεγχος χρόνου
+Retime Clip|Αλλαγή χρόνου κλιπ
+Freeze Frame|Πάγωμα καρέ
+Speed Ramp...|Ράμπα ταχύτητας...
+Reverse Clip|Αντιστροφή κλιπ
+Create New Compound Clip|Νέο σύνθετο κλιπ
+Link Clips|Σύνδεση κλιπ
+Unlink Audio and Video|Αποσύνδεση ήχου/εικόνας
+Enable / Disable Audio Scrubbing|Scrubbing ήχου ναι/όχι
+Auto Align Clips|Αυτόματη στοίχιση
+Based on Timecode|Βάσει timecode
+Based on Waveform|Βάσει κυματομορφής
+Normalize Audio Levels...|Ομαλοποίηση ήχου...
+Render in Place|Render επιτόπου
+New Effects Clip|Νέο κλιπ εφέ
+New Compound Clip|Νέο σύνθετο κλιπ
+Clip Attributes...|Ιδιότητες κλιπ...
+Mark In|Σήμα εισόδου
+Mark Out|Σήμα εξόδου
+Mark Clip|Σήμα κλιπ
+Mark Timeline In/Out|Σήμα χρονολ. εισ./εξ.
+Clear In|Καθαρ. εισόδου
+Clear Out|Καθαρ. εξόδου
+Clear In and Out|Καθαρ. εισόδου/εξόδου
+Modify Marker...|Αλλαγή σήματος...
+Delete Marker at Current Position|Διαγραφή σήματος εδώ
+Delete All Markers in Timeline|Διαγραφή όλων των σημάτων
+Go to Previous Marker|Προηγούμενο σήμα
+Go to Next Marker|Επόμενο σήμα
+Set Clip Color|Χρώμα κλιπ
+Default|Προεπιλογή
+Orange|Πορτοκαλί
+Apricot|Βερίκοκο
+Yellow|Κίτρινο
+Lime|Λάιμ
+Olive|Ελιά
+Green|Πράσινο
+Teal|Τιρκουάζ
+Navy|Ναυτικό
+Blue|Μπλε
+Purple|Μοβ
+Violet|Βιολετί
+Pink|Ροζ
+Tan|Ταμπά
+Beige|Μπεζ
+Brown|Καφέ
+Chocolate|Σοκολατί
+Show Current Frame on Playback|Εμφάνιση τρέχοντος καρέ
+Safe Area Overlay|Ασφαλής περιοχή
+Show Grid / Guides|Πλέγμα / οδηγοί
+Show Toolbar|Εμφάνιση εργαλείων
+Show Full Screen Viewer|Προβολή πλήρους οθόνης
+Show Cinema Viewer|Προβολή σινεμά
+Viewer Overlays|Επικαλύψεις προβολής
+Transform / Crop / Dynamic Zoom|Μετασχ. / περικοπή / ζουμ
+Safe Area|Ασφαλής περιοχή
+Center Crosshair|Σταυρός κέντρου
+Checkerboard Background (Alpha)|Σκακιέρα (άλφα)
+Show All Overlays|Όλες οι επικαλύψεις
+Timecode Window|Παράθυρο timecode
+Show Scopes|Εμφάνιση scopes
+Show Audio Meters|Μετρητές ήχου
+Show Audio Mixer|Μίκτης ήχου
+Show Inspector|Εμφάνιση επιθεωρητή
+Play Forward|Αναπαραγωγή εμπρός
+Play Reverse|Αναπαραγωγή πίσω
+Stop|Διακοπή
+Play Around Current Frame|Αναπ. γύρω από καρέ
+Play In to Out|Αναπ. εισόδου-εξόδου
+Play Around In / Around Out|Αναπ. γύρω από σήματα
+Loop Playback|Αναπαραγωγή σε βρόχο
+Go to First Frame|Πρώτο καρέ
+Go to Last Frame|Τελευταίο καρέ
+Go to In|Στην είσοδο
+Go to Out|Στην έξοδο
+Previous Frame|Προηγούμενο καρέ
+Next Frame|Επόμενο καρέ
+Previous Edit Point|Προηγ. σημείο κοπής
+Next Edit Point|Επόμ. σημείο κοπής
+Timeline Playback Resolution|Ανάλυση αναπαραγωγής
+Half|Μισή
+Quarter|Τέταρτο
+Effects Memory Cache|Κρυφή μνήμη εφέ
+Timeline Proxy Mode|Λειτουργία proxy
+Off|Όχι
+Eighth|Όγδοο
+Hardware Decoding|Αποκωδ. υλικού
+Delete Render Cache|Διαγραφή render cache
+Video Transitions|Μεταβάσεις εικόνας
+Cross Dissolve|Σταυρωτή διάλυση
+Dip to Color|Βύθιση σε χρώμα
+Audio Transitions|Μεταβάσεις ήχου
+Cross Fade|Σταυρωτό fade
+Remove Transition|Αφαίρεση μετάβασης
+OpenFX|OpenFX
+Blur|Θάμπωμα
+Gaussian Blur|Θάμπωμα Gauss
+Sharpen|Ένταση
+Color|Χρώμα
+Invert Colors|Αντιστροφή χρωμάτων
+Black and White|Ασπρόμαυρο
+Distort|Παραμόρφωση
+Mosaic|Μωσαϊκό
+Audio FX|Εφέ ήχου
+EQ|EQ
+Dynamics|Δυναμική
+Picasso FX|Picasso FX
+Sepia|Σέπια
+Soft Blur|Απαλό θάμπωμα
+Light|Φως
+Glow|Λάμψη
+Stylize|Στυλ
+Vignette|Βινιέτα
+Film Grain|Κόκκος φιλμ
+Compositing Effects|Εφέ σύνθεσης
+Nodes|Κόμβοι
+Generators|Γεννήτριες
+Solid Color|Μονόχρωμο
+Color Bars|Μπάρες χρώματος
+Gradient|Διαβάθμιση
+Titles|Τίτλοι
+Text|Κείμενο
+Text+|Κείμενο+
+Effects Library Search|Αναζήτηση εφέ
+Add Tool (Compositing)|Προσθήκη εργαλείου
+Reset All Grades and Nodes|Επαναφορά βαθμονομήσεων
+Reset Current Node Grade|Επαναφορά κόμβου
+Enable/Disable Current Node|Κόμβος ναι/όχι
+Grab Still|Λήψη στατικού
+Play Still|Αναπ. στατικού
+Add Serial Node|Προσθ. σειριακού κόμβου
+Add Serial Before|Σειριακός πριν
+Add Parallel Node|Προσθ. παράλληλου κόμβου
+Add Layer Mixer|Προσθ. μίκτη επιπέδων
+Add Splitter / Combiner|Διαχωριστής / συνδυαστής
+Add Outside Node|Προσθ. εξωτερικού κόμβου
+Label Node|Ετικέτα κόμβου
+Timeline|Χρονολόγιο
+Previous Node Graph|Προηγ. γράφος κόμβων
+Next Node Graph|Επόμ. γράφος κόμβων
+LUT|LUT
+Apply LUT from list|Εφαρμογή LUT από λίστα
+Gallery|Γκαλερί
+Scopes On/Off|Scopes ναι/όχι
+Highlight|Φωτεινά
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Αυτόματη αντικ. διαλόγου
+Bounce Mix to Track|Bounce μίξης σε κανάλι
+Bounce Selected Tracks|Bounce επιλεγμένων
+Cache Audio Effects|Cache εφέ ήχου
+Audio Link|Σύνδεση ήχου
+Link Group|Ομάδα σύνδεσης
+Decompose|Αποσύνθεση
+Loop Jog|Jog σε βρόχο
+Show Audio Timeline / Mixer|Χρονολ. / μίκτης ήχου
+Full Screen Viewer|Προβολή πλήρους οθόνης
+Show Panel in Workspace|Εμφάνιση πίνακα
+Media Pool|Δεξαμενή πολυμέσων
+Effects Library|Βιβλιοθήκη εφέ
+Inspector|Επιθεωρητής
+Mixer|Μίκτης
+Metadata|Μεταδεδομένα
+Edit Index|Ευρετήριο επεξεργασίας
+Sound Library|Βιβλιοθήκη ήχων
+Layout|Διάταξη
+Reset UI Layout|Επαναφορά διάταξης
+Save Layout|Αποθήκευση διάταξης
+Load Layout|Φόρτωση διάταξης
+Switch to Page|Μετάβαση σε σελίδα
+Media|Πολυμέσα
+Edit|Επεξ.
+Effects|Εφέ
+Audio|Ήχος
+Deliver|Παράδοση
+Dual Screen On/Off|Διπλή οθόνη ναι/όχι
+Video Clean Feed|Καθαρή έξοδος εικόνας
+Picasso Suite Manual|Εγχειρίδιο Picasso Suite
+Picasso Suite Tutorials|Οδηγοί Picasso Suite
+Check for Updates...|Έλεγχος ενημερώσεων...
+Export Log File...|Εξαγωγή αρχείου καταγρ....
+About Picasso Suite|Σχετικά με το Picasso
+Language|Γλώσσα

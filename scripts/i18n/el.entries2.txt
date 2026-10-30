@@ -1,0 +1,8 @@
+Save Copy As...|Αποθήκ. αντιγρ. ως...
+Fit to Fill|Προσαρμ. γεμίσματος
+Extend Edit|Επέκταση κοπής
+Add Serial Node|Προσθ. σειρ. κόμβου
+Add Parallel Node|Προσθ. παράλ. κόμβου
+Add Outside Node|Προσθ. εξωτ. κόμβου
+Edit Index|Ευρετήριο κοπής
+Export Log File...|Εξαγωγή καταγραφής...

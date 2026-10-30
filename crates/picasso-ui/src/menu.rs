@@ -885,6 +885,7 @@ const LANGUAGES: &[Entry] = &[
     language(crate::i18n::Language::Norwegian),
     language(crate::i18n::Language::Russian),
     language(crate::i18n::Language::Ukrainian),
+    language(crate::i18n::Language::Greek),
     language(crate::i18n::Language::Chinese),
     language(crate::i18n::Language::Japanese),
     language(crate::i18n::Language::Arabic),
