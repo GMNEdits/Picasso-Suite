@@ -121,6 +121,17 @@ impl Store {
                 },
             );
         }
+        // A copy killed mid-render left a .tmp file behind; remove orphans that are
+        // not in the index so they do not accumulate.
+        if let Some(root) = &store.root {
+            if let Ok(entries) = std::fs::read_dir(root) {
+                for entry in entries.flatten() {
+                    if entry.path().extension().is_some_and(|e| e == "tmp") {
+                        let _ = std::fs::remove_file(entry.path());
+                    }
+                }
+            }
+        }
         store
     }
 
@@ -536,7 +547,11 @@ pub(crate) fn start(
 ) {
     std::thread::spawn(move || {
         let mut told = 0u64;
-        let result = make(Path::new(&source), &dest, &mut |done, total| {
+        // Write to a temporary file and rename on success: a copy killed mid-render by a crash
+        // is not left for path_for() to find and mistake for a good one (it would be a truncated
+        // MP4 without a moov atom, and the indexer never recorded it).
+        let temp = dest.with_extension("tmp");
+        let result = make(Path::new(&source), &temp, &mut |done, total| {
             // Every handful of pictures, so a long file says it is working without a message
             // for every one of its pictures.
             if done == total || done.saturating_sub(told) >= 8 {
@@ -552,16 +567,20 @@ pub(crate) fn start(
             }
             !cancel.load(std::sync::atomic::Ordering::Relaxed)
         });
+        // A cancel (or other failure) leaves a truncated file behind; remove it so a retry
+        // makes a fresh one and no orphan is left in the data folder.
         let result = match result {
             Err(_) if cancel.load(std::sync::atomic::Ordering::Relaxed) => Err(STOPPED.to_string()),
             other => other,
         };
-        // A failed render leaves a truncated file behind; remove it so a retry makes a fresh one
-        // and no orphan is left in the data folder.
         let made = match result {
-            Ok(()) => Ok(dest.to_string_lossy().into_owned()),
+            Ok(()) => match std::fs::rename(&temp, &dest) {
+                Ok(()) => Ok(dest.to_string_lossy().into_owned()),
+                Err(e) => Err(format!("could not save the copy: {e}")),
+            },
             Err(e) => {
                 let _ = std::fs::remove_file(&dest);
+                let _ = std::fs::remove_file(&temp);
                 Err(e)
             }
         };
