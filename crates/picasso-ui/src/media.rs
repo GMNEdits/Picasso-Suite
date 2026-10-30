@@ -223,7 +223,7 @@ fn empty_pool_message(p: &Painter, s: &Screen, x0: f32, x1: f32, y0: f32, y1: f3
     let mid = area.top() + area.height() * 0.43;
     let room = area.width() - 24.0;
     let title = "No clips in media pool";
-    p.text(
+    crate::i18n::paint_text(&p,
         pos2(area.center().x, mid),
         Align2::CENTER_CENTER,
         title,
@@ -231,7 +231,7 @@ fn empty_pool_message(p: &Painter, s: &Screen, x0: f32, x1: f32, y0: f32, y1: f3
         theme::EMPTY_TITLE,
     );
     let sub = "Add clips from Media Storage to get started";
-    p.text(
+    crate::i18n::paint_text(&p,
         pos2(area.center().x, mid + 70.0 * k),
         Align2::CENTER_CENTER,
         sub,
@@ -419,7 +419,7 @@ impl StudioApp {
         // The message grows and shrinks with the panel, and stays inside it.
         let (tall, _) = s.grown(FILES_RIGHT + 1.0, y0, QUEUE_RIGHT - 1.0, y1);
         let title = "No jobs in Queue";
-        p.text(
+        crate::i18n::paint_text(&p,
             pos2(area.center().x, area.top() + area.height() * 0.43),
             Align2::CENTER_CENTER,
             title,
@@ -455,7 +455,7 @@ impl StudioApp {
                 Stroke::new(1.0, Color32::from_rgb(60, 60, 66)),
                 egui::StrokeKind::Inside,
             );
-            p.text(
+            crate::i18n::paint_text(&p,
                 r.center(),
                 Align2::CENTER_CENTER,
                 label,
@@ -536,7 +536,7 @@ impl StudioApp {
             }
         }
         // The viewer: the size of the picture, the clip, the time and the size.
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(rx(1125.0), y),
             Align2::LEFT_CENTER,
             "32%",
@@ -544,7 +544,7 @@ impl StudioApp {
             theme::ICON_BRIGHT,
         );
         paint(&painter, s.p(rx(1165.0), y), Icon::Chevron, theme::ICON);
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(rx(1093.0), y),
             Align2::CENTER_CENTER,
             "...",
@@ -554,7 +554,7 @@ impl StudioApp {
         // The drop-down that names the clip in the viewer.
         painter.circle_filled(s.p(rx(1190.0), y), 2.0, Color32::from_rgb(70, 70, 76));
         let box_rect = s.r(rx(1290.0), top + 5.0, rx(1405.0), top + BAR - 5.0);
-        painter.text(
+        crate::i18n::paint_text(&painter,
             box_rect.right_center(),
             Align2::RIGHT_CENTER,
             self.source_timecode(),
@@ -584,7 +584,7 @@ impl StudioApp {
             planned = Some("The viewer menu");
         }
         // The meters.
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(rx(1507.0), y),
             Align2::LEFT_CENTER,
             "Embedded Audio",
@@ -626,7 +626,7 @@ impl StudioApp {
                 }
             }
         }
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(rx(272.0), y),
             Align2::LEFT_CENTER,
             "Master",
@@ -653,7 +653,7 @@ impl StudioApp {
                 planned = Some(hint);
             }
         }
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(rx(1507.0), y),
             Align2::LEFT_CENTER,
             "Metadata",
@@ -670,7 +670,7 @@ impl StudioApp {
         let area = s.r(LEFT, y0, STORAGE_RIGHT - 1.0, y1);
         #[cfg(target_arch = "wasm32")]
         {
-            ui.painter().text(
+            crate::i18n::paint_text(&ui.painter(),
                 area.center(),
                 Align2::CENTER_CENTER,
                 "Folders need the desktop app",
@@ -752,7 +752,7 @@ impl StudioApp {
                                 2.0,
                                 Color32::from_rgb(132, 168, 224),
                             );
-                            p.text(
+                            crate::i18n::paint_text(&p,
                                 pos2(x + 44.0, rect.center().y),
                                 Align2::LEFT_CENTER,
                                 name,
@@ -807,7 +807,7 @@ impl StudioApp {
             return;
         };
         if files.is_empty() {
-            ui.painter().text(
+            crate::i18n::paint_text(&ui.painter(),
                 area.center(),
                 Align2::CENTER_CENTER,
                 format!("No media in {}", name_of(folder)),
@@ -857,7 +857,7 @@ impl StudioApp {
                                 if audio { Icon::PageAudio } else { Icon::Photo },
                                 theme::ICON,
                             );
-                            p.text(
+                            crate::i18n::paint_text(&p,
                                 pos2(picture.left(), picture.bottom() + 5.0),
                                 Align2::LEFT_TOP,
                                 name_of(path),
@@ -1070,7 +1070,7 @@ impl StudioApp {
                 self.media.tab = tab;
             }
             let on = self.media.tab == tab;
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 rect.center() - vec2(0.0, 2.0),
                 Align2::CENTER_CENTER,
                 name,
@@ -1106,7 +1106,7 @@ impl StudioApp {
         let dim = Color32::from_rgb(110, 110, 118);
         for (db, share) in SCALE {
             let y = top + height * share;
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(first - 22.0, y),
                 Align2::RIGHT_CENTER,
                 db.to_string(),
@@ -1152,7 +1152,7 @@ impl StudioApp {
         };
         for (n, level) in levels.iter().enumerate() {
             let cx = first + step * n as f32;
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(cx, top - 28.0),
                 Align2::CENTER_CENTER,
                 (n + 1).to_string(),
@@ -1163,7 +1163,7 @@ impl StudioApp {
         }
         // The two channels of what is heard.
         let monitor = body.right() - 40.0;
-        p.text(
+        crate::i18n::paint_text(&p,
             pos2(monitor, top - 28.0),
             Align2::CENTER_CENTER,
             "Monitor",
@@ -1186,7 +1186,7 @@ impl StudioApp {
             self.sound.peaks(id, &path)
         });
         let Some(peaks) = peaks.filter(|p| !p.is_empty()) else {
-            p.text(
+            crate::i18n::paint_text(&p,
                 area.center(),
                 Align2::CENTER_CENTER,
                 "No sound to show",
@@ -1225,7 +1225,7 @@ impl StudioApp {
             Icon::Sidebar,
             theme::ICON,
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             pos2(area.left() + 56.0, y0 + 22.0),
             Align2::LEFT_CENTER,
             "Bins",
@@ -1243,7 +1243,7 @@ impl StudioApp {
             pos2(area.right(), y0 + 44.0 + ROW + 6.0),
         );
         painter.rect_filled(master, 0.0, Color32::from_rgb(20, 20, 23));
-        painter.text(
+        crate::i18n::paint_text(&painter,
             pos2(master.left() + 40.0, master.center().y),
             Align2::LEFT_CENTER,
             "Master",
@@ -1265,7 +1265,7 @@ impl StudioApp {
             Icon::PanelStack,
             theme::ICON,
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             pos2(area.left() + 56.0, smart_top + 26.0),
             Align2::LEFT_CENTER,
             "Smart Bins",
@@ -1300,7 +1300,7 @@ impl StudioApp {
                     theme::ICON,
                 );
             }
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(area.left() + 40.0, rect.center().y),
                 Align2::LEFT_CENTER,
                 name,
@@ -1348,7 +1348,7 @@ impl StudioApp {
             0.0,
             Color32::from_rgb(14, 14, 18),
         );
-        ui.painter().text(
+        crate::i18n::paint_text(&ui.painter(),
             pos2(crumb.left() + 10.0, crumb.center().y),
             Align2::LEFT_CENTER,
             self.pool_bin_title(),
@@ -1387,7 +1387,7 @@ impl StudioApp {
             .selected_media
             .and_then(|id| self.project().media(id).cloned());
         let Some(item) = item else {
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 area.center() - vec2(0.0, 6.0),
                 Align2::CENTER_CENTER,
                 "Nothing to inspect",
@@ -1447,7 +1447,7 @@ impl StudioApp {
         let mut y = area.top() + 8.0;
         for (name, value) in rows {
             let row = Rect::from_min_max(pos2(area.left(), y), pos2(area.right(), y + ROW));
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(row.left() + 16.0, row.center().y),
                 Align2::LEFT_CENTER,
                 name,

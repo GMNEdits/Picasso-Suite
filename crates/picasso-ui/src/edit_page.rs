@@ -139,7 +139,7 @@ impl<'a> Ed<'a> {
         } else {
             theme::regular(size)
         };
-        self.p.text(self.at(x, y), align, text, font, c);
+        crate::i18n::paint_text(&self.p,self.at(x, y), align, text, font, c);
     }
     /// Text sized to fill `width` reference pixels.
     /// Text `width` reference pixels wide, smaller when a divider made its column narrower than
@@ -149,7 +149,7 @@ impl<'a> Ed<'a> {
         let now = map_x(x1, &self.columns) - map_x(x0, &self.columns);
         let usual = map_x(x1, &COLUMNS) - map_x(x0, &COLUMNS);
         let shrink = (now / usual.max(1.0)).min(1.0);
-        self.p.text(
+        crate::i18n::paint_text(&self.p,
             self.at(x, y),
             Align2::CENTER_CENTER,
             text,

@@ -180,7 +180,7 @@ impl Canvas<'_> {
         } else {
             theme::regular(size)
         };
-        self.p.text(self.rv(x, y), align, text, font, c);
+        crate::i18n::paint_text(&self.p,self.rv(x, y), align, text, font, c);
     }
     fn rect(&self, x0: f32, y0: f32, x1: f32, y1: f32) -> Rect {
         self.s
@@ -190,7 +190,7 @@ impl Canvas<'_> {
         self.p.rect_filled(self.rect(x0, y0, x1, y1), 0.0, c);
     }
     fn text(&self, x: f32, y: f32, align: Align2, text: &str, width: f32, c: Color32, bold: bool) {
-        self.p.text(
+        crate::i18n::paint_text(&self.p,
             self.at(x, y),
             align,
             text,
@@ -200,7 +200,7 @@ impl Canvas<'_> {
     }
     /// Text at a fixed size in points.
     fn label(&self, x: f32, y: f32, align: Align2, text: &str, size: f32, c: Color32) {
-        self.p.text(
+        crate::i18n::paint_text(&self.p,
             self.at(x, y),
             align,
             text,
@@ -1137,7 +1137,7 @@ impl StudioApp {
                 Stroke::new(1.0, Color32::from_rgb(52, 52, 58)),
                 egui::StrokeKind::Inside,
             );
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 field.center(),
                 Align2::CENTER_CENTER,
                 format!("{gain:.1}"),
@@ -1220,7 +1220,7 @@ impl StudioApp {
                         _ => Color32::from_rgb(64, 64, 70),
                     };
                     c.p.rect_filled(r, 3.0, fill);
-                    c.p.text(
+                    crate::i18n::paint_text(&c.p,
                         r.center(),
                         Align2::CENTER_CENTER,
                         *what,
@@ -1475,7 +1475,7 @@ impl StudioApp {
                     egui::vec2(15.0 * R * k, 14.0 * R * k),
                 );
                 c.p.rect_filled(r, 2.0, fill);
-                c.p.text(
+                crate::i18n::paint_text(&c.p,
                     r.center(),
                     Align2::CENTER_CENTER,
                     *letter,

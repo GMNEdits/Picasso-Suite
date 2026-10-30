@@ -104,7 +104,7 @@ pub(crate) fn prompt_box(
                 StrokeKind::Outside,
             );
             crate::chrome::paint_logo(ui.ctx(), p, at(76.0, 110.0), 46.0);
-            p.text(
+            crate::i18n::paint_text(&p,
                 at(129.0, 89.0),
                 Align2::LEFT_CENTER,
                 title,
@@ -112,7 +112,7 @@ pub(crate) fn prompt_box(
                 Color32::from_rgb(236, 236, 238),
             );
             for (i, line) in lines.iter().enumerate() {
-                p.text(
+                crate::i18n::paint_text(&p,
                     at(129.0, 124.0 + 24.8 * i as f32),
                     Align2::LEFT_CENTER,
                     line,
@@ -135,7 +135,7 @@ pub(crate) fn prompt_box(
                     p.rect_filled(button, 13.5, Color32::from_rgb(48, 48, 54));
                 }
                 p.rect_stroke(button, 13.5, Stroke::new(1.2, border), StrokeKind::Inside);
-                p.text(
+                crate::i18n::paint_text(&p,
                     button.center(),
                     Align2::CENTER_CENTER,
                     label,

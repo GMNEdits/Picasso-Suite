@@ -220,6 +220,26 @@ pub(crate) fn tr_ui(text: &'static str) -> &'static str {
     translate_ui(current(), text).unwrap_or(text)
 }
 
+/// `Painter::text` with the text in the language chosen. The anchor is the caller's, so a label that is
+/// right-aligned or centred stays so when the translation is wider or narrower than the English:
+/// it grows to the side it should, and not into what is next to it.
+pub(crate) fn paint_text(
+    painter: &egui::Painter,
+    pos: egui::Pos2,
+    anchor: egui::Align2,
+    text: impl ToString,
+    font: egui::FontId,
+    color: egui::Color32,
+) -> egui::Rect {
+    let text = text.to_string();
+    let language = current();
+    let shown = match translate_ui(language, text.trim()) {
+        Some(translated) if language != Language::English => translated.to_string(),
+        _ => text,
+    };
+    painter.text(pos, anchor, shown, font, color)
+}
+
 /// Text painted on a page or in a window, in the language; `None` when it has no translation.
 pub(crate) fn translate_ui(language: Language, text: &str) -> Option<&'static str> {
     ui_table(language)?.get(text).copied()
@@ -357,6 +377,27 @@ mod tests {
             assert_eq!((*label, *act), (l.name(), Act::Language(*l)));
         }
         assert_eq!(listed[0].0, "English (Default)", "English is first");
+    }
+
+    #[test]
+    fn a_translated_text_is_not_translated_again() {
+        // A text the program paints twice (once where it is drawn, once when the frame ends) would be
+        // changed twice if a translation were itself a text that has a translation of its own.
+        for language in Language::ALL {
+            let Some((_, entries, ui)) = language.data() else {
+                continue;
+            };
+            for (english, shown) in entries.iter().chain(ui) {
+                if shown != english {
+                    if let Some(again) = translate_ui(language, shown) {
+                        assert_eq!(
+                            again, *shown,
+                            "{language:?}: {english:?} -> {shown:?}, which is translated again to {again:?}"
+                        );
+                    }
+                }
+            }
+        }
     }
 
     #[test]

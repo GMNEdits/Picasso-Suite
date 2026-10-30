@@ -425,7 +425,7 @@ impl StudioApp {
             24.0,
         );
         for (x, a) in [(234.0, "Master"), (554.0, "81%")] {
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 rv(x, y),
                 Align2::CENTER_CENTER,
                 a,
@@ -465,7 +465,7 @@ impl StudioApp {
             2.0,
             Color32::from_rgb(33, 32, 35),
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             rv(1142.0, 844.0),
             Align2::LEFT_CENTER,
             "--",

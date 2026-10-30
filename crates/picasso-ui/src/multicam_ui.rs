@@ -276,7 +276,7 @@ impl StudioApp {
                                 },
                                 StrokeKind::Inside,
                             );
-                            ui.painter().text(
+                            crate::i18n::paint_text(&ui.painter(),
                                 rect.left_top() + egui::vec2(5.0, 3.0),
                                 egui::Align2::LEFT_TOP,
                                 format!("{}", i + 1),

@@ -494,7 +494,7 @@ impl StudioApp {
                         } else {
                             name.clone()
                         };
-                        painter.text(
+                        crate::i18n::paint_text(&painter,
                             egui::pos2(picture.center().x, picture.bottom() + 6.0),
                             egui::Align2::CENTER_TOP,
                             shown,

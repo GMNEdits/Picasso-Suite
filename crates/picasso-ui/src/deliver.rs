@@ -362,7 +362,7 @@ impl StudioApp {
         let x = MIDDLE_RIGHT + 18.0;
         // As much smaller as the dividers made the queue narrower.
         let k = s.shrink(x + 150.0, y0 + 62.0);
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(x, y0 + 26.0),
             Align2::LEFT_CENTER,
             "System",
@@ -384,14 +384,14 @@ impl StudioApp {
             .enumerate()
         {
             let y = y0 + 62.0 + n as f32 * 30.0;
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 s.p(x + 150.0, y),
                 Align2::RIGHT_CENTER,
                 label,
                 regular(16.0 * k),
                 DIM,
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 s.p(x + 166.0, y),
                 Align2::LEFT_CENTER,
                 value,
@@ -416,7 +416,7 @@ impl StudioApp {
             .layout_no_wrap(title.to_string(), semibold(19.0), TEXT)
             .size()
             .x;
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(LEFT + 16.0, y),
             Align2::LEFT_CENTER,
             title,
@@ -435,7 +435,7 @@ impl StudioApp {
             planned = Some("The render settings menu");
         }
         // The viewer: its size, the clip, and the options.
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(LEFT_RIGHT + 18.0, y),
             Align2::LEFT_CENTER,
             "22%",
@@ -454,7 +454,7 @@ impl StudioApp {
             Color32::from_rgb(70, 70, 76),
         );
         let name = self.project().timeline_name.clone();
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(LEFT_RIGHT + 282.0, y),
             Align2::RIGHT_CENTER,
             &name,
@@ -493,7 +493,7 @@ impl StudioApp {
             None => {}
         }
         let time = self.tc(self.playhead as i64);
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(MIDDLE_RIGHT - 148.0, y),
             Align2::RIGHT_CENTER,
             &time,
@@ -528,7 +528,7 @@ impl StudioApp {
         {
             planned = Some("The viewer menu");
         }
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(MIDDLE_RIGHT + 16.0, y),
             Align2::LEFT_CENTER,
             "Render Queue",
@@ -576,8 +576,8 @@ impl StudioApp {
             let galley = painter.layout_no_wrap(name.to_string(), regular(17.0 * k), DIM);
             let width = galley.size().x;
             let at = s.p(x + dx, y);
-            painter.text(at, Align2::LEFT_CENTER, name, regular(17.0 * k), DIM);
-            painter.text(
+            crate::i18n::paint_text(&painter,at, Align2::LEFT_CENTER, name, regular(17.0 * k), DIM);
+            crate::i18n::paint_text(&painter,
                 at + vec2(width + 12.0 * k, 0.0),
                 Align2::LEFT_CENTER,
                 value,
@@ -721,7 +721,7 @@ impl StudioApp {
             let row =
                 Rect::from_min_size(pos2(area.left() + 8.0, y), vec2(area.width() - 16.0, 64.0));
             painter.rect_filled(row, 3.0, Color32::from_rgb(34, 33, 38));
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 row.min + vec2(12.0, 16.0),
                 Align2::LEFT_CENTER,
                 &job.name,
@@ -738,7 +738,7 @@ impl StudioApp {
                 JobState::Failed(why) => (format!("Failed: {why}"), theme::ERROR),
                 JobState::Cancelled => ("Cancelled".to_string(), DIM),
             };
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 row.min + vec2(12.0, 40.0),
                 Align2::LEFT_CENTER,
                 format!("{}   {status}", job.label),
@@ -840,7 +840,7 @@ impl StudioApp {
         }) {
             let clear = Rect::from_min_size(pill.left_top() - vec2(110.0, 0.0), vec2(100.0, 32.0));
             let r = ui.interact(clear, ui.id().with("clear_jobs"), Sense::click());
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 clear.center(),
                 Align2::CENTER_CENTER,
                 "Clear done",
@@ -884,7 +884,7 @@ impl StudioApp {
             planned = Some("Timeline options");
         }
         // What is rendered.
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(LEFT_RIGHT + 420.0, y),
             Align2::RIGHT_CENTER,
             "Render",
@@ -897,7 +897,7 @@ impl StudioApp {
         painter.rect_filled(field, 3.0, Color32::from_rgb(30, 30, 34));
         painter.rect_stroke(field, 3.0, Stroke::new(1.0, LINE), egui::StrokeKind::Inside);
         let whole = self.range_is_whole();
-        painter.text(
+        crate::i18n::paint_text(&painter,
             field.left_center() + vec2(12.0 * k, 0.0),
             Align2::LEFT_CENTER,
             if whole {
@@ -937,14 +937,14 @@ impl StudioApp {
         );
         // The zoom.
         let track = s.r(LEFT_RIGHT + 760.0, y - 12.0, LEFT_RIGHT + 900.0, y + 12.0);
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(LEFT_RIGHT + 744.0, y),
             Align2::CENTER_CENTER,
             "-",
             regular(22.0 * k),
             DIM,
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(LEFT_RIGHT + 922.0, y),
             Align2::CENTER_CENTER,
             "+",
@@ -987,7 +987,7 @@ impl StudioApp {
 
         // The big time and the ruler.
         let ruler_left = LEFT_RIGHT + 381.0;
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(LEFT_RIGHT + 250.0, y_ruler + 36.0),
             Align2::CENTER_CENTER,
             self.tc(self.playhead as i64),
@@ -1029,7 +1029,7 @@ impl StudioApp {
                 Stroke::new(1.0, theme::RULER_TICK),
             );
             if major {
-                clip.text(
+                crate::i18n::paint_text(&clip,
                     pos2(x + 6.0, y_ruler_pos(s, y_ruler) + 28.0),
                     Align2::LEFT_CENTER,
                     self.tc(frame as i64),

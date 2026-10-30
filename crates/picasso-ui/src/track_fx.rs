@@ -121,7 +121,7 @@ fn eq_controls(ui: &mut Ui, fx: &mut TrackFx) {
             [pos2(x, rect.top()), pos2(x, rect.bottom())],
             Stroke::new(1.0, Color32::from_gray(45)),
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             pos2(x + 3.0, rect.bottom() - 3.0),
             egui::Align2::LEFT_BOTTOM,
             if hz >= 1000.0 {

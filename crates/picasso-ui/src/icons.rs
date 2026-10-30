@@ -279,7 +279,7 @@ impl Pen<'_> {
         self.p.add(Shape::line(pts, self.stroke()));
     }
     fn text(&self, x: f32, y: f32, s: &str, size: f32) {
-        self.p.text(
+        crate::i18n::paint_text(&self.p,
             self.pt(x, y),
             Align2::CENTER_CENTER,
             s,
@@ -832,7 +832,7 @@ pub(crate) fn paint_scaled(p: &Painter, c: Pos2, icon: Icon, col: Color32, mult:
                 2.0,
                 col,
             );
-            s.p.text(
+            crate::i18n::paint_text(&s.p,
                 s.pt(6.5, 7.3),
                 Align2::CENTER_CENTER,
                 "HQ",
@@ -1008,7 +1008,7 @@ pub(crate) fn paint_scaled(p: &Painter, c: Pos2, icon: Icon, col: Color32, mult:
         }
         Icon::PoiStart | Icon::PoiEnd => {
             s.rect(-11.0, -8.0, 22.0, 14.0, 2.0);
-            s.p.text(
+            crate::i18n::paint_text(&s.p,
                 s.pt(0.0, -1.0),
                 Align2::CENTER_CENTER,
                 "POI",

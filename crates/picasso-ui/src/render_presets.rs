@@ -255,7 +255,7 @@ pub(crate) fn paint_badge(p: &Painter, c: Pos2, badge: Badge) {
             let tag =
                 Rect::from_min_size(pos2(r.left() + 13.0, r.bottom() - 6.0), vec2(26.0, 11.0));
             p.rect_filled(tag, 2.0, color);
-            p.text(
+            crate::i18n::paint_text(&p,
                 tag.center(),
                 Align2::CENTER_CENTER,
                 label,
@@ -269,7 +269,7 @@ pub(crate) fn paint_badge(p: &Painter, c: Pos2, badge: Badge) {
         }
         Badge::Vimeo => {
             tile(Color32::from_rgb(26, 183, 234));
-            p.text(
+            crate::i18n::paint_text(&p,
                 c,
                 Align2::CENTER_CENTER,
                 "v",
@@ -358,7 +358,7 @@ pub(crate) fn paint_badge(p: &Painter, c: Pos2, badge: Badge) {
                 Stroke::new(1.2, Color32::from_rgb(153, 153, 255)),
                 StrokeKind::Inside,
             );
-            p.text(
+            crate::i18n::paint_text(&p,
                 c,
                 Align2::CENTER_CENTER,
                 "Pr",
@@ -437,7 +437,7 @@ fn row(
         paint_badge(p, pos2(rect.left() + 42.0, rect.center().y), badge);
         x = rect.left() + 82.0;
     }
-    p.text(
+    crate::i18n::paint_text(&p,
         pos2(x, rect.center().y),
         Align2::LEFT_CENTER,
         text,

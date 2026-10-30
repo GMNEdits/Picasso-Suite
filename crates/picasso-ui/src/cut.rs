@@ -244,7 +244,7 @@ impl StudioApp {
             |ui| self.timeline_ui(ui, ctx, Mode::Overview),
         );
         for (name, _, top, h) in &self.cut_rows_overview {
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(l.p(219.0, 0.0).x, top + h / 2.0),
                 Align2::CENTER_CENTER,
                 name,
@@ -370,7 +370,7 @@ impl StudioApp {
             } else {
                 y.min(row_top + h / 2.0)
             };
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(label_x, y),
                 Align2::CENTER_CENTER,
                 name,
@@ -738,7 +738,7 @@ impl StudioApp {
             planned = Some("Live sources");
         }
         // The timeline's name with its drop-down, the clock and the source timecode.
-        painter.text(
+        crate::i18n::paint_text(&painter,
             l.p(1397.0, y),
             Align2::CENTER_CENTER,
             self.timeline_name(),
@@ -761,7 +761,7 @@ impl StudioApp {
             Stroke::new(1.0, Color32::from_rgb(42, 42, 46)),
             StrokeKind::Inside,
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             box_rect.center(),
             Align2::CENTER_CENTER,
             self.source_timecode(),
@@ -865,7 +865,7 @@ impl StudioApp {
             Color32::from_rgb(41, 40, 45),
         );
         l.vline(&painter, 960.5, 70.0, 478.0, Color32::from_rgb(8, 8, 10));
-        painter.text(
+        crate::i18n::paint_text(&painter,
             l.p(13.0, 85.0),
             Align2::LEFT_CENTER,
             self.pool_bin_title(),
@@ -882,14 +882,14 @@ impl StudioApp {
                 "No clips in media pool",
                 "Add clips with Import, or drop files here",
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(l.p(480.0, 300.0).x, mid - 14.0 * R * k),
                 Align2::CENTER_CENTER,
                 title,
                 fitting(&painter, title, 30.0 * R * k, room),
                 theme::EMPTY_TITLE,
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(l.p(480.0, 300.0).x, mid + 26.0 * R * k),
                 Align2::CENTER_CENTER,
                 sub,
@@ -920,7 +920,7 @@ impl StudioApp {
                 Stroke::new(2.0, theme::ACCENT),
                 StrokeKind::Inside,
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 area.center(),
                 Align2::CENTER_CENTER,
                 "Drop to add to the media pool",
@@ -954,7 +954,7 @@ impl StudioApp {
         let span = bottom - top;
         for (label, share) in METER_LABELS {
             let y = top + span * share;
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(l.p(1880.0, 0.0).x, y),
                 Align2::RIGHT_CENTER,
                 label,
@@ -1230,7 +1230,7 @@ impl StudioApp {
             self.go_to_edit(false);
         }
         let tcg = format!("TCG {}", self.tc(self.playhead as i64));
-        painter.text(
+        crate::i18n::paint_text(&painter,
             l.p(1696.0, y),
             Align2::LEFT_CENTER,
             tcg,

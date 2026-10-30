@@ -285,7 +285,7 @@ impl Pm<'_> {
         } else {
             theme::regular(size)
         };
-        self.p.text(at, align, text, font, c);
+        crate::i18n::paint_text(&self.p,at, align, text, font, c);
     }
     fn icon(&self, x: f32, y: f32, icon: Icon, c: Color32, size: f32) {
         crate::icons::paint_scaled(self.p, self.at(x, y), icon, c, size);

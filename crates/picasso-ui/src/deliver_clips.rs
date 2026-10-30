@@ -144,14 +144,14 @@ impl StudioApp {
                 Stroke::new(1.0, Color32::from_rgb(70, 70, 76)),
                 egui::StrokeKind::Inside,
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 label.center(),
                 Align2::CENTER_CENTER,
                 &number,
                 semibold(16.0),
                 TEXT,
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(x + thumb.x - 4.0, label.center().y),
                 Align2::RIGHT_CENTER,
                 &clip.track,
@@ -180,7 +180,7 @@ impl StudioApp {
                 egui::StrokeKind::Inside,
             );
             let codec = self.codec_label(clip.media);
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(x, pic.bottom() + 16.0),
                 Align2::LEFT_CENTER,
                 codec,
@@ -275,7 +275,7 @@ impl StudioApp {
                     Color32::from_rgb(58, 150, 98)
                 },
             );
-            heads.text(
+            crate::i18n::paint_text(&heads,
                 pos2(head.left() + 47.0 * z, head.center().y),
                 Align2::CENTER_CENTER,
                 &track.name,
@@ -333,7 +333,7 @@ impl StudioApp {
                         _ => Color32::from_rgb(64, 64, 70),
                     };
                     heads.rect_filled(r, 3.0, fill);
-                    heads.text(
+                    crate::i18n::paint_text(&heads,
                         r.center(),
                         Align2::CENTER_CENTER,
                         letter,
@@ -348,7 +348,7 @@ impl StudioApp {
                         toggles.push((*i, 1 + k as u8));
                     }
                 }
-                heads.text(
+                crate::i18n::paint_text(&heads,
                     pos2(head.right() - 18.0 * z, head.center().y),
                     Align2::RIGHT_CENTER,
                     "2.0",

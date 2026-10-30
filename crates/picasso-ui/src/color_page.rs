@@ -762,7 +762,7 @@ impl<'a> Cv<'a> {
         self.p.rect_filled(self.rect(x0, y0, x1, y1), 0.0, c);
     }
     fn text(&self, x: f32, y: f32, align: Align2, text: &str, width: f32, c: Color32, bold: bool) {
-        self.p.text(
+        crate::i18n::paint_text(&self.p,
             self.at(x, y),
             align,
             text,
@@ -796,7 +796,7 @@ impl<'a> Cv<'a> {
         } else {
             theme::regular(size)
         };
-        self.p.text(self.at(x, y), align, text, font, c);
+        crate::i18n::paint_text(&self.p,self.at(x, y), align, text, font, c);
     }
     fn line(&self, a: (f32, f32), b: (f32, f32), w: f32, c: Color32) {
         let ends = self
@@ -1866,7 +1866,7 @@ impl StudioApp {
             };
             c.p.rect_stroke(rect, 2.0, outline, StrokeKind::Outside);
             let label = if enabled { TEXT } else { GREY };
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 c.rv(x0 + 10.0, 186.0),
                 Align2::LEFT_CENTER,
                 format!("{:02}", n + 1),
@@ -1896,7 +1896,7 @@ impl StudioApp {
                 .get(n)
                 .filter(|m| **m != picasso_color::NodeMode::Serial)
             {
-                c.p.text(
+                crate::i18n::paint_text(&c.p,
                     c.rv(x0 + 8.0, top + 9.0),
                     Align2::LEFT_CENTER,
                     mode.name().to_uppercase(),
@@ -1914,7 +1914,7 @@ impl StudioApp {
                 lut
             };
             if let Some(caption) = caption {
-                c.p.text(
+                crate::i18n::paint_text(&c.p,
                     c.rv((x0 + x1) / 2.0 + 6.0, 186.0),
                     Align2::CENTER_CENTER,
                     shorten_caption(&caption, 10),
@@ -2066,7 +2066,7 @@ impl StudioApp {
                 Stroke::new(1.0, Color32::from_rgb(70, 70, 76)),
                 StrokeKind::Inside,
             );
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 number.center(),
                 Align2::CENTER_CENTER,
                 format!("{:02}", n + 1),
@@ -2077,14 +2077,14 @@ impl StudioApp {
                 .project()
                 .fps
                 .timecode(clip.end.saturating_sub(clip.start));
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 c.rv(x + 30.0, 470.0),
                 Align2::LEFT_CENTER,
                 length,
                 theme::semibold(9.5 * R),
                 TEXT,
             );
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 c.rv(x + 111.0, 470.0),
                 Align2::LEFT_CENTER,
                 &clip.track,
@@ -2112,7 +2112,7 @@ impl StudioApp {
                 StrokeKind::Inside,
             );
             let codec = self.codec_label(clip.media);
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 c.rv(x - 1.0, 570.0),
                 Align2::LEFT_CENTER,
                 codec,
@@ -2158,7 +2158,7 @@ impl StudioApp {
                 [c.rv(x, 593.0), c.rv(x, 615.0)],
                 Stroke::new(1.0, Color32::from_rgb(70, 70, 76)),
             );
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 c.rv(x + 6.0, 603.0),
                 Align2::LEFT_CENTER,
                 self.tc(frame as i64),
@@ -2193,7 +2193,7 @@ impl StudioApp {
         for (i, (name, on, clips)) in videos.iter().enumerate() {
             let bottom = band_bottom - row_h * i as f32;
             let top = bottom - row_h + 1.0;
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 c.rv(6.0, (top + bottom) / 2.0),
                 Align2::LEFT_CENTER,
                 name,
@@ -2326,7 +2326,7 @@ impl StudioApp {
         // Info: a ring with an "i".
         let info = c.at(1889.0, y);
         c.p.circle_stroke(info, 7.0 * R, Stroke::new(1.2, ICON));
-        c.p.text(
+        crate::i18n::paint_text(&c.p,
             info,
             Align2::CENTER_CENTER,
             "i",
@@ -3060,7 +3060,7 @@ impl StudioApp {
                 2.0,
                 if on { *fill } else { fill.gamma_multiply(0.35) },
             );
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 rect.center(),
                 Align2::CENTER_CENTER,
                 *name,
@@ -3142,7 +3142,7 @@ impl StudioApp {
             let x = 1325.0 + 27.0 * i as f32;
             let rect = c.rect(x - 10.0, 879.0, x + 10.0, 897.0);
             c.p.rect_filled(rect, 2.0, *fill);
-            c.p.text(
+            crate::i18n::paint_text(&c.p,
                 rect.center(),
                 Align2::CENTER_CENTER,
                 *name,

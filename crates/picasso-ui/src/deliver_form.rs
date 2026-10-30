@@ -22,7 +22,7 @@ impl StudioApp {
             crate::deliver::LEFT_RIGHT,
             bottom,
         );
-        ui.painter().text(
+        crate::i18n::paint_text(&ui.painter(),
             area.center(),
             egui::Align2::CENTER_CENTER,
             "Rendering needs the desktop app",
@@ -98,7 +98,7 @@ mod native {
     }
 
     fn label(p: &Painter, row: Rect, text: &str, on: bool) {
-        p.text(
+        crate::i18n::paint_text(&p,
             pos2(row.left() + LABEL_RIGHT, row.center().y),
             Align2::RIGHT_CENTER,
             text,
@@ -154,7 +154,7 @@ mod native {
         };
         p.rect_filled(rect, 2.0, fill);
         p.rect_stroke(rect, 2.0, Stroke::new(1.0, FIELD_LINE), StrokeKind::Inside);
-        p.text(
+        crate::i18n::paint_text(&p,
             rect.left_center() + vec2(12.0, 0.0),
             Align2::LEFT_CENTER,
             current,
@@ -233,7 +233,7 @@ mod native {
             vec2(24.0, 24.0),
         );
         let r = box_at(ui, id, rect, on, value);
-        ui.painter().text(
+        crate::i18n::paint_text(&ui.painter(),
             pos2(rect.right() + 14.0, row.center().y),
             Align2::LEFT_CENTER,
             text,
@@ -275,7 +275,7 @@ mod native {
         if value {
             p.circle_filled(c, 4.5, if on { theme::WHITE } else { OFF });
         }
-        p.text(
+        crate::i18n::paint_text(&p,
             pos2(c.x + 22.0, c.y),
             Align2::LEFT_CENTER,
             text,
@@ -351,7 +351,7 @@ mod native {
 
             // The preset, always in view.
             let preset_row = Rect::from_min_size(pane.min, vec2(pane.width(), 96.0));
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(preset_row.left() + 88.0, preset_row.center().y),
                 Align2::RIGHT_CENTER,
                 "Preset",
@@ -383,7 +383,7 @@ mod native {
                 box_rect.left_center() + vec2(32.0, 0.0),
                 self.preset_badge(),
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 box_rect.left_center() + vec2(72.0, 0.0),
                 Align2::LEFT_CENTER,
                 &self.deliver_ui.preset_name,
@@ -413,7 +413,7 @@ mod native {
                 footer.top(),
                 Stroke::new(1.0, Color32::from_rgb(14, 14, 18)),
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(footer.left() + 40.0, footer.center().y),
                 Align2::LEFT_CENTER,
                 "Estimated File Size",
@@ -421,7 +421,7 @@ mod native {
                 Color32::from_rgb(160, 160, 166),
             );
             let mb = self.estimated_mb();
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(footer.left() + 232.0, footer.center().y),
                 Align2::LEFT_CENTER,
                 if mb >= 1024.0 {
@@ -461,7 +461,7 @@ mod native {
                 Stroke::new(1.0, Color32::from_rgb(58, 57, 63)),
                 StrokeKind::Inside,
             );
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 button.center(),
                 Align2::CENTER_CENTER,
                 "Add to Render Queue",
@@ -585,7 +585,7 @@ mod native {
                 Stroke::new(1.0, Color32::from_rgb(58, 57, 63)),
                 StrokeKind::Inside,
             );
-            p.text(
+            crate::i18n::paint_text(&p,
                 browse.center(),
                 Align2::CENTER_CENTER,
                 "Browse",
@@ -652,7 +652,7 @@ mod native {
                 if on {
                     p.rect_filled(seg, 2.0, Color32::from_rgb(20, 20, 23));
                 }
-                p.text(
+                crate::i18n::paint_text(&p,
                     seg.center(),
                     Align2::CENTER_CENTER,
                     name,
@@ -824,7 +824,7 @@ mod native {
                 16..=16_384,
                 custom && !self.deliver_ui.vertical,
             );
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(left.x + 126.0, r.center().y),
                 Align2::CENTER_CENTER,
                 "x",
@@ -881,7 +881,7 @@ mod native {
                     .copied()
                     .unwrap_or(self.project().fps),
             };
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(r.left() + CONTROL_LEFT + 4.0, r.center().y),
                 Align2::LEFT_CENTER,
                 format!("{} frames per second", fps_label(shown)),
@@ -1016,7 +1016,7 @@ mod native {
             if number(ui, field, &mut every, 1..=600, encodes && !auto) {
                 self.deliver_ui.every = every;
             }
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(field.right() + 14.0, r.center().y),
                 Align2::LEFT_CENTER,
                 "frames",
@@ -1105,7 +1105,7 @@ mod native {
                     if number(ui, field, &mut value, 100..=500_000, encodes) {
                         self.deliver.options.rate = Rate::Bitrate(value);
                     }
-                    p.text(
+                    crate::i18n::paint_text(&p,
                         pos2(field.right() + 14.0, r.center().y),
                         Align2::LEFT_CENTER,
                         "Kb/s",
@@ -1352,7 +1352,7 @@ mod native {
             );
             p.rect_filled(at, 2.0, FIELD);
             p.rect_stroke(at, 2.0, Stroke::new(1.0, FIELD_LINE), StrokeKind::Inside);
-            p.text(
+            crate::i18n::paint_text(&p,
                 at.left_center() + vec2(12.0, 0.0),
                 Align2::LEFT_CENTER,
                 &list[now].0,
@@ -1382,7 +1382,7 @@ mod native {
             if let Some(i) = picked {
                 self.deliver_ui.script_at_end = i == 1;
             }
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(at.right() + 14.0, r.center().y),
                 Align2::LEFT_CENTER,
                 "of render job",
@@ -1572,7 +1572,7 @@ mod native {
             }
             let r = row(ui, 44.0);
             label(&p, r, "Output Track 1", on);
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(r.left() + CONTROL_LEFT + 4.0, r.center().y),
                 Align2::LEFT_CENTER,
                 "Main, stereo, 48 kHz",
@@ -1596,7 +1596,7 @@ mod native {
                 self.deliver_ui.unique = v;
             }
             let r = row(ui, 40.0);
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(r.left() + 52.0, r.center().y),
                 Align2::LEFT_CENTER,
                 "Adds (1), (2) ... to the name instead of writing over a file.",
@@ -1611,7 +1611,7 @@ mod native {
                 "" => "folder of PNG pictures".to_string(),
                 e => format!(".{e}"),
             };
-            p.text(
+            crate::i18n::paint_text(&p,
                 pos2(r.left() + CONTROL_LEFT + 4.0, r.center().y),
                 Align2::LEFT_CENTER,
                 ext,

@@ -1420,7 +1420,7 @@ impl StudioApp {
                     Stroke::new(1.2, Color32::from_rgb(214, 70, 58)),
                     StrokeKind::Inside,
                 );
-                painter.text(
+                crate::i18n::paint_text(&painter,
                     badge.center(),
                     Align2::CENTER_CENTER,
                     &label,
@@ -1472,7 +1472,7 @@ impl StudioApp {
                         Color32::from_rgb(62, 62, 68)
                     },
                 );
-                painter.text(
+                crate::i18n::paint_text(&painter,
                     solo_btn.center(),
                     Align2::CENTER_CENTER,
                     "S",
@@ -1503,7 +1503,7 @@ impl StudioApp {
                         Color32::from_rgb(62, 62, 68)
                     },
                 );
-                painter.text(
+                crate::i18n::paint_text(&painter,
                     mute.center(),
                     Align2::CENTER_CENTER,
                     "M",
@@ -1514,7 +1514,7 @@ impl StudioApp {
                         Color32::from_rgb(140, 140, 146)
                     },
                 );
-                painter.text(
+                crate::i18n::paint_text(&painter,
                     at(240.0),
                     Align2::CENTER_CENTER,
                     "2.0",
@@ -1529,7 +1529,7 @@ impl StudioApp {
             };
             // A row squeezed by many tracks has room for one line only.
             let tall = geo.track_h(i) >= 50.0 * r;
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 pos2(rect.left() + 16.0 * r, top + if tall { 38.0 } else { 32.0 } * r),
                 Align2::LEFT_CENTER,
                 &shown_name,
@@ -1538,7 +1538,7 @@ impl StudioApp {
             );
             if tall {
                 let n = clip_counts.get(i).copied().unwrap_or(0);
-                painter.text(
+                crate::i18n::paint_text(&painter,
                     pos2(rect.left() + 16.0 * r, top + 58.0 * r),
                     Align2::LEFT_CENTER,
                     format!("{n} Clip{}", if n == 1 { "" } else { "s" }),
@@ -1592,7 +1592,7 @@ impl StudioApp {
             [ruler.left_bottom(), ruler.right_bottom()],
             Stroke::new(1.0, Color32::from_rgb(30, 30, 34)),
         );
-        over.text(
+        crate::i18n::paint_text(&over,
             ruler.center() + vec2(0.0, 2.0),
             Align2::CENTER_CENTER,
             self.tc(self.playhead as i64),
@@ -1918,7 +1918,7 @@ impl StudioApp {
                 Stroke::NONE,
             ));
             if mode == Mode::Detail && !marker.name.is_empty() {
-                painter.text(
+                crate::i18n::paint_text(&painter,
                     pos2(x + 8.0, ruler_bottom + 10.0),
                     Align2::LEFT_CENTER,
                     &marker.name,
@@ -2019,7 +2019,7 @@ impl StudioApp {
                     } else {
                         strip.top() + 15.0
                     };
-                    painter.text(
+                    crate::i18n::paint_text(&painter,
                         pos2(x + if mode == Mode::Edit { 8.0 } else { 6.0 }, label_y),
                         Align2::LEFT_CENTER,
                         self.tc(frame),
@@ -2095,7 +2095,7 @@ impl StudioApp {
         painter.rect_filled(strip, 4.0, Color32::from_black_alpha(70));
         if rect.width() > 24.0 {
             let clipped = painter.with_clip_rect(rect.shrink2(vec2(4.0, 0.0)));
-            clipped.text(
+            crate::i18n::paint_text(&clipped,
                 rect.left_top() + vec2(6.0, 1.0),
                 Align2::LEFT_TOP,
                 &clip.name,
@@ -2103,7 +2103,7 @@ impl StudioApp {
                 Color32::WHITE,
             );
             if rect.height() > 36.0 {
-                clipped.text(
+                crate::i18n::paint_text(&clipped,
                     rect.left_bottom() + vec2(6.0, -4.0),
                     Align2::LEFT_BOTTOM,
                     project.fps.timecode(clip.duration),
@@ -2143,7 +2143,7 @@ impl StudioApp {
         }
         paint_keys(painter, rect, clip);
         if (clip.speed - 1.0).abs() > 1e-4 && rect.width() > 60.0 {
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 rect.right_top() + vec2(-8.0, 2.0),
                 Align2::RIGHT_TOP,
                 format!("{:.0}%", clip.speed * 100.0),
@@ -2152,7 +2152,7 @@ impl StudioApp {
             );
         }
         if clip.opacity < 1.0 {
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 rect.right_bottom() + vec2(-5.0, -4.0),
                 Align2::RIGHT_BOTTOM,
                 format!("{:.0}%", clip.opacity * 100.0),
@@ -2232,7 +2232,7 @@ impl StudioApp {
                         StrokeKind::Middle,
                     );
                 }
-                painter.text(
+                crate::i18n::paint_text(&painter,
                     pos2(tag.left() + 15.0, tag.center().y),
                     Align2::LEFT_CENTER,
                     length,
@@ -2378,7 +2378,7 @@ impl StudioApp {
         }
         let length = project.fps.timecode(clip.duration);
         let length = length.get(3..).unwrap_or(&length).to_string();
-        painter.text(
+        crate::i18n::paint_text(&painter,
             pos2(x, bar_rect.center().y),
             Align2::LEFT_CENTER,
             format!("{name}  {length}"),

@@ -275,7 +275,7 @@ impl StudioApp {
             s.p(27.0, 19.0),
             s.p(0.0, 0.0).distance(s.p(28.0, 0.0)),
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(57.0, 16.5),
             Align2::LEFT_CENTER,
             "Picasso Suite",
@@ -334,7 +334,7 @@ impl StudioApp {
             } else {
                 theme::TEXT_DIM
             };
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 s.p(1700.0, 19.0),
                 Align2::RIGHT_CENTER,
                 &self.status.text,
@@ -459,7 +459,7 @@ impl StudioApp {
             semibold(21.0)
         };
         if !self.session.is_dirty() {
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 s.p(937.0, y - 1.0),
                 Align2::CENTER_CENTER,
                 name,
@@ -473,7 +473,7 @@ impl StudioApp {
             .size()
             .x;
         let left = 925.2 - width / 2.0;
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(left, y + 0.7),
             Align2::LEFT_CENTER,
             name,
@@ -481,14 +481,14 @@ impl StudioApp {
             theme::WHITE,
         );
         let right = left + width;
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(right + 11.7, y),
             Align2::CENTER_CENTER,
             "|",
             theme::regular(19.0),
             Color32::from_rgb(150, 150, 152),
         );
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(right + 49.6, y + 0.5),
             Align2::LEFT_CENTER,
             "Edited",
@@ -664,7 +664,7 @@ impl StudioApp {
             Color32::from_rgb(9, 9, 11),
         );
         paint_logo(&ctx, &painter, at(55.0, 23.5), 17.0 * R);
-        painter.text(
+        crate::i18n::paint_text(&painter,
             at(73.0, 23.5),
             Align2::LEFT_CENTER,
             format!("Picasso Suite {}", env!("CARGO_PKG_VERSION")),
@@ -716,7 +716,7 @@ impl StudioApp {
                 other => other,
             };
             crate::icons::paint_scaled(&painter, at(cx, 31.5), icon, color, 0.6 * R);
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 at(cx, 12.5),
                 Align2::CENTER_CENTER,
                 crate::i18n::tr_ui(name),
@@ -927,7 +927,7 @@ impl StudioApp {
                 Color32::from_rgb(142, 146, 150)
             };
             crate::icons::paint_scaled(&painter, s.p(icon_x, y), it.icon, color, 0.62 * R);
-            painter.text(
+            crate::i18n::paint_text(&painter,
                 s.p(label_x, y),
                 Align2::LEFT_CENTER,
                 it.label,
@@ -969,7 +969,7 @@ impl StudioApp {
             }
             end = line - 13.0 * R;
         }
-        painter.text(
+        crate::i18n::paint_text(&painter,
             s.p(958.0 * R, y),
             Align2::CENTER_CENTER,
             &self.project().name,

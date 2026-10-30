@@ -227,7 +227,7 @@ impl<'a> Fx<'a> {
         self.p.rect_filled(self.rect(x0, y0, x1, y1), 0.0, c);
     }
     fn text(&self, x: f32, y: f32, align: Align2, text: &str, width: f32, c: Color32, bold: bool) {
-        self.p.text(
+        crate::i18n::paint_text(&self.p,
             self.at(x, y),
             align,
             text,
@@ -249,7 +249,7 @@ impl<'a> Fx<'a> {
         } else {
             theme::regular(size)
         };
-        self.p.text(self.at(x, y), align, text, font, c);
+        crate::i18n::paint_text(&self.p,self.at(x, y), align, text, font, c);
     }
     fn line(&self, a: (f32, f32), b: (f32, f32), w: f32, c: Color32) {
         let ends = self
@@ -424,7 +424,7 @@ impl StudioApp {
                 .viewer
                 .paint(ui, area, aspect, VIEWER, true, self.overlays);
             let clipped = c.p.with_clip_rect(area);
-            clipped.text(
+            crate::i18n::paint_text(&clipped,
                 pos2(shown.center().x, shown.top() - 12.0),
                 Align2::CENTER_CENTER,
                 format!(
@@ -765,7 +765,7 @@ impl StudioApp {
             egui::Stroke::new(1.5, red),
             egui::StrokeKind::Outside,
         );
-        c.p.text(
+        crate::i18n::paint_text(&c.p,
             c.rv(65.0, 839.0),
             Align2::LEFT_CENTER,
             shorten(&k.name, 18),
@@ -795,7 +795,7 @@ impl StudioApp {
             egui::Stroke::new(1.0, Color32::from_rgb(90, 90, 96)),
             egui::StrokeKind::Outside,
         );
-        c.p.text(
+        crate::i18n::paint_text(&c.p,
             c.rv(948.0, 838.0),
             Align2::CENTER_CENTER,
             "MediaOut1",
