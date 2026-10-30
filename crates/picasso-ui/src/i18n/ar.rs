@@ -443,7 +443,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Transitions", "ﺕﻻﺎﻘﺘﻧﺍ"),
     ("Untitled", "ﻥﺍﻮﻨﻋ ﻼﺑ"),
     ("Use vertical resolution", "ﺔﻴﺳﺃﺮﻟﺍ ﺔﻗﺪﻟﺍ ﻡﺍﺪﺨﺘﺳﺍ"),
-    ("Version 0.6.1", "0.6.1 ﺭﺍﺪﺻﻹﺍ"),
+    ("Version {}", "{} ﺭﺍﺪﺻﻹﺍ"),
     ("Video", "ﻮﻳﺪﻴﻓ"),
     ("Waveform", "ﺔﺟﻮﻣ"),
     ("Workspace", "ﺔﺣﺎﺴﻤﻟﺍ"),

@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.6.2
+
+Picasso Suite 0.6.2 is the biggest update since 0.6.0: the program can be shown in 39 languages (**Help > Language**, kept for the next start), videos can have small Optimised Media copies for smooth scrubbing, work is saved by autosave and can be recovered, missing media can be relinked and a project archived, and the updater is safer. It also fixes exports that read back one frame short and menus that did not open on two pages. The project file format is the same as in 0.6.1.
 
 ### ✨ New
 - ✅ **Autosave and recovery:** while a project has changes that were not saved, a copy of it is written every minute beside the project file (`shot.picasso.autosave`, with the two before it), or in the data folder for a project that was never saved. Opening a project whose copy is newer asks "Recover unsaved changes?"; **Recover** opens it with the project's own file kept as the place it saves to, and **Discard** deletes the copy and leaves the project file alone. A save, or Exit without saving, deletes the copies. A crash or a power cut now costs at most a minute of work.

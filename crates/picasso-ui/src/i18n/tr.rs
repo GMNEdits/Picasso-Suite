@@ -449,7 +449,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Trim", "Kırp"),
     ("Untitled", "Adsız"),
     ("Use vertical resolution", "Dikey çözünürlük"),
-    ("Version 0.6.1", "Sürüm 0.6.1"),
+    ("Version {}", "Sürüm {}"),
     ("Video", "Video"),
     ("View", "Gör."),
     ("Waveform", "Dalga"),

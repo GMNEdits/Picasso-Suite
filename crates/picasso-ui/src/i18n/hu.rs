@@ -443,7 +443,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Transitions", "Átmenetek"),
     ("Untitled", "Névtelen"),
     ("Use vertical resolution", "Függőleges felb."),
-    ("Version 0.6.1", "Verzió 0.6.1"),
+    ("Version {}", "Verzió {}"),
     ("Video", "Videó"),
     ("Waveform", "Hullám"),
     ("Workspace", "Munkater."),

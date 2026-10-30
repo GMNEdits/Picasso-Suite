@@ -443,7 +443,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Transitions", "Transition"),
     ("Untitled", "Untitled"),
     ("Use vertical resolution", "Vertical resolution"),
-    ("Version 0.6.1", "Bersyon 0.6.1"),
+    ("Version {}", "Bersyon {}"),
     ("Video", "Video"),
     ("Waveform", "Waveform"),
     ("Workspace", "Workspace"),

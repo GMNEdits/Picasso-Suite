@@ -447,7 +447,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Transitions", "Overgangen"),
     ("Trim", "Trim"),
     ("Use vertical resolution", "Verticale resolutie"),
-    ("Version 0.6.1", "Versie 0.6.1"),
+    ("Version {}", "Versie {}"),
     ("Video", "Video"),
     ("View", "Beeld"),
     ("Waveform", "Golfvorm"),

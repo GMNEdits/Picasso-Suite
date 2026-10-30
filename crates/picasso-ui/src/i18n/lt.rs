@@ -443,7 +443,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Transitions", "Perėjimai"),
     ("Untitled", "Be pavad."),
     ("Use vertical resolution", "Vertikali skiriamoji"),
-    ("Version 0.6.1", "Versija 0.6.1"),
+    ("Version {}", "Versija {}"),
     ("Video", "Video"),
     ("Waveform", "Bangos f."),
     ("Workspace", "Sritis"),

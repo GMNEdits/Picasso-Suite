@@ -201,6 +201,8 @@ def rust(code, menus, pairs, ui):
     CODE = code
     menus = [shape(m) for m in menus]
     pairs = [(e, shape(t)) for e, t in pairs]
+    # The version changes with every release: its line is a sentence with the number left out.
+    ui = [(('Version {}', t.replace('0.6.1', '{}').replace('০.৬.১', '{}')) if e == 'Version 0.6.1' else (e, t)) for e, t in ui]
     ui = [(e, shape(t)) for e, t in ui]
     esc = lambda s: s.replace(chr(92), chr(92) * 2).replace(chr(34), chr(92) + chr(34))
     out = [f'//! The menus in {code}. Made from scripts/i18n/{code}.txt by scripts/i18n/build.py.', '']

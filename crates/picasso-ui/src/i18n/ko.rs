@@ -443,7 +443,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Transitions", "전환"),
     ("Untitled", "이름 없음"),
     ("Use vertical resolution", "세로 해상도"),
-    ("Version 0.6.1", "버전 0.6.1"),
+    ("Version {}", "버전 {}"),
     ("Video", "비디오"),
     ("Waveform", "파형"),
     ("Workspace", "작업공간"),

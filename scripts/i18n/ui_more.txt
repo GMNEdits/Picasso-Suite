@@ -66,3 +66,4 @@ to the project. Would you like to change the project
 frame rate to {} frames per second?
 Don't Change
 Change
+Version {}

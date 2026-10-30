@@ -443,7 +443,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Transitions", "Yfirfærslur"),
     ("Untitled", "Án heitis"),
     ("Use vertical resolution", "Lóðrétt upplausn"),
-    ("Version 0.6.1", "Útgáfa 0.6.1"),
+    ("Version {}", "Útgáfa {}"),
     ("Video", "Mynd"),
     ("Waveform", "Bylgjuform"),
     ("Workspace", "Vinnusv."),

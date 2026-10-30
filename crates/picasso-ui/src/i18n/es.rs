@@ -473,7 +473,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Trim", "Rec."),
     ("Untitled", "Sin título"),
     ("Use vertical resolution", "Resolución vertical"),
-    ("Version 0.6.1", "Versión 0.6.1"),
+    ("Version {}", "Versión {}"),
     ("Video", "Vídeo"),
     ("View", "Ver"),
     ("Waveform", "Forma onda"),
