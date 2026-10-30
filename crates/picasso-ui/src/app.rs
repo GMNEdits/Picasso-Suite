@@ -146,6 +146,16 @@ pub struct StudioApp {
     /// Timeline proxy mode: the viewer shows video this many times smaller on each side
     /// (1 is off, then 2, 4 or 8). Exports always use the whole picture.
     pub(crate) proxy: u32,
+    /// Small copies of video files, made for smooth editing, and where they are.
+    pub(crate) proxies: crate::proxy::Store,
+    /// The copies being made now, and the files waiting for theirs.
+    pub(crate) proxy_jobs: crate::proxy::Jobs,
+    /// Whether the viewer reads those copies instead of the files (Playback > Use Optimised
+    /// Media). Exports read them only when the Deliver page says so.
+    pub(crate) use_optimised: bool,
+    /// What the cache's copies were last worked out from, so they are worked out only when the
+    /// media or the copies change.
+    pub(crate) proxy_stamp: u64,
     /// The colour node the Color page edits (0 is the first), kept within the clip's nodes.
     pub(crate) color_node: usize,
     /// Viewer pictures already made, in memory and on disk.
@@ -220,7 +230,7 @@ impl StudioApp {
     }
 
     fn with_project(ctx: &Context, project: Project) -> Self {
-        Self {
+        let mut app = Self {
             session: Session::new(project),
             cache: crate::video::new_cache(ctx),
             sound: crate::sound::Sound::new(ctx),
@@ -275,6 +285,16 @@ impl StudioApp {
             cut_rows_detail: Vec::new(),
             looping: false,
             proxy: 1,
+            // The tests keep away from the user's data folder; a test that wants copies says
+            // where they are.
+            proxies: if cfg!(test) {
+                crate::proxy::Store::load_from(None)
+            } else {
+                crate::proxy::Store::load()
+            },
+            proxy_jobs: crate::proxy::Jobs::default(),
+            use_optimised: true,
+            proxy_stamp: 0,
             source: crate::source_viewer::SourceViewer::default(),
             recording: crate::recording::Recording::default(),
             extra: crate::menu_extra::Extra::default(),
@@ -306,7 +326,10 @@ impl StudioApp {
             inbox: Inbox::default(),
             project_path: None,
             show_shortcuts: false,
-        }
+        };
+        // A project opened at the start may already have copies of its files.
+        app.refresh_proxies();
+        app
     }
 
     // ----- status -----
@@ -774,6 +797,8 @@ impl StudioApp {
         self.project_path = path;
         // A copy offered for the project before this one does not belong to it.
         self.recover = None;
+        // The new project's files may have copies of their own already.
+        self.refresh_proxies();
     }
 
     pub(crate) fn open_text(&mut self, name: &str, path: Option<String>, text: &str) -> bool {
@@ -1374,6 +1399,12 @@ impl StudioApp {
                 Incoming::CodecLabel { media, label } => {
                     self.codec_labels.insert(media, label);
                 }
+                Incoming::ProxyProgress {
+                    source,
+                    done,
+                    total,
+                } => self.proxy_progress(&source, done, total),
+                Incoming::ProxyDone { source, made } => self.finish_proxy(source, made),
                 Incoming::Error(e) => {
                     // A failed save is not followed by an exit.
                     self.exit_after_save = false;
@@ -1404,6 +1435,7 @@ impl StudioApp {
     pub fn ui(&mut self, ui: &mut Ui) {
         let ctx = ui.ctx().clone();
         self.process_inbox();
+        self.refresh_proxies_if_needed();
         self.watch_for_close(&ctx);
         self.tick_autosave(&ctx);
         self.recover_window(&ctx);

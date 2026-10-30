@@ -368,7 +368,8 @@ pub(crate) mod native {
                     options,
                 },
                 project: Arc::new(project.clone()),
-                cache: self.cache.clone(),
+                // The originals, unless the Deliver page was told to use the optimised copies.
+                cache: self.export_cache(),
                 state: State::Queued,
                 done: Arc::default(),
                 total: Arc::new(AtomicU64::new(total)),

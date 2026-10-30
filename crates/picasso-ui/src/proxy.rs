@@ -12,6 +12,8 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+use crate::app::StudioApp;
+
 /// The longest side of an optimised copy, in pixels: a 4K and a 1080p file both become
 /// 1280×720, and a file already smaller than that keeps its size.
 pub(crate) const LONG_SIDE: u32 = 1280;
@@ -35,6 +37,8 @@ pub(crate) struct Store {
     /// Where the copies and the index are. `None` when there is no data folder (the browser).
     root: Option<PathBuf>,
     entries: HashMap<String, Entry>,
+    /// Counts the changes, so the pictures are put together again when a copy appears or goes.
+    revision: u64,
 }
 
 impl Store {
@@ -49,6 +53,7 @@ impl Store {
         let mut store = Store {
             root,
             entries: HashMap::new(),
+            revision: 0,
         };
         let Some(text) = store.index_path().and_then(|p| std::fs::read_to_string(p).ok()) else {
             return store;
@@ -128,6 +133,7 @@ impl Store {
                 modified,
             },
         );
+        self.revision += 1;
     }
 
     /// Forgets the copy of `source`, deleting the file too.
@@ -136,6 +142,7 @@ impl Store {
             if let Some(root) = &self.root {
                 let _ = std::fs::remove_file(root.join(entry.file));
             }
+            self.revision += 1;
         }
     }
 
@@ -148,6 +155,7 @@ impl Store {
             }
         }
         self.entries.clear();
+        self.revision += 1;
         if let Some(index) = self.index_path() {
             let _ = std::fs::remove_file(index);
         }
@@ -182,6 +190,21 @@ impl Store {
             .iter()
             .map(|(source, entry)| (source.clone(), root.join(&entry.file)))
             .collect()
+    }
+
+    /// Changes when a copy is added or removed, so what is drawn from them is drawn again.
+    pub(crate) fn revision(&self) -> u64 {
+        self.revision
+    }
+
+    /// Whether there is anywhere to keep copies: the browser has no data folder.
+    pub(crate) fn has_folder(&self) -> bool {
+        self.root.is_some()
+    }
+
+    /// Where the copies are kept, for the window to say.
+    pub(crate) fn folder(&self) -> Option<&Path> {
+        self.root.as_deref()
     }
 
     /// Writes the index, so the next start knows what is there. Written beside it first, so a
@@ -237,6 +260,7 @@ fn hash(text: &str) -> u32 {
 /// It is the export pipeline on a project of one clip, so the copy has the file's own frame
 /// rate and length and the frames line up with the original's: the same time asks for the same
 /// picture. Runs on a thread of its own; `progress` gets the frames done and the total.
+#[cfg(not(target_arch = "wasm32"))]
 pub(crate) fn make(
     source: &Path,
     dest: &Path,
@@ -323,7 +347,7 @@ pub(crate) fn make(
             ..picasso_export::Options::default()
         },
     };
-    picasso_export::render(&session.project(), &cache, &settings, progress)
+    picasso_export::render(session.project(), &cache, &settings, progress)
         .map_err(|e| format!("{}: {e}", dest.display()))
 }
 
@@ -338,6 +362,324 @@ pub(crate) fn copy_size((width, height): (u32, u32)) -> (u32, u32) {
     let w = ((f64::from(width) * scale).round() as u32).max(2) & !1;
     let h = ((f64::from(height) * scale).round() as u32).max(2) & !1;
     (w, h)
+}
+
+/// The copies being made: one at a time, so two of them do not fight over the processor and the
+/// window says clearly how far the work has got.
+#[derive(Clone, Debug, Default)]
+pub(crate) struct Jobs {
+    /// The files waiting, in the order they were asked for.
+    queue: std::collections::VecDeque<String>,
+    /// The file being made now, with the pictures done and the total.
+    running: Option<(String, u64, u64)>,
+}
+
+impl Jobs {
+    /// Whether `source` is waiting or being made now.
+    pub(crate) fn holds(&self, source: &str) -> bool {
+        self.queue.iter().any(|s| s == source)
+            || self.running.as_ref().is_some_and(|(s, _, _)| s == source)
+    }
+
+    /// Puts `source` in line. False when it was already there.
+    pub(crate) fn enqueue(&mut self, source: &str) -> bool {
+        if self.holds(source) {
+            return false;
+        }
+        self.queue.push_back(source.to_string());
+        true
+    }
+
+    /// The next file to make, now the one being made. None while one is being made: the copies
+    /// are made one at a time.
+    pub(crate) fn take(&mut self) -> Option<String> {
+        if self.running.is_some() {
+            return None;
+        }
+        let source = self.queue.pop_front()?;
+        self.running = Some((source.clone(), 0, 0));
+        Some(source)
+    }
+
+    /// Says how far the copy of `source` has got, in pictures.
+    pub(crate) fn progress(&mut self, source: &str, done: u64, total: u64) {
+        if let Some((s, d, t)) = &mut self.running {
+            if s == source {
+                (*d, *t) = (done, total);
+            }
+        }
+    }
+
+    /// The copy of `source` was made, or could not be: it is no longer being made.
+    pub(crate) fn done(&mut self, source: &str) {
+        if self.running.as_ref().is_some_and(|(s, _, _)| s == source) {
+            self.running = None;
+        }
+        self.queue.retain(|s| s != source);
+    }
+
+    /// How far the copy of `source` is, from 0 to 1, while it is being made.
+    pub(crate) fn fraction(&self, source: &str) -> Option<f32> {
+        let (s, done, total) = self.running.as_ref()?;
+        if s != source {
+            return None;
+        }
+        Some(if *total == 0 {
+            0.0
+        } else {
+            (*done as f32 / *total as f32).clamp(0.0, 1.0)
+        })
+    }
+
+    /// Whether anything is waiting or being made.
+    pub(crate) fn busy(&self) -> bool {
+        self.running.is_some() || !self.queue.is_empty()
+    }
+}
+
+/// Makes the copy of `source` in `dest` on a thread of its own, saying how far it has got and
+/// how it ended. The inbox brings both back to the window.
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) fn start(
+    source: String,
+    dest: PathBuf,
+    inbox: crate::platform::Inbox,
+    ctx: egui::Context,
+) {
+    std::thread::spawn(move || {
+        let mut told = 0u64;
+        let result = make(Path::new(&source), &dest, &mut |done, total| {
+            // Every handful of pictures, so a long file says it is working without a message
+            // for every one of its pictures.
+            if done == total || done.saturating_sub(told) >= 8 {
+                told = done;
+                inbox.push(
+                    &ctx,
+                    crate::platform::Incoming::ProxyProgress {
+                        source: source.clone(),
+                        done,
+                        total,
+                    },
+                );
+            }
+            true
+        });
+        inbox.push(
+            &ctx,
+            crate::platform::Incoming::ProxyDone {
+                source,
+                made: result.map(|()| dest.to_string_lossy().into_owned()),
+            },
+        );
+    });
+}
+
+/// The file's name as the window says it.
+pub(crate) fn name_of(source: &str) -> String {
+    Path::new(source)
+        .file_name()
+        .map_or_else(|| source.to_string(), |n| n.to_string_lossy().into_owned())
+}
+
+/// A number that changes when the copies the viewer reads would change: the switch, the copies
+/// that were made, and the video files the project uses.
+fn signature<'a>(
+    use_optimised: bool,
+    revision: u64,
+    paths: impl Iterator<Item = &'a str>,
+) -> u64 {
+    let mut h: u64 = 0xcbf2_9ce4_8422_2325;
+    let mut add = |bytes: &[u8]| {
+        for b in bytes {
+            h ^= u64::from(*b);
+            h = h.wrapping_mul(0x0100_0000_01b3);
+        }
+    };
+    add(&[u8::from(use_optimised)]);
+    add(&revision.to_le_bytes());
+    for path in paths {
+        add(path.as_bytes());
+        add(&[0]);
+    }
+    h
+}
+
+impl StudioApp {
+    /// The video files the project's timelines use, as they are on disk.
+    pub(crate) fn project_videos(&self) -> Vec<String> {
+        self.project()
+            .media_used()
+            .iter()
+            .filter_map(|m| self.project().media(*m))
+            .filter_map(|m| match &m.source {
+                picasso_core::MediaSource::Video { path } => Some(path.clone()),
+                _ => None,
+            })
+            .collect()
+    }
+
+    /// Works out which files the viewer should read copies of, and gives them to the cache.
+    /// Called when the copies, the media or the switch change, not every frame.
+    pub(crate) fn refresh_proxies(&mut self) {
+        let mut copies = HashMap::new();
+        if self.use_optimised {
+            // Every video in the pool, used or not: the media pool's thumbnails are small, and
+            // a 4K picture per tile adds up.
+            for item in &self.project().media {
+                if let picasso_core::MediaSource::Video { path } = &item.source {
+                    if let Some(copy) = self.proxies.path_for(path) {
+                        copies.insert(path.clone(), copy.to_string_lossy().into_owned());
+                    }
+                }
+            }
+        }
+        self.cache = self.cache.with_copies(copies);
+        self.proxy_stamp = self.proxy_signature();
+        // The pictures on screen were put together from other files.
+        self.media_generation += 1;
+    }
+
+    fn proxy_signature(&self) -> u64 {
+        let paths = self.project().media.iter().filter_map(|m| match &m.source {
+            picasso_core::MediaSource::Video { path } => Some(path.as_str()),
+            _ => None,
+        });
+        signature(self.use_optimised, self.proxies.revision(), paths)
+    }
+
+    /// Refreshes the copies when they, the media or the switch have changed since last frame.
+    pub(crate) fn refresh_proxies_if_needed(&mut self) {
+        if self.proxy_signature() != self.proxy_stamp {
+            self.refresh_proxies();
+        }
+    }
+
+    /// Playback > Use Optimised Media: the viewer reads the copies, or the files themselves.
+    pub(crate) fn set_optimised(&mut self, on: bool) {
+        if self.use_optimised == on {
+            return;
+        }
+        self.use_optimised = on;
+        self.refresh_proxies();
+        if on {
+            self.info("Playing from optimised media");
+        } else {
+            self.info("Playing from the original media");
+        }
+    }
+
+    /// The video files the timelines use that have no copy yet, and are not being made.
+    pub(crate) fn optimise_wanted(&self) -> Vec<String> {
+        self.project_videos()
+            .into_iter()
+            .filter(|path| self.proxies.path_for(path).is_none())
+            .filter(|path| !self.proxy_jobs.holds(path))
+            .collect()
+    }
+
+    /// Makes the copies of the video files the timelines use, one after another.
+    pub(crate) fn optimise_media(&mut self) {
+        #[cfg(target_arch = "wasm32")]
+        {
+            self.fail("optimised media needs the desktop app");
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            if !self.proxies.has_folder() {
+                self.fail("there is no data folder to keep optimised media in");
+                return;
+            }
+            let wanted = self.optimise_wanted();
+            if wanted.is_empty() {
+                self.info("Every video the timelines use has an optimised copy");
+                return;
+            }
+            for path in &wanted {
+                self.proxy_jobs.enqueue(path);
+            }
+            self.info(format!("Optimising {} file(s)...", wanted.len()));
+            self.start_next_proxy();
+        }
+    }
+
+    /// Starts the next copy waiting, if none is being made.
+    pub(crate) fn start_next_proxy(&mut self) {
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            let Some(source) = self.proxy_jobs.take() else {
+                return;
+            };
+            let Some(dest) = self.proxies.place_for(&source) else {
+                self.proxy_jobs.done(&source);
+                return;
+            };
+            crate::proxy::start(source, dest, self.inbox.clone(), self.ctx.clone());
+        }
+    }
+
+    /// The copy of `source` was made (where it is) or could not be. The next one starts.
+    pub(crate) fn finish_proxy(&mut self, source: String, made: Result<String, String>) {
+        self.proxy_jobs.done(&source);
+        match made {
+            Ok(copy) => {
+                self.proxies.record(&source, Path::new(&copy));
+                self.proxies.save();
+                self.info(format!("Optimised {}", name_of(&source)));
+            }
+            Err(e) => self.fail(format!("could not optimise {}: {e}", name_of(&source))),
+        }
+        self.refresh_proxies();
+        self.start_next_proxy();
+        if !self.proxy_jobs.busy() && !self.status.error {
+            self.info("The optimised copies are ready");
+        }
+    }
+
+    /// How far the copy of `source` has got, when it is being made.
+    pub(crate) fn proxy_progress(&mut self, source: &str, done: u64, total: u64) {
+        self.proxy_jobs.progress(source, done, total);
+        let percent = (done * 100).checked_div(total).unwrap_or(0);
+        self.info(format!("Optimising {}: {percent}%", name_of(source)));
+    }
+
+    /// Deletes the copies of the video files the timelines use.
+    pub(crate) fn forget_proxies(&mut self) {
+        let wanted = self.project_videos();
+        let mut gone = 0;
+        for (source, _) in self.proxies.copies() {
+            if wanted.contains(&source) {
+                self.proxies.forget(&source);
+                gone += 1;
+            }
+        }
+        self.proxies.save();
+        self.refresh_proxies();
+        if gone == 0 {
+            self.info("The timelines' video files have no optimised copy");
+        } else {
+            self.info(format!("Deleted {gone} optimised copy(ies)"));
+        }
+    }
+
+    /// Deletes every copy, for every project.
+    pub(crate) fn delete_all_copies(&mut self) {
+        let gone = self.proxies.copies().len();
+        self.proxies.clear();
+        self.proxies.save();
+        self.refresh_proxies();
+        self.info(format!("Deleted {gone} optimised copy(ies)"));
+    }
+
+    /// The cache an export reads: the originals, unless the Deliver page was told to use the
+    /// copies. A copy is smaller than its file, so an export must ask for it.
+    #[cfg(not(target_arch = "wasm32"))]
+    pub(crate) fn export_cache(&self) -> picasso_render::MediaCache {
+        if self.deliver_ui.optimized_media {
+            self.cache.clone()
+        } else {
+            self.cache.originals()
+        }
+    }
 }
 
 #[cfg(test)]
@@ -515,6 +857,193 @@ mod tests {
             frame.pts_us
         );
         assert_eq!((frame.width, frame.height), (1280, 720));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    /// An app with one video on its timeline, the file being `path`.
+    fn app_with_video(path: &str) -> StudioApp {
+        let ctx = egui::Context::default();
+        let mut app = StudioApp::new(&ctx);
+        app.load_demo();
+        // The demo's own media are not files; the video is what the window works on.
+        let media = app
+            .run(picasso_core::Command::AddMedia {
+                name: "A001".into(),
+                source: picasso_core::MediaSource::Video {
+                    path: path.to_string(),
+                },
+                length: Some(50),
+                default_duration: 50,
+            })
+            .expect("the file was added");
+        let picasso_core::Outcome::Media(media) = media else {
+            panic!("no media");
+        };
+        app.insert_media(media);
+        app
+    }
+
+    /// A store with a copy of `source` already made, and the app told about it.
+    fn with_copy(app: &mut StudioApp, dir: &Path, source: &str) -> PathBuf {
+        let mut store = Store::load_from(Some(dir.join("store")));
+        std::fs::create_dir_all(dir.join("store")).unwrap();
+        let place = store.place_for(source).unwrap();
+        std::fs::write(&place, b"the copy").unwrap();
+        store.record(source, &place);
+        app.proxies = store;
+        app.refresh_proxies();
+        place
+    }
+
+    #[test]
+    fn the_viewer_reads_the_copy_only_when_there_is_one_and_it_is_wanted() {
+        let dir = scratch("wired");
+        let source = source(&dir, "A001.mov");
+        let mut app = app_with_video(&source);
+        assert_eq!(app.cache.copy_for(&source), None, "no copy yet");
+
+        let place = with_copy(&mut app, &dir, &source);
+        assert_eq!(
+            app.cache.copy_for(&source),
+            Some(place.to_string_lossy().as_ref()),
+            "the viewer reads the copy"
+        );
+
+        // Playback > Use Optimised Media off: the file itself is read again.
+        app.set_optimised(false);
+        assert_eq!(app.cache.copy_for(&source), None);
+        assert!(!app.cache.uses_copies());
+        app.set_optimised(true);
+        assert!(app.cache.uses_copies());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_copy_of_a_file_that_changed_is_not_given_to_the_viewer() {
+        let dir = scratch("changed");
+        let source = source(&dir, "A001.mov");
+        let mut app = app_with_video(&source);
+        with_copy(&mut app, &dir, &source);
+        // The file is written again: the copy no longer stands for it.
+        std::thread::sleep(std::time::Duration::from_millis(1100));
+        std::fs::write(&source, b"the original, but longer").unwrap();
+        app.refresh_proxies();
+        assert_eq!(app.cache.copy_for(&source), None);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn an_export_reads_the_files_unless_it_is_told_to_use_the_copies() {
+        let dir = scratch("export");
+        let source = source(&dir, "A001.mov");
+        let mut app = app_with_video(&source);
+        with_copy(&mut app, &dir, &source);
+        assert!(app.cache.uses_copies(), "the viewer reads the copy");
+        assert!(
+            !app.export_cache().uses_copies(),
+            "an export reads the file, whole"
+        );
+        app.deliver_ui.optimized_media = true;
+        assert!(
+            app.export_cache().uses_copies(),
+            "ticked on the Deliver page, it reads the copy"
+        );
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn only_files_without_a_copy_are_queued() {
+        let dir = scratch("wanted");
+        let one = source(&dir, "A001.mov");
+        let two = source(&dir, "A002.mov");
+        let mut app = app_with_video(&one);
+        let media = app
+            .run(picasso_core::Command::AddMedia {
+                name: "A002".into(),
+                source: picasso_core::MediaSource::Video {
+                    path: two.clone(),
+                },
+                length: Some(50),
+                default_duration: 50,
+            })
+            .and_then(|o| match o {
+                picasso_core::Outcome::Media(id) => Some(id),
+                _ => None,
+            })
+            .unwrap();
+        // Past the first clip: one clip per place on the track.
+        app.playhead = 50;
+        app.insert_media(media);
+        with_copy(&mut app, &dir, &one);
+        assert_eq!(app.optimise_wanted(), vec![two.clone()]);
+        // Once it is in line it is not asked for again.
+        app.proxy_jobs.enqueue(&two);
+        assert!(app.optimise_wanted().is_empty());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn deleting_the_copies_leaves_the_other_projects_ones() {
+        let dir = scratch("delete");
+        let mine = source(&dir, "A001.mov");
+        let theirs = source(&dir, "B002.mov");
+        let mut app = app_with_video(&mine);
+        let store_dir = dir.join("store");
+        std::fs::create_dir_all(&store_dir).unwrap();
+        let mut store = Store::load_from(Some(store_dir.clone()));
+        let a = store.place_for(&mine).unwrap();
+        let b = store.place_for(&theirs).unwrap();
+        std::fs::write(&a, b"a").unwrap();
+        std::fs::write(&b, b"b").unwrap();
+        store.record(&mine, &a);
+        store.record(&theirs, &b);
+        app.proxies = store;
+        app.refresh_proxies();
+
+        app.forget_proxies();
+        assert!(!a.is_file(), "this project's copy goes");
+        assert!(b.is_file(), "another project's copy stays");
+        assert_eq!(app.cache.copy_for(&mine), None);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn copies_are_made_one_at_a_time_and_say_how_far_they_are() {
+        let mut jobs = Jobs::default();
+        assert!(jobs.enqueue("a.mov"));
+        assert!(jobs.enqueue("b.mov"));
+        assert!(!jobs.enqueue("a.mov"), "it is already in line");
+        assert!(jobs.holds("a.mov") && jobs.holds("b.mov"));
+
+        assert_eq!(jobs.take(), Some("a.mov".to_string()));
+        assert_eq!(jobs.take(), None, "b waits while a is being made");
+        jobs.progress("a.mov", 25, 50);
+        assert_eq!(jobs.fraction("a.mov"), Some(0.5));
+        assert_eq!(jobs.fraction("b.mov"), None, "b has not started");
+
+        jobs.done("a.mov");
+        assert!(!jobs.holds("a.mov"));
+        assert_eq!(jobs.take(), Some("b.mov".to_string()));
+        jobs.done("b.mov");
+        assert!(!jobs.busy(), "nothing is left");
+    }
+
+    #[test]
+    fn a_copy_that_was_made_is_kept_for_the_next_start() {
+        let dir = scratch("record");
+        let source = source(&dir, "A001.mov");
+        let mut app = app_with_video(&source);
+        let store_dir = dir.join("store");
+        std::fs::create_dir_all(&store_dir).unwrap();
+        app.proxies = Store::load_from(Some(store_dir.clone()));
+        let place = app.proxies.place_for(&source).unwrap();
+        std::fs::write(&place, b"the copy").unwrap();
+
+        app.finish_proxy(source.clone(), Ok(place.to_string_lossy().into_owned()));
+        assert_eq!(app.cache.copy_for(&source), Some(place.to_string_lossy().as_ref()));
+        // The next start finds it, without being told again.
+        let again = Store::load_from(Some(store_dir));
+        assert_eq!(again.path_for(&source), Some(place));
         let _ = std::fs::remove_dir_all(&dir);
     }
 }

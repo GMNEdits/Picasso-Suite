@@ -1235,9 +1235,11 @@ impl StudioApp {
 
     pub(crate) fn export_frame(&mut self, ctx: &Context) {
         let (w, h) = (self.project().width, self.project().height);
+        // What an export would read: the files themselves, unless the page was told to use the
+        // optimised copies.
         let frame = match render_frame(
             self.session.project(),
-            &self.cache.blocking(),
+            &self.export_cache().blocking(),
             self.playhead,
             w,
             h,
