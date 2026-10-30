@@ -1,0 +1,25 @@
+1|Nach Updates suchen
+2|Suche auf GitHub nach einer neuen Version...
+3|Picasso Suite {} ist aktuell.
+4|Die neueste Version ist {}.
+5|Picasso Suite {} ist verfügbar
+6|Sie haben {}.
+7|Diese Kopie wurde nicht aus einem Release-Paket installiert und kann sich nicht selbst aktualisieren. Laden Sie die neue Version von der Release-Seite herunter.
+8|Dieses Release hat kein Paket für diese Art der Installation.
+9|Jetzt aktualisieren
+10|Release-Seite
+11|Lade {} herunter...
+12|Installiere...
+13|Die neue Version ist installiert. Starten Sie Picasso Suite neu, um sie zu nutzen.
+14|Picasso Suite {} ist installiert. Starten Sie Picasso Suite neu, um es zu nutzen.
+15|Picasso Suite {} ist installiert. Schließen Sie Picasso Suite und öffnen Sie es erneut.
+16|Speichern Sie zuerst Ihr Projekt: Beim Neustart wird es geschlossen.
+17|Jetzt neu starten
+18|Das Update hat nicht funktioniert.
+19|Erneut versuchen
+20|Bildrate des Projekts ändern?
+21|Die gewählten Clips haben eine andere Bildrate
+22|als das Projekt. Möchten Sie die Bildrate
+23|des Projekts auf {} Bilder pro Sekunde ändern?
+24|Nicht ändern
+25|Ändern

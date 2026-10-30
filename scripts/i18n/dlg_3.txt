@@ -1,0 +1,312 @@
+#is
+Leita að uppfærslum
+Leita að nýrri útgáfu á GitHub...
+Picasso Suite {} er uppfært.
+Nýjasta útgáfan er {}.
+Picasso Suite {} er fáanlegt
+Þú ert með {}.
+Þetta eintak var ekki sett upp úr útgáfupakka og getur því ekki uppfært sig sjálft. Sæktu nýju útgáfuna á útgáfusíðunni.
+Þessi útgáfa er ekki með pakka fyrir þessa gerð uppsetningar.
+Uppfæra núna
+Útgáfusíða
+Sæki {}...
+Set upp...
+Nýja útgáfan er uppsett. Endurræstu Picasso Suite til að nota hana.
+Picasso Suite {} er uppsett. Endurræstu Picasso Suite til að nota það.
+Picasso Suite {} er uppsett. Lokaðu Picasso Suite og opnaðu það aftur.
+Vistaðu verkefnið fyrst: endurræsing lokar því.
+Endurræsa núna
+Uppfærslan virkaði ekki.
+Reyna aftur
+Breyta rammatíðni verkefnisins?
+Völdu klippin eru með aðra rammatíðni
+en verkefnið. Viltu breyta rammatíðni
+verkefnisins í {} ramma á sekúndu?
+Ekki breyta
+Breyta
+#lb
+No Aktualiséierunge sichen
+Sicht op GitHub no enger neier Versioun...
+Picasso Suite {} ass um neiste Stand.
+Déi neist Versioun ass {}.
+Picasso Suite {} ass verfügbar
+Dir hutt {}.
+Dës Kopie gouf net aus engem Release-Package installéiert a kann sech net selwer aktualiséieren. Luet déi nei Versioun vun der Release-Säit erof.
+Dëse Release huet kee Package fir dës Aart vun Installatioun.
+Elo aktualiséieren
+Release-Säit
+{} gëtt erofgelueden...
+Installéieren...
+Déi nei Versioun ass installéiert. Start Picasso Suite nei fir se ze benotzen.
+Picasso Suite {} ass installéiert. Start Picasso Suite nei fir et ze benotzen.
+Picasso Suite {} ass installéiert. Maacht Picasso Suite zou an op et nei op.
+Späichert fir d'éischt de Projet: den Neistart mécht en zou.
+Elo nei starten
+D'Aktualiséierung huet net geklappt.
+Nach eng Kéier probéieren
+Bildrate vum Projet änneren?
+Déi gewielte Clips hunn eng aner Bildrate
+wéi de Projet. Wëllt Dir d'Bildrate
+vum Projet op {} Biller pro Sekonn änneren?
+Net änneren
+Änneren
+#sq
+Kontrollo për përditësime
+Po kërkohet një version i ri në GitHub...
+Picasso Suite {} është i përditësuar.
+Versioni i fundit është {}.
+Picasso Suite {} është i disponueshëm
+Ju keni {}.
+Kjo kopje nuk u instalua nga një paketë versioni, prandaj nuk mund të përditësohet vetë. Shkarkoni versionin e ri nga faqja e versioneve.
+Ky version nuk ka paketë për këtë lloj instalimi.
+Përditëso tani
+Faqja e versioneve
+Po shkarkohet {}...
+Po instalohet...
+Versioni i ri u instalua. Rinisni Picasso Suite për ta përdorur.
+Picasso Suite {} u instalua. Rinisni Picasso Suite për ta përdorur.
+Picasso Suite {} u instalua. Mbyllni Picasso Suite dhe hapeni përsëri.
+Ruani fillimisht projektin: rinisja e mbyll.
+Rinis tani
+Përditësimi nuk funksionoi.
+Provo përsëri
+Të ndryshohet shpejtësia e kuadrove e projektit?
+Klipet e zgjedhura kanë shpejtësi kuadrosh
+ndryshe nga projekti. A doni ta ndryshoni
+shpejtësinë e projektit në {} kuadro në sekondë?
+Mos ndrysho
+Ndrysho
+#fil
+Tingnan ang mga update
+Naghahanap ng bagong bersyon sa GitHub...
+Updated na ang Picasso Suite {}.
+Ang pinakabagong bersyon ay {}.
+Available na ang Picasso Suite {}
+Mayroon kang {}.
+Ang kopyang ito ay hindi na-install mula sa release package, kaya hindi ito makakapag-update nang mag-isa. I-download ang bagong bersyon mula sa release page.
+Walang package ang release na ito para sa ganitong uri ng install.
+I-update ngayon
+Release page
+Dina-download ang {}...
+Ini-install...
+Naka-install na ang bagong bersyon. I-restart ang Picasso Suite para magamit ito.
+Naka-install na ang Picasso Suite {}. I-restart ang Picasso Suite para magamit ito.
+Naka-install na ang Picasso Suite {}. Isara ang Picasso Suite at buksan ulit.
+I-save muna ang proyekto: isinasara ito ng pag-restart.
+I-restart ngayon
+Hindi gumana ang update.
+Subukan ulit
+Baguhin ang frame rate ng proyekto?
+Iba ang frame rate ng mga napiling clip
+kaysa sa proyekto. Gusto mo bang baguhin
+ang frame rate ng proyekto sa {} frame bawat segundo?
+Huwag baguhin
+Baguhin
+#vi
+Kiểm tra cập nhật
+Đang tìm phiên bản mới trên GitHub...
+Picasso Suite {} đã mới nhất.
+Bản phát hành mới nhất là {}.
+Picasso Suite {} đã có
+Bạn đang dùng {}.
+Bản sao này không được cài từ gói phát hành nên không thể tự cập nhật. Hãy tải phiên bản mới từ trang phát hành.
+Bản phát hành này không có gói cho kiểu cài đặt này.
+Cập nhật ngay
+Trang phát hành
+Đang tải {}...
+Đang cài đặt...
+Phiên bản mới đã được cài. Hãy khởi động lại Picasso Suite để dùng.
+Picasso Suite {} đã được cài. Hãy khởi động lại Picasso Suite để dùng.
+Picasso Suite {} đã được cài. Hãy đóng Picasso Suite và mở lại.
+Hãy lưu dự án trước: khởi động lại sẽ đóng nó.
+Khởi động lại ngay
+Cập nhật không thành công.
+Thử lại
+Đổi tốc độ khung của dự án?
+Các clip đã chọn có tốc độ khung
+khác với dự án. Bạn có muốn đổi tốc độ
+khung của dự án thành {} khung/giây không?
+Không đổi
+Đổi
+#ko
+업데이트 확인
+GitHub에서 새 버전을 찾는 중...
+Picasso Suite {}은(는) 최신입니다.
+최신 릴리스는 {}입니다.
+Picasso Suite {}을(를) 사용할 수 있습니다
+현재 버전은 {}입니다.
+이 복사본은 릴리스 패키지로 설치되지 않아 스스로 업데이트할 수 없습니다. 릴리스 페이지에서 새 버전을 내려받으세요.
+이 릴리스에는 이 설치 방식에 맞는 패키지가 없습니다.
+지금 업데이트
+릴리스 페이지
+{} 내려받는 중...
+설치하는 중...
+새 버전이 설치되었습니다. 사용하려면 Picasso Suite를 다시 시작하세요.
+Picasso Suite {}이(가) 설치되었습니다. 사용하려면 Picasso Suite를 다시 시작하세요.
+Picasso Suite {}이(가) 설치되었습니다. Picasso Suite를 닫고 다시 여세요.
+먼저 프로젝트를 저장하세요: 다시 시작하면 닫힙니다.
+지금 다시 시작
+업데이트에 실패했습니다.
+다시 시도
+프로젝트 프레임 레이트를 바꿀까요?
+선택한 클립의 프레임 레이트가
+프로젝트와 다릅니다. 프로젝트 프레임
+레이트를 초당 {} 프레임으로 바꿀까요?
+바꾸지 않음
+바꾸기
+#bn
+আপডেট দেখুন
+GitHub-এ নতুন সংস্করণ খোঁজা হচ্ছে...
+Picasso Suite {} হালনাগাদ আছে.
+সর্বশেষ সংস্করণ {}.
+Picasso Suite {} পাওয়া যাচ্ছে
+আপনার কাছে {} আছে.
+এই কপি রিলিজ প্যাকেজ থেকে ইনস্টল হয়নি, তাই নিজে আপডেট হতে পারে না. রিলিজ পেজ থেকে নতুন সংস্করণ নামান.
+এই রিলিজে এই ধরনের ইনস্টলের প্যাকেজ নেই.
+এখনই আপডেট
+রিলিজ পেজ
+{} নামানো হচ্ছে...
+ইনস্টল হচ্ছে...
+নতুন সংস্করণ ইনস্টল হয়েছে. ব্যবহার করতে Picasso Suite পুনরায় চালু করুন.
+Picasso Suite {} ইনস্টল হয়েছে. ব্যবহার করতে Picasso Suite পুনরায় চালু করুন.
+Picasso Suite {} ইনস্টল হয়েছে. Picasso Suite বন্ধ করে আবার খুলুন.
+আগে প্রজেক্ট সংরক্ষণ করুন: পুনরায় চালু করলে এটি বন্ধ হবে.
+এখনই পুনরায় চালু
+আপডেট কাজ করেনি.
+আবার চেষ্টা
+প্রজেক্টের ফ্রেম রেট বদলাবেন?
+নির্বাচিত ক্লিপের ফ্রেম রেট প্রজেক্টের
+থেকে আলাদা. আপনি কি প্রজেক্টের ফ্রেম রেট
+বদলে প্রতি সেকেন্ডে {} ফ্রেম করতে চান?
+বদলাবেন না
+বদলান
+#th
+ตรวจหาอัปเดต
+กำลังค้นหา เวอร์ชันใหม่ บน GitHub...
+Picasso Suite {} เป็นรุ่นล่าสุดแล้ว
+รุ่นล่าสุดคือ {}
+Picasso Suite {} พร้อมใช้งาน
+คุณใช้ {}
+สำเนานี้ไม่ได้ติดตั้งจากแพ็กเกจรุ่นที่ออกจำหน่าย จึงอัปเดตตัวเองไม่ได้ ดาวน์โหลดเวอร์ชันใหม่ จากหน้ารุ่นที่ออกจำหน่าย
+รุ่นนี้ไม่มีแพ็กเกจ สำหรับการติดตั้งแบบนี้
+อัปเดตเดี๋ยวนี้
+หน้ารุ่นที่ออก
+กำลังดาวน์โหลด {}...
+กำลังติดตั้ง...
+ติดตั้งเวอร์ชันใหม่แล้ว เริ่ม Picasso Suite ใหม่ เพื่อใช้งาน
+ติดตั้ง Picasso Suite {} แล้ว เริ่ม Picasso Suite ใหม่ เพื่อใช้งาน
+ติดตั้ง Picasso Suite {} แล้ว ปิด Picasso Suite แล้วเปิดใหม่
+บันทึกโปรเจกต์ ก่อน: การเริ่มใหม่ จะปิดโปรเจกต์
+เริ่มใหม่เดี๋ยวนี้
+อัปเดตไม่สำเร็จ
+ลองอีกครั้ง
+เปลี่ยนเฟรมเรต ของโปรเจกต์ไหม
+คลิปที่เลือก มีเฟรมเรตต่างจาก
+โปรเจกต์ คุณต้องการเปลี่ยนเฟรมเรต
+ของโปรเจกต์ เป็น {} เฟรมต่อวินาทีไหม
+ไม่เปลี่ยน
+เปลี่ยน
+#zh
+检查更新
+正在 GitHub 上查找新版本...
+Picasso Suite {} 已是最新版本。
+最新版本是 {}。
+Picasso Suite {} 可用
+你当前使用 {}。
+此副本不是通过发行包安装的，因此无法自行更新。请从发布页面下载新版本。
+此发行版没有适用于这种安装方式的包。
+立即更新
+发布页面
+正在下载 {}...
+正在安装...
+新版本已安装。请重启 Picasso Suite 以使用。
+Picasso Suite {} 已安装。请重启 Picasso Suite 以使用。
+Picasso Suite {} 已安装。请关闭 Picasso Suite 后重新打开。
+请先保存项目：重启会将其关闭。
+立即重启
+更新失败。
+重试
+更改项目帧率？
+所选片段的帧率与项目
+不同。是否将项目帧率
+更改为每秒 {} 帧？
+不更改
+更改
+#ja
+アップデートを確認
+GitHubで新しいバージョンを確認中...
+Picasso Suite {} は最新です。
+最新のリリースは {} です。
+Picasso Suite {} が利用可能です
+現在のバージョンは {} です。
+このコピーはリリースパッケージからインストールされていないため、自動更新できません。リリースページから新しいバージョンをダウンロードしてください。
+このリリースには、この種のインストール用のパッケージがありません。
+今すぐ更新
+リリースページ
+{} をダウンロード中...
+インストール中...
+新しいバージョンをインストールしました。使うには Picasso Suite を再起動してください。
+Picasso Suite {} をインストールしました。使うには Picasso Suite を再起動してください。
+Picasso Suite {} をインストールしました。Picasso Suite を閉じて開き直してください。
+先にプロジェクトを保存してください。再起動すると閉じます。
+今すぐ再起動
+アップデートに失敗しました。
+再試行
+プロジェクトのフレームレートを変更しますか？
+選択したクリップのフレームレートが
+プロジェクトと異なります。プロジェクトの
+フレームレートを毎秒 {} フレームに変更しますか？
+変更しない
+変更
+#ar
+التحقق من التحديثات
+جارٍ البحث عن إصدار جديد على GitHub...
+Picasso Suite {} محدّث.
+أحدث إصدار هو {}.
+Picasso Suite {} متاح
+لديك {}.
+لم تُثبَّت هذه النسخة من حزمة إصدار، لذا لا تستطيع تحديث نفسها. نزّل الإصدار الجديد من صفحة الإصدارات.
+ليس لهذا الإصدار حزمة لهذا النوع من التثبيت.
+حدّث الآن
+صفحة الإصدارات
+جارٍ تنزيل {}...
+جارٍ التثبيت...
+ثُبّت الإصدار الجديد. أعد تشغيل Picasso Suite لاستخدامه.
+ثُبّت Picasso Suite {}. أعد تشغيل Picasso Suite لاستخدامه.
+ثُبّت Picasso Suite {}. أغلق Picasso Suite وافتحه مجددًا.
+احفظ المشروع أولًا: إعادة التشغيل تغلقه.
+أعد التشغيل الآن
+لم ينجح التحديث.
+أعد المحاولة
+تغيير معدل إطارات المشروع؟
+المقاطع المحددة لها معدل إطارات
+يختلف عن المشروع. هل تريد تغيير
+معدل إطارات المشروع إلى {} إطارًا في الثانية؟
+لا تغيّر
+غيّر
+#hi
+अपडेट जाँचें
+GitHub पर नया संस्करण खोजा जा रहा है...
+Picasso Suite {} अद्यतित है.
+नवीनतम संस्करण {} है.
+Picasso Suite {} उपलब्ध है
+आपके पास {} है.
+यह प्रति रिलीज़ पैकेज से इंस्टॉल नहीं हुई, इसलिए खुद अपडेट नहीं हो सकती. रिलीज़ पेज से नया संस्करण डाउनलोड करें.
+इस रिलीज़ में इस प्रकार के इंस्टॉल के लिए पैकेज नहीं है.
+अभी अपडेट करें
+रिलीज़ पेज
+{} डाउनलोड हो रहा है...
+इंस्टॉल हो रहा है...
+नया संस्करण इंस्टॉल हो गया. उपयोग के लिए Picasso Suite फिर शुरू करें.
+Picasso Suite {} इंस्टॉल हो गया. उपयोग के लिए Picasso Suite फिर शुरू करें.
+Picasso Suite {} इंस्टॉल हो गया. Picasso Suite बंद करके फिर खोलें.
+पहले प्रोजेक्ट सहेजें: फिर शुरू करने पर वह बंद होता है.
+अभी फिर शुरू करें
+अपडेट काम नहीं किया.
+फिर कोशिश करें
+प्रोजेक्ट का फ़्रेम रेट बदलें?
+चुने गए क्लिप का फ़्रेम रेट प्रोजेक्ट
+से अलग है. क्या आप प्रोजेक्ट का
+फ़्रेम रेट {} फ़्रेम प्रति सेकंड करना चाहते हैं?
+न बदलें
+बदलें

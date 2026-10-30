@@ -1,0 +1,25 @@
+Check for Updates|ตรวจหาอัปเดต
+Checking GitHub for a newer version...|กำลังค้นหา เวอร์ชันใหม่ บน GitHub...
+Picasso Suite {} is up to date.|Picasso Suite {} เป็นรุ่นล่าสุดแล้ว
+The latest release is {}.|รุ่นล่าสุดคือ {}
+Picasso Suite {} is available|Picasso Suite {} พร้อมใช้งาน
+You have {}.|คุณใช้ {}
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|สำเนานี้ไม่ได้ติดตั้งจากแพ็กเกจรุ่นที่ออกจำหน่าย จึงอัปเดตตัวเองไม่ได้ ดาวน์โหลดเวอร์ชันใหม่ จากหน้ารุ่นที่ออกจำหน่าย
+This release has no package for this kind of install.|รุ่นนี้ไม่มีแพ็กเกจ สำหรับการติดตั้งแบบนี้
+Update now|อัปเดตเดี๋ยวนี้
+Release page|หน้ารุ่นที่ออก
+Downloading {}...|กำลังดาวน์โหลด {}...
+Installing...|กำลังติดตั้ง...
+The new version is installed. Restart Picasso Suite to use it.|ติดตั้งเวอร์ชันใหม่แล้ว เริ่ม Picasso Suite ใหม่ เพื่อใช้งาน
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|ติดตั้ง Picasso Suite {} แล้ว เริ่ม Picasso Suite ใหม่ เพื่อใช้งาน
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|ติดตั้ง Picasso Suite {} แล้ว ปิด Picasso Suite แล้วเปิดใหม่
+Save your project first: restarting closes it.|บันทึกโปรเจกต์ ก่อน: การเริ่มใหม่ จะปิดโปรเจกต์
+Restart now|เริ่มใหม่เดี๋ยวนี้
+The update did not work.|อัปเดตไม่สำเร็จ
+Try again|ลองอีกครั้ง
+Change Project Frame Rate?|เปลี่ยนเฟรมเรต ของโปรเจกต์ไหม
+The selected clips have a different frame rate|คลิปที่เลือก มีเฟรมเรตต่างจาก
+to the project. Would you like to change the project|โปรเจกต์ คุณต้องการเปลี่ยนเฟรมเรต
+frame rate to {} frames per second?|ของโปรเจกต์ เป็น {} เฟรมต่อวินาทีไหม
+Don't Change|ไม่เปลี่ยน
+Change|เปลี่ยน

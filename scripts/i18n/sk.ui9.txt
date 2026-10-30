@@ -1,0 +1,25 @@
+Check for Updates|Skontrolovať aktualizácie
+Checking GitHub for a newer version...|Hľadám novú verziu na GitHube...
+Picasso Suite {} is up to date.|Picasso Suite {} je aktuálny.
+The latest release is {}.|Najnovšia verzia je {}.
+Picasso Suite {} is available|Picasso Suite {} je k dispozícii
+You have {}.|Máte {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Táto kópia nebola nainštalovaná z balíka vydania, a preto sa nevie sama aktualizovať. Stiahnite novú verziu zo stránky vydaní.
+This release has no package for this kind of install.|Toto vydanie nemá balík pre tento druh inštalácie.
+Update now|Aktualizovať teraz
+Release page|Stránka vydaní
+Downloading {}...|Sťahujem {}...
+Installing...|Inštalujem...
+The new version is installed. Restart Picasso Suite to use it.|Nová verzia je nainštalovaná. Reštartujte Picasso Suite, aby ste ju mohli používať.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} je nainštalovaný. Reštartujte Picasso Suite, aby ste ho mohli používať.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} je nainštalovaný. Zatvorte Picasso Suite a otvorte ho znova.
+Save your project first: restarting closes it.|Najprv uložte projekt: reštart ho zatvorí.
+Restart now|Reštartovať teraz
+The update did not work.|Aktualizácia zlyhala.
+Try again|Skúsiť znova
+Change Project Frame Rate?|Zmeniť snímkovú frekvenciu projektu?
+The selected clips have a different frame rate|Vybrané klipy majú inú snímkovú frekvenciu
+to the project. Would you like to change the project|než projekt. Chcete zmeniť snímkovú
+frame rate to {} frames per second?|frekvenciu projektu na {} snímok za sekundu?
+Don't Change|Nemeniť
+Change|Zmeniť

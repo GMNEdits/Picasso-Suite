@@ -1,0 +1,25 @@
+1|Cerca aggiornamenti
+2|Cerco una nuova versione su GitHub...
+3|Picasso Suite {} è aggiornato.
+4|L'ultima versione è {}.
+5|Picasso Suite {} è disponibile
+6|Hai la {}.
+7|Questa copia non è stata installata da un pacchetto di rilascio, quindi non può aggiornarsi da sola. Scarica la nuova versione dalla pagina dei rilasci.
+8|Questo rilascio non ha un pacchetto per questo tipo di installazione.
+9|Aggiorna ora
+10|Pagina dei rilasci
+11|Scarico {}...
+12|Installazione...
+13|La nuova versione è installata. Riavvia Picasso Suite per usarla.
+14|Picasso Suite {} è installato. Riavvia Picasso Suite per usarlo.
+15|Picasso Suite {} è installato. Chiudi Picasso Suite e riaprilo.
+16|Salva prima il progetto: il riavvio lo chiude.
+17|Riavvia ora
+18|L'aggiornamento non ha funzionato.
+19|Riprova
+20|Cambiare la frequenza fotogrammi del progetto?
+21|I clip selezionati hanno una frequenza fotogrammi
+22|diversa da quella del progetto. Vuoi cambiare la
+23|frequenza del progetto a {} fotogrammi al secondo?
+24|Non cambiare
+25|Cambia

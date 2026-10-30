@@ -1,0 +1,25 @@
+Check for Updates|अपडेट जाँचें
+Checking GitHub for a newer version...|GitHub पर नया संस्करण खोजा जा रहा है...
+Picasso Suite {} is up to date.|Picasso Suite {} अद्यतित है।
+The latest release is {}.|नवीनतम संस्करण {} है।
+Picasso Suite {} is available|Picasso Suite {} उपलब्ध है
+You have {}.|आपके पास {} है।
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|यह प्रति रिलीज़ पैकेज से इंस्टॉल नहीं हुई, इसलिए खुद अपडेट नहीं हो सकती। रिलीज़ पेज से नया संस्करण डाउनलोड करें।
+This release has no package for this kind of install.|इस रिलीज़ में इस प्रकार के इंस्टॉल के लिए पैकेज नहीं है।
+Update now|अभी अपडेट करें
+Release page|रिलीज़ पेज
+Downloading {}...|{} डाउनलोड हो रहा है...
+Installing...|इंस्टॉल हो रहा है...
+The new version is installed. Restart Picasso Suite to use it.|नया संस्करण इंस्टॉल हो गया। उपयोग के लिए Picasso Suite फिर शुरू करें।
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} इंस्टॉल हो गया। उपयोग के लिए Picasso Suite फिर शुरू करें।
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} इंस्टॉल हो गया। Picasso Suite बंद करके फिर खोलें।
+Save your project first: restarting closes it.|पहले प्रोजेक्ट सहेजें: फिर शुरू करने पर वह बंद होता है।
+Restart now|अभी फिर शुरू करें
+The update did not work.|अपडेट काम नहीं किया।
+Try again|फिर कोशिश करें
+Change Project Frame Rate?|प्रोजेक्ट का फ़्रेम रेट बदलें?
+The selected clips have a different frame rate|चुने गए क्लिप का फ़्रेम रेट प्रोजेक्ट
+to the project. Would you like to change the project|से अलग है। क्या आप प्रोजेक्ट का
+frame rate to {} frames per second?|फ़्रेम रेट {} फ़्रेम प्रति सेकंड करना चाहते हैं?
+Don't Change|न बदलें
+Change|बदलें

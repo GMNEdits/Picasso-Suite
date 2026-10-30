@@ -431,9 +431,12 @@ pub(crate) fn paint_text(
 ) -> egui::Rect {
     let text = text.to_string();
     let language = current();
-    let translated = match translate_ui(language, text.trim()) {
-        Some(translated) if language != Language::English => Some(translated.to_string()),
-        _ => None,
+    let translated = if language == Language::English {
+        None
+    } else {
+        translate_ui(language, text.trim())
+            .map(str::to_string)
+            .or_else(|| translate_template(language, text.trim()))
     };
     let Some(shown) = translated else {
         return painter.text(pos, anchor, text, font, color);
@@ -466,6 +469,62 @@ pub(crate) fn smaller(was: f32, now: f32) -> Option<f32> {
         return None;
     }
     Some((was / now).max(SMALLEST))
+}
+
+/// The sentences of a language that have a piece filled in (a version, a frame rate): the English
+/// one and its translation, each with `{}` where the piece goes.
+fn templates(language: Language) -> &'static [(&'static str, &'static str)] {
+    static TABLES: std::sync::Mutex<Vec<(Language, &'static [(&'static str, &'static str)])>> =
+        std::sync::Mutex::new(Vec::new());
+    let mut tables = TABLES.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    if let Some((_, found)) = tables.iter().find(|(l, _)| *l == language) {
+        return found;
+    }
+    let list: Vec<(&'static str, &'static str)> = language
+        .data()
+        .map(|(_, _, ui)| ui.iter().copied().filter(|(english, _)| english.contains("{}")).collect())
+        .unwrap_or_default();
+    let list: &'static [(&'static str, &'static str)] = Box::leak(list.into_boxed_slice());
+    tables.push((language, list));
+    list
+}
+
+/// The pieces of `text` that fill the `{}` of `template`, when it is that sentence.
+fn fill_of<'a>(template: &str, text: &'a str) -> Option<Vec<&'a str>> {
+    let parts: Vec<&str> = template.split("{}").collect();
+    let (first, last) = (parts.first()?, parts.last()?);
+    if parts.len() < 2 || !text.starts_with(first) || text.len() < first.len() + last.len() || !text.ends_with(last) {
+        return None;
+    }
+    let mut rest = &text[first.len()..text.len() - last.len()];
+    let mut found = Vec::new();
+    for literal in &parts[1..parts.len() - 1] {
+        let at = rest.find(literal)?;
+        found.push(&rest[..at]);
+        rest = &rest[at + literal.len()..];
+    }
+    found.push(rest);
+    Some(found)
+}
+
+/// A sentence with a piece filled in, in the language: the table holds it with `{}` where the piece
+/// goes ("Picasso Suite {} is available"), and the piece is put back in the translation.
+pub(crate) fn translate_template(language: Language, text: &str) -> Option<String> {
+    for (english, shown) in templates(language) {
+        let Some(pieces) = fill_of(english, text) else {
+            continue;
+        };
+        let mut out = String::new();
+        let mut pieces = pieces.into_iter();
+        for (i, part) in shown.split("{}").enumerate() {
+            if i > 0 {
+                out.push_str(pieces.next().unwrap_or_default());
+            }
+            out.push_str(part);
+        }
+        return Some(out);
+    }
+    None
 }
 
 /// Text painted on a page or in a window, in the language; `None` when it has no translation.
@@ -615,6 +674,18 @@ mod tests {
             assert_eq!((*label, *act), (l.name(), Act::Language(*l)));
         }
         assert_eq!(listed[0].0, "English (Default)", "English is first");
+    }
+
+    #[test]
+    fn a_sentence_with_a_piece_filled_in_is_translated_around_it() {
+        assert_eq!(
+            translate_template(Language::Spanish, "Picasso Suite 0.6.2 is available").as_deref(),
+            Some("Picasso Suite 0.6.2 está disponible")
+        );
+        assert_eq!(translate_template(Language::Spanish, "Something else 1"), None);
+        assert_eq!(translate_template(Language::English, "Picasso Suite 0.6.2 is available"), None);
+        assert_eq!(fill_of("a {} b {} c", "a 1 b 2 c"), Some(vec!["1", "2"]));
+        assert_eq!(fill_of("a {} b", "x 1 b"), None);
     }
 
     #[test]

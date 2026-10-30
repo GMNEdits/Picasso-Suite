@@ -1,0 +1,25 @@
+Check for Updates|আপডেট দেখুন
+Checking GitHub for a newer version...|GitHub-এ নতুন সংস্করণ খোঁজা হচ্ছে...
+Picasso Suite {} is up to date.|Picasso Suite {} হালনাগাদ আছে.
+The latest release is {}.|সর্বশেষ সংস্করণ {}.
+Picasso Suite {} is available|Picasso Suite {} পাওয়া যাচ্ছে
+You have {}.|আপনার কাছে {} আছে.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|এই কপি রিলিজ প্যাকেজ থেকে ইনস্টল হয়নি, তাই নিজে আপডেট হতে পারে না. রিলিজ পেজ থেকে নতুন সংস্করণ নামান.
+This release has no package for this kind of install.|এই রিলিজে এই ধরনের ইনস্টলের প্যাকেজ নেই.
+Update now|এখনই আপডেট
+Release page|রিলিজ পেজ
+Downloading {}...|{} নামানো হচ্ছে...
+Installing...|ইনস্টল হচ্ছে...
+The new version is installed. Restart Picasso Suite to use it.|নতুন সংস্করণ ইনস্টল হয়েছে. ব্যবহার করতে Picasso Suite পুনরায় চালু করুন.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} ইনস্টল হয়েছে. ব্যবহার করতে Picasso Suite পুনরায় চালু করুন.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} ইনস্টল হয়েছে. Picasso Suite বন্ধ করে আবার খুলুন.
+Save your project first: restarting closes it.|আগে প্রজেক্ট সংরক্ষণ করুন: পুনরায় চালু করলে এটি বন্ধ হবে.
+Restart now|এখনই পুনরায় চালু
+The update did not work.|আপডেট কাজ করেনি.
+Try again|আবার চেষ্টা
+Change Project Frame Rate?|প্রজেক্টের ফ্রেম রেট বদলাবেন?
+The selected clips have a different frame rate|নির্বাচিত ক্লিপের ফ্রেম রেট প্রজেক্টের
+to the project. Would you like to change the project|থেকে আলাদা. আপনি কি প্রজেক্টের ফ্রেম রেট
+frame rate to {} frames per second?|বদলে প্রতি সেকেন্ডে {} ফ্রেম করতে চান?
+Don't Change|বদলাবেন না
+Change|বদলান

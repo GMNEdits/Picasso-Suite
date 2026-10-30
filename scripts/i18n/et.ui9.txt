@@ -1,0 +1,25 @@
+Check for Updates|Otsi uuendusi
+Checking GitHub for a newer version...|Uue versiooni otsimine GitHubist...
+Picasso Suite {} is up to date.|Picasso Suite {} on ajakohane.
+The latest release is {}.|Uusim versioon on {}.
+Picasso Suite {} is available|Picasso Suite {} on saadaval
+You have {}.|Teil on {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Seda koopiat ei paigaldatud väljaandepaketist, seega ei saa see ennast uuendada. Laadige uus versioon alla väljaannete lehelt.
+This release has no package for this kind of install.|Sellel väljaandel pole paketti seda tüüpi paigalduseks.
+Update now|Uuenda kohe
+Release page|Väljaannete leht
+Downloading {}...|Allalaadimine {}...
+Installing...|Paigaldamine...
+The new version is installed. Restart Picasso Suite to use it.|Uus versioon on paigaldatud. Taaskäivitage Picasso Suite selle kasutamiseks.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} on paigaldatud. Taaskäivitage Picasso Suite selle kasutamiseks.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} on paigaldatud. Sulgege Picasso Suite ja avage see uuesti.
+Save your project first: restarting closes it.|Salvestage kõigepealt projekt: taaskäivitus sulgeb selle.
+Restart now|Taaskäivita kohe
+The update did not work.|Uuendamine ebaõnnestus.
+Try again|Proovi uuesti
+Change Project Frame Rate?|Kas muuta projekti kaadrisagedust?
+The selected clips have a different frame rate|Valitud klippidel on teine kaadrisagedus
+to the project. Would you like to change the project|kui projektil. Kas soovite muuta projekti
+frame rate to {} frames per second?|kaadrisageduseks {} kaadrit sekundis?
+Don't Change|Ära muuda
+Change|Muuda

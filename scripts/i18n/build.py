@@ -45,7 +45,10 @@ def shape(text):
         return text
     import arabic_reshaper
     from bidi import get_display
-    return chr(10).join(get_display(arabic_reshaper.reshape(line)) for line in text.split(chr(10)))
+    keep = chr(0xE0FF)  # the placeholder of a sentence must not be mirrored with the brackets
+    text = text.replace('{}', keep)
+    out = chr(10).join(get_display(arabic_reshaper.reshape(line)) for line in text.split(chr(10)))
+    return out.replace(keep, '{}')
 
 
 def width(text):
@@ -86,7 +89,12 @@ ROOMY = {'Color Bars', 'Half', 'Eighth', 'Teal', 'Default', 'Off'}
 TABS = {'Media', 'Photo', 'Cut', 'Edit', 'Fusion', 'Color', 'Fairlight', 'Deliver'}
 
 
+DIALOG = set((HERE / 'keys_dialogs.txt').read_text(encoding='utf-8').split(chr(10)))
+
+
 def fits_page(english, shown):
+    if english in DIALOG:
+        return True  # a dialog's sentence wraps, so it may be as long as it needs
     we, ws = width_en(english), width(shown)
     # Text on a page is made smaller down to 3/4 when it is wider than the English; wider than that
     # (a third more) would run into its neighbour.

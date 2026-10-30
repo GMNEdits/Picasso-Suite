@@ -1,0 +1,25 @@
+Check for Updates|Periksa pembaruan
+Checking GitHub for a newer version...|Mencari versi baru di GitHub...
+Picasso Suite {} is up to date.|Picasso Suite {} sudah terbaru.
+The latest release is {}.|Rilis terbaru adalah {}.
+Picasso Suite {} is available|Picasso Suite {} tersedia
+You have {}.|Anda memakai {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Salinan ini tidak dipasang dari paket rilis, jadi tidak bisa memperbarui diri. Unduh versi baru dari halaman rilis.
+This release has no package for this kind of install.|Rilis ini tidak punya paket untuk jenis pemasangan ini.
+Update now|Perbarui sekarang
+Release page|Halaman rilis
+Downloading {}...|Mengunduh {}...
+Installing...|Memasang...
+The new version is installed. Restart Picasso Suite to use it.|Versi baru sudah terpasang. Mulai ulang Picasso Suite untuk memakainya.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} sudah terpasang. Mulai ulang Picasso Suite untuk memakainya.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} sudah terpasang. Tutup Picasso Suite dan buka lagi.
+Save your project first: restarting closes it.|Simpan proyek dulu: memulai ulang menutupnya.
+Restart now|Mulai ulang
+The update did not work.|Pembaruan gagal.
+Try again|Coba lagi
+Change Project Frame Rate?|Ubah frame rate proyek?
+The selected clips have a different frame rate|Klip yang dipilih punya frame rate
+to the project. Would you like to change the project|berbeda dari proyek. Ingin mengubah
+frame rate to {} frames per second?|frame rate proyek menjadi {} bingkai per detik?
+Don't Change|Jangan ubah
+Change|Ubah

@@ -1,0 +1,25 @@
+Check for Updates|업데이트 확인
+Checking GitHub for a newer version...|GitHub에서 새 버전을 찾는 중...
+Picasso Suite {} is up to date.|Picasso Suite {}은(는) 최신입니다.
+The latest release is {}.|최신 릴리스는 {}입니다.
+Picasso Suite {} is available|Picasso Suite {}을(를) 사용할 수 있습니다
+You have {}.|현재 버전은 {}입니다.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|이 복사본은 릴리스 패키지로 설치되지 않아 스스로 업데이트할 수 없습니다. 릴리스 페이지에서 새 버전을 내려받으세요.
+This release has no package for this kind of install.|이 릴리스에는 이 설치 방식에 맞는 패키지가 없습니다.
+Update now|지금 업데이트
+Release page|릴리스 페이지
+Downloading {}...|{} 내려받는 중...
+Installing...|설치하는 중...
+The new version is installed. Restart Picasso Suite to use it.|새 버전이 설치되었습니다. 사용하려면 Picasso Suite를 다시 시작하세요.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {}이(가) 설치되었습니다. 사용하려면 Picasso Suite를 다시 시작하세요.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {}이(가) 설치되었습니다. Picasso Suite를 닫고 다시 여세요.
+Save your project first: restarting closes it.|먼저 프로젝트를 저장하세요: 다시 시작하면 닫힙니다.
+Restart now|지금 다시 시작
+The update did not work.|업데이트에 실패했습니다.
+Try again|다시 시도
+Change Project Frame Rate?|프로젝트 프레임 레이트를 바꿀까요?
+The selected clips have a different frame rate|선택한 클립의 프레임 레이트가
+to the project. Would you like to change the project|프로젝트와 다릅니다. 프로젝트 프레임
+frame rate to {} frames per second?|레이트를 초당 {} 프레임으로 바꿀까요?
+Don't Change|바꾸지 않음
+Change|바꾸기

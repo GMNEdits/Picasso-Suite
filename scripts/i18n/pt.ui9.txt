@@ -1,0 +1,25 @@
+Check for Updates|Procurar atualizações
+Checking GitHub for a newer version...|A procurar uma versão nova no GitHub...
+Picasso Suite {} is up to date.|O Picasso Suite {} está atualizado.
+The latest release is {}.|A última versão é a {}.
+Picasso Suite {} is available|O Picasso Suite {} está disponível
+You have {}.|Tem a versão {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Esta cópia não foi instalada a partir de um pacote de versão, por isso não se pode atualizar sozinha. Descarregue a nova versão na página de versões.
+This release has no package for this kind of install.|Esta versão não tem pacote para este tipo de instalação.
+Update now|Atualizar agora
+Release page|Página de versões
+Downloading {}...|A descarregar {}...
+Installing...|A instalar...
+The new version is installed. Restart Picasso Suite to use it.|A nova versão está instalada. Reinicie o Picasso Suite para a usar.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|O Picasso Suite {} está instalado. Reinicie o Picasso Suite para o usar.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|O Picasso Suite {} está instalado. Feche o Picasso Suite e abra-o de novo.
+Save your project first: restarting closes it.|Guarde primeiro o projeto: ao reiniciar, fecha.
+Restart now|Reiniciar agora
+The update did not work.|A atualização não funcionou.
+Try again|Tentar de novo
+Change Project Frame Rate?|Alterar a taxa de fotogramas do projeto?
+The selected clips have a different frame rate|Os clips selecionados têm uma taxa de fotogramas
+to the project. Would you like to change the project|diferente da do projeto. Quer alterar a taxa
+frame rate to {} frames per second?|de fotogramas do projeto para {} fotogramas por segundo?
+Don't Change|Não alterar
+Change|Alterar

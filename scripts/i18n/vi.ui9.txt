@@ -1,0 +1,25 @@
+Check for Updates|Kiểm tra cập nhật
+Checking GitHub for a newer version...|Đang tìm phiên bản mới trên GitHub...
+Picasso Suite {} is up to date.|Picasso Suite {} đã mới nhất.
+The latest release is {}.|Bản phát hành mới nhất là {}.
+Picasso Suite {} is available|Picasso Suite {} đã có
+You have {}.|Bạn đang dùng {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Bản sao này không được cài từ gói phát hành nên không thể tự cập nhật. Hãy tải phiên bản mới từ trang phát hành.
+This release has no package for this kind of install.|Bản phát hành này không có gói cho kiểu cài đặt này.
+Update now|Cập nhật ngay
+Release page|Trang phát hành
+Downloading {}...|Đang tải {}...
+Installing...|Đang cài đặt...
+The new version is installed. Restart Picasso Suite to use it.|Phiên bản mới đã được cài. Hãy khởi động lại Picasso Suite để dùng.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} đã được cài. Hãy khởi động lại Picasso Suite để dùng.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} đã được cài. Hãy đóng Picasso Suite và mở lại.
+Save your project first: restarting closes it.|Hãy lưu dự án trước: khởi động lại sẽ đóng nó.
+Restart now|Khởi động lại ngay
+The update did not work.|Cập nhật không thành công.
+Try again|Thử lại
+Change Project Frame Rate?|Đổi tốc độ khung của dự án?
+The selected clips have a different frame rate|Các clip đã chọn có tốc độ khung
+to the project. Would you like to change the project|khác với dự án. Bạn có muốn đổi tốc độ
+frame rate to {} frames per second?|khung của dự án thành {} khung/giây không?
+Don't Change|Không đổi
+Change|Đổi

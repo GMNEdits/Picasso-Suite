@@ -1,0 +1,25 @@
+Check for Updates|Provjeri ažuriranja
+Checking GitHub for a newer version...|Tražim novu verziju na GitHubu...
+Picasso Suite {} is up to date.|Picasso Suite {} je ažuran.
+The latest release is {}.|Najnovija verzija je {}.
+Picasso Suite {} is available|Picasso Suite {} je dostupan
+You have {}.|Imate {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Ova kopija nije instalirana iz paketa izdanja pa se ne može sama ažurirati. Preuzmite novu verziju sa stranice izdanja.
+This release has no package for this kind of install.|Ovo izdanje nema paket za ovu vrstu instalacije.
+Update now|Ažuriraj sada
+Release page|Stranica izdanja
+Downloading {}...|Preuzimam {}...
+Installing...|Instaliram...
+The new version is installed. Restart Picasso Suite to use it.|Nova verzija je instalirana. Ponovo pokrenite Picasso Suite da je koristite.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} je instaliran. Ponovo pokrenite Picasso Suite da ga koristite.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} je instaliran. Zatvorite Picasso Suite i otvorite ga ponovo.
+Save your project first: restarting closes it.|Prvo sačuvajte projekat: ponovno pokretanje ga zatvara.
+Restart now|Ponovo pokreni
+The update did not work.|Ažuriranje nije uspjelo.
+Try again|Pokušaj ponovo
+Change Project Frame Rate?|Promijeniti broj kadrova projekta?
+The selected clips have a different frame rate|Odabrani klipovi imaju drugačiji broj kadrova
+to the project. Would you like to change the project|od projekta. Želite li promijeniti broj
+frame rate to {} frames per second?|kadrova projekta na {} kadrova u sekundi?
+Don't Change|Ne mijenjaj
+Change|Promijeni

@@ -1,0 +1,25 @@
+1|Sprawdź aktualizacje
+2|Szukanie nowej wersji w GitHub...
+3|Picasso Suite {} jest aktualny.
+4|Najnowsza wersja to {}.
+5|Picasso Suite {} jest dostępny
+6|Masz wersję {}.
+7|Ta kopia nie została zainstalowana z pakietu wydania, więc nie może się sama aktualizować. Pobierz nową wersję ze strony wydań.
+8|To wydanie nie ma pakietu dla tego rodzaju instalacji.
+9|Aktualizuj teraz
+10|Strona wydań
+11|Pobieranie {}...
+12|Instalowanie...
+13|Nowa wersja jest zainstalowana. Uruchom Picasso Suite ponownie, aby jej użyć.
+14|Picasso Suite {} jest zainstalowany. Uruchom Picasso Suite ponownie, aby go użyć.
+15|Picasso Suite {} jest zainstalowany. Zamknij Picasso Suite i otwórz go ponownie.
+16|Najpierw zapisz projekt: ponowne uruchomienie go zamyka.
+17|Uruchom ponownie
+18|Aktualizacja nie powiodła się.
+19|Spróbuj ponownie
+20|Zmienić liczbę klatek projektu?
+21|Wybrane klipy mają inną liczbę klatek
+22|niż projekt. Czy chcesz zmienić liczbę
+23|klatek projektu na {} klatek na sekundę?
+24|Nie zmieniaj
+25|Zmień

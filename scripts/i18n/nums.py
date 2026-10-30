@@ -38,6 +38,25 @@ def convert(code):
     return len(entries), len(uis)
 
 
+def dialogs(code):
+    dlg = HERE / f'{code}.dlg'
+    if not dlg.exists():
+        return
+    nl = chr(10)
+    keys = (HERE / 'keys_dialogs.txt').read_text(encoding='utf-8').split(nl)
+    done = {}
+    for line in dlg.read_text(encoding='utf-8').split(nl):
+        if '|' in line:
+            n, text = line.split('|', 1)
+            assert int(n) not in done and 1 <= int(n) <= len(keys), (code, n)
+            assert text.count('{}') == keys[int(n) - 1].count('{}'), (code, n, 'pieces')
+            done[int(n)] = text
+    out = nl.join(f'{keys[n - 1]}|{t}' for n, t in sorted(done.items())) + nl
+    (HERE / f'{code}.ui9.txt').write_text(out, encoding='utf-8', newline=nl)
+
+
 if __name__ == '__main__':
     for code in sys.argv[1:]:
-        print(code, convert(code))
+        if (HERE / f'{code}.nums').exists():
+            print(code, convert(code))
+        dialogs(code)

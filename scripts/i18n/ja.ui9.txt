@@ -1,0 +1,25 @@
+Check for Updates|アップデートを確認
+Checking GitHub for a newer version...|GitHubで新しいバージョンを確認中...
+Picasso Suite {} is up to date.|Picasso Suite {} は最新です。
+The latest release is {}.|最新のリリースは {} です。
+Picasso Suite {} is available|Picasso Suite {} が利用可能です
+You have {}.|現在のバージョンは {} です。
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|このコピーはリリースパッケージからインストールされていないため、自動更新できません。リリースページから新しいバージョンをダウンロードしてください。
+This release has no package for this kind of install.|このリリースには、この種のインストール用のパッケージがありません。
+Update now|今すぐ更新
+Release page|リリースページ
+Downloading {}...|{} をダウンロード中...
+Installing...|インストール中...
+The new version is installed. Restart Picasso Suite to use it.|新しいバージョンをインストールしました。使うには Picasso Suite を再起動してください。
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} をインストールしました。使うには Picasso Suite を再起動してください。
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} をインストールしました。Picasso Suite を閉じて開き直してください。
+Save your project first: restarting closes it.|先にプロジェクトを保存してください。再起動すると閉じます。
+Restart now|今すぐ再起動
+The update did not work.|アップデートに失敗しました。
+Try again|再試行
+Change Project Frame Rate?|プロジェクトのフレームレートを変更しますか？
+The selected clips have a different frame rate|選択したクリップのフレームレートが
+to the project. Would you like to change the project|プロジェクトと異なります。プロジェクトの
+frame rate to {} frames per second?|フレームレートを毎秒 {} フレームに変更しますか？
+Don't Change|変更しない
+Change|変更

@@ -48,10 +48,15 @@ pub(crate) fn translate_frame_in(ctx: &Context, language: Language) {
                 if job.sections.len() != 1 {
                     continue;
                 }
-                let Some(shown) = translate_ui(language, job.text.trim()) else {
-                    continue;
+                let trimmed = job.text.trim();
+                let shown = match translate_ui(language, trimmed) {
+                    Some(shown) => shown.to_string(),
+                    None => match super::translate_template(language, trimmed) {
+                        Some(shown) => shown,
+                        None => continue,
+                    },
                 };
-                let mut new = LayoutJob::single_section(shown.to_string(), job.sections[0].format.clone());
+                let mut new = LayoutJob::single_section(shown, job.sections[0].format.clone());
                 new.wrap = job.wrap.clone();
                 new.halign = job.halign;
                 new.justify = job.justify;

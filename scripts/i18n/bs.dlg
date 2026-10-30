@@ -1,0 +1,25 @@
+1|Provjeri ažuriranja
+2|Tražim novu verziju na GitHubu...
+3|Picasso Suite {} je ažuran.
+4|Najnovija verzija je {}.
+5|Picasso Suite {} je dostupan
+6|Imate {}.
+7|Ova kopija nije instalirana iz paketa izdanja pa se ne može sama ažurirati. Preuzmite novu verziju sa stranice izdanja.
+8|Ovo izdanje nema paket za ovu vrstu instalacije.
+9|Ažuriraj sada
+10|Stranica izdanja
+11|Preuzimam {}...
+12|Instaliram...
+13|Nova verzija je instalirana. Ponovo pokrenite Picasso Suite da je koristite.
+14|Picasso Suite {} je instaliran. Ponovo pokrenite Picasso Suite da ga koristite.
+15|Picasso Suite {} je instaliran. Zatvorite Picasso Suite i otvorite ga ponovo.
+16|Prvo sačuvajte projekat: ponovno pokretanje ga zatvara.
+17|Ponovo pokreni
+18|Ažuriranje nije uspjelo.
+19|Pokušaj ponovo
+20|Promijeniti broj kadrova projekta?
+21|Odabrani klipovi imaju drugačiji broj kadrova
+22|od projekta. Želite li promijeniti broj
+23|kadrova projekta na {} kadrova u sekundi?
+24|Ne mijenjaj
+25|Promijeni

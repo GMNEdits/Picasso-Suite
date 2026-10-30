@@ -1,0 +1,364 @@
+#da
+Søg efter opdateringer
+Søger efter en ny version på GitHub...
+Picasso Suite {} er opdateret.
+Den nyeste version er {}.
+Picasso Suite {} er tilgængelig
+Du har {}.
+Denne kopi blev ikke installeret fra en udgivelsespakke og kan ikke opdatere sig selv. Hent den nye version fra udgivelsessiden.
+Denne udgivelse har ingen pakke til denne type installation.
+Opdater nu
+Udgivelsesside
+Henter {}...
+Installerer...
+Den nye version er installeret. Genstart Picasso Suite for at bruge den.
+Picasso Suite {} er installeret. Genstart Picasso Suite for at bruge det.
+Picasso Suite {} er installeret. Luk Picasso Suite og åbn det igen.
+Gem projektet først: genstart lukker det.
+Genstart nu
+Opdateringen virkede ikke.
+Prøv igen
+Ændre projektets billedfrekvens?
+De valgte klip har en anden billedfrekvens
+end projektet. Vil du ændre projektets
+billedfrekvens til {} billeder pr. sekund?
+Lad være
+Ændre
+#fi
+Tarkista päivitykset
+Etsitään uutta versiota GitHubista...
+Picasso Suite {} on ajan tasalla.
+Uusin versio on {}.
+Picasso Suite {} on saatavilla
+Sinulla on {}.
+Tätä kopiota ei asennettu julkaisupaketista, joten se ei voi päivittää itseään. Lataa uusi versio julkaisusivulta.
+Tällä julkaisulla ei ole pakettia tälle asennustavalle.
+Päivitä nyt
+Julkaisusivu
+Ladataan {}...
+Asennetaan...
+Uusi versio on asennettu. Käynnistä Picasso Suite uudelleen käyttääksesi sitä.
+Picasso Suite {} on asennettu. Käynnistä Picasso Suite uudelleen käyttääksesi sitä.
+Picasso Suite {} on asennettu. Sulje Picasso Suite ja avaa se uudelleen.
+Tallenna ensin projekti: uudelleenkäynnistys sulkee sen.
+Käynnistä nyt uudelleen
+Päivitys ei onnistunut.
+Yritä uudelleen
+Vaihdetaanko projektin kuvataajuus?
+Valituilla klipeillä on eri kuvataajuus
+kuin projektilla. Haluatko vaihtaa projektin
+kuvataajuudeksi {} kuvaa sekunnissa?
+Älä vaihda
+Vaihda
+#id
+Periksa pembaruan
+Mencari versi baru di GitHub...
+Picasso Suite {} sudah terbaru.
+Rilis terbaru adalah {}.
+Picasso Suite {} tersedia
+Anda memakai {}.
+Salinan ini tidak dipasang dari paket rilis, jadi tidak bisa memperbarui diri. Unduh versi baru dari halaman rilis.
+Rilis ini tidak punya paket untuk jenis pemasangan ini.
+Perbarui sekarang
+Halaman rilis
+Mengunduh {}...
+Memasang...
+Versi baru sudah terpasang. Mulai ulang Picasso Suite untuk memakainya.
+Picasso Suite {} sudah terpasang. Mulai ulang Picasso Suite untuk memakainya.
+Picasso Suite {} sudah terpasang. Tutup Picasso Suite dan buka lagi.
+Simpan proyek dulu: memulai ulang menutupnya.
+Mulai ulang
+Pembaruan gagal.
+Coba lagi
+Ubah frame rate proyek?
+Klip yang dipilih punya frame rate
+berbeda dari proyek. Ingin mengubah
+frame rate proyek menjadi {} bingkai per detik?
+Jangan ubah
+Ubah
+#cs
+Zkontrolovat aktualizace
+Hledám novou verzi na GitHubu...
+Picasso Suite {} je aktuální.
+Nejnovější verze je {}.
+Picasso Suite {} je k dispozici
+Máte {}.
+Tato kopie nebyla nainstalována z balíčku vydání, a proto se neumí sama aktualizovat. Stáhněte novou verzi ze stránky vydání.
+Toto vydání nemá balíček pro tento druh instalace.
+Aktualizovat teď
+Stránka vydání
+Stahuji {}...
+Instaluji...
+Nová verze je nainstalována. Restartujte Picasso Suite, abyste ji mohli používat.
+Picasso Suite {} je nainstalován. Restartujte Picasso Suite, abyste jej mohli používat.
+Picasso Suite {} je nainstalován. Zavřete Picasso Suite a otevřete jej znovu.
+Nejdřív uložte projekt: restart jej zavře.
+Restartovat teď
+Aktualizace se nezdařila.
+Zkusit znovu
+Změnit snímkovou frekvenci projektu?
+Vybrané klipy mají jinou snímkovou frekvenci
+než projekt. Chcete změnit snímkovou
+frekvenci projektu na {} snímků za sekundu?
+Neměnit
+Změnit
+#sk
+Skontrolovať aktualizácie
+Hľadám novú verziu na GitHube...
+Picasso Suite {} je aktuálny.
+Najnovšia verzia je {}.
+Picasso Suite {} je k dispozícii
+Máte {}.
+Táto kópia nebola nainštalovaná z balíka vydania, a preto sa nevie sama aktualizovať. Stiahnite novú verziu zo stránky vydaní.
+Toto vydanie nemá balík pre tento druh inštalácie.
+Aktualizovať teraz
+Stránka vydaní
+Sťahujem {}...
+Inštalujem...
+Nová verzia je nainštalovaná. Reštartujte Picasso Suite, aby ste ju mohli používať.
+Picasso Suite {} je nainštalovaný. Reštartujte Picasso Suite, aby ste ho mohli používať.
+Picasso Suite {} je nainštalovaný. Zatvorte Picasso Suite a otvorte ho znova.
+Najprv uložte projekt: reštart ho zatvorí.
+Reštartovať teraz
+Aktualizácia zlyhala.
+Skúsiť znova
+Zmeniť snímkovú frekvenciu projektu?
+Vybrané klipy majú inú snímkovú frekvenciu
+než projekt. Chcete zmeniť snímkovú
+frekvenciu projektu na {} snímok za sekundu?
+Nemeniť
+Zmeniť
+#ro
+Caută actualizări
+Se caută o versiune nouă pe GitHub...
+Picasso Suite {} este la zi.
+Cea mai recentă versiune este {}.
+Picasso Suite {} este disponibil
+Aveți {}.
+Această copie nu a fost instalată dintr-un pachet de versiune, deci nu se poate actualiza singură. Descărcați noua versiune de pe pagina versiunilor.
+Această versiune nu are pachet pentru acest tip de instalare.
+Actualizează acum
+Pagina versiunilor
+Se descarcă {}...
+Se instalează...
+Noua versiune este instalată. Reporniți Picasso Suite pentru a o folosi.
+Picasso Suite {} este instalat. Reporniți Picasso Suite pentru a-l folosi.
+Picasso Suite {} este instalat. Închideți Picasso Suite și deschideți-l din nou.
+Salvați mai întâi proiectul: repornirea îl închide.
+Repornește acum
+Actualizarea nu a mers.
+Încearcă din nou
+Schimbați rata de cadre a proiectului?
+Clipurile alese au o altă rată de cadre
+decât proiectul. Vreți să schimbați rata
+de cadre a proiectului la {} cadre pe secundă?
+Nu schimba
+Schimbă
+#hu
+Frissítések keresése
+Új verzió keresése a GitHubon...
+A Picasso Suite {} naprakész.
+A legújabb kiadás: {}.
+A Picasso Suite {} elérhető
+Önnél: {}.
+Ez a példány nem kiadási csomagból lett telepítve, ezért nem tudja magát frissíteni. Töltse le az új verziót a kiadások oldaláról.
+Ennek a kiadásnak nincs csomagja ehhez a telepítéstípushoz.
+Frissítés most
+Kiadások oldala
+{} letöltése...
+Telepítés...
+Az új verzió telepítve van. Indítsa újra a Picasso Suite-ot a használatához.
+A Picasso Suite {} telepítve van. Indítsa újra a Picasso Suite-ot a használatához.
+A Picasso Suite {} telepítve van. Zárja be a Picasso Suite-ot, és nyissa meg újra.
+Előbb mentse a projektet: az újraindítás bezárja.
+Újraindítás most
+A frissítés nem sikerült.
+Újra
+Megváltoztatja a projekt képkockasebességét?
+A kijelölt klipek képkockasebessége eltér
+a projektétől. Szeretné a projekt
+képkockasebességét {} kép/másodpercre állítani?
+Nem
+Igen
+#hr
+Provjeri ažuriranja
+Tražim novu verziju na GitHubu...
+Picasso Suite {} je ažuran.
+Najnovija verzija je {}.
+Picasso Suite {} je dostupan
+Imate {}.
+Ova kopija nije instalirana iz paketa izdanja pa se ne može sama ažurirati. Preuzmite novu verziju sa stranice izdanja.
+Ovo izdanje nema paket za ovu vrstu instalacije.
+Ažuriraj sada
+Stranica izdanja
+Preuzimam {}...
+Instaliram...
+Nova verzija je instalirana. Ponovno pokrenite Picasso Suite da je koristite.
+Picasso Suite {} je instaliran. Ponovno pokrenite Picasso Suite da ga koristite.
+Picasso Suite {} je instaliran. Zatvorite Picasso Suite i otvorite ga ponovno.
+Prvo spremite projekt: ponovno pokretanje ga zatvara.
+Ponovno pokreni
+Ažuriranje nije uspjelo.
+Pokušaj ponovno
+Promijeniti broj kadrova projekta?
+Odabrani klipovi imaju drukčiji broj kadrova
+od projekta. Želite li promijeniti broj
+kadrova projekta na {} kadrova u sekundi?
+Ne mijenjaj
+Promijeni
+#bs
+Provjeri ažuriranja
+Tražim novu verziju na GitHubu...
+Picasso Suite {} je ažuran.
+Najnovija verzija je {}.
+Picasso Suite {} je dostupan
+Imate {}.
+Ova kopija nije instalirana iz paketa izdanja pa se ne može sama ažurirati. Preuzmite novu verziju sa stranice izdanja.
+Ovo izdanje nema paket za ovu vrstu instalacije.
+Ažuriraj sada
+Stranica izdanja
+Preuzimam {}...
+Instaliram...
+Nova verzija je instalirana. Ponovo pokrenite Picasso Suite da je koristite.
+Picasso Suite {} je instaliran. Ponovo pokrenite Picasso Suite da ga koristite.
+Picasso Suite {} je instaliran. Zatvorite Picasso Suite i otvorite ga ponovo.
+Prvo sačuvajte projekat: ponovno pokretanje ga zatvara.
+Ponovo pokreni
+Ažuriranje nije uspjelo.
+Pokušaj ponovo
+Promijeniti broj kadrova projekta?
+Odabrani klipovi imaju drugačiji broj kadrova
+od projekta. Želite li promijeniti broj
+kadrova projekta na {} kadrova u sekundi?
+Ne mijenjaj
+Promijeni
+#sr
+Проверите ажурирања
+Тражим нову верзију на GitHub-у...
+Picasso Suite {} је ажуран.
+Најновија верзија је {}.
+Picasso Suite {} је доступан
+Имате {}.
+Ова копија није инсталирана из пакета издања па не може сама да се ажурира. Преузмите нову верзију са странице издања.
+Ово издање нема пакет за ову врсту инсталације.
+Ажурирај сада
+Страница издања
+Преузимам {}...
+Инсталирам...
+Нова верзија је инсталирана. Поново покрените Picasso Suite да је користите.
+Picasso Suite {} је инсталиран. Поново покрените Picasso Suite да га користите.
+Picasso Suite {} је инсталиран. Затворите Picasso Suite и отворите га поново.
+Прво сачувајте пројекат: поновно покретање га затвара.
+Поново покрени
+Ажурирање није успело.
+Покушај поново
+Променити број кадрова пројекта?
+Изабрани клипови имају другачији број кадрова
+од пројекта. Желите ли да промените број
+кадрова пројекта на {} кадрова у секунди?
+Не мењај
+Промени
+#ca
+Cerca actualitzacions
+Cercant una versió nova a GitHub...
+Picasso Suite {} està al dia.
+L'última versió és la {}.
+Picasso Suite {} està disponible
+Tens la {}.
+Aquesta còpia no es va instal·lar des d'un paquet de versió, així que no es pot actualitzar sola. Baixa la nova versió des de la pàgina de versions.
+Aquesta versió no té paquet per a aquest tipus d'instal·lació.
+Actualitza ara
+Pàgina de versions
+Baixant {}...
+Instal·lant...
+La nova versió està instal·lada. Reinicia Picasso Suite per usar-la.
+Picasso Suite {} està instal·lat. Reinicia Picasso Suite per usar-lo.
+Picasso Suite {} està instal·lat. Tanca Picasso Suite i obre'l de nou.
+Desa primer el projecte: en reiniciar es tanca.
+Reinicia ara
+L'actualització no ha funcionat.
+Torna-ho a provar
+Canviar la taxa de fotogrames del projecte?
+Els clips seleccionats tenen una taxa de fotogrames
+diferent de la del projecte. Vols canviar la taxa
+de fotogrames del projecte a {} fotogrames per segon?
+No canviïs
+Canvia
+#et
+Otsi uuendusi
+Uue versiooni otsimine GitHubist...
+Picasso Suite {} on ajakohane.
+Uusim versioon on {}.
+Picasso Suite {} on saadaval
+Teil on {}.
+Seda koopiat ei paigaldatud väljaandepaketist, seega ei saa see ennast uuendada. Laadige uus versioon alla väljaannete lehelt.
+Sellel väljaandel pole paketti seda tüüpi paigalduseks.
+Uuenda kohe
+Väljaannete leht
+Allalaadimine {}...
+Paigaldamine...
+Uus versioon on paigaldatud. Taaskäivitage Picasso Suite selle kasutamiseks.
+Picasso Suite {} on paigaldatud. Taaskäivitage Picasso Suite selle kasutamiseks.
+Picasso Suite {} on paigaldatud. Sulgege Picasso Suite ja avage see uuesti.
+Salvestage kõigepealt projekt: taaskäivitus sulgeb selle.
+Taaskäivita kohe
+Uuendamine ebaõnnestus.
+Proovi uuesti
+Kas muuta projekti kaadrisagedust?
+Valitud klippidel on teine kaadrisagedus
+kui projektil. Kas soovite muuta projekti
+kaadrisageduseks {} kaadrit sekundis?
+Ära muuda
+Muuda
+#lv
+Meklēt atjauninājumus
+Meklē jaunu versiju vietnē GitHub...
+Picasso Suite {} ir atjaunināts.
+Jaunākā versija ir {}.
+Picasso Suite {} ir pieejams
+Jums ir {}.
+Šī kopija nav instalēta no laidiena pakotnes, tāpēc tā nevar atjaunināties pati. Lejupielādējiet jauno versiju laidienu lapā.
+Šim laidienam nav pakotnes šāda veida instalēšanai.
+Atjaunināt tūlīt
+Laidienu lapa
+Lejupielādē {}...
+Instalē...
+Jaunā versija ir instalēta. Restartējiet Picasso Suite, lai to lietotu.
+Picasso Suite {} ir instalēts. Restartējiet Picasso Suite, lai to lietotu.
+Picasso Suite {} ir instalēts. Aizveriet Picasso Suite un atveriet to vēlreiz.
+Vispirms saglabājiet projektu: restartēšana to aizver.
+Restartēt tūlīt
+Atjaunināšana neizdevās.
+Mēģināt vēlreiz
+Mainīt projekta kadru ātrumu?
+Izvēlētajiem klipiem ir cits kadru ātrums
+nekā projektam. Vai vēlaties mainīt projekta
+kadru ātrumu uz {} kadriem sekundē?
+Nemainīt
+Mainīt
+#lt
+Tikrinti naujinimus
+Ieškoma naujos versijos GitHub...
+Picasso Suite {} yra naujausias.
+Naujausia versija yra {}.
+Picasso Suite {} yra pasiekiamas
+Jūs turite {}.
+Ši kopija nebuvo įdiegta iš leidimo paketo, todėl negali pati atsinaujinti. Atsisiųskite naują versiją leidimų puslapyje.
+Šis leidimas neturi paketo tokiam diegimo tipui.
+Atnaujinti dabar
+Leidimų puslapis
+Atsisiunčiama {}...
+Diegiama...
+Nauja versija įdiegta. Iš naujo paleiskite Picasso Suite, kad ją naudotumėte.
+Picasso Suite {} įdiegtas. Iš naujo paleiskite Picasso Suite, kad jį naudotumėte.
+Picasso Suite {} įdiegtas. Uždarykite Picasso Suite ir atidarykite jį iš naujo.
+Pirmiausia įrašykite projektą: paleidus iš naujo jis užsidaro.
+Paleisti iš naujo
+Atnaujinimas nepavyko.
+Bandyti dar kartą
+Keisti projekto kadrų dažnį?
+Pasirinkti klipai turi kitą kadrų dažnį
+nei projektas. Ar norite pakeisti projekto
+kadrų dažnį į {} kadrų per sekundę?
+Nekeisti
+Keisti

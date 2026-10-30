@@ -1,0 +1,25 @@
+Check for Updates|Tikrinti naujinimus
+Checking GitHub for a newer version...|Ieškoma naujos versijos GitHub...
+Picasso Suite {} is up to date.|Picasso Suite {} yra naujausias.
+The latest release is {}.|Naujausia versija yra {}.
+Picasso Suite {} is available|Picasso Suite {} yra pasiekiamas
+You have {}.|Jūs turite {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Ši kopija nebuvo įdiegta iš leidimo paketo, todėl negali pati atsinaujinti. Atsisiųskite naują versiją leidimų puslapyje.
+This release has no package for this kind of install.|Šis leidimas neturi paketo tokiam diegimo tipui.
+Update now|Atnaujinti dabar
+Release page|Leidimų puslapis
+Downloading {}...|Atsisiunčiama {}...
+Installing...|Diegiama...
+The new version is installed. Restart Picasso Suite to use it.|Nauja versija įdiegta. Iš naujo paleiskite Picasso Suite, kad ją naudotumėte.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} įdiegtas. Iš naujo paleiskite Picasso Suite, kad jį naudotumėte.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} įdiegtas. Uždarykite Picasso Suite ir atidarykite jį iš naujo.
+Save your project first: restarting closes it.|Pirmiausia įrašykite projektą: paleidus iš naujo jis užsidaro.
+Restart now|Paleisti iš naujo
+The update did not work.|Atnaujinimas nepavyko.
+Try again|Bandyti dar kartą
+Change Project Frame Rate?|Keisti projekto kadrų dažnį?
+The selected clips have a different frame rate|Pasirinkti klipai turi kitą kadrų dažnį
+to the project. Would you like to change the project|nei projektas. Ar norite pakeisti projekto
+frame rate to {} frames per second?|kadrų dažnį į {} kadrų per sekundę?
+Don't Change|Nekeisti
+Change|Keisti

@@ -1,0 +1,25 @@
+1|Cerca actualitzacions
+2|Cercant una versió nova a GitHub...
+3|Picasso Suite {} està al dia.
+4|L'última versió és la {}.
+5|Picasso Suite {} està disponible
+6|Tens la {}.
+7|Aquesta còpia no es va instal·lar des d'un paquet de versió, així que no es pot actualitzar sola. Baixa la nova versió des de la pàgina de versions.
+8|Aquesta versió no té paquet per a aquest tipus d'instal·lació.
+9|Actualitza ara
+10|Pàgina de versions
+11|Baixant {}...
+12|Instal·lant...
+13|La nova versió està instal·lada. Reinicia Picasso Suite per usar-la.
+14|Picasso Suite {} està instal·lat. Reinicia Picasso Suite per usar-lo.
+15|Picasso Suite {} està instal·lat. Tanca Picasso Suite i obre'l de nou.
+16|Desa primer el projecte: en reiniciar es tanca.
+17|Reinicia ara
+18|L'actualització no ha funcionat.
+19|Torna-ho a provar
+20|Canviar la taxa de fotogrames del projecte?
+21|Els clips seleccionats tenen una taxa de fotogrames
+22|diferent de la del projecte. Vols canviar la taxa
+23|de fotogrames del projecte a {} fotogrames per segon?
+24|No canviïs
+25|Canvia

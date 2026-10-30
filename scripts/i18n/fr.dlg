@@ -1,0 +1,25 @@
+1|Rechercher des mises à jour
+2|Recherche d'une nouvelle version sur GitHub...
+3|Picasso Suite {} est à jour.
+4|La dernière version est {}.
+5|Picasso Suite {} est disponible
+6|Vous avez {}.
+7|Cette copie n'a pas été installée depuis un paquet de version et ne peut pas se mettre à jour seule. Téléchargez la nouvelle version depuis la page des versions.
+8|Cette version n'a pas de paquet pour ce type d'installation.
+9|Mettre à jour
+10|Page des versions
+11|Téléchargement de {}...
+12|Installation...
+13|La nouvelle version est installée. Redémarrez Picasso Suite pour l'utiliser.
+14|Picasso Suite {} est installé. Redémarrez Picasso Suite pour l'utiliser.
+15|Picasso Suite {} est installé. Fermez Picasso Suite et rouvrez-le.
+16|Enregistrez d'abord votre projet : le redémarrage le ferme.
+17|Redémarrer
+18|La mise à jour n'a pas fonctionné.
+19|Réessayer
+20|Changer la cadence du projet ?
+21|Les clips choisis ont une cadence d'images
+22|différente de celle du projet. Voulez-vous changer la
+23|cadence du projet pour {} images par seconde ?
+24|Ne pas changer
+25|Changer

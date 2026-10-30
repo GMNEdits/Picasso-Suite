@@ -41,3 +41,28 @@ Export Subtitle
 As a separate file
 Export As
 frames
+Check for Updates
+Checking GitHub for a newer version...
+Picasso Suite {} is up to date.
+The latest release is {}.
+Picasso Suite {} is available
+You have {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.
+This release has no package for this kind of install.
+Update now
+Release page
+Downloading {}...
+Installing...
+The new version is installed. Restart Picasso Suite to use it.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.
+Save your project first: restarting closes it.
+Restart now
+The update did not work.
+Try again
+Change Project Frame Rate?
+The selected clips have a different frame rate
+to the project. Would you like to change the project
+frame rate to {} frames per second?
+Don't Change
+Change

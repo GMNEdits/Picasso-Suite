@@ -1,0 +1,25 @@
+1|Procurar atualizações
+2|A procurar uma versão nova no GitHub...
+3|O Picasso Suite {} está atualizado.
+4|A última versão é a {}.
+5|O Picasso Suite {} está disponível
+6|Tem a versão {}.
+7|Esta cópia não foi instalada a partir de um pacote de versão, por isso não se pode atualizar sozinha. Descarregue a nova versão na página de versões.
+8|Esta versão não tem pacote para este tipo de instalação.
+9|Atualizar agora
+10|Página de versões
+11|A descarregar {}...
+12|A instalar...
+13|A nova versão está instalada. Reinicie o Picasso Suite para a usar.
+14|O Picasso Suite {} está instalado. Reinicie o Picasso Suite para o usar.
+15|O Picasso Suite {} está instalado. Feche o Picasso Suite e abra-o de novo.
+16|Guarde primeiro o projeto: ao reiniciar, fecha.
+17|Reiniciar agora
+18|A atualização não funcionou.
+19|Tentar de novo
+20|Alterar a taxa de fotogramas do projeto?
+21|Os clips selecionados têm uma taxa de fotogramas
+22|diferente da do projeto. Quer alterar a taxa
+23|de fotogramas do projeto para {} fotogramas por segundo?
+24|Não alterar
+25|Alterar

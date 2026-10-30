@@ -1,0 +1,25 @@
+Check for Updates|التحقق من التحديثات
+Checking GitHub for a newer version...|جارٍ البحث عن إصدار جديد على GitHub...
+Picasso Suite {} is up to date.|Picasso Suite {} محدّث.
+The latest release is {}.|أحدث إصدار هو {}.
+Picasso Suite {} is available|Picasso Suite {} متاح
+You have {}.|لديك {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|لم تُثبَّت هذه النسخة من حزمة إصدار، لذا لا تستطيع تحديث نفسها. نزّل الإصدار الجديد من صفحة الإصدارات.
+This release has no package for this kind of install.|ليس لهذا الإصدار حزمة لهذا النوع من التثبيت.
+Update now|حدّث الآن
+Release page|صفحة الإصدارات
+Downloading {}...|جارٍ تنزيل {}...
+Installing...|جارٍ التثبيت...
+The new version is installed. Restart Picasso Suite to use it.|ثُبّت الإصدار الجديد. أعد تشغيل Picasso Suite لاستخدامه.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|ثُبّت Picasso Suite {}. أعد تشغيل Picasso Suite لاستخدامه.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|ثُبّت Picasso Suite {}. أغلق Picasso Suite وافتحه مجددًا.
+Save your project first: restarting closes it.|احفظ المشروع أولًا: إعادة التشغيل تغلقه.
+Restart now|أعد التشغيل الآن
+The update did not work.|لم ينجح التحديث.
+Try again|أعد المحاولة
+Change Project Frame Rate?|تغيير معدل إطارات المشروع؟
+The selected clips have a different frame rate|المقاطع المحددة لها معدل إطارات
+to the project. Would you like to change the project|يختلف عن المشروع. هل تريد تغيير
+frame rate to {} frames per second?|معدل إطارات المشروع إلى {} إطارًا في الثانية؟
+Don't Change|لا تغيّر
+Change|غيّر

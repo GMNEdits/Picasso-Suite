@@ -1,0 +1,25 @@
+Check for Updates|Tingnan ang mga update
+Checking GitHub for a newer version...|Naghahanap ng bagong bersyon sa GitHub...
+Picasso Suite {} is up to date.|Updated na ang Picasso Suite {}.
+The latest release is {}.|Ang pinakabagong bersyon ay {}.
+Picasso Suite {} is available|Available na ang Picasso Suite {}
+You have {}.|Mayroon kang {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Ang kopyang ito ay hindi na-install mula sa release package, kaya hindi ito makakapag-update nang mag-isa. I-download ang bagong bersyon mula sa release page.
+This release has no package for this kind of install.|Walang package ang release na ito para sa ganitong uri ng install.
+Update now|I-update ngayon
+Release page|Release page
+Downloading {}...|Dina-download ang {}...
+Installing...|Ini-install...
+The new version is installed. Restart Picasso Suite to use it.|Naka-install na ang bagong bersyon. I-restart ang Picasso Suite para magamit ito.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Naka-install na ang Picasso Suite {}. I-restart ang Picasso Suite para magamit ito.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Naka-install na ang Picasso Suite {}. Isara ang Picasso Suite at buksan ulit.
+Save your project first: restarting closes it.|I-save muna ang proyekto: isinasara ito ng pag-restart.
+Restart now|I-restart ngayon
+The update did not work.|Hindi gumana ang update.
+Try again|Subukan ulit
+Change Project Frame Rate?|Baguhin ang frame rate ng proyekto?
+The selected clips have a different frame rate|Iba ang frame rate ng mga napiling clip
+to the project. Would you like to change the project|kaysa sa proyekto. Gusto mo bang baguhin
+frame rate to {} frames per second?|ang frame rate ng proyekto sa {} frame bawat segundo?
+Don't Change|Huwag baguhin
+Change|Baguhin

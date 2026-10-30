@@ -1,0 +1,25 @@
+Check for Updates|Sök efter uppdateringar
+Checking GitHub for a newer version...|Söker efter en ny version på GitHub...
+Picasso Suite {} is up to date.|Picasso Suite {} är uppdaterad.
+The latest release is {}.|Den senaste versionen är {}.
+Picasso Suite {} is available|Picasso Suite {} finns tillgänglig
+You have {}.|Du har {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Den här kopian installerades inte från ett versionspaket och kan inte uppdatera sig själv. Hämta den nya versionen från versionssidan.
+This release has no package for this kind of install.|Den här versionen har inget paket för den här typen av installation.
+Update now|Uppdatera nu
+Release page|Versionssida
+Downloading {}...|Hämtar {}...
+Installing...|Installerar...
+The new version is installed. Restart Picasso Suite to use it.|Den nya versionen är installerad. Starta om Picasso Suite för att använda den.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} är installerat. Starta om Picasso Suite för att använda det.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} är installerat. Stäng Picasso Suite och öppna det igen.
+Save your project first: restarting closes it.|Spara projektet först: omstart stänger det.
+Restart now|Starta om nu
+The update did not work.|Uppdateringen fungerade inte.
+Try again|Försök igen
+Change Project Frame Rate?|Ändra projektets bildfrekvens?
+The selected clips have a different frame rate|De valda klippen har en annan bildfrekvens
+to the project. Would you like to change the project|än projektet. Vill du ändra projektets
+frame rate to {} frames per second?|bildfrekvens till {} bilder per sekund?
+Don't Change|Ändra inte
+Change|Ändra

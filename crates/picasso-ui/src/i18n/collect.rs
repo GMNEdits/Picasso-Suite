@@ -514,3 +514,30 @@ fn every_menu_of_the_title_row_opens_on_every_page() {
     }
     crate::i18n::set(Language::English);
 }
+
+#[test]
+fn a_label_with_a_version_in_it_is_painted_in_the_language_chosen() {
+    use crate::i18n::{CHANGING, Language};
+    let _only = CHANGING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    let ctx = Context::default();
+    crate::i18n::set(Language::Spanish);
+    let mut found = BTreeSet::new();
+    for _ in 0..2 {
+        let input = RawInput {
+            screen_rect: Some(Rect::from_min_size(Pos2::ZERO, egui::vec2(800.0, 600.0))),
+            ..RawInput::default()
+        };
+        let mut output = ctx.run_ui(input, |ui| {
+            ui.label("Picasso Suite 0.7.0 is available");
+            ui.label("Update now");
+            crate::i18n::translate_frame(ui.ctx());
+        });
+        output.textures_delta.clear();
+        for clipped in &output.shapes {
+            texts(&clipped.shape, &mut found);
+        }
+    }
+    crate::i18n::set(Language::English);
+    assert!(found.contains("Picasso Suite 0.7.0 está disponible"), "{found:?}");
+    assert!(found.contains("Actualizar ahora"), "{found:?}");
+}

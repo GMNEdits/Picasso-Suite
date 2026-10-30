@@ -1,0 +1,25 @@
+Check for Updates|Cerca actualitzacions
+Checking GitHub for a newer version...|Cercant una versió nova a GitHub...
+Picasso Suite {} is up to date.|Picasso Suite {} està al dia.
+The latest release is {}.|L'última versió és la {}.
+Picasso Suite {} is available|Picasso Suite {} està disponible
+You have {}.|Tens la {}.
+This copy was not installed from a release package, so it cannot update itself. Download the new version from the release page.|Aquesta còpia no es va instal·lar des d'un paquet de versió, així que no es pot actualitzar sola. Baixa la nova versió des de la pàgina de versions.
+This release has no package for this kind of install.|Aquesta versió no té paquet per a aquest tipus d'instal·lació.
+Update now|Actualitza ara
+Release page|Pàgina de versions
+Downloading {}...|Baixant {}...
+Installing...|Instal·lant...
+The new version is installed. Restart Picasso Suite to use it.|La nova versió està instal·lada. Reinicia Picasso Suite per usar-la.
+Picasso Suite {} is installed. Restart Picasso Suite to use it.|Picasso Suite {} està instal·lat. Reinicia Picasso Suite per usar-lo.
+Picasso Suite {} is installed. Close Picasso Suite and open it again.|Picasso Suite {} està instal·lat. Tanca Picasso Suite i obre'l de nou.
+Save your project first: restarting closes it.|Desa primer el projecte: en reiniciar es tanca.
+Restart now|Reinicia ara
+The update did not work.|L'actualització no ha funcionat.
+Try again|Torna-ho a provar
+Change Project Frame Rate?|Canviar la taxa de fotogrames del projecte?
+The selected clips have a different frame rate|Els clips seleccionats tenen una taxa de fotogrames
+to the project. Would you like to change the project|diferent de la del projecte. Vols canviar la taxa
+frame rate to {} frames per second?|de fotogrames del projecte a {} fotogrames per segon?
+Don't Change|No canviïs
+Change|Canvia

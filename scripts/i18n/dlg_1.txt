@@ -1,0 +1,338 @@
+#es
+Buscar actualizaciones
+Buscando una versión nueva en GitHub...
+Picasso Suite {} está al día.
+La última versión es {}.
+Picasso Suite {} está disponible
+Tienes {}.
+Esta copia no se instaló desde un paquete de versión, así que no puede actualizarse sola. Descarga la nueva versión desde la página de versiones.
+Esta versión no tiene paquete para este tipo de instalación.
+Actualizar ahora
+Página de versiones
+Descargando {}...
+Instalando...
+La nueva versión está instalada. Reinicia Picasso Suite para usarla.
+Picasso Suite {} está instalado. Reinicia Picasso Suite para usarlo.
+Picasso Suite {} está instalado. Cierra Picasso Suite y ábrelo de nuevo.
+Guarda primero tu proyecto: al reiniciar se cierra.
+Reiniciar ahora
+La actualización no funcionó.
+Reintentar
+¿Cambiar la velocidad de fotogramas del proyecto?
+Los clips seleccionados tienen una velocidad de fotogramas
+distinta a la del proyecto. ¿Quieres cambiar la velocidad
+de fotogramas del proyecto a {} fotogramas por segundo?
+No cambiar
+Cambiar
+#pt
+Procurar atualizações
+A procurar uma versão nova no GitHub...
+O Picasso Suite {} está atualizado.
+A última versão é a {}.
+O Picasso Suite {} está disponível
+Tem a versão {}.
+Esta cópia não foi instalada a partir de um pacote de versão, por isso não se pode atualizar sozinha. Descarregue a nova versão na página de versões.
+Esta versão não tem pacote para este tipo de instalação.
+Atualizar agora
+Página de versões
+A descarregar {}...
+A instalar...
+A nova versão está instalada. Reinicie o Picasso Suite para a usar.
+O Picasso Suite {} está instalado. Reinicie o Picasso Suite para o usar.
+O Picasso Suite {} está instalado. Feche o Picasso Suite e abra-o de novo.
+Guarde primeiro o projeto: ao reiniciar, fecha.
+Reiniciar agora
+A atualização não funcionou.
+Tentar de novo
+Alterar a taxa de fotogramas do projeto?
+Os clips selecionados têm uma taxa de fotogramas
+diferente da do projeto. Quer alterar a taxa
+de fotogramas do projeto para {} fotogramas por segundo?
+Não alterar
+Alterar
+#fr
+Rechercher des mises à jour
+Recherche d'une nouvelle version sur GitHub...
+Picasso Suite {} est à jour.
+La dernière version est {}.
+Picasso Suite {} est disponible
+Vous avez {}.
+Cette copie n'a pas été installée depuis un paquet de version et ne peut pas se mettre à jour seule. Téléchargez la nouvelle version depuis la page des versions.
+Cette version n'a pas de paquet pour ce type d'installation.
+Mettre à jour
+Page des versions
+Téléchargement de {}...
+Installation...
+La nouvelle version est installée. Redémarrez Picasso Suite pour l'utiliser.
+Picasso Suite {} est installé. Redémarrez Picasso Suite pour l'utiliser.
+Picasso Suite {} est installé. Fermez Picasso Suite et rouvrez-le.
+Enregistrez d'abord votre projet : le redémarrage le ferme.
+Redémarrer
+La mise à jour n'a pas fonctionné.
+Réessayer
+Changer la cadence du projet ?
+Les clips choisis ont une cadence d'images
+différente de celle du projet. Voulez-vous changer la
+cadence du projet pour {} images par seconde ?
+Ne pas changer
+Changer
+#de
+Nach Updates suchen
+Suche auf GitHub nach einer neuen Version...
+Picasso Suite {} ist aktuell.
+Die neueste Version ist {}.
+Picasso Suite {} ist verfügbar
+Sie haben {}.
+Diese Kopie wurde nicht aus einem Release-Paket installiert und kann sich nicht selbst aktualisieren. Laden Sie die neue Version von der Release-Seite herunter.
+Dieses Release hat kein Paket für diese Art der Installation.
+Jetzt aktualisieren
+Release-Seite
+Lade {} herunter...
+Installiere...
+Die neue Version ist installiert. Starten Sie Picasso Suite neu, um sie zu nutzen.
+Picasso Suite {} ist installiert. Starten Sie Picasso Suite neu, um es zu nutzen.
+Picasso Suite {} ist installiert. Schließen Sie Picasso Suite und öffnen Sie es erneut.
+Speichern Sie zuerst Ihr Projekt: Beim Neustart wird es geschlossen.
+Jetzt neu starten
+Das Update hat nicht funktioniert.
+Erneut versuchen
+Bildrate des Projekts ändern?
+Die gewählten Clips haben eine andere Bildrate
+als das Projekt. Möchten Sie die Bildrate
+des Projekts auf {} Bilder pro Sekunde ändern?
+Nicht ändern
+Ändern
+#it
+Cerca aggiornamenti
+Cerco una nuova versione su GitHub...
+Picasso Suite {} è aggiornato.
+L'ultima versione è {}.
+Picasso Suite {} è disponibile
+Hai la {}.
+Questa copia non è stata installata da un pacchetto di rilascio, quindi non può aggiornarsi da sola. Scarica la nuova versione dalla pagina dei rilasci.
+Questo rilascio non ha un pacchetto per questo tipo di installazione.
+Aggiorna ora
+Pagina dei rilasci
+Scarico {}...
+Installazione...
+La nuova versione è installata. Riavvia Picasso Suite per usarla.
+Picasso Suite {} è installato. Riavvia Picasso Suite per usarlo.
+Picasso Suite {} è installato. Chiudi Picasso Suite e riaprilo.
+Salva prima il progetto: il riavvio lo chiude.
+Riavvia ora
+L'aggiornamento non ha funzionato.
+Riprova
+Cambiare la frequenza fotogrammi del progetto?
+I clip selezionati hanno una frequenza fotogrammi
+diversa da quella del progetto. Vuoi cambiare la
+frequenza del progetto a {} fotogrammi al secondo?
+Non cambiare
+Cambia
+#nl
+Zoeken naar updates
+Bezig met zoeken naar een nieuwe versie op GitHub...
+Picasso Suite {} is up-to-date.
+De nieuwste versie is {}.
+Picasso Suite {} is beschikbaar
+U heeft {}.
+Deze kopie is niet geïnstalleerd vanuit een release-pakket en kan zichzelf niet bijwerken. Download de nieuwe versie van de releasepagina.
+Deze release heeft geen pakket voor dit type installatie.
+Nu bijwerken
+Releasepagina
+{} downloaden...
+Installeren...
+De nieuwe versie is geïnstalleerd. Start Picasso Suite opnieuw om hem te gebruiken.
+Picasso Suite {} is geïnstalleerd. Start Picasso Suite opnieuw om hem te gebruiken.
+Picasso Suite {} is geïnstalleerd. Sluit Picasso Suite en open het opnieuw.
+Sla eerst uw project op: herstarten sluit het.
+Nu herstarten
+De update is mislukt.
+Opnieuw proberen
+Framerate van het project wijzigen?
+De gekozen clips hebben een andere framerate
+dan het project. Wilt u de framerate
+van het project wijzigen naar {} frames per seconde?
+Niet wijzigen
+Wijzigen
+#pl
+Sprawdź aktualizacje
+Szukanie nowej wersji w GitHub...
+Picasso Suite {} jest aktualny.
+Najnowsza wersja to {}.
+Picasso Suite {} jest dostępny
+Masz wersję {}.
+Ta kopia nie została zainstalowana z pakietu wydania, więc nie może się sama aktualizować. Pobierz nową wersję ze strony wydań.
+To wydanie nie ma pakietu dla tego rodzaju instalacji.
+Aktualizuj teraz
+Strona wydań
+Pobieranie {}...
+Instalowanie...
+Nowa wersja jest zainstalowana. Uruchom Picasso Suite ponownie, aby jej użyć.
+Picasso Suite {} jest zainstalowany. Uruchom Picasso Suite ponownie, aby go użyć.
+Picasso Suite {} jest zainstalowany. Zamknij Picasso Suite i otwórz go ponownie.
+Najpierw zapisz projekt: ponowne uruchomienie go zamyka.
+Uruchom ponownie
+Aktualizacja nie powiodła się.
+Spróbuj ponownie
+Zmienić liczbę klatek projektu?
+Wybrane klipy mają inną liczbę klatek
+niż projekt. Czy chcesz zmienić liczbę
+klatek projektu na {} klatek na sekundę?
+Nie zmieniaj
+Zmień
+#tr
+Güncellemeleri denetle
+GitHub'da yeni sürüm aranıyor...
+Picasso Suite {} güncel.
+En son sürüm {}.
+Picasso Suite {} kullanıma hazır
+Sürümünüz {}.
+Bu kopya bir sürüm paketinden kurulmadığı için kendini güncelleyemez. Yeni sürümü sürümler sayfasından indirin.
+Bu sürümün bu kurulum türü için paketi yok.
+Şimdi güncelle
+Sürümler sayfası
+{} indiriliyor...
+Kuruluyor...
+Yeni sürüm kuruldu. Kullanmak için Picasso Suite'i yeniden başlatın.
+Picasso Suite {} kuruldu. Kullanmak için Picasso Suite'i yeniden başlatın.
+Picasso Suite {} kuruldu. Picasso Suite'i kapatıp yeniden açın.
+Önce projenizi kaydedin: yeniden başlatma onu kapatır.
+Şimdi yeniden başlat
+Güncelleme çalışmadı.
+Tekrar dene
+Proje kare hızı değiştirilsin mi?
+Seçilen klipler projeden farklı bir
+kare hızına sahip. Projenin kare hızını
+saniyede {} kare olarak değiştirmek ister misiniz?
+Değiştirme
+Değiştir
+#sv
+Sök efter uppdateringar
+Söker efter en ny version på GitHub...
+Picasso Suite {} är uppdaterad.
+Den senaste versionen är {}.
+Picasso Suite {} finns tillgänglig
+Du har {}.
+Den här kopian installerades inte från ett versionspaket och kan inte uppdatera sig själv. Hämta den nya versionen från versionssidan.
+Den här versionen har inget paket för den här typen av installation.
+Uppdatera nu
+Versionssida
+Hämtar {}...
+Installerar...
+Den nya versionen är installerad. Starta om Picasso Suite för att använda den.
+Picasso Suite {} är installerat. Starta om Picasso Suite för att använda det.
+Picasso Suite {} är installerat. Stäng Picasso Suite och öppna det igen.
+Spara projektet först: omstart stänger det.
+Starta om nu
+Uppdateringen fungerade inte.
+Försök igen
+Ändra projektets bildfrekvens?
+De valda klippen har en annan bildfrekvens
+än projektet. Vill du ändra projektets
+bildfrekvens till {} bilder per sekund?
+Ändra inte
+Ändra
+#no
+Se etter oppdateringer
+Søker etter en ny versjon på GitHub...
+Picasso Suite {} er oppdatert.
+Den nyeste versjonen er {}.
+Picasso Suite {} er tilgjengelig
+Du har {}.
+Denne kopien ble ikke installert fra en utgivelsespakke og kan ikke oppdatere seg selv. Last ned den nye versjonen fra utgivelsessiden.
+Denne utgivelsen har ingen pakke for denne typen installasjon.
+Oppdater nå
+Utgivelsesside
+Laster ned {}...
+Installerer...
+Den nye versjonen er installert. Start Picasso Suite på nytt for å bruke den.
+Picasso Suite {} er installert. Start Picasso Suite på nytt for å bruke det.
+Picasso Suite {} er installert. Lukk Picasso Suite og åpne det igjen.
+Lagre prosjektet først: omstart lukker det.
+Start på nytt nå
+Oppdateringen virket ikke.
+Prøv igjen
+Endre prosjektets bildefrekvens?
+De valgte klippene har en annen bildefrekvens
+enn prosjektet. Vil du endre prosjektets
+bildefrekvens til {} bilder per sekund?
+Ikke endre
+Endre
+#ru
+Проверить обновления
+Поиск новой версии на GitHub...
+Picasso Suite {} актуален.
+Последняя версия: {}.
+Доступна версия Picasso Suite {}
+У вас {}.
+Эта копия не установлена из пакета выпуска, поэтому не может обновляться сама. Скачайте новую версию со страницы выпусков.
+У этого выпуска нет пакета для такого типа установки.
+Обновить сейчас
+Страница выпусков
+Загрузка {}...
+Установка...
+Новая версия установлена. Перезапустите Picasso Suite, чтобы использовать её.
+Picasso Suite {} установлен. Перезапустите Picasso Suite, чтобы использовать его.
+Picasso Suite {} установлен. Закройте Picasso Suite и откройте снова.
+Сначала сохраните проект: перезапуск его закроет.
+Перезапустить
+Обновление не удалось.
+Повторить
+Изменить частоту кадров проекта?
+У выбранных клипов частота кадров
+отличается от проекта. Хотите изменить
+частоту кадров проекта на {} кадров в секунду?
+Не менять
+Изменить
+#uk
+Перевірити оновлення
+Пошук нової версії на GitHub...
+Picasso Suite {} актуальний.
+Остання версія: {}.
+Доступна версія Picasso Suite {}
+У вас {}.
+Цю копію не встановлено з пакета випуску, тож вона не може оновлюватися сама. Завантажте нову версію зі сторінки випусків.
+У цього випуску немає пакета для такого типу встановлення.
+Оновити зараз
+Сторінка випусків
+Завантаження {}...
+Встановлення...
+Нову версію встановлено. Перезапустіть Picasso Suite, щоб її використати.
+Picasso Suite {} встановлено. Перезапустіть Picasso Suite, щоб його використати.
+Picasso Suite {} встановлено. Закрийте Picasso Suite і відкрийте знову.
+Спершу збережіть проєкт: перезапуск його закриє.
+Перезапустити
+Оновлення не вдалося.
+Спробувати ще
+Змінити частоту кадрів проєкту?
+Вибрані кліпи мають іншу частоту кадрів,
+ніж проєкт. Бажаєте змінити частоту
+кадрів проєкту на {} кадрів за секунду?
+Не змінювати
+Змінити
+#el
+Έλεγχος ενημερώσεων
+Αναζήτηση νέας έκδοσης στο GitHub...
+Το Picasso Suite {} είναι ενημερωμένο.
+Η τελευταία έκδοση είναι η {}.
+Το Picasso Suite {} είναι διαθέσιμο
+Έχετε την {}.
+Αυτό το αντίγραφο δεν εγκαταστάθηκε από πακέτο έκδοσης, οπότε δεν μπορεί να ενημερωθεί μόνο του. Κατεβάστε τη νέα έκδοση από τη σελίδα εκδόσεων.
+Αυτή η έκδοση δεν έχει πακέτο για αυτόν τον τύπο εγκατάστασης.
+Ενημέρωση τώρα
+Σελίδα εκδόσεων
+Λήψη {}...
+Εγκατάσταση...
+Η νέα έκδοση εγκαταστάθηκε. Κάντε επανεκκίνηση του Picasso Suite για να τη χρησιμοποιήσετε.
+Το Picasso Suite {} εγκαταστάθηκε. Κάντε επανεκκίνηση του Picasso Suite για να το χρησιμοποιήσετε.
+Το Picasso Suite {} εγκαταστάθηκε. Κλείστε το Picasso Suite και ανοίξτε το ξανά.
+Αποθηκεύστε πρώτα το έργο: η επανεκκίνηση το κλείνει.
+Επανεκκίνηση τώρα
+Η ενημέρωση δεν λειτούργησε.
+Δοκιμή ξανά
+Αλλαγή ρυθμού καρέ του έργου;
+Τα επιλεγμένα κλιπ έχουν διαφορετικό ρυθμό καρέ
+από το έργο. Θέλετε να αλλάξετε τον ρυθμό
+καρέ του έργου σε {} καρέ ανά δευτερόλεπτο;
+Χωρίς αλλαγή
+Αλλαγή

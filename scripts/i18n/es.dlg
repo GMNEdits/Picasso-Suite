@@ -1,0 +1,25 @@
+1|Buscar actualizaciones
+2|Buscando una versión nueva en GitHub...
+3|Picasso Suite {} está al día.
+4|La última versión es {}.
+5|Picasso Suite {} está disponible
+6|Tienes {}.
+7|Esta copia no se instaló desde un paquete de versión, así que no puede actualizarse sola. Descarga la nueva versión desde la página de versiones.
+8|Esta versión no tiene paquete para este tipo de instalación.
+9|Actualizar ahora
+10|Página de versiones
+11|Descargando {}...
+12|Instalando...
+13|La nueva versión está instalada. Reinicia Picasso Suite para usarla.
+14|Picasso Suite {} está instalado. Reinicia Picasso Suite para usarlo.
+15|Picasso Suite {} está instalado. Cierra Picasso Suite y ábrelo de nuevo.
+16|Guarda primero tu proyecto: al reiniciar se cierra.
+17|Reiniciar ahora
+18|La actualización no funcionó.
+19|Reintentar
+20|¿Cambiar la velocidad de fotogramas del proyecto?
+21|Los clips seleccionados tienen una velocidad de fotogramas
+22|distinta a la del proyecto. ¿Quieres cambiar la velocidad
+23|de fotogramas del proyecto a {} fotogramas por segundo?
+24|No cambiar
+25|Cambiar
