@@ -1,0 +1,304 @@
+#menus
+ملف
+تحرير
+قص
+الجدول
+مقطع
+علامة
+عرض
+تشغيل
+تأثير
+لون
+صوت
+المساحة
+مساعدة
+#entries
+New Project Library...|مكتبة مشاريع جديدة...
+Open Project Library...|فتح مكتبة المشاريع...
+Show Current Project Library in File Explorer|إظهار المكتبة في المستكشف
+Project Manager|مدير المشاريع
+New Project|مشروع جديد
+Open Project...|فتح مشروع...
+Import Project...|استيراد مشروع...
+Export Project...|تصدير مشروع...
+Restore Project Archive...|استعادة أرشيف المشروع...
+Save Project|حفظ المشروع
+Save Project As...|حفظ المشروع باسم...
+Save Copy As...|حفظ نسخة باسم...
+Revert to Last Saved Version|العودة لآخر حفظ
+Import|استيراد
+Media...|وسائط...
+Folder as Bin...|مجلد كحاوية...
+Timeline: AAF, EDL, XML...|الجدول: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|الجدول: EDL مسبق...
+Subtitle...|ترجمة...
+Metadata to Media Pool...|بيانات وصفية للمجموعة...
+Bin...|حاوية...
+Export|تصدير
+Timeline: EDL...|الجدول: EDL...
+Timeline: OpenTimelineIO...|الجدول: OpenTimelineIO...
+Timeline: XML...|الجدول: XML...
+Timeline: AAF...|الجدول: AAF...
+Metadata from Media Pool...|بيانات من المجموعة...
+Media Management...|إدارة الوسائط...
+Project Settings...|إعدادات المشروع...
+System Preferences...|تفضيلات النظام...
+Quick Export...|تصدير سريع...
+Quit|خروج
+Undo|تراجع
+Redo|إعادة
+Cut|قص
+Copy|نسخ
+Paste|لصق
+Paste Insert|لصق وإدراج
+Paste Mix to Current Track|لصق مدمج في المسار
+Duplicate|تكرار
+Fit to Fill|ملاءمة للملء
+Place on Top|وضع في الأعلى
+Delete Selected|حذف المحدد
+Delete Selected with Ripple|حذف المحدد مع تموج
+Select All|تحديد الكل
+Deselect All|إلغاء تحديد الكل
+Select Clips Forward|تحديد المقاطع التالية
+Find...|بحث...
+Recent Projects|المشاريع الأخيرة
+Project Manager...|مدير المشاريع...
+Keyboard Customization|لوحة المفاتيح
+Select Nearest Edit Point|تحديد أقرب نقطة تحرير
+Selection Mode|وضع التحديد
+Trim Mode|وضع القص
+Dynamic Trim Mode|قص ديناميكي
+Ripple Start|تموج البداية
+Ripple End|تموج النهاية
+Ripple Trim Previous / Next|قص متموج سابق/تالٍ
+Ripple Trim Previous Edit to Playhead|قص متموج للسابق حتى المؤشر
+Ripple Trim Next Edit to Playhead|قص متموج للتالي حتى المؤشر
+Trim Start to Playhead|قص البداية حتى المؤشر
+Trim End to Playhead|قص النهاية حتى المؤشر
+Extend Edit|تمديد التحرير
+Slip Clip|إزاحة المحتوى
+Slip One Frame Earlier|إزاحة إطار للخلف
+Slip One Frame Later|إزاحة إطار للأمام
+Slide Clip|انزلاق المقطع
+Slide One Frame Left|انزلاق إطار لليسار
+Slide One Frame Right|انزلاق إطار لليمين
+Loop Trim|قص متكرر
+Asymmetric Trimming|قص غير متماثل
+Trim Editor|محرر القص
+New Timeline...|جدول جديد...
+New Timeline Using Selected Clips|جدول من المقاطع المحددة
+Create New Compound Clip...|إنشاء مقطع مركّب...
+New Effects Clip...|مقطع تأثيرات جديد...
+Decompose in Place|تفكيك في مكانه
+Decompose Compound Clip|تفكيك المقطع المركّب
+Decompose Nested Timeline|تفكيك الجدول المتداخل
+Split Clip|تقسيم المقطع
+Create Timeline Using Bin...|جدول من حاوية...
+Import Timeline...|استيراد جدول...
+Export Timeline...|تصدير جدول...
+Timeline Resolution and Frame Rate...|الدقة ومعدل الإطارات...
+Timeline Settings|إعدادات الجدول
+Snap|التقاط
+Linked Selection|تحديد مرتبط
+Position Lock|قفل الموضع
+Selection Follows Playhead|التحديد يتبع المؤشر
+Add Marker|إضافة علامة
+Add Marker and Show Dialog|إضافة علامة مع نافذة
+Delete All Markers|حذف كل العلامات
+Create Subtitle Track|إنشاء مسار ترجمة
+Create Subtitle Region|إنشاء منطقة ترجمة
+Add Transition to All Edits|انتقال لكل القطع
+Switch Timeline|تبديل الجدول
+Open Timeline in New Window|فتح الجدول في نافذة
+Delete Timeline|حذف الجدول
+Enable Clip|تفعيل المقطع
+Match Frame|مطابقة الإطار
+Lock Clip|قفل المقطع
+New Multicam Clip...|مقطع متعدد الكاميرات...
+Multicam Viewer|عارض الكاميرات
+Add to Media Pool as Stills|إضافة كصور ثابتة
+Change Clip Speed...|تغيير سرعة المقطع...
+Change Clip Duration...|تغيير مدة المقطع...
+Retime Controls|عناصر تغيير الزمن
+Retime Clip|تغيير زمن المقطع
+Freeze Frame|تجميد الإطار
+Speed Ramp...|تدرج السرعة...
+Reverse Clip|عكس المقطع
+Create New Compound Clip|إنشاء مقطع مركّب
+Link Clips|ربط المقاطع
+Unlink Audio and Video|فصل الصوت والفيديو
+Enable / Disable Audio Scrubbing|تمرير الصوت تشغيل/إيقاف
+Auto Align Clips|محاذاة تلقائية
+Based on Timecode|حسب الرمز الزمني
+Based on Waveform|حسب الموجة
+Normalize Audio Levels...|تسوية مستوى الصوت...
+Render in Place|معالجة في مكانها
+New Effects Clip|مقطع تأثيرات جديد
+New Compound Clip|مقطع مركّب جديد
+Clip Attributes...|خصائص المقطع...
+Mark In|تحديد البداية
+Mark Out|تحديد النهاية
+Mark Clip|تحديد المقطع
+Mark Timeline In/Out|بداية/نهاية الجدول
+Clear In|مسح البداية
+Clear Out|مسح النهاية
+Clear In and Out|مسح البداية والنهاية
+Modify Marker...|تعديل علامة...
+Delete Marker at Current Position|حذف العلامة هنا
+Delete All Markers in Timeline|حذف كل علامات الجدول
+Go to Previous Marker|العلامة السابقة
+Go to Next Marker|العلامة التالية
+Set Clip Color|لون المقطع
+Default|افتراضي
+Orange|برتقالي
+Apricot|مشمشي
+Yellow|أصفر
+Lime|ليموني
+Olive|زيتوني
+Green|أخضر
+Teal|أزرق مخضر
+Navy|كحلي
+Blue|أزرق
+Purple|بنفسجي
+Violet|بنفسجي فاتح
+Pink|وردي
+Tan|بني فاتح
+Beige|بيج
+Brown|بني
+Chocolate|شوكولاتة
+Show Current Frame on Playback|إظهار الإطار الحالي عند التشغيل
+Safe Area Overlay|طبقة المنطقة الآمنة
+Show Grid / Guides|إظهار الشبكة/الأدلة
+Show Toolbar|إظهار الأدوات
+Show Full Screen Viewer|إظهار العارض بملء الشاشة
+Show Cinema Viewer|إظهار عارض السينما
+Viewer Overlays|طبقات العارض
+Transform / Crop / Dynamic Zoom|تحويل/اقتصاص/تكبير
+Safe Area|المنطقة الآمنة
+Center Crosshair|تقاطع المركز
+Checkerboard Background (Alpha)|خلفية رقعة (ألفا)
+Show All Overlays|إظهار كل الطبقات
+Timecode Window|نافذة الرمز الزمني
+Show Scopes|إظهار المقاييس
+Show Audio Meters|إظهار مقاييس الصوت
+Show Audio Mixer|إظهار خلاط الصوت
+Show Inspector|إظهار المفتش
+Play Forward|تشغيل للأمام
+Play Reverse|تشغيل للخلف
+Stop|إيقاف
+Play Around Current Frame|تشغيل حول الإطار
+Play In to Out|تشغيل من البداية للنهاية
+Play Around In / Around Out|تشغيل حول البداية/النهاية
+Loop Playback|تكرار التشغيل
+Go to First Frame|أول إطار
+Go to Last Frame|آخر إطار
+Go to In|إلى البداية
+Go to Out|إلى النهاية
+Previous Frame|الإطار السابق
+Next Frame|الإطار التالي
+Previous Edit Point|نقطة التحرير السابقة
+Next Edit Point|نقطة التحرير التالية
+Timeline Playback Resolution|دقة التشغيل
+Half|نصف
+Quarter|ربع
+Effects Memory Cache|ذاكرة التأثيرات
+Timeline Proxy Mode|وضع النسخة البديلة
+Off|إيقاف
+Eighth|ثمن
+Hardware Decoding|فك الترميز بالعتاد
+Delete Render Cache|حذف ذاكرة المعالجة
+Video Transitions|انتقالات الفيديو
+Cross Dissolve|ذوبان متقاطع
+Dip to Color|الغمس في لون
+Audio Transitions|انتقالات الصوت
+Cross Fade|تلاشٍ متقاطع
+Remove Transition|إزالة الانتقال
+OpenFX|OpenFX
+Blur|تمويه
+Gaussian Blur|تمويه غاوسي
+Sharpen|حدّة
+Color|لون
+Invert Colors|عكس الألوان
+Black and White|أبيض وأسود
+Distort|تشويه
+Mosaic|فسيفساء
+Audio FX|تأثيرات الصوت
+EQ|EQ
+Dynamics|ديناميكيات
+Picasso FX|Picasso FX
+Sepia|بني قديم
+Soft Blur|تمويه ناعم
+Light|ضوء
+Glow|توهج
+Stylize|تنميط
+Vignette|تظليل الحواف
+Film Grain|حبيبات الفيلم
+Compositing Effects|تأثيرات التركيب
+Nodes|عقد
+Generators|مولدات
+Solid Color|لون واحد
+Color Bars|أشرطة الألوان
+Gradient|تدرج
+Titles|عناوين
+Text|نص
+Text+|نص+
+Effects Library Search|بحث في التأثيرات
+Add Tool (Compositing)|إضافة أداة (تركيب)
+Reset All Grades and Nodes|إعادة ضبط التصحيح والعقد
+Reset Current Node Grade|إعادة ضبط العقدة
+Enable/Disable Current Node|العقدة تشغيل/إيقاف
+Grab Still|التقاط صورة ثابتة
+Play Still|عرض صورة ثابتة
+Add Serial Node|إضافة عقدة تسلسلية
+Add Serial Before|إضافة تسلسلية قبل
+Add Parallel Node|إضافة عقدة متوازية
+Add Layer Mixer|إضافة خلاط طبقات
+Add Splitter / Combiner|إضافة فاصل/دامج
+Add Outside Node|إضافة عقدة خارجية
+Label Node|تسمية العقدة
+Timeline|الجدول
+Previous Node Graph|مخطط العقد السابق
+Next Node Graph|مخطط العقد التالي
+LUT|LUT
+Apply LUT from list|تطبيق LUT من القائمة
+Gallery|المعرض
+Scopes On/Off|المقاييس تشغيل/إيقاف
+Highlight|إضاءات
+Lightbox|صندوق ضوئي
+ADR|ADR
+Automated Dialogue Replacement|استبدال الحوار الآلي
+Bounce Mix to Track|دمج الميكس في مسار
+Bounce Selected Tracks|دمج المسارات المحددة
+Cache Audio Effects|تخزين مؤثرات الصوت
+Audio Link|ربط الصوت
+Link Group|مجموعة الربط
+Decompose|تفكيك
+Loop Jog|تمرير متكرر
+Show Audio Timeline / Mixer|إظهار جدول/خلاط الصوت
+Full Screen Viewer|عارض بملء الشاشة
+Show Panel in Workspace|إظهار اللوحة في المساحة
+Media Pool|مجموعة الوسائط
+Effects Library|مكتبة التأثيرات
+Inspector|المفتش
+Mixer|الخلاط
+Metadata|بيانات وصفية
+Edit Index|فهرس التحرير
+Sound Library|مكتبة الصوت
+Layout|التخطيط
+Reset UI Layout|إعادة ضبط التخطيط
+Save Layout|حفظ التخطيط
+Load Layout|تحميل التخطيط
+Switch to Page|انتقال إلى صفحة
+Media|وسائط
+Edit|تحرير
+Effects|تأثيرات
+Audio|صوت
+Deliver|تسليم
+Dual Screen On/Off|شاشتان تشغيل/إيقاف
+Video Clean Feed|إخراج فيديو نظيف
+Picasso Suite Manual|دليل Picasso Suite
+Picasso Suite Tutorials|دروس Picasso Suite
+Check for Updates...|التحقق من التحديثات...
+Export Log File...|تصدير ملف السجل...
+About Picasso Suite|حول Picasso Suite
+Language|اللغة

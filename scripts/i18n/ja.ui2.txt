@@ -1,0 +1,37 @@
+Clips|ｸﾘｯﾌﾟ
+Add Job|追加
+Capture|取込
+Clone|ｸﾛｰﾝ
+Clone Tool|ｸﾛｰﾝﾂｰﾙ
+Codec|ｺｰﾃﾞｯｸ
+Contrast|ｺﾝﾄﾗｽﾄ
+Effects In|ｴﾌｪｸﾄ入
+Encoder|ｴﾝｺｰﾀﾞｰ
+Gain|ｹﾞｲﾝ
+L. Mix|L ﾐｯｸｽ
+Layer|ﾚｲﾔｰ
+Local|ﾛｰｶﾙ
+Native|ﾈｲﾃｨﾌﾞ
+Offset|ｵﾌｾｯﾄ
+Pause|ﾎﾟｰｽﾞ
+Preset|ﾌﾟﾘｾｯﾄ
+Projects|ﾌﾟﾛｼﾞｪｸﾄ
+Render All|全レンダー
+Reset|ﾘｾｯﾄ
+Tint|色調
+Track FX|ﾄﾗｯｸFX
+Version 0.6.1|Ver 0.6.1
+Data Rate|ﾃﾞｰﾀﾚｰﾄ
+Export As|形式
+Teal|ﾃｨｰﾙ
+Lightbox|ﾗｲﾄﾎﾞｯｸｽ
+Edit|編集
+Mixer|ﾐｷｻｰ
+Timeline: AAF, EDL, XML...|時間軸: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|時間軸: OpenTimelineIO...
+Filters|ﾌｨﾙﾀｰ
+Help|ﾍﾙﾌﾟ
+Pivot|支点
+Soft Clip|ｿﾌﾄｸﾘｯﾌﾟ
+Tape|ﾃｰﾌﾟ
+Trim|ﾄﾘﾑ

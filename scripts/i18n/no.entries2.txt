@@ -1,0 +1,4 @@
+Trim End to Playhead|Trim slutt til hodet
+Auto Align Clips|Auto-juster klipp
+Show Grid / Guides|Vis rutenett/hjelpelinjer
+Next Edit Point|Neste redigeringspkt

@@ -67,29 +67,47 @@ pub fn regular(size: f32) -> FontId {
     FontId::proportional(size)
 }
 
-/// Installs the fonts, the dark theme and the type scale.
-pub fn install(ctx: &Context) {
+/// The fonts for a language: Noto Sans for the Latin, Greek and Cyrillic scripts, and behind it the
+/// Chinese, Japanese and Arabic ones (the characters those languages need: `assets/fonts`), so a
+/// language name or a file name in any of them is drawn. The Han characters of the Chinese and the
+/// Japanese font differ in shape: the one of the language in use comes first.
+pub fn fonts_for(language: crate::i18n::Language) -> FontDefinitions {
     let mut fonts = FontDefinitions::default();
-    fonts.font_data.insert(
-        "noto-regular".into(),
-        Arc::new(FontData::from_static(include_bytes!(
-            "../assets/fonts/NotoSans-Regular.ttf"
-        ))),
-    );
-    fonts.font_data.insert(
-        "noto-semibold".into(),
-        Arc::new(FontData::from_static(include_bytes!(
-            "../assets/fonts/NotoSans-SemiBold.ttf"
-        ))),
-    );
+    let mut add = |name: &str, bytes: &'static [u8]| {
+        fonts
+            .font_data
+            .insert(name.into(), Arc::new(FontData::from_static(bytes)));
+    };
+    add("noto-regular", include_bytes!("../assets/fonts/NotoSans-Regular.ttf"));
+    add("noto-semibold", include_bytes!("../assets/fonts/NotoSans-SemiBold.ttf"));
+    add("noto-sc", include_bytes!("../assets/fonts/NotoSansSC-Regular.subset.ttf"));
+    add("noto-jp", include_bytes!("../assets/fonts/NotoSansJP-Regular.subset.ttf"));
+    add("noto-arabic", include_bytes!("../assets/fonts/NotoSansArabic-Regular.subset.ttf"));
+    let han: [&str; 2] = if crate::i18n::japanese_fonts(language) {
+        ["noto-jp", "noto-sc"]
+    } else {
+        ["noto-sc", "noto-jp"]
+    };
+    let behind = [han[0], han[1], "noto-arabic"];
     if let Some(family) = fonts.families.get_mut(&FontFamily::Proportional) {
         family.insert(0, "noto-regular".into());
+        for (i, name) in behind.iter().enumerate() {
+            family.insert(1 + i, (*name).into());
+        }
     }
-    fonts.families.insert(
-        FontFamily::Name("semibold".into()),
-        vec!["noto-semibold".into(), "noto-regular".into()],
-    );
-    ctx.set_fonts(fonts);
+    let mut semibold: Vec<String> = vec!["noto-semibold".into(), "noto-regular".into()];
+    semibold.extend(behind.iter().map(|n| (*n).to_string()));
+    fonts
+        .families
+        .insert(FontFamily::Name("semibold".into()), semibold);
+    fonts
+}
+
+/// Installs the fonts, the dark theme and the type scale.
+pub fn install(ctx: &Context) {
+    let language = crate::i18n::current();
+    ctx.set_fonts(fonts_for(language));
+    crate::i18n::fonts_installed(language);
 
     let mut v = Visuals::dark();
     v.panel_fill = PANEL;

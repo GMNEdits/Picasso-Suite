@@ -1,0 +1,4 @@
+Bins|目录
+Codec|编码
+Folder as Bin...|文件夹导入...
+EQ|EQ

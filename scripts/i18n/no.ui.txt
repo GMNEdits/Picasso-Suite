@@ -1,0 +1,222 @@
+Clips|Klipp
+60 frames per second|60 bilder/sek
+Add Job|Legg til jobb
+Add to Render Queue|Legg i rendkøen
+Advanced Settings|Avanserte valg
+Archive Project|Arkiver prosjekt
+Archive Project...|Arkiver prosjekt...
+Auto|Auto
+Automatic|Automatisk
+Balanced|Balansert
+Bins|Beholdere
+Browse|Bla
+Bus Sends|Bussend
+Capture|Opptak
+Chapters from Markers|Kapitler
+Choose a folder|Velg en mappe
+Clip Name|Klippnavn
+Clone|Klone
+Clone Tool|Klonverktøy
+Codec|Kodek
+Col Boost|Farge+
+Collections|Samlinger
+Contrast|Kontrast
+Control Room|Kontrollrom
+Create an Album|Lag et album
+Curves - Custom|Kurver - egen
+Custom Export|Egen eksport
+Decode Options|Dekodevalg
+Demo Project|Demoprosjekt
+Drag photos into the Photo Album to start editing|Dra bilder inn i albumet for å redigere
+Drawn with|Tegnet med
+Editing|Redigerer
+Effects In|Effekter inn
+Embedded Audio|Innebygd lyd
+Encoder|Koder
+Encoding Profile|Kodingsprofil
+Entire Timeline|Hele tidslinjen
+Estimated File Size|Filstørrelse
+Every|Hver
+Export Video|Eksporter video
+Fairlight|Fairlight
+File Name|Filnavn
+Format|Format
+Frame rate|Bildefrekvens
+Frame reordering|Bildeomsortering
+Full Frames|Hele bilder
+Full Screen|Fullskjerm
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Skjermkort
+Groups|Grupper
+Hi/Light|Høylys
+High|Høy
+Hue|Tone
+Image|Bilde
+Index|Indeks
+Individual clips|Enkeltklipp
+Input|Inngang
+Integrated|Integrert
+Key Frames|Nøkkelbilder
+Keywords|Nøkkelord
+L. Mix|L. Miks
+Layer|Lag
+Local|Lokal
+Location|Sted
+Loop playback|Gjenta avspilling
+Loudness|Lydstyrke
+Low|Lav
+Mark|Merk
+Media Management|Mediebehandling
+Media Source|Mediekilde
+Media Storage|Medielager
+Meters|Målere
+Mid/Detail|Midt/Detalj
+Modifiers|Endringer
+Monitor|Monitor
+Monitor volume|Monitorvolum
+Native|Original
+Network Optimization|Nettverksoptimering
+No jobs in Queue|Ingen jobber i køen
+No jobs in queue|Ingen jobber i køen
+No stills created|Ingen stillbilder
+Not reported|Ikke oppgitt
+Nothing to inspect|Ingenting å se
+Offset|Forskyv.
+Open|Åpne
+Order|Rekkefølge
+Parade|Parade
+Pause|Pause
+Photo|Foto
+Photo Album|Album
+Playback|Avspilling
+Position lock|Posisjonslås
+Preset|Forhåndsvalg
+Primaries - Color Wheels|Primær - fargehjul
+Process Mode|Prosessmodus
+Project settings|Prosjektvalg
+Projects|Prosjekter
+Quality|Kvalitet
+Quick Export|Hurtigeksport
+Range|Område
+Rate Control|Ratekontroll
+Relink Missing Media|Koble til medier
+Relink Missing Media...|Koble til medier...
+Remove|Fjern
+Render|Render
+Render All|Render alle
+Render Queue|Rendekø
+Render Settings|Render-valg
+Render Settings - Custom Export|Render-valg - egen eksport
+Reset|Null
+Reset All|Null alle
+Resolution|Oppløsning
+Search|Søk
+Settings|Valg
+Shad|Skygge
+Short|Kort
+Short Max|Kort maks
+Single clip|Ett klipp
+Smart Bins|Smartbeholdere
+Source Color Space|Kildefargerom
+Source Gamma Space|Kildegamma
+Subtitle Settings|Undertekstvalg
+System|System
+Timeline Resolution|Tidslinjeoppl.
+Timeline proxy|Tidslinjeproxy
+Tint|Fargetone
+Tools|Verktøy
+Track FX|Spor-FX
+Transitions|Overganger
+Untitled|Uten navn
+Use vertical resolution|Bruk vertikal oppl.
+Version 0.6.1|Versjon 0.6.1
+Video|Video
+Waveform|Bølgeform
+Workspace|Oppsett
+No clips in media pool|Ingen klipp i mediebanken
+Add clips with Import, or drop files here|Legg til klipp med Importer, eller slipp filer her
+Add clips from Media Storage to get started|Legg til klipp fra medielageret for å starte
+No sound to show|Ingen lyd å vise
+No clip to grade|Ingen klipp å gradere
+No Input|Ingen inngang
+DURATION|VARIGHET
+Export Audio|Eksporter lyd
+Data Rate|Datarate
+Output Track 1|Utgangsspor 1
+Use unique filename|Bruk unikt filnavn
+Adds (1), (2) ... to the name instead of writing over a file.|Legger til (1), (2) ... i navnet i stedet for å skrive over.
+File type|Filtype
+Whole timeline|Hele tidslinjen
+In to out marks|Inn til ut
+Pixel aspect ratio|Pikselforhold
+Square|Kvadrat
+Cinemascope|Cinemascope
+Data Levels|Datanivåer
+Retain sub-black and super-white data|Behold under-svart/over-hvitt
+Color Space Tag|Fargeromsmerke
+Gamma Tag|Gammamerke
+Data burn-in|Innbrent data
+Same as project|Som prosjektet
+Bypass re-encode when possible|Hopp over omkoding
+Use optimized media|Bruk optimerte medier
+Use proxy media|Bruk proxymedier
+Use render cached images|Bruk bufrede bilder
+Force sizing to highest quality|Best kvalitet ved skalering
+Force debayer to highest quality|Best kvalitet ved debayer
+Render All Video Tracks|Alle videospor
+Enable Flat Pass|Aktiver flat pass
+visionOS Bypass|visionOS-omgåelse
+Disable sizing and blanking output|Slå av skalering og blanking
+Trigger script at|Kjør skript ved
+Start|Start
+of render job|av renderjobb
+Export Subtitle|Eksporter undertekst
+As a separate file|Egen fil
+Export As|Eksporter som
+frames|bilder
+Cut|Klipp
+Teal|Blågrønn
+Half|Halv
+Color Bars|Fargestolper
+Lightbox|Lysbord
+Edit|Rediger
+Mixer|Mikser
+Sound Library|Lydbibliotek
+Timeline: AAF, EDL, XML...|Tidslinje: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Tidslinje: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Et videoprogram skrevet i Rust for Windows, Linux, macOS og nettet.
+Audio scrubbing (sound while the playhead is dragged)|Lydskrubbing (lyd når hodet dras)
+Best|Best
+Changing the frame rate keeps every clip on the same frames.|Ny bildefrekvens beholder hvert klipp på samme bilder.
+Click a command's keys, then press the key it should have. Escape gives up.|Klikk på tastene til en kommando, og trykk den nye tasten. Esc avbryter.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Kopierer filene tidslinjene bruker til en mappe, og lagrer en kopi av prosjektet som peker på dem. Prosjektet du redigerer endres ikke.
+Decode supported video using hardware acceleration|Dekod støttet video med maskinvareakselerasjon
+Every media file is where the project says it is.|Alle mediefiler ligger der prosjektet sier.
+Filters|Filtre
+Free software under the GPL, version 3 or later.|Fri programvare under GPL, versjon 3 eller nyere.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 og VC-1 dekodes på skjermkortet når driveren kan. Slå av hvis klipp blir grønne eller ødelagte. PICASSO_NO_HWACCEL=1 slår det av for én kjøring.
+Help|Hjelp
+Linked selection (picture and sound together)|Koblet utvalg (bilde og lyd sammen)
+Loaded the demo project|Demoprosjektet er lastet
+Pivot|Pivot
+Selection follows the playhead|Utvalg følger avspillingshodet
+Snap to clips, markers and the playhead|Fest til klipp, markører og hodet
+Soft Clip|Myk klipp
+Tape|Bånd
+Trim|Trim
+View|Vis
+Full|Full
+Clip|Klipp
+Keyframes|Nøkkelbilder
+LUTs|LUT-er
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Met.
+Scopes|Skop
+Spline|Spline
+Sync Bin|Synk.beh.
+Temp|Temp

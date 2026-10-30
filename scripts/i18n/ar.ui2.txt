@@ -1,0 +1,19 @@
+Add Job|مهمة
+Bins|حاوية
+Clone|نسخ
+Keywords|كلمات
+L. Mix|ميكس L
+Low|قليل
+Parade|متوازٍ
+Pause|إيقاف
+Track FX|مؤثرات
+Data Rate|معدل
+Data Levels|المستويات
+Lightbox|صندوق
+Best|أفضل
+Filters|فلاتر
+Help|دعم
+Sat|تشبع
+Save Project As...|حفظ باسم...
+Media Pool|الوسائط
+Metadata|بيانات

@@ -19,6 +19,7 @@ use super::{translate_ui, Language};
 
 /// Translates the text painted this frame. Called at the end of the frame.
 pub(crate) fn translate_frame(ctx: &Context) {
+    super::sync_fonts(ctx);
     translate_frame_in(ctx, super::current());
 }
 

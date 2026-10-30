@@ -1,0 +1,222 @@
+Clips|مقاطع
+60 frames per second|60 إطارًا/ث
+Add Job|إضافة مهمة
+Add to Render Queue|إضافة لقائمة المعالجة
+Advanced Settings|إعدادات متقدمة
+Archive Project|أرشفة المشروع
+Archive Project...|أرشفة...
+Auto|تلقائي
+Automatic|تلقائي
+Balanced|متوازن
+Bins|حاويات
+Browse|تصفح
+Bus Sends|إرسال الناقل
+Capture|التقاط
+Chapters from Markers|فصول
+Choose a folder|اختر مجلدًا
+Clip Name|اسم المقطع
+Clone|استنساخ
+Clone Tool|أداة الاستنساخ
+Codec|ترميز
+Col Boost|تعزيز اللون
+Collections|مجموعات
+Contrast|تباين
+Control Room|غرفة التحكم
+Create an Album|إنشاء ألبوم
+Curves - Custom|منحنيات - مخصص
+Custom Export|تصدير مخصص
+Decode Options|خيارات الفك
+Demo Project|مشروع تجريبي
+Drag photos into the Photo Album to start editing|اسحب الصور إلى الألبوم لبدء التحرير
+Drawn with|رُسم بواسطة
+Editing|تحرير
+Effects In|تأثيرات داخل
+Embedded Audio|صوت مضمّن
+Encoder|مرمّز
+Encoding Profile|ملف الترميز
+Entire Timeline|كل الجدول
+Estimated File Size|الحجم المقدّر
+Every|كل
+Export Video|تصدير الفيديو
+Fairlight|Fairlight
+File Name|اسم الملف
+Format|الصيغة
+Frame rate|معدل الإطارات
+Frame reordering|إعادة ترتيب الإطارات
+Full Frames|إطارات كاملة
+Full Screen|ملء الشاشة
+Fusion|Fusion
+Gain|كسب
+Gamma|غاما
+Generator|مولّد
+Graphics card|بطاقة الرسوم
+Groups|مجموعات
+Hi/Light|إضاءة
+High|عالٍ
+Hue|تدرج
+Image|صورة
+Index|فهرس
+Individual clips|مقاطع منفردة
+Input|إدخال
+Integrated|متكامل
+Key Frames|إطارات رئيسية
+Keywords|كلمات مفتاحية
+L. Mix|ميكس يسار
+Layer|طبقة
+Local|محلي
+Location|الموقع
+Loop playback|تكرار التشغيل
+Loudness|الجهارة
+Low|منخفض
+Mark|علامة
+Media Management|إدارة الوسائط
+Media Source|مصدر الوسائط
+Media Storage|تخزين الوسائط
+Meters|مقاييس
+Mid/Detail|وسط/تفاصيل
+Modifiers|معدّلات
+Monitor|مراقبة
+Monitor volume|صوت المراقبة
+Native|أصلي
+Network Optimization|تحسين الشبكة
+No jobs in Queue|لا مهام في القائمة
+No jobs in queue|لا مهام في القائمة
+No stills created|لا صور ثابتة
+Not reported|غير مُبلَّغ
+Nothing to inspect|لا شيء للفحص
+Offset|إزاحة
+Open|فتح
+Order|ترتيب
+Parade|عرض متوازٍ
+Pause|إيقاف مؤقت
+Photo|صور
+Photo Album|ألبوم
+Playback|تشغيل
+Position lock|قفل الموضع
+Preset|إعداد
+Primaries - Color Wheels|أولي - عجلات
+Process Mode|وضع المعالجة
+Project settings|إعدادات المشروع
+Projects|مشاريع
+Quality|الجودة
+Quick Export|تصدير سريع
+Range|النطاق
+Rate Control|التحكم بالمعدل
+Relink Missing Media|إعادة ربط الوسائط
+Relink Missing Media...|إعادة ربط الوسائط...
+Remove|إزالة
+Render|معالجة
+Render All|معالجة الكل
+Render Queue|قائمة المعالجة
+Render Settings|إعدادات المعالجة
+Render Settings - Custom Export|إعدادات المعالجة - مخصص
+Reset|إعادة
+Reset All|إعادة الكل
+Resolution|الدقة
+Search|بحث
+Settings|إعدادات
+Shad|ظلال
+Short|قصير
+Short Max|قصير أقصى
+Single clip|مقطع واحد
+Smart Bins|حاويات ذكية
+Source Color Space|فضاء اللون الأصلي
+Source Gamma Space|فضاء غاما الأصلي
+Subtitle Settings|إعدادات الترجمة
+System|النظام
+Timeline Resolution|دقة الجدول
+Timeline proxy|نسخة الجدول
+Tint|صبغة
+Tools|أدوات
+Track FX|مؤثرات المسار
+Transitions|انتقالات
+Untitled|بلا عنوان
+Use vertical resolution|استخدام الدقة الرأسية
+Version 0.6.1|الإصدار 0.6.1
+Video|فيديو
+Waveform|موجة
+Workspace|المساحة
+No clips in media pool|لا مقاطع في المجموعة
+Add clips with Import, or drop files here|أضف المقاطع بالاستيراد أو أفلت الملفات هنا
+Add clips from Media Storage to get started|أضف مقاطع من التخزين للبدء
+No sound to show|لا صوت للعرض
+No clip to grade|لا مقطع للتصحيح
+No Input|لا إدخال
+DURATION|المدة
+Export Audio|تصدير الصوت
+Data Rate|معدل البيانات
+Output Track 1|مسار الإخراج 1
+Use unique filename|اسم ملف فريد
+Adds (1), (2) ... to the name instead of writing over a file.|يضيف (1) و(2)... إلى الاسم بدل الكتابة فوق الملف.
+File type|نوع الملف
+Whole timeline|كل الجدول
+In to out marks|من البداية للنهاية
+Pixel aspect ratio|نسبة البكسل
+Square|مربع
+Cinemascope|سينمائي
+Data Levels|مستويات البيانات
+Retain sub-black and super-white data|إبقاء ما دون الأسود وفوق الأبيض
+Color Space Tag|وسم فضاء اللون
+Gamma Tag|وسم غاما
+Data burn-in|دمج البيانات
+Same as project|مثل المشروع
+Bypass re-encode when possible|تخطي إعادة الترميز
+Use optimized media|وسائط محسّنة
+Use proxy media|استخدام نسخ بديلة
+Use render cached images|صور المعالجة المخزنة
+Force sizing to highest quality|أعلى جودة للتحجيم
+Force debayer to highest quality|أعلى جودة لإزالة بايِر
+Render All Video Tracks|كل مسارات الفيديو
+Enable Flat Pass|تفعيل Flat Pass
+visionOS Bypass|تجاوز visionOS
+Disable sizing and blanking output|تعطيل التحجيم والإخفاء
+Trigger script at|تشغيل سكربت عند
+Start|بدء
+of render job|مهمة المعالجة
+Export Subtitle|تصدير الترجمة
+As a separate file|ملف منفصل
+Export As|تصدير باسم
+frames|إطارات
+Cut|قص
+Teal|فيروزي
+Half|نصف
+Color Bars|أشرطة لون
+Lightbox|صندوق ضوء
+Edit|تحرير
+Mixer|خلاط
+Sound Library|مكتبة الصوت
+Timeline: AAF, EDL, XML...|الجدول: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|الجدول: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|محرر فيديو مكتوب بلغة Rust لأنظمة Windows وLinux وmacOS والويب.
+Audio scrubbing (sound while the playhead is dragged)|تمرير الصوت (يُسمع أثناء سحب المؤشر)
+Best|الأفضل
+Changing the frame rate keeps every clip on the same frames.|تغيير معدل الإطارات يُبقي كل مقطع على إطاراته.
+Click a command's keys, then press the key it should have. Escape gives up.|انقر مفاتيح الأمر ثم اضغط المفتاح الجديد. Esc للإلغاء.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|ينسخ الملفات التي تستخدمها الجداول إلى مجلد، ويكتب نسخة من المشروع تشير إليها. لا يتغير المشروع الذي تحرره.
+Decode supported video using hardware acceleration|فك الفيديو المدعوم بتسريع العتاد
+Every media file is where the project says it is.|كل ملف وسائط في المكان الذي يحدده المشروع.
+Filters|مرشحات
+Free software under the GPL, version 3 or later.|برنامج حر برخصة GPL الإصدار 3 أو أحدث.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|تُفك H.264 وH.265 وAV1 وVP9 وMPEG-2 وVC-1 على بطاقة الرسوم إن دعمها التعريف. أوقف هذا إن ظهرت المقاطع خضراء أو مشوهة. PICASSO_NO_HWACCEL=1 يوقفه لمرة واحدة.
+Help|مساعدة
+Linked selection (picture and sound together)|تحديد مرتبط (الصورة والصوت معًا)
+Loaded the demo project|تم تحميل المشروع التجريبي
+Pivot|محور
+Selection follows the playhead|التحديد يتبع المؤشر
+Snap to clips, markers and the playhead|التقاط للمقاطع والعلامات والمؤشر
+Soft Clip|قص ناعم
+Tape|شريط
+Trim|قص
+View|عرض
+Full|كامل
+Clip|مقطع
+Keyframes|إطارات رئيسية
+LUTs|LUT
+Lift|رفع
+Master|رئيسي
+Pan|توزيع
+Sat|إشباع
+Scopes|مقاييس
+Spline|منحنى
+Sync Bin|مزامنة
+Temp|حرارة

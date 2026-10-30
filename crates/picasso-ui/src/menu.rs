@@ -882,8 +882,12 @@ const LANGUAGES: &[Entry] = &[
     language(crate::i18n::Language::Polish),
     language(crate::i18n::Language::Turkish),
     language(crate::i18n::Language::Swedish),
+    language(crate::i18n::Language::Norwegian),
     language(crate::i18n::Language::Russian),
     language(crate::i18n::Language::Ukrainian),
+    language(crate::i18n::Language::Chinese),
+    language(crate::i18n::Language::Japanese),
+    language(crate::i18n::Language::Arabic),
 ];
 
 const fn language(language: crate::i18n::Language) -> Entry {

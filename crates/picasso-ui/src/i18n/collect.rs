@@ -98,6 +98,7 @@ fn painted_in(language: crate::i18n::Language) -> BTreeSet<String> {
     let mut app = StudioApp::new(&ctx);
     app.load_demo();
     crate::i18n::set(language);
+    crate::i18n::sync_fonts(&ctx);
     let mut found = BTreeSet::new();
     frames(&mut app, &ctx, (1920.0, 1080.0), &mut found);
     app.manager.open = false;
@@ -156,6 +157,7 @@ fn painted_boxes_of(language: crate::i18n::Language, demo: bool) -> Vec<(String,
         app.load_demo();
     }
     crate::i18n::set(language);
+    crate::i18n::sync_fonts(&ctx);
     let mut all = Vec::new();
     let mut take = |name: &str, app: &mut StudioApp| {
         let mut found = Vec::new();
@@ -341,6 +343,7 @@ fn painted_all(language: crate::i18n::Language) -> Vec<(String, Vec<(bool, Rect)
     let mut app = StudioApp::new(&ctx);
     app.load_demo();
     crate::i18n::set(language);
+    crate::i18n::sync_fonts(&ctx);
     app.manager.open = false;
     let first = app.project().tracks.iter().flat_map(|t| t.clips.first()).next().map(|c| c.id);
     let mut all = Vec::new();
@@ -415,4 +418,53 @@ fn no_language_runs_a_text_into_an_icon_that_english_did_not() {
     }
     assert!(report.is_empty(), "text on icons:
 {report}");
+}
+
+#[test]
+fn every_character_of_every_language_has_a_glyph_in_the_fonts_bundled() {
+    use crate::i18n::{CHANGING, Language};
+    let _only = CHANGING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    let mut missing = String::new();
+    for language in Language::ALL {
+        let ctx = Context::default();
+        ctx.set_fonts(crate::theme::fonts_for(language));
+        let font = egui::FontId::proportional(14.0);
+        let mut absent: BTreeSet<char> = BTreeSet::new();
+        let mut check = |ctx: &Context, text: &str| {
+            ctx.fonts_mut(|fonts| {
+                for c in text.chars().filter(|c| !c.is_control()) {
+                    if !fonts.has_glyph(&font, c) {
+                        absent.insert(c);
+                    }
+                }
+            });
+        };
+        // Two frames: the fonts are given to the context at the start of the first.
+        for _ in 0..2 {
+            let input = RawInput {
+                screen_rect: Some(Rect::from_min_size(Pos2::ZERO, egui::vec2(800.0, 600.0))),
+                ..RawInput::default()
+            };
+            let mut output = ctx.run_ui(input, |ui| {
+                for other in Language::ALL {
+                    check(ui.ctx(), other.name());
+                    if let Some((menus, entries, ui_text)) = language.data() {
+                        if other == language {
+                            for m in menus {
+                                check(ui.ctx(), m);
+                            }
+                            for (_, shown) in entries.iter().chain(ui_text) {
+                                check(ui.ctx(), shown);
+                            }
+                        }
+                    }
+                }
+            });
+            output.textures_delta.clear();
+        }
+        if !absent.is_empty() {
+            missing.push_str(&format!("{language:?}: {absent:?}\n"));
+        }
+    }
+    assert!(missing.is_empty(), "characters no bundled font draws:\n{missing}");
 }

@@ -1,5 +1,12 @@
 Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)
 
+The NotoSansSC-Regular.subset.ttf and NotoSansJP-Regular.subset.ttf fonts are Noto Sans SC and JP,
+Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'; and
+NotoSansArabic-Regular.subset.ttf is Noto Sans Arabic, Copyright 2022 The Noto Project Authors
+(https://github.com/notofonts/arabic). The three are cut down to the characters the languages of
+Help > Language need (scripts/i18n/subset.py) and are under the same license:
+
+
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 https://scripts.sil.org/OFL

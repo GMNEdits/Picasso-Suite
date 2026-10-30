@@ -1,0 +1,304 @@
+#menus
+文件
+编辑
+修剪
+时间线
+片段
+标记
+视图
+播放
+特效
+调色
+音频
+工作区
+帮助
+#entries
+New Project Library...|新建项目库...
+Open Project Library...|打开项目库...
+Show Current Project Library in File Explorer|在资源管理器中显示项目库
+Project Manager|项目管理器
+New Project|新建项目
+Open Project...|打开项目...
+Import Project...|导入项目...
+Export Project...|导出项目...
+Restore Project Archive...|恢复项目存档...
+Save Project|保存项目
+Save Project As...|项目另存为...
+Save Copy As...|副本另存为...
+Revert to Last Saved Version|还原到上次保存
+Import|导入
+Media...|媒体...
+Folder as Bin...|文件夹作为媒体夹...
+Timeline: AAF, EDL, XML...|时间线：AAF、EDL、XML...
+Timeline: Pre-conformed EDL...|时间线：预整合 EDL...
+Subtitle...|字幕...
+Metadata to Media Pool...|元数据到媒体池...
+Bin...|媒体夹...
+Export|导出
+Timeline: EDL...|时间线：EDL...
+Timeline: OpenTimelineIO...|时间线：OpenTimelineIO...
+Timeline: XML...|时间线：XML...
+Timeline: AAF...|时间线：AAF...
+Metadata from Media Pool...|从媒体池导出元数据...
+Media Management...|媒体管理...
+Project Settings...|项目设置...
+System Preferences...|系统偏好设置...
+Quick Export...|快速导出...
+Quit|退出
+Undo|撤销
+Redo|重做
+Cut|剪切
+Copy|复制
+Paste|粘贴
+Paste Insert|粘贴并插入
+Paste Mix to Current Track|混合粘贴到当前轨道
+Duplicate|复制副本
+Fit to Fill|适配填充
+Place on Top|置于顶层
+Delete Selected|删除所选
+Delete Selected with Ripple|波纹删除所选
+Select All|全选
+Deselect All|取消全选
+Select Clips Forward|向后选择片段
+Find...|查找...
+Recent Projects|最近项目
+Project Manager...|项目管理器...
+Keyboard Customization|快捷键
+Select Nearest Edit Point|选择最近编辑点
+Selection Mode|选择模式
+Trim Mode|修剪模式
+Dynamic Trim Mode|动态修剪模式
+Ripple Start|波纹起点
+Ripple End|波纹终点
+Ripple Trim Previous / Next|波纹修剪上/下一个
+Ripple Trim Previous Edit to Playhead|波纹修剪上一编辑到播放头
+Ripple Trim Next Edit to Playhead|波纹修剪下一编辑到播放头
+Trim Start to Playhead|修剪起点到播放头
+Trim End to Playhead|修剪终点到播放头
+Extend Edit|延长编辑
+Slip Clip|滑动片段内容
+Slip One Frame Earlier|内容提前一帧
+Slip One Frame Later|内容延后一帧
+Slide Clip|滑移片段
+Slide One Frame Left|左移一帧
+Slide One Frame Right|右移一帧
+Loop Trim|循环修剪
+Asymmetric Trimming|非对称修剪
+Trim Editor|修剪编辑器
+New Timeline...|新建时间线...
+New Timeline Using Selected Clips|用所选片段新建时间线
+Create New Compound Clip...|创建复合片段...
+New Effects Clip...|新建特效片段...
+Decompose in Place|就地分解
+Decompose Compound Clip|分解复合片段
+Decompose Nested Timeline|分解嵌套时间线
+Split Clip|分割片段
+Create Timeline Using Bin...|用媒体夹创建时间线...
+Import Timeline...|导入时间线...
+Export Timeline...|导出时间线...
+Timeline Resolution and Frame Rate...|分辨率与帧率...
+Timeline Settings|时间线设置
+Snap|吸附
+Linked Selection|联动选择
+Position Lock|位置锁定
+Selection Follows Playhead|选择跟随播放头
+Add Marker|添加标记
+Add Marker and Show Dialog|添加标记并弹窗
+Delete All Markers|删除所有标记
+Create Subtitle Track|创建字幕轨道
+Create Subtitle Region|创建字幕区域
+Add Transition to All Edits|所有剪辑点加转场
+Switch Timeline|切换时间线
+Open Timeline in New Window|在新窗口打开时间线
+Delete Timeline|删除时间线
+Enable Clip|启用片段
+Match Frame|匹配帧
+Lock Clip|锁定片段
+New Multicam Clip...|新建多机位片段...
+Multicam Viewer|多机位查看器
+Add to Media Pool as Stills|作为静帧加入媒体池
+Change Clip Speed...|更改片段速度...
+Change Clip Duration...|更改片段时长...
+Retime Controls|变速控制
+Retime Clip|片段变速
+Freeze Frame|定格帧
+Speed Ramp...|速度渐变...
+Reverse Clip|倒放片段
+Create New Compound Clip|创建复合片段
+Link Clips|链接片段
+Unlink Audio and Video|解除音视频链接
+Enable / Disable Audio Scrubbing|音频擦洗开/关
+Auto Align Clips|自动对齐片段
+Based on Timecode|基于时间码
+Based on Waveform|基于波形
+Normalize Audio Levels...|标准化音量...
+Render in Place|就地渲染
+New Effects Clip|新建特效片段
+New Compound Clip|新建复合片段
+Clip Attributes...|片段属性...
+Mark In|标记入点
+Mark Out|标记出点
+Mark Clip|标记片段
+Mark Timeline In/Out|标记时间线入/出点
+Clear In|清除入点
+Clear Out|清除出点
+Clear In and Out|清除入点和出点
+Modify Marker...|修改标记...
+Delete Marker at Current Position|删除当前位置标记
+Delete All Markers in Timeline|删除时间线所有标记
+Go to Previous Marker|转到上一标记
+Go to Next Marker|转到下一标记
+Set Clip Color|设置片段颜色
+Default|默认
+Orange|橙色
+Apricot|杏色
+Yellow|黄色
+Lime|青柠
+Olive|橄榄
+Green|绿色
+Teal|青色
+Navy|藏青
+Blue|蓝色
+Purple|紫色
+Violet|紫罗兰
+Pink|粉色
+Tan|棕褐
+Beige|米色
+Brown|棕色
+Chocolate|巧克力
+Show Current Frame on Playback|播放时显示当前帧
+Safe Area Overlay|安全区叠加
+Show Grid / Guides|显示网格/参考线
+Show Toolbar|显示工具栏
+Show Full Screen Viewer|显示全屏查看器
+Show Cinema Viewer|显示影院查看器
+Viewer Overlays|查看器叠加
+Transform / Crop / Dynamic Zoom|变换/裁剪/动态缩放
+Safe Area|安全区
+Center Crosshair|中心十字线
+Checkerboard Background (Alpha)|棋盘背景（Alpha）
+Show All Overlays|显示所有叠加
+Timecode Window|时间码窗口
+Show Scopes|显示示波器
+Show Audio Meters|显示音频电平表
+Show Audio Mixer|显示调音台
+Show Inspector|显示检查器
+Play Forward|正向播放
+Play Reverse|反向播放
+Stop|停止
+Play Around Current Frame|播放当前帧前后
+Play In to Out|播放入点到出点
+Play Around In / Around Out|播放入/出点前后
+Loop Playback|循环播放
+Go to First Frame|转到第一帧
+Go to Last Frame|转到最后一帧
+Go to In|转到入点
+Go to Out|转到出点
+Previous Frame|上一帧
+Next Frame|下一帧
+Previous Edit Point|上一编辑点
+Next Edit Point|下一编辑点
+Timeline Playback Resolution|播放分辨率
+Half|一半
+Quarter|四分之一
+Effects Memory Cache|特效内存缓存
+Timeline Proxy Mode|时间线代理模式
+Off|关
+Eighth|八分之一
+Hardware Decoding|硬件解码
+Delete Render Cache|删除渲染缓存
+Video Transitions|视频转场
+Cross Dissolve|交叉溶解
+Dip to Color|渐隐到颜色
+Audio Transitions|音频转场
+Cross Fade|交叉淡化
+Remove Transition|移除转场
+OpenFX|OpenFX
+Blur|模糊
+Gaussian Blur|高斯模糊
+Sharpen|锐化
+Color|颜色
+Invert Colors|反转颜色
+Black and White|黑白
+Distort|扭曲
+Mosaic|马赛克
+Audio FX|音频特效
+EQ|均衡器
+Dynamics|动态
+Picasso FX|Picasso 特效
+Sepia|复古棕
+Soft Blur|柔化模糊
+Light|光效
+Glow|辉光
+Stylize|风格化
+Vignette|暗角
+Film Grain|胶片颗粒
+Compositing Effects|合成特效
+Nodes|节点
+Generators|生成器
+Solid Color|纯色
+Color Bars|彩条
+Gradient|渐变
+Titles|标题
+Text|文本
+Text+|文本+
+Effects Library Search|搜索特效库
+Add Tool (Compositing)|添加工具（合成）
+Reset All Grades and Nodes|重置所有调色和节点
+Reset Current Node Grade|重置当前节点调色
+Enable/Disable Current Node|启用/禁用当前节点
+Grab Still|抓取静帧
+Play Still|播放静帧
+Add Serial Node|添加串行节点
+Add Serial Before|在前添加串行节点
+Add Parallel Node|添加并行节点
+Add Layer Mixer|添加图层混合节点
+Add Splitter / Combiner|添加分离/合并节点
+Add Outside Node|添加外部节点
+Label Node|节点标签
+Timeline|时间线
+Previous Node Graph|上一节点图
+Next Node Graph|下一节点图
+LUT|LUT
+Apply LUT from list|从列表应用 LUT
+Gallery|画廊
+Scopes On/Off|示波器开/关
+Highlight|高光
+Lightbox|灯箱
+ADR|ADR
+Automated Dialogue Replacement|自动对白替换
+Bounce Mix to Track|混音导出到轨道
+Bounce Selected Tracks|导出所选轨道
+Cache Audio Effects|缓存音频特效
+Audio Link|音频链接
+Link Group|链接组
+Decompose|分解
+Loop Jog|循环微调
+Show Audio Timeline / Mixer|显示音频时间线/调音台
+Full Screen Viewer|全屏查看器
+Show Panel in Workspace|在工作区显示面板
+Media Pool|媒体池
+Effects Library|特效库
+Inspector|检查器
+Mixer|调音台
+Metadata|元数据
+Edit Index|编辑索引
+Sound Library|音效库
+Layout|布局
+Reset UI Layout|重置界面布局
+Save Layout|保存布局
+Load Layout|加载布局
+Switch to Page|切换页面
+Media|媒体
+Edit|剪辑
+Effects|特效
+Audio|音频
+Deliver|交付
+Dual Screen On/Off|双屏开/关
+Video Clean Feed|纯净视频输出
+Picasso Suite Manual|Picasso Suite 手册
+Picasso Suite Tutorials|Picasso Suite 教程
+Check for Updates...|检查更新...
+Export Log File...|导出日志文件...
+About Picasso Suite|关于 Picasso Suite
+Language|语言

@@ -11,9 +11,14 @@
 //! The menus are translated where they are drawn (`tr`); the text of the pages, panels and windows
 //! is translated where it is painted (`paint`), once a frame, for the text that has a translation.
 //! Every language has every menu entry and the text the pages show first (about 190 pieces of text
-//! each); what has no translation (yet), such as a dialog or a tooltip, shows in English. The languages here are those the bundled
-//! font draws (Latin, Greek and Cyrillic scripts): Chinese, Japanese, Korean, Arabic, Hindi and the
-//! like need a font of their own first.
+//! each); what has no translation (yet), such as a dialog or a tooltip, shows in English.
+//!
+//! The bundled Noto Sans draws the Latin, Greek and Cyrillic scripts. Chinese, Japanese and Arabic
+//! have fonts of their own beside it (`assets/fonts/*.subset.ttf`, the characters a language needs,
+//! made with `scripts/i18n/subset.py`); the Han characters come from the Japanese font while Japanese
+//! is the language and from the Chinese one otherwise. Arabic is joined and put in the order it is
+//! read when the table is made (the text drawing here sets letters one by one, left to right), so the
+//! tables hold it as it is to be drawn. Korean, Hindi and the like are still to come.
 
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicU8, Ordering};
@@ -23,18 +28,22 @@ pub(crate) use paint::translate_frame;
 
 #[cfg(test)]
 mod collect;
+mod ar;
 mod de;
 mod paint;
 mod es;
 mod fr;
 mod it;
+mod ja;
 mod nl;
+mod no;
 mod pl;
 mod pt;
 mod ru;
 mod sv;
 mod tr;
 mod uk;
+mod zh;
 
 /// A language the menus can be shown in.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Default)]
@@ -50,13 +59,17 @@ pub(crate) enum Language {
     Polish,
     Turkish,
     Swedish,
+    Norwegian,
     Russian,
     Ukrainian,
+    Chinese,
+    Japanese,
+    Arabic,
 }
 
 impl Language {
     /// Every language, in the order of the Help > Language menu.
-    pub(crate) const ALL: [Language; 12] = [
+    pub(crate) const ALL: [Language; 16] = [
         Language::English,
         Language::Spanish,
         Language::Portuguese,
@@ -67,8 +80,12 @@ impl Language {
         Language::Polish,
         Language::Turkish,
         Language::Swedish,
+        Language::Norwegian,
         Language::Russian,
         Language::Ukrainian,
+        Language::Chinese,
+        Language::Japanese,
+        Language::Arabic,
     ];
 
     /// The short code kept in `preferences.txt`.
@@ -84,8 +101,12 @@ impl Language {
             Self::Polish => "pl",
             Self::Turkish => "tr",
             Self::Swedish => "sv",
+            Self::Norwegian => "no",
             Self::Russian => "ru",
             Self::Ukrainian => "uk",
+            Self::Chinese => "zh",
+            Self::Japanese => "ja",
+            Self::Arabic => "ar",
         }
     }
 
@@ -102,8 +123,13 @@ impl Language {
             Self::Polish => "Polski",
             Self::Turkish => "Türkçe",
             Self::Swedish => "Svenska",
+            Self::Norwegian => "Norsk",
             Self::Russian => "Русский",
             Self::Ukrainian => "Українська",
+            Self::Chinese => "中文",
+            Self::Japanese => "日本語",
+            // "العربية" as it is drawn (joined, and in the order seen).
+            Self::Arabic => "ﺔﻴﺑﺮﻌﻟﺍ",
         }
     }
 
@@ -130,8 +156,12 @@ impl Language {
             Self::Polish => (&pl::MENUS, pl::ENTRIES, pl::UI),
             Self::Turkish => (&tr::MENUS, tr::ENTRIES, tr::UI),
             Self::Swedish => (&sv::MENUS, sv::ENTRIES, sv::UI),
+            Self::Norwegian => (&no::MENUS, no::ENTRIES, no::UI),
             Self::Russian => (&ru::MENUS, ru::ENTRIES, ru::UI),
             Self::Ukrainian => (&uk::MENUS, uk::ENTRIES, uk::UI),
+            Self::Chinese => (&zh::MENUS, zh::ENTRIES, zh::UI),
+            Self::Japanese => (&ja::MENUS, ja::ENTRIES, ja::UI),
+            Self::Arabic => (&ar::MENUS, ar::ENTRIES, ar::UI),
         })
     }
 }
@@ -146,6 +176,8 @@ const MENU_NAMES: [&str; 13] = [
 ];
 
 static CURRENT: AtomicU8 = AtomicU8::new(0);
+/// Whether the fonts installed put the Japanese one before the Chinese one for the Han characters.
+static JAPANESE_FONTS: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
 
 /// Held by a test that changes the language in use, so two of them never run at once.
 #[cfg(test)]
@@ -157,6 +189,25 @@ pub(crate) fn current() -> Language {
         .get(usize::from(CURRENT.load(Ordering::Relaxed)))
         .copied()
         .unwrap_or_default()
+}
+
+/// Whether the Han characters are to be drawn with the Japanese font first (they differ in shape
+/// from the Chinese ones): that is, while Japanese is the language.
+pub(crate) fn japanese_fonts(language: Language) -> bool {
+    language == Language::Japanese
+}
+
+/// Notes the fonts the context was given for this language (`crate::theme::install` did).
+pub(crate) fn fonts_installed(language: Language) {
+    JAPANESE_FONTS.store(japanese_fonts(language), Ordering::Relaxed);
+}
+
+/// Gives the context the fonts the language in use needs, when they are not those it has.
+pub(crate) fn sync_fonts(ctx: &egui::Context) {
+    let language = current();
+    if JAPANESE_FONTS.swap(japanese_fonts(language), Ordering::Relaxed) != japanese_fonts(language) {
+        ctx.set_fonts(crate::theme::fonts_for(language));
+    }
 }
 
 /// Shows the menus in this language from the next frame on.
@@ -194,8 +245,8 @@ pub(crate) fn menu_name_in(language: Language, name: &'static str) -> &'static s
 
 /// The entries of a language by their English label, made once.
 fn table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
-    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 12] =
-        [const { OnceLock::new() }; 12];
+    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 16] =
+        [const { OnceLock::new() }; 16];
     let (_, entries, _) = language.data()?;
     Some(
         TABLES[usize::from(language.index())]
@@ -205,8 +256,8 @@ fn table(language: Language) -> Option<&'static HashMap<&'static str, &'static s
 
 /// The text of the pages and windows of a language by its English text, made once.
 fn ui_table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
-    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 12] =
-        [const { OnceLock::new() }; 12];
+    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 16] =
+        [const { OnceLock::new() }; 16];
     let (_, menus, ui) = language.data()?;
     Some(TABLES[usize::from(language.index())].get_or_init(|| {
         // A menu label is also text on a page ("Media", "Color"): one table for both.
@@ -295,6 +346,9 @@ mod tests {
         assert_eq!(Language::Spanish.name(), "Español");
         assert_eq!(Language::Portuguese.name(), "Português");
         assert_eq!(Language::German.name(), "Deutsch");
+        assert_eq!(Language::Norwegian.name(), "Norsk");
+        assert_eq!(Language::Chinese.name(), "中文");
+        assert_eq!(Language::Japanese.name(), "日本語");
     }
 
     #[test]
@@ -309,6 +363,10 @@ mod tests {
         assert_eq!(menu_name_in(Language::Spanish, "File"), "Arch.");
         assert_eq!(menu_name_in(Language::English, "File"), "File");
         assert_eq!(menu_name_in(Language::German, "Help"), "Hilfe");
+        assert_eq!(translate(Language::Norwegian, "Save Project"), "Lagre prosjekt");
+        assert_eq!(translate(Language::Chinese, "Save Project"), "保存项目");
+        assert_eq!(translate(Language::Japanese, "Save Project"), "プロジェクトを保存");
+        assert_eq!(menu_name_in(Language::Chinese, "Timeline"), "时间线");
     }
 
     #[test]

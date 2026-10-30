@@ -1,0 +1,37 @@
+Add Job|Ny jobb
+Archive Project...|Arkiver...
+Bins|Bins
+Editing|Redig.
+Effects In|Effekt inn
+Export Video|Eksp. video
+Frame rate|Bildefrekv.
+Input|Inn
+Native|Nativ
+Offset|Forsk.
+Order|Rekke
+Preset|Preset
+Projects|Prosj.
+Range|Omr.
+Shad|Skyg.
+Smart Bins|Smartbins
+Tint|Tint
+Tools|Verkt.
+Untitled|Navnløs
+No clips in media pool|Mediebanken er tom
+No clip to grade|Intet å gradere
+No Input|Ingen inn
+Use optimized media|Bruk optim. medier
+Export Subtitle|Undertekst ut
+Export As|Eksp. som
+Teal|Turkis
+Edit|Redig.
+Clip|Clip
+LUTs|LUT
+Sat|Sat
+Import Project...|Importer prosj...
+Export Project...|Eksporter prosj...
+Save Project As...|Lagre som...
+Import|Import
+Folder as Bin...|Som mappe...
+Subtitle...|Tekst...
+Export|Eksport

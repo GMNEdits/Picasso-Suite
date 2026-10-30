@@ -5,7 +5,7 @@ crates/picasso-ui/src/i18n/<code>.rs, and checks the fit rules the menus need:
 - an entry is at most 6 characters or a third longer than the English one (20 characters always fit: a
   menu is that wide before it has a label), and never over 48.
 """
-import sys, pathlib
+import sys, pathlib, unicodedata
 from PIL import ImageFont
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -20,8 +20,45 @@ MENU_NAMES = ['File', 'Edit', 'Trim', 'Timeline', 'Clip', 'Mark', 'View', 'Playb
 FONT = ImageFont.truetype(str(ROOT / 'crates' / 'picasso-ui' / 'assets' / 'fonts' / 'NotoSans-Regular.ttf'), 14)
 
 
+FONT_DIR = ROOT / 'crates' / 'picasso-ui' / 'assets' / 'fonts'
+ARABIC = ImageFont.truetype(str(FONT_DIR / 'NotoSansArabic-Regular.subset.ttf'), 14, layout_engine=ImageFont.Layout.BASIC)
+LATIN = ImageFont.truetype(str(FONT_DIR / 'NotoSans-Regular.ttf'), 14, layout_engine=ImageFont.Layout.BASIC)
+# Languages whose script the bundled Latin font does not draw: their width is measured per character
+# (a Chinese or Japanese character is as wide as it is tall; the Arabic ones come from the Arabic font),
+# and their entries are held to a width in pixels, since a character count says little there.
+OTHER = {'zh', 'ja', 'ar'}
+CODE = ''
+_latin_cmap = None
+
+
+def shape(text):
+    """Arabic is drawn letter by letter, left to right (the toolkit does not join or turn it): the text is
+    joined into its presentation forms and put in the order it is seen, here, once."""
+    if CODE != 'ar':
+        return text
+    import arabic_reshaper
+    from bidi import get_display
+    return chr(10).join(get_display(arabic_reshaper.reshape(line)) for line in text.split(chr(10)))
+
+
 def width(text):
-    return FONT.getlength(text)
+    if CODE not in OTHER:
+        return FONT.getlength(text)
+    global _latin_cmap
+    if _latin_cmap is None:
+        from fontTools.ttLib import TTFont
+        _latin_cmap = set(TTFont(str(FONT_DIR / 'NotoSans-Regular.ttf')).getBestCmap())
+    total = 0.0
+    for c in shape(text):
+        if ord(c) in _latin_cmap:
+            total += LATIN.getlength(c)
+        elif unicodedata.east_asian_width(c) in 'WF':
+            total += 14
+        elif unicodedata.east_asian_width(c) == 'H':
+            total += 7
+        else:
+            total += ARABIC.getlength(c)
+    return total
 
 
 # Words that have room where the pages draw them (the rows of a list): a translation may be up to half
@@ -33,26 +70,37 @@ TABS = {'Media', 'Photo', 'Cut', 'Edit', 'Fusion', 'Color', 'Fairlight', 'Delive
 
 
 def fits_page(english, shown):
+    we, ws = width_en(english), width(shown)
     # Text on a page is made smaller down to 3/4 when it is wider than the English; wider than that
     # (a third more) would run into its neighbour.
     if len(english) >= 18 and english not in ROOMY:
         # A short sentence fills the room it has (a hint in the middle of a panel): not wider than the
         # English. A long one is drawn smaller when it is wider (down to 3/4), so up to a third wider.
         if len(english) >= 40:
-            return width(shown) <= width(english) * 1.3
-        return width(shown) <= width(english) + 2
+            return ws <= we * 1.3
+        return ws <= we + 2
     if english in TABS:
-        return width(shown) <= width(english) * 1.4 + 10
+        return ws <= we * 1.4 + 10
     if english in ROOMY:
-        return width(shown) <= width(english) * 1.5 + 8
-    return width(shown) <= width(english) * 1.15 + 4
+        return ws <= we * 1.5 + 8
+    return ws <= we * 1.15 + 4
 
 
 def entry_max(english):
     return min(max(len(english) + 6, -(-len(english) * 135 // 100), 20), 48)
 
 
+def entry_px(english):
+    return min(max((len(english) + 6) * 7.0, width_en(english) * 1.35, 140), 336)
+
+
+def width_en(text):
+    return LATIN.getlength(text)
+
+
 def build(code):
+    global CODE
+    CODE = code
     lines = (HERE / f'{code}.txt').read_text(encoding='utf-8').split('\n')
     assert lines[0] == '#menus', code
     i = lines.index('#entries')
@@ -63,6 +111,8 @@ def build(code):
     for name, short, most in zip(MENU_NAMES, menus, MENU_MAX):
         if len(short) > most:
             problems.append(f'menu {name} -> {short!r} is {len(short)} > {most}')
+        if code in OTHER and width(short) > most * 7.2:
+            problems.append(f'menu {name} -> {short!r} is {width(short):.0f}px > {most * 7.2:.0f}px')
     pairs = []
     seen = set()
     entry_lines = list(lines[i + 1:u])
@@ -78,6 +128,8 @@ def build(code):
         seen.add(en)
         if tr != en and len(tr) > entry_max(en):
             problems.append(f'{en!r} -> {tr!r} is {len(tr)} > {entry_max(en)}')
+        if code in OTHER and tr != en and width(tr) > entry_px(en):
+            problems.append(f'{en!r} -> {tr!r} is {width(tr):.0f}px > {entry_px(en):.0f}px')
         pairs.append((en, tr))
     missing = [e for e in ENGLISH if e not in seen]
     ui = []
@@ -101,7 +153,7 @@ def build(code):
             continue
         en, tr = l.split('|', 1)
         if not fits_page(en, tr):
-            problems.append(f'ui text {en!r} -> {tr!r} is {width(tr):.0f}px, the English {width(en):.0f}px')
+            problems.append(f'ui text {en!r} -> {tr!r} is {width(tr):.0f}px, the English {width_en(en):.0f}px')
         if en not in collected:
             problems.append(f'ui text {en!r} is not shown anywhere (scripts/i18n/ui_labels.txt)')
         ui.append((en, tr))
@@ -110,11 +162,16 @@ def build(code):
     own = {en for en, _ in ui}
     for en, tr in latest.items():
         if en in on_pages and en not in own and not fits_page(en, tr):
-            problems.append(f'page text {en!r} -> {tr!r} is {width(tr):.0f}px, the English {width(en):.0f}px (from the menus)')
+            problems.append(f'page text {en!r} -> {tr!r} is {width(tr):.0f}px, the English {width_en(en):.0f}px (from the menus)')
     return menus, pairs, ui, problems, missing
 
 
 def rust(code, menus, pairs, ui):
+    global CODE
+    CODE = code
+    menus = [shape(m) for m in menus]
+    pairs = [(e, shape(t)) for e, t in pairs]
+    ui = [(e, shape(t)) for e, t in ui]
     esc = lambda s: s.replace(chr(92), chr(92) * 2).replace(chr(34), chr(92) + chr(34))
     out = [f'//! The menus in {code}. Made from scripts/i18n/{code}.txt by scripts/i18n/build.py.', '']
     out.append('pub(super) const MENUS: [&str; 13] = [')

@@ -1,0 +1,222 @@
+Clips|片段
+60 frames per second|60 帧/秒
+Add Job|添加任务
+Add to Render Queue|加入渲染队列
+Advanced Settings|高级设置
+Archive Project|归档项目
+Archive Project...|归档项目...
+Auto|自动
+Automatic|自动
+Balanced|均衡
+Bins|媒体夹
+Browse|浏览
+Bus Sends|总线发送
+Capture|采集
+Chapters from Markers|章节
+Choose a folder|选择文件夹
+Clip Name|片段名称
+Clone|克隆
+Clone Tool|克隆工具
+Codec|编解码器
+Col Boost|增色
+Collections|合集
+Contrast|对比度
+Control Room|控制室
+Create an Album|创建相册
+Curves - Custom|曲线 - 自定义
+Custom Export|自定义导出
+Decode Options|解码选项
+Demo Project|演示项目
+Drag photos into the Photo Album to start editing|将照片拖入相册开始编辑
+Drawn with|绘制于
+Editing|编辑中
+Effects In|特效入
+Embedded Audio|嵌入音频
+Encoder|编码器
+Encoding Profile|编码配置
+Entire Timeline|整个时间线
+Estimated File Size|预计大小
+Every|每
+Export Video|导出视频
+Fairlight|Fairlight
+File Name|文件名
+Format|格式
+Frame rate|帧率
+Frame reordering|帧重排
+Full Frames|完整帧
+Full Screen|全屏
+Fusion|Fusion
+Gain|增益
+Gamma|伽马
+Generator|生成器
+Graphics card|显卡
+Groups|分组
+Hi/Light|高光
+High|高
+Hue|色相
+Image|图像
+Index|索引
+Individual clips|单个片段
+Input|输入
+Integrated|综合
+Key Frames|关键帧
+Keywords|关键词
+L. Mix|左混
+Layer|图层
+Local|本地
+Location|位置
+Loop playback|循环播放
+Loudness|响度
+Low|低
+Mark|标记
+Media Management|媒体管理
+Media Source|媒体源
+Media Storage|媒体存储
+Meters|电平表
+Mid/Detail|中间/细节
+Modifiers|修改器
+Monitor|监看
+Monitor volume|监听音量
+Native|原生
+Network Optimization|网络优化
+No jobs in Queue|队列中没有任务
+No jobs in queue|队列中没有任务
+No stills created|未创建静帧
+Not reported|未报告
+Nothing to inspect|无可检查
+Offset|偏移
+Open|打开
+Order|顺序
+Parade|分量图
+Pause|暂停
+Photo|照片
+Photo Album|相册
+Playback|播放
+Position lock|位置锁
+Preset|预设
+Primaries - Color Wheels|一级 - 色轮
+Process Mode|处理模式
+Project settings|项目设置
+Projects|项目
+Quality|质量
+Quick Export|快速导出
+Range|范围
+Rate Control|码率控制
+Relink Missing Media|重新链接媒体
+Relink Missing Media...|重新链接媒体...
+Remove|移除
+Render|渲染
+Render All|全部渲染
+Render Queue|渲染队列
+Render Settings|渲染设置
+Render Settings - Custom Export|渲染设置 - 自定义导出
+Reset|重置
+Reset All|全部重置
+Resolution|分辨率
+Search|搜索
+Settings|设置
+Shad|阴影
+Short|短
+Short Max|短最大
+Single clip|单个片段
+Smart Bins|智能媒体夹
+Source Color Space|源色彩空间
+Source Gamma Space|源伽马空间
+Subtitle Settings|字幕设置
+System|系统
+Timeline Resolution|时间线分辨率
+Timeline proxy|时间线代理
+Tint|色调
+Tools|工具
+Track FX|轨道特效
+Transitions|转场
+Untitled|未命名
+Use vertical resolution|使用垂直分辨率
+Version 0.6.1|版本 0.6.1
+Video|视频
+Waveform|波形
+Workspace|工作区
+No clips in media pool|媒体池中没有片段
+Add clips with Import, or drop files here|用“导入”添加片段，或拖放文件到此
+Add clips from Media Storage to get started|从媒体存储添加片段以开始
+No sound to show|没有可显示的声音
+No clip to grade|没有可调色的片段
+No Input|无输入
+DURATION|时长
+Export Audio|导出音频
+Data Rate|数据率
+Output Track 1|输出轨道 1
+Use unique filename|使用唯一文件名
+Adds (1), (2) ... to the name instead of writing over a file.|在名称后加 (1)、(2)…，而不是覆盖文件。
+File type|文件类型
+Whole timeline|整个时间线
+In to out marks|入点到出点
+Pixel aspect ratio|像素宽高比
+Square|方形
+Cinemascope|宽银幕
+Data Levels|数据电平
+Retain sub-black and super-white data|保留低于黑/高于白数据
+Color Space Tag|色彩空间标签
+Gamma Tag|伽马标签
+Data burn-in|数据烧录
+Same as project|与项目相同
+Bypass re-encode when possible|可能时跳过重编码
+Use optimized media|使用优化媒体
+Use proxy media|使用代理媒体
+Use render cached images|使用渲染缓存
+Force sizing to highest quality|缩放用最高质量
+Force debayer to highest quality|去拜耳用最高质量
+Render All Video Tracks|渲染所有视频轨
+Enable Flat Pass|启用 Flat Pass
+visionOS Bypass|visionOS 旁路
+Disable sizing and blanking output|禁用缩放和消隐输出
+Trigger script at|触发脚本于
+Start|开始
+of render job|渲染任务时
+Export Subtitle|导出字幕
+As a separate file|单独文件
+Export As|导出为
+frames|帧
+Cut|剪切
+Teal|青色
+Half|一半
+Color Bars|彩条
+Lightbox|灯箱
+Edit|剪辑
+Mixer|调音台
+Sound Library|音效库
+Timeline: AAF, EDL, XML...|时间线：AAF、EDL、XML...
+Timeline: OpenTimelineIO...|时间线：OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|用 Rust 编写的视频编辑器，支持 Windows、Linux、macOS 和网页。
+Audio scrubbing (sound while the playhead is dragged)|音频擦洗（拖动播放头时发声）
+Best|最佳
+Changing the frame rate keeps every clip on the same frames.|更改帧率后，每个片段保持在相同的帧上。
+Click a command's keys, then press the key it should have. Escape gives up.|点击命令的按键，再按新的键。按 Esc 取消。
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|将时间线用到的文件复制到文件夹，并写入指向它们的项目副本。正在编辑的项目不会改变。
+Decode supported video using hardware acceleration|用硬件加速解码支持的视频
+Every media file is where the project says it is.|所有媒体文件都在项目指定的位置。
+Filters|滤镜
+Free software under the GPL, version 3 or later.|自由软件，遵循 GPL 第 3 版或更高版本。
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|驱动支持时，H.264、H.265、AV1、VP9、MPEG-2 和 VC-1 会在显卡上解码。若片段出现绿屏或花屏，请关闭。PICASSO_NO_HWACCEL=1 可单次关闭。
+Help|帮助
+Linked selection (picture and sound together)|联动选择（画面与声音一起）
+Loaded the demo project|已加载演示项目
+Pivot|轴心
+Selection follows the playhead|选择跟随播放头
+Snap to clips, markers and the playhead|吸附到片段、标记和播放头
+Soft Clip|软削波
+Tape|磁带
+Trim|修剪
+View|视图
+Full|完整
+Clip|片段
+Keyframes|关键帧
+LUTs|LUT
+Lift|提升
+Master|主控
+Pan|声像
+Sat|饱和
+Scopes|示波器
+Spline|样条
+Sync Bin|同步夹
+Temp|色温

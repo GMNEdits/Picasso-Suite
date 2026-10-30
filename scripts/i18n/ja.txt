@@ -1,0 +1,304 @@
+#menus
+ﾌｧｲﾙ
+編集
+ﾄﾘﾑ
+時間軸
+ｸﾘｯﾌﾟ
+ﾏｰｸ
+表示
+再生
+効果
+ｶﾗｰ
+音声
+作業域
+ヘルプ
+#entries
+New Project Library...|新規プロジェクトライブラリ...
+Open Project Library...|プロジェクトライブラリを開く...
+Show Current Project Library in File Explorer|ライブラリをエクスプローラーで表示
+Project Manager|プロジェクトマネージャー
+New Project|新規プロジェクト
+Open Project...|プロジェクトを開く...
+Import Project...|プロジェクトを読み込む...
+Export Project...|プロジェクトを書き出す...
+Restore Project Archive...|アーカイブを復元...
+Save Project|プロジェクトを保存
+Save Project As...|名前を付けて保存...
+Save Copy As...|コピーを保存...
+Revert to Last Saved Version|最後の保存に戻す
+Import|読み込み
+Media...|メディア...
+Folder as Bin...|フォルダをビンに...
+Timeline: AAF, EDL, XML...|タイムライン: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|タイムライン: 事前EDL...
+Subtitle...|字幕...
+Metadata to Media Pool...|メタデータをプールへ...
+Bin...|ビン...
+Export|書き出し
+Timeline: EDL...|タイムライン: EDL...
+Timeline: OpenTimelineIO...|タイムライン: OpenTimelineIO...
+Timeline: XML...|タイムライン: XML...
+Timeline: AAF...|タイムライン: AAF...
+Metadata from Media Pool...|プールのメタデータ...
+Media Management...|メディア管理...
+Project Settings...|プロジェクト設定...
+System Preferences...|システム環境設定...
+Quick Export...|クイック書き出し...
+Quit|終了
+Undo|元に戻す
+Redo|やり直し
+Cut|切り取り
+Copy|コピー
+Paste|貼り付け
+Paste Insert|挿入して貼り付け
+Paste Mix to Current Track|現在のトラックにミックス貼付
+Duplicate|複製
+Fit to Fill|フィット・トゥ・フィル
+Place on Top|最上部に配置
+Delete Selected|選択を削除
+Delete Selected with Ripple|選択をリップル削除
+Select All|すべて選択
+Deselect All|選択をすべて解除
+Select Clips Forward|以降のクリップを選択
+Find...|検索...
+Recent Projects|最近のプロジェクト
+Project Manager...|プロジェクトマネージャー...
+Keyboard Customization|キーボード設定
+Select Nearest Edit Point|最寄りの編集点を選択
+Selection Mode|選択モード
+Trim Mode|トリムモード
+Dynamic Trim Mode|ダイナミックトリム
+Ripple Start|リップル開始
+Ripple End|リップル終了
+Ripple Trim Previous / Next|リップルトリム 前/次
+Ripple Trim Previous Edit to Playhead|前の編集点までリップル
+Ripple Trim Next Edit to Playhead|次の編集点までリップル
+Trim Start to Playhead|開始をヘッドにトリム
+Trim End to Playhead|終了をヘッドにトリム
+Extend Edit|編集を延長
+Slip Clip|スリップ
+Slip One Frame Earlier|1フレーム早くスリップ
+Slip One Frame Later|1フレーム遅くスリップ
+Slide Clip|スライド
+Slide One Frame Left|1フレーム左へ
+Slide One Frame Right|1フレーム右へ
+Loop Trim|ループトリム
+Asymmetric Trimming|非対称トリム
+Trim Editor|トリムエディター
+New Timeline...|新規タイムライン...
+New Timeline Using Selected Clips|選択クリップで新規タイムライン
+Create New Compound Clip...|複合クリップを作成...
+New Effects Clip...|新規エフェクトクリップ...
+Decompose in Place|その場で分解
+Decompose Compound Clip|複合クリップを分解
+Decompose Nested Timeline|ネストを分解
+Split Clip|クリップを分割
+Create Timeline Using Bin...|ビンからタイムライン作成...
+Import Timeline...|タイムラインを読み込む...
+Export Timeline...|タイムラインを書き出す...
+Timeline Resolution and Frame Rate...|解像度とフレームレート...
+Timeline Settings|タイムライン設定
+Snap|スナップ
+Linked Selection|リンク選択
+Position Lock|位置ロック
+Selection Follows Playhead|選択がヘッドに追従
+Add Marker|マーカーを追加
+Add Marker and Show Dialog|マーカー追加(ダイアログ)
+Delete All Markers|すべてのマーカーを削除
+Create Subtitle Track|字幕トラックを作成
+Create Subtitle Region|字幕範囲を作成
+Add Transition to All Edits|全編集点にトランジション
+Switch Timeline|タイムラインを切替
+Open Timeline in New Window|新しいウィンドウで開く
+Delete Timeline|タイムラインを削除
+Enable Clip|クリップを有効化
+Match Frame|マッチフレーム
+Lock Clip|クリップをロック
+New Multicam Clip...|新規マルチカムクリップ...
+Multicam Viewer|マルチカムビューアー
+Add to Media Pool as Stills|静止画としてプールへ
+Change Clip Speed...|クリップ速度を変更...
+Change Clip Duration...|クリップ長を変更...
+Retime Controls|リタイム制御
+Retime Clip|クリップをリタイム
+Freeze Frame|フリーズフレーム
+Speed Ramp...|スピードランプ...
+Reverse Clip|クリップを逆再生
+Create New Compound Clip|複合クリップを作成
+Link Clips|クリップをリンク
+Unlink Audio and Video|音声と映像のリンク解除
+Enable / Disable Audio Scrubbing|音声スクラブ 入/切
+Auto Align Clips|クリップを自動整列
+Based on Timecode|タイムコード基準
+Based on Waveform|波形基準
+Normalize Audio Levels...|音量を正規化...
+Render in Place|その場でレンダー
+New Effects Clip|新規エフェクトクリップ
+New Compound Clip|新規複合クリップ
+Clip Attributes...|クリップ属性...
+Mark In|イン点を設定
+Mark Out|アウト点を設定
+Mark Clip|クリップをマーク
+Mark Timeline In/Out|タイムラインのイン/アウト
+Clear In|イン点を消去
+Clear Out|アウト点を消去
+Clear In and Out|イン/アウトを消去
+Modify Marker...|マーカーを変更...
+Delete Marker at Current Position|現在位置のマーカー削除
+Delete All Markers in Timeline|全マーカーを削除
+Go to Previous Marker|前のマーカーへ
+Go to Next Marker|次のマーカーへ
+Set Clip Color|クリップの色を設定
+Default|標準
+Orange|オレンジ
+Apricot|アプリコット
+Yellow|黄
+Lime|ライム
+Olive|オリーブ
+Green|緑
+Teal|ティール
+Navy|ネイビー
+Blue|青
+Purple|紫
+Violet|バイオレット
+Pink|ピンク
+Tan|タン
+Beige|ベージュ
+Brown|茶
+Chocolate|チョコ
+Show Current Frame on Playback|再生中に現在のフレーム表示
+Safe Area Overlay|セーフエリア表示
+Show Grid / Guides|グリッド/ガイド表示
+Show Toolbar|ツールバーを表示
+Show Full Screen Viewer|全画面ビューアーを表示
+Show Cinema Viewer|シネマビューアーを表示
+Viewer Overlays|ビューアーオーバーレイ
+Transform / Crop / Dynamic Zoom|変形/クロップ/ズーム
+Safe Area|セーフエリア
+Center Crosshair|中央十字線
+Checkerboard Background (Alpha)|市松模様(アルファ)
+Show All Overlays|すべてのオーバーレイ
+Timecode Window|タイムコード窓
+Show Scopes|スコープを表示
+Show Audio Meters|音声メーターを表示
+Show Audio Mixer|音声ミキサーを表示
+Show Inspector|インスペクターを表示
+Play Forward|順再生
+Play Reverse|逆再生
+Stop|停止
+Play Around Current Frame|現在位置の前後を再生
+Play In to Out|イン〜アウトを再生
+Play Around In / Around Out|イン/アウト前後を再生
+Loop Playback|ループ再生
+Go to First Frame|最初のフレームへ
+Go to Last Frame|最後のフレームへ
+Go to In|イン点へ
+Go to Out|アウト点へ
+Previous Frame|前のフレーム
+Next Frame|次のフレーム
+Previous Edit Point|前の編集点
+Next Edit Point|次の編集点
+Timeline Playback Resolution|再生解像度
+Half|1/2
+Quarter|1/4
+Effects Memory Cache|エフェクトのメモリ
+Timeline Proxy Mode|プロキシモード
+Off|オフ
+Eighth|1/8
+Hardware Decoding|ハードウェアデコード
+Delete Render Cache|レンダーキャッシュ削除
+Video Transitions|ビデオ切替効果
+Cross Dissolve|クロスディゾルブ
+Dip to Color|ディップ・トゥ・カラー
+Audio Transitions|音声切替効果
+Cross Fade|クロスフェード
+Remove Transition|切替効果を削除
+OpenFX|OpenFX
+Blur|ぼかし
+Gaussian Blur|ガウスぼかし
+Sharpen|シャープ
+Color|カラー
+Invert Colors|色を反転
+Black and White|白黒
+Distort|歪み
+Mosaic|モザイク
+Audio FX|音声エフェクト
+EQ|EQ
+Dynamics|ダイナミクス
+Picasso FX|Picasso FX
+Sepia|セピア
+Soft Blur|ソフトぼかし
+Light|ライト
+Glow|グロー
+Stylize|スタイライズ
+Vignette|ビネット
+Film Grain|フィルムグレイン
+Compositing Effects|合成エフェクト
+Nodes|ノード
+Generators|ジェネレーター
+Solid Color|単色
+Color Bars|カラーバー
+Gradient|グラデーション
+Titles|タイトル
+Text|テキスト
+Text+|テキスト+
+Effects Library Search|エフェクトを検索
+Add Tool (Compositing)|ツール追加(合成)
+Reset All Grades and Nodes|全グレードとノードをリセット
+Reset Current Node Grade|現在のノードをリセット
+Enable/Disable Current Node|現在のノード 入/切
+Grab Still|スチルを取得
+Play Still|スチルを再生
+Add Serial Node|シリアルノードを追加
+Add Serial Before|前にシリアルノード追加
+Add Parallel Node|パラレルノードを追加
+Add Layer Mixer|レイヤーミキサーを追加
+Add Splitter / Combiner|スプリッター/コンバイナー追加
+Add Outside Node|アウトサイドノードを追加
+Label Node|ノードにラベル
+Timeline|タイムライン
+Previous Node Graph|前のノードグラフ
+Next Node Graph|次のノードグラフ
+LUT|LUT
+Apply LUT from list|リストからLUTを適用
+Gallery|ギャラリー
+Scopes On/Off|スコープ 入/切
+Highlight|ハイライト
+Lightbox|ライトボックス
+ADR|ADR
+Automated Dialogue Replacement|自動ダイアログ置換
+Bounce Mix to Track|ミックスをトラックに出力
+Bounce Selected Tracks|選択トラックを出力
+Cache Audio Effects|音声エフェクトをキャッシュ
+Audio Link|音声リンク
+Link Group|リンクグループ
+Decompose|分解
+Loop Jog|ループジョグ
+Show Audio Timeline / Mixer|音声タイムライン/ミキサー
+Full Screen Viewer|全画面ビューアー
+Show Panel in Workspace|パネルをワークスペースに表示
+Media Pool|メディアプール
+Effects Library|エフェクトライブラリ
+Inspector|インスペクター
+Mixer|ミキサー
+Metadata|メタデータ
+Edit Index|編集インデックス
+Sound Library|サウンドライブラリ
+Layout|レイアウト
+Reset UI Layout|UIレイアウトをリセット
+Save Layout|レイアウトを保存
+Load Layout|レイアウトを読み込む
+Switch to Page|ページを切り替え
+Media|メディア
+Edit|エディット
+Effects|エフェクト
+Audio|オーディオ
+Deliver|デリバー
+Dual Screen On/Off|デュアル画面 入/切
+Video Clean Feed|ビデオクリーンフィード
+Picasso Suite Manual|Picasso Suite マニュアル
+Picasso Suite Tutorials|Picasso Suite チュートリアル
+Check for Updates...|アップデートを確認...
+Export Log File...|ログファイルを書き出す...
+About Picasso Suite|Picasso Suite について
+Language|言語
