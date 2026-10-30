@@ -1,0 +1,289 @@
+New Project Library...
+Open Project Library...
+Show Current Project Library in File Explorer
+Project Manager
+New Project
+Open Project...
+Import Project...
+Export Project...
+Restore Project Archive...
+Save Project
+Save Project As...
+Save Copy As...
+Revert to Last Saved Version
+Import
+Media...
+Folder as Bin...
+Timeline: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...
+Subtitle...
+Metadata to Media Pool...
+Bin...
+Export
+Timeline: EDL...
+Timeline: OpenTimelineIO...
+Timeline: XML...
+Timeline: AAF...
+Metadata from Media Pool...
+Media Management...
+Project Settings...
+System Preferences...
+Quick Export...
+Quit
+Undo
+Redo
+Cut
+Copy
+Paste
+Paste Insert
+Paste Mix to Current Track
+Duplicate
+Fit to Fill
+Place on Top
+Delete Selected
+Delete Selected with Ripple
+Select All
+Deselect All
+Select Clips Forward
+Find...
+Recent Projects
+Project Manager...
+Keyboard Customization
+Select Nearest Edit Point
+Selection Mode
+Trim Mode
+Dynamic Trim Mode
+Ripple Start
+Ripple End
+Ripple Trim Previous / Next
+Ripple Trim Previous Edit to Playhead
+Ripple Trim Next Edit to Playhead
+Trim Start to Playhead
+Trim End to Playhead
+Extend Edit
+Slip Clip
+Slip One Frame Earlier
+Slip One Frame Later
+Slide Clip
+Slide One Frame Left
+Slide One Frame Right
+Loop Trim
+Asymmetric Trimming
+Trim Editor
+New Timeline...
+New Timeline Using Selected Clips
+Create New Compound Clip...
+New Effects Clip...
+Decompose in Place
+Decompose Compound Clip
+Decompose Nested Timeline
+Split Clip
+Create Timeline Using Bin...
+Import Timeline...
+Export Timeline...
+Timeline Resolution and Frame Rate...
+Timeline Settings
+Snap
+Linked Selection
+Position Lock
+Selection Follows Playhead
+Add Marker
+Add Marker and Show Dialog
+Delete All Markers
+Create Subtitle Track
+Create Subtitle Region
+Add Transition to All Edits
+Switch Timeline
+Open Timeline in New Window
+Delete Timeline
+Enable Clip
+Match Frame
+Lock Clip
+New Multicam Clip...
+Multicam Viewer
+Add to Media Pool as Stills
+Change Clip Speed...
+Change Clip Duration...
+Retime Controls
+Retime Clip
+Freeze Frame
+Speed Ramp...
+Reverse Clip
+Create New Compound Clip
+Link Clips
+Unlink Audio and Video
+Enable / Disable Audio Scrubbing
+Auto Align Clips
+Based on Timecode
+Based on Waveform
+Normalize Audio Levels...
+Render in Place
+New Effects Clip
+New Compound Clip
+Clip Attributes...
+Mark In
+Mark Out
+Mark Clip
+Mark Timeline In/Out
+Clear In
+Clear Out
+Clear In and Out
+Modify Marker...
+Delete Marker at Current Position
+Delete All Markers in Timeline
+Go to Previous Marker
+Go to Next Marker
+Set Clip Color
+Default
+Orange
+Apricot
+Yellow
+Lime
+Olive
+Green
+Teal
+Navy
+Blue
+Purple
+Violet
+Pink
+Tan
+Beige
+Brown
+Chocolate
+Show Current Frame on Playback
+Safe Area Overlay
+Show Grid / Guides
+Show Toolbar
+Show Full Screen Viewer
+Show Cinema Viewer
+Viewer Overlays
+Transform / Crop / Dynamic Zoom
+Safe Area
+Center Crosshair
+Checkerboard Background (Alpha)
+Show All Overlays
+Timecode Window
+Show Scopes
+Show Audio Meters
+Show Audio Mixer
+Show Inspector
+Play Forward
+Play Reverse
+Stop
+Play Around Current Frame
+Play In to Out
+Play Around In / Around Out
+Loop Playback
+Go to First Frame
+Go to Last Frame
+Go to In
+Go to Out
+Previous Frame
+Next Frame
+Previous Edit Point
+Next Edit Point
+Timeline Playback Resolution
+Half
+Quarter
+Effects Memory Cache
+Timeline Proxy Mode
+Off
+Eighth
+Hardware Decoding
+Delete Render Cache
+Video Transitions
+Cross Dissolve
+Dip to Color
+Audio Transitions
+Cross Fade
+Remove Transition
+OpenFX
+Blur
+Gaussian Blur
+Sharpen
+Color
+Invert Colors
+Black and White
+Distort
+Mosaic
+Audio FX
+EQ
+Dynamics
+Picasso FX
+Sepia
+Soft Blur
+Light
+Glow
+Stylize
+Vignette
+Film Grain
+Compositing Effects
+Nodes
+Generators
+Solid Color
+Color Bars
+Gradient
+Titles
+Text
+Text+
+Effects Library Search
+Add Tool (Compositing)
+Reset All Grades and Nodes
+Reset Current Node Grade
+Enable/Disable Current Node
+Grab Still
+Play Still
+Add Serial Node
+Add Serial Before
+Add Parallel Node
+Add Layer Mixer
+Add Splitter / Combiner
+Add Outside Node
+Label Node
+Timeline
+Previous Node Graph
+Next Node Graph
+LUT
+Apply LUT from list
+Gallery
+Scopes On/Off
+Highlight
+Lightbox
+ADR
+Automated Dialogue Replacement
+Bounce Mix to Track
+Bounce Selected Tracks
+Cache Audio Effects
+Audio Link
+Link Group
+Decompose
+Loop Jog
+Show Audio Timeline / Mixer
+Full Screen Viewer
+Show Panel in Workspace
+Media Pool
+Effects Library
+Inspector
+Mixer
+Metadata
+Edit Index
+Sound Library
+Layout
+Reset UI Layout
+Save Layout
+Load Layout
+Switch to Page
+Media
+Edit
+Effects
+Audio
+Deliver
+Dual Screen On/Off
+Video Clean Feed
+Picasso Suite Manual
+Picasso Suite Tutorials
+Check for Updates...
+Export Log File...
+About Picasso Suite
+Language

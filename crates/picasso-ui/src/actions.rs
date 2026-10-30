@@ -1067,6 +1067,7 @@ impl StudioApp {
             Act::ProxyEighth => Some(self.proxy == 8),
             Act::ToggleHardwareDecoding => Some(self.extra.prefs.hardware_decoding),
             Act::ToggleAudioScrubbing => Some(self.extra.prefs.audio_scrubbing),
+            Act::Language(language) => Some(self.extra.prefs.language == language),
             Act::OverlaySafeArea => Some(self.overlays.safe_area),
             Act::OverlayCrosshair => Some(self.overlays.crosshair),
             Act::OverlayGrid => Some(self.overlays.grid),
@@ -1637,6 +1638,13 @@ impl StudioApp {
                 self.fail("importing a folder needs the desktop app");
             }
             Act::Preferences => self.extra.preferences = true,
+            Act::Language(language) => {
+                self.extra.prefs.language = language;
+                crate::i18n::set(language);
+                #[cfg(not(test))]
+                self.extra.prefs.save();
+                self.info(format!("Language: {}", language.name()));
+            }
         }
     }
 
@@ -1676,7 +1684,7 @@ impl StudioApp {
                 }
                 Entry::Sub { label, items } if *label == "Recent Projects" => {
                     let recent = self.recent(10);
-                    ui.menu_button(*label, |ui| {
+                    ui.menu_button(crate::i18n::tr(label), |ui| {
                         ui.set_min_width(240.0);
                         if recent.is_empty() {
                             ui.add_enabled(false, Button::new("No recent projects"));
@@ -1693,7 +1701,7 @@ impl StudioApp {
                 }
                 Entry::Sub { label, items } => {
                     ui.add_enabled_ui(menu::is_live(items), |ui| {
-                        ui.menu_button(*label, |ui| {
+                        ui.menu_button(crate::i18n::tr(label), |ui| {
                             ui.set_min_width(240.0);
                             self.draw_entries(ui, ctx, items);
                         });
@@ -1706,7 +1714,7 @@ impl StudioApp {
                     act,
                 } => {
                     let enabled = act.is_some_and(|a| self.act_enabled(a));
-                    let mut button = Button::new(*label);
+                    let mut button = Button::new(crate::i18n::tr(label));
                     let text = menu::display_keys(*act, shown, keys);
                     if !text.is_empty() {
                         button = button.shortcut_text(text);

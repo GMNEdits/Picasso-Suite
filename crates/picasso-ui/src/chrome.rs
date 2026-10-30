@@ -283,8 +283,20 @@ impl StudioApp {
             theme::MENU_TEXT,
         );
 
-        for (label, x, entries) in crate::menu::MENUS {
+        for (n, (label, x, entries)) in crate::menu::MENUS.into_iter().enumerate() {
+            // The slot is the English name's; another language's name is a short form that fits
+            // it (`crate::i18n`).
             let rect = s.r(x - 11.0, -4.0, x + label.len() as f32 * 10.5 + 11.0, 34.0);
+            let shown = crate::i18n::menu_name(label);
+            let size = if shown == label {
+                18.0
+            } else {
+                let room = crate::menu::MENUS
+                    .get(n + 1)
+                    .map_or(120.0, |next| next.1 - x - 8.0);
+                let room = s.r(0.0, 0.0, room, 0.0).width();
+                menu_name_size(ui, shown, room)
+            };
             ui.scope_builder(
                 UiBuilder::new()
                     .max_rect(rect)
@@ -305,7 +317,7 @@ impl StudioApp {
                     style.spacing.button_padding = vec2(11.0, 6.0);
                     ui.set_min_height(38.0);
                     ui.menu_button(
-                        RichText::new(label).size(18.0).color(theme::MENU_TEXT),
+                        RichText::new(shown).size(size).color(theme::MENU_TEXT),
                         |ui| {
                             ui.set_min_width(300.0);
                             self.draw_entries(ui, ctx, entries);
@@ -811,6 +823,20 @@ impl StudioApp {
         }
         self.extra_windows(ctx);
     }
+}
+
+/// The font size of a menu name of the title row: 18, or smaller when the name (in a language
+/// whose short form is still a wide one) would run into the next menu. English never shrinks.
+fn menu_name_size(ui: &Ui, name: &str, room: f32) -> f32 {
+    let wide = ui
+        .painter()
+        .layout_no_wrap(name.to_string(), regular(18.0), theme::MENU_TEXT)
+        .size()
+        .x;
+    if wide <= room || wide <= 0.0 || room <= 0.0 {
+        return 18.0;
+    }
+    (18.0 * room / wide).max(12.0)
 }
 
 /// The app's picture (96 x 96, raw RGBA), drawn `size` points wide and centred on `c`.

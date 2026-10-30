@@ -22,6 +22,7 @@ mod exit_prompt;
 mod fps_prompt;
 mod icons;
 mod interchange;
+mod i18n;
 mod keyboard;
 mod keyframes_ui;
 mod layouts;

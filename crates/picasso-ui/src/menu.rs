@@ -213,6 +213,8 @@ pub(crate) enum Act {
     CheckForUpdates,
     /// Saves this session's log (see [`crate::session_log`]).
     ExportLog,
+    /// Shows the menus in this language (Help > Language), kept for the next start.
+    Language(crate::i18n::Language),
     // Not in a menu
     LeaveViewer,
 }
@@ -868,10 +870,32 @@ const WORKSPACE: &[Entry] = &[
     planned("Video Clean Feed", ""),
 ];
 
+/// Help > Language: each language by its own name, English (the default) first.
+const LANGUAGES: &[Entry] = &[
+    language(crate::i18n::Language::English),
+    language(crate::i18n::Language::Spanish),
+    language(crate::i18n::Language::Portuguese),
+    language(crate::i18n::Language::French),
+    language(crate::i18n::Language::German),
+    language(crate::i18n::Language::Italian),
+    language(crate::i18n::Language::Dutch),
+    language(crate::i18n::Language::Polish),
+    language(crate::i18n::Language::Turkish),
+    language(crate::i18n::Language::Swedish),
+    language(crate::i18n::Language::Russian),
+    language(crate::i18n::Language::Ukrainian),
+];
+
+const fn language(language: crate::i18n::Language) -> Entry {
+    item(language.name(), &[], Act::Language(language))
+}
+
 const HELP: &[Entry] = &[
     item("Picasso Suite Manual", &["F1"], Act::Manual),
     planned("Picasso Suite Tutorials", ""),
     item("Keyboard Customization", &[], Act::ShowShortcuts),
+    SEP,
+    sub("Language", LANGUAGES),
     SEP,
     item("Check for Updates...", &[], Act::CheckForUpdates),
     SEP,

@@ -2618,3 +2618,37 @@ fn exiting_without_saving_lets_the_window_close() {
     app.exit_without_saving(&ctx);
     assert!(!app.exit_prompt);
 }
+
+#[test]
+fn the_language_chosen_in_the_help_menu_is_kept_for_the_next_start() {
+    use crate::i18n::{self, Language};
+    let _only = i18n::CHANGING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    let mut app = app();
+    // English is the default, and is the one checked in the menu.
+    assert_eq!(app.extra.prefs.language, Language::English);
+    assert_eq!(app.act_checked(Act::Language(Language::English)), Some(true));
+    assert_eq!(app.act_checked(Act::Language(Language::Spanish)), Some(false));
+
+    act(&mut app, Act::Language(Language::Spanish));
+    assert_eq!(app.extra.prefs.language, Language::Spanish);
+    assert_eq!(i18n::current(), Language::Spanish);
+    assert_eq!(app.act_checked(Act::Language(Language::Spanish)), Some(true));
+    assert_eq!(app.act_checked(Act::Language(Language::English)), Some(false));
+    assert!(app.status.text.contains("Español"), "{}", app.status.text);
+    assert_eq!(i18n::menu_name("File"), "Arch.");
+    assert_eq!(i18n::tr("Save Project"), "Guardar proyecto");
+
+    // Written down, and read back at the next start.
+    let text = app.extra.prefs.text();
+    assert!(text.contains("language=es"), "{text}");
+    let next_start = crate::prefs::Preferences::parse(&text);
+    assert_eq!(next_start.language, Language::Spanish);
+    next_start.apply();
+    assert_eq!(i18n::current(), Language::Spanish);
+
+    // Back to English: the labels are the English ones again.
+    act(&mut app, Act::Language(Language::English));
+    assert_eq!(i18n::tr("Save Project"), "Save Project");
+    assert_eq!(i18n::menu_name("File"), "File");
+    assert!(app.extra.prefs.text().contains("language=en"));
+}

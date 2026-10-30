@@ -1,6 +1,6 @@
 //! The settings of this computer rather than of a project (System Preferences and Keyboard
 //! Customization), in `preferences.txt` in the data folder: `hardware_decoding=on` and
-//! `audio_scrubbing=on` lines, a `key<TAB>Undo<TAB>Ctrl+U` line for each command whose keys were
+//! `audio_scrubbing=on` lines, a `language=es` line (Help > Language, `crate::i18n`), a `key<TAB>Undo<TAB>Ctrl+U` line for each command whose keys were
 //! changed, with the keys it has instead of the menus' (none: no key), and a
 //! `panels=147,457,1186,474,960,519` line with the sizes of the panels whose dividers were
 //! dragged (`crate::panels`). Lines that cannot be read are skipped, so a file from another
@@ -8,6 +8,7 @@
 
 use std::collections::HashMap;
 
+use crate::i18n::Language;
 use crate::menu::{self, Act};
 use crate::panels::Panels;
 
@@ -23,6 +24,8 @@ pub(crate) struct Preferences {
     /// Play short pieces of the sound while the playhead is dragged (the Clip menu's
     /// "Enable / Disable Audio Scrubbing").
     pub audio_scrubbing: bool,
+    /// The language of the menus (Help > Language); English until another is chosen.
+    pub language: Language,
     /// The commands whose keys were changed, and their keys.
     pub keys: HashMap<Act, Vec<String>>,
     /// The sizes of the panels on the pages.
@@ -34,6 +37,7 @@ impl Default for Preferences {
         Self {
             hardware_decoding: true,
             audio_scrubbing: true,
+            language: Language::English,
             keys: HashMap::new(),
             panels: Panels::default(),
         }
@@ -70,6 +74,8 @@ impl Preferences {
                 match name.trim() {
                     "hardware_decoding" => prefs.hardware_decoding = value.trim() != "off",
                     "audio_scrubbing" => prefs.audio_scrubbing = value.trim() != "off",
+                    // A language this version does not have stays English.
+                    "language" => prefs.language = Language::from_code(value).unwrap_or_default(),
                     "panels" => {
                         if let Some(panels) = parse_panels(value) {
                             let moved = std::mem::take(&mut prefs.panels.moved);
@@ -85,9 +91,10 @@ impl Preferences {
 
     pub(crate) fn text(&self) -> String {
         let mut out = format!(
-            "hardware_decoding={}\naudio_scrubbing={}\n",
+            "hardware_decoding={}\naudio_scrubbing={}\nlanguage={}\n",
             if self.hardware_decoding { "on" } else { "off" },
-            if self.audio_scrubbing { "on" } else { "off" }
+            if self.audio_scrubbing { "on" } else { "off" },
+            self.language.code()
         );
         out.push_str(&panels_text(&self.panels));
         let mut keys: Vec<(String, &Vec<String>)> = self
@@ -108,9 +115,10 @@ impl Preferences {
         out
     }
 
-    /// Puts the preferences to work: the keys, and hardware decoding for the files opened next.
+    /// Puts the preferences to work: the keys, the language, and hardware decoding for the files opened next.
     pub(crate) fn apply(&self) {
         menu::set_custom_keys(self.keys.clone());
+        crate::i18n::set(self.language);
         #[cfg(not(target_arch = "wasm32"))]
         picasso_decode::hw::set_hardware_decoding(self.hardware_decoding);
     }
@@ -192,6 +200,7 @@ mod tests {
         let mut prefs = Preferences {
             hardware_decoding: false,
             audio_scrubbing: false,
+            language: Language::Portuguese,
             ..Preferences::default()
         };
         prefs.keys.insert(Act::Undo, vec!["Ctrl+U".into()]);
@@ -204,7 +213,7 @@ mod tests {
             .insert(Act::TogglePlay, vec!["K".into(), "Ctrl+[".into()]);
         let text = prefs.text();
         assert!(
-            text.starts_with("hardware_decoding=off\naudio_scrubbing=off\n"),
+            text.starts_with("hardware_decoding=off\naudio_scrubbing=off\nlanguage=pt\n"),
             "{text}"
         );
         assert_eq!(Preferences::parse(&text), prefs);
@@ -224,6 +233,10 @@ mod tests {
             Some(&vec!["Ctrl+U".to_string()])
         );
         assert_eq!(Preferences::parse(""), Preferences::default());
+        // A language this version does not have, or none: English.
+        assert_eq!(Preferences::parse("language=klingon").language, Language::English);
+        assert_eq!(Preferences::parse("language=").language, Language::English);
+        assert_eq!(Preferences::parse("language=de").language, Language::German);
         // Panel sizes: all six numbers or none, and in range.
         assert_eq!(
             Preferences::parse("panels=1,2,3").panels,

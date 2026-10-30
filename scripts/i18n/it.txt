@@ -1,0 +1,304 @@
+#menus
+File
+Mod.
+Trim
+Timeline
+Clip
+Segna
+Vista
+Riprod.
+Effetti
+Col.
+Audio
+Spazio
+Aiuto
+#entries
+New Project Library...|Nuova libreria progetti...
+Open Project Library...|Apri libreria progetti...
+Show Current Project Library in File Explorer|Mostra libreria in Esplora file
+Project Manager|Gestione progetti
+New Project|Nuovo progetto
+Open Project...|Apri progetto...
+Import Project...|Importa progetto...
+Export Project...|Esporta progetto...
+Restore Project Archive...|Ripristina archivio progetto...
+Save Project|Salva progetto
+Save Project As...|Salva progetto come...
+Save Copy As...|Salva copia come...
+Revert to Last Saved Version|Torna all'ultimo salvato
+Import|Importa
+Media...|Media...
+Folder as Bin...|Cartella come bin...
+Timeline: AAF, EDL, XML...|Timeline: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Timeline: EDL preconf...
+Subtitle...|Sottotitoli...
+Metadata to Media Pool...|Metadati nel pool media...
+Bin...|Bin...
+Export|Esporta
+Timeline: EDL...|Timeline: EDL...
+Timeline: OpenTimelineIO...|Timeline: OpenTimelineIO...
+Timeline: XML...|Timeline: XML...
+Timeline: AAF...|Timeline: AAF...
+Metadata from Media Pool...|Metadati dal pool media...
+Media Management...|Gestione media...
+Project Settings...|Impostazioni progetto...
+System Preferences...|Preferenze di sistema...
+Quick Export...|Esport. rapida...
+Quit|Esci
+Undo|Annulla
+Redo|Ripeti
+Cut|Taglia
+Copy|Copia
+Paste|Incolla
+Paste Insert|Incolla e inserisci
+Paste Mix to Current Track|Incolla mix su traccia
+Duplicate|Duplica
+Fit to Fill|Adatta allo spazio
+Place on Top|Metti sopra
+Delete Selected|Elimina selezione
+Delete Selected with Ripple|Elimina selez. con ripple
+Select All|Seleziona tutto
+Deselect All|Deseleziona tutto
+Select Clips Forward|Seleziona clip seguenti
+Find...|Trova...
+Recent Projects|Progetti recenti
+Project Manager...|Gestione progetti...
+Keyboard Customization|Personalizza tastiera
+Select Nearest Edit Point|Seleziona taglio vicino
+Selection Mode|Modo selezione
+Trim Mode|Modo trim
+Dynamic Trim Mode|Modo trim dinamico
+Ripple Start|Ripple inizio
+Ripple End|Ripple fine
+Ripple Trim Previous / Next|Ripple prec. / succ.
+Ripple Trim Previous Edit to Playhead|Ripple taglio prec. a testina
+Ripple Trim Next Edit to Playhead|Ripple taglio succ. a testina
+Trim Start to Playhead|Trim inizio a testina
+Trim End to Playhead|Trim fine a testina
+Extend Edit|Estendi taglio
+Slip Clip|Slip clip
+Slip One Frame Earlier|Slip 1 fotogramma prima
+Slip One Frame Later|Slip 1 fotogramma dopo
+Slide Clip|Slide clip
+Slide One Frame Left|Slide 1 fotogramma a sin.
+Slide One Frame Right|Slide 1 fotogramma a des.
+Loop Trim|Trim in loop
+Asymmetric Trimming|Trim asimmetrico
+Trim Editor|Editor trim
+New Timeline...|Nuova timeline...
+New Timeline Using Selected Clips|Nuova timeline da selezione
+Create New Compound Clip...|Crea clip composta...
+New Effects Clip...|Nuova clip effetti...
+Decompose in Place|Scomponi sul posto
+Decompose Compound Clip|Scomponi clip composta
+Decompose Nested Timeline|Scomponi timeline annid.
+Split Clip|Dividi clip
+Create Timeline Using Bin...|Crea timeline da bin...
+Import Timeline...|Importa timeline...
+Export Timeline...|Esporta timeline...
+Timeline Resolution and Frame Rate...|Risoluzione e fps timeline...
+Timeline Settings|Impostazioni timeline
+Snap|Aggancio
+Linked Selection|Selezione collegata
+Position Lock|Blocco posizione
+Selection Follows Playhead|Selez. segue la testina
+Add Marker|Aggiungi marcatore
+Add Marker and Show Dialog|Aggiungi marcatore + dialogo
+Delete All Markers|Elimina marcatori
+Create Subtitle Track|Crea traccia sottotitoli
+Create Subtitle Region|Crea area sottotitoli
+Add Transition to All Edits|Transizione su ogni taglio
+Switch Timeline|Cambia timeline
+Open Timeline in New Window|Apri timeline in finestra
+Delete Timeline|Elimina timeline
+Enable Clip|Attiva clip
+Match Frame|Match frame
+Lock Clip|Blocca clip
+New Multicam Clip...|Nuova clip multicam...
+Multicam Viewer|Viewer multicam
+Add to Media Pool as Stills|Aggiungi come fermo immagine
+Change Clip Speed...|Cambia velocità clip...
+Change Clip Duration...|Cambia durata clip...
+Retime Controls|Controlli retime
+Retime Clip|Retime clip
+Freeze Frame|Fermo immagine
+Speed Ramp...|Rampa velocità...
+Reverse Clip|Inverti clip
+Create New Compound Clip|Crea clip composta
+Link Clips|Collega clip
+Unlink Audio and Video|Scollega audio e video
+Enable / Disable Audio Scrubbing|Scrubbing audio sì/no
+Auto Align Clips|Allinea clip auto.
+Based on Timecode|Da timecode
+Based on Waveform|Da forma d'onda
+Normalize Audio Levels...|Normalizza livelli audio...
+Render in Place|Render sul posto
+New Effects Clip|Nuova clip effetti
+New Compound Clip|Nuova clip composta
+Clip Attributes...|Attributi clip...
+Mark In|Segna In
+Mark Out|Segna Out
+Mark Clip|Segna clip
+Mark Timeline In/Out|Segna In/Out timeline
+Clear In|Cancella In
+Clear Out|Cancella Out
+Clear In and Out|Cancella In e Out
+Modify Marker...|Modifica marcatore...
+Delete Marker at Current Position|Elimina marcatore qui
+Delete All Markers in Timeline|Elimina marcatori timeline
+Go to Previous Marker|Vai al marcatore prec.
+Go to Next Marker|Vai al marcatore succ.
+Set Clip Color|Colore clip
+Default|Predefinito
+Orange|Arancione
+Apricot|Albicocca
+Yellow|Giallo
+Lime|Lime
+Olive|Oliva
+Green|Verde
+Teal|Verde acqua
+Navy|Blu navy
+Blue|Blu
+Purple|Porpora
+Violet|Viola
+Pink|Rosa
+Tan|Marroncino
+Beige|Beige
+Brown|Marrone
+Chocolate|Cioccolato
+Show Current Frame on Playback|Fotogramma attuale in play
+Safe Area Overlay|Overlay area sicura
+Show Grid / Guides|Griglia / guide
+Show Toolbar|Barra strumenti
+Show Full Screen Viewer|Viewer a schermo intero
+Show Cinema Viewer|Mostra viewer cinema
+Viewer Overlays|Overlay del viewer
+Transform / Crop / Dynamic Zoom|Trasf. / Ritaglio / Zoom
+Safe Area|Area sicura
+Center Crosshair|Croce centrale
+Checkerboard Background (Alpha)|Sfondo a scacchi (alfa)
+Show All Overlays|Mostra tutti overlay
+Timecode Window|Finestra timecode
+Show Scopes|Mostra scope
+Show Audio Meters|Mostra indicatori audio
+Show Audio Mixer|Mostra mixer audio
+Show Inspector|Mostra inspector
+Play Forward|Riproduci avanti
+Play Reverse|Riproduci indietro
+Stop|Stop
+Play Around Current Frame|Riprod. attorno al fotogr.
+Play In to Out|Riproduci In-Out
+Play Around In / Around Out|Riprod. attorno a In/Out
+Loop Playback|Riproduzione in loop
+Go to First Frame|Vai al primo fotogr.
+Go to Last Frame|Vai all'ultimo fotogr.
+Go to In|Vai a In
+Go to Out|Vai a Out
+Previous Frame|Fotogramma prec.
+Next Frame|Fotogramma succ.
+Previous Edit Point|Taglio precedente
+Next Edit Point|Taglio successivo
+Timeline Playback Resolution|Risoluzione di riproduzione
+Half|Metà
+Quarter|Quarto
+Effects Memory Cache|Cache effetti
+Timeline Proxy Mode|Modo proxy
+Off|No
+Eighth|Ottavo
+Hardware Decoding|Decodifica hardware
+Delete Render Cache|Elimina cache render
+Video Transitions|Transizioni video
+Cross Dissolve|Dissolvenza incr.
+Dip to Color|Dissolvenza a colore
+Audio Transitions|Transizioni audio
+Cross Fade|Diss. incrociata
+Remove Transition|Rimuovi transizione
+OpenFX|OpenFX
+Blur|Sfocatura
+Gaussian Blur|Sfocatura gaussiana
+Sharpen|Nitidezza
+Color|Colore
+Invert Colors|Inverti colori
+Black and White|Bianco e nero
+Distort|Distorsione
+Mosaic|Mosaico
+Audio FX|Effetti audio
+EQ|EQ
+Dynamics|Dinamica
+Picasso FX|Picasso FX
+Sepia|Seppia
+Soft Blur|Sfocatura morbida
+Light|Luce
+Glow|Bagliore
+Stylize|Stilizza
+Vignette|Vignettatura
+Film Grain|Grana pellicola
+Compositing Effects|Effetti compositing
+Nodes|Nodi
+Generators|Generatori
+Solid Color|Colore pieno
+Color Bars|Barre colore
+Gradient|Gradiente
+Titles|Titoli
+Text|Testo
+Text+|Testo+
+Effects Library Search|Cerca negli effetti
+Add Tool (Compositing)|Aggiungi strumento
+Reset All Grades and Nodes|Reset gradazioni e nodi
+Reset Current Node Grade|Reset nodo corrente
+Enable/Disable Current Node|Attiva/disatt. nodo
+Grab Still|Cattura fermo imm.
+Play Still|Riproduci fermo imm.
+Add Serial Node|Aggiungi nodo seriale
+Add Serial Before|Aggiungi seriale prima
+Add Parallel Node|Aggiungi nodo parallelo
+Add Layer Mixer|Aggiungi mix. livelli
+Add Splitter / Combiner|Aggiungi splitter/comb.
+Add Outside Node|Aggiungi nodo esterno
+Label Node|Etichetta nodo
+Timeline|Timeline
+Previous Node Graph|Grafo nodi prec.
+Next Node Graph|Grafo nodi succ.
+LUT|LUT
+Apply LUT from list|Applica LUT dalla lista
+Gallery|Galleria
+Scopes On/Off|Scope sì/no
+Highlight|Alte luci
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Sostituz. auto. dialoghi
+Bounce Mix to Track|Bounce mix su traccia
+Bounce Selected Tracks|Bounce tracce scelte
+Cache Audio Effects|Cache effetti audio
+Audio Link|Collegamento audio
+Link Group|Gruppo collegam.
+Decompose|Scomponi
+Loop Jog|Jog in loop
+Show Audio Timeline / Mixer|Timeline / mixer audio
+Full Screen Viewer|Viewer a schermo intero
+Show Panel in Workspace|Mostra pannello
+Media Pool|Pool media
+Effects Library|Libreria effetti
+Inspector|Inspector
+Mixer|Mixer
+Metadata|Metadati
+Edit Index|Indice di montaggio
+Sound Library|Libreria suoni
+Layout|Layout
+Reset UI Layout|Ripristina layout
+Save Layout|Salva layout
+Load Layout|Carica layout
+Switch to Page|Vai alla pagina
+Media|Media
+Edit|Montaggio
+Effects|Effetti
+Audio|Audio
+Deliver|Consegna
+Dual Screen On/Off|Doppio schermo sì/no
+Video Clean Feed|Segnale video pulito
+Picasso Suite Manual|Manuale di Picasso Suite
+Picasso Suite Tutorials|Tutorial di Picasso Suite
+Check for Updates...|Cerca aggiornamenti...
+Export Log File...|Esporta file di log...
+About Picasso Suite|Info su Picasso Suite
+Language|Lingua

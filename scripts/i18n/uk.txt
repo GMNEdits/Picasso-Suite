@@ -1,0 +1,22 @@
+#menus
+Файл
+Прав.
+Обр.
+Таймлайн
+Кліп
+Мітка
+Вид
+Відтв.
+Ефекти
+Колір
+Звук
+Область
+Довідка
+#entries
+Picasso Suite Manual|Посібник Picasso Suite
+Picasso Suite Tutorials|Уроки Picasso Suite
+Keyboard Customization|Налаштування клавіатури
+Check for Updates...|Перевірити оновлення...
+Export Log File...|Експорт файлу журналу...
+About Picasso Suite|Про Picasso Suite
+Language|Мова

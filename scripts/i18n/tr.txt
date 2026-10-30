@@ -1,0 +1,22 @@
+#menus
+Dosya
+Düzen
+Kırp
+Zaman
+Klip
+İşrt.
+Gör.
+Oynat
+Efekt
+Renk
+Ses
+Alan
+Yardım
+#entries
+Picasso Suite Manual|Picasso Suite Kılavuzu
+Picasso Suite Tutorials|Picasso Suite Eğitimleri
+Keyboard Customization|Klavye özelleştirme
+Check for Updates...|Güncellemeleri denetle...
+Export Log File...|Günlüğü dışa aktar...
+About Picasso Suite|Picasso Suite hakkında
+Language|Dil

@@ -1,0 +1,22 @@
+#menus
+Arkiv
+Red.
+Trim
+Tidslinje
+Klipp
+Mark.
+Visa
+Uppsp.
+Effekt
+Färg
+Ljud
+Arbetsyta
+Hjälp
+#entries
+Picasso Suite Manual|Picasso Suite-manual
+Picasso Suite Tutorials|Picasso Suite-guider
+Keyboard Customization|Anpassa tangentbord
+Check for Updates...|Sök efter uppdateringar...
+Export Log File...|Exportera loggfil...
+About Picasso Suite|Om Picasso Suite
+Language|Språk
