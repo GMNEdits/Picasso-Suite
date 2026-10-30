@@ -353,6 +353,7 @@ pub(crate) fn fonts_installed(language: Language) {
 pub(crate) fn sync_fonts(ctx: &egui::Context) {
     let language = current();
     if JAPANESE_FONTS.swap(japanese_fonts(language), Ordering::Relaxed) != japanese_fonts(language) {
+        SHRINK.with(|cache| cache.borrow_mut().clear());
         ctx.set_fonts(crate::theme::fonts_for(language));
     }
 }
@@ -444,9 +445,28 @@ pub(crate) fn paint_text(
     // A sentence (a hint in the middle of a panel) that is wider than the English one is drawn smaller,
     // not over the panel beside it. A short label is never drawn smaller than the ones around it.
     let font = if text.chars().count() >= LONG && !shown.contains('\n') {
-        let width = |t: &str| painter.layout_no_wrap(t.to_string(), font.clone(), color).size().x;
-        let (was, now) = (width(&text), width(&shown));
-        match smaller(was, now) {
+        // How much smaller a sentence is drawn is worked out once, not every frame: laying a
+        // sentence out twice for each of the texts of a page cost milliseconds a frame.
+        let key = (
+            language,
+            text.clone(),
+            font.size.to_bits(),
+            font.family == egui::FontFamily::Proportional,
+        );
+        let scale = SHRINK.with(|cache| {
+            if let Some(found) = cache.borrow().get(&key) {
+                return *found;
+            }
+            let width = |t: &str| painter.layout_no_wrap(t.to_string(), font.clone(), color).size().x;
+            let found = smaller(width(&text), width(&shown));
+            let mut cache = cache.borrow_mut();
+            if cache.len() > 4096 {
+                cache.clear();
+            }
+            cache.insert(key, found);
+            found
+        });
+        match scale {
             Some(scale) => egui::FontId::new(font.size * scale, font.family.clone()),
             None => font,
         }
@@ -454,6 +474,13 @@ pub(crate) fn paint_text(
         font
     };
     painter.text(pos, anchor, shown, font, color)
+}
+
+thread_local! {
+    /// The scale a sentence is drawn at in a language, by the language, the English text, the size and
+    /// whether the font is the regular one; forgotten when the fonts change.
+    static SHRINK: std::cell::RefCell<HashMap<(Language, String, u32, bool), Option<f32>>> =
+        std::cell::RefCell::new(HashMap::new());
 }
 
 /// From this many characters a text is a sentence, which may be drawn smaller to fit its place.

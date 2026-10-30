@@ -193,6 +193,10 @@ fn parse_release(json: &str, install: &Install) -> Result<Release, String> {
     let package = v["assets"].as_array().and_then(|assets| {
         assets.iter().find_map(|a| {
             let name = a["name"].as_str()?;
+            // The name is put in a path: only a plain file name is taken.
+            if Path::new(name).file_name() != Some(std::ffi::OsStr::new(name)) || name.starts_with('.') {
+                return None;
+            }
             let url = a["browser_download_url"].as_str()?;
             (install.wants(name) && url.starts_with(DOWNLOAD_PREFIX))
                 .then(|| (name.to_string(), url.to_string()))
@@ -238,7 +242,7 @@ fn run(mut cmd: Command, what: &str) -> Result<Vec<u8>, String> {
 /// Asks GitHub for the latest release.
 fn fetch_latest(install: &Install) -> Result<Release, String> {
     let mut cmd = quiet("curl");
-    cmd.args(["-fsSL", "--max-time", "20"])
+    cmd.args(["-fsSL", "--proto", "=https", "--proto-redir", "=https", "--max-time", "20"])
         .args(["-H", "Accept: application/vnd.github+json"])
         .args(["-H", "User-Agent: picasso-suite-updater"])
         .arg(format!("https://api.github.com/repos/{REPO}/releases/latest"));
@@ -252,7 +256,7 @@ fn download(url: &str, dest: &Path) -> Result<(), String> {
         return Err("the package is not on this project's release page".into());
     }
     let mut cmd = quiet("curl");
-    cmd.args(["-fsSL", "--max-time", "900", "-o"])
+    cmd.args(["-fsSL", "--proto", "=https", "--proto-redir", "=https", "--max-time", "900", "-o"])
         .arg(dest)
         .arg(url);
     run(cmd, "Downloading the new version").map(|_| ())
@@ -264,8 +268,35 @@ fn work_dir(tag: &str) -> Result<PathBuf, String> {
         .chars()
         .filter(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_'))
         .collect();
-    let dir = std::env::temp_dir().join(format!("picasso-suite-update-{safe}"));
-    let _ = std::fs::remove_dir_all(&dir);
+    // The package is installed (with pkexec, as root, for a .deb or .rpm) after it is downloaded here, so
+    // nobody else may be able to put another file in its place in between: the folder has a name
+    // nobody can guess and is made for this user alone, never a name another user could have made.
+    let nonce = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map_or(0, |d| d.as_nanos());
+    let temp = std::env::temp_dir();
+    let dir = temp.join(format!("picasso-suite-update-{safe}-{}-{nonce:x}", std::process::id()));
+    // What an earlier update left (a real folder; a link is not followed).
+    if let Ok(entries) = std::fs::read_dir(&temp) {
+        for entry in entries.flatten() {
+            let name = entry.file_name().to_string_lossy().into_owned();
+            let is_dir = entry.file_type().is_ok_and(|t| t.is_dir() && !t.is_symlink());
+            if is_dir && name.starts_with("picasso-suite-update-") && entry.path() != dir {
+                let _ = std::fs::remove_dir_all(entry.path());
+            }
+        }
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::DirBuilderExt;
+        // `create` (not `create_dir_all`) fails when the name exists, so a folder made by someone else is never used.
+        std::fs::DirBuilder::new()
+            .mode(0o700)
+            .recursive(true)
+            .create(&dir)
+            .map_err(|e| format!("{}: {e}", dir.display()))?;
+    }
+    #[cfg(not(unix))]
     std::fs::create_dir_all(&dir).map_err(|e| format!("{}: {e}", dir.display()))?;
     Ok(dir)
 }
@@ -1007,5 +1038,33 @@ mod windows_install_tests {
         clean_up_dir(&dir);
         assert!(!dir.join("picasso-suite.exe.old").exists());
         let _ = std::fs::remove_dir_all(&dir);
+    }
+}
+
+#[cfg(test)]
+mod hardening_tests {
+    use super::*;
+
+    #[test]
+    fn each_update_gets_a_folder_of_its_own_that_nobody_else_made() {
+        let one = work_dir("v9.9.9").unwrap();
+        let two = work_dir("v9.9.9").unwrap();
+        assert_ne!(one, two, "a name nobody can guess, never one that was there before");
+        assert!(two.is_dir());
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            assert_eq!(std::fs::metadata(&two).unwrap().permissions().mode() & 0o777, 0o700);
+        }
+        let _ = std::fs::remove_dir_all(&two);
+    }
+
+    #[test]
+    fn a_package_name_that_is_a_path_is_not_taken() {
+        let json = r#"{"tag_name":"v9.9.9","body":"","assets":[
+            {"name":"../../picasso-suite-windows.zip","browser_download_url":"https://github.com/fabox-os/Picasso-Suite/releases/download/v9.9.9/evil.zip"},
+            {"name":".picasso-suite-windows.zip","browser_download_url":"https://github.com/fabox-os/Picasso-Suite/releases/download/v9.9.9/h.zip"}]}"#;
+        let release = parse_release(json, &Install::WindowsZip(PathBuf::from("."))).unwrap_or_else(|_| panic!("parsed"));
+        assert!(release.package.is_none(), "{:?}", release.package);
     }
 }

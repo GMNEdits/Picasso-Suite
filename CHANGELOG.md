@@ -14,6 +14,7 @@
 - ✅ **Exported files no longer read back one frame short:** the encoder gave the last video packet no duration, so 24 frames at 24 fps had a length of 23/24 s; every packet now carries one frame. Thanks to GANESH NIKAM.
 - ✅ **Recovering a copy that cannot be read:** Autosave no longer says it recovered a copy that is not a project (the project was marked changed with changes that never existed); it names the file and points at Discard. Thanks to GANESH NIKAM.
 - ✅ **Optimised media, made safer:** the index of copies can only name files inside the copies folder (an edited index could make Delete Copies remove another file), two paths that hash alike never share a copy (the hash is 64 bits and a taken name is not reused), a file name with a tab or a line break keeps no copy, and copies that were never finished (the program closed while one was being made) are swept at the next start when they are an hour old.
+- ✅ **Updater hardened:** the update is downloaded over HTTPS only (redirects included), a package name from GitHub must be a plain file name, and the folder it is downloaded to has a name nobody can guess and is private to the user (a `.deb` or `.rpm` is installed with `pkexec` after the download, so another user could have swapped the file in a shared `/tmp`).
 - ✅ **Help menu:** the first menus (File to Timeline, or all of them on the Media page) did not open on the Media and Deliver pages, in any language; the menu row is now above the pages' layers. A long submenu such as Help > Language is a short window that scrolls.
 
 ## 0.6.1
