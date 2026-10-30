@@ -516,7 +516,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Media...", "Média..."),
     ("Export", "Export."),
     ("Teal", "Petról."),
-    ("Mixer", "Mistura"),
+    ("Mixer", "Mist."),
     ("About Picasso Suite", "Acerca de"),
     ("Half", "Meio"),
     ("Media Pool", "Pool média"),
@@ -524,4 +524,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Revert to Last Saved Version", "Reverter"),
     ("Timeline: AAF, EDL, XML...", "Crono: AAF, EDL, XML..."),
     ("Timeline: OpenTimelineIO...", "Crono: OpenTimelineIO..."),
+    ("Timeline", "Cronol."),
+    ("Lightbox", "Mesa luz"),
+    ("Sound Library", "Sons"),
 ];

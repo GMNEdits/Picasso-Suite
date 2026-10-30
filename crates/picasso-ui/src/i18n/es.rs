@@ -536,4 +536,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Revert to Last Saved Version", "Revertir"),
     ("Timeline: AAF, EDL, XML...", "Crono: AAF, EDL, XML..."),
     ("Timeline: OpenTimelineIO...", "Crono: OpenTimelineIO..."),
+    ("Timeline", "Crono."),
+    ("Lightbox", "Mesa luz"),
+    ("Media Pool", "Medios"),
 ];

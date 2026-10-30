@@ -521,8 +521,11 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Cut", "Cut"),
     ("Edit", "Mont."),
     ("Teal", "Sarc."),
-    ("Lightbox", "Table lum."),
+    ("Lightbox", "Lightbox"),
     ("Save Project As...", "Enreg. sous..."),
     ("Timeline: AAF, EDL, XML...", "Mont. : AAF, EDL, XML..."),
     ("Timeline: OpenTimelineIO...", "Mont. : OpenTimelineIO..."),
+    ("Media Pool", "Médias"),
+    ("Mixer", "Mix."),
+    ("Metadata", "Métadon."),
 ];

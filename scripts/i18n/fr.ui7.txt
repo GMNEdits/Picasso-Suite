@@ -1,0 +1,4 @@
+Lightbox|Lightbox
+Media Pool|Médias
+Mixer|Mix.
+Metadata|Métadon.

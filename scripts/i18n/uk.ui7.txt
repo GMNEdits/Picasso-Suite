@@ -1,0 +1,2 @@
+Mixer|Мікш.
+Sound Library|Звуки

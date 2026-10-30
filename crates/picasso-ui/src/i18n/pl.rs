@@ -502,4 +502,6 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Save Copy As...", "Kopia jako..."),
     ("Import", "Import"),
     ("Export", "Eksport"),
+    ("Lightbox", "Lightbox"),
+    ("Sound Library", "Dźwięki"),
 ];

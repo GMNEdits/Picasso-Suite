@@ -505,4 +505,5 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Teal", "Turk."),
     ("Edit", "Edit"),
     ("Revert to Last Saved Version", "Terug naar opgeslagen"),
+    ("Sound Library", "Geluiden"),
 ];

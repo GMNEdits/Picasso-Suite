@@ -1,0 +1,4 @@
+Mixer|Микш.
+Metadata|Метадан.
+Sound Library|Звуки
+Effects|Эфф.

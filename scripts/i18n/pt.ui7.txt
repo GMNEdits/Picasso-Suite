@@ -1,0 +1,4 @@
+Mixer|Mist.
+Timeline|Cronol.
+Lightbox|Mesa luz
+Sound Library|Sons

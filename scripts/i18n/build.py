@@ -24,13 +24,9 @@ def width(text):
     return FONT.getlength(text)
 
 
-# Words that have room where the pages draw them (the page tabs along the bottom, the buttons of the
-# toolbars, the rows of a list): a translation may be up to twice as wide there.
-ROOMY = {
-    'Effects', 'Audio', 'Timeline', 'Mixer', 'Metadata',
-    'Media Pool', 'Inspector', 'Nodes', 'Titles', 'Lightbox',
-    'Sound Library', 'Color Bars', 'Half', 'Eighth', 'Teal', 'Default', 'Off',
-}
+# Words that have room where the pages draw them (the rows of a list): a translation may be up to half
+# as wide again there. The buttons of the toolbars do not: they sit side by side.
+ROOMY = {'Color Bars', 'Half', 'Eighth', 'Teal', 'Default', 'Off'}
 # The page tabs along the bottom: centred on a tab 100 px wide, so a name may grow a little to both sides
 # but is kept near the English (a long word beside short ones looks wrong).
 TABS = {'Media', 'Photo', 'Cut', 'Edit', 'Fusion', 'Color', 'Fairlight', 'Deliver'}

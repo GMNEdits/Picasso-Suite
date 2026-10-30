@@ -507,4 +507,8 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Revert to Last Saved Version", "Вернуть"),
     ("Timeline: AAF, EDL, XML...", "Таймл.: AAF, EDL, XML..."),
     ("Timeline: OpenTimelineIO...", "Таймл.: OpenTimelineIO..."),
+    ("Mixer", "Микш."),
+    ("Metadata", "Метадан."),
+    ("Sound Library", "Звуки"),
+    ("Effects", "Эфф."),
 ];

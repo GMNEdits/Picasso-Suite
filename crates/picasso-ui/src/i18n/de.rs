@@ -520,4 +520,5 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Export", "Export"),
     ("Cut", "Cut"),
     ("Edit", "Edit"),
+    ("Lightbox", "Lightbox"),
 ];

@@ -1,0 +1,4 @@
+Nodes|Düğüm
+Titles|Başlık
+Lightbox|Lightbox
+Media Pool|Medya

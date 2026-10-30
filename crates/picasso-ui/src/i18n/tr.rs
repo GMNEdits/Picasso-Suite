@@ -505,4 +505,8 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Off", "Kap."),
     ("Timeline", "Çizelge"),
     ("About Picasso Suite", "Hakkında"),
+    ("Nodes", "Düğüm"),
+    ("Titles", "Başlık"),
+    ("Lightbox", "Lightbox"),
+    ("Media Pool", "Medya"),
 ];
