@@ -704,6 +704,11 @@ pub(crate) fn encode(
             .map_err(enc_err)?;
             while venc.receive_packet(&mut packet).is_ok() {
                 packet.set_stream(video_index);
+                // A constant-frame-rate picture is one time-base unit long. ffmpeg does not
+                // always give the last packet a duration from the last frame, which makes the
+                // file read back one frame short; state it on the packet in codec time_base and
+                // let rescale_ts convert it to the stream's time_base.
+                packet.set_duration(1);
                 packet.rescale_ts(time_base, video_stream_tb);
                 packet.write_interleaved(&mut octx).map_err(enc_err)?;
             }
@@ -736,6 +741,7 @@ pub(crate) fn encode(
         venc.send_eof().map_err(enc_err)?;
         while venc.receive_packet(&mut packet).is_ok() {
             packet.set_stream(video_index);
+            packet.set_duration(1);
             packet.rescale_ts(time_base, video_stream_tb);
             packet.write_interleaved(&mut octx).map_err(enc_err)?;
         }
