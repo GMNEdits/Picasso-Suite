@@ -1,9 +1,9 @@
 #menus
-Arq.
+Fich.
 Edit.
 Corte
-Linha T.
-Clipe
+Cronol.
+Clip
 Marca
 Ver
 Reprod.

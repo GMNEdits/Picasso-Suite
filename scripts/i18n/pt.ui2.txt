@@ -1,42 +1,200 @@
-No clips in media pool|Sem clipes no painel
-Add clips with Import, or drop files here|Adicione clipes: Importar ou arraste aqui
-Add clips from Media Storage to get started|Adicione clipes do Armazenamento para começar
+Clips|Clips
+60 frames per second|60 fotogramas/s
+A video editor written in Rust for Windows, Linux, macOS and the web.|Um editor de vídeo escrito em Rust para Windows, Linux, macOS e web.
+Add Job|Adic.
+Add to Render Queue|Adic. à fila
+Advanced Settings|Avançadas
+Archive Project|Arquivar projeto
+Archive Project...|Arquivar projeto...
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing de áudio (som ao arrastar o cursor)
+Auto|Auto
+Automatic|Automático
+Balanced|Equil.
+Best|Top
+Bins|Bins
+Browse|Procurar
+Bus Sends|Envios a bus
+Capture|Captura
+Changing the frame rate keeps every clip on the same frames.|Mudar os fps mantém cada clip nos mesmos fotogramas.
+Chapters from Markers|Capítulos de marcadores
+Choose a folder|Escolher pasta
+Click a command's keys, then press the key it should have. Escape gives up.|Clique nas teclas de um comando e prima a nova tecla. Esc cancela.
+Clip Name|Nome
+Clone|Clonar
+Clone Tool|Clonar
+Codec|Codec
+Col Boost|Realce cor
+Collections|Coleções
+Contrast|Contraste
+Control Room|Sala de controlo
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Copia os ficheiros que as cronologias usam para uma pasta e escreve lá uma cópia do projeto que aponta para eles. O projeto em edição não muda.
+Create an Album|Criar álbum
+Curves - Custom|Curvas - Person.
+Custom Export|Exp. person.
+Decode Options|Descodificação
+Decode supported video using hardware acceleration|Descodificar vídeo com aceleração por hardware
+Demo Project|Projeto demo
+Drag photos into the Photo Album to start editing|Arraste fotos para o álbum para começar
+Drawn with|Feito com
+Editing|Edição
+Effects In|Efeitos ent.
+Embedded Audio|Áudio incorporado
+Encoder|Codific.
+Encoding Profile|Perfil codific.
+Entire Timeline|Cronologia inteira
+Estimated File Size|Tamanho estimado
+Every|Cada
+Every media file is where the project says it is.|Todos os ficheiros estão onde o projeto indica.
+Export Video|Exp. vídeo
+Fairlight|Fairlight
+File Name|Nome
+Filters|Filtros
+Format|Formato
+Frame rate|Fps
+Frame reordering|Reorden. fot.
+Free software under the GPL, version 3 or later.|Software livre sob a GPL, versão 3 ou posterior.
+Full Frames|Completos
+Full Screen|Ecrã inteiro
+Fusion|Fusion
+Gain|Gan.
+Gamma|Gama
+Generator|Gerador
+Graphics card|Placa gráfica
+Groups|Grupos
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 e VC-1 são descodificados na placa gráfica se o controlador puder. Desligue se os clips saírem verdes ou partidos. PICASSO_NO_HWACCEL=1 desliga uma vez.
+Help|Ajuda
+Hi/Light|Realces
+High|Alto
+Hue|Mat.
+Image|Imag.
+Index|Índice
+Individual clips|Clips soltos
+Input|Entr.
+Integrated|Integrado
+Key Frames|Keyframes
+Keywords|Etiquetas
+L. Mix|Mist.
+Layer|Cam.
+Linked selection (picture and sound together)|Seleção ligada (imagem e som)
+Loaded the demo project|Projeto demo carregado
+Local|Local
+Location|Local
+Loop playback|Repr. em ciclo
+Loudness|Sonoridade
+Low|Bx.
+Mark|Marca
+Media Management|Gestão de multimédia
+Media Source|Origem
+Media Storage|Armazenamento
+Meters|Medid.
+Mid/Detail|Méd./Det.
+Modifiers|Modific.
+Monitor|Monitor
+Monitor volume|Vol. monitor
+Native|Nativo
+Network Optimization|Otimiz. de rede
+No jobs in Queue|Sem tarefas
+No jobs in queue|Sem tarefas
+No stills created|Sem imagens fixas
+Not reported|Não indicado
+Nothing to inspect|Nada a inspecionar
+Offset|Desvio
+Open|Abrir
+Order|Ordem
+Parade|Parade
+Pause|Pausa
+Photo|Foto
+Photo Album|Álbum de fotos
+Pivot|Pivô
+Playback|Reprod.
+Position lock|Bloq. posição
+Preset|Predef.
+Primaries - Color Wheels|Primárias - Rodas de cor
+Process Mode|Modo processo
+Project settings|Def. do projeto
+Projects|Projetos
+Quality|Qualid.
+Quick Export|Exp. rápida
+Range|Faixa
+Rate Control|Controlo taxa
+Relink Missing Media|Religar multimédia
+Relink Missing Media...|Religar multimédia...
+Remove|Remover
+Render|Render
+Render All|Render tudo
+Render Queue|Fila de render
+Render Settings|Def. de render
+Render Settings - Custom Export|Render - Exportação person.
+Reset|Repor
+Reset All|Repor
+Resolution|Resolução
+Search|Busca
+Selection follows the playhead|A seleção segue o cursor
+Settings|Defin.
+Shad|Somb.
+Short|Curto
+Short Max|Curto máx.
+Single clip|Um clip
+Smart Bins|Bins intelig.
+Snap to clips, markers and the playhead|Íman a clips e marcadores
+Source Color Space|Espaço cor origem
+Source Gamma Space|Espaço gama de origem
+Subtitle Settings|Def. legendas
+System|Sistema
+System Preferences|Preferências
+Tape|Fita
+Timeline Resolution|Resol. cronologia
+Timeline proxy|Proxy cronol.
+Tint|Tom
+Tools|Ferr.
+Track FX|FX pista
+Transitions|Transições
+Trim|Apar.
+Untitled|S/ título
+Use vertical resolution|Resolução vertical
+Version 0.6.1|Versão 0.6.1
+Video|Vídeo
+View|Ver
+Waveform|Onda
+Workspace|Espaço
+No clips in media pool|Sem clips no pool
+Add clips with Import, or drop files here|Adicione clips: Importar ou arraste
+Add clips from Media Storage to get started|Adicione clips do armazenamento para começar
 No sound to show|Sem som
-No clip to grade|Sem clipe ativo
+No clip to grade|Sem clip ativo
 No Input|Sem entr.
 DURATION|DURAÇÃO
-File|Arq.
 Export Audio|Exportar áudio
 Data Rate|Taxa dados
-Output Track 1|Faixa de saída 1
+Output Track 1|Pista de saída 1
 Use unique filename|Nome único
-Adds (1), (2) ... to the name instead of writing over a file.|Adiciona (1), (2)... ao nome em vez de substituir um ficheiro.
+Adds (1), (2) ... to the name instead of writing over a file.|Acrescenta (1), (2)... ao nome em vez de substituir um ficheiro.
 File type|Tipo
-Whole timeline|Linha toda
+Whole timeline|Toda cronologia
 In to out marks|Marcas E/S
-Pixel aspect ratio|Proporção de pixel
+Pixel aspect ratio|Proporção de píxel
 Square|Quadr.
 Cinemascope|Cinemascope
 Data Levels|Níveis dados
 Retain sub-black and super-white data|Manter dados sub-preto e super-branco
 Color Space Tag|Etiqueta de cor
-Gamma Tag|Tag gama
+Gamma Tag|Etiq. gama
 Data burn-in|Dados no ecrã
 Same as project|Como o projeto
 Bypass re-encode when possible|Evitar recodificar se possível
-Use optimized media|Usar mídia otimizada
-Use proxy media|Usar mídia proxy
+Use optimized media|Média otimizada
+Use proxy media|Média proxy
 Use render cached images|Usar imagens em cache
-Force sizing to highest quality|Forçar escala máx. qualidade
-Force debayer to highest quality|Forçar debayer máx. qualidade
-Render All Video Tracks|Render faixas vídeo
+Force sizing to highest quality|Forçar escala de máx. qualidade
+Force debayer to highest quality|Forçar debayer de máx. qualidade
+Render All Video Tracks|Render pistas vídeo
 Enable Flat Pass|Ativar Flat Pass
 visionOS Bypass|Bypass visionOS
 Disable sizing and blanking output|Desativar escala e recorte
-Trigger script at|Executar script no
+Trigger script at|Executar script em
 Start|Início
-of render job|do render
-Export Subtitle|Exportar legenda
-As a separate file|Ficheiro à parte
+of render job|do trabalho
+Export Subtitle|Exp. legendas
+As a separate file|Ficheiro separado
 Export As|Exp. como
-frames|fotog.
+frames|fot.

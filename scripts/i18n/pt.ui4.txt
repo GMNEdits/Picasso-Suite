@@ -1,0 +1,9 @@
+Save Project|Guardar
+Save Project As...|Guardar como...
+Save Copy As...|Cópia como...
+Import|Import.
+Media...|Média...
+Export|Export.
+Teal|Petróleo
+Mixer|Mistura
+About Picasso Suite|Acerca de

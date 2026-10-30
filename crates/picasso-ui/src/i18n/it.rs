@@ -509,4 +509,11 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("As a separate file", "File separato"),
     ("Export As", "Esp. come"),
     ("frames", "fotogr."),
+    ("New Project", "Nuovo"),
+    ("Export Project...", "Esporta..."),
+    ("Save Project As...", "Salva come..."),
+    ("Save Copy As...", "Copia come..."),
+    ("Folder as Bin...", "Cartella/bin..."),
+    ("Teal", "Acqua"),
+    ("Edit", "Edit"),
 ];

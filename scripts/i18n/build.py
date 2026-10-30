@@ -24,9 +24,20 @@ def width(text):
     return FONT.getlength(text)
 
 
+# Words that have room where the pages draw them (the page tabs along the bottom, the buttons of the
+# toolbars, the rows of a list): a translation may be up to twice as wide there.
+ROOMY = {
+    'Cut', 'Edit', 'Deliver', 'Color', 'Effects', 'Audio', 'Media', 'Timeline', 'Mixer', 'Metadata',
+    'Media Pool', 'Inspector', 'Fusion', 'Photo', 'Fairlight', 'Nodes', 'Titles', 'Lightbox',
+    'Sound Library', 'Color Bars', 'Half', 'Eighth', 'Teal', 'Default', 'Off',
+}
+
+
 def fits_page(english, shown):
     # Text on a page is made smaller down to 3/4 when it is wider than the English; wider than that
     # (a third more) would run into its neighbour.
+    if english in ROOMY:
+        return width(shown) <= width(english) * 2.0 + 10
     return width(shown) <= width(english) * 1.15 + 4
 
 
@@ -76,6 +87,7 @@ def build(code):
     ui_lines = [f'{en}|{tr}' for en, tr in latest_ui.items()]
     collected = set((HERE / 'ui_labels.txt').read_text(encoding='utf-8').split('\n'))
     collected |= set((HERE / 'ui_more.txt').read_text(encoding='utf-8').split('\n'))
+    on_pages = set(collected)
     collected |= set(ENGLISH)
     for l in ui_lines:
         if not l.strip():
@@ -86,6 +98,12 @@ def build(code):
         if en not in collected:
             problems.append(f'ui text {en!r} is not shown anywhere (scripts/i18n/ui_labels.txt)')
         ui.append((en, tr))
+    # A menu word that is also text on a page (Cut, Edit, Media...) is drawn there too, so it has to fit
+    # there, unless the page text has a short form of its own.
+    own = {en for en, _ in ui}
+    for en, tr in latest.items():
+        if en in on_pages and en not in own and not fits_page(en, tr):
+            problems.append(f'page text {en!r} -> {tr!r} is {width(tr):.0f}px, the English {width(en):.0f}px (from the menus)')
     return menus, pairs, ui, problems, missing
 
 

@@ -489,4 +489,13 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("As a separate file", "Окремий файл"),
     ("Export As", "Експорт як"),
     ("frames", "кадрів"),
+    ("Project Manager", "Проєкти"),
+    ("Open Project...", "Відкрити..."),
+    ("Save Project", "Зберегти"),
+    ("Save Project As...", "Зберегти як..."),
+    ("Save Copy As...", "Копія як..."),
+    ("Export", "Експ."),
+    ("Cut", "Виріз."),
+    ("Teal", "Бірюза"),
+    ("Half", "Пів"),
 ];

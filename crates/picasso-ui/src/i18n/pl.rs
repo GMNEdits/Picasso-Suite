@@ -495,4 +495,11 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("As a separate file", "Osobny plik"),
     ("Export As", "Eksp. jako"),
     ("frames", "klatki"),
+    ("About Picasso Suite", "O programie"),
+    ("Project Manager", "Projekty"),
+    ("Export Project...", "Eksport..."),
+    ("Save Project As...", "Zapisz jako..."),
+    ("Save Copy As...", "Kopia jako..."),
+    ("Import", "Import"),
+    ("Export", "Eksport"),
 ];

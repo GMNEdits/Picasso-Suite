@@ -511,4 +511,12 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("As a separate file", "Separate Datei"),
     ("Export As", "Export als"),
     ("frames", "Bilder"),
+    ("Import Project...", "Importieren..."),
+    ("Export Project...", "Exportieren..."),
+    ("Save Project", "Speichern"),
+    ("Save Project As...", "Speichern als..."),
+    ("Save Copy As...", "Kopie speich..."),
+    ("Import", "Import"),
+    ("Export", "Export"),
+    ("Cut", "Schnitt"),
 ];

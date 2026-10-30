@@ -495,4 +495,11 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("As a separate file", "Ayrı dosya"),
     ("Export As", "Şu olarak"),
     ("frames", "kare"),
+    ("Save Project As...", "Farklı kaydet..."),
+    ("Import", "İçe al"),
+    ("Folder as Bin...", "Klasör/bin..."),
+    ("Timeline: AAF, EDL, XML...", "Çizelge: AAF, EDL, XML..."),
+    ("Export", "Dışa al"),
+    ("Timeline: OpenTimelineIO...", "Çizelge: OpenTimelineIO..."),
+    ("Teal", "Turkuaz"),
 ];

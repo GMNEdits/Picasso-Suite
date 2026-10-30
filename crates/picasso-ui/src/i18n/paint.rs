@@ -7,19 +7,14 @@
 //! several parts) stays as it is. Nothing but the pixels change; what the program compares
 //! and stores stays English.
 //!
-//! A translation is put where the English text was. When it is wider than the English text it
-//! is made smaller, down to three quarters of the size, instead of running into what is next to
-//! it; the tables are written with short forms so that this is rarely needed.
+//! A translation is put where the English text was, at the same size: the tables are written with
+//! short forms so that it is not wider than the English (`scripts/i18n/build.py` measures each
+//! one), and a text is never drawn smaller than the others around it.
 
 use egui::epaint::text::LayoutJob;
 use egui::{Context, LayerId, Shape};
 
 use super::{translate_ui, Language};
-
-/// The smallest a translation is made when it is wider than the English text.
-const SMALLEST: f32 = 0.75;
-/// A translation up to this much wider than the English text is left at full size.
-const SLACK: f32 = 1.0;
 
 /// Translates the text painted this frame. Called at the end of the frame.
 pub(crate) fn translate_frame(ctx: &Context) {
@@ -35,8 +30,8 @@ pub(crate) fn translate_frame_in(ctx: &Context, language: Language) {
         layers.push(LayerId::background());
     }
 
-    // What is to be translated: where it is, the job to lay out, and how wide the English was.
-    let mut wanted: Vec<(LayerId, usize, LayoutJob, f32)> = Vec::new();
+    // What is to be translated: where it is and the job to lay out.
+    let mut wanted: Vec<(LayerId, usize, LayoutJob)> = Vec::new();
     ctx.graphics(|graphics| {
         for layer in &layers {
             let Some(list) = graphics.get(*layer) else {
@@ -61,7 +56,7 @@ pub(crate) fn translate_frame_in(ctx: &Context, language: Language) {
                 new.break_on_newline = job.break_on_newline;
                 new.first_row_min_height = job.first_row_min_height;
                 new.sections[0].leading_space = job.sections[0].leading_space;
-                wanted.push((*layer, i, new, text.galley.rect.width()));
+                wanted.push((*layer, i, new));
             }
         }
     });
@@ -72,25 +67,12 @@ pub(crate) fn translate_frame_in(ctx: &Context, language: Language) {
     let laid_out: Vec<_> = ctx.fonts_mut(|fonts| {
         wanted
             .iter()
-            .map(|(_, _, job, was)| {
-                let galley = fonts.layout_job(job.clone());
-                let wide = galley.rect.width();
-                // Wrapped text has the room it was given: only a single line is made smaller.
-                if galley.rows.len() > 1 || wide <= was + SLACK || wide <= 0.0 {
-                    return galley;
-                }
-                let scale = (was / wide).max(SMALLEST);
-                let mut smaller = job.clone();
-                for section in &mut smaller.sections {
-                    section.format.font_id.size *= scale;
-                }
-                fonts.layout_job(smaller)
-            })
+            .map(|(_, _, job)| fonts.layout_job(job.clone()))
             .collect()
     });
 
     ctx.graphics_mut(|graphics| {
-        for ((layer, i, _, _), galley) in wanted.into_iter().zip(laid_out) {
+        for ((layer, i, _), galley) in wanted.into_iter().zip(laid_out) {
             if let Some(list) = graphics.get_mut(layer) {
                 list.mutate_shape(egui::layers::ShapeIdx(i), |clipped| {
                     if let Shape::Text(text) = &mut clipped.shape {
