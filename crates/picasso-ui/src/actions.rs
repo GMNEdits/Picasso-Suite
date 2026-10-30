@@ -1703,7 +1703,16 @@ impl StudioApp {
                     ui.add_enabled_ui(menu::is_live(items), |ui| {
                         ui.menu_button(crate::i18n::tr(label), |ui| {
                             ui.set_min_width(240.0);
-                            self.draw_entries(ui, ctx, items);
+                            // A long list (the languages) is a short window that scrolls, not a
+                            // menu taller than the screen.
+                            if items.len() > 14 {
+                                egui::ScrollArea::vertical()
+                                    .max_height(340.0)
+                                    .auto_shrink([true, true])
+                                    .show(ui, |ui| self.draw_entries(ui, ctx, items));
+                            } else {
+                                self.draw_entries(ui, ctx, items);
+                            }
                         });
                     });
                 }
