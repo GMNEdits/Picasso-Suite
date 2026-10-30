@@ -502,6 +502,6 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Subtitle...", "Ondertit..."),
     ("Export", "Export"),
     ("Cut", "Knip"),
-    ("Teal", "Turkoois"),
+    ("Teal", "Turk."),
     ("Edit", "Edit"),
 ];

@@ -530,4 +530,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Export", "Export."),
     ("Folder as Bin...", "Carpeta/bin..."),
     ("About Picasso Suite", "Acerca de"),
+    ("Edit", "Edic."),
+    ("Teal", "Turq."),
+    ("Mixer", "Mezcla"),
 ];

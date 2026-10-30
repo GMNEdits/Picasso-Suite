@@ -27,17 +27,22 @@ def width(text):
 # Words that have room where the pages draw them (the page tabs along the bottom, the buttons of the
 # toolbars, the rows of a list): a translation may be up to twice as wide there.
 ROOMY = {
-    'Cut', 'Edit', 'Deliver', 'Color', 'Effects', 'Audio', 'Media', 'Timeline', 'Mixer', 'Metadata',
-    'Media Pool', 'Inspector', 'Fusion', 'Photo', 'Fairlight', 'Nodes', 'Titles', 'Lightbox',
+    'Effects', 'Audio', 'Timeline', 'Mixer', 'Metadata',
+    'Media Pool', 'Inspector', 'Nodes', 'Titles', 'Lightbox',
     'Sound Library', 'Color Bars', 'Half', 'Eighth', 'Teal', 'Default', 'Off',
 }
+# The page tabs along the bottom: centred on a tab 100 px wide, so a name may grow a little to both sides
+# but is kept near the English (a long word beside short ones looks wrong).
+TABS = {'Media', 'Photo', 'Cut', 'Edit', 'Fusion', 'Color', 'Fairlight', 'Deliver'}
 
 
 def fits_page(english, shown):
     # Text on a page is made smaller down to 3/4 when it is wider than the English; wider than that
     # (a third more) would run into its neighbour.
+    if english in TABS:
+        return width(shown) <= width(english) * 1.4 + 10
     if english in ROOMY:
-        return width(shown) <= width(english) * 2.0 + 10
+        return width(shown) <= width(english) * 1.5 + 8
     return width(shown) <= width(english) * 1.15 + 4
 
 

@@ -518,5 +518,6 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Save Copy As...", "Kopie speich..."),
     ("Import", "Import"),
     ("Export", "Export"),
-    ("Cut", "Schnitt"),
+    ("Cut", "Cut"),
+    ("Edit", "Edit"),
 ];

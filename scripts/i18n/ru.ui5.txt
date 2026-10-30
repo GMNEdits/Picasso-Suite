@@ -1,0 +1,6 @@
+Cut|Рез.
+Default|Станд.
+Color Bars|Цвет. полосы
+Lightbox|Свет. стол
+Teal|Бир.
+Edit|Edit

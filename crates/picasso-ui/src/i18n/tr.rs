@@ -501,5 +501,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Timeline: AAF, EDL, XML...", "Çizelge: AAF, EDL, XML..."),
     ("Export", "Dışa al"),
     ("Timeline: OpenTimelineIO...", "Çizelge: OpenTimelineIO..."),
-    ("Teal", "Turkuaz"),
+    ("Teal", "Turk."),
+    ("Off", "Kap."),
+    ("Timeline", "Çizelge"),
 ];

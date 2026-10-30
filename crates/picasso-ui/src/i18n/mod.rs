@@ -214,6 +214,12 @@ fn ui_table(language: Language) -> Option<&'static HashMap<&'static str, &'stati
     }))
 }
 
+/// A page text in the language chosen, for text a page draws itself (the page tabs are centred, so
+/// they are translated where they are drawn); English when it has no translation.
+pub(crate) fn tr_ui(text: &'static str) -> &'static str {
+    translate_ui(current(), text).unwrap_or(text)
+}
+
 /// Text painted on a page or in a window, in the language; `None` when it has no translation.
 pub(crate) fn translate_ui(language: Language, text: &str) -> Option<&'static str> {
     ui_table(language)?.get(text).copied()

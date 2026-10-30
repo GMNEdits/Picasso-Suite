@@ -497,7 +497,11 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Save Copy As...", "Копия как..."),
     ("Subtitle...", "Субт..."),
     ("Export", "Эксп."),
-    ("Cut", "Вырез."),
-    ("Teal", "Бирюза"),
+    ("Cut", "Рез."),
+    ("Teal", "Бир."),
     ("Half", "Пол."),
+    ("Default", "Станд."),
+    ("Color Bars", "Цвет. полосы"),
+    ("Lightbox", "Свет. стол"),
+    ("Edit", "Edit"),
 ];

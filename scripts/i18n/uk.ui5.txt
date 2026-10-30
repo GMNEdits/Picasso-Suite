@@ -1,0 +1,3 @@
+Color Bars|Кольор. смуги
+Lightbox|Світл. стіл
+Edit|Edit

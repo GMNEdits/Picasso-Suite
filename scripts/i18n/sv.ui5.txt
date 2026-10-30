@@ -1,0 +1,4 @@
+Cut|Klipp
+Half|Hälft.
+Teal|Blågr.
+Edit|Edit

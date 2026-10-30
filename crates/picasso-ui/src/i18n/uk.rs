@@ -498,4 +498,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Cut", "Виріз."),
     ("Teal", "Бірюза"),
     ("Half", "Пів"),
+    ("Color Bars", "Кольор. смуги"),
+    ("Lightbox", "Світл. стіл"),
+    ("Edit", "Edit"),
 ];

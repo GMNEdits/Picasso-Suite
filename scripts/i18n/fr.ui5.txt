@@ -1,0 +1,4 @@
+Cut|Cut
+Edit|Mont.
+Teal|Sarc.
+Lightbox|Table lum.

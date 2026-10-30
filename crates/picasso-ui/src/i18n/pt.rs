@@ -515,7 +515,10 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Import", "Import."),
     ("Media...", "Média..."),
     ("Export", "Export."),
-    ("Teal", "Petróleo"),
+    ("Teal", "Petról."),
     ("Mixer", "Mistura"),
     ("About Picasso Suite", "Acerca de"),
+    ("Half", "Meio"),
+    ("Media Pool", "Pool média"),
+    ("Media", "Média"),
 ];

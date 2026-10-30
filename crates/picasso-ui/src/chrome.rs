@@ -719,7 +719,7 @@ impl StudioApp {
             painter.text(
                 at(cx, 12.5),
                 Align2::CENTER_CENTER,
-                name,
+                crate::i18n::tr_ui(name),
                 if selected {
                     semibold(12.5 * R)
                 } else {
