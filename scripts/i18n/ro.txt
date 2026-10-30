@@ -1,0 +1,304 @@
+#menus
+Fiș.
+Edit.
+Tăi.
+Cronol.
+Clip
+Marc.
+Vez.
+Redare
+Efecte
+Cul.
+Audio
+Spațiu
+Ajutor
+#entries
+New Project Library...|Bibliotecă nouă de proiecte...
+Open Project Library...|Deschide biblioteca de proiecte...
+Show Current Project Library in File Explorer|Arată biblioteca în Explorer
+Project Manager|Manager de proiecte
+New Project|Proiect nou
+Open Project...|Deschide proiect...
+Import Project...|Importă proiect...
+Export Project...|Exportă proiect...
+Restore Project Archive...|Restaurează arhiva proiectului...
+Save Project|Salvează proiectul
+Save Project As...|Salvează proiectul ca...
+Save Copy As...|Salvează copia ca...
+Revert to Last Saved Version|Revino la ultima salvare
+Import|Importă
+Media...|Media...
+Folder as Bin...|Dosar ca bin...
+Timeline: AAF, EDL, XML...|Cronologie: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Cronologie: pre-EDL...
+Subtitle...|Subtitrare...
+Metadata to Media Pool...|Metadate în media pool...
+Bin...|Bin...
+Export|Exportă
+Timeline: EDL...|Cronologie: EDL...
+Timeline: OpenTimelineIO...|Cronologie: OpenTimelineIO...
+Timeline: XML...|Cronologie: XML...
+Timeline: AAF...|Cronologie: AAF...
+Metadata from Media Pool...|Metadate din media pool...
+Media Management...|Gestionare media...
+Project Settings...|Setări proiect...
+System Preferences...|Preferințe sistem...
+Quick Export...|Export rapid...
+Quit|Ieșire
+Undo|Anulează
+Redo|Refă
+Cut|Taie
+Copy|Copiază
+Paste|Lipește
+Paste Insert|Lipește și inserează
+Paste Mix to Current Track|Lipește mixul în pistă
+Duplicate|Duplică
+Fit to Fill|Potrivește la umplere
+Place on Top|Plasează deasupra
+Delete Selected|Șterge selecția
+Delete Selected with Ripple|Șterge selecția cu ripple
+Select All|Selectează tot
+Deselect All|Deselectează tot
+Select Clips Forward|Selectează clipuri înainte
+Find...|Caută...
+Recent Projects|Proiecte recente
+Project Manager...|Manager de proiecte...
+Keyboard Customization|Scurtături tastatură
+Select Nearest Edit Point|Alege cel mai apropiat punct
+Selection Mode|Mod selecție
+Trim Mode|Mod tăiere
+Dynamic Trim Mode|Tăiere dinamică
+Ripple Start|Ripple început
+Ripple End|Ripple sfârșit
+Ripple Trim Previous / Next|Ripple anterior / următor
+Ripple Trim Previous Edit to Playhead|Ripple anterior la cursor
+Ripple Trim Next Edit to Playhead|Ripple următor la cursor
+Trim Start to Playhead|Taie începutul la cursor
+Trim End to Playhead|Taie sfârșitul la cursor
+Extend Edit|Extinde editarea
+Slip Clip|Slip clip
+Slip One Frame Earlier|Slip un cadru mai devreme
+Slip One Frame Later|Slip un cadru mai târziu
+Slide Clip|Slide clip
+Slide One Frame Left|Slide un cadru la stânga
+Slide One Frame Right|Slide un cadru la dreapta
+Loop Trim|Tăiere în buclă
+Asymmetric Trimming|Tăiere asimetrică
+Trim Editor|Editor de tăiere
+New Timeline...|Cronologie nouă...
+New Timeline Using Selected Clips|Cronologie din clipurile alese
+Create New Compound Clip...|Clip compus nou...
+New Effects Clip...|Clip de efecte nou...
+Decompose in Place|Descompune pe loc
+Decompose Compound Clip|Descompune clipul compus
+Decompose Nested Timeline|Descompune cronologia imbricată
+Split Clip|Împarte clipul
+Create Timeline Using Bin...|Cronologie din bin...
+Import Timeline...|Importă cronologie...
+Export Timeline...|Exportă cronologie...
+Timeline Resolution and Frame Rate...|Rezoluție și rată de cadre...
+Timeline Settings|Setări cronologie
+Snap|Magnet
+Linked Selection|Selecție legată
+Position Lock|Blocare poziție
+Selection Follows Playhead|Selecția urmează cursorul
+Add Marker|Adaugă marcaj
+Add Marker and Show Dialog|Adaugă marcaj cu dialog
+Delete All Markers|Șterge toate marcajele
+Create Subtitle Track|Creează pistă de subtitrare
+Create Subtitle Region|Creează regiune de subtitrare
+Add Transition to All Edits|Tranziție la toate tăieturile
+Switch Timeline|Schimbă cronologia
+Open Timeline in New Window|Deschide cronologia în fereastră
+Delete Timeline|Șterge cronologia
+Enable Clip|Activează clipul
+Match Frame|Cadru potrivit
+Lock Clip|Blochează clipul
+New Multicam Clip...|Clip multicam nou...
+Multicam Viewer|Vizualizator multicam
+Add to Media Pool as Stills|Adaugă ca imagini statice
+Change Clip Speed...|Schimbă viteza clipului...
+Change Clip Duration...|Schimbă durata clipului...
+Retime Controls|Control timp
+Retime Clip|Retimează clipul
+Freeze Frame|Îngheață cadrul
+Speed Ramp...|Rampă de viteză...
+Reverse Clip|Inversează clipul
+Create New Compound Clip|Clip compus nou
+Link Clips|Leagă clipurile
+Unlink Audio and Video|Separă sunetul de imagine
+Enable / Disable Audio Scrubbing|Scrubbing audio pornit/oprit
+Auto Align Clips|Aliniază clipurile automat
+Based on Timecode|După timecode
+Based on Waveform|După forma de undă
+Normalize Audio Levels...|Normalizează nivelul audio...
+Render in Place|Randare pe loc
+New Effects Clip|Clip de efecte nou
+New Compound Clip|Clip compus nou
+Clip Attributes...|Atribute clip...
+Mark In|Marcaj intrare
+Mark Out|Marcaj ieșire
+Mark Clip|Marchează clipul
+Mark Timeline In/Out|Marchează cronol. intrare/ieșire
+Clear In|Șterge intrarea
+Clear Out|Șterge ieșirea
+Clear In and Out|Șterge intrarea și ieșirea
+Modify Marker...|Modifică marcajul...
+Delete Marker at Current Position|Șterge marcajul de aici
+Delete All Markers in Timeline|Șterge toate marcajele
+Go to Previous Marker|La marcajul anterior
+Go to Next Marker|La marcajul următor
+Set Clip Color|Culoarea clipului
+Default|Implicit
+Orange|Portocaliu
+Apricot|Caisă
+Yellow|Galben
+Lime|Lime
+Olive|Măsliniu
+Green|Verde
+Teal|Verde-albastru
+Navy|Bleumarin
+Blue|Albastru
+Purple|Mov
+Violet|Violet
+Pink|Roz
+Tan|Maro deschis
+Beige|Bej
+Brown|Maro
+Chocolate|Ciocolatiu
+Show Current Frame on Playback|Arată cadrul curent la redare
+Safe Area Overlay|Zonă sigură
+Show Grid / Guides|Arată grila / ghidajele
+Show Toolbar|Arată bara de unelte
+Show Full Screen Viewer|Arată vizualizare ecran complet
+Show Cinema Viewer|Arată vizualizare cinema
+Viewer Overlays|Suprapuneri vizualizator
+Transform / Crop / Dynamic Zoom|Transf. / decupare / zoom
+Safe Area|Zonă sigură
+Center Crosshair|Cruce centrală
+Checkerboard Background (Alpha)|Fundal șah (alfa)
+Show All Overlays|Arată toate suprapunerile
+Timecode Window|Fereastră timecode
+Show Scopes|Arată scope-uri
+Show Audio Meters|Arată indicatoare audio
+Show Audio Mixer|Arată mixerul audio
+Show Inspector|Arată inspectorul
+Play Forward|Redă înainte
+Play Reverse|Redă înapoi
+Stop|Stop
+Play Around Current Frame|Redă în jurul cadrului
+Play In to Out|Redă intrare–ieșire
+Play Around In / Around Out|Redă în jurul intrării/ieșirii
+Loop Playback|Redare în buclă
+Go to First Frame|La primul cadru
+Go to Last Frame|La ultimul cadru
+Go to In|La intrare
+Go to Out|La ieșire
+Previous Frame|Cadrul anterior
+Next Frame|Cadrul următor
+Previous Edit Point|Punctul de editare anterior
+Next Edit Point|Punctul de editare următor
+Timeline Playback Resolution|Rezoluție redare
+Half|Jumătate
+Quarter|Sfert
+Effects Memory Cache|Cache memorie efecte
+Timeline Proxy Mode|Mod proxy
+Off|Oprit
+Eighth|Optime
+Hardware Decoding|Decodare hardware
+Delete Render Cache|Șterge cache randare
+Video Transitions|Tranziții video
+Cross Dissolve|Dizolvare încrucișată
+Dip to Color|Estompare prin culoare
+Audio Transitions|Tranziții audio
+Cross Fade|Fade încrucișat
+Remove Transition|Elimină tranziția
+OpenFX|OpenFX
+Blur|Estompare
+Gaussian Blur|Estompare Gauss
+Sharpen|Claritate
+Color|Culoare
+Invert Colors|Inversează culorile
+Black and White|Alb-negru
+Distort|Distorsiune
+Mosaic|Mozaic
+Audio FX|Efecte audio
+EQ|EQ
+Dynamics|Dinamică
+Picasso FX|Picasso FX
+Sepia|Sepia
+Soft Blur|Estompare fină
+Light|Lumină
+Glow|Strălucire
+Stylize|Stilizare
+Vignette|Vignetă
+Film Grain|Granulație film
+Compositing Effects|Efecte de compoziție
+Nodes|Noduri
+Generators|Generatoare
+Solid Color|Culoare unică
+Color Bars|Bare de culoare
+Gradient|Degrade
+Titles|Titluri
+Text|Text
+Text+|Text+
+Effects Library Search|Caută în biblioteca de efecte
+Add Tool (Compositing)|Adaugă unealtă (compoziție)
+Reset All Grades and Nodes|Resetează gradările și nodurile
+Reset Current Node Grade|Resetează nodul curent
+Enable/Disable Current Node|Nod pornit/oprit
+Grab Still|Captează still
+Play Still|Redă still
+Add Serial Node|Adaugă nod serial
+Add Serial Before|Adaugă serial înainte
+Add Parallel Node|Adaugă nod paralel
+Add Layer Mixer|Adaugă mixer de straturi
+Add Splitter / Combiner|Adaugă divizor / combinator
+Add Outside Node|Adaugă nod exterior
+Label Node|Etichetează nodul
+Timeline|Cronologie
+Previous Node Graph|Graful de noduri anterior
+Next Node Graph|Graful de noduri următor
+LUT|LUT
+Apply LUT from list|Aplică LUT din listă
+Gallery|Galerie
+Scopes On/Off|Scope-uri pornit/oprit
+Highlight|Lumini
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Înlocuire automată dialog
+Bounce Mix to Track|Bounce mix în pistă
+Bounce Selected Tracks|Bounce piste alese
+Cache Audio Effects|Cache efecte audio
+Audio Link|Legătură audio
+Link Group|Grup de legătură
+Decompose|Descompune
+Loop Jog|Jog în buclă
+Show Audio Timeline / Mixer|Arată cronologia / mixerul audio
+Full Screen Viewer|Ecran complet
+Show Panel in Workspace|Arată panoul în spațiu
+Media Pool|Media pool
+Effects Library|Bibliotecă de efecte
+Inspector|Inspector
+Mixer|Mixer
+Metadata|Metadate
+Edit Index|Index editare
+Sound Library|Bibliotecă de sunete
+Layout|Aspect
+Reset UI Layout|Resetează aspectul
+Save Layout|Salvează aspectul
+Load Layout|Încarcă aspectul
+Switch to Page|Mergi la pagina
+Media|Media
+Edit|Editare
+Effects|Efecte
+Audio|Audio
+Deliver|Livrare
+Dual Screen On/Off|Două ecrane pornit/oprit
+Video Clean Feed|Ieșire video curată
+Picasso Suite Manual|Manual Picasso Suite
+Picasso Suite Tutorials|Tutoriale Picasso Suite
+Check for Updates...|Caută actualizări...
+Export Log File...|Exportă fișierul jurnal...
+About Picasso Suite|Despre Picasso Suite
+Language|Limbă

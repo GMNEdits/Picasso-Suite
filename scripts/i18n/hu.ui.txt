@@ -1,0 +1,248 @@
+Clips|Klipek
+60 frames per second|60 kocka/mp
+Add Job|Új feladat
+Add to Render Queue|Sorba tétel
+Advanced Settings|Haladó
+Archive Project|Projekt archiv.
+Archive Project...|Archiválás...
+Auto|Auto
+Automatic|Automatikus
+Balanced|Kiegyens.
+Bins|Kukák
+Browse|Tallózás
+Bus Sends|Busz küldés
+Capture|Felvétel
+Chapters from Markers|Fejezetek
+Choose a folder|Mappa kiválasztása
+Clip Name|Klip neve
+Clone|Klón
+Clone Tool|Klónozó
+Codec|Kodek
+Col Boost|Szín+
+Collections|Gyűjtemények
+Contrast|Kontraszt
+Control Room|Vezérlő
+Create an Album|Album létrehozása
+Curves - Custom|Görbék - egyéni
+Custom Export|Egyéni export
+Decode Options|Dekódolás
+Demo Project|Demó projekt
+Drag photos into the Photo Album to start editing|Húzzon fotókat az albumba a szerkesztéshez
+Drawn with|Rajzolva
+Editing|Szerkeszt
+Effects In|Effekt be
+Embedded Audio|Beágyazott hang
+Encoder|Kódoló
+Encoding Profile|Kódolási profil
+Entire Timeline|Teljes idővonal
+Estimated File Size|Méret
+Every|Minden
+Export Video|Videó export
+Fairlight|Fairlight
+File Name|Fájlnév
+Format|Formátum
+Frame rate|Kocka/mp
+Frame reordering|Átrendezés
+Full Frames|Teljes kockák
+Full Screen|Teljes kép
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generátor
+Graphics card|Videokártya
+Groups|Csoportok
+Hi/Light|Fények
+High|Magas
+Hue|Árnyalat
+Image|Kép
+Index|Index
+Individual clips|Egyes klipek
+Input|Be
+Integrated|Integrált
+Key Frames|Kulcskockák
+Keywords|Kulcsszó
+L. Mix|B mix
+Layer|Réteg
+Local|Helyi
+Location|Hely
+Loop playback|Ismétlés
+Loudness|Hangosság
+Low|Alacsony
+Mark|Jelölő
+Media Management|Médiakezelés
+Media Source|Médiaforrás
+Media Storage|Médiatár
+Meters|Mérők
+Mid/Detail|Közép/részlet
+Modifiers|Módosítók
+Monitor|Monitor
+Monitor volume|Monitor hangerő
+Native|Natív
+Network Optimization|Hálózat optim.
+No jobs in Queue|Nincs feladat
+No jobs in queue|Nincs feladat
+No stills created|Nincs állókép
+Not reported|Nincs jelentve
+Nothing to inspect|Nincs mit nézni
+Offset|Eltolás
+Open|Megnyit
+Order|Sorrend
+Parade|Parade
+Pause|Szünet
+Photo|Fotó
+Photo Album|Album
+Playback|Lejátszás
+Position lock|Pozíciózár
+Preset|Előbeállít.
+Primaries - Color Wheels|Elsődleges - színkerekek
+Process Mode|Feldolg. mód
+Project settings|Projektbeáll.
+Projects|Projektek
+Quality|Minőség
+Quick Export|Gyors export
+Range|Tartomány
+Rate Control|Ráta-vezérlés
+Relink Missing Media|Média újracsatol.
+Relink Missing Media...|Média újracsatol...
+Remove|Eltávolít
+Render|Render
+Render All|Mind render
+Render Queue|Render sor
+Render Settings|Render beáll.
+Render Settings - Custom Export|Render beáll. - egyéni
+Reset|Reset
+Reset All|Mind reset
+Resolution|Felbontás
+Search|Keresés
+Settings|Beállítások
+Shad|Árnyékok
+Short|Rövid
+Short Max|Rövid max
+Single clip|Egy klip
+Smart Bins|Okos kukák
+Source Color Space|Forrás színtér
+Source Gamma Space|Forrás gamma tér
+Subtitle Settings|Felirat beáll.
+System|Rendszer
+Timeline Resolution|Idővonal felb.
+Timeline proxy|Idővonal proxy
+Tint|Árnyalat
+Tools|Eszközök
+Track FX|Sáv FX
+Transitions|Átmenetek
+Untitled|Névtelen
+Use vertical resolution|Függőleges felb.
+Version 0.6.1|Verzió 0.6.1
+Video|Videó
+Waveform|Hullámforma
+Workspace|Munkater.
+No clips in media pool|Nincs klip a készletben
+Add clips with Import, or drop files here|Importáljon klipeket, vagy húzza ide a fájlokat
+Add clips from Media Storage to get started|Kezdéshez adjon klipeket a médiatárból
+No sound to show|Nincs hang
+No clip to grade|Nincs klip a fokozáshoz
+No Input|Nincs bemenet
+DURATION|IDŐTARTAM
+Export Audio|Hang exportálása
+Data Rate|Adatsebesség
+Output Track 1|Kimeneti sáv 1
+Use unique filename|Egyedi fájlnév
+Adds (1), (2) ... to the name instead of writing over a file.|(1), (2) ... a névhez a felülírás helyett.
+File type|Fájltípus
+Whole timeline|Teljes idővonal
+In to out marks|Be-től ki-ig
+Pixel aspect ratio|Pixelarány
+Square|Négyzet
+Cinemascope|Cinemascope
+Data Levels|Adatszintek
+Retain sub-black and super-white data|Fekete alatti/fehér feletti megtart
+Color Space Tag|Színtér címke
+Gamma Tag|Gamma címke
+Data burn-in|Adat beégetése
+Same as project|Mint a projekt
+Bypass re-encode when possible|Újrakódolás kihagyása
+Use optimized media|Optimalizált média
+Use proxy media|Proxy média használata
+Use render cached images|Gyorsítótárazott képek
+Force sizing to highest quality|Legjobb méretezés
+Force debayer to highest quality|Legjobb debayer
+Render All Video Tracks|Minden videósáv
+Enable Flat Pass|Flat pass bekapcsolása
+visionOS Bypass|visionOS megkerülés
+Disable sizing and blanking output|Méretezés/blanking ki
+Trigger script at|Szkript futtatása
+Start|Kezdés
+of render job|render feladatnál
+Export Subtitle|Felirat export
+As a separate file|Külön fájl
+Export As|Exportálás mint
+frames|kocka
+Cut|Vágás
+Teal|Pávakék
+Half|Fél
+Color Bars|Színsávok
+Lightbox|Fénydoboz
+Edit|Szerk.
+Mixer|Keverő
+Sound Library|Hangok
+Timeline: AAF, EDL, XML...|Idővonal: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Idővonal: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rust nyelven írt videószerkesztő Windowsra, Linuxra, macOS-re és webre.
+Audio scrubbing (sound while the playhead is dragged)|Hangpásztázás (hang a fej húzásakor)
+Best|Legjobb
+Changing the frame rate keeps every clip on the same frames.|Új képkockasebesség: a klipek ugyanazokon a kockákon maradnak.
+Click a command's keys, then press the key it should have. Escape gives up.|Kattintson a parancs billentyűire, majd nyomja az újat. Esc megszakít.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Átmásolja az idővonalak fájljait egy mappába, és ír egy rájuk mutató projektmásolatot. A megnyitott projekt nem változik.
+Decode supported video using hardware acceleration|Támogatott videó dekódolása hardveres gyorsítással
+Every media file is where the project says it is.|Minden médiafájl ott van, ahol a projekt mondja.
+Filters|Szűrők
+Free software under the GPL, version 3 or later.|Szabad szoftver GPL 3. vagy újabb verzió alatt.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|A H.264, H.265, AV1, VP9, MPEG-2 és VC-1 a videokártyán dekódolódik, ha a driver tudja. Kapcsolja ki, ha a klipek zöldek vagy hibásak. A PICASSO_NO_HWACCEL=1 egy futásra kikapcsolja.
+Help|Súgó
+Linked selection (picture and sound together)|Kapcsolt kijelölés (kép és hang együtt)
+Loaded the demo project|Demó projekt betöltve
+Pivot|Pivot
+Selection follows the playhead|Kijelölés követi a fejet
+Snap to clips, markers and the playhead|Illesztés klipekhez, jelölőkhöz, fejhez
+Soft Clip|Soft Clip
+Tape|Szalag
+Trim|Vágás
+View|Nézet
+Full|Teljes
+Clip|Klip
+Keyframes|Kulcskockák
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Tel.
+Scopes|Scope
+Spline|Spline
+Sync Bin|Szink. kuka
+Temp|Hőm.
+Import Project...|Proj. import...
+Export Project...|Proj. export...
+Save Project As...|Mentés másként...
+Save Copy As...|Másolat mentése...
+Import|Import
+Export|Export
+Subtitle...|Felirat...
+Media...|Média...
+Folder as Bin...|Mappa...
+Timeline|Idővonal
+Media Pool|Médiakészlet
+Inspector|Vizsgáló
+Metadata|Metaadat
+Eighth|1/8
+About Picasso Suite|Névjegy
+New Project|Új projekt
+Open Project...|Megnyitás...
+Save Project|Mentés
+Dynamics|Dinamika
+Titles|Címek
+Gallery|Galéria
+Effects|Effektek
+Audio|Hang
+Timeline: EDL...|Idővonal: EDL...
+Timeline: XML...|Idővonal: XML...
+Media|Média

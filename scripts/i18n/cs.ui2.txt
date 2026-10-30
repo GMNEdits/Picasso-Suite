@@ -1,0 +1,39 @@
+Add Job|Úloha
+Archive Project|Archivovat
+Browse|Najít
+Demo Project|Ukázka
+Every|Každé
+File Name|Název
+Full Screen|Celá obr.
+High|Vys.
+Hue|Odst.
+Key Frames|Klíč. snímky
+Low|Níz.
+Mark|Znač.
+Modifiers|Modif.
+Preset|Pozice
+Process Mode|Zpracování
+Project settings|Nast. projektu
+Source Color Space|Zdroj. bar. prostor
+Source Gamma Space|Zdroj. gama
+Tools|Nástr.
+Untitled|Beze jm.
+No clips in media pool|Žádné klipy
+No clip to grade|Žádný klip
+No Input|Bez vstupu
+File type|Typ
+Color Space Tag|Znač. prostoru
+Use optimized media|Optimalizovaná
+As a separate file|Zvláštní soubor
+Export As|Export jako
+Cut|Vyjm.
+Teal|Tyrkys
+Edit|Úpr.
+Best|Max
+Help|Pomoc
+Temp|Teplota
+Hue|Hue
+No Input|Bez vst.
+Help|Nápov.
+Temp|Tepl.
+Help|Help

@@ -1,0 +1,58 @@
+Add Job|Tasca
+Bins|Safata
+Clip Name|Nom clip
+Custom Export|Export. pròpia
+Effects In|Efectes ent.
+Encoder|Codific.
+Encoding Profile|Perfil codific.
+File Name|Fitxer
+Full Frames|Sencers
+Full Screen|Pant. completa
+Hi/Light|Llums
+Input|Ent.
+Key Frames|Fot. clau
+Keywords|Paraules
+L. Mix|Mescla
+Media Source|Font
+Media Storage|Emmagatz.
+Meters|Mesur.
+Modifiers|Modif.
+Offset|Desfas.
+Position lock|Bloq. posició
+Preset|Preset
+Project settings|Config. projecte
+Quick Export|Export. ràpida
+Rate Control|Control taxa
+Settings|Config.
+Shad|Omb.
+Smart Bins|Intel·ligents
+Source Color Space|Espai color origen
+Source Gamma Space|Espai gamma orig.
+Track FX|FX pista
+Untitled|Sense nom
+Waveform|Ona
+No clip to grade|Cap clip
+No Input|Sense ent.
+Data Rate|Taxa
+File type|Tipus
+Bins|Saf.
+Effects In|Efect. ent.
+Full Screen|Pant. compl.
+Untitled|Sense n.
+Data Levels|Nivells
+Color Space Tag|Etiq. espai color
+Gamma Tag|Etiq. gamma
+Data burn-in|Gravat dades
+Render All Video Tracks|Totes les pistes vídeo
+of render job|tasca render
+Export As|Exporta com
+frames|fot.
+Cut|Ret.
+Teal|Turq.
+Mixer|Mesc.
+Best|Màx
+Keyframes|Fot. clau
+Sync Bin|Sinc.
+Media...|Cont....
+Export As|Export
+Export As|Exp. com

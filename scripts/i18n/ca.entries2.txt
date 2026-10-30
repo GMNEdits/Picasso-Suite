@@ -1,0 +1,34 @@
+New Project Library...|Biblio. de projectes nova...
+Open Project Library...|Obre biblio. de projectes...
+Save Copy As...|Desa còpia com a...
+Folder as Bin...|Carpeta com a safata...
+Project Settings...|Config. del projecte...
+Slide One Frame Left|Slide 1 fotograma esq.
+Timeline Settings|Config. cronologia
+Delete All Markers|Suprimeix marcadors
+Delete Timeline|Suprimeix cronologia
+Change Clip Speed...|Canvia velocitat clip...
+Retime Clip|Reajusta temps clip
+Speed Ramp...|Rampa velocitat...
+Auto Align Clips|Alinea clips auto
+Mark Timeline In/Out|Marca cronol. ent./sort.
+Clear In and Out|Esborra entr. i sort.
+Modify Marker...|Modifica marcador...
+Show Toolbar|Mostra eines
+Show Full Screen Viewer|Mostra visor pantalla compl.
+Viewer Overlays|Superposicions
+Show All Overlays|Mostra superposicions
+Show Audio Meters|Mostra mesuradors àudio
+Show Audio Mixer|Mostra mesclador àudio
+Play In to Out|Reprodueix ent.–sort.
+Hardware Decoding|Descodif. maquinari
+Gaussian Blur|Desenfoc. gaussià
+Effects Library Search|Cerca biblio. d'efectes
+Add Parallel Node|Afegeix node paral·lel
+Add Layer Mixer|Afegeix mescl. capes
+Cache Audio Effects|Cau d'efectes d'àudio
+Reset UI Layout|Reinicia disposició
+Load Layout|Carrega disposició
+Export Log File...|Exporta registre...
+Folder as Bin...|Carpeta com safata...
+Play In to Out|Reprodueix ent–sort

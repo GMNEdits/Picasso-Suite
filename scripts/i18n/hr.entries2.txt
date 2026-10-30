@@ -1,0 +1,12 @@
+New Timeline...|Nova linija...
+Export Timeline...|Izvezi liniju...
+Timeline Settings|Postavke linije
+Switch Timeline|Promijeni liniju
+Delete Timeline|Obriši liniju
+Retime Clip|Vrijeme klipa
+Auto Align Clips|Auto poravnanje klipova
+Viewer Overlays|Prekrivanja
+Play Forward|Reprod. naprijed
+Play In to Out|Reprod. ulaz-izlaz
+Loop Playback|Reprod. u petlji
+Auto Align Clips|Auto poravnaj klipove

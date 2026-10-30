@@ -1,0 +1,5 @@
+Show Toolbar|Zobr. nástroje
+Show All Overlays|Zobr. všechny překryvy
+Multicam Viewer|Multikamera prehlia.
+Show Grid / Guides|Zobr. mriežku/vodidlá
+Check for Updates...|Skontrol. aktualizácie...

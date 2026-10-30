@@ -1,0 +1,6 @@
+Save Copy As...|Simpan salinan...
+Deselect All|Batal semua pilihan
+Auto Align Clips|Sejajarkan otomatis
+Mark Timeline In/Out|Tandai lini masa masuk/kel.
+Play In to Out|Putar masuk-keluar
+Next Node Graph|Grafik node berikut

@@ -1,0 +1,61 @@
+Clips|Clipuri
+Add Job|Job nou
+Bins|Bin
+Browse|Caută
+Bus Sends|Bus
+Every|Fiecare
+Full Screen|Ecran plin
+Hue|Hue
+Image|Imagine
+Input|Intrare
+Keywords|Chei
+Low|Jos
+Mark|Marc.
+Meters|Metre
+Mid/Detail|Mijloc
+Modifiers|Modif.
+Open|Deschide
+Preset|Preset
+Reset|Reset
+Reset All|Tot
+Shad|Umbre
+Smart Bins|Bin smart
+Source Color Space|Spațiu culoare sursă
+Tint|Tint
+Untitled|Fără nume
+Version 0.6.1|Vers. 0.6.1
+Waveform|Undă
+No clips in media pool|Niciun clip
+No sound to show|Niciun sunet
+No clip to grade|Niciun clip
+No Input|Fără intrare
+Color Space Tag|Etichetă spațiu
+Gamma Tag|Etich. gamma
+Data burn-in|Burn-in date
+Use optimized media|Media optimizată
+Use proxy media|Media proxy
+of render job|a jobului
+Teal|Turcoaz
+Half|1/2
+Edit|Edit.
+Best|Max
+Help|Info
+Loaded the demo project|Demo încărcat
+Tape|Bandă
+Trim|Tăiere
+View|Vezi
+Scopes|Scope
+Subtitle...|Subtit...
+Project Manager|Manager proiecte
+Clips|Clip.
+Every|Fiec.
+Image|Imag.
+Input|Intr.
+Open|Desch.
+Shad|Umb.
+Source Color Space|Spațiu sursă
+Untitled|Fără nm.
+No Input|Fără intr.
+Teal|Turc.
+Tape|Tape
+Trim|Trim

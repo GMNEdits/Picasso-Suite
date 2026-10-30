@@ -1,0 +1,248 @@
+Clips|Klipit
+60 frames per second|60 kuvaa/s
+Add Job|Lisää työ
+Add to Render Queue|Lisää renderöintijonoon
+Advanced Settings|Lisäasetukset
+Archive Project|Arkistoi projekti
+Archive Project...|Arkistoi...
+Auto|Auto
+Automatic|Automaattinen
+Balanced|Tasapainoinen
+Bins|Lokerot
+Browse|Selaa
+Bus Sends|Väylälähd.
+Capture|Kaappaus
+Chapters from Markers|Luvut
+Choose a folder|Valitse kansio
+Clip Name|Klipin nimi
+Clone|Klooni
+Clone Tool|Kloonaus
+Codec|Koodekki
+Col Boost|Väri+
+Collections|Kokoelmat
+Contrast|Kontrasti
+Control Room|Valvomo
+Create an Album|Luo albumi
+Curves - Custom|Käyrät - oma
+Custom Export|Oma vienti
+Decode Options|Purkuvalinnat
+Demo Project|Demoprojekti
+Drag photos into the Photo Album to start editing|Vedä kuvia albumiin aloittaaksesi muokkauksen
+Drawn with|Piirretty
+Editing|Muokkaus
+Effects In|Tehoste sis.
+Embedded Audio|Upotettu ääni
+Encoder|Koodaaja
+Encoding Profile|Koodausprofiili
+Entire Timeline|Koko aikajana
+Estimated File Size|Tiedostokoko
+Every|Joka
+Export Video|Vie video
+Fairlight|Fairlight
+File Name|Tiedostonimi
+Format|Muoto
+Frame rate|Kuvataajuus
+Frame reordering|Järjestys
+Full Frames|Täydet kuvat
+Full Screen|Koko näyttö
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generaattori
+Graphics card|Näytönohjain
+Groups|Ryhmät
+Hi/Light|Valoisat
+High|Korkea
+Hue|Sävy
+Image|Kuva
+Index|Indeksi
+Individual clips|Yksittäiset klipit
+Input|Sisään
+Integrated|Integroitu
+Key Frames|Avainkuvat
+Keywords|Avainsanat
+L. Mix|V-miksi
+Layer|Taso
+Local|Paikallinen
+Location|Sijainti
+Loop playback|Toisto silmukalla
+Loudness|Äänekkyys
+Low|Matala
+Mark|Merkki
+Media Management|Median hallinta
+Media Source|Mediakansio
+Media Storage|Medialevy
+Meters|Mittarit
+Mid/Detail|Keski/yksit.
+Modifiers|Muokkaimet
+Monitor|Monitori
+Monitor volume|Monitorin voimak.
+Native|Natiivi
+Network Optimization|Verkon optimointi
+No jobs in Queue|Ei töitä jonossa
+No jobs in queue|Ei töitä jonossa
+No stills created|Ei still-kuvia
+Not reported|Ei tiedossa
+Nothing to inspect|Ei mitään nähtävää
+Offset|Siirtymä
+Open|Avaa
+Order|Järjestys
+Parade|Parade
+Pause|Tauko
+Photo|Kuva
+Photo Album|Albumi
+Playback|Toisto
+Position lock|Sijaintilukko
+Preset|Esiasetus
+Primaries - Color Wheels|Primäärit - värirenkaat
+Process Mode|Prosessitila
+Project settings|Projektiasetukset
+Projects|Projektit
+Quality|Laatu
+Quick Export|Pikavienti
+Range|Alue
+Rate Control|Bittinopeus
+Relink Missing Media|Yhdistä media uudelleen
+Relink Missing Media...|Yhdistä media uudelleen...
+Remove|Poista
+Render|Renderöi
+Render All|Renderöi kaikki
+Render Queue|Render-jono
+Render Settings|Render-asetukset
+Render Settings - Custom Export|Render-asetukset - oma
+Reset|Nollaa
+Reset All|Nollaa kaikki
+Resolution|Tarkkuus
+Search|Haku
+Settings|Asetukset
+Shad|Varjot
+Short|Lyhyt
+Short Max|Lyhyt maks.
+Single clip|Yksi klippi
+Smart Bins|Älylokerot
+Source Color Space|Lähdeväriavaruus
+Source Gamma Space|Lähdegamma
+Subtitle Settings|Tekstitysasetukset
+System|Järjestelmä
+Timeline Resolution|Aikaj. tarkkuus
+Timeline proxy|Aikajana-proxy
+Tint|Sävy
+Tools|Työkalut
+Track FX|Raita-FX
+Transitions|Siirtymät
+Untitled|Nimetön
+Use vertical resolution|Pystytarkkuus
+Version 0.6.1|Versio 0.6.1
+Video|Video
+Waveform|Aaltomuoto
+Workspace|Työtila
+No clips in media pool|Ei klippejä mediapoolissa
+Add clips with Import, or drop files here|Tuo klippejä tai pudota tiedostot tähän
+Add clips from Media Storage to get started|Aloita lisäämällä klippejä medialevyltä
+No sound to show|Ei näytettävää ääntä
+No clip to grade|Ei gradattavaa klippiä
+No Input|Ei tuloa
+DURATION|KESTO
+Export Audio|Vie ääni
+Data Rate|Datanopeus
+Output Track 1|Ulostuloraita 1
+Use unique filename|Yksilöllinen nimi
+Adds (1), (2) ... to the name instead of writing over a file.|Lisää (1), (2) ... nimeen ylikirjoituksen sijaan.
+File type|Tiedostotyyppi
+Whole timeline|Koko aikajana
+In to out marks|Alusta loppuun
+Pixel aspect ratio|Pikselisuhde
+Square|Neliö
+Cinemascope|Cinemascope
+Data Levels|Datatasot
+Retain sub-black and super-white data|Säilytä ali-musta/yli-valkoinen
+Color Space Tag|Väriavaruuden tunniste
+Gamma Tag|Gamman tunniste
+Data burn-in|Dataan poltto
+Same as project|Kuten projekti
+Bypass re-encode when possible|Ohita uudelleenkoodaus
+Use optimized media|Käytä optimoitua mediaa
+Use proxy media|Käytä proxy-mediaa
+Use render cached images|Käytä välimuistikuvia
+Force sizing to highest quality|Paras skaalaus
+Force debayer to highest quality|Paras debayer
+Render All Video Tracks|Kaikki videoraidat
+Enable Flat Pass|Ota flat pass käyttöön
+visionOS Bypass|visionOS-ohitus
+Disable sizing and blanking output|Ei skaalausta/blankingia
+Trigger script at|Aja skripti
+Start|Alku
+of render job|renderöintityön
+Export Subtitle|Vie tekstitys
+As a separate file|Erillinen tiedosto
+Export As|Vie muodossa
+frames|kuvaa
+Cut|Leikkaa
+Teal|Sinivihreä
+Half|Puolikas
+Color Bars|Värikaaviot
+Lightbox|Valopöytä
+Edit|Muokkaa
+Mixer|Mikseri
+Sound Library|Äänet
+Timeline: AAF, EDL, XML...|Aikajana: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Aikajana: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rust-kielellä tehty videoeditori Windowsille, Linuxille, macOS:lle ja webiin.
+Audio scrubbing (sound while the playhead is dragged)|Äänen scrubbaus (ääni soittopäätä vedettäessä)
+Best|Paras
+Changing the frame rate keeps every clip on the same frames.|Uusi kuvataajuus pitää klipit samoissa kuvissa.
+Click a command's keys, then press the key it should have. Escape gives up.|Napsauta komennon näppäimiä ja paina uutta. Esc peruu.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Kopioi aikajanojen tiedostot kansioon ja kirjoittaa niihin viittaavan projektikopion. Avoin projekti ei muutu.
+Decode supported video using hardware acceleration|Pura tuettu video laitteistokiihdytyksellä
+Every media file is where the project says it is.|Jokainen mediatiedosto on projektin kertomassa paikassa.
+Filters|Suodattimet
+Free software under the GPL, version 3 or later.|Vapaa ohjelmisto GPL:n versiolla 3 tai uudemmalla.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 ja VC-1 puretaan näytönohjaimella, jos ajuri osaa. Poista käytöstä, jos klipit näkyvät vihreinä tai rikkinäisinä. PICASSO_NO_HWACCEL=1 poistaa yhdeksi ajoksi.
+Help|Ohje
+Linked selection (picture and sound together)|Linkitetty valinta (kuva ja ääni yhdessä)
+Loaded the demo project|Demoprojekti ladattu
+Pivot|Pivot
+Selection follows the playhead|Valinta seuraa soittopäätä
+Snap to clips, markers and the playhead|Tartu klippeihin, merkkeihin ja soittopäähän
+Soft Clip|Soft Clip
+Tape|Nauha
+Trim|Trim
+View|Näytä
+Full|Täysi
+Clip|Clip
+Keyframes|Avainkuvat
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Skoopit
+Spline|Spline
+Sync Bin|Synk.kans.
+Temp|Läm.
+Import Project...|Tuo proj...
+Export Project...|Vie proj...
+Save Project As...|Tallenna nimellä...
+Save Copy As...|Kopio nimellä...
+Import|Tuo
+Export|Vie
+Subtitle...|Tekstit...
+Media...|Media...
+Folder as Bin...|Kansio...
+Timeline|Aikajana
+Media Pool|Mediapooli
+Inspector|Tarkastaja
+Metadata|Metatied.
+Eighth|1/8
+About Picasso Suite|Tietoja
+New Project|Uusi proj.
+Open Project...|Avaa...
+Save Project|Tallenna
+Dynamics|Dynamiikka
+Titles|Otsikot
+Gallery|Galleria
+Effects|Tehosteet
+Audio|Ääni
+Timeline: EDL...|Aikajana: EDL...
+Timeline: XML...|Aikajana: XML...
+Media|Media

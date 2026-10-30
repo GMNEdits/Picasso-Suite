@@ -1,0 +1,17 @@
+Save Project As...|Projekt mentése így...
+Save Copy As...|Másolat mentése...
+Paste Insert|Beillesztés+beszúrás
+Fit to Fill|Illesztés kitöltésre
+Change Clip Speed...|Klip sebessége...
+Freeze Frame|Kocka fagyasztása
+Link Clips|Klipek kapcsolása
+Auto Align Clips|Klipek auto igazítása
+Show Grid / Guides|Rács / vezetők mutatása
+Play In to Out|Lejátszás be–ki
+Effects Memory Cache|Effektek gyorsítótára
+Add Serial Node|Soros csomópont+
+Add Parallel Node|Párhuzamos csomópont+
+Add Layer Mixer|Rétegkeverő+
+Add Outside Node|Külső csomópont+
+Next Node Graph|Köv. csomópontgráf
+Reset UI Layout|Elrendezés reset

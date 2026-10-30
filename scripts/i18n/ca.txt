@@ -1,0 +1,304 @@
+#menus
+Fitx.
+Edita
+Ret.
+Cronol.
+Clip
+Marca
+Vista
+Reprod.
+Efectes
+Color
+Àudio
+Espai
+Ajuda
+#entries
+New Project Library...|Biblioteca de projectes nova...
+Open Project Library...|Obre la biblioteca de projectes...
+Show Current Project Library in File Explorer|Mostra la biblioteca a l'Explorador
+Project Manager|Gestor de projectes
+New Project|Projecte nou
+Open Project...|Obre projecte...
+Import Project...|Importa projecte...
+Export Project...|Exporta projecte...
+Restore Project Archive...|Restaura l'arxiu del projecte...
+Save Project|Desa el projecte
+Save Project As...|Desa el projecte com a...
+Save Copy As...|Desa una còpia com a...
+Revert to Last Saved Version|Torna a l'últim desat
+Import|Importa
+Media...|Contingut...
+Folder as Bin...|Carpeta com a safata...
+Timeline: AAF, EDL, XML...|Cronologia: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Cronologia: pre-EDL...
+Subtitle...|Subtítols...
+Metadata to Media Pool...|Metadades al conjunt...
+Bin...|Safata...
+Export|Exporta
+Timeline: EDL...|Cronologia: EDL...
+Timeline: OpenTimelineIO...|Cronologia: OpenTimelineIO...
+Timeline: XML...|Cronologia: XML...
+Timeline: AAF...|Cronologia: AAF...
+Metadata from Media Pool...|Metadades del conjunt...
+Media Management...|Gestió de contingut...
+Project Settings...|Configuració del projecte...
+System Preferences...|Preferències del sistema...
+Quick Export...|Exportació ràpida...
+Quit|Surt
+Undo|Desfés
+Redo|Refés
+Cut|Retalla
+Copy|Copia
+Paste|Enganxa
+Paste Insert|Enganxa i insereix
+Paste Mix to Current Track|Enganxa mescla a la pista
+Duplicate|Duplica
+Fit to Fill|Ajusta a l'ompliment
+Place on Top|Posa a dalt
+Delete Selected|Suprimeix la selecció
+Delete Selected with Ripple|Suprimeix la selecció amb ripple
+Select All|Selecciona-ho tot
+Deselect All|Desselecciona-ho tot
+Select Clips Forward|Selecciona clips endavant
+Find...|Cerca...
+Recent Projects|Projectes recents
+Project Manager...|Gestor de projectes...
+Keyboard Customization|Dreceres de teclat
+Select Nearest Edit Point|Selecciona el tall més proper
+Selection Mode|Mode de selecció
+Trim Mode|Mode de retall
+Dynamic Trim Mode|Retall dinàmic
+Ripple Start|Ripple inici
+Ripple End|Ripple final
+Ripple Trim Previous / Next|Ripple anterior / següent
+Ripple Trim Previous Edit to Playhead|Ripple anterior al cap
+Ripple Trim Next Edit to Playhead|Ripple següent al cap
+Trim Start to Playhead|Retalla l'inici al cap
+Trim End to Playhead|Retalla el final al cap
+Extend Edit|Amplia l'edició
+Slip Clip|Slip del clip
+Slip One Frame Earlier|Slip un fotograma abans
+Slip One Frame Later|Slip un fotograma després
+Slide Clip|Slide del clip
+Slide One Frame Left|Slide un fotograma a l'esquerra
+Slide One Frame Right|Slide un fotograma a la dreta
+Loop Trim|Retall en bucle
+Asymmetric Trimming|Retall asimètric
+Trim Editor|Editor de retall
+New Timeline...|Cronologia nova...
+New Timeline Using Selected Clips|Cronologia dels clips triats
+Create New Compound Clip...|Clip compost nou...
+New Effects Clip...|Clip d'efectes nou...
+Decompose in Place|Descompon al lloc
+Decompose Compound Clip|Descompon el clip compost
+Decompose Nested Timeline|Descompon la cronologia niuada
+Split Clip|Divideix el clip
+Create Timeline Using Bin...|Cronologia de la safata...
+Import Timeline...|Importa cronologia...
+Export Timeline...|Exporta cronologia...
+Timeline Resolution and Frame Rate...|Resolució i fotogrames...
+Timeline Settings|Configuració de la cronologia
+Snap|Imant
+Linked Selection|Selecció enllaçada
+Position Lock|Bloqueig de posició
+Selection Follows Playhead|La selecció segueix el cap
+Add Marker|Afegeix marcador
+Add Marker and Show Dialog|Afegeix marcador amb diàleg
+Delete All Markers|Suprimeix tots els marcadors
+Create Subtitle Track|Crea pista de subtítols
+Create Subtitle Region|Crea regió de subtítols
+Add Transition to All Edits|Transició a tots els talls
+Switch Timeline|Canvia de cronologia
+Open Timeline in New Window|Obre la cronologia en finestra
+Delete Timeline|Suprimeix la cronologia
+Enable Clip|Activa el clip
+Match Frame|Fotograma coincident
+Lock Clip|Bloqueja el clip
+New Multicam Clip...|Clip multicàmera nou...
+Multicam Viewer|Visor multicàmera
+Add to Media Pool as Stills|Afegeix com a imatges fixes
+Change Clip Speed...|Canvia la velocitat del clip...
+Change Clip Duration...|Canvia la durada del clip...
+Retime Controls|Controls de temps
+Retime Clip|Reajusta el temps del clip
+Freeze Frame|Congela el fotograma
+Speed Ramp...|Rampa de velocitat...
+Reverse Clip|Inverteix el clip
+Create New Compound Clip|Clip compost nou
+Link Clips|Enllaça clips
+Unlink Audio and Video|Separa àudio i vídeo
+Enable / Disable Audio Scrubbing|Scrubbing d'àudio sí/no
+Auto Align Clips|Alinea clips automàticament
+Based on Timecode|Segons el timecode
+Based on Waveform|Segons la forma d'ona
+Normalize Audio Levels...|Normalitza el nivell d'àudio...
+Render in Place|Renderitza al lloc
+New Effects Clip|Clip d'efectes nou
+New Compound Clip|Clip compost nou
+Clip Attributes...|Atributs del clip...
+Mark In|Marca entrada
+Mark Out|Marca sortida
+Mark Clip|Marca el clip
+Mark Timeline In/Out|Marca cronologia entrada/sortida
+Clear In|Esborra entrada
+Clear Out|Esborra sortida
+Clear In and Out|Esborra entrada i sortida
+Modify Marker...|Modifica el marcador...
+Delete Marker at Current Position|Suprimeix el marcador aquí
+Delete All Markers in Timeline|Suprimeix tots els marcadors
+Go to Previous Marker|Al marcador anterior
+Go to Next Marker|Al marcador següent
+Set Clip Color|Color del clip
+Default|Per defecte
+Orange|Taronja
+Apricot|Albercoc
+Yellow|Groc
+Lime|Llima
+Olive|Oliva
+Green|Verd
+Teal|Verd blavós
+Navy|Blau marí
+Blue|Blau
+Purple|Porpra
+Violet|Violeta
+Pink|Rosa
+Tan|Beix fosc
+Beige|Beix
+Brown|Marró
+Chocolate|Xocolata
+Show Current Frame on Playback|Mostra el fotograma en reproduir
+Safe Area Overlay|Àrea segura
+Show Grid / Guides|Mostra quadrícula / guies
+Show Toolbar|Mostra la barra d'eines
+Show Full Screen Viewer|Mostra el visor a pantalla completa
+Show Cinema Viewer|Mostra el visor de cinema
+Viewer Overlays|Superposicions del visor
+Transform / Crop / Dynamic Zoom|Transf. / retall / zoom
+Safe Area|Àrea segura
+Center Crosshair|Creu central
+Checkerboard Background (Alpha)|Fons de quadres (alfa)
+Show All Overlays|Mostra totes les superposicions
+Timecode Window|Finestra de timecode
+Show Scopes|Mostra els scopes
+Show Audio Meters|Mostra els mesuradors d'àudio
+Show Audio Mixer|Mostra el mesclador d'àudio
+Show Inspector|Mostra l'inspector
+Play Forward|Reprodueix endavant
+Play Reverse|Reprodueix enrere
+Stop|Atura
+Play Around Current Frame|Reprodueix al voltant
+Play In to Out|Reprodueix entrada–sortida
+Play Around In / Around Out|Reprodueix al voltant d'E/S
+Loop Playback|Reproducció en bucle
+Go to First Frame|Al primer fotograma
+Go to Last Frame|A l'últim fotograma
+Go to In|A l'entrada
+Go to Out|A la sortida
+Previous Frame|Fotograma anterior
+Next Frame|Fotograma següent
+Previous Edit Point|Punt d'edició anterior
+Next Edit Point|Punt d'edició següent
+Timeline Playback Resolution|Resolució de reproducció
+Half|Meitat
+Quarter|Quart
+Effects Memory Cache|Memòria cau d'efectes
+Timeline Proxy Mode|Mode proxy
+Off|No
+Eighth|Vuitè
+Hardware Decoding|Descodificació per maquinari
+Delete Render Cache|Suprimeix la memòria cau
+Video Transitions|Transicions de vídeo
+Cross Dissolve|Dissolució creuada
+Dip to Color|Fosa a color
+Audio Transitions|Transicions d'àudio
+Cross Fade|Fosa creuada
+Remove Transition|Elimina la transició
+OpenFX|OpenFX
+Blur|Desenfocament
+Gaussian Blur|Desenfocament gaussià
+Sharpen|Nitidesa
+Color|Color
+Invert Colors|Inverteix colors
+Black and White|Blanc i negre
+Distort|Distorsió
+Mosaic|Mosaic
+Audio FX|Efectes d'àudio
+EQ|EQ
+Dynamics|Dinàmica
+Picasso FX|Picasso FX
+Sepia|Sèpia
+Soft Blur|Desenfocament suau
+Light|Llum
+Glow|Resplendor
+Stylize|Estilitza
+Vignette|Vinyeta
+Film Grain|Gra de pel·lícula
+Compositing Effects|Efectes de composició
+Nodes|Nodes
+Generators|Generadors
+Solid Color|Color sòlid
+Color Bars|Barres de color
+Gradient|Degradat
+Titles|Títols
+Text|Text
+Text+|Text+
+Effects Library Search|Cerca a la biblioteca d'efectes
+Add Tool (Compositing)|Afegeix eina (composició)
+Reset All Grades and Nodes|Restableix graduacions i nodes
+Reset Current Node Grade|Restableix el node actual
+Enable/Disable Current Node|Node sí/no
+Grab Still|Captura un still
+Play Still|Reprodueix un still
+Add Serial Node|Afegeix node en sèrie
+Add Serial Before|Afegeix sèrie abans
+Add Parallel Node|Afegeix node en paral·lel
+Add Layer Mixer|Afegeix mesclador de capes
+Add Splitter / Combiner|Afegeix divisor / combinador
+Add Outside Node|Afegeix node exterior
+Label Node|Etiqueta el node
+Timeline|Cronologia
+Previous Node Graph|Graf de nodes anterior
+Next Node Graph|Graf de nodes següent
+LUT|LUT
+Apply LUT from list|Aplica LUT de la llista
+Gallery|Galeria
+Scopes On/Off|Scopes sí/no
+Highlight|Llums altes
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Substitució automàtica de diàleg
+Bounce Mix to Track|Bounce de mescla a pista
+Bounce Selected Tracks|Bounce de pistes triades
+Cache Audio Effects|Memòria cau d'efectes d'àudio
+Audio Link|Enllaç d'àudio
+Link Group|Grup d'enllaç
+Decompose|Descompon
+Loop Jog|Jog en bucle
+Show Audio Timeline / Mixer|Mostra cronologia / mesclador d'àudio
+Full Screen Viewer|Visor a pantalla completa
+Show Panel in Workspace|Mostra el tauler a l'espai
+Media Pool|Conjunt de contingut
+Effects Library|Biblioteca d'efectes
+Inspector|Inspector
+Mixer|Mesclador
+Metadata|Metadades
+Edit Index|Índex d'edició
+Sound Library|Biblioteca de sons
+Layout|Disposició
+Reset UI Layout|Restableix la disposició
+Save Layout|Desa la disposició
+Load Layout|Carrega la disposició
+Switch to Page|Vés a la pàgina
+Media|Contingut
+Edit|Edició
+Effects|Efectes
+Audio|Àudio
+Deliver|Lliurament
+Dual Screen On/Off|Dues pantalles sí/no
+Video Clean Feed|Sortida de vídeo neta
+Picasso Suite Manual|Manual de Picasso Suite
+Picasso Suite Tutorials|Tutorials de Picasso Suite
+Check for Updates...|Cerca actualitzacions...
+Export Log File...|Exporta el fitxer de registre...
+About Picasso Suite|Quant a Picasso Suite
+Language|Llengua

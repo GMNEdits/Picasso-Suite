@@ -1,0 +1,304 @@
+#menus
+Soub.
+Úpr.
+Ořez
+Čas. osa
+Klip
+Znač.
+Zobr.
+Přehrát
+Efekty
+Barva
+Zvuk
+Plocha
+Nápověda
+#entries
+New Project Library...|Nová knihovna projektů...
+Open Project Library...|Otevřít knihovnu projektů...
+Show Current Project Library in File Explorer|Zobrazit knihovnu v Průzkumníku
+Project Manager|Správce projektů
+New Project|Nový projekt
+Open Project...|Otevřít projekt...
+Import Project...|Importovat projekt...
+Export Project...|Exportovat projekt...
+Restore Project Archive...|Obnovit archiv projektu...
+Save Project|Uložit projekt
+Save Project As...|Uložit projekt jako...
+Save Copy As...|Uložit kopii jako...
+Revert to Last Saved Version|Vrátit poslední uložení
+Import|Import
+Media...|Média...
+Folder as Bin...|Složka jako koš...
+Timeline: AAF, EDL, XML...|Osa: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Osa: předem EDL...
+Subtitle...|Titulky...
+Metadata to Media Pool...|Metadata do zásobníku...
+Bin...|Koš...
+Export|Export
+Timeline: EDL...|Osa: EDL...
+Timeline: OpenTimelineIO...|Osa: OpenTimelineIO...
+Timeline: XML...|Osa: XML...
+Timeline: AAF...|Osa: AAF...
+Metadata from Media Pool...|Metadata ze zásobníku...
+Media Management...|Správa médií...
+Project Settings...|Nastavení projektu...
+System Preferences...|Předvolby systému...
+Quick Export...|Rychlý export...
+Quit|Konec
+Undo|Zpět
+Redo|Znovu
+Cut|Vyjmout
+Copy|Kopírovat
+Paste|Vložit
+Paste Insert|Vložit a zasunout
+Paste Mix to Current Track|Vložit mix do stopy
+Duplicate|Duplikovat
+Fit to Fill|Přizpůsobit výplni
+Place on Top|Umístit nahoru
+Delete Selected|Smazat vybrané
+Delete Selected with Ripple|Smazat vybrané s ripple
+Select All|Vybrat vše
+Deselect All|Zrušit výběr
+Select Clips Forward|Vybrat klipy dopředu
+Find...|Najít...
+Recent Projects|Nedávné projekty
+Project Manager...|Správce projektů...
+Keyboard Customization|Klávesové zkratky
+Select Nearest Edit Point|Vybrat nejbližší střih
+Selection Mode|Režim výběru
+Trim Mode|Režim ořezu
+Dynamic Trim Mode|Dynamický ořez
+Ripple Start|Ripple začátek
+Ripple End|Ripple konec
+Ripple Trim Previous / Next|Ripple předchozí / další
+Ripple Trim Previous Edit to Playhead|Ripple předch. k přehrávači
+Ripple Trim Next Edit to Playhead|Ripple další k přehrávači
+Trim Start to Playhead|Ořez začátku k přehrávači
+Trim End to Playhead|Ořez konce k přehrávači
+Extend Edit|Prodloužit střih
+Slip Clip|Posun obsahu klipu
+Slip One Frame Earlier|Posun o snímek dříve
+Slip One Frame Later|Posun o snímek později
+Slide Clip|Posunout klip
+Slide One Frame Left|Posun o snímek doleva
+Slide One Frame Right|Posun o snímek doprava
+Loop Trim|Smyčkový ořez
+Asymmetric Trimming|Asymetrický ořez
+Trim Editor|Editor ořezu
+New Timeline...|Nová osa...
+New Timeline Using Selected Clips|Nová osa z vybraných klipů
+Create New Compound Clip...|Nový složený klip...
+New Effects Clip...|Nový klip efektu...
+Decompose in Place|Rozložit na místě
+Decompose Compound Clip|Rozložit složený klip
+Decompose Nested Timeline|Rozložit vnořenou osu
+Split Clip|Rozdělit klip
+Create Timeline Using Bin...|Osa z koše...
+Import Timeline...|Importovat osu...
+Export Timeline...|Exportovat osu...
+Timeline Resolution and Frame Rate...|Rozlišení a snímková frekv....
+Timeline Settings|Nastavení osy
+Snap|Přichytávání
+Linked Selection|Propojený výběr
+Position Lock|Zámek pozice
+Selection Follows Playhead|Výběr sleduje přehrávač
+Add Marker|Přidat značku
+Add Marker and Show Dialog|Přidat značku s dialogem
+Delete All Markers|Smazat všechny značky
+Create Subtitle Track|Vytvořit stopu titulků
+Create Subtitle Region|Vytvořit oblast titulků
+Add Transition to All Edits|Přechod na všechny střihy
+Switch Timeline|Přepnout osu
+Open Timeline in New Window|Otevřít osu v novém okně
+Delete Timeline|Smazat osu
+Enable Clip|Povolit klip
+Match Frame|Najít shodný snímek
+Lock Clip|Zamknout klip
+New Multicam Clip...|Nový multikamera klip...
+Multicam Viewer|Multikamera prohlížeč
+Add to Media Pool as Stills|Přidat jako statické snímky
+Change Clip Speed...|Změnit rychlost klipu...
+Change Clip Duration...|Změnit délku klipu...
+Retime Controls|Ovládání času
+Retime Clip|Změnit čas klipu
+Freeze Frame|Zmrazit snímek
+Speed Ramp...|Rychlostní rampa...
+Reverse Clip|Obrátit klip
+Create New Compound Clip|Nový složený klip
+Link Clips|Propojit klipy
+Unlink Audio and Video|Oddělit zvuk a obraz
+Enable / Disable Audio Scrubbing|Scrubbing zvuku zap/vyp
+Auto Align Clips|Auto zarovnání klipů
+Based on Timecode|Podle timecode
+Based on Waveform|Podle vlny
+Normalize Audio Levels...|Normalizovat hlasitost...
+Render in Place|Renderovat na místě
+New Effects Clip|Nový klip efektu
+New Compound Clip|Nový složený klip
+Clip Attributes...|Vlastnosti klipu...
+Mark In|Značka vstup
+Mark Out|Značka výstup
+Mark Clip|Označit klip
+Mark Timeline In/Out|Označit osu vstup/výstup
+Clear In|Smazat vstup
+Clear Out|Smazat výstup
+Clear In and Out|Smazat vstup a výstup
+Modify Marker...|Upravit značku...
+Delete Marker at Current Position|Smazat značku zde
+Delete All Markers in Timeline|Smazat všechny značky
+Go to Previous Marker|Na předchozí značku
+Go to Next Marker|Na další značku
+Set Clip Color|Barva klipu
+Default|Výchozí
+Orange|Oranžová
+Apricot|Meruňková
+Yellow|Žlutá
+Lime|Limetková
+Olive|Olivová
+Green|Zelená
+Teal|Modrozelená
+Navy|Námořnická
+Blue|Modrá
+Purple|Fialová
+Violet|Violet
+Pink|Růžová
+Tan|Světle hnědá
+Beige|Béžová
+Brown|Hnědá
+Chocolate|Čokoládová
+Show Current Frame on Playback|Zobrazit snímek při přehrávání
+Safe Area Overlay|Bezpečná oblast
+Show Grid / Guides|Zobrazit mřížku / vodítka
+Show Toolbar|Zobrazit panel nástrojů
+Show Full Screen Viewer|Zobrazit celou obrazovku
+Show Cinema Viewer|Zobrazit kino
+Viewer Overlays|Překryvy prohlížeče
+Transform / Crop / Dynamic Zoom|Transform. / ořez / zoom
+Safe Area|Bezpečná oblast
+Center Crosshair|Středový kříž
+Checkerboard Background (Alpha)|Šachovnice (alfa)
+Show All Overlays|Zobrazit všechny překryvy
+Timecode Window|Okno timecode
+Show Scopes|Zobrazit scopes
+Show Audio Meters|Zobrazit měřiče zvuku
+Show Audio Mixer|Zobrazit zvukový mixér
+Show Inspector|Zobrazit inspektor
+Play Forward|Přehrát vpřed
+Play Reverse|Přehrát vzad
+Stop|Stop
+Play Around Current Frame|Přehrát kolem snímku
+Play In to Out|Přehrát vstup–výstup
+Play Around In / Around Out|Přehrát kolem vstupu/výstupu
+Loop Playback|Přehrávat ve smyčce
+Go to First Frame|Na první snímek
+Go to Last Frame|Na poslední snímek
+Go to In|Na vstup
+Go to Out|Na výstup
+Previous Frame|Předchozí snímek
+Next Frame|Další snímek
+Previous Edit Point|Předchozí střih
+Next Edit Point|Další střih
+Timeline Playback Resolution|Rozlišení přehrávání
+Half|Půl
+Quarter|Čtvrt
+Effects Memory Cache|Paměť cache efektů
+Timeline Proxy Mode|Režim proxy
+Off|Vyp
+Eighth|Osmina
+Hardware Decoding|Hardwarové dekódování
+Delete Render Cache|Smazat cache renderu
+Video Transitions|Video přechody
+Cross Dissolve|Prolínačka
+Dip to Color|Přes barvu
+Audio Transitions|Zvukové přechody
+Cross Fade|Prolnutí zvuku
+Remove Transition|Odebrat přechod
+OpenFX|OpenFX
+Blur|Rozostření
+Gaussian Blur|Gaussovo rozostření
+Sharpen|Doostření
+Color|Barva
+Invert Colors|Invertovat barvy
+Black and White|Černobílá
+Distort|Zkreslení
+Mosaic|Mozaika
+Audio FX|Zvukové efekty
+EQ|EQ
+Dynamics|Dynamika
+Picasso FX|Picasso FX
+Sepia|Sépie
+Soft Blur|Jemné rozostření
+Light|Světlo
+Glow|Záře
+Stylize|Stylizace
+Vignette|Vinětace
+Film Grain|Filmové zrno
+Compositing Effects|Kompoziční efekty
+Nodes|Uzly
+Generators|Generátory
+Solid Color|Plná barva
+Color Bars|Barevné pruhy
+Gradient|Přechod
+Titles|Titulky
+Text|Text
+Text+|Text+
+Effects Library Search|Hledat v knihovně efektů
+Add Tool (Compositing)|Přidat nástroj (kompozice)
+Reset All Grades and Nodes|Reset všech gradací a uzlů
+Reset Current Node Grade|Reset aktuálního uzlu
+Enable/Disable Current Node|Uzel zap/vyp
+Grab Still|Pořídit still
+Play Still|Přehrát still
+Add Serial Node|Přidat sériový uzel
+Add Serial Before|Přidat sériový před
+Add Parallel Node|Přidat paralelní uzel
+Add Layer Mixer|Přidat mixér vrstev
+Add Splitter / Combiner|Přidat rozdělovač / spojovač
+Add Outside Node|Přidat vnější uzel
+Label Node|Pojmenovat uzel
+Timeline|Osa
+Previous Node Graph|Předchozí graf uzlů
+Next Node Graph|Další graf uzlů
+LUT|LUT
+Apply LUT from list|Použít LUT ze seznamu
+Gallery|Galerie
+Scopes On/Off|Scopes zap/vyp
+Highlight|Světla
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Automatická náhrada dialogu
+Bounce Mix to Track|Bounce mixu do stopy
+Bounce Selected Tracks|Bounce vybraných stop
+Cache Audio Effects|Cache zvukových efektů
+Audio Link|Propojení zvuku
+Link Group|Skupina propojení
+Decompose|Rozložit
+Loop Jog|Smyčkový jog
+Show Audio Timeline / Mixer|Zobrazit zvukovou osu / mixér
+Full Screen Viewer|Celá obrazovka
+Show Panel in Workspace|Zobrazit panel v ploše
+Media Pool|Zásobník médií
+Effects Library|Knihovna efektů
+Inspector|Inspektor
+Mixer|Mixér
+Metadata|Metadata
+Edit Index|Index střihu
+Sound Library|Knihovna zvuků
+Layout|Rozvržení
+Reset UI Layout|Reset rozvržení
+Save Layout|Uložit rozvržení
+Load Layout|Načíst rozvržení
+Switch to Page|Přepnout na stránku
+Media|Média
+Edit|Úpravy
+Effects|Efekty
+Audio|Zvuk
+Deliver|Výstup
+Dual Screen On/Off|Dvě obrazovky zap/vyp
+Video Clean Feed|Čistý video výstup
+Picasso Suite Manual|Příručka Picasso Suite
+Picasso Suite Tutorials|Návody Picasso Suite
+Check for Updates...|Zkontrolovat aktualizace...
+Export Log File...|Exportovat soubor logu...
+About Picasso Suite|O Picasso Suite
+Language|Jazyk

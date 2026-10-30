@@ -1,0 +1,44 @@
+Add Job|Tugas
+Auto|Auto
+Editing|Edit
+File Name|Berkas
+Full Frames|Bingkai
+High|Tgi
+Image|Citra
+Loudness|Volume
+Low|Rdh
+Mid/Detail|Tengah
+No stills created|Tak ada diam
+Nothing to inspect|Tak ada
+Range|Rentang
+Render All|Semua
+Reset All|Semua
+Shad|Bayang
+Short|Pdk
+Short Max|Pdk maks
+Source Color Space|Ruang warna asal
+Source Gamma Space|Gamma asal
+Untitled|Tanpa nama
+No clips in media pool|Tak ada klip
+No clip to grade|Tak ada klip
+No Input|Tak ada
+File type|Jenis
+Retain sub-black and super-white data|Pertahankan sub-hitam/super-putih
+Trigger script at|Jalankan skrip
+Export As|Ekspor ke
+Cut|Pot.
+Half|1/2
+Timeline: AAF, EDL, XML...|Lini: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Lini: OpenTimelineIO...
+Best|Baik
+Help|Bantu
+Full|Penuh
+Sync Bin|Sinkron
+Revert to Last Saved Version|Kembali ke simpanan akhir
+Quarter|1/4
+Range|Kisaran
+Shad|Bay.
+Untitled|Tanpa nm
+Help|Info
+Full|Full
+Untitled|Baru

@@ -1,0 +1,58 @@
+Add to Render Queue|Lisää jonoon
+Automatic|Autom.
+Balanced|Tasap.
+Bins|Lok.
+Capture|Kaappa.
+Codec|Koodekki
+Editing|Muokk.
+Effects In|Tehost. sis.
+File Name|Tiedosto
+Generator|Generaat.
+High|Kork.
+Index|Indeksi
+Local|Paik.
+Low|Mat.
+Mark|Merk.
+Modifiers|Muokk.
+Nothing to inspect|Ei mitään
+Offset|Siirt.
+Order|Järj.
+Preset|Esias.
+Relink Missing Media|Yhdistä media
+Relink Missing Media...|Yhdistä media...
+Render|Render.
+Render All|Kaikki
+Reset All|Nollaa
+System|Järj.
+Tools|Työk.
+No clips in media pool|Ei klippejä poolissa
+No clip to grade|Ei klippiä
+Data Rate|Datanop.
+File type|Tyyppi
+Color Space Tag|Väriavar. tunn.
+Gamma Tag|Gamma-tunn.
+Use optimized media|Optimoitu media
+Use proxy media|Proxy-media
+Enable Flat Pass|Flat pass päälle
+Export As|Vie nimellä
+Cut|Leik.
+Teal|Turkoosi
+Half|Puoli
+Edit|Muok.
+Mixer|Miks.
+Filters|Suodat.
+Snap to clips, markers and the playhead|Tartu klippeihin, merkkeihin, päähän
+Tape|Nauha
+Full|Täys.
+Sync Bin|Synk.
+Save Project As...|Tallenna nimellä...
+Titles|Otsik.
+Effects|Tehost.
+Quarter|Neljäs
+Codec|Kodek
+Index|Hakem.
+Teal|Turk.
+Tape|Tape
+Full|Full
+Save Project As...|Tallenna nimellä
+Index|Index

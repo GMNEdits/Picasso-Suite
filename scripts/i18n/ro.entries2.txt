@@ -1,0 +1,15 @@
+Open Project Library...|Deschide bibl. proiecte...
+Fit to Fill|Potrivește umplerea
+Auto Align Clips|Aliniere automată
+Mark Timeline In/Out|Marchează cron. in/out
+Clear In and Out|Șterge intrare/ieșire
+Viewer Overlays|Suprapuneri
+Show All Overlays|Toate suprapunerile
+Previous Edit Point|Punct editare anterior
+Next Edit Point|Punct editare următor
+Cross Dissolve|Dizolvare încruc.
+Dip to Color|Estompare în culoare
+Add Layer Mixer|Adaugă mixer straturi
+Next Node Graph|Graf noduri următor
+Scopes On/Off|Scope-uri on/off
+Export Log File...|Exportă jurnalul...

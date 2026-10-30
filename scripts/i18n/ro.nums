@@ -1,0 +1,553 @@
+#menus
+Fiș.
+Edit.
+Tăi.
+Cronol.
+Clip
+Marc.
+Vez.
+Redare
+Efecte
+Cul.
+Audio
+Spațiu
+Ajutor
+#entries
+1|Bibliotecă nouă de proiecte...
+2|Deschide biblioteca de proiecte...
+3|Arată biblioteca în Explorer
+4|Manager de proiecte
+5|Proiect nou
+6|Deschide proiect...
+7|Importă proiect...
+8|Exportă proiect...
+9|Restaurează arhiva proiectului...
+10|Salvează proiectul
+11|Salvează proiectul ca...
+12|Salvează copia ca...
+13|Revino la ultima salvare
+14|Importă
+15|Media...
+16|Dosar ca bin...
+17|Cronologie: AAF, EDL, XML...
+18|Cronologie: pre-EDL...
+19|Subtitrare...
+20|Metadate în media pool...
+21|Bin...
+22|Exportă
+23|Cronologie: EDL...
+24|Cronologie: OpenTimelineIO...
+25|Cronologie: XML...
+26|Cronologie: AAF...
+27|Metadate din media pool...
+28|Gestionare media...
+29|Setări proiect...
+30|Preferințe sistem...
+31|Export rapid...
+32|Ieșire
+33|Anulează
+34|Refă
+35|Taie
+36|Copiază
+37|Lipește
+38|Lipește și inserează
+39|Lipește mixul în pistă
+40|Duplică
+41|Potrivește la umplere
+42|Plasează deasupra
+43|Șterge selecția
+44|Șterge selecția cu ripple
+45|Selectează tot
+46|Deselectează tot
+47|Selectează clipuri înainte
+48|Caută...
+49|Proiecte recente
+50|Manager de proiecte...
+51|Scurtături tastatură
+52|Alege cel mai apropiat punct
+53|Mod selecție
+54|Mod tăiere
+55|Tăiere dinamică
+56|Ripple început
+57|Ripple sfârșit
+58|Ripple anterior / următor
+59|Ripple anterior la cursor
+60|Ripple următor la cursor
+61|Taie începutul la cursor
+62|Taie sfârșitul la cursor
+63|Extinde editarea
+64|Slip clip
+65|Slip un cadru mai devreme
+66|Slip un cadru mai târziu
+67|Slide clip
+68|Slide un cadru la stânga
+69|Slide un cadru la dreapta
+70|Tăiere în buclă
+71|Tăiere asimetrică
+72|Editor de tăiere
+73|Cronologie nouă...
+74|Cronologie din clipurile alese
+75|Clip compus nou...
+76|Clip de efecte nou...
+77|Descompune pe loc
+78|Descompune clipul compus
+79|Descompune cronologia imbricată
+80|Împarte clipul
+81|Cronologie din bin...
+82|Importă cronologie...
+83|Exportă cronologie...
+84|Rezoluție și rată de cadre...
+85|Setări cronologie
+86|Magnet
+87|Selecție legată
+88|Blocare poziție
+89|Selecția urmează cursorul
+90|Adaugă marcaj
+91|Adaugă marcaj cu dialog
+92|Șterge toate marcajele
+93|Creează pistă de subtitrare
+94|Creează regiune de subtitrare
+95|Tranziție la toate tăieturile
+96|Schimbă cronologia
+97|Deschide cronologia în fereastră
+98|Șterge cronologia
+99|Activează clipul
+100|Cadru potrivit
+101|Blochează clipul
+102|Clip multicam nou...
+103|Vizualizator multicam
+104|Adaugă ca imagini statice
+105|Schimbă viteza clipului...
+106|Schimbă durata clipului...
+107|Control timp
+108|Retimează clipul
+109|Îngheață cadrul
+110|Rampă de viteză...
+111|Inversează clipul
+112|Clip compus nou
+113|Leagă clipurile
+114|Separă sunetul de imagine
+115|Scrubbing audio pornit/oprit
+116|Aliniază clipurile automat
+117|După timecode
+118|După forma de undă
+119|Normalizează nivelul audio...
+120|Randare pe loc
+121|Clip de efecte nou
+122|Clip compus nou
+123|Atribute clip...
+124|Marcaj intrare
+125|Marcaj ieșire
+126|Marchează clipul
+127|Marchează cronol. intrare/ieșire
+128|Șterge intrarea
+129|Șterge ieșirea
+130|Șterge intrarea și ieșirea
+131|Modifică marcajul...
+132|Șterge marcajul de aici
+133|Șterge toate marcajele
+134|La marcajul anterior
+135|La marcajul următor
+136|Culoarea clipului
+137|Implicit
+138|Portocaliu
+139|Caisă
+140|Galben
+141|Lime
+142|Măsliniu
+143|Verde
+144|Verde-albastru
+145|Bleumarin
+146|Albastru
+147|Mov
+148|Violet
+149|Roz
+150|Maro deschis
+151|Bej
+152|Maro
+153|Ciocolatiu
+154|Arată cadrul curent la redare
+155|Zonă sigură
+156|Arată grila / ghidajele
+157|Arată bara de unelte
+158|Arată vizualizare ecran complet
+159|Arată vizualizare cinema
+160|Suprapuneri vizualizator
+161|Transf. / decupare / zoom
+162|Zonă sigură
+163|Cruce centrală
+164|Fundal șah (alfa)
+165|Arată toate suprapunerile
+166|Fereastră timecode
+167|Arată scope-uri
+168|Arată indicatoare audio
+169|Arată mixerul audio
+170|Arată inspectorul
+171|Redă înainte
+172|Redă înapoi
+173|Stop
+174|Redă în jurul cadrului
+175|Redă intrare–ieșire
+176|Redă în jurul intrării/ieșirii
+177|Redare în buclă
+178|La primul cadru
+179|La ultimul cadru
+180|La intrare
+181|La ieșire
+182|Cadrul anterior
+183|Cadrul următor
+184|Punctul de editare anterior
+185|Punctul de editare următor
+186|Rezoluție redare
+187|Jumătate
+188|Sfert
+189|Cache memorie efecte
+190|Mod proxy
+191|Oprit
+192|Optime
+193|Decodare hardware
+194|Șterge cache randare
+195|Tranziții video
+196|Dizolvare încrucișată
+197|Estompare prin culoare
+198|Tranziții audio
+199|Fade încrucișat
+200|Elimină tranziția
+201|OpenFX
+202|Estompare
+203|Estompare Gauss
+204|Claritate
+205|Culoare
+206|Inversează culorile
+207|Alb-negru
+208|Distorsiune
+209|Mozaic
+210|Efecte audio
+211|EQ
+212|Dinamică
+213|Picasso FX
+214|Sepia
+215|Estompare fină
+216|Lumină
+217|Strălucire
+218|Stilizare
+219|Vignetă
+220|Granulație film
+221|Efecte de compoziție
+222|Noduri
+223|Generatoare
+224|Culoare unică
+225|Bare de culoare
+226|Degrade
+227|Titluri
+228|Text
+229|Text+
+230|Caută în biblioteca de efecte
+231|Adaugă unealtă (compoziție)
+232|Resetează gradările și nodurile
+233|Resetează nodul curent
+234|Nod pornit/oprit
+235|Captează still
+236|Redă still
+237|Adaugă nod serial
+238|Adaugă serial înainte
+239|Adaugă nod paralel
+240|Adaugă mixer de straturi
+241|Adaugă divizor / combinator
+242|Adaugă nod exterior
+243|Etichetează nodul
+244|Cronologie
+245|Graful de noduri anterior
+246|Graful de noduri următor
+247|LUT
+248|Aplică LUT din listă
+249|Galerie
+250|Scope-uri pornit/oprit
+251|Lumini
+252|Lightbox
+253|ADR
+254|Înlocuire automată dialog
+255|Bounce mix în pistă
+256|Bounce piste alese
+257|Cache efecte audio
+258|Legătură audio
+259|Grup de legătură
+260|Descompune
+261|Jog în buclă
+262|Arată cronologia / mixerul audio
+263|Ecran complet
+264|Arată panoul în spațiu
+265|Media pool
+266|Bibliotecă de efecte
+267|Inspector
+268|Mixer
+269|Metadate
+270|Index editare
+271|Bibliotecă de sunete
+272|Aspect
+273|Resetează aspectul
+274|Salvează aspectul
+275|Încarcă aspectul
+276|Mergi la pagina
+277|Media
+278|Editare
+279|Efecte
+280|Audio
+281|Livrare
+282|Două ecrane pornit/oprit
+283|Ieșire video curată
+284|Manual Picasso Suite
+285|Tutoriale Picasso Suite
+286|Caută actualizări...
+287|Exportă fișierul jurnal...
+288|Despre Picasso Suite
+289|Limbă
+#ui
+1|Clipuri
+2|60 cadre/s
+3|Adaugă job
+4|Adaugă în coadă
+5|Avansat
+6|Arhivează proiect
+7|Arhivează...
+8|Auto
+9|Automat
+10|Echilibrat
+11|Bin-uri
+12|Răsfoiește
+13|Trimiteri bus
+14|Captură
+15|Capitole
+16|Alege un dosar
+17|Nume clip
+18|Clonă
+19|Clonare
+20|Codec
+21|Culoare+
+22|Colecții
+23|Contrast
+24|Control
+25|Creează album
+26|Curbe - proprii
+27|Export propriu
+28|Decodare
+29|Proiect demo
+30|Trageți poze în album pentru a edita
+31|Desenat cu
+32|Editare
+33|Efecte int.
+34|Audio încorporat
+35|Encoder
+36|Profil codare
+37|Toată cronol.
+38|Dimensiune
+39|La fiecare
+40|Export video
+41|Fairlight
+42|Nume fișier
+43|Format
+44|Cadre/s
+45|Reordonare
+46|Cadre întregi
+47|Ecran complet
+48|Fusion
+49|Gain
+50|Gamma
+51|Generator
+52|Placă video
+53|Grupuri
+54|Lumini
+55|Înalt
+56|Nuanță
+57|Imagine
+58|Index
+59|Clipuri separate
+60|Intrare
+61|Integrat
+62|Cadre cheie
+63|Cuvinte-cheie
+64|Mix S
+65|Strat
+66|Local
+67|Locație
+68|Redare în buclă
+69|Volum
+70|Scăzut
+71|Marcaj
+72|Gestionare media
+73|Sursă media
+74|Stocare media
+75|Indicatoare
+76|Mijloc/detaliu
+77|Modificatori
+78|Monitor
+79|Volum monitor
+80|Nativ
+81|Optimizare rețea
+82|Niciun job
+83|Niciun job
+84|Niciun still
+85|Nespecificat
+86|Nimic de văzut
+87|Decalaj
+88|Deschide
+89|Ordine
+90|Parade
+91|Pauză
+92|Foto
+93|Album
+94|Redare
+95|Blocare poziție
+96|Presetare
+97|Primare - roți culoare
+98|Mod procesare
+99|Setări proiect
+100|Proiecte
+101|Calitate
+102|Export rapid
+103|Interval
+104|Control rată
+105|Relegare media
+106|Relegare media...
+107|Elimină
+108|Randare
+109|Randare tot
+110|Coadă randare
+111|Setări randare
+112|Setări - export propriu
+113|Resetare
+114|Resetare tot
+115|Rezoluție
+116|Caută
+117|Setări
+118|Umbre
+119|Scurt
+120|Scurt max
+121|Un clip
+122|Bin-uri smart
+123|Spațiu culoare sursă
+124|Spațiu gamma sursă
+125|Setări subtitrare
+126|Sistem
+127|Rezoluție cronol.
+128|Proxy cronol.
+129|Tentă
+130|Unelte
+131|FX pistă
+132|Tranziții
+133|Fără nume
+134|Rezoluție verticală
+135|Versiunea 0.6.1
+136|Video
+137|Formă de undă
+138|Spațiu
+139|Niciun clip în media pool
+140|Importați clipuri sau trageți fișiere aici
+141|Adăugați clipuri din stocare pentru a începe
+142|Niciun sunet de arătat
+143|Niciun clip de gradat
+144|Fără intrare
+145|DURATĂ
+146|Export audio
+147|Rată date
+148|Pista de ieșire 1
+149|Nume unic
+150|Adaugă (1), (2) ... la nume în loc să suprascrie.
+151|Tip fișier
+152|Toată cronologia
+153|Intrare la ieșire
+154|Raport pixel
+155|Pătrat
+156|Cinemascope
+157|Niveluri date
+158|Păstrează sub-negru/supra-alb
+159|Etichetă spațiu culoare
+160|Etichetă gamma
+161|Date imprimate
+162|Ca proiectul
+163|Sari recodarea
+164|Folosește media optimizată
+165|Folosește media proxy
+166|Folosește imagini cache
+167|Cea mai bună scalare
+168|Cel mai bun debayer
+169|Toate pistele video
+170|Activează flat pass
+171|Ocolire visionOS
+172|Fără scalare/blanking
+173|Rulează scriptul la
+174|Start
+175|jobului de randare
+176|Export subtitrare
+177|Fișier separat
+178|Exportă ca
+179|cadre
+180|Taie
+181|Turcoaz
+182|Jumătate
+183|Bare culoare
+184|Lightbox
+185|Editare
+186|Mixer
+187|Sunete
+188|Cronol.: AAF, EDL, XML...
+189|Cronol.: OpenTimelineIO...
+190|Editor video scris în Rust pentru Windows, Linux, macOS și web.
+191|Scrubbing audio (sunet la tragerea cursorului)
+192|Cel mai bun
+193|Noua rată de cadre ține clipurile pe aceleași cadre.
+194|Click pe tastele comenzii și apăsați noua tastă. Esc anulează.
+195|Copiază fișierele folosite de cronologii într-un dosar și scrie o copie a proiectului care le indică. Proiectul deschis nu se schimbă.
+196|Decodează video cu accelerare hardware
+197|Fiecare fișier media este unde spune proiectul.
+198|Filtre
+199|Software liber sub GPL versiunea 3 sau mai nouă.
+200|H.264, H.265, AV1, VP9, MPEG-2 și VC-1 se decodează pe placa video dacă driverul poate. Opriți dacă clipurile apar verzi sau stricate. PICASSO_NO_HWACCEL=1 oprește pentru o rulare.
+201|Ajutor
+202|Selecție legată (imagine și sunet)
+203|Proiectul demo a fost încărcat
+204|Pivot
+205|Selecția urmează cursorul
+206|Magnet la clipuri, marcaje, cursor
+207|Soft Clip
+208|Bandă
+209|Tăiere
+210|Vizual
+211|Plin
+212|Clip
+213|Cadre cheie
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scope-uri
+220|Spline
+221|Sync bin
+222|Temp
+223|Import proj...
+224|Export proj...
+225|Salvează ca...
+226|Copie ca...
+227|Import
+228|Export
+229|Subtitrare...
+230|Media...
+231|Dosar...
+232|Cronol.
+233|Media pool
+234|Inspector
+235|Metadate
+236|1/8
+237|Despre
+238|Proiect nou
+239|Deschide...
+240|Salvează
+241|Dinamică
+242|Titluri
+243|Galerie
+244|Efecte
+245|Audio
+246|Cronol.: EDL...
+247|Cronol.: XML...
+248|Media

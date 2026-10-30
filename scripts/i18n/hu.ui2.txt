@@ -1,0 +1,49 @@
+Add Job|Feladat
+Automatic|Auto
+Bins|Kuka
+Choose a folder|Mappa választása
+Collections|Gyűjt.
+Editing|Szerk.
+Every|Mind
+Format|Forma
+Groups|Csopt.
+High|Mag.
+Hue|Szín
+Low|Alac.
+Mid/Detail|Közép
+Open|Nyit
+Order|Rend
+Preset|Előbe.
+Range|Tart.
+Render All|Mind
+Reset All|Mind
+Settings|Beáll.
+Shad|Árny.
+System|Rendsz.
+Tint|Tint
+Tools|Eszk.
+Waveform|Hullám
+No clips in media pool|Nincs klip
+No clip to grade|Nincs klip
+No Input|Nincs be
+Export Audio|Hang export
+Data Rate|Adatráta
+Data burn-in|Beégetés
+Use proxy media|Proxy média
+Enable Flat Pass|Flat pass be
+visionOS Bypass|visionOS kihagy
+Start|Start
+of render job|render fel.
+Export As|Export mint
+Teal|Kékzöld
+Lightbox|Fénydob.
+Best|Max
+Tape|Tape
+Trim|Vág.
+Full|Tel.
+Sync Bin|Szink.
+Save Project As...|Mentés így...
+Save Copy As...|Másolat...
+Nodes|Csomók
+Export As|Export
+Teal|Kék

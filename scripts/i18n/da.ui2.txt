@@ -1,0 +1,26 @@
+Balanced|Balanc.
+Browse|Søg
+Editing|Redig.
+Mark|Mark.
+Native|Nativ
+Order|Orden
+Range|Spænd
+Reset All|Nulst. alle
+Shad|Skyg.
+Tools|Værkt.
+Untitled|Unavngiv.
+No clips in media pool|Ingen klip i puljen
+No clip to grade|Intet at gradere
+Data burn-in|Indbrændt
+Use optimized media|Optimerede medier
+Export As|Eksp. som
+Best|Bedst
+Keyframes|Nøglebill.
+Export Project...|Eksp. projekt...
+Save Project As...|Gem som...
+Import|Import
+Subtitle...|Tekst...
+Export|Eksport
+Eighth|1/8
+Untitled|Navnløs
+Best|Top

@@ -1,0 +1,304 @@
+#menus
+Dat.
+Uredi
+Trim
+Vremen.
+Klip
+Ozn.
+Prik.
+Reprod.
+Efekti
+Boja
+Zvuk
+Prostor
+Pomoć
+#entries
+New Project Library...|Nova biblioteka projekata...
+Open Project Library...|Otvori biblioteku projekata...
+Show Current Project Library in File Explorer|Prikaži biblioteku u Exploreru
+Project Manager|Upravitelj projekata
+New Project|Novi projekt
+Open Project...|Otvori projekt...
+Import Project...|Uvezi projekt...
+Export Project...|Izvezi projekt...
+Restore Project Archive...|Vrati arhivu projekta...
+Save Project|Sačuvaj projekt
+Save Project As...|Sačuvaj projekt kao...
+Save Copy As...|Sačuvaj kopiju kao...
+Revert to Last Saved Version|Vrati zadnje spremljeno
+Import|Uvezi
+Media...|Mediji...
+Folder as Bin...|Mapa kao koš...
+Timeline: AAF, EDL, XML...|Vrem.: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Vrem.: pred-EDL...
+Subtitle...|Titlovi...
+Metadata to Media Pool...|Metapodaci u skup medija...
+Bin...|Koš...
+Export|Izvezi
+Timeline: EDL...|Vrem.: EDL...
+Timeline: OpenTimelineIO...|Vrem.: OpenTimelineIO...
+Timeline: XML...|Vrem.: XML...
+Timeline: AAF...|Vrem.: AAF...
+Metadata from Media Pool...|Metapodaci iz skupa medija...
+Media Management...|Upravljanje medijima...
+Project Settings...|Postavke projekta...
+System Preferences...|Postavke sistema...
+Quick Export...|Brzi izvoz...
+Quit|Izlaz
+Undo|Poništi
+Redo|Ponovi
+Cut|Izreži
+Copy|Kopiraj
+Paste|Zalijepi
+Paste Insert|Zalijepi i umetni
+Paste Mix to Current Track|Zalijepi miks na stazu
+Duplicate|Dupliciraj
+Fit to Fill|Prilagodi ispuni
+Place on Top|Stavi na vrh
+Delete Selected|Obriši odabrano
+Delete Selected with Ripple|Obriši odabrano s ripple
+Select All|Odaberi sve
+Deselect All|Poništi odabir
+Select Clips Forward|Odaberi klipove naprijed
+Find...|Nađi...
+Recent Projects|Nedavni projekti
+Project Manager...|Upravitelj projekata...
+Keyboard Customization|Prečice tastature
+Select Nearest Edit Point|Odaberi najbližu točku reza
+Selection Mode|Način odabira
+Trim Mode|Način trimanja
+Dynamic Trim Mode|Dinamičko trimanje
+Ripple Start|Ripple početak
+Ripple End|Ripple kraj
+Ripple Trim Previous / Next|Ripple prethodni / sljedeći
+Ripple Trim Previous Edit to Playhead|Ripple prethodni do glave
+Ripple Trim Next Edit to Playhead|Ripple sljedeći do glave
+Trim Start to Playhead|Trim početka do glave
+Trim End to Playhead|Trim kraja do glave
+Extend Edit|Produži rez
+Slip Clip|Slip klipa
+Slip One Frame Earlier|Slip jedan kadar ranije
+Slip One Frame Later|Slip jedan kadar kasnije
+Slide Clip|Slide klipa
+Slide One Frame Left|Slide jedan kadar lijevo
+Slide One Frame Right|Slide jedan kadar desno
+Loop Trim|Trimanje u petlji
+Asymmetric Trimming|Asimetrično trimanje
+Trim Editor|Uređivač trima
+New Timeline...|Nova vremenska linija...
+New Timeline Using Selected Clips|Nova linija iz odabranih
+Create New Compound Clip...|Novi složeni klip...
+New Effects Clip...|Novi klip efekta...
+Decompose in Place|Razloži na mjestu
+Decompose Compound Clip|Razloži složeni klip
+Decompose Nested Timeline|Razloži ugniježđenu liniju
+Split Clip|Podijeli klip
+Create Timeline Using Bin...|Linija iz koša...
+Import Timeline...|Uvezi vremensku liniju...
+Export Timeline...|Izvezi vremensku liniju...
+Timeline Resolution and Frame Rate...|Rezolucija i broj kadrova...
+Timeline Settings|Postavke vremenske linije
+Snap|Prianjanje
+Linked Selection|Povezani odabir
+Position Lock|Zaključaj poziciju
+Selection Follows Playhead|Odabir prati glavu
+Add Marker|Dodaj marker
+Add Marker and Show Dialog|Dodaj marker s dijalogom
+Delete All Markers|Obriši sve markere
+Create Subtitle Track|Napravi stazu titlova
+Create Subtitle Region|Napravi područje titlova
+Add Transition to All Edits|Prijelaz na sve rezove
+Switch Timeline|Promijeni vremensku liniju
+Open Timeline in New Window|Otvori liniju u novom prozoru
+Delete Timeline|Obriši vremensku liniju
+Enable Clip|Omogući klip
+Match Frame|Odgovarajući kadar
+Lock Clip|Zaključaj klip
+New Multicam Clip...|Novi multicam klip...
+Multicam Viewer|Multicam preglednik
+Add to Media Pool as Stills|Dodaj kao mirne slike
+Change Clip Speed...|Promijeni brzinu klipa...
+Change Clip Duration...|Promijeni trajanje klipa...
+Retime Controls|Kontrole vremena
+Retime Clip|Promijeni vrijeme klipa
+Freeze Frame|Zamrzni kadar
+Speed Ramp...|Rampa brzine...
+Reverse Clip|Obrni klip
+Create New Compound Clip|Novi složeni klip
+Link Clips|Poveži klipove
+Unlink Audio and Video|Odvoji zvuk i sliku
+Enable / Disable Audio Scrubbing|Scrubbing zvuka uklj/isklj
+Auto Align Clips|Automatski poravnaj klipove
+Based on Timecode|Prema timecodeu
+Based on Waveform|Prema valnom obliku
+Normalize Audio Levels...|Normaliziraj razinu zvuka...
+Render in Place|Renderiraj na mjestu
+New Effects Clip|Novi klip efekta
+New Compound Clip|Novi složeni klip
+Clip Attributes...|Svojstva klipa...
+Mark In|Označi ulaz
+Mark Out|Označi izlaz
+Mark Clip|Označi klip
+Mark Timeline In/Out|Označi liniju ulaz/izlaz
+Clear In|Obriši ulaz
+Clear Out|Obriši izlaz
+Clear In and Out|Obriši ulaz i izlaz
+Modify Marker...|Izmijeni marker...
+Delete Marker at Current Position|Obriši marker ovdje
+Delete All Markers in Timeline|Obriši sve markere
+Go to Previous Marker|Na prethodni marker
+Go to Next Marker|Na sljedeći marker
+Set Clip Color|Boja klipa
+Default|Zadano
+Orange|Narančasta
+Apricot|Marelica
+Yellow|Žuta
+Lime|Limeta
+Olive|Maslinasta
+Green|Zelena
+Teal|Tirkizna
+Navy|Mornarska
+Blue|Plava
+Purple|Ljubičasta
+Violet|Violet
+Pink|Ružičasta
+Tan|Smeđkasta
+Beige|Bež
+Brown|Smeđa
+Chocolate|Čokoladna
+Show Current Frame on Playback|Prikaži kadar pri reprodukciji
+Safe Area Overlay|Sigurno područje
+Show Grid / Guides|Prikaži mrežu / vodilice
+Show Toolbar|Prikaži alatnu traku
+Show Full Screen Viewer|Prikaži cijeli ekran
+Show Cinema Viewer|Prikaži kino prikaz
+Viewer Overlays|Prekrivanja preglednika
+Transform / Crop / Dynamic Zoom|Transform. / obrezivanje / zoom
+Safe Area|Sigurno područje
+Center Crosshair|Središnji križ
+Checkerboard Background (Alpha)|Šahovska pozadina (alfa)
+Show All Overlays|Prikaži sva prekrivanja
+Timecode Window|Prozor timecodea
+Show Scopes|Prikaži scopeove
+Show Audio Meters|Prikaži mjerače zvuka
+Show Audio Mixer|Prikaži zvučni mikser
+Show Inspector|Prikaži inspektor
+Play Forward|Reproduciraj naprijed
+Play Reverse|Reproduciraj unatrag
+Stop|Stop
+Play Around Current Frame|Reproduciraj oko kadra
+Play In to Out|Reproduciraj ulaz do izlaza
+Play Around In / Around Out|Reproduciraj oko ulaza/izlaza
+Loop Playback|Reprodukcija u petlji
+Go to First Frame|Na prvi kadar
+Go to Last Frame|Na zadnji kadar
+Go to In|Na ulaz
+Go to Out|Na izlaz
+Previous Frame|Prethodni kadar
+Next Frame|Sljedeći kadar
+Previous Edit Point|Prethodna točka reza
+Next Edit Point|Sljedeća točka reza
+Timeline Playback Resolution|Rezolucija reprodukcije
+Half|Pola
+Quarter|Četvrtina
+Effects Memory Cache|Memorija efekata (cache)
+Timeline Proxy Mode|Proxy način
+Off|Isklj
+Eighth|Osmina
+Hardware Decoding|Hardversko dekodiranje
+Delete Render Cache|Obriši render cache
+Video Transitions|Video prijelazi
+Cross Dissolve|Križno stapanje
+Dip to Color|Stapanje kroz boju
+Audio Transitions|Zvučni prijelazi
+Cross Fade|Križni fade
+Remove Transition|Ukloni prijelaz
+OpenFX|OpenFX
+Blur|Zamućenje
+Gaussian Blur|Gaussovo zamućenje
+Sharpen|Izoštravanje
+Color|Boja
+Invert Colors|Invertiraj boje
+Black and White|Crno-bijelo
+Distort|Izobličenje
+Mosaic|Mozaik
+Audio FX|Zvučni efekti
+EQ|EQ
+Dynamics|Dinamika
+Picasso FX|Picasso FX
+Sepia|Sepija
+Soft Blur|Meko zamućenje
+Light|Svjetlo
+Glow|Sjaj
+Stylize|Stilizacija
+Vignette|Vinjeta
+Film Grain|Zrno filma
+Compositing Effects|Kompozitni efekti
+Nodes|Čvorovi
+Generators|Generatori
+Solid Color|Jedna boja
+Color Bars|Trake boja
+Gradient|Gradijent
+Titles|Naslovi
+Text|Tekst
+Text+|Tekst+
+Effects Library Search|Traži u biblioteci efekata
+Add Tool (Compositing)|Dodaj alat (kompozit)
+Reset All Grades and Nodes|Resetiraj sve gradacije i čvorove
+Reset Current Node Grade|Resetiraj trenutni čvor
+Enable/Disable Current Node|Čvor uklj/isklj
+Grab Still|Snimi still
+Play Still|Reproduciraj still
+Add Serial Node|Dodaj serijski čvor
+Add Serial Before|Dodaj serijski prije
+Add Parallel Node|Dodaj paralelni čvor
+Add Layer Mixer|Dodaj mikser slojeva
+Add Splitter / Combiner|Dodaj razdjelnik / spajač
+Add Outside Node|Dodaj vanjski čvor
+Label Node|Označi čvor
+Timeline|Vremenska linija
+Previous Node Graph|Prethodni graf čvorova
+Next Node Graph|Sljedeći graf čvorova
+LUT|LUT
+Apply LUT from list|Primijeni LUT s popisa
+Gallery|Galerija
+Scopes On/Off|Scopeovi uklj/isklj
+Highlight|Svjetla
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Automatska zamjena dijaloga
+Bounce Mix to Track|Bounce miksa na stazu
+Bounce Selected Tracks|Bounce odabranih staza
+Cache Audio Effects|Cache zvučnih efekata
+Audio Link|Zvučna veza
+Link Group|Grupa veze
+Decompose|Razloži
+Loop Jog|Jog u petlji
+Show Audio Timeline / Mixer|Prikaži zvučnu liniju / mikser
+Full Screen Viewer|Cijeli ekran
+Show Panel in Workspace|Prikaži ploču u prostoru
+Media Pool|Skup medija
+Effects Library|Biblioteka efekata
+Inspector|Inspektor
+Mixer|Mikser
+Metadata|Metapodaci
+Edit Index|Indeks uređivanja
+Sound Library|Biblioteka zvukova
+Layout|Raspored
+Reset UI Layout|Resetiraj raspored
+Save Layout|Sačuvaj raspored
+Load Layout|Učitaj raspored
+Switch to Page|Prijeđi na stranicu
+Media|Mediji
+Edit|Uređivanje
+Effects|Efekti
+Audio|Zvuk
+Deliver|Isporuka
+Dual Screen On/Off|Dva ekrana uklj/isklj
+Video Clean Feed|Čisti video izlaz
+Picasso Suite Manual|Priručnik Picasso Suite
+Picasso Suite Tutorials|Vodiči Picasso Suite
+Check for Updates...|Provjeri ažuriranja...
+Export Log File...|Izvezi datoteku zapisa...
+About Picasso Suite|O Picasso Suite
+Language|Jezik

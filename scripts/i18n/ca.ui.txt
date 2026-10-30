@@ -1,0 +1,248 @@
+Clips|Clips
+60 frames per second|60 fotogr./s
+Add Job|Afegeix tasca
+Add to Render Queue|Afegeix a la cua
+Advanced Settings|Avançat
+Archive Project|Arxiva el projecte
+Archive Project...|Arxiva...
+Auto|Auto
+Automatic|Automàtic
+Balanced|Equilibrat
+Bins|Safates
+Browse|Explora
+Bus Sends|Enviam. bus
+Capture|Captura
+Chapters from Markers|Capítols
+Choose a folder|Tria una carpeta
+Clip Name|Nom del clip
+Clone|Clon
+Clone Tool|Clonació
+Codec|Còdec
+Col Boost|Color+
+Collections|Col·leccions
+Contrast|Contrast
+Control Room|Control
+Create an Album|Crea un àlbum
+Curves - Custom|Corbes - pròpies
+Custom Export|Exportació pròpia
+Decode Options|Descodificació
+Demo Project|Projecte demo
+Drag photos into the Photo Album to start editing|Arrossega fotos a l'àlbum per editar
+Drawn with|Dibuixat amb
+Editing|Editant
+Effects In|Efectes ent.
+Embedded Audio|Àudio incrustat
+Encoder|Codificador
+Encoding Profile|Perfil de codificació
+Entire Timeline|Tota la cronologia
+Estimated File Size|Mida
+Every|Cada
+Export Video|Exporta vídeo
+Fairlight|Fairlight
+File Name|Nom del fitxer
+Format|Format
+Frame rate|Fotogr./s
+Frame reordering|Reordenació
+Full Frames|Fotogrames sencers
+Full Screen|Pantalla completa
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generador
+Graphics card|Targeta gràfica
+Groups|Grups
+Hi/Light|Llums altes
+High|Alt
+Hue|To
+Image|Imatge
+Index|Índex
+Individual clips|Clips individuals
+Input|Entrada
+Integrated|Integrat
+Key Frames|Fotogrames clau
+Keywords|Paraules clau
+L. Mix|Mescla E
+Layer|Capa
+Local|Local
+Location|Ubicació
+Loop playback|Bucle
+Loudness|Sonoritat
+Low|Baix
+Mark|Marca
+Media Management|Gestió de contingut
+Media Source|Font de contingut
+Media Storage|Emmagatzematge
+Meters|Mesuradors
+Mid/Detail|Mitjos/detall
+Modifiers|Modificadors
+Monitor|Monitor
+Monitor volume|Volum del monitor
+Native|Natiu
+Network Optimization|Optimització de xarxa
+No jobs in Queue|Cap tasca
+No jobs in queue|Cap tasca
+No stills created|Cap still
+Not reported|No informat
+Nothing to inspect|Res a inspeccionar
+Offset|Desfasament
+Open|Obre
+Order|Ordre
+Parade|Parade
+Pause|Pausa
+Photo|Foto
+Photo Album|Àlbum
+Playback|Reprod.
+Position lock|Bloqueig de posició
+Preset|Predefinit
+Primaries - Color Wheels|Primaris - rodes de color
+Process Mode|Mode de procés
+Project settings|Config. del projecte
+Projects|Projectes
+Quality|Qualitat
+Quick Export|Exportació ràpida
+Range|Interval
+Rate Control|Control de taxa
+Relink Missing Media|Reenllaça contingut
+Relink Missing Media...|Reenllaça contingut...
+Remove|Elimina
+Render|Render
+Render All|Render tot
+Render Queue|Cua de render
+Render Settings|Config. de render
+Render Settings - Custom Export|Config. - export propi
+Reset|Reset
+Reset All|Reset tot
+Resolution|Resolució
+Search|Cerca
+Settings|Configuració
+Shad|Ombres
+Short|Curt
+Short Max|Curt màx.
+Single clip|Un clip
+Smart Bins|Safates intel·ligents
+Source Color Space|Espai de color d'origen
+Source Gamma Space|Espai gamma d'origen
+Subtitle Settings|Config. de subtítols
+System|Sistema
+Timeline Resolution|Resolució cronol.
+Timeline proxy|Proxy cronol.
+Tint|Tint
+Tools|Eines
+Track FX|FX de pista
+Transitions|Transicions
+Untitled|Sense títol
+Use vertical resolution|Resolució vertical
+Version 0.6.1|Versió 0.6.1
+Video|Vídeo
+Waveform|Forma d'ona
+Workspace|Espai
+No clips in media pool|Cap clip al conjunt
+Add clips with Import, or drop files here|Importa clips o deixa-hi fitxers
+Add clips from Media Storage to get started|Afegeix clips de l'emmagatzematge
+No sound to show|Cap so per mostrar
+No clip to grade|Cap clip per graduar
+No Input|Sense entrada
+DURATION|DURADA
+Export Audio|Exporta àudio
+Data Rate|Taxa de dades
+Output Track 1|Pista de sortida 1
+Use unique filename|Nom únic
+Adds (1), (2) ... to the name instead of writing over a file.|Afegeix (1), (2) ... al nom en comptes de sobreescriure.
+File type|Tipus de fitxer
+Whole timeline|Tota la cronologia
+In to out marks|Entrada a sortida
+Pixel aspect ratio|Relació de píxel
+Square|Quadrat
+Cinemascope|Cinemascope
+Data Levels|Nivells de dades
+Retain sub-black and super-white data|Conserva sota-negre/sobre-blanc
+Color Space Tag|Etiqueta d'espai de color
+Gamma Tag|Etiqueta gamma
+Data burn-in|Dades gravades
+Same as project|Com el projecte
+Bypass re-encode when possible|Omet la recodificació
+Use optimized media|Contingut optimitzat
+Use proxy media|Contingut proxy
+Use render cached images|Imatges de memòria cau
+Force sizing to highest quality|Millor escalat
+Force debayer to highest quality|Millor debayer
+Render All Video Tracks|Totes les pistes de vídeo
+Enable Flat Pass|Activa flat pass
+visionOS Bypass|Evita visionOS
+Disable sizing and blanking output|Sense escalat/blanking
+Trigger script at|Executa l'script en
+Start|Inici
+of render job|la tasca de render
+Export Subtitle|Exporta subtítols
+As a separate file|Fitxer separat
+Export As|Exporta com a
+frames|fotogrames
+Cut|Retalla
+Teal|Turquesa
+Half|Meitat
+Color Bars|Barres color
+Lightbox|Lightbox
+Edit|Edita
+Mixer|Mesclador
+Sound Library|Sons
+Timeline: AAF, EDL, XML...|Cronol.: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Cronol.: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Editor de vídeo en Rust per a Windows, Linux, macOS i web.
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing d'àudio (so en arrossegar el cap)
+Best|Millor
+Changing the frame rate keeps every clip on the same frames.|La nova taxa manté cada clip als mateixos fotogrames.
+Click a command's keys, then press the key it should have. Escape gives up.|Clica les tecles d'una ordre i prem la nova. Esc cancel·la.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Copia els fitxers de les cronologies en una carpeta i escriu una còpia del projecte que hi apunta. El projecte obert no canvia.
+Decode supported video using hardware acceleration|Descodifica vídeo amb acceleració per maquinari
+Every media file is where the project says it is.|Cada fitxer és on diu el projecte.
+Filters|Filtres
+Free software under the GPL, version 3 or later.|Programari lliure sota la GPL versió 3 o posterior.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 i VC-1 es descodifiquen a la targeta gràfica si el controlador pot. Desactiva-ho si els clips surten verds o trencats. PICASSO_NO_HWACCEL=1 ho desactiva una vegada.
+Help|Ajuda
+Linked selection (picture and sound together)|Selecció enllaçada (imatge i so junts)
+Loaded the demo project|Projecte demo carregat
+Pivot|Pivot
+Selection follows the playhead|La selecció segueix el cap
+Snap to clips, markers and the playhead|Imant a clips, marcadors i cap
+Soft Clip|Soft Clip
+Tape|Cinta
+Trim|Retall
+View|Vista
+Full|Ple
+Clip|Clip
+Keyframes|Fotogrames clau
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Safata sinc.
+Temp|Temp
+Import Project...|Import proj...
+Export Project...|Export proj...
+Save Project As...|Desa com a...
+Save Copy As...|Còpia com a...
+Import|Importa
+Export|Exporta
+Subtitle...|Subtítols...
+Media...|Contingut...
+Folder as Bin...|Carpeta...
+Timeline|Cronol.
+Media Pool|Conjunt
+Inspector|Inspector
+Metadata|Metadades
+Eighth|1/8
+About Picasso Suite|Quant a
+New Project|Projecte nou
+Open Project...|Obre...
+Save Project|Desa
+Dynamics|Dinàmica
+Titles|Títols
+Gallery|Galeria
+Effects|Efectes
+Audio|Àudio
+Timeline: EDL...|Cronol.: EDL...
+Timeline: XML...|Cronol.: XML...
+Media|Contingut

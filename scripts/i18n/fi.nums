@@ -1,0 +1,553 @@
+#menus
+Tied.
+Muok.
+Trim.
+Aikajana
+Klip.
+Merk.
+Näytä
+Toisto
+Tehost.
+Väri
+Ääni
+Työtila
+Ohje
+#entries
+1|Uusi projektikirjasto...
+2|Avaa projektikirjasto...
+3|Näytä kirjasto Resurssienhall.
+4|Projektinhallinta
+5|Uusi projekti
+6|Avaa projekti...
+7|Tuo projekti...
+8|Vie projekti...
+9|Palauta projektiarkisto...
+10|Tallenna projekti
+11|Tallenna projekti nimellä...
+12|Tallenna kopio nimellä...
+13|Palauta viimeksi tallennettu
+14|Tuo
+15|Media...
+16|Kansio lokerona...
+17|Aikajana: AAF, EDL, XML...
+18|Aikajana: esi-EDL...
+19|Tekstitys...
+20|Metatiedot mediapooliin...
+21|Lokero...
+22|Vie
+23|Aikajana: EDL...
+24|Aikajana: OpenTimelineIO...
+25|Aikajana: XML...
+26|Aikajana: AAF...
+27|Metatiedot mediapoolista...
+28|Median hallinta...
+29|Projektin asetukset...
+30|Järjestelmäasetukset...
+31|Pikaviennit...
+32|Lopeta
+33|Kumoa
+34|Tee uudelleen
+35|Leikkaa
+36|Kopioi
+37|Liitä
+38|Liitä ja lisää
+39|Liitä miksi raitaan
+40|Kahdenna
+41|Sovita täyttöön
+42|Aseta päälle
+43|Poista valitut
+44|Poista valitut ripplellä
+45|Valitse kaikki
+46|Poista valinnat
+47|Valitse klipit eteenpäin
+48|Etsi...
+49|Viimeisimmät projektit
+50|Projektinhallinta...
+51|Pikanäppäimet
+52|Valitse lähin leikkauskohta
+53|Valintatila
+54|Trimmaustila
+55|Dynaaminen trimmaus
+56|Ripple alku
+57|Ripple loppu
+58|Ripple edellinen / seuraava
+59|Ripple edell. soittopäähän
+60|Ripple seur. soittopäähän
+61|Trimmaa alku soittopäähän
+62|Trimmaa loppu soittopäähän
+63|Laajenna leikkaus
+64|Slip-klippi
+65|Slip kuva aiemmaksi
+66|Slip kuva myöhemmäksi
+67|Slide-klippi
+68|Slide kuva vasemmalle
+69|Slide kuva oikealle
+70|Silmukkatrimmaus
+71|Epäsymmetrinen trimmaus
+72|Trimmauseditori
+73|Uusi aikajana...
+74|Uusi aikajana valituista
+75|Uusi yhdistelmäklippi...
+76|Uusi tehosteklippi...
+77|Pura paikallaan
+78|Pura yhdistelmäklippi
+79|Pura sisäkkäinen aikajana
+80|Jaa klippi
+81|Aikajana lokerosta...
+82|Tuo aikajana...
+83|Vie aikajana...
+84|Tarkkuus ja kuvataajuus...
+85|Aikajanan asetukset
+86|Tartu
+87|Linkitetty valinta
+88|Sijaintilukko
+89|Valinta seuraa soittopäätä
+90|Lisää merkki
+91|Lisää merkki ja dialogi
+92|Poista kaikki merkit
+93|Luo tekstitysraita
+94|Luo tekstitysalue
+95|Siirtymä kaikkiin leikkauksiin
+96|Vaihda aikajanaa
+97|Avaa aikajana uudessa ikkunassa
+98|Poista aikajana
+99|Ota klippi käyttöön
+100|Vastaava kuva
+101|Lukitse klippi
+102|Uusi monikameraklippi...
+103|Monikameranäkymä
+104|Lisää still-kuvina
+105|Vaihda klipin nopeutta...
+106|Vaihda klipin kestoa...
+107|Ajoituksen hallinta
+108|Ajoita klippi uudelleen
+109|Pysäytyskuva
+110|Nopeusramppi...
+111|Käännä klippi
+112|Uusi yhdistelmäklippi
+113|Linkitä klipit
+114|Erota ääni ja kuva
+115|Äänen scrubbaus päälle/pois
+116|Tasaa klipit automaattisesti
+117|Aikakoodin mukaan
+118|Aaltomuodon mukaan
+119|Normalisoi äänitasot...
+120|Renderöi paikallaan
+121|Uusi tehosteklippi
+122|Uusi yhdistelmäklippi
+123|Klipin ominaisuudet...
+124|Merkitse alku
+125|Merkitse loppu
+126|Merkitse klippi
+127|Merkitse aikajana alku/loppu
+128|Tyhjennä alku
+129|Tyhjennä loppu
+130|Tyhjennä alku ja loppu
+131|Muokkaa merkkiä...
+132|Poista merkki tästä
+133|Poista kaikki merkit
+134|Edellinen merkki
+135|Seuraava merkki
+136|Klipin väri
+137|Oletus
+138|Oranssi
+139|Aprikoosi
+140|Keltainen
+141|Lime
+142|Oliivi
+143|Vihreä
+144|Sinivihreä
+145|Laivastonsininen
+146|Sininen
+147|Violetti
+148|Orvokki
+149|Vaaleanpunainen
+150|Vaaleanruskea
+151|Beige
+152|Ruskea
+153|Suklaa
+154|Näytä nykyinen kuva toistossa
+155|Turva-alue
+156|Näytä ruudukko / apuviivat
+157|Näytä työkalupalkki
+158|Näytä koko näytön näkymä
+159|Näytä elokuvanäkymä
+160|Näkymän peitteet
+161|Muunna / rajaa / zoomaa
+162|Turva-alue
+163|Keskiristikko
+164|Ruututausta (alfa)
+165|Näytä kaikki peitteet
+166|Aikakoodi-ikkuna
+167|Näytä skoopit
+168|Näytä äänimittarit
+169|Näytä äänimikseri
+170|Näytä tarkastaja
+171|Toista eteenpäin
+172|Toista taaksepäin
+173|Pysäytä
+174|Toista kuvan ympäriltä
+175|Toista alusta loppuun
+176|Toista alun / lopun ympäriltä
+177|Toista silmukkana
+178|Ensimmäiseen kuvaan
+179|Viimeiseen kuvaan
+180|Alkuun
+181|Loppuun
+182|Edellinen kuva
+183|Seuraava kuva
+184|Edellinen leikkauskohta
+185|Seuraava leikkauskohta
+186|Toistotarkkuus
+187|Puolikas
+188|Neljännes
+189|Tehostemuisti
+190|Proxy-tila
+191|Pois
+192|Kahdeksasosa
+193|Laitteistopurku
+194|Poista render-välimuisti
+195|Videosiirtymät
+196|Ristiinhäivytys
+197|Häivytys väriin
+198|Äänisiirtymät
+199|Ristiinhäivytys
+200|Poista siirtymä
+201|OpenFX
+202|Sumennus
+203|Gaussin sumennus
+204|Terävöitys
+205|Väri
+206|Käännä värit
+207|Mustavalkoinen
+208|Vääristymä
+209|Mosaiikki
+210|Äänitehosteet
+211|EQ
+212|Dynamiikka
+213|Picasso FX
+214|Seepia
+215|Pehmeä sumennus
+216|Valo
+217|Hehku
+218|Tyylittely
+219|Vinjetti
+220|Filmin rae
+221|Komposiittitehosteet
+222|Solmut
+223|Generaattorit
+224|Yksivärinen
+225|Värikaaviot
+226|Liukuväri
+227|Otsikot
+228|Teksti
+229|Teksti+
+230|Hae tehosteista
+231|Lisää työkalu (komp.)
+232|Nollaa kaikki gradet ja solmut
+233|Nollaa nykyinen solmu
+234|Solmu päälle/pois
+235|Ota still-kuva
+236|Toista still-kuva
+237|Lisää sarjasolmu
+238|Lisää sarja ennen
+239|Lisää rinnakkaissolmu
+240|Lisää kerrosmikseri
+241|Lisää jakaja / yhdistäjä
+242|Lisää ulkosolmu
+243|Nimeä solmu
+244|Aikajana
+245|Edellinen solmukaavio
+246|Seuraava solmukaavio
+247|LUT
+248|Käytä LUT listasta
+249|Galleria
+250|Skoopit päälle/pois
+251|Valoisat
+252|Valopöytä
+253|ADR
+254|Automaattinen dialogin korvaus
+255|Miksaa raitaan
+256|Miksaa valitut raidat
+257|Välimuistita äänitehosteet
+258|Äänilinkki
+259|Linkkiryhmä
+260|Pura
+261|Silmukka-jog
+262|Näytä ääniaikajana / mikseri
+263|Koko näytön näkymä
+264|Näytä paneeli työtilassa
+265|Mediapooli
+266|Tehostekirjasto
+267|Tarkastaja
+268|Mikseri
+269|Metatiedot
+270|Muokkausindeksi
+271|Äänikirjasto
+272|Asettelu
+273|Nollaa asettelu
+274|Tallenna asettelu
+275|Lataa asettelu
+276|Siirry sivulle
+277|Media
+278|Muokkaus
+279|Tehosteet
+280|Ääni
+281|Julkaisu
+282|Kaksi näyttöä päälle/pois
+283|Puhdas videosyöte
+284|Picasso Suite -opas
+285|Picasso Suite -ohjeet
+286|Tarkista päivitykset...
+287|Vie lokitiedosto...
+288|Tietoja: Picasso Suite
+289|Kieli
+#ui
+1|Klipit
+2|60 kuvaa/s
+3|Lisää työ
+4|Lisää renderöintijonoon
+5|Lisäasetukset
+6|Arkistoi projekti
+7|Arkistoi...
+8|Auto
+9|Automaattinen
+10|Tasapainoinen
+11|Lokerot
+12|Selaa
+13|Väylälähd.
+14|Kaappaus
+15|Luvut
+16|Valitse kansio
+17|Klipin nimi
+18|Klooni
+19|Kloonaus
+20|Koodekki
+21|Väri+
+22|Kokoelmat
+23|Kontrasti
+24|Valvomo
+25|Luo albumi
+26|Käyrät - oma
+27|Oma vienti
+28|Purkuvalinnat
+29|Demoprojekti
+30|Vedä kuvia albumiin aloittaaksesi muokkauksen
+31|Piirretty
+32|Muokkaus
+33|Tehoste sis.
+34|Upotettu ääni
+35|Koodaaja
+36|Koodausprofiili
+37|Koko aikajana
+38|Tiedostokoko
+39|Joka
+40|Vie video
+41|Fairlight
+42|Tiedostonimi
+43|Muoto
+44|Kuvataajuus
+45|Järjestys
+46|Täydet kuvat
+47|Koko näyttö
+48|Fusion
+49|Gain
+50|Gamma
+51|Generaattori
+52|Näytönohjain
+53|Ryhmät
+54|Valoisat
+55|Korkea
+56|Sävy
+57|Kuva
+58|Indeksi
+59|Yksittäiset klipit
+60|Sisään
+61|Integroitu
+62|Avainkuvat
+63|Avainsanat
+64|V-miksi
+65|Taso
+66|Paikallinen
+67|Sijainti
+68|Toisto silmukalla
+69|Äänekkyys
+70|Matala
+71|Merkki
+72|Median hallinta
+73|Mediakansio
+74|Medialevy
+75|Mittarit
+76|Keski/yksit.
+77|Muokkaimet
+78|Monitori
+79|Monitorin voimak.
+80|Natiivi
+81|Verkon optimointi
+82|Ei töitä jonossa
+83|Ei töitä jonossa
+84|Ei still-kuvia
+85|Ei tiedossa
+86|Ei mitään nähtävää
+87|Siirtymä
+88|Avaa
+89|Järjestys
+90|Parade
+91|Tauko
+92|Kuva
+93|Albumi
+94|Toisto
+95|Sijaintilukko
+96|Esiasetus
+97|Primäärit - värirenkaat
+98|Prosessitila
+99|Projektiasetukset
+100|Projektit
+101|Laatu
+102|Pikavienti
+103|Alue
+104|Bittinopeus
+105|Yhdistä media uudelleen
+106|Yhdistä media uudelleen...
+107|Poista
+108|Renderöi
+109|Renderöi kaikki
+110|Render-jono
+111|Render-asetukset
+112|Render-asetukset - oma
+113|Nollaa
+114|Nollaa kaikki
+115|Tarkkuus
+116|Haku
+117|Asetukset
+118|Varjot
+119|Lyhyt
+120|Lyhyt maks.
+121|Yksi klippi
+122|Älylokerot
+123|Lähdeväriavaruus
+124|Lähdegamma
+125|Tekstitysasetukset
+126|Järjestelmä
+127|Aikaj. tarkkuus
+128|Aikajana-proxy
+129|Sävy
+130|Työkalut
+131|Raita-FX
+132|Siirtymät
+133|Nimetön
+134|Pystytarkkuus
+135|Versio 0.6.1
+136|Video
+137|Aaltomuoto
+138|Työtila
+139|Ei klippejä mediapoolissa
+140|Tuo klippejä tai pudota tiedostot tähän
+141|Aloita lisäämällä klippejä medialevyltä
+142|Ei näytettävää ääntä
+143|Ei gradattavaa klippiä
+144|Ei tuloa
+145|KESTO
+146|Vie ääni
+147|Datanopeus
+148|Ulostuloraita 1
+149|Yksilöllinen nimi
+150|Lisää (1), (2) ... nimeen ylikirjoituksen sijaan.
+151|Tiedostotyyppi
+152|Koko aikajana
+153|Alusta loppuun
+154|Pikselisuhde
+155|Neliö
+156|Cinemascope
+157|Datatasot
+158|Säilytä ali-musta/yli-valkoinen
+159|Väriavaruuden tunniste
+160|Gamman tunniste
+161|Dataan poltto
+162|Kuten projekti
+163|Ohita uudelleenkoodaus
+164|Käytä optimoitua mediaa
+165|Käytä proxy-mediaa
+166|Käytä välimuistikuvia
+167|Paras skaalaus
+168|Paras debayer
+169|Kaikki videoraidat
+170|Ota flat pass käyttöön
+171|visionOS-ohitus
+172|Ei skaalausta/blankingia
+173|Aja skripti
+174|Alku
+175|renderöintityön
+176|Vie tekstitys
+177|Erillinen tiedosto
+178|Vie muodossa
+179|kuvaa
+180|Leikkaa
+181|Sinivihreä
+182|Puolikas
+183|Värikaaviot
+184|Valopöytä
+185|Muokkaa
+186|Mikseri
+187|Äänet
+188|Aikajana: AAF, EDL, XML...
+189|Aikajana: OpenTimelineIO...
+190|Rust-kielellä tehty videoeditori Windowsille, Linuxille, macOS:lle ja webiin.
+191|Äänen scrubbaus (ääni soittopäätä vedettäessä)
+192|Paras
+193|Uusi kuvataajuus pitää klipit samoissa kuvissa.
+194|Napsauta komennon näppäimiä ja paina uutta. Esc peruu.
+195|Kopioi aikajanojen tiedostot kansioon ja kirjoittaa niihin viittaavan projektikopion. Avoin projekti ei muutu.
+196|Pura tuettu video laitteistokiihdytyksellä
+197|Jokainen mediatiedosto on projektin kertomassa paikassa.
+198|Suodattimet
+199|Vapaa ohjelmisto GPL:n versiolla 3 tai uudemmalla.
+200|H.264, H.265, AV1, VP9, MPEG-2 ja VC-1 puretaan näytönohjaimella, jos ajuri osaa. Poista käytöstä, jos klipit näkyvät vihreinä tai rikkinäisinä. PICASSO_NO_HWACCEL=1 poistaa yhdeksi ajoksi.
+201|Ohje
+202|Linkitetty valinta (kuva ja ääni yhdessä)
+203|Demoprojekti ladattu
+204|Pivot
+205|Valinta seuraa soittopäätä
+206|Tartu klippeihin, merkkeihin ja soittopäähän
+207|Soft Clip
+208|Nauha
+209|Trim
+210|Näytä
+211|Täysi
+212|Clip
+213|Avainkuvat
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Skoopit
+220|Spline
+221|Synk.kans.
+222|Läm.
+223|Tuo proj...
+224|Vie proj...
+225|Tallenna nimellä...
+226|Kopio nimellä...
+227|Tuo
+228|Vie
+229|Tekstit...
+230|Media...
+231|Kansio...
+232|Aikajana
+233|Mediapooli
+234|Tarkastaja
+235|Metatied.
+236|1/8
+237|Tietoja
+238|Uusi proj.
+239|Avaa...
+240|Tallenna
+241|Dynamiikka
+242|Otsikot
+243|Galleria
+244|Tehosteet
+245|Ääni
+246|Aikajana: EDL...
+247|Aikajana: XML...
+248|Media

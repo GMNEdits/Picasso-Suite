@@ -1,0 +1,553 @@
+#menus
+Soub.
+Úpr.
+Ořez
+Čas. osa
+Klip
+Znač.
+Zobr.
+Přehrát
+Efekty
+Barva
+Zvuk
+Plocha
+Nápověda
+#entries
+1|Nová knihovna projektů...
+2|Otevřít knihovnu projektů...
+3|Zobrazit knihovnu v Průzkumníku
+4|Správce projektů
+5|Nový projekt
+6|Otevřít projekt...
+7|Importovat projekt...
+8|Exportovat projekt...
+9|Obnovit archiv projektu...
+10|Uložit projekt
+11|Uložit projekt jako...
+12|Uložit kopii jako...
+13|Vrátit poslední uložení
+14|Import
+15|Média...
+16|Složka jako koš...
+17|Osa: AAF, EDL, XML...
+18|Osa: předem EDL...
+19|Titulky...
+20|Metadata do zásobníku...
+21|Koš...
+22|Export
+23|Osa: EDL...
+24|Osa: OpenTimelineIO...
+25|Osa: XML...
+26|Osa: AAF...
+27|Metadata ze zásobníku...
+28|Správa médií...
+29|Nastavení projektu...
+30|Předvolby systému...
+31|Rychlý export...
+32|Konec
+33|Zpět
+34|Znovu
+35|Vyjmout
+36|Kopírovat
+37|Vložit
+38|Vložit a zasunout
+39|Vložit mix do stopy
+40|Duplikovat
+41|Přizpůsobit výplni
+42|Umístit nahoru
+43|Smazat vybrané
+44|Smazat vybrané s ripple
+45|Vybrat vše
+46|Zrušit výběr
+47|Vybrat klipy dopředu
+48|Najít...
+49|Nedávné projekty
+50|Správce projektů...
+51|Klávesové zkratky
+52|Vybrat nejbližší střih
+53|Režim výběru
+54|Režim ořezu
+55|Dynamický ořez
+56|Ripple začátek
+57|Ripple konec
+58|Ripple předchozí / další
+59|Ripple předch. k přehrávači
+60|Ripple další k přehrávači
+61|Ořez začátku k přehrávači
+62|Ořez konce k přehrávači
+63|Prodloužit střih
+64|Posun obsahu klipu
+65|Posun o snímek dříve
+66|Posun o snímek později
+67|Posunout klip
+68|Posun o snímek doleva
+69|Posun o snímek doprava
+70|Smyčkový ořez
+71|Asymetrický ořez
+72|Editor ořezu
+73|Nová osa...
+74|Nová osa z vybraných klipů
+75|Nový složený klip...
+76|Nový klip efektu...
+77|Rozložit na místě
+78|Rozložit složený klip
+79|Rozložit vnořenou osu
+80|Rozdělit klip
+81|Osa z koše...
+82|Importovat osu...
+83|Exportovat osu...
+84|Rozlišení a snímková frekv....
+85|Nastavení osy
+86|Přichytávání
+87|Propojený výběr
+88|Zámek pozice
+89|Výběr sleduje přehrávač
+90|Přidat značku
+91|Přidat značku s dialogem
+92|Smazat všechny značky
+93|Vytvořit stopu titulků
+94|Vytvořit oblast titulků
+95|Přechod na všechny střihy
+96|Přepnout osu
+97|Otevřít osu v novém okně
+98|Smazat osu
+99|Povolit klip
+100|Najít shodný snímek
+101|Zamknout klip
+102|Nový multikamera klip...
+103|Multikamera prohlížeč
+104|Přidat jako statické snímky
+105|Změnit rychlost klipu...
+106|Změnit délku klipu...
+107|Ovládání času
+108|Změnit čas klipu
+109|Zmrazit snímek
+110|Rychlostní rampa...
+111|Obrátit klip
+112|Nový složený klip
+113|Propojit klipy
+114|Oddělit zvuk a obraz
+115|Scrubbing zvuku zap/vyp
+116|Auto zarovnání klipů
+117|Podle timecode
+118|Podle vlny
+119|Normalizovat hlasitost...
+120|Renderovat na místě
+121|Nový klip efektu
+122|Nový složený klip
+123|Vlastnosti klipu...
+124|Značka vstup
+125|Značka výstup
+126|Označit klip
+127|Označit osu vstup/výstup
+128|Smazat vstup
+129|Smazat výstup
+130|Smazat vstup a výstup
+131|Upravit značku...
+132|Smazat značku zde
+133|Smazat všechny značky
+134|Na předchozí značku
+135|Na další značku
+136|Barva klipu
+137|Výchozí
+138|Oranžová
+139|Meruňková
+140|Žlutá
+141|Limetková
+142|Olivová
+143|Zelená
+144|Modrozelená
+145|Námořnická
+146|Modrá
+147|Fialová
+148|Violet
+149|Růžová
+150|Světle hnědá
+151|Béžová
+152|Hnědá
+153|Čokoládová
+154|Zobrazit snímek při přehrávání
+155|Bezpečná oblast
+156|Zobrazit mřížku / vodítka
+157|Zobrazit panel nástrojů
+158|Zobrazit celou obrazovku
+159|Zobrazit kino
+160|Překryvy prohlížeče
+161|Transform. / ořez / zoom
+162|Bezpečná oblast
+163|Středový kříž
+164|Šachovnice (alfa)
+165|Zobrazit všechny překryvy
+166|Okno timecode
+167|Zobrazit scopes
+168|Zobrazit měřiče zvuku
+169|Zobrazit zvukový mixér
+170|Zobrazit inspektor
+171|Přehrát vpřed
+172|Přehrát vzad
+173|Stop
+174|Přehrát kolem snímku
+175|Přehrát vstup–výstup
+176|Přehrát kolem vstupu/výstupu
+177|Přehrávat ve smyčce
+178|Na první snímek
+179|Na poslední snímek
+180|Na vstup
+181|Na výstup
+182|Předchozí snímek
+183|Další snímek
+184|Předchozí střih
+185|Další střih
+186|Rozlišení přehrávání
+187|Půl
+188|Čtvrt
+189|Paměť cache efektů
+190|Režim proxy
+191|Vyp
+192|Osmina
+193|Hardwarové dekódování
+194|Smazat cache renderu
+195|Video přechody
+196|Prolínačka
+197|Přes barvu
+198|Zvukové přechody
+199|Prolnutí zvuku
+200|Odebrat přechod
+201|OpenFX
+202|Rozostření
+203|Gaussovo rozostření
+204|Doostření
+205|Barva
+206|Invertovat barvy
+207|Černobílá
+208|Zkreslení
+209|Mozaika
+210|Zvukové efekty
+211|EQ
+212|Dynamika
+213|Picasso FX
+214|Sépie
+215|Jemné rozostření
+216|Světlo
+217|Záře
+218|Stylizace
+219|Vinětace
+220|Filmové zrno
+221|Kompoziční efekty
+222|Uzly
+223|Generátory
+224|Plná barva
+225|Barevné pruhy
+226|Přechod
+227|Titulky
+228|Text
+229|Text+
+230|Hledat v knihovně efektů
+231|Přidat nástroj (kompozice)
+232|Reset všech gradací a uzlů
+233|Reset aktuálního uzlu
+234|Uzel zap/vyp
+235|Pořídit still
+236|Přehrát still
+237|Přidat sériový uzel
+238|Přidat sériový před
+239|Přidat paralelní uzel
+240|Přidat mixér vrstev
+241|Přidat rozdělovač / spojovač
+242|Přidat vnější uzel
+243|Pojmenovat uzel
+244|Osa
+245|Předchozí graf uzlů
+246|Další graf uzlů
+247|LUT
+248|Použít LUT ze seznamu
+249|Galerie
+250|Scopes zap/vyp
+251|Světla
+252|Lightbox
+253|ADR
+254|Automatická náhrada dialogu
+255|Bounce mixu do stopy
+256|Bounce vybraných stop
+257|Cache zvukových efektů
+258|Propojení zvuku
+259|Skupina propojení
+260|Rozložit
+261|Smyčkový jog
+262|Zobrazit zvukovou osu / mixér
+263|Celá obrazovka
+264|Zobrazit panel v ploše
+265|Zásobník médií
+266|Knihovna efektů
+267|Inspektor
+268|Mixér
+269|Metadata
+270|Index střihu
+271|Knihovna zvuků
+272|Rozvržení
+273|Reset rozvržení
+274|Uložit rozvržení
+275|Načíst rozvržení
+276|Přepnout na stránku
+277|Média
+278|Úpravy
+279|Efekty
+280|Zvuk
+281|Výstup
+282|Dvě obrazovky zap/vyp
+283|Čistý video výstup
+284|Příručka Picasso Suite
+285|Návody Picasso Suite
+286|Zkontrolovat aktualizace...
+287|Exportovat soubor logu...
+288|O Picasso Suite
+289|Jazyk
+#ui
+1|Klipy
+2|60 snímků/s
+3|Přidat úlohu
+4|Přidat do fronty
+5|Pokročilé
+6|Archivovat projekt
+7|Archivovat...
+8|Auto
+9|Automaticky
+10|Vyvážené
+11|Koše
+12|Procházet
+13|Sběrnice
+14|Záznam
+15|Kapitoly
+16|Vyberte složku
+17|Název klipu
+18|Klon
+19|Klonování
+20|Kodek
+21|Barva+
+22|Kolekce
+23|Kontrast
+24|Řídicí místnost
+25|Vytvořit album
+26|Křivky - vlastní
+27|Vlastní export
+28|Dekódování
+29|Ukázkový projekt
+30|Přetáhněte fotky do alba a začněte upravovat
+31|Kresleno
+32|Úpravy
+33|Efekty vst.
+34|Vložený zvuk
+35|Enkodér
+36|Profil kódování
+37|Celá osa
+38|Velikost
+39|Každých
+40|Export videa
+41|Fairlight
+42|Název souboru
+43|Formát
+44|Snímky/s
+45|Řazení snímků
+46|Celé snímky
+47|Celá obrazovka
+48|Fusion
+49|Gain
+50|Gamma
+51|Generátor
+52|Grafická karta
+53|Skupiny
+54|Světla
+55|Vysoká
+56|Odstín
+57|Obraz
+58|Index
+59|Jednotlivé klipy
+60|Vstup
+61|Integrované
+62|Klíčové snímky
+63|Klíč. slova
+64|L mix
+65|Vrstva
+66|Místní
+67|Umístění
+68|Smyčka
+69|Hlasitost
+70|Nízká
+71|Značka
+72|Správa médií
+73|Zdroj médií
+74|Úložiště
+75|Měřiče
+76|Střed/detail
+77|Modifikátory
+78|Monitor
+79|Hlasitost monitoru
+80|Nativní
+81|Optimalizace sítě
+82|Žádné úlohy
+83|Žádné úlohy
+84|Žádné stilly
+85|Nehlášeno
+86|Nic k zobrazení
+87|Posun
+88|Otevřít
+89|Pořadí
+90|Parade
+91|Pauza
+92|Foto
+93|Album
+94|Přehrát
+95|Zámek pozice
+96|Předvolba
+97|Primární - barevná kola
+98|Režim zpracování
+99|Nastavení projektu
+100|Projekty
+101|Kvalita
+102|Rychlý export
+103|Rozsah
+104|Řízení bitrate
+105|Znovu propojit média
+106|Znovu propojit média...
+107|Odebrat
+108|Render
+109|Render vše
+110|Fronta renderu
+111|Nastavení renderu
+112|Nastavení - vlastní export
+113|Reset
+114|Reset vše
+115|Rozlišení
+116|Hledat
+117|Nastavení
+118|Stíny
+119|Krátký
+120|Krátký max
+121|Jeden klip
+122|Chytré koše
+123|Zdrojový barevný prostor
+124|Zdrojový gama prostor
+125|Nastavení titulků
+126|Systém
+127|Rozlišení osy
+128|Proxy osy
+129|Tón
+130|Nástroje
+131|FX stopy
+132|Přechody
+133|Bez názvu
+134|Svislé rozlišení
+135|Verze 0.6.1
+136|Video
+137|Vlna
+138|Plocha
+139|V zásobníku nejsou klipy
+140|Importujte klipy nebo sem přetáhněte soubory
+141|Pro začátek přidejte klipy z úložiště
+142|Žádný zvuk
+143|Žádný klip ke gradaci
+144|Žádný vstup
+145|DÉLKA
+146|Export zvuku
+147|Datový tok
+148|Výstupní stopa 1
+149|Unikátní název
+150|Přidá (1), (2) ... k názvu místo přepsání souboru.
+151|Typ souboru
+152|Celá osa
+153|Vstup až výstup
+154|Poměr pixelu
+155|Čtverec
+156|Cinemascope
+157|Úrovně dat
+158|Zachovat pod-černou/nad-bílou
+159|Značka barev. prostoru
+160|Značka gama
+161|Vypálení dat
+162|Jako projekt
+163|Přeskočit překódování
+164|Použít optimalizovaná média
+165|Použít proxy média
+166|Použít cache obrazy
+167|Nejlepší škálování
+168|Nejlepší debayer
+169|Všechny video stopy
+170|Zapnout flat pass
+171|Obejít visionOS
+172|Vypnout škálování/blanking
+173|Spustit skript při
+174|Start
+175|úlohy renderu
+176|Export titulků
+177|Samostatný soubor
+178|Exportovat jako
+179|snímků
+180|Vyjmout
+181|Modrozel.
+182|Půl
+183|Pruhy
+184|Lightbox
+185|Úpravy
+186|Mixér
+187|Zvuky
+188|Osa: AAF, EDL, XML...
+189|Osa: OpenTimelineIO...
+190|Video editor v Rustu pro Windows, Linux, macOS a web.
+191|Scrubbing zvuku (zvuk při tažení přehrávače)
+192|Nejlepší
+193|Nová snímková frekvence drží klipy na stejných snímcích.
+194|Klikněte na klávesy příkazu a stiskněte novou. Esc zruší.
+195|Zkopíruje soubory používané osami do složky a zapíše kopii projektu, která na ně ukazuje. Otevřený projekt se nezmění.
+196|Dekódovat video hardwarovou akcelerací
+197|Každý mediální soubor je tam, kde projekt říká.
+198|Filtry
+199|Svobodný software pod GPL verze 3 nebo novější.
+200|H.264, H.265, AV1, VP9, MPEG-2 a VC-1 se dekódují na grafické kartě, pokud to ovladač umí. Vypněte, pokud jsou klipy zelené nebo rozbité. PICASSO_NO_HWACCEL=1 vypne na jedno spuštění.
+201|Nápověda
+202|Propojený výběr (obraz i zvuk)
+203|Ukázkový projekt načten
+204|Pivot
+205|Výběr sleduje přehrávač
+206|Přichytit ke klipům, značkám, přehrávači
+207|Soft Clip
+208|Páska
+209|Ořez
+210|Zobr.
+211|Plný
+212|Klip
+213|Klíč. snímky
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Sync koš
+222|Teplota
+223|Import proj...
+224|Export proj...
+225|Uložit jako...
+226|Kopie jako...
+227|Import
+228|Export
+229|Titulky...
+230|Média...
+231|Složka...
+232|Osa
+233|Zásobník
+234|Inspektor
+235|Metadata
+236|1/8
+237|O aplikaci
+238|Nový proj.
+239|Otevřít...
+240|Uložit
+241|Dynamika
+242|Titulky
+243|Galerie
+244|Efekty
+245|Zvuk
+246|Osa: EDL...
+247|Osa: XML...
+248|Média

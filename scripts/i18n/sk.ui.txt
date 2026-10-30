@@ -1,0 +1,248 @@
+Clips|Klipy
+60 frames per second|60 snímok/s
+Add Job|Pridať úlohu
+Add to Render Queue|Pridať do frontu
+Advanced Settings|Pokročilé
+Archive Project|Archivovať projekt
+Archive Project...|Archivovať...
+Auto|Auto
+Automatic|Automaticky
+Balanced|Vyvážené
+Bins|Koše
+Browse|Prechádzať
+Bus Sends|Zbernica
+Capture|Záznam
+Chapters from Markers|Kapitoly
+Choose a folder|Vyberte priečinok
+Clip Name|Názov klipu
+Clone|Klon
+Clone Tool|Klonovanie
+Codec|Kodek
+Col Boost|Farba+
+Collections|Kolekcie
+Contrast|Kontrast
+Control Room|Riadiaca miestnosť
+Create an Album|Vytvoriť album
+Curves - Custom|Krivky - vlastné
+Custom Export|Vlastný export
+Decode Options|Dekódovanie
+Demo Project|Ukážkový projekt
+Drag photos into the Photo Album to start editing|Presuňte fotky do albumu a začnite upravovať
+Drawn with|Kreslené
+Editing|Úpravy
+Effects In|Efekty vst.
+Embedded Audio|Vložený zvuk
+Encoder|Enkodér
+Encoding Profile|Profil kódovania
+Entire Timeline|Celá os
+Estimated File Size|Veľkosť
+Every|Každých
+Export Video|Export videa
+Fairlight|Fairlight
+File Name|Názov súboru
+Format|Formát
+Frame rate|Snímky/s
+Frame reordering|Radenie snímok
+Full Frames|Celé snímky
+Full Screen|Celá obrazovka
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generátor
+Graphics card|Grafická karta
+Groups|Skupiny
+Hi/Light|Svetlá
+High|Vysoká
+Hue|Odtieň
+Image|Obraz
+Index|Index
+Individual clips|Jednotlivé klipy
+Input|Vstup
+Integrated|Integrované
+Key Frames|Kľúčové snímky
+Keywords|Kľúč. slová
+L. Mix|L mix
+Layer|Vrstva
+Local|Miestne
+Location|Umiestnenie
+Loop playback|Slučka
+Loudness|Hlasitosť
+Low|Nízka
+Mark|Značka
+Media Management|Správa médií
+Media Source|Zdroj médií
+Media Storage|Úložisko
+Meters|Merače
+Mid/Detail|Stred/detail
+Modifiers|Modifikátory
+Monitor|Monitor
+Monitor volume|Hlasitosť monitora
+Native|Natívne
+Network Optimization|Optimalizácia siete
+No jobs in Queue|Žiadne úlohy
+No jobs in queue|Žiadne úlohy
+No stills created|Žiadne stilly
+Not reported|Nehlásené
+Nothing to inspect|Nič na zobrazenie
+Offset|Posun
+Open|Otvoriť
+Order|Poradie
+Parade|Parade
+Pause|Pauza
+Photo|Foto
+Photo Album|Album
+Playback|Prehrať
+Position lock|Zámok pozície
+Preset|Predvoľba
+Primaries - Color Wheels|Primárne - farebné kolesá
+Process Mode|Režim spracovania
+Project settings|Nastavenia projektu
+Projects|Projekty
+Quality|Kvalita
+Quick Export|Rýchly export
+Range|Rozsah
+Rate Control|Riadenie bitrate
+Relink Missing Media|Znova prepojiť médiá
+Relink Missing Media...|Znova prepojiť médiá...
+Remove|Odstrániť
+Render|Render
+Render All|Render všetko
+Render Queue|Front renderu
+Render Settings|Nastavenia renderu
+Render Settings - Custom Export|Nastavenia - vlastný export
+Reset|Reset
+Reset All|Reset všetko
+Resolution|Rozlíšenie
+Search|Hľadať
+Settings|Nastavenia
+Shad|Tiene
+Short|Krátky
+Short Max|Krátky max
+Single clip|Jeden klip
+Smart Bins|Múdre koše
+Source Color Space|Zdrojový farebný priestor
+Source Gamma Space|Zdrojový gama priestor
+Subtitle Settings|Nastavenia titulkov
+System|Systém
+Timeline Resolution|Rozlíšenie osi
+Timeline proxy|Proxy osi
+Tint|Tón
+Tools|Nástroje
+Track FX|FX stopy
+Transitions|Prechody
+Untitled|Bez názvu
+Use vertical resolution|Zvislé rozlíšenie
+Version 0.6.1|Verzia 0.6.1
+Video|Video
+Waveform|Vlna
+Workspace|Plocha
+No clips in media pool|V zásobníku nie sú klipy
+Add clips with Import, or drop files here|Importujte klipy alebo sem presuňte súbory
+Add clips from Media Storage to get started|Na začiatok pridajte klipy z úložiska
+No sound to show|Žiadny zvuk
+No clip to grade|Žiadny klip na gradáciu
+No Input|Žiadny vstup
+DURATION|DĹŽKA
+Export Audio|Export zvuku
+Data Rate|Dátový tok
+Output Track 1|Výstupná stopa 1
+Use unique filename|Unikátny názov
+Adds (1), (2) ... to the name instead of writing over a file.|Pridá (1), (2) ... k názvu namiesto prepísania súboru.
+File type|Typ súboru
+Whole timeline|Celá os
+In to out marks|Vstup až výstup
+Pixel aspect ratio|Pomer pixela
+Square|Štvorec
+Cinemascope|Cinemascope
+Data Levels|Úrovne dát
+Retain sub-black and super-white data|Zachovať pod-čiernu/nad-bielu
+Color Space Tag|Značka farebného priestoru
+Gamma Tag|Značka gama
+Data burn-in|Vypálenie dát
+Same as project|Ako projekt
+Bypass re-encode when possible|Preskočiť prekódovanie
+Use optimized media|Použiť optimalizované médiá
+Use proxy media|Použiť proxy médiá
+Use render cached images|Použiť cache obrazy
+Force sizing to highest quality|Najlepšie škálovanie
+Force debayer to highest quality|Najlepší debayer
+Render All Video Tracks|Všetky video stopy
+Enable Flat Pass|Zapnúť flat pass
+visionOS Bypass|Obísť visionOS
+Disable sizing and blanking output|Vypnúť škálovanie/blanking
+Trigger script at|Spustiť skript pri
+Start|Štart
+of render job|úlohy renderu
+Export Subtitle|Export titulkov
+As a separate file|Samostatný súbor
+Export As|Exportovať ako
+frames|snímok
+Cut|Vystrihnúť
+Teal|Modrozel.
+Half|Pol
+Color Bars|Pruhy
+Lightbox|Lightbox
+Edit|Úpravy
+Mixer|Mixér
+Sound Library|Zvuky
+Timeline: AAF, EDL, XML...|Os: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Os: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Video editor v Ruste pre Windows, Linux, macOS a web.
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing zvuku (zvuk pri ťahaní prehrávača)
+Best|Najlepšie
+Changing the frame rate keeps every clip on the same frames.|Nová snímková frekvencia drží klipy na rovnakých snímkach.
+Click a command's keys, then press the key it should have. Escape gives up.|Kliknite na klávesy príkazu a stlačte novú. Esc zruší.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Skopíruje súbory používané osami do priečinka a zapíše kópiu projektu, ktorá na ne ukazuje. Otvorený projekt sa nezmení.
+Decode supported video using hardware acceleration|Dekódovať video hardvérovou akceleráciou
+Every media file is where the project says it is.|Každý mediálny súbor je tam, kde projekt hovorí.
+Filters|Filtre
+Free software under the GPL, version 3 or later.|Slobodný softvér pod GPL verzie 3 alebo novšej.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 a VC-1 sa dekódujú na grafickej karte, ak to ovládač vie. Vypnite, ak sú klipy zelené alebo rozbité. PICASSO_NO_HWACCEL=1 vypne na jedno spustenie.
+Help|Pomocník
+Linked selection (picture and sound together)|Prepojený výber (obraz aj zvuk)
+Loaded the demo project|Ukážkový projekt načítaný
+Pivot|Pivot
+Selection follows the playhead|Výber sleduje prehrávač
+Snap to clips, markers and the playhead|Prichytiť ku klipom, značkám, prehrávaču
+Soft Clip|Soft Clip
+Tape|Páska
+Trim|Orez
+View|Zobr.
+Full|Plný
+Clip|Klip
+Keyframes|Kľúč. snímky
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Sync kôš
+Temp|Teplota
+Import Project...|Import proj...
+Export Project...|Export proj...
+Save Project As...|Uložiť ako...
+Save Copy As...|Kópia ako...
+Import|Import
+Export|Export
+Subtitle...|Titulky...
+Media...|Médiá...
+Folder as Bin...|Priečinok...
+Timeline|Os
+Media Pool|Zásobník
+Inspector|Inšpektor
+Metadata|Metadáta
+Eighth|1/8
+About Picasso Suite|O aplikácii
+New Project|Nový proj.
+Open Project...|Otvoriť...
+Save Project|Uložiť
+Dynamics|Dynamika
+Titles|Titulky
+Gallery|Galéria
+Effects|Efekty
+Audio|Zvuk
+Timeline: EDL...|Os: EDL...
+Timeline: XML...|Os: XML...
+Media|Médiá

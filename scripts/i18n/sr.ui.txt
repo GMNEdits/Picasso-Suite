@@ -1,0 +1,248 @@
+Clips|Клипови
+60 frames per second|60 кадрова/с
+Add Job|Додај посао
+Add to Render Queue|Додај у ред
+Advanced Settings|Напредно
+Archive Project|Архивирај пројект
+Archive Project...|Архивирај...
+Auto|Auto
+Automatic|Аутоматски
+Balanced|Уравнотежено
+Bins|Кошеви
+Browse|Прегледај
+Bus Sends|Bus слања
+Capture|Снимање
+Chapters from Markers|Поглавља
+Choose a folder|Одабери мапу
+Clip Name|Назив клипа
+Clone|Клон
+Clone Tool|Клонирање
+Codec|Кодек
+Col Boost|Боја+
+Collections|Збирке
+Contrast|Контраст
+Control Room|Контрола
+Create an Album|Направи албум
+Curves - Custom|Кривуље - властите
+Custom Export|Властити извоз
+Decode Options|Декодирање
+Demo Project|Демо пројект
+Drag photos into the Photo Album to start editing|Повуците фотографије у албум за уређивање
+Drawn with|Нацртано
+Editing|Уређује се
+Effects In|Ефекти ул.
+Embedded Audio|Уграђени звук
+Encoder|Кодер
+Encoding Profile|Профил кодирања
+Entire Timeline|Цела линија
+Estimated File Size|Величина
+Every|Сваких
+Export Video|Извоз видеа
+Fairlight|Fairlight
+File Name|Назив датотеке
+Format|Format
+Frame rate|Кадрова/с
+Frame reordering|Прераспоред
+Full Frames|Цели кадрови
+Full Screen|Цели екран
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Графичка картица
+Groups|Групе
+Hi/Light|Светла
+High|Високо
+Hue|Тон
+Image|Слика
+Index|Индекс
+Individual clips|Поједини клипови
+Input|Улаз
+Integrated|Интегрирано
+Key Frames|Кључни кадрови
+Keywords|Кључне речи
+L. Mix|Л микс
+Layer|Слој
+Local|Локално
+Location|Локација
+Loop playback|Петља
+Loudness|Гласноћа
+Low|Ниско
+Mark|Ознака
+Media Management|Управљање медијима
+Media Source|Извор медија
+Media Storage|Складиште медија
+Meters|Мерачи
+Mid/Detail|Средина/детаљ
+Modifiers|Модификатори
+Monitor|Monitor
+Monitor volume|Гласноћа монитора
+Native|Изворно
+Network Optimization|Оптимизација мреже
+No jobs in Queue|Нема послова
+No jobs in queue|Нема послова
+No stills created|Нема stillova
+Not reported|Није пријављено
+Nothing to inspect|Нема шта да се види
+Offset|Помак
+Open|Отвори
+Order|Редослед
+Parade|Parade
+Pause|Пауза
+Photo|Foto
+Photo Album|Album
+Playback|Репрод.
+Position lock|Закључана поз.
+Preset|Предложак
+Primaries - Color Wheels|Примарни - котачи боја
+Process Mode|Начин обраде
+Project settings|Поставке пројекта
+Projects|Пројекти
+Quality|Квалитета
+Quick Export|Брзи извоз
+Range|Распон
+Rate Control|Контрола брзине
+Relink Missing Media|Поново повежи медије
+Relink Missing Media...|Поново повежи медије...
+Remove|Уклони
+Render|Render
+Render All|Render све
+Render Queue|Ред рендера
+Render Settings|Поставке рендера
+Render Settings - Custom Export|Поставке - властити извоз
+Reset|Reset
+Reset All|Reset све
+Resolution|Резолуција
+Search|Тражи
+Settings|Поставке
+Shad|Сјене
+Short|Кратко
+Short Max|Кратко макс
+Single clip|Један клип
+Smart Bins|Паметни кошеви
+Source Color Space|Изворни простор боје
+Source Gamma Space|Изворни гамма простор
+Subtitle Settings|Поставке титлова
+System|Систем
+Timeline Resolution|Резолуција линије
+Timeline proxy|Proxy линије
+Tint|Нијанса
+Tools|Алати
+Track FX|FX стазе
+Transitions|Пријелази
+Untitled|Без назива
+Use vertical resolution|Окомита резолуција
+Version 0.6.1|Верзија 0.6.1
+Video|Video
+Waveform|Вални облик
+Workspace|Простор
+No clips in media pool|Нема клипова у скупу
+Add clips with Import, or drop files here|Увезите клипове или овдје испустите датотеке
+Add clips from Media Storage to get started|За почетак додајте клипове из похране
+No sound to show|Нема звука
+No clip to grade|Нема клипа за градацију
+No Input|Нема улаза
+DURATION|TRAJANJE
+Export Audio|Извоз звука
+Data Rate|Брзина података
+Output Track 1|Излазна стаза 1
+Use unique filename|Јединствени назив
+Adds (1), (2) ... to the name instead of writing over a file.|Додаје (1), (2) ... називу уместо преписивања.
+File type|Врста датотеке
+Whole timeline|Цела линија
+In to out marks|Улаз до излаза
+Pixel aspect ratio|Омјер пиксела
+Square|Квадрат
+Cinemascope|Cinemascope
+Data Levels|Разине података
+Retain sub-black and super-white data|Задржи испод-црног/изнад-бијелог
+Color Space Tag|Ознака простора боје
+Gamma Tag|Gamma ознака
+Data burn-in|Утиснути подаци
+Same as project|Као пројект
+Bypass re-encode when possible|Прескочи поново кодирање
+Use optimized media|Оптимизирани медији
+Use proxy media|Proxy медији
+Use render cached images|Слике из cachea
+Force sizing to highest quality|Најбоље скалирање
+Force debayer to highest quality|Најбољи debayer
+Render All Video Tracks|Све video стазе
+Enable Flat Pass|Укључи флат пасс
+visionOS Bypass|Заобиђи visionOS
+Disable sizing and blanking output|Без скалирања/бланкинга
+Trigger script at|Покрени скрипту при
+Start|Старт
+of render job|послу рендера
+Export Subtitle|Извоз титлова
+As a separate file|Засебна датотека
+Export As|Извези као
+frames|кадрова
+Cut|Изрежи
+Teal|Тиркиз
+Half|Пола
+Color Bars|Траке боја
+Lightbox|Lightbox
+Edit|Уреди
+Mixer|Миксер
+Sound Library|Звукови
+Timeline: AAF, EDL, XML...|Врем.: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Врем.: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Video уређивач у Русту за Windows, Linux, macOS и wеб.
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing звука (звук при повлачењу главе)
+Best|Најбоље
+Changing the frame rate keeps every clip on the same frames.|Нова брзина кадрова држи клипове на истим кадровима.
+Click a command's keys, then press the key it should have. Escape gives up.|Кликните типке наредбе и притисните нову. Esc прекида.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Копира датотеке које линије користе у мапу и пише копију пројекта која показује на њих. Отворени пројект се не мијења.
+Decode supported video using hardware acceleration|Декодирај подржани video хардверским убрзањем
+Every media file is where the project says it is.|Свака медијска датотека је гдје пројект каже.
+Filters|Филтри
+Free software under the GPL, version 3 or later.|Слободан софтвер под GPL верзијом 3 или новијом.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|Х.264, Х.265, AV1, VP9, MPEG-2 и VC-1 декодирају се на графичкој картици ако управљачки програм може. Искључите ако су клипови зелени или покварени. PICASSO_NO_HWACCEL=1 искључује за једно покретање.
+Help|Помоћ
+Linked selection (picture and sound together)|Повезани одабир (слика и звук заједно)
+Loaded the demo project|Демо пројект учитан
+Pivot|Pivot
+Selection follows the playhead|Одабир прати главу
+Snap to clips, markers and the playhead|Приањање на клипове, маркере, главу
+Soft Clip|Soft Clip
+Tape|Трака
+Trim|Трим
+View|Приказ
+Full|Пуно
+Clip|Клип
+Keyframes|Кључни кадрови
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scope
+Spline|Spline
+Sync Bin|Сyнц кош
+Temp|Temp
+Import Project...|Увоз прој...
+Export Project...|Извоз прој...
+Save Project As...|Сачувај као...
+Save Copy As...|Копија као...
+Import|Увези
+Export|Извези
+Subtitle...|Титлови...
+Media...|Медији...
+Folder as Bin...|Мапа...
+Timeline|Времен.
+Media Pool|Скуп медија
+Inspector|Инспектор
+Metadata|Метаподаци
+Eighth|1/8
+About Picasso Suite|О програму
+New Project|Нови прој.
+Open Project...|Отвори...
+Save Project|Сачувај
+Dynamics|Динамика
+Titles|Наслови
+Gallery|Галерија
+Effects|Ефекти
+Audio|Звук
+Timeline: EDL...|Врем.: EDL...
+Timeline: XML...|Врем.: XML...
+Media|Медији

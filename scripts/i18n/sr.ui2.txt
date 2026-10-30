@@ -1,0 +1,48 @@
+Clips|Клипови
+Add Job|Посао
+Balanced|Уравнот.
+Bins|Кош
+Browse|Тражи
+Editing|Уређ.
+File Name|Назив
+High|Вис.
+Key Frames|Кључ. кадрови
+Keywords|Кључне р.
+Local|Лок.
+Low|Нис.
+Mark|Озн.
+Mid/Detail|Средина
+Modifiers|Модиф.
+Monitor volume|Гласн. монитора
+Order|Редос.
+Position lock|Закључ. поз.
+Preset|Preset
+Rate Control|Контрола
+Relink Missing Media|Повежи медије
+Relink Missing Media...|Повежи медије...
+Smart Bins|Паметни
+Source Color Space|Изворни прост. боје
+Source Gamma Space|Изворни гамма
+Tint|Тон
+Untitled|Без имена
+No clip to grade|Нема клипа
+No Input|Нема ул.
+Data Rate|Брзина
+File type|Врста
+Data Levels|Разине
+Color Space Tag|Ознака простора
+Gamma Tag|Gamma ознака
+As a separate file|Засебна датот.
+Best|Маx
+Help|Инфо
+View|Прик.
+Full|Пуно
+Keyframes|Кључ. кад.
+Metadata|Метапод.
+Titles|Наслови
+Project Manager|Управитељ прој.
+Clips|Клип.
+Untitled|Без наз.
+Gamma Tag|Gamma озн.
+Full|Фулл
+Titles|Насл.

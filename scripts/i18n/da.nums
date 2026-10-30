@@ -1,0 +1,527 @@
+#menus
+Fil
+Rdg.
+Trim
+Tidslinje
+Klip
+Mark.
+Vis
+Afspil
+Effekt
+Farve
+Lyd
+Layout
+Hjælp
+#entries
+1|Nyt projektbibliotek...
+2|Åbn projektbibliotek...
+3|Vis bibliotek i Stifinder
+4|Projektstyring
+5|Nyt projekt
+6|Åbn projekt...
+7|Importér projekt...
+8|Eksportér projekt...
+9|Gendan projektarkiv...
+10|Gem projekt
+11|Gem projekt som...
+12|Gem kopi som...
+13|Tilbage til sidst gemte
+14|Importér
+15|Medier...
+16|Mappe som bin...
+17|Tidslinje: AAF, EDL, XML...
+18|Tidslinje: for-EDL...
+19|Undertekst...
+20|Metadata til mediepulje...
+21|Bin...
+22|Eksportér
+23|Tidslinje: EDL...
+24|Tidslinje: OpenTimelineIO...
+25|Tidslinje: XML...
+26|Tidslinje: AAF...
+27|Metadata fra mediepulje...
+28|Mediestyring...
+29|Projektindstillinger...
+30|Systemindstillinger...
+31|Hurtig eksport...
+32|Afslut
+33|Fortryd
+34|Gentag
+35|Klip ud
+36|Kopiér
+37|Sæt ind
+38|Sæt ind og indsæt
+39|Sæt mix ind i spor
+40|Dupliker
+41|Tilpas til udfyldning
+42|Placér øverst
+43|Slet valgte
+44|Slet valgte med ripple
+45|Vælg alle
+46|Fravælg alle
+47|Vælg klip fremad
+48|Find...
+49|Seneste projekter
+50|Projektstyring...
+51|Tastatur
+52|Vælg nærmeste redigeringspunkt
+53|Valgtilstand
+54|Trimtilstand
+55|Dynamisk trimtilstand
+56|Ripple start
+57|Ripple slut
+58|Ripple-trim forrige / næste
+59|Ripple forrige til afspilleren
+60|Ripple næste til afspilleren
+61|Trim start til afspilleren
+62|Trim slut til afspilleren
+63|Forlæng redigering
+64|Slip klip
+65|Slip ét billede tidligere
+66|Slip ét billede senere
+67|Skub klip
+68|Skub ét billede til venstre
+69|Skub ét billede til højre
+70|Løkketrim
+71|Asymmetrisk trimning
+72|Trimeditor
+73|Ny tidslinje...
+74|Ny tidslinje af valgte klip
+75|Lav nyt sammensat klip...
+76|Nyt effektklip...
+77|Opløs på stedet
+78|Opløs sammensat klip
+79|Opløs indlejret tidslinje
+80|Del klip
+81|Tidslinje fra bin...
+82|Importér tidslinje...
+83|Eksportér tidslinje...
+84|Opløsning og billedfrekvens...
+85|Tidslinjeindstillinger
+86|Fastgør
+87|Koblet markering
+88|Positionslås
+89|Markering følger afspiller
+90|Tilføj markør
+91|Tilføj markør med dialog
+92|Slet alle markører
+93|Opret undertekstspor
+94|Opret underteksområde
+95|Overgang på alle klip
+96|Skift tidslinje
+97|Åbn tidslinje i nyt vindue
+98|Slet tidslinje
+99|Aktivér klip
+100|Match billede
+101|Lås klip
+102|Nyt multikamera-klip...
+103|Multikamera-visning
+104|Tilføj som stillbilleder
+105|Skift klipfart...
+106|Skift kliplængde...
+107|Tidsstyring
+108|Tidsjustér klip
+109|Frys billede
+110|Hastighedsrampe...
+111|Vend klip om
+112|Lav nyt sammensat klip
+113|Kobl klip
+114|Adskil lyd og billede
+115|Lydscrubbing til/fra
+116|Auto-justér klip
+117|Efter timecode
+118|Efter lydbølge
+119|Normalisér lydniveau...
+120|Rendér på stedet
+121|Nyt effektklip
+122|Nyt sammensat klip
+123|Klipegenskaber...
+124|Markér ind
+125|Markér ud
+126|Markér klip
+127|Markér tidslinje ind/ud
+128|Ryd ind
+129|Ryd ud
+130|Ryd ind og ud
+131|Rediger markør...
+132|Slet markør her
+133|Slet alle markører
+134|Gå til forrige markør
+135|Gå til næste markør
+136|Klipfarve
+137|Standard
+138|Orange
+139|Abrikos
+140|Gul
+141|Lime
+142|Oliven
+143|Grøn
+144|Blågrøn
+145|Marine
+146|Blå
+147|Lilla
+148|Violet
+149|Pink
+150|Lysebrun
+151|Beige
+152|Brun
+153|Chokolade
+154|Vis aktuelt billede ved afspilning
+155|Sikkert område
+156|Vis gitter / hjælpelinjer
+157|Vis værktøjslinje
+158|Vis fuldskærmsvisning
+159|Vis biografvisning
+160|Overlejringer
+161|Transformér / beskær / zoom
+162|Sikkert område
+163|Midterkors
+164|Ternet baggrund (alfa)
+165|Vis alle overlejringer
+166|Timecode-vindue
+167|Vis scopes
+168|Vis lydmålere
+169|Vis lydmixer
+170|Vis inspektør
+171|Afspil fremad
+172|Afspil baglæns
+173|Stop
+174|Afspil omkring billedet
+175|Afspil ind til ud
+176|Afspil omkring ind / ud
+177|Gentag afspilning
+178|Gå til første billede
+179|Gå til sidste billede
+180|Gå til ind
+181|Gå til ud
+182|Forrige billede
+183|Næste billede
+184|Forrige redigeringspunkt
+185|Næste redigeringspunkt
+186|Afspilningsopløsning
+187|Halv
+188|Kvart
+189|Effekt-cache i hukommelse
+190|Proxy-tilstand
+191|Fra
+192|Ottendedel
+193|Hardwaredekodning
+194|Slet render-cache
+195|Videoovergange
+196|Krydsopløsning
+197|Via farve
+198|Lydovergange
+199|Krydstoning
+200|Fjern overgang
+201|OpenFX
+202|Slør
+203|Gaussisk slør
+204|Skærp
+205|Farve
+206|Invertér farver
+207|Sort/hvid
+208|Forvræng
+209|Mosaik
+210|Lydeffekter
+211|EQ
+212|Dynamik
+213|Picasso FX
+214|Sepia
+215|Blødt slør
+216|Lys
+217|Glød
+218|Stilisér
+219|Vignet
+220|Filmkorn
+221|Kompositeffekter
+222|Noder
+223|Generatorer
+224|Ensfarvet
+225|Farvebjælker
+226|Gradient
+227|Titler
+228|Tekst
+229|Tekst+
+230|Søg i effektbibliotek
+231|Tilføj værktøj (komp.)
+232|Nulstil alle grader og noder
+233|Nulstil aktuel node
+234|Node til/fra
+235|Tag stillbillede
+236|Afspil stillbillede
+237|Tilføj seriel node
+238|Tilføj seriel før
+239|Tilføj parallel node
+240|Tilføj lagmixer
+241|Tilføj deler / samler
+242|Tilføj ydre node
+243|Navngiv node
+244|Tidslinje
+245|Forrige nodegraf
+246|Næste nodegraf
+247|LUT
+248|Brug LUT fra liste
+249|Galleri
+250|Scopes til/fra
+251|Højlys
+252|Lysbord
+253|ADR
+254|Automatisk dialogerstatning
+255|Bounce mix til spor
+256|Bounce valgte spor
+257|Cache lydeffekter
+258|Lydkobling
+259|Koblingsgruppe
+260|Opløs
+261|Løkke-jog
+262|Vis lydtidslinje / mixer
+263|Fuldskærmsvisning
+264|Vis panel i layout
+265|Mediepulje
+266|Effektbibliotek
+267|Inspektør
+268|Mixer
+269|Metadata
+270|Redigeringsindeks
+271|Lydbibliotek
+272|Layout
+273|Nulstil layout
+274|Gem layout
+275|Indlæs layout
+276|Skift til side
+277|Medier
+278|Rediger
+279|Effekter
+280|Lyd
+281|Lever
+282|To skærme til/fra
+283|Rent videosignal
+284|Picasso Suite-manual
+285|Picasso Suite-guides
+286|Søg efter opdateringer...
+287|Eksportér logfil...
+288|Om Picasso Suite
+289|Sprog
+#ui
+1|Klip
+2|60 billeder/sek
+3|Nyt job
+4|Læg i rendérkø
+5|Avanceret
+6|Arkivér projekt
+7|Arkivér...
+8|Auto
+9|Automatisk
+10|Afbalanceret
+11|Bins
+12|Gennemse
+13|Bus-send
+14|Optag
+15|Kapitler
+16|Vælg en mappe
+17|Klipnavn
+18|Klon
+19|Klonværktøj
+20|Kodek
+21|Farve+
+22|Samlinger
+23|Kontrast
+24|Kontrolrum
+25|Opret album
+26|Kurver - egen
+27|Egen eksport
+28|Dekodning
+29|Demoprojekt
+30|Træk fotos ind i albummet for at redigere
+31|Tegnet med
+32|Redigerer
+33|Effekt ind
+34|Indlejret lyd
+35|Koder
+36|Kodningsprofil
+37|Hele tidslinjen
+38|Filstørrelse
+39|Hver
+40|Eksp. video
+41|Fairlight
+42|Filnavn
+43|Format
+44|Billedfrekv.
+45|Omsortering
+46|Hele billeder
+47|Fuld skærm
+48|Fusion
+49|Gain
+50|Gamma
+51|Generator
+52|Grafikkort
+53|Grupper
+54|Højlys
+55|Høj
+56|Tone
+57|Billede
+58|Indeks
+59|Enkeltklip
+60|Ind
+61|Integreret
+62|Nøglebilleder
+63|Nøgleord
+64|L-mix
+65|Lag
+66|Lokal
+67|Sted
+68|Gentag afspil.
+69|Lydstyrke
+70|Lav
+71|Marker
+72|Mediestyring
+73|Mediekilde
+74|Medielager
+75|Målere
+76|Midt/detalje
+77|Ændringer
+78|Monitor
+79|Monitorvolumen
+80|Original
+81|Netværksoptim.
+82|Ingen jobs i køen
+83|Ingen jobs i køen
+84|Ingen stillbilleder
+85|Ikke oplyst
+86|Intet at se
+87|Forsk.
+88|Åbn
+89|Rækkefølge
+90|Parade
+91|Pause
+92|Foto
+93|Album
+94|Afspil
+95|Positionslås
+96|Preset
+97|Primær - farvehjul
+98|Procestilstand
+99|Projektvalg
+100|Projekter
+101|Kvalitet
+102|Hurtig eksport
+103|Område
+104|Ratekontrol
+105|Genkobl medier
+106|Genkobl medier...
+107|Fjern
+108|Render
+109|Render alle
+110|Rendérkø
+111|Render-valg
+112|Render-valg - egen
+113|Nulstil
+114|Nulstil alle
+115|Opløsning
+116|Søg
+117|Indstill.
+118|Skygge
+119|Kort
+120|Kort maks
+121|Ét klip
+122|Smart bins
+123|Kildefarverum
+124|Kildegamma
+125|Undertekstvalg
+126|System
+127|Tidslinjeopl.
+128|Tidslinjeproxy
+129|Tint
+130|Værktøj
+131|Spor-FX
+132|Overgange
+133|Uden navn
+134|Lodret opløsning
+135|Version 0.6.1
+136|Video
+137|Bølgeform
+138|Layout
+139|Ingen klip i mediepuljen
+140|Importér klip, eller slip filer her
+141|Tilføj klip fra medielageret for at starte
+142|Ingen lyd at vise
+143|Intet klip at gradere
+144|Intet input
+145|VARIGHED
+146|Eksportér lyd
+147|Datarate
+148|Outputspor 1
+149|Unikt filnavn
+150|Tilføjer (1), (2) ... til navnet i stedet for at overskrive.
+151|Filtype
+152|Hele tidslinjen
+153|Ind til ud
+154|Pixelformat
+155|Kvadrat
+156|Cinemascope
+157|Dataniveauer
+158|Behold under-sort/over-hvid
+159|Farverums-tag
+160|Gamma-tag
+161|Indbrændt data
+162|Som projektet
+163|Spring omkodning over
+164|Brug optimerede medier
+165|Brug proxymedier
+166|Brug cachede billeder
+167|Bedste skalering
+168|Bedste debayer
+169|Alle videospor
+170|Slå flat pass til
+171|visionOS-omgå
+172|Slå skalering/blanking fra
+173|Kør script ved
+174|Start
+175|af renderjob
+176|Eksp. undertekst
+177|Som separat fil
+178|Eksportér som
+179|billeder
+180|Klip
+181|Turkis
+182|Halv
+183|Farvebjælker
+184|Lysbord
+185|Redig.
+186|Mixer
+187|Lyde
+188|Tidslinje: AAF, EDL, XML...
+189|Tidslinje: OpenTimelineIO...
+190|Videoprogram skrevet i Rust til Windows, Linux, macOS og nettet.
+191|Lydscrubbing (lyd når afspilleren trækkes)
+192|Bedst
+193|Ny billedfrekvens beholder klippene på samme billeder.
+194|Klik på tasterne for en kommando, og tryk den nye. Esc afbryder.
+195|Kopierer de filer, tidslinjerne bruger, til en mappe, og gemmer en projektkopi, der peger på dem. Det åbne projekt ændres ikke.
+196|Dekod understøttet video med hardwareacceleration
+197|Alle mediefiler er, hvor projektet siger.
+198|Filtre
+199|Fri software under GPL, version 3 eller nyere.
+200|H.264, H.265, AV1, VP9, MPEG-2 og VC-1 dekodes på grafikkortet, når driveren kan. Slå fra, hvis klip bliver grønne eller ødelagte. PICASSO_NO_HWACCEL=1 slår det fra for én kørsel.
+201|Hjælp
+202|Koblet markering (billede og lyd sammen)
+203|Demoprojekt indlæst
+204|Pivot
+205|Markering følger afspilleren
+206|Fastgør til klip, markører og afspiller
+207|Soft Clip
+208|Bånd
+209|Trim
+210|Vis
+211|Fuld
+212|Clip
+213|Nøglebilleder
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Synk.bin
+222|Temp

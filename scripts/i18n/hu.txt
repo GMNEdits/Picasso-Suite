@@ -1,0 +1,304 @@
+#menus
+Fájl
+Szrk.
+Vágás
+Idővonal
+Klip
+Jelző
+Nézet
+Lejátszás
+Effekt
+Szín
+Hang
+Munkater.
+Súgó
+#entries
+New Project Library...|Új projektkönyvtár...
+Open Project Library...|Projektkönyvtár megnyitása...
+Show Current Project Library in File Explorer|Könyvtár mutatása a Fájlkezelőben
+Project Manager|Projektkezelő
+New Project|Új projekt
+Open Project...|Projekt megnyitása...
+Import Project...|Projekt importálása...
+Export Project...|Projekt exportálása...
+Restore Project Archive...|Projektarchívum visszaállítása...
+Save Project|Projekt mentése
+Save Project As...|Projekt mentése másként...
+Save Copy As...|Másolat mentése másként...
+Revert to Last Saved Version|Vissza az utolsó mentéshez
+Import|Importálás
+Media...|Média...
+Folder as Bin...|Mappa kukaként...
+Timeline: AAF, EDL, XML...|Idővonal: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Idővonal: elő-EDL...
+Subtitle...|Felirat...
+Metadata to Media Pool...|Metaadat a médiakészletbe...
+Bin...|Kuka...
+Export|Exportálás
+Timeline: EDL...|Idővonal: EDL...
+Timeline: OpenTimelineIO...|Idővonal: OpenTimelineIO...
+Timeline: XML...|Idővonal: XML...
+Timeline: AAF...|Idővonal: AAF...
+Metadata from Media Pool...|Metaadat a médiakészletből...
+Media Management...|Médiakezelés...
+Project Settings...|Projektbeállítások...
+System Preferences...|Rendszerbeállítások...
+Quick Export...|Gyors exportálás...
+Quit|Kilépés
+Undo|Visszavonás
+Redo|Újra
+Cut|Kivágás
+Copy|Másolás
+Paste|Beillesztés
+Paste Insert|Beillesztés és beszúrás
+Paste Mix to Current Track|Mix beillesztése sávba
+Duplicate|Kettőzés
+Fit to Fill|Illesztés kitöltéshez
+Place on Top|Felülre helyezés
+Delete Selected|Kijelöltek törlése
+Delete Selected with Ripple|Kijelöltek törlése rippellel
+Select All|Összes kijelölése
+Deselect All|Kijelölés törlése
+Select Clips Forward|Klipek kijelölése előre
+Find...|Keresés...
+Recent Projects|Legutóbbi projektek
+Project Manager...|Projektkezelő...
+Keyboard Customization|Billentyűparancsok
+Select Nearest Edit Point|Legközelebbi vágáspont kijelölése
+Selection Mode|Kijelölési mód
+Trim Mode|Vágási mód
+Dynamic Trim Mode|Dinamikus vágási mód
+Ripple Start|Ripple kezdet
+Ripple End|Ripple vég
+Ripple Trim Previous / Next|Ripple előző / következő
+Ripple Trim Previous Edit to Playhead|Ripple előző a fejig
+Ripple Trim Next Edit to Playhead|Ripple következő a fejig
+Trim Start to Playhead|Kezdet vágása a fejig
+Trim End to Playhead|Vég vágása a fejig
+Extend Edit|Vágás kiterjesztése
+Slip Clip|Klip csúsztatása
+Slip One Frame Earlier|Egy képkockával korábbra
+Slip One Frame Later|Egy képkockával későbbre
+Slide Clip|Klip eltolása
+Slide One Frame Left|Egy képkockával balra
+Slide One Frame Right|Egy képkockával jobbra
+Loop Trim|Ciklikus vágás
+Asymmetric Trimming|Aszimmetrikus vágás
+Trim Editor|Vágószerkesztő
+New Timeline...|Új idővonal...
+New Timeline Using Selected Clips|Új idővonal a kijelöltekből
+Create New Compound Clip...|Új összetett klip...
+New Effects Clip...|Új effektklip...
+Decompose in Place|Szétbontás helyben
+Decompose Compound Clip|Összetett klip szétbontása
+Decompose Nested Timeline|Beágyazott idővonal szétbontása
+Split Clip|Klip kettévágása
+Create Timeline Using Bin...|Idővonal kukából...
+Import Timeline...|Idővonal importálása...
+Export Timeline...|Idővonal exportálása...
+Timeline Resolution and Frame Rate...|Felbontás és képkockasebesség...
+Timeline Settings|Idővonal-beállítások
+Snap|Illesztés
+Linked Selection|Kapcsolt kijelölés
+Position Lock|Pozíciózár
+Selection Follows Playhead|Kijelölés követi a fejet
+Add Marker|Jelölő hozzáadása
+Add Marker and Show Dialog|Jelölő hozzáadása párbeszéddel
+Delete All Markers|Összes jelölő törlése
+Create Subtitle Track|Feliratsáv létrehozása
+Create Subtitle Region|Feliratrégió létrehozása
+Add Transition to All Edits|Átmenet minden vágásra
+Switch Timeline|Idővonal váltása
+Open Timeline in New Window|Idővonal megnyitása új ablakban
+Delete Timeline|Idővonal törlése
+Enable Clip|Klip engedélyezése
+Match Frame|Egyező képkocka
+Lock Clip|Klip zárolása
+New Multicam Clip...|Új többkamerás klip...
+Multicam Viewer|Többkamerás nézet
+Add to Media Pool as Stills|Hozzáadás állóképként
+Change Clip Speed...|Klip sebességének módosítása...
+Change Clip Duration...|Klip hosszának módosítása...
+Retime Controls|Időzítés-vezérlők
+Retime Clip|Klip újraidőzítése
+Freeze Frame|Képkocka lefagyasztása
+Speed Ramp...|Sebességrámpa...
+Reverse Clip|Klip megfordítása
+Create New Compound Clip|Új összetett klip
+Link Clips|Klipek összekapcsolása
+Unlink Audio and Video|Hang és kép szétválasztása
+Enable / Disable Audio Scrubbing|Hangpásztázás be/ki
+Auto Align Clips|Klipek automatikus igazítása
+Based on Timecode|Timecode alapján
+Based on Waveform|Hullámforma alapján
+Normalize Audio Levels...|Hangszint normalizálása...
+Render in Place|Renderelés helyben
+New Effects Clip|Új effektklip
+New Compound Clip|Új összetett klip
+Clip Attributes...|Klip tulajdonságai...
+Mark In|Be jelölése
+Mark Out|Ki jelölése
+Mark Clip|Klip jelölése
+Mark Timeline In/Out|Idővonal be/ki jelölése
+Clear In|Be törlése
+Clear Out|Ki törlése
+Clear In and Out|Be és ki törlése
+Modify Marker...|Jelölő módosítása...
+Delete Marker at Current Position|Jelölő törlése itt
+Delete All Markers in Timeline|Összes jelölő törlése
+Go to Previous Marker|Előző jelölőre
+Go to Next Marker|Következő jelölőre
+Set Clip Color|Klip színe
+Default|Alapérték
+Orange|Narancs
+Apricot|Barack
+Yellow|Sárga
+Lime|Lime
+Olive|Olíva
+Green|Zöld
+Teal|Pávakék
+Navy|Tengerkék
+Blue|Kék
+Purple|Lila
+Violet|Ibolya
+Pink|Rózsaszín
+Tan|Cser
+Beige|Bézs
+Brown|Barna
+Chocolate|Csokoládé
+Show Current Frame on Playback|Aktuális kocka mutatása lejátszáskor
+Safe Area Overlay|Biztonságos terület
+Show Grid / Guides|Rács / segédvonalak mutatása
+Show Toolbar|Eszköztár mutatása
+Show Full Screen Viewer|Teljes képernyős nézet
+Show Cinema Viewer|Mozinézet
+Viewer Overlays|Nézet-rátétek
+Transform / Crop / Dynamic Zoom|Átalakítás / vágás / zoom
+Safe Area|Biztonságos terület
+Center Crosshair|Középső célkereszt
+Checkerboard Background (Alpha)|Sakktábla háttér (alfa)
+Show All Overlays|Összes rátét mutatása
+Timecode Window|Timecode ablak
+Show Scopes|Scope-ok mutatása
+Show Audio Meters|Hangmérők mutatása
+Show Audio Mixer|Hangkeverő mutatása
+Show Inspector|Vizsgáló mutatása
+Play Forward|Lejátszás előre
+Play Reverse|Lejátszás hátra
+Stop|Megállítás
+Play Around Current Frame|Lejátszás a kocka körül
+Play In to Out|Lejátszás be-től ki-ig
+Play Around In / Around Out|Lejátszás be/ki körül
+Loop Playback|Ismétlődő lejátszás
+Go to First Frame|Első képkockára
+Go to Last Frame|Utolsó képkockára
+Go to In|Be pontra
+Go to Out|Ki pontra
+Previous Frame|Előző képkocka
+Next Frame|Következő képkocka
+Previous Edit Point|Előző vágáspont
+Next Edit Point|Következő vágáspont
+Timeline Playback Resolution|Lejátszási felbontás
+Half|Fél
+Quarter|Negyed
+Effects Memory Cache|Effektek memóriagyorsítótára
+Timeline Proxy Mode|Proxy mód
+Off|Ki
+Eighth|Nyolcad
+Hardware Decoding|Hardveres dekódolás
+Delete Render Cache|Render gyorsítótár törlése
+Video Transitions|Videóátmenetek
+Cross Dissolve|Kereszt-áttűnés
+Dip to Color|Áttűnés színbe
+Audio Transitions|Hangátmenetek
+Cross Fade|Kereszt-fade
+Remove Transition|Átmenet eltávolítása
+OpenFX|OpenFX
+Blur|Elmosás
+Gaussian Blur|Gauss-elmosás
+Sharpen|Élesítés
+Color|Szín
+Invert Colors|Színek invertálása
+Black and White|Fekete-fehér
+Distort|Torzítás
+Mosaic|Mozaik
+Audio FX|Hangeffektek
+EQ|EQ
+Dynamics|Dinamika
+Picasso FX|Picasso FX
+Sepia|Szépia
+Soft Blur|Lágy elmosás
+Light|Fény
+Glow|Fényfoszlás
+Stylize|Stilizálás
+Vignette|Vignetta
+Film Grain|Filmszemcse
+Compositing Effects|Kompozit effektek
+Nodes|Csomópontok
+Generators|Generátorok
+Solid Color|Egyszínű
+Color Bars|Színsávok
+Gradient|Színátmenet
+Titles|Címek
+Text|Szöveg
+Text+|Szöveg+
+Effects Library Search|Keresés az effektkönyvtárban
+Add Tool (Compositing)|Eszköz hozzáadása (komp.)
+Reset All Grades and Nodes|Minden fokozat és csomópont reset
+Reset Current Node Grade|Aktuális csomópont reset
+Enable/Disable Current Node|Csomópont be/ki
+Grab Still|Állókép rögzítése
+Play Still|Állókép lejátszása
+Add Serial Node|Soros csomópont hozzáadása
+Add Serial Before|Soros csomópont elé
+Add Parallel Node|Párhuzamos csomópont hozzáadása
+Add Layer Mixer|Rétegkeverő hozzáadása
+Add Splitter / Combiner|Szétválasztó / egyesítő
+Add Outside Node|Külső csomópont hozzáadása
+Label Node|Csomópont címkézése
+Timeline|Idővonal
+Previous Node Graph|Előző csomópontgráf
+Next Node Graph|Következő csomópontgráf
+LUT|LUT
+Apply LUT from list|LUT alkalmazása listából
+Gallery|Galéria
+Scopes On/Off|Scope-ok be/ki
+Highlight|Csúcsfények
+Lightbox|Fénydoboz
+ADR|ADR
+Automated Dialogue Replacement|Automatikus párbeszédcsere
+Bounce Mix to Track|Mix sávba bounce-olása
+Bounce Selected Tracks|Kijelölt sávok bounce-olása
+Cache Audio Effects|Hangeffektek gyorsítótára
+Audio Link|Hangkapcsolat
+Link Group|Kapcsolatcsoport
+Decompose|Szétbontás
+Loop Jog|Ciklikus jog
+Show Audio Timeline / Mixer|Hangidővonal / keverő mutatása
+Full Screen Viewer|Teljes képernyős nézet
+Show Panel in Workspace|Panel mutatása a munkaterületen
+Media Pool|Médiakészlet
+Effects Library|Effektkönyvtár
+Inspector|Vizsgáló
+Mixer|Keverő
+Metadata|Metaadat
+Edit Index|Szerkesztési index
+Sound Library|Hangkönyvtár
+Layout|Elrendezés
+Reset UI Layout|Elrendezés visszaállítása
+Save Layout|Elrendezés mentése
+Load Layout|Elrendezés betöltése
+Switch to Page|Váltás oldalra
+Media|Média
+Edit|Szerkesztés
+Effects|Effektek
+Audio|Hang
+Deliver|Kiadás
+Dual Screen On/Off|Két képernyő be/ki
+Video Clean Feed|Tiszta videókimenet
+Picasso Suite Manual|Picasso Suite kézikönyv
+Picasso Suite Tutorials|Picasso Suite oktatók
+Check for Updates...|Frissítések keresése...
+Export Log File...|Naplófájl exportálása...
+About Picasso Suite|A Picasso Suite névjegye
+Language|Nyelv

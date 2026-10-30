@@ -1,0 +1,10 @@
+Save Project As...|Tallenna nimellä...
+Save Copy As...|Tallenna kopio...
+Recent Projects|Viime projektit
+Retime Clip|Ajoita klippi
+Auto Align Clips|Tasaa automaat.
+Mark Timeline In/Out|Merkitse aikaj. alku/loppu
+Show Grid / Guides|Näytä ruudukko/apuviivat
+Play In to Out|Toista alusta loppuun
+Next Edit Point|Seur. leikkauskohta
+Play In to Out|Toista väli

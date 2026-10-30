@@ -1,0 +1,248 @@
+Clips|Klip
+60 frames per second|60 bingkai/dtk
+Add Job|Tambah tugas
+Add to Render Queue|Tambah ke antrean
+Advanced Settings|Lanjutan
+Archive Project|Arsipkan proyek
+Archive Project...|Arsipkan...
+Auto|Otomatis
+Automatic|Otomatis
+Balanced|Seimbang
+Bins|Bin
+Browse|Jelajah
+Bus Sends|Kirim bus
+Capture|Tangkap
+Chapters from Markers|Bab
+Choose a folder|Pilih folder
+Clip Name|Nama klip
+Clone|Klon
+Clone Tool|Alat klon
+Codec|Kodek
+Col Boost|Warna+
+Collections|Koleksi
+Contrast|Kontras
+Control Room|Ruang kontrol
+Create an Album|Buat album
+Curves - Custom|Kurva - khusus
+Custom Export|Ekspor khusus
+Decode Options|Opsi dekode
+Demo Project|Proyek demo
+Drag photos into the Photo Album to start editing|Seret foto ke album untuk mulai mengedit
+Drawn with|Digambar
+Editing|Mengedit
+Effects In|Efek masuk
+Embedded Audio|Audio tertanam
+Encoder|Encoder
+Encoding Profile|Profil encoding
+Entire Timeline|Seluruh lini masa
+Estimated File Size|Ukuran berkas
+Every|Tiap
+Export Video|Ekspor video
+Fairlight|Fairlight
+File Name|Nama berkas
+Format|Format
+Frame rate|Frame rate
+Frame reordering|Urutan ulang
+Full Frames|Bingkai penuh
+Full Screen|Layar penuh
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Kartu grafis
+Groups|Grup
+Hi/Light|Sorotan
+High|Tinggi
+Hue|Rona
+Image|Gambar
+Index|Indeks
+Individual clips|Klip terpisah
+Input|Masuk
+Integrated|Terpadu
+Key Frames|Keyframe
+Keywords|Kata kunci
+L. Mix|Mix K
+Layer|Layer
+Local|Lokal
+Location|Lokasi
+Loop playback|Putar berulang
+Loudness|Kenyaringan
+Low|Rendah
+Mark|Tanda
+Media Management|Manajemen media
+Media Source|Sumber media
+Media Storage|Penyimpanan
+Meters|Meter
+Mid/Detail|Tengah/detail
+Modifiers|Pengubah
+Monitor|Monitor
+Monitor volume|Volume monitor
+Native|Asli
+Network Optimization|Optimasi jaringan
+No jobs in Queue|Tak ada tugas
+No jobs in queue|Tak ada tugas
+No stills created|Tak ada gambar diam
+Not reported|Tak dilaporkan
+Nothing to inspect|Tak ada yang dilihat
+Offset|Offset
+Open|Buka
+Order|Urutan
+Parade|Parade
+Pause|Jeda
+Photo|Foto
+Photo Album|Album
+Playback|Putar
+Position lock|Kunci posisi
+Preset|Preset
+Primaries - Color Wheels|Primer - roda warna
+Process Mode|Mode proses
+Project settings|Pengaturan
+Projects|Proyek
+Quality|Kualitas
+Quick Export|Ekspor cepat
+Range|Rentang
+Rate Control|Kontrol rate
+Relink Missing Media|Tautkan ulang media
+Relink Missing Media...|Tautkan ulang media...
+Remove|Hapus
+Render|Render
+Render All|Render semua
+Render Queue|Antrean render
+Render Settings|Setelan render
+Render Settings - Custom Export|Setelan render - khusus
+Reset|Reset
+Reset All|Reset semua
+Resolution|Resolusi
+Search|Cari
+Settings|Setelan
+Shad|Bayangan
+Short|Pendek
+Short Max|Pendek maks
+Single clip|Satu klip
+Smart Bins|Bin pintar
+Source Color Space|Ruang warna sumber
+Source Gamma Space|Ruang gamma sumber
+Subtitle Settings|Setelan subjudul
+System|Sistem
+Timeline Resolution|Resolusi lini masa
+Timeline proxy|Proxy lini masa
+Tint|Tint
+Tools|Alat
+Track FX|FX trek
+Transitions|Transisi
+Untitled|Tanpa judul
+Use vertical resolution|Resolusi vertikal
+Version 0.6.1|Versi 0.6.1
+Video|Video
+Waveform|Gelombang
+Workspace|Ruang kerja
+No clips in media pool|Tak ada klip di kumpulan
+Add clips with Import, or drop files here|Impor klip, atau letakkan berkas di sini
+Add clips from Media Storage to get started|Tambah klip dari penyimpanan untuk mulai
+No sound to show|Tak ada suara
+No clip to grade|Tak ada klip untuk digrade
+No Input|Tanpa input
+DURATION|DURASI
+Export Audio|Ekspor audio
+Data Rate|Data rate
+Output Track 1|Trek keluaran 1
+Use unique filename|Nama unik
+Adds (1), (2) ... to the name instead of writing over a file.|Menambah (1), (2) ... ke nama, bukan menimpa berkas.
+File type|Jenis berkas
+Whole timeline|Seluruh lini masa
+In to out marks|Masuk ke keluar
+Pixel aspect ratio|Rasio piksel
+Square|Persegi
+Cinemascope|Cinemascope
+Data Levels|Level data
+Retain sub-black and super-white data|Pertahankan di bawah-hitam/atas-putih
+Color Space Tag|Tag ruang warna
+Gamma Tag|Tag gamma
+Data burn-in|Burn-in data
+Same as project|Sama dgn proyek
+Bypass re-encode when possible|Lewati encode ulang
+Use optimized media|Pakai media optimal
+Use proxy media|Pakai media proxy
+Use render cached images|Pakai gambar cache
+Force sizing to highest quality|Skala kualitas terbaik
+Force debayer to highest quality|Debayer kualitas terbaik
+Render All Video Tracks|Semua trek video
+Enable Flat Pass|Aktifkan flat pass
+visionOS Bypass|Bypass visionOS
+Disable sizing and blanking output|Matikan skala/blanking
+Trigger script at|Jalankan skrip pada
+Start|Mulai
+of render job|tugas render
+Export Subtitle|Ekspor subjudul
+As a separate file|Berkas terpisah
+Export As|Ekspor sebagai
+frames|bingkai
+Cut|Potong
+Teal|Teal
+Half|Setengah
+Color Bars|Bilah warna
+Lightbox|Lightbox
+Edit|Edit
+Mixer|Mixer
+Sound Library|Suara
+Timeline: AAF, EDL, XML...|Lini masa: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Lini masa: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Editor video dalam Rust untuk Windows, Linux, macOS, dan web.
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing audio (suara saat playhead diseret)
+Best|Terbaik
+Changing the frame rate keeps every clip on the same frames.|Frame rate baru menjaga tiap klip di bingkai sama.
+Click a command's keys, then press the key it should have. Escape gives up.|Klik tombol perintah, lalu tekan tombol baru. Esc batal.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Menyalin berkas yang dipakai lini masa ke folder, dan menulis salinan proyek yang menunjuk ke sana. Proyek terbuka tak berubah.
+Decode supported video using hardware acceleration|Dekode video dengan akselerasi perangkat keras
+Every media file is where the project says it is.|Semua berkas media ada di tempat yang dicatat proyek.
+Filters|Filter
+Free software under the GPL, version 3 or later.|Perangkat lunak bebas di bawah GPL versi 3 atau lebih baru.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 dan VC-1 didekode di kartu grafis jika driver bisa. Matikan jika klip tampak hijau atau rusak. PICASSO_NO_HWACCEL=1 mematikannya sekali.
+Help|Bantuan
+Linked selection (picture and sound together)|Pilihan terhubung (gambar dan suara bersama)
+Loaded the demo project|Proyek demo dimuat
+Pivot|Pivot
+Selection follows the playhead|Pilihan ikuti playhead
+Snap to clips, markers and the playhead|Snap ke klip, penanda, playhead
+Soft Clip|Soft Clip
+Tape|Pita
+Trim|Trim
+View|Lihat
+Full|Penuh
+Clip|Klip
+Keyframes|Keyframe
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scope
+Spline|Spline
+Sync Bin|Sinkron bin
+Temp|Suhu
+Import Project...|Impor proy...
+Export Project...|Ekspor proy...
+Save Project As...|Simpan sbg...
+Save Copy As...|Salinan sbg...
+Import|Impor
+Export|Ekspor
+Subtitle...|Subjudul...
+Media...|Media...
+Folder as Bin...|Folder...
+Timeline|Lini masa
+Media Pool|Kumpulan
+Inspector|Inspektur
+Metadata|Metadata
+Eighth|1/8
+About Picasso Suite|Tentang
+New Project|Proyek baru
+Open Project...|Buka...
+Save Project|Simpan
+Dynamics|Dinamika
+Titles|Judul
+Gallery|Galeri
+Effects|Efek
+Audio|Audio
+Timeline: EDL...|Lini masa: EDL...
+Timeline: XML...|Lini masa: XML...
+Media|Media

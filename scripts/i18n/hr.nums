@@ -1,0 +1,553 @@
+#menus
+Dat.
+Uredi
+Trim
+Vremen.
+Klip
+Ozn.
+Prik.
+Reprod.
+Efekti
+Boja
+Zvuk
+Prostor
+Pomoć
+#entries
+1|Nova biblioteka projekata...
+2|Otvori biblioteku projekata...
+3|Prikaži biblioteku u Exploreru
+4|Upravitelj projekata
+5|Novi projekt
+6|Otvori projekt...
+7|Uvezi projekt...
+8|Izvezi projekt...
+9|Vrati arhivu projekta...
+10|Spremi projekt
+11|Spremi projekt kao...
+12|Spremi kopiju kao...
+13|Vrati zadnje spremljeno
+14|Uvezi
+15|Mediji...
+16|Mapa kao koš...
+17|Vrem.: AAF, EDL, XML...
+18|Vrem.: pred-EDL...
+19|Titlovi...
+20|Metapodaci u skup medija...
+21|Koš...
+22|Izvezi
+23|Vrem.: EDL...
+24|Vrem.: OpenTimelineIO...
+25|Vrem.: XML...
+26|Vrem.: AAF...
+27|Metapodaci iz skupa medija...
+28|Upravljanje medijima...
+29|Postavke projekta...
+30|Postavke sustava...
+31|Brzi izvoz...
+32|Izlaz
+33|Poništi
+34|Ponovi
+35|Izreži
+36|Kopiraj
+37|Zalijepi
+38|Zalijepi i umetni
+39|Zalijepi miks na stazu
+40|Dupliciraj
+41|Prilagodi ispuni
+42|Stavi na vrh
+43|Obriši odabrano
+44|Obriši odabrano s ripple
+45|Odaberi sve
+46|Poništi odabir
+47|Odaberi klipove naprijed
+48|Nađi...
+49|Nedavni projekti
+50|Upravitelj projekata...
+51|Tipkovnički prečaci
+52|Odaberi najbližu točku reza
+53|Način odabira
+54|Način trimanja
+55|Dinamičko trimanje
+56|Ripple početak
+57|Ripple kraj
+58|Ripple prethodni / sljedeći
+59|Ripple prethodni do glave
+60|Ripple sljedeći do glave
+61|Trim početka do glave
+62|Trim kraja do glave
+63|Produži rez
+64|Slip klipa
+65|Slip jedan kadar ranije
+66|Slip jedan kadar kasnije
+67|Slide klipa
+68|Slide jedan kadar lijevo
+69|Slide jedan kadar desno
+70|Trimanje u petlji
+71|Asimetrično trimanje
+72|Uređivač trima
+73|Nova vremenska linija...
+74|Nova linija iz odabranih
+75|Novi složeni klip...
+76|Novi klip efekta...
+77|Razloži na mjestu
+78|Razloži složeni klip
+79|Razloži ugniježđenu liniju
+80|Podijeli klip
+81|Linija iz koša...
+82|Uvezi vremensku liniju...
+83|Izvezi vremensku liniju...
+84|Rezolucija i broj kadrova...
+85|Postavke vremenske linije
+86|Prianjanje
+87|Povezani odabir
+88|Zaključaj poziciju
+89|Odabir prati glavu
+90|Dodaj marker
+91|Dodaj marker s dijalogom
+92|Obriši sve markere
+93|Napravi stazu titlova
+94|Napravi područje titlova
+95|Prijelaz na sve rezove
+96|Promijeni vremensku liniju
+97|Otvori liniju u novom prozoru
+98|Obriši vremensku liniju
+99|Omogući klip
+100|Odgovarajući kadar
+101|Zaključaj klip
+102|Novi multicam klip...
+103|Multicam preglednik
+104|Dodaj kao mirne slike
+105|Promijeni brzinu klipa...
+106|Promijeni trajanje klipa...
+107|Kontrole vremena
+108|Promijeni vrijeme klipa
+109|Zamrzni kadar
+110|Rampa brzine...
+111|Obrni klip
+112|Novi složeni klip
+113|Poveži klipove
+114|Odvoji zvuk i sliku
+115|Scrubbing zvuka uklj/isklj
+116|Automatski poravnaj klipove
+117|Prema timecodeu
+118|Prema valnom obliku
+119|Normaliziraj razinu zvuka...
+120|Renderiraj na mjestu
+121|Novi klip efekta
+122|Novi složeni klip
+123|Svojstva klipa...
+124|Označi ulaz
+125|Označi izlaz
+126|Označi klip
+127|Označi liniju ulaz/izlaz
+128|Obriši ulaz
+129|Obriši izlaz
+130|Obriši ulaz i izlaz
+131|Izmijeni marker...
+132|Obriši marker ovdje
+133|Obriši sve markere
+134|Na prethodni marker
+135|Na sljedeći marker
+136|Boja klipa
+137|Zadano
+138|Narančasta
+139|Marelica
+140|Žuta
+141|Limeta
+142|Maslinasta
+143|Zelena
+144|Tirkizna
+145|Mornarska
+146|Plava
+147|Ljubičasta
+148|Violet
+149|Ružičasta
+150|Smeđkasta
+151|Bež
+152|Smeđa
+153|Čokoladna
+154|Prikaži kadar pri reprodukciji
+155|Sigurno područje
+156|Prikaži mrežu / vodilice
+157|Prikaži alatnu traku
+158|Prikaži cijeli zaslon
+159|Prikaži kino prikaz
+160|Prekrivanja preglednika
+161|Transform. / obrezivanje / zoom
+162|Sigurno područje
+163|Središnji križ
+164|Šahovska pozadina (alfa)
+165|Prikaži sva prekrivanja
+166|Prozor timecodea
+167|Prikaži scopeove
+168|Prikaži mjerače zvuka
+169|Prikaži zvučni mikser
+170|Prikaži inspektor
+171|Reproduciraj naprijed
+172|Reproduciraj unatrag
+173|Stop
+174|Reproduciraj oko kadra
+175|Reproduciraj ulaz do izlaza
+176|Reproduciraj oko ulaza/izlaza
+177|Reprodukcija u petlji
+178|Na prvi kadar
+179|Na zadnji kadar
+180|Na ulaz
+181|Na izlaz
+182|Prethodni kadar
+183|Sljedeći kadar
+184|Prethodna točka reza
+185|Sljedeća točka reza
+186|Rezolucija reprodukcije
+187|Pola
+188|Četvrtina
+189|Memorija efekata (cache)
+190|Proxy način
+191|Isklj
+192|Osmina
+193|Hardversko dekodiranje
+194|Obriši render cache
+195|Video prijelazi
+196|Križno stapanje
+197|Stapanje kroz boju
+198|Zvučni prijelazi
+199|Križni fade
+200|Ukloni prijelaz
+201|OpenFX
+202|Zamućenje
+203|Gaussovo zamućenje
+204|Izoštravanje
+205|Boja
+206|Invertiraj boje
+207|Crno-bijelo
+208|Izobličenje
+209|Mozaik
+210|Zvučni efekti
+211|EQ
+212|Dinamika
+213|Picasso FX
+214|Sepija
+215|Meko zamućenje
+216|Svjetlo
+217|Sjaj
+218|Stilizacija
+219|Vinjeta
+220|Zrno filma
+221|Kompozitni efekti
+222|Čvorovi
+223|Generatori
+224|Jedna boja
+225|Trake boja
+226|Gradijent
+227|Naslovi
+228|Tekst
+229|Tekst+
+230|Traži u biblioteci efekata
+231|Dodaj alat (kompozit)
+232|Resetiraj sve gradacije i čvorove
+233|Resetiraj trenutni čvor
+234|Čvor uklj/isklj
+235|Snimi still
+236|Reproduciraj still
+237|Dodaj serijski čvor
+238|Dodaj serijski prije
+239|Dodaj paralelni čvor
+240|Dodaj mikser slojeva
+241|Dodaj razdjelnik / spajač
+242|Dodaj vanjski čvor
+243|Označi čvor
+244|Vremenska linija
+245|Prethodni graf čvorova
+246|Sljedeći graf čvorova
+247|LUT
+248|Primijeni LUT s popisa
+249|Galerija
+250|Scopeovi uklj/isklj
+251|Svjetla
+252|Lightbox
+253|ADR
+254|Automatska zamjena dijaloga
+255|Bounce miksa na stazu
+256|Bounce odabranih staza
+257|Cache zvučnih efekata
+258|Zvučna veza
+259|Grupa veze
+260|Razloži
+261|Jog u petlji
+262|Prikaži zvučnu liniju / mikser
+263|Cijeli zaslon
+264|Prikaži ploču u prostoru
+265|Skup medija
+266|Biblioteka efekata
+267|Inspektor
+268|Mikser
+269|Metapodaci
+270|Indeks uređivanja
+271|Biblioteka zvukova
+272|Raspored
+273|Resetiraj raspored
+274|Spremi raspored
+275|Učitaj raspored
+276|Prijeđi na stranicu
+277|Mediji
+278|Uređivanje
+279|Efekti
+280|Zvuk
+281|Isporuka
+282|Dva zaslona uklj/isklj
+283|Čisti video izlaz
+284|Priručnik Picasso Suite
+285|Vodiči Picasso Suite
+286|Provjeri ažuriranja...
+287|Izvezi datoteku zapisa...
+288|O Picasso Suite
+289|Jezik
+#ui
+1|Klipovi
+2|60 kadrova/s
+3|Dodaj posao
+4|Dodaj u red
+5|Napredno
+6|Arhiviraj projekt
+7|Arhiviraj...
+8|Auto
+9|Automatski
+10|Uravnoteženo
+11|Koševi
+12|Pregledaj
+13|Bus slanja
+14|Snimanje
+15|Poglavlja
+16|Odaberi mapu
+17|Naziv klipa
+18|Klon
+19|Kloniranje
+20|Kodek
+21|Boja+
+22|Zbirke
+23|Kontrast
+24|Kontrola
+25|Napravi album
+26|Krivulje - vlastite
+27|Vlastiti izvoz
+28|Dekodiranje
+29|Demo projekt
+30|Povucite fotografije u album za uređivanje
+31|Nacrtano
+32|Uređuje se
+33|Efekti ul.
+34|Ugrađeni zvuk
+35|Koder
+36|Profil kodiranja
+37|Cijela linija
+38|Veličina
+39|Svakih
+40|Izvoz videa
+41|Fairlight
+42|Naziv datoteke
+43|Format
+44|Kadrova/s
+45|Preraspored
+46|Cijeli kadrovi
+47|Cijeli zaslon
+48|Fusion
+49|Gain
+50|Gamma
+51|Generator
+52|Grafička kartica
+53|Grupe
+54|Svjetla
+55|Visoko
+56|Ton
+57|Slika
+58|Indeks
+59|Pojedini klipovi
+60|Ulaz
+61|Integrirano
+62|Ključni kadrovi
+63|Ključne riječi
+64|L miks
+65|Sloj
+66|Lokalno
+67|Lokacija
+68|Petlja
+69|Glasnoća
+70|Nisko
+71|Oznaka
+72|Upravljanje medijima
+73|Izvor medija
+74|Pohrana medija
+75|Mjerači
+76|Sredina/detalj
+77|Modifikatori
+78|Monitor
+79|Glasnoća monitora
+80|Izvorno
+81|Optimizacija mreže
+82|Nema poslova
+83|Nema poslova
+84|Nema stillova
+85|Nije prijavljeno
+86|Nema što vidjeti
+87|Pomak
+88|Otvori
+89|Redoslijed
+90|Parade
+91|Pauza
+92|Foto
+93|Album
+94|Reprod.
+95|Zaključana poz.
+96|Predložak
+97|Primarni - kotači boja
+98|Način obrade
+99|Postavke projekta
+100|Projekti
+101|Kvaliteta
+102|Brzi izvoz
+103|Raspon
+104|Kontrola brzine
+105|Ponovno poveži medije
+106|Ponovno poveži medije...
+107|Ukloni
+108|Render
+109|Render sve
+110|Red rendera
+111|Postavke rendera
+112|Postavke - vlastiti izvoz
+113|Reset
+114|Reset sve
+115|Rezolucija
+116|Traži
+117|Postavke
+118|Sjene
+119|Kratko
+120|Kratko maks
+121|Jedan klip
+122|Pametni koševi
+123|Izvorni prostor boje
+124|Izvorni gamma prostor
+125|Postavke titlova
+126|Sustav
+127|Rezolucija linije
+128|Proxy linije
+129|Nijansa
+130|Alati
+131|FX staze
+132|Prijelazi
+133|Bez naziva
+134|Okomita rezolucija
+135|Verzija 0.6.1
+136|Video
+137|Valni oblik
+138|Prostor
+139|Nema klipova u skupu
+140|Uvezite klipove ili ovdje ispustite datoteke
+141|Za početak dodajte klipove iz pohrane
+142|Nema zvuka
+143|Nema klipa za gradaciju
+144|Nema ulaza
+145|TRAJANJE
+146|Izvoz zvuka
+147|Brzina podataka
+148|Izlazna staza 1
+149|Jedinstveni naziv
+150|Dodaje (1), (2) ... nazivu umjesto prepisivanja.
+151|Vrsta datoteke
+152|Cijela linija
+153|Ulaz do izlaza
+154|Omjer piksela
+155|Kvadrat
+156|Cinemascope
+157|Razine podataka
+158|Zadrži ispod-crnog/iznad-bijelog
+159|Oznaka prostora boje
+160|Gamma oznaka
+161|Utisnuti podaci
+162|Kao projekt
+163|Preskoči ponovno kodiranje
+164|Optimizirani mediji
+165|Proxy mediji
+166|Slike iz cachea
+167|Najbolje skaliranje
+168|Najbolji debayer
+169|Sve video staze
+170|Uključi flat pass
+171|Zaobiđi visionOS
+172|Bez skaliranja/blankinga
+173|Pokreni skriptu pri
+174|Start
+175|poslu rendera
+176|Izvoz titlova
+177|Zasebna datoteka
+178|Izvezi kao
+179|kadrova
+180|Izreži
+181|Tirkiz
+182|Pola
+183|Trake boja
+184|Lightbox
+185|Uredi
+186|Mikser
+187|Zvukovi
+188|Vrem.: AAF, EDL, XML...
+189|Vrem.: OpenTimelineIO...
+190|Video uređivač u Rustu za Windows, Linux, macOS i web.
+191|Scrubbing zvuka (zvuk pri povlačenju glave)
+192|Najbolje
+193|Nova brzina kadrova drži klipove na istim kadrovima.
+194|Kliknite tipke naredbe i pritisnite novu. Esc prekida.
+195|Kopira datoteke koje linije koriste u mapu i piše kopiju projekta koja pokazuje na njih. Otvoreni projekt se ne mijenja.
+196|Dekodiraj podržani video hardverskim ubrzanjem
+197|Svaka medijska datoteka je gdje projekt kaže.
+198|Filtri
+199|Slobodan softver pod GPL verzijom 3 ili novijom.
+200|H.264, H.265, AV1, VP9, MPEG-2 i VC-1 dekodiraju se na grafičkoj kartici ako upravljački program može. Isključite ako su klipovi zeleni ili pokvareni. PICASSO_NO_HWACCEL=1 isključuje za jedno pokretanje.
+201|Pomoć
+202|Povezani odabir (slika i zvuk zajedno)
+203|Demo projekt učitan
+204|Pivot
+205|Odabir prati glavu
+206|Prianjanje na klipove, markere, glavu
+207|Soft Clip
+208|Traka
+209|Trim
+210|Prikaz
+211|Puno
+212|Klip
+213|Ključni kadrovi
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scope
+220|Spline
+221|Sync koš
+222|Temp
+223|Uvoz proj...
+224|Izvoz proj...
+225|Spremi kao...
+226|Kopija kao...
+227|Uvezi
+228|Izvezi
+229|Titlovi...
+230|Mediji...
+231|Mapa...
+232|Vremen.
+233|Skup medija
+234|Inspektor
+235|Metapodaci
+236|1/8
+237|O programu
+238|Novi proj.
+239|Otvori...
+240|Spremi
+241|Dinamika
+242|Naslovi
+243|Galerija
+244|Efekti
+245|Zvuk
+246|Vrem.: EDL...
+247|Vrem.: XML...
+248|Mediji

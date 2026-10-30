@@ -1,0 +1,553 @@
+#menus
+Fitx.
+Edita
+Ret.
+Cronol.
+Clip
+Marca
+Vista
+Reprod.
+Efectes
+Color
+Àudio
+Espai
+Ajuda
+#entries
+1|Biblioteca de projectes nova...
+2|Obre la biblioteca de projectes...
+3|Mostra la biblioteca a l'Explorador
+4|Gestor de projectes
+5|Projecte nou
+6|Obre projecte...
+7|Importa projecte...
+8|Exporta projecte...
+9|Restaura l'arxiu del projecte...
+10|Desa el projecte
+11|Desa el projecte com a...
+12|Desa una còpia com a...
+13|Torna a l'últim desat
+14|Importa
+15|Contingut...
+16|Carpeta com a safata...
+17|Cronologia: AAF, EDL, XML...
+18|Cronologia: pre-EDL...
+19|Subtítols...
+20|Metadades al conjunt...
+21|Safata...
+22|Exporta
+23|Cronologia: EDL...
+24|Cronologia: OpenTimelineIO...
+25|Cronologia: XML...
+26|Cronologia: AAF...
+27|Metadades del conjunt...
+28|Gestió de contingut...
+29|Configuració del projecte...
+30|Preferències del sistema...
+31|Exportació ràpida...
+32|Surt
+33|Desfés
+34|Refés
+35|Retalla
+36|Copia
+37|Enganxa
+38|Enganxa i insereix
+39|Enganxa mescla a la pista
+40|Duplica
+41|Ajusta a l'ompliment
+42|Posa a dalt
+43|Suprimeix la selecció
+44|Suprimeix la selecció amb ripple
+45|Selecciona-ho tot
+46|Desselecciona-ho tot
+47|Selecciona clips endavant
+48|Cerca...
+49|Projectes recents
+50|Gestor de projectes...
+51|Dreceres de teclat
+52|Selecciona el tall més proper
+53|Mode de selecció
+54|Mode de retall
+55|Retall dinàmic
+56|Ripple inici
+57|Ripple final
+58|Ripple anterior / següent
+59|Ripple anterior al cap
+60|Ripple següent al cap
+61|Retalla l'inici al cap
+62|Retalla el final al cap
+63|Amplia l'edició
+64|Slip del clip
+65|Slip un fotograma abans
+66|Slip un fotograma després
+67|Slide del clip
+68|Slide un fotograma a l'esquerra
+69|Slide un fotograma a la dreta
+70|Retall en bucle
+71|Retall asimètric
+72|Editor de retall
+73|Cronologia nova...
+74|Cronologia dels clips triats
+75|Clip compost nou...
+76|Clip d'efectes nou...
+77|Descompon al lloc
+78|Descompon el clip compost
+79|Descompon la cronologia niuada
+80|Divideix el clip
+81|Cronologia de la safata...
+82|Importa cronologia...
+83|Exporta cronologia...
+84|Resolució i fotogrames...
+85|Configuració de la cronologia
+86|Imant
+87|Selecció enllaçada
+88|Bloqueig de posició
+89|La selecció segueix el cap
+90|Afegeix marcador
+91|Afegeix marcador amb diàleg
+92|Suprimeix tots els marcadors
+93|Crea pista de subtítols
+94|Crea regió de subtítols
+95|Transició a tots els talls
+96|Canvia de cronologia
+97|Obre la cronologia en finestra
+98|Suprimeix la cronologia
+99|Activa el clip
+100|Fotograma coincident
+101|Bloqueja el clip
+102|Clip multicàmera nou...
+103|Visor multicàmera
+104|Afegeix com a imatges fixes
+105|Canvia la velocitat del clip...
+106|Canvia la durada del clip...
+107|Controls de temps
+108|Reajusta el temps del clip
+109|Congela el fotograma
+110|Rampa de velocitat...
+111|Inverteix el clip
+112|Clip compost nou
+113|Enllaça clips
+114|Separa àudio i vídeo
+115|Scrubbing d'àudio sí/no
+116|Alinea clips automàticament
+117|Segons el timecode
+118|Segons la forma d'ona
+119|Normalitza el nivell d'àudio...
+120|Renderitza al lloc
+121|Clip d'efectes nou
+122|Clip compost nou
+123|Atributs del clip...
+124|Marca entrada
+125|Marca sortida
+126|Marca el clip
+127|Marca cronologia entrada/sortida
+128|Esborra entrada
+129|Esborra sortida
+130|Esborra entrada i sortida
+131|Modifica el marcador...
+132|Suprimeix el marcador aquí
+133|Suprimeix tots els marcadors
+134|Al marcador anterior
+135|Al marcador següent
+136|Color del clip
+137|Per defecte
+138|Taronja
+139|Albercoc
+140|Groc
+141|Llima
+142|Oliva
+143|Verd
+144|Verd blavós
+145|Blau marí
+146|Blau
+147|Porpra
+148|Violeta
+149|Rosa
+150|Beix fosc
+151|Beix
+152|Marró
+153|Xocolata
+154|Mostra el fotograma en reproduir
+155|Àrea segura
+156|Mostra quadrícula / guies
+157|Mostra la barra d'eines
+158|Mostra el visor a pantalla completa
+159|Mostra el visor de cinema
+160|Superposicions del visor
+161|Transf. / retall / zoom
+162|Àrea segura
+163|Creu central
+164|Fons de quadres (alfa)
+165|Mostra totes les superposicions
+166|Finestra de timecode
+167|Mostra els scopes
+168|Mostra els mesuradors d'àudio
+169|Mostra el mesclador d'àudio
+170|Mostra l'inspector
+171|Reprodueix endavant
+172|Reprodueix enrere
+173|Atura
+174|Reprodueix al voltant
+175|Reprodueix entrada–sortida
+176|Reprodueix al voltant d'E/S
+177|Reproducció en bucle
+178|Al primer fotograma
+179|A l'últim fotograma
+180|A l'entrada
+181|A la sortida
+182|Fotograma anterior
+183|Fotograma següent
+184|Punt d'edició anterior
+185|Punt d'edició següent
+186|Resolució de reproducció
+187|Meitat
+188|Quart
+189|Memòria cau d'efectes
+190|Mode proxy
+191|No
+192|Vuitè
+193|Descodificació per maquinari
+194|Suprimeix la memòria cau
+195|Transicions de vídeo
+196|Dissolució creuada
+197|Fosa a color
+198|Transicions d'àudio
+199|Fosa creuada
+200|Elimina la transició
+201|OpenFX
+202|Desenfocament
+203|Desenfocament gaussià
+204|Nitidesa
+205|Color
+206|Inverteix colors
+207|Blanc i negre
+208|Distorsió
+209|Mosaic
+210|Efectes d'àudio
+211|EQ
+212|Dinàmica
+213|Picasso FX
+214|Sèpia
+215|Desenfocament suau
+216|Llum
+217|Resplendor
+218|Estilitza
+219|Vinyeta
+220|Gra de pel·lícula
+221|Efectes de composició
+222|Nodes
+223|Generadors
+224|Color sòlid
+225|Barres de color
+226|Degradat
+227|Títols
+228|Text
+229|Text+
+230|Cerca a la biblioteca d'efectes
+231|Afegeix eina (composició)
+232|Restableix graduacions i nodes
+233|Restableix el node actual
+234|Node sí/no
+235|Captura un still
+236|Reprodueix un still
+237|Afegeix node en sèrie
+238|Afegeix sèrie abans
+239|Afegeix node en paral·lel
+240|Afegeix mesclador de capes
+241|Afegeix divisor / combinador
+242|Afegeix node exterior
+243|Etiqueta el node
+244|Cronologia
+245|Graf de nodes anterior
+246|Graf de nodes següent
+247|LUT
+248|Aplica LUT de la llista
+249|Galeria
+250|Scopes sí/no
+251|Llums altes
+252|Lightbox
+253|ADR
+254|Substitució automàtica de diàleg
+255|Bounce de mescla a pista
+256|Bounce de pistes triades
+257|Memòria cau d'efectes d'àudio
+258|Enllaç d'àudio
+259|Grup d'enllaç
+260|Descompon
+261|Jog en bucle
+262|Mostra cronologia / mesclador d'àudio
+263|Visor a pantalla completa
+264|Mostra el tauler a l'espai
+265|Conjunt de contingut
+266|Biblioteca d'efectes
+267|Inspector
+268|Mesclador
+269|Metadades
+270|Índex d'edició
+271|Biblioteca de sons
+272|Disposició
+273|Restableix la disposició
+274|Desa la disposició
+275|Carrega la disposició
+276|Vés a la pàgina
+277|Contingut
+278|Edició
+279|Efectes
+280|Àudio
+281|Lliurament
+282|Dues pantalles sí/no
+283|Sortida de vídeo neta
+284|Manual de Picasso Suite
+285|Tutorials de Picasso Suite
+286|Cerca actualitzacions...
+287|Exporta el fitxer de registre...
+288|Quant a Picasso Suite
+289|Llengua
+#ui
+1|Clips
+2|60 fotogr./s
+3|Afegeix tasca
+4|Afegeix a la cua
+5|Avançat
+6|Arxiva el projecte
+7|Arxiva...
+8|Auto
+9|Automàtic
+10|Equilibrat
+11|Safates
+12|Explora
+13|Enviam. bus
+14|Captura
+15|Capítols
+16|Tria una carpeta
+17|Nom del clip
+18|Clon
+19|Clonació
+20|Còdec
+21|Color+
+22|Col·leccions
+23|Contrast
+24|Control
+25|Crea un àlbum
+26|Corbes - pròpies
+27|Exportació pròpia
+28|Descodificació
+29|Projecte demo
+30|Arrossega fotos a l'àlbum per editar
+31|Dibuixat amb
+32|Editant
+33|Efectes ent.
+34|Àudio incrustat
+35|Codificador
+36|Perfil de codificació
+37|Tota la cronologia
+38|Mida
+39|Cada
+40|Exporta vídeo
+41|Fairlight
+42|Nom del fitxer
+43|Format
+44|Fotogr./s
+45|Reordenació
+46|Fotogrames sencers
+47|Pantalla completa
+48|Fusion
+49|Gain
+50|Gamma
+51|Generador
+52|Targeta gràfica
+53|Grups
+54|Llums altes
+55|Alt
+56|To
+57|Imatge
+58|Índex
+59|Clips individuals
+60|Entrada
+61|Integrat
+62|Fotogrames clau
+63|Paraules clau
+64|Mescla E
+65|Capa
+66|Local
+67|Ubicació
+68|Bucle
+69|Sonoritat
+70|Baix
+71|Marca
+72|Gestió de contingut
+73|Font de contingut
+74|Emmagatzematge
+75|Mesuradors
+76|Mitjos/detall
+77|Modificadors
+78|Monitor
+79|Volum del monitor
+80|Natiu
+81|Optimització de xarxa
+82|Cap tasca
+83|Cap tasca
+84|Cap still
+85|No informat
+86|Res a inspeccionar
+87|Desfasament
+88|Obre
+89|Ordre
+90|Parade
+91|Pausa
+92|Foto
+93|Àlbum
+94|Reprod.
+95|Bloqueig de posició
+96|Predefinit
+97|Primaris - rodes de color
+98|Mode de procés
+99|Config. del projecte
+100|Projectes
+101|Qualitat
+102|Exportació ràpida
+103|Interval
+104|Control de taxa
+105|Reenllaça contingut
+106|Reenllaça contingut...
+107|Elimina
+108|Render
+109|Render tot
+110|Cua de render
+111|Config. de render
+112|Config. - export propi
+113|Reset
+114|Reset tot
+115|Resolució
+116|Cerca
+117|Configuració
+118|Ombres
+119|Curt
+120|Curt màx.
+121|Un clip
+122|Safates intel·ligents
+123|Espai de color d'origen
+124|Espai gamma d'origen
+125|Config. de subtítols
+126|Sistema
+127|Resolució cronol.
+128|Proxy cronol.
+129|Tint
+130|Eines
+131|FX de pista
+132|Transicions
+133|Sense títol
+134|Resolució vertical
+135|Versió 0.6.1
+136|Vídeo
+137|Forma d'ona
+138|Espai
+139|Cap clip al conjunt
+140|Importa clips o deixa-hi fitxers
+141|Afegeix clips de l'emmagatzematge
+142|Cap so per mostrar
+143|Cap clip per graduar
+144|Sense entrada
+145|DURADA
+146|Exporta àudio
+147|Taxa de dades
+148|Pista de sortida 1
+149|Nom únic
+150|Afegeix (1), (2) ... al nom en comptes de sobreescriure.
+151|Tipus de fitxer
+152|Tota la cronologia
+153|Entrada a sortida
+154|Relació de píxel
+155|Quadrat
+156|Cinemascope
+157|Nivells de dades
+158|Conserva sota-negre/sobre-blanc
+159|Etiqueta d'espai de color
+160|Etiqueta gamma
+161|Dades gravades
+162|Com el projecte
+163|Omet la recodificació
+164|Contingut optimitzat
+165|Contingut proxy
+166|Imatges de memòria cau
+167|Millor escalat
+168|Millor debayer
+169|Totes les pistes de vídeo
+170|Activa flat pass
+171|Evita visionOS
+172|Sense escalat/blanking
+173|Executa l'script en
+174|Inici
+175|la tasca de render
+176|Exporta subtítols
+177|Fitxer separat
+178|Exporta com a
+179|fotogrames
+180|Retalla
+181|Turquesa
+182|Meitat
+183|Barres color
+184|Lightbox
+185|Edita
+186|Mesclador
+187|Sons
+188|Cronol.: AAF, EDL, XML...
+189|Cronol.: OpenTimelineIO...
+190|Editor de vídeo en Rust per a Windows, Linux, macOS i web.
+191|Scrubbing d'àudio (so en arrossegar el cap)
+192|Millor
+193|La nova taxa manté cada clip als mateixos fotogrames.
+194|Clica les tecles d'una ordre i prem la nova. Esc cancel·la.
+195|Copia els fitxers de les cronologies en una carpeta i escriu una còpia del projecte que hi apunta. El projecte obert no canvia.
+196|Descodifica vídeo amb acceleració per maquinari
+197|Cada fitxer és on diu el projecte.
+198|Filtres
+199|Programari lliure sota la GPL versió 3 o posterior.
+200|H.264, H.265, AV1, VP9, MPEG-2 i VC-1 es descodifiquen a la targeta gràfica si el controlador pot. Desactiva-ho si els clips surten verds o trencats. PICASSO_NO_HWACCEL=1 ho desactiva una vegada.
+201|Ajuda
+202|Selecció enllaçada (imatge i so junts)
+203|Projecte demo carregat
+204|Pivot
+205|La selecció segueix el cap
+206|Imant a clips, marcadors i cap
+207|Soft Clip
+208|Cinta
+209|Retall
+210|Vista
+211|Ple
+212|Clip
+213|Fotogrames clau
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Safata sinc.
+222|Temp
+223|Import proj...
+224|Export proj...
+225|Desa com a...
+226|Còpia com a...
+227|Importa
+228|Exporta
+229|Subtítols...
+230|Contingut...
+231|Carpeta...
+232|Cronol.
+233|Conjunt
+234|Inspector
+235|Metadades
+236|1/8
+237|Quant a
+238|Projecte nou
+239|Obre...
+240|Desa
+241|Dinàmica
+242|Títols
+243|Galeria
+244|Efectes
+245|Àudio
+246|Cronol.: EDL...
+247|Cronol.: XML...
+248|Contingut

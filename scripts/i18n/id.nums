@@ -1,0 +1,553 @@
+#menus
+Berk.
+Edit
+Trim
+Lini Masa
+Klip
+Tanda
+Lihat
+Putar
+Efek
+Warna
+Audio
+Ruang Kerja
+Bantuan
+#entries
+1|Pustaka proyek baru...
+2|Buka pustaka proyek...
+3|Tampilkan pustaka di Explorer
+4|Manajer Proyek
+5|Proyek baru
+6|Buka proyek...
+7|Impor proyek...
+8|Ekspor proyek...
+9|Pulihkan arsip proyek...
+10|Simpan proyek
+11|Simpan proyek sebagai...
+12|Simpan salinan sebagai...
+13|Kembali ke simpanan terakhir
+14|Impor
+15|Media...
+16|Folder sebagai bin...
+17|Lini masa: AAF, EDL, XML...
+18|Lini masa: pra-EDL...
+19|Subjudul...
+20|Metadata ke kumpulan media...
+21|Bin...
+22|Ekspor
+23|Lini masa: EDL...
+24|Lini masa: OpenTimelineIO...
+25|Lini masa: XML...
+26|Lini masa: AAF...
+27|Metadata dari kumpulan media...
+28|Manajemen media...
+29|Pengaturan proyek...
+30|Preferensi sistem...
+31|Ekspor cepat...
+32|Keluar
+33|Urungkan
+34|Ulangi
+35|Potong
+36|Salin
+37|Tempel
+38|Tempel sisipkan
+39|Tempel campuran ke trek
+40|Gandakan
+41|Sesuaikan isian
+42|Taruh di atas
+43|Hapus terpilih
+44|Hapus terpilih dengan ripple
+45|Pilih semua
+46|Batalkan semua pilihan
+47|Pilih klip ke depan
+48|Cari...
+49|Proyek terbaru
+50|Manajer Proyek...
+51|Pintasan keyboard
+52|Pilih titik edit terdekat
+53|Mode pilih
+54|Mode trim
+55|Mode trim dinamis
+56|Ripple awal
+57|Ripple akhir
+58|Ripple trim sebelum / berikut
+59|Ripple sebelum ke playhead
+60|Ripple berikut ke playhead
+61|Trim awal ke playhead
+62|Trim akhir ke playhead
+63|Perpanjang edit
+64|Geser isi klip
+65|Geser isi 1 bingkai awal
+66|Geser isi 1 bingkai akhir
+67|Geser klip
+68|Geser 1 bingkai ke kiri
+69|Geser 1 bingkai ke kanan
+70|Trim berulang
+71|Trim asimetris
+72|Editor trim
+73|Lini masa baru...
+74|Lini masa dari klip terpilih
+75|Buat klip gabungan...
+76|Klip efek baru...
+77|Urai di tempat
+78|Urai klip gabungan
+79|Urai lini masa bersarang
+80|Pisah klip
+81|Lini masa dari bin...
+82|Impor lini masa...
+83|Ekspor lini masa...
+84|Resolusi dan frame rate...
+85|Pengaturan lini masa
+86|Snap
+87|Pilihan terhubung
+88|Kunci posisi
+89|Pilihan ikuti playhead
+90|Tambah penanda
+91|Tambah penanda + dialog
+92|Hapus semua penanda
+93|Buat trek subjudul
+94|Buat area subjudul
+95|Transisi di semua potongan
+96|Ganti lini masa
+97|Buka lini masa di jendela baru
+98|Hapus lini masa
+99|Aktifkan klip
+100|Cocokkan bingkai
+101|Kunci klip
+102|Klip multikamera baru...
+103|Penampil multikamera
+104|Tambah sebagai gambar diam
+105|Ubah kecepatan klip...
+106|Ubah durasi klip...
+107|Kontrol retime
+108|Retime klip
+109|Bekukan bingkai
+110|Ramp kecepatan...
+111|Balik klip
+112|Buat klip gabungan
+113|Hubungkan klip
+114|Pisahkan audio dan video
+115|Scrubbing audio nyala/mati
+116|Sejajarkan klip otomatis
+117|Berdasarkan timecode
+118|Berdasarkan gelombang
+119|Normalkan level audio...
+120|Render di tempat
+121|Klip efek baru
+122|Klip gabungan baru
+123|Atribut klip...
+124|Tandai masuk
+125|Tandai keluar
+126|Tandai klip
+127|Tandai lini masa masuk/keluar
+128|Hapus masuk
+129|Hapus keluar
+130|Hapus masuk dan keluar
+131|Ubah penanda...
+132|Hapus penanda di sini
+133|Hapus semua penanda
+134|Ke penanda sebelumnya
+135|Ke penanda berikutnya
+136|Warna klip
+137|Bawaan
+138|Oranye
+139|Aprikot
+140|Kuning
+141|Limau
+142|Zaitun
+143|Hijau
+144|Hijau kebiruan
+145|Biru laut
+146|Biru
+147|Ungu
+148|Violet
+149|Merah muda
+150|Cokelat muda
+151|Krem
+152|Cokelat
+153|Cokelat tua
+154|Tampilkan bingkai saat putar
+155|Area aman
+156|Tampilkan grid / pemandu
+157|Tampilkan bilah alat
+158|Penampil layar penuh
+159|Penampil bioskop
+160|Overlay penampil
+161|Transformasi / pangkas / zoom
+162|Area aman
+163|Garis silang tengah
+164|Latar papan catur (alfa)
+165|Tampilkan semua overlay
+166|Jendela timecode
+167|Tampilkan scope
+168|Tampilkan meter audio
+169|Tampilkan mixer audio
+170|Tampilkan inspektur
+171|Putar maju
+172|Putar mundur
+173|Berhenti
+174|Putar sekitar bingkai
+175|Putar masuk ke keluar
+176|Putar sekitar masuk/keluar
+177|Putar berulang
+178|Ke bingkai pertama
+179|Ke bingkai terakhir
+180|Ke titik masuk
+181|Ke titik keluar
+182|Bingkai sebelumnya
+183|Bingkai berikutnya
+184|Titik edit sebelumnya
+185|Titik edit berikutnya
+186|Resolusi pemutaran
+187|Setengah
+188|Seperempat
+189|Cache memori efek
+190|Mode proxy
+191|Mati
+192|Seperdelapan
+193|Dekode perangkat keras
+194|Hapus cache render
+195|Transisi video
+196|Cross dissolve
+197|Dip ke warna
+198|Transisi audio
+199|Cross fade
+200|Hapus transisi
+201|OpenFX
+202|Buram
+203|Buram Gauss
+204|Pertajam
+205|Warna
+206|Balik warna
+207|Hitam putih
+208|Distorsi
+209|Mozaik
+210|Efek audio
+211|EQ
+212|Dinamika
+213|Picasso FX
+214|Sepia
+215|Buram lembut
+216|Cahaya
+217|Pendar
+218|Stilisasi
+219|Vinyet
+220|Butiran film
+221|Efek komposit
+222|Node
+223|Generator
+224|Warna solid
+225|Bilah warna
+226|Gradasi
+227|Judul
+228|Teks
+229|Teks+
+230|Cari pustaka efek
+231|Tambah alat (komposit)
+232|Reset semua grade dan node
+233|Reset node saat ini
+234|Node nyala/mati
+235|Ambil gambar diam
+236|Putar gambar diam
+237|Tambah node serial
+238|Tambah serial sebelum
+239|Tambah node paralel
+240|Tambah mixer layer
+241|Tambah pemisah / penggabung
+242|Tambah node luar
+243|Beri label node
+244|Lini masa
+245|Grafik node sebelumnya
+246|Grafik node berikutnya
+247|LUT
+248|Terapkan LUT dari daftar
+249|Galeri
+250|Scope nyala/mati
+251|Sorotan
+252|Lightbox
+253|ADR
+254|Penggantian dialog otomatis
+255|Bounce mix ke trek
+256|Bounce trek terpilih
+257|Cache efek audio
+258|Tautan audio
+259|Grup tautan
+260|Urai
+261|Jog berulang
+262|Tampilkan lini masa / mixer audio
+263|Penampil layar penuh
+264|Tampilkan panel
+265|Kumpulan media
+266|Pustaka efek
+267|Inspektur
+268|Mixer
+269|Metadata
+270|Indeks edit
+271|Pustaka suara
+272|Tata letak
+273|Reset tata letak
+274|Simpan tata letak
+275|Muat tata letak
+276|Pindah ke halaman
+277|Media
+278|Edit
+279|Efek
+280|Audio
+281|Kirim
+282|Dua layar nyala/mati
+283|Umpan video bersih
+284|Panduan Picasso Suite
+285|Tutorial Picasso Suite
+286|Periksa pembaruan...
+287|Ekspor berkas log...
+288|Tentang Picasso Suite
+289|Bahasa
+#ui
+1|Klip
+2|60 bingkai/dtk
+3|Tambah tugas
+4|Tambah ke antrean
+5|Lanjutan
+6|Arsipkan proyek
+7|Arsipkan...
+8|Otomatis
+9|Otomatis
+10|Seimbang
+11|Bin
+12|Jelajah
+13|Kirim bus
+14|Tangkap
+15|Bab
+16|Pilih folder
+17|Nama klip
+18|Klon
+19|Alat klon
+20|Kodek
+21|Warna+
+22|Koleksi
+23|Kontras
+24|Ruang kontrol
+25|Buat album
+26|Kurva - khusus
+27|Ekspor khusus
+28|Opsi dekode
+29|Proyek demo
+30|Seret foto ke album untuk mulai mengedit
+31|Digambar
+32|Mengedit
+33|Efek masuk
+34|Audio tertanam
+35|Encoder
+36|Profil encoding
+37|Seluruh lini masa
+38|Ukuran berkas
+39|Tiap
+40|Ekspor video
+41|Fairlight
+42|Nama berkas
+43|Format
+44|Frame rate
+45|Urutan ulang
+46|Bingkai penuh
+47|Layar penuh
+48|Fusion
+49|Gain
+50|Gamma
+51|Generator
+52|Kartu grafis
+53|Grup
+54|Sorotan
+55|Tinggi
+56|Rona
+57|Gambar
+58|Indeks
+59|Klip terpisah
+60|Masuk
+61|Terpadu
+62|Keyframe
+63|Kata kunci
+64|Mix K
+65|Layer
+66|Lokal
+67|Lokasi
+68|Putar berulang
+69|Kenyaringan
+70|Rendah
+71|Tanda
+72|Manajemen media
+73|Sumber media
+74|Penyimpanan
+75|Meter
+76|Tengah/detail
+77|Pengubah
+78|Monitor
+79|Volume monitor
+80|Asli
+81|Optimasi jaringan
+82|Tak ada tugas
+83|Tak ada tugas
+84|Tak ada gambar diam
+85|Tak dilaporkan
+86|Tak ada yang dilihat
+87|Offset
+88|Buka
+89|Urutan
+90|Parade
+91|Jeda
+92|Foto
+93|Album
+94|Putar
+95|Kunci posisi
+96|Preset
+97|Primer - roda warna
+98|Mode proses
+99|Pengaturan
+100|Proyek
+101|Kualitas
+102|Ekspor cepat
+103|Rentang
+104|Kontrol rate
+105|Tautkan ulang media
+106|Tautkan ulang media...
+107|Hapus
+108|Render
+109|Render semua
+110|Antrean render
+111|Setelan render
+112|Setelan render - khusus
+113|Reset
+114|Reset semua
+115|Resolusi
+116|Cari
+117|Setelan
+118|Bayangan
+119|Pendek
+120|Pendek maks
+121|Satu klip
+122|Bin pintar
+123|Ruang warna sumber
+124|Ruang gamma sumber
+125|Setelan subjudul
+126|Sistem
+127|Resolusi lini masa
+128|Proxy lini masa
+129|Tint
+130|Alat
+131|FX trek
+132|Transisi
+133|Tanpa judul
+134|Resolusi vertikal
+135|Versi 0.6.1
+136|Video
+137|Gelombang
+138|Ruang kerja
+139|Tak ada klip di kumpulan
+140|Impor klip, atau letakkan berkas di sini
+141|Tambah klip dari penyimpanan untuk mulai
+142|Tak ada suara
+143|Tak ada klip untuk digrade
+144|Tanpa input
+145|DURASI
+146|Ekspor audio
+147|Data rate
+148|Trek keluaran 1
+149|Nama unik
+150|Menambah (1), (2) ... ke nama, bukan menimpa berkas.
+151|Jenis berkas
+152|Seluruh lini masa
+153|Masuk ke keluar
+154|Rasio piksel
+155|Persegi
+156|Cinemascope
+157|Level data
+158|Pertahankan di bawah-hitam/atas-putih
+159|Tag ruang warna
+160|Tag gamma
+161|Burn-in data
+162|Sama dgn proyek
+163|Lewati encode ulang
+164|Pakai media optimal
+165|Pakai media proxy
+166|Pakai gambar cache
+167|Skala kualitas terbaik
+168|Debayer kualitas terbaik
+169|Semua trek video
+170|Aktifkan flat pass
+171|Bypass visionOS
+172|Matikan skala/blanking
+173|Jalankan skrip pada
+174|Mulai
+175|tugas render
+176|Ekspor subjudul
+177|Berkas terpisah
+178|Ekspor sebagai
+179|bingkai
+180|Potong
+181|Teal
+182|Setengah
+183|Bilah warna
+184|Lightbox
+185|Edit
+186|Mixer
+187|Suara
+188|Lini masa: AAF, EDL, XML...
+189|Lini masa: OpenTimelineIO...
+190|Editor video dalam Rust untuk Windows, Linux, macOS, dan web.
+191|Scrubbing audio (suara saat playhead diseret)
+192|Terbaik
+193|Frame rate baru menjaga tiap klip di bingkai sama.
+194|Klik tombol perintah, lalu tekan tombol baru. Esc batal.
+195|Menyalin berkas yang dipakai lini masa ke folder, dan menulis salinan proyek yang menunjuk ke sana. Proyek terbuka tak berubah.
+196|Dekode video dengan akselerasi perangkat keras
+197|Semua berkas media ada di tempat yang dicatat proyek.
+198|Filter
+199|Perangkat lunak bebas di bawah GPL versi 3 atau lebih baru.
+200|H.264, H.265, AV1, VP9, MPEG-2 dan VC-1 didekode di kartu grafis jika driver bisa. Matikan jika klip tampak hijau atau rusak. PICASSO_NO_HWACCEL=1 mematikannya sekali.
+201|Bantuan
+202|Pilihan terhubung (gambar dan suara bersama)
+203|Proyek demo dimuat
+204|Pivot
+205|Pilihan ikuti playhead
+206|Snap ke klip, penanda, playhead
+207|Soft Clip
+208|Pita
+209|Trim
+210|Lihat
+211|Penuh
+212|Klip
+213|Keyframe
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scope
+220|Spline
+221|Sinkron bin
+222|Suhu
+223|Impor proy...
+224|Ekspor proy...
+225|Simpan sbg...
+226|Salinan sbg...
+227|Impor
+228|Ekspor
+229|Subjudul...
+230|Media...
+231|Folder...
+232|Lini masa
+233|Kumpulan
+234|Inspektur
+235|Metadata
+236|1/8
+237|Tentang
+238|Proyek baru
+239|Buka...
+240|Simpan
+241|Dinamika
+242|Judul
+243|Galeri
+244|Efek
+245|Audio
+246|Lini masa: EDL...
+247|Lini masa: XML...
+248|Media

@@ -1,0 +1,39 @@
+Archive Project|Архивирај
+Clip Name|Назив
+Curves - Custom|Криве
+Every|Сваки
+Full Frames|Кадрови
+Graphics card|Граф. картица
+Index|Инд.
+Individual clips|Клипови
+Integrated|Интегр.
+Key Frames|Кључни
+Media Storage|Складиште
+Native|Нативно
+Network Optimization|Мрежа - оптим.
+Not reported|Н/д
+Nothing to inspect|Ништа
+Open|Отвори
+Project settings|Поставке
+Projects|Пројекти
+Quality|Квалит.
+Short|Кратко
+Short Max|Кр. макс
+Source Color Space|Изв. простор боје
+Waveform|Талас
+Data burn-in|Утиснуто
+Use optimized media|Оптим. медији
+Trigger script at|Скрипта при
+Export As|Извези
+Cut|Рез
+Mixer|Мик.
+Filters|Филт.
+Full|Пун
+Clip|Клип
+Gallery|Гал.
+Quarter|1/4
+Nodes|Чвор.
+Native|Нат.
+Open|Отв.
+Short|Кр.
+Clip|Клп

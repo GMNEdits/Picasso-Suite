@@ -1,0 +1,304 @@
+#menus
+Berk.
+Edit
+Trim
+Lini Masa
+Klip
+Tanda
+Lihat
+Putar
+Efek
+Warna
+Audio
+Ruang Kerja
+Bantuan
+#entries
+New Project Library...|Pustaka proyek baru...
+Open Project Library...|Buka pustaka proyek...
+Show Current Project Library in File Explorer|Tampilkan pustaka di Explorer
+Project Manager|Manajer Proyek
+New Project|Proyek baru
+Open Project...|Buka proyek...
+Import Project...|Impor proyek...
+Export Project...|Ekspor proyek...
+Restore Project Archive...|Pulihkan arsip proyek...
+Save Project|Simpan proyek
+Save Project As...|Simpan proyek sebagai...
+Save Copy As...|Simpan salinan sebagai...
+Revert to Last Saved Version|Kembali ke simpanan terakhir
+Import|Impor
+Media...|Media...
+Folder as Bin...|Folder sebagai bin...
+Timeline: AAF, EDL, XML...|Lini masa: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Lini masa: pra-EDL...
+Subtitle...|Subjudul...
+Metadata to Media Pool...|Metadata ke kumpulan media...
+Bin...|Bin...
+Export|Ekspor
+Timeline: EDL...|Lini masa: EDL...
+Timeline: OpenTimelineIO...|Lini masa: OpenTimelineIO...
+Timeline: XML...|Lini masa: XML...
+Timeline: AAF...|Lini masa: AAF...
+Metadata from Media Pool...|Metadata dari kumpulan media...
+Media Management...|Manajemen media...
+Project Settings...|Pengaturan proyek...
+System Preferences...|Preferensi sistem...
+Quick Export...|Ekspor cepat...
+Quit|Keluar
+Undo|Urungkan
+Redo|Ulangi
+Cut|Potong
+Copy|Salin
+Paste|Tempel
+Paste Insert|Tempel sisipkan
+Paste Mix to Current Track|Tempel campuran ke trek
+Duplicate|Gandakan
+Fit to Fill|Sesuaikan isian
+Place on Top|Taruh di atas
+Delete Selected|Hapus terpilih
+Delete Selected with Ripple|Hapus terpilih dengan ripple
+Select All|Pilih semua
+Deselect All|Batalkan semua pilihan
+Select Clips Forward|Pilih klip ke depan
+Find...|Cari...
+Recent Projects|Proyek terbaru
+Project Manager...|Manajer Proyek...
+Keyboard Customization|Pintasan keyboard
+Select Nearest Edit Point|Pilih titik edit terdekat
+Selection Mode|Mode pilih
+Trim Mode|Mode trim
+Dynamic Trim Mode|Mode trim dinamis
+Ripple Start|Ripple awal
+Ripple End|Ripple akhir
+Ripple Trim Previous / Next|Ripple trim sebelum / berikut
+Ripple Trim Previous Edit to Playhead|Ripple sebelum ke playhead
+Ripple Trim Next Edit to Playhead|Ripple berikut ke playhead
+Trim Start to Playhead|Trim awal ke playhead
+Trim End to Playhead|Trim akhir ke playhead
+Extend Edit|Perpanjang edit
+Slip Clip|Geser isi klip
+Slip One Frame Earlier|Geser isi 1 bingkai awal
+Slip One Frame Later|Geser isi 1 bingkai akhir
+Slide Clip|Geser klip
+Slide One Frame Left|Geser 1 bingkai ke kiri
+Slide One Frame Right|Geser 1 bingkai ke kanan
+Loop Trim|Trim berulang
+Asymmetric Trimming|Trim asimetris
+Trim Editor|Editor trim
+New Timeline...|Lini masa baru...
+New Timeline Using Selected Clips|Lini masa dari klip terpilih
+Create New Compound Clip...|Buat klip gabungan...
+New Effects Clip...|Klip efek baru...
+Decompose in Place|Urai di tempat
+Decompose Compound Clip|Urai klip gabungan
+Decompose Nested Timeline|Urai lini masa bersarang
+Split Clip|Pisah klip
+Create Timeline Using Bin...|Lini masa dari bin...
+Import Timeline...|Impor lini masa...
+Export Timeline...|Ekspor lini masa...
+Timeline Resolution and Frame Rate...|Resolusi dan frame rate...
+Timeline Settings|Pengaturan lini masa
+Snap|Snap
+Linked Selection|Pilihan terhubung
+Position Lock|Kunci posisi
+Selection Follows Playhead|Pilihan ikuti playhead
+Add Marker|Tambah penanda
+Add Marker and Show Dialog|Tambah penanda + dialog
+Delete All Markers|Hapus semua penanda
+Create Subtitle Track|Buat trek subjudul
+Create Subtitle Region|Buat area subjudul
+Add Transition to All Edits|Transisi di semua potongan
+Switch Timeline|Ganti lini masa
+Open Timeline in New Window|Buka lini masa di jendela baru
+Delete Timeline|Hapus lini masa
+Enable Clip|Aktifkan klip
+Match Frame|Cocokkan bingkai
+Lock Clip|Kunci klip
+New Multicam Clip...|Klip multikamera baru...
+Multicam Viewer|Penampil multikamera
+Add to Media Pool as Stills|Tambah sebagai gambar diam
+Change Clip Speed...|Ubah kecepatan klip...
+Change Clip Duration...|Ubah durasi klip...
+Retime Controls|Kontrol retime
+Retime Clip|Retime klip
+Freeze Frame|Bekukan bingkai
+Speed Ramp...|Ramp kecepatan...
+Reverse Clip|Balik klip
+Create New Compound Clip|Buat klip gabungan
+Link Clips|Hubungkan klip
+Unlink Audio and Video|Pisahkan audio dan video
+Enable / Disable Audio Scrubbing|Scrubbing audio nyala/mati
+Auto Align Clips|Sejajarkan klip otomatis
+Based on Timecode|Berdasarkan timecode
+Based on Waveform|Berdasarkan gelombang
+Normalize Audio Levels...|Normalkan level audio...
+Render in Place|Render di tempat
+New Effects Clip|Klip efek baru
+New Compound Clip|Klip gabungan baru
+Clip Attributes...|Atribut klip...
+Mark In|Tandai masuk
+Mark Out|Tandai keluar
+Mark Clip|Tandai klip
+Mark Timeline In/Out|Tandai lini masa masuk/keluar
+Clear In|Hapus masuk
+Clear Out|Hapus keluar
+Clear In and Out|Hapus masuk dan keluar
+Modify Marker...|Ubah penanda...
+Delete Marker at Current Position|Hapus penanda di sini
+Delete All Markers in Timeline|Hapus semua penanda
+Go to Previous Marker|Ke penanda sebelumnya
+Go to Next Marker|Ke penanda berikutnya
+Set Clip Color|Warna klip
+Default|Bawaan
+Orange|Oranye
+Apricot|Aprikot
+Yellow|Kuning
+Lime|Limau
+Olive|Zaitun
+Green|Hijau
+Teal|Hijau kebiruan
+Navy|Biru laut
+Blue|Biru
+Purple|Ungu
+Violet|Violet
+Pink|Merah muda
+Tan|Cokelat muda
+Beige|Krem
+Brown|Cokelat
+Chocolate|Cokelat tua
+Show Current Frame on Playback|Tampilkan bingkai saat putar
+Safe Area Overlay|Area aman
+Show Grid / Guides|Tampilkan grid / pemandu
+Show Toolbar|Tampilkan bilah alat
+Show Full Screen Viewer|Penampil layar penuh
+Show Cinema Viewer|Penampil bioskop
+Viewer Overlays|Overlay penampil
+Transform / Crop / Dynamic Zoom|Transformasi / pangkas / zoom
+Safe Area|Area aman
+Center Crosshair|Garis silang tengah
+Checkerboard Background (Alpha)|Latar papan catur (alfa)
+Show All Overlays|Tampilkan semua overlay
+Timecode Window|Jendela timecode
+Show Scopes|Tampilkan scope
+Show Audio Meters|Tampilkan meter audio
+Show Audio Mixer|Tampilkan mixer audio
+Show Inspector|Tampilkan inspektur
+Play Forward|Putar maju
+Play Reverse|Putar mundur
+Stop|Berhenti
+Play Around Current Frame|Putar sekitar bingkai
+Play In to Out|Putar masuk ke keluar
+Play Around In / Around Out|Putar sekitar masuk/keluar
+Loop Playback|Putar berulang
+Go to First Frame|Ke bingkai pertama
+Go to Last Frame|Ke bingkai terakhir
+Go to In|Ke titik masuk
+Go to Out|Ke titik keluar
+Previous Frame|Bingkai sebelumnya
+Next Frame|Bingkai berikutnya
+Previous Edit Point|Titik edit sebelumnya
+Next Edit Point|Titik edit berikutnya
+Timeline Playback Resolution|Resolusi pemutaran
+Half|Setengah
+Quarter|Seperempat
+Effects Memory Cache|Cache memori efek
+Timeline Proxy Mode|Mode proxy
+Off|Mati
+Eighth|Seperdelapan
+Hardware Decoding|Dekode perangkat keras
+Delete Render Cache|Hapus cache render
+Video Transitions|Transisi video
+Cross Dissolve|Cross dissolve
+Dip to Color|Dip ke warna
+Audio Transitions|Transisi audio
+Cross Fade|Cross fade
+Remove Transition|Hapus transisi
+OpenFX|OpenFX
+Blur|Buram
+Gaussian Blur|Buram Gauss
+Sharpen|Pertajam
+Color|Warna
+Invert Colors|Balik warna
+Black and White|Hitam putih
+Distort|Distorsi
+Mosaic|Mozaik
+Audio FX|Efek audio
+EQ|EQ
+Dynamics|Dinamika
+Picasso FX|Picasso FX
+Sepia|Sepia
+Soft Blur|Buram lembut
+Light|Cahaya
+Glow|Pendar
+Stylize|Stilisasi
+Vignette|Vinyet
+Film Grain|Butiran film
+Compositing Effects|Efek komposit
+Nodes|Node
+Generators|Generator
+Solid Color|Warna solid
+Color Bars|Bilah warna
+Gradient|Gradasi
+Titles|Judul
+Text|Teks
+Text+|Teks+
+Effects Library Search|Cari pustaka efek
+Add Tool (Compositing)|Tambah alat (komposit)
+Reset All Grades and Nodes|Reset semua grade dan node
+Reset Current Node Grade|Reset node saat ini
+Enable/Disable Current Node|Node nyala/mati
+Grab Still|Ambil gambar diam
+Play Still|Putar gambar diam
+Add Serial Node|Tambah node serial
+Add Serial Before|Tambah serial sebelum
+Add Parallel Node|Tambah node paralel
+Add Layer Mixer|Tambah mixer layer
+Add Splitter / Combiner|Tambah pemisah / penggabung
+Add Outside Node|Tambah node luar
+Label Node|Beri label node
+Timeline|Lini masa
+Previous Node Graph|Grafik node sebelumnya
+Next Node Graph|Grafik node berikutnya
+LUT|LUT
+Apply LUT from list|Terapkan LUT dari daftar
+Gallery|Galeri
+Scopes On/Off|Scope nyala/mati
+Highlight|Sorotan
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Penggantian dialog otomatis
+Bounce Mix to Track|Bounce mix ke trek
+Bounce Selected Tracks|Bounce trek terpilih
+Cache Audio Effects|Cache efek audio
+Audio Link|Tautan audio
+Link Group|Grup tautan
+Decompose|Urai
+Loop Jog|Jog berulang
+Show Audio Timeline / Mixer|Tampilkan lini masa / mixer audio
+Full Screen Viewer|Penampil layar penuh
+Show Panel in Workspace|Tampilkan panel
+Media Pool|Kumpulan media
+Effects Library|Pustaka efek
+Inspector|Inspektur
+Mixer|Mixer
+Metadata|Metadata
+Edit Index|Indeks edit
+Sound Library|Pustaka suara
+Layout|Tata letak
+Reset UI Layout|Reset tata letak
+Save Layout|Simpan tata letak
+Load Layout|Muat tata letak
+Switch to Page|Pindah ke halaman
+Media|Media
+Edit|Edit
+Effects|Efek
+Audio|Audio
+Deliver|Kirim
+Dual Screen On/Off|Dua layar nyala/mati
+Video Clean Feed|Umpan video bersih
+Picasso Suite Manual|Panduan Picasso Suite
+Picasso Suite Tutorials|Tutorial Picasso Suite
+Check for Updates...|Periksa pembaruan...
+Export Log File...|Ekspor berkas log...
+About Picasso Suite|Tentang Picasso Suite
+Language|Bahasa

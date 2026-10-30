@@ -1,0 +1,553 @@
+#menus
+Fájl
+Szrk.
+Vágás
+Idővonal
+Klip
+Jelző
+Nézet
+Lejátszás
+Effekt
+Szín
+Hang
+Munkater.
+Súgó
+#entries
+1|Új projektkönyvtár...
+2|Projektkönyvtár megnyitása...
+3|Könyvtár mutatása a Fájlkezelőben
+4|Projektkezelő
+5|Új projekt
+6|Projekt megnyitása...
+7|Projekt importálása...
+8|Projekt exportálása...
+9|Projektarchívum visszaállítása...
+10|Projekt mentése
+11|Projekt mentése másként...
+12|Másolat mentése másként...
+13|Vissza az utolsó mentéshez
+14|Importálás
+15|Média...
+16|Mappa kukaként...
+17|Idővonal: AAF, EDL, XML...
+18|Idővonal: elő-EDL...
+19|Felirat...
+20|Metaadat a médiakészletbe...
+21|Kuka...
+22|Exportálás
+23|Idővonal: EDL...
+24|Idővonal: OpenTimelineIO...
+25|Idővonal: XML...
+26|Idővonal: AAF...
+27|Metaadat a médiakészletből...
+28|Médiakezelés...
+29|Projektbeállítások...
+30|Rendszerbeállítások...
+31|Gyors exportálás...
+32|Kilépés
+33|Visszavonás
+34|Újra
+35|Kivágás
+36|Másolás
+37|Beillesztés
+38|Beillesztés és beszúrás
+39|Mix beillesztése sávba
+40|Kettőzés
+41|Illesztés kitöltéshez
+42|Felülre helyezés
+43|Kijelöltek törlése
+44|Kijelöltek törlése rippellel
+45|Összes kijelölése
+46|Kijelölés törlése
+47|Klipek kijelölése előre
+48|Keresés...
+49|Legutóbbi projektek
+50|Projektkezelő...
+51|Billentyűparancsok
+52|Legközelebbi vágáspont kijelölése
+53|Kijelölési mód
+54|Vágási mód
+55|Dinamikus vágási mód
+56|Ripple kezdet
+57|Ripple vég
+58|Ripple előző / következő
+59|Ripple előző a fejig
+60|Ripple következő a fejig
+61|Kezdet vágása a fejig
+62|Vég vágása a fejig
+63|Vágás kiterjesztése
+64|Klip csúsztatása
+65|Egy képkockával korábbra
+66|Egy képkockával későbbre
+67|Klip eltolása
+68|Egy képkockával balra
+69|Egy képkockával jobbra
+70|Ciklikus vágás
+71|Aszimmetrikus vágás
+72|Vágószerkesztő
+73|Új idővonal...
+74|Új idővonal a kijelöltekből
+75|Új összetett klip...
+76|Új effektklip...
+77|Szétbontás helyben
+78|Összetett klip szétbontása
+79|Beágyazott idővonal szétbontása
+80|Klip kettévágása
+81|Idővonal kukából...
+82|Idővonal importálása...
+83|Idővonal exportálása...
+84|Felbontás és képkockasebesség...
+85|Idővonal-beállítások
+86|Illesztés
+87|Kapcsolt kijelölés
+88|Pozíciózár
+89|Kijelölés követi a fejet
+90|Jelölő hozzáadása
+91|Jelölő hozzáadása párbeszéddel
+92|Összes jelölő törlése
+93|Feliratsáv létrehozása
+94|Feliratrégió létrehozása
+95|Átmenet minden vágásra
+96|Idővonal váltása
+97|Idővonal megnyitása új ablakban
+98|Idővonal törlése
+99|Klip engedélyezése
+100|Egyező képkocka
+101|Klip zárolása
+102|Új többkamerás klip...
+103|Többkamerás nézet
+104|Hozzáadás állóképként
+105|Klip sebességének módosítása...
+106|Klip hosszának módosítása...
+107|Időzítés-vezérlők
+108|Klip újraidőzítése
+109|Képkocka lefagyasztása
+110|Sebességrámpa...
+111|Klip megfordítása
+112|Új összetett klip
+113|Klipek összekapcsolása
+114|Hang és kép szétválasztása
+115|Hangpásztázás be/ki
+116|Klipek automatikus igazítása
+117|Timecode alapján
+118|Hullámforma alapján
+119|Hangszint normalizálása...
+120|Renderelés helyben
+121|Új effektklip
+122|Új összetett klip
+123|Klip tulajdonságai...
+124|Be jelölése
+125|Ki jelölése
+126|Klip jelölése
+127|Idővonal be/ki jelölése
+128|Be törlése
+129|Ki törlése
+130|Be és ki törlése
+131|Jelölő módosítása...
+132|Jelölő törlése itt
+133|Összes jelölő törlése
+134|Előző jelölőre
+135|Következő jelölőre
+136|Klip színe
+137|Alapérték
+138|Narancs
+139|Barack
+140|Sárga
+141|Lime
+142|Olíva
+143|Zöld
+144|Pávakék
+145|Tengerkék
+146|Kék
+147|Lila
+148|Ibolya
+149|Rózsaszín
+150|Cser
+151|Bézs
+152|Barna
+153|Csokoládé
+154|Aktuális kocka mutatása lejátszáskor
+155|Biztonságos terület
+156|Rács / segédvonalak mutatása
+157|Eszköztár mutatása
+158|Teljes képernyős nézet
+159|Mozinézet
+160|Nézet-rátétek
+161|Átalakítás / vágás / zoom
+162|Biztonságos terület
+163|Középső célkereszt
+164|Sakktábla háttér (alfa)
+165|Összes rátét mutatása
+166|Timecode ablak
+167|Scope-ok mutatása
+168|Hangmérők mutatása
+169|Hangkeverő mutatása
+170|Vizsgáló mutatása
+171|Lejátszás előre
+172|Lejátszás hátra
+173|Megállítás
+174|Lejátszás a kocka körül
+175|Lejátszás be-től ki-ig
+176|Lejátszás be/ki körül
+177|Ismétlődő lejátszás
+178|Első képkockára
+179|Utolsó képkockára
+180|Be pontra
+181|Ki pontra
+182|Előző képkocka
+183|Következő képkocka
+184|Előző vágáspont
+185|Következő vágáspont
+186|Lejátszási felbontás
+187|Fél
+188|Negyed
+189|Effektek memóriagyorsítótára
+190|Proxy mód
+191|Ki
+192|Nyolcad
+193|Hardveres dekódolás
+194|Render gyorsítótár törlése
+195|Videóátmenetek
+196|Kereszt-áttűnés
+197|Áttűnés színbe
+198|Hangátmenetek
+199|Kereszt-fade
+200|Átmenet eltávolítása
+201|OpenFX
+202|Elmosás
+203|Gauss-elmosás
+204|Élesítés
+205|Szín
+206|Színek invertálása
+207|Fekete-fehér
+208|Torzítás
+209|Mozaik
+210|Hangeffektek
+211|EQ
+212|Dinamika
+213|Picasso FX
+214|Szépia
+215|Lágy elmosás
+216|Fény
+217|Fényfoszlás
+218|Stilizálás
+219|Vignetta
+220|Filmszemcse
+221|Kompozit effektek
+222|Csomópontok
+223|Generátorok
+224|Egyszínű
+225|Színsávok
+226|Színátmenet
+227|Címek
+228|Szöveg
+229|Szöveg+
+230|Keresés az effektkönyvtárban
+231|Eszköz hozzáadása (komp.)
+232|Minden fokozat és csomópont reset
+233|Aktuális csomópont reset
+234|Csomópont be/ki
+235|Állókép rögzítése
+236|Állókép lejátszása
+237|Soros csomópont hozzáadása
+238|Soros csomópont elé
+239|Párhuzamos csomópont hozzáadása
+240|Rétegkeverő hozzáadása
+241|Szétválasztó / egyesítő
+242|Külső csomópont hozzáadása
+243|Csomópont címkézése
+244|Idővonal
+245|Előző csomópontgráf
+246|Következő csomópontgráf
+247|LUT
+248|LUT alkalmazása listából
+249|Galéria
+250|Scope-ok be/ki
+251|Csúcsfények
+252|Fénydoboz
+253|ADR
+254|Automatikus párbeszédcsere
+255|Mix sávba bounce-olása
+256|Kijelölt sávok bounce-olása
+257|Hangeffektek gyorsítótára
+258|Hangkapcsolat
+259|Kapcsolatcsoport
+260|Szétbontás
+261|Ciklikus jog
+262|Hangidővonal / keverő mutatása
+263|Teljes képernyős nézet
+264|Panel mutatása a munkaterületen
+265|Médiakészlet
+266|Effektkönyvtár
+267|Vizsgáló
+268|Keverő
+269|Metaadat
+270|Szerkesztési index
+271|Hangkönyvtár
+272|Elrendezés
+273|Elrendezés visszaállítása
+274|Elrendezés mentése
+275|Elrendezés betöltése
+276|Váltás oldalra
+277|Média
+278|Szerkesztés
+279|Effektek
+280|Hang
+281|Kiadás
+282|Két képernyő be/ki
+283|Tiszta videókimenet
+284|Picasso Suite kézikönyv
+285|Picasso Suite oktatók
+286|Frissítések keresése...
+287|Naplófájl exportálása...
+288|A Picasso Suite névjegye
+289|Nyelv
+#ui
+1|Klipek
+2|60 kocka/mp
+3|Új feladat
+4|Sorba tétel
+5|Haladó
+6|Projekt archiv.
+7|Archiválás...
+8|Auto
+9|Automatikus
+10|Kiegyens.
+11|Kukák
+12|Tallózás
+13|Busz küldés
+14|Felvétel
+15|Fejezetek
+16|Mappa kiválasztása
+17|Klip neve
+18|Klón
+19|Klónozó
+20|Kodek
+21|Szín+
+22|Gyűjtemények
+23|Kontraszt
+24|Vezérlő
+25|Album létrehozása
+26|Görbék - egyéni
+27|Egyéni export
+28|Dekódolás
+29|Demó projekt
+30|Húzzon fotókat az albumba a szerkesztéshez
+31|Rajzolva
+32|Szerkeszt
+33|Effekt be
+34|Beágyazott hang
+35|Kódoló
+36|Kódolási profil
+37|Teljes idővonal
+38|Méret
+39|Minden
+40|Videó export
+41|Fairlight
+42|Fájlnév
+43|Formátum
+44|Kocka/mp
+45|Átrendezés
+46|Teljes kockák
+47|Teljes kép
+48|Fusion
+49|Gain
+50|Gamma
+51|Generátor
+52|Videokártya
+53|Csoportok
+54|Fények
+55|Magas
+56|Árnyalat
+57|Kép
+58|Index
+59|Egyes klipek
+60|Be
+61|Integrált
+62|Kulcskockák
+63|Kulcsszó
+64|B mix
+65|Réteg
+66|Helyi
+67|Hely
+68|Ismétlés
+69|Hangosság
+70|Alacsony
+71|Jelölő
+72|Médiakezelés
+73|Médiaforrás
+74|Médiatár
+75|Mérők
+76|Közép/részlet
+77|Módosítók
+78|Monitor
+79|Monitor hangerő
+80|Natív
+81|Hálózat optim.
+82|Nincs feladat
+83|Nincs feladat
+84|Nincs állókép
+85|Nincs jelentve
+86|Nincs mit nézni
+87|Eltolás
+88|Megnyit
+89|Sorrend
+90|Parade
+91|Szünet
+92|Fotó
+93|Album
+94|Lejátszás
+95|Pozíciózár
+96|Előbeállít.
+97|Elsődleges - színkerekek
+98|Feldolg. mód
+99|Projektbeáll.
+100|Projektek
+101|Minőség
+102|Gyors export
+103|Tartomány
+104|Ráta-vezérlés
+105|Média újracsatol.
+106|Média újracsatol...
+107|Eltávolít
+108|Render
+109|Mind render
+110|Render sor
+111|Render beáll.
+112|Render beáll. - egyéni
+113|Reset
+114|Mind reset
+115|Felbontás
+116|Keresés
+117|Beállítások
+118|Árnyékok
+119|Rövid
+120|Rövid max
+121|Egy klip
+122|Okos kukák
+123|Forrás színtér
+124|Forrás gamma tér
+125|Felirat beáll.
+126|Rendszer
+127|Idővonal felb.
+128|Idővonal proxy
+129|Árnyalat
+130|Eszközök
+131|Sáv FX
+132|Átmenetek
+133|Névtelen
+134|Függőleges felb.
+135|Verzió 0.6.1
+136|Videó
+137|Hullámforma
+138|Munkater.
+139|Nincs klip a készletben
+140|Importáljon klipeket, vagy húzza ide a fájlokat
+141|Kezdéshez adjon klipeket a médiatárból
+142|Nincs hang
+143|Nincs klip a fokozáshoz
+144|Nincs bemenet
+145|IDŐTARTAM
+146|Hang exportálása
+147|Adatsebesség
+148|Kimeneti sáv 1
+149|Egyedi fájlnév
+150|(1), (2) ... a névhez a felülírás helyett.
+151|Fájltípus
+152|Teljes idővonal
+153|Be-től ki-ig
+154|Pixelarány
+155|Négyzet
+156|Cinemascope
+157|Adatszintek
+158|Fekete alatti/fehér feletti megtart
+159|Színtér címke
+160|Gamma címke
+161|Adat beégetése
+162|Mint a projekt
+163|Újrakódolás kihagyása
+164|Optimalizált média
+165|Proxy média használata
+166|Gyorsítótárazott képek
+167|Legjobb méretezés
+168|Legjobb debayer
+169|Minden videósáv
+170|Flat pass bekapcsolása
+171|visionOS megkerülés
+172|Méretezés/blanking ki
+173|Szkript futtatása
+174|Kezdés
+175|render feladatnál
+176|Felirat export
+177|Külön fájl
+178|Exportálás mint
+179|kocka
+180|Vágás
+181|Pávakék
+182|Fél
+183|Színsávok
+184|Fénydoboz
+185|Szerk.
+186|Keverő
+187|Hangok
+188|Idővonal: AAF, EDL, XML...
+189|Idővonal: OpenTimelineIO...
+190|Rust nyelven írt videószerkesztő Windowsra, Linuxra, macOS-re és webre.
+191|Hangpásztázás (hang a fej húzásakor)
+192|Legjobb
+193|Új képkockasebesség: a klipek ugyanazokon a kockákon maradnak.
+194|Kattintson a parancs billentyűire, majd nyomja az újat. Esc megszakít.
+195|Átmásolja az idővonalak fájljait egy mappába, és ír egy rájuk mutató projektmásolatot. A megnyitott projekt nem változik.
+196|Támogatott videó dekódolása hardveres gyorsítással
+197|Minden médiafájl ott van, ahol a projekt mondja.
+198|Szűrők
+199|Szabad szoftver GPL 3. vagy újabb verzió alatt.
+200|A H.264, H.265, AV1, VP9, MPEG-2 és VC-1 a videokártyán dekódolódik, ha a driver tudja. Kapcsolja ki, ha a klipek zöldek vagy hibásak. A PICASSO_NO_HWACCEL=1 egy futásra kikapcsolja.
+201|Súgó
+202|Kapcsolt kijelölés (kép és hang együtt)
+203|Demó projekt betöltve
+204|Pivot
+205|Kijelölés követi a fejet
+206|Illesztés klipekhez, jelölőkhöz, fejhez
+207|Soft Clip
+208|Szalag
+209|Vágás
+210|Nézet
+211|Teljes
+212|Klip
+213|Kulcskockák
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Tel.
+219|Scope
+220|Spline
+221|Szink. kuka
+222|Hőm.
+223|Proj. import...
+224|Proj. export...
+225|Mentés másként...
+226|Másolat mentése...
+227|Import
+228|Export
+229|Felirat...
+230|Média...
+231|Mappa...
+232|Idővonal
+233|Médiakészlet
+234|Vizsgáló
+235|Metaadat
+236|1/8
+237|Névjegy
+238|Új projekt
+239|Megnyitás...
+240|Mentés
+241|Dinamika
+242|Címek
+243|Galéria
+244|Effektek
+245|Hang
+246|Idővonal: EDL...
+247|Idővonal: XML...
+248|Média
