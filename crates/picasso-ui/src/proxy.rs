@@ -231,6 +231,102 @@ fn hash(text: &str) -> u32 {
     h
 }
 
+/// Makes the copy of `source` at `dest`: the file rendered again, smaller, with a key frame
+/// every few pictures so a picture can be found without reading the ones before it.
+///
+/// It is the export pipeline on a project of one clip, so the copy has the file's own frame
+/// rate and length and the frames line up with the original's: the same time asks for the same
+/// picture. Runs on a thread of its own; `progress` gets the frames done and the total.
+pub(crate) fn make(
+    source: &Path,
+    dest: &Path,
+    progress: &mut dyn FnMut(u64, u64) -> bool,
+) -> Result<(), String> {
+    let info = picasso_decode::probe(source).map_err(|e| format!("{}: {e}", source.display()))?;
+    let (num, den) = info.fps;
+    if num == 0 || den == 0 {
+        return Err(format!("{}: the file does not say its frame rate", source.display()));
+    }
+    let fps = picasso_core::Fps { num, den };
+    let duration_us = info
+        .duration_us
+        .filter(|d| *d > 0)
+        .ok_or_else(|| format!("{}: the file does not say how long it is", source.display()))?;
+    let frames = (u128::try_from(duration_us).unwrap_or(0) * u128::from(num)
+        / (1_000_000 * u128::from(den))) as u64;
+    if frames == 0 {
+        return Err(format!("{}: the file has no pictures", source.display()));
+    }
+
+    // A project of only this file, at the file's own size and frame rate.
+    let mut project = picasso_core::Project::new("Optimised media");
+    project.fps = fps;
+    project.width = info.width.max(2);
+    project.height = info.height.max(2);
+    let mut session = picasso_core::Session::new(project);
+    let name = source
+        .file_stem()
+        .map(|s| s.to_string_lossy().into_owned())
+        .unwrap_or_else(|| "media".into());
+    let media = match session
+        .dispatch(picasso_core::Command::AddMedia {
+            name,
+            source: picasso_core::MediaSource::Video {
+                path: source.to_string_lossy().into_owned(),
+            },
+            length: Some(frames),
+            default_duration: frames,
+        })
+        .map_err(|e| e.to_string())?
+    {
+        picasso_core::Outcome::Media(id) => id,
+        other => return Err(format!("the file was not added: {other:?}")),
+    };
+    let track = match session
+        .dispatch(picasso_core::Command::AddTrack {
+            kind: picasso_core::TrackKind::Video,
+        })
+        .map_err(|e| e.to_string())?
+    {
+        picasso_core::Outcome::Track(id) => id,
+        other => return Err(format!("the track was not added: {other:?}")),
+    };
+    session
+        .dispatch(picasso_core::Command::AddClip {
+            track,
+            media,
+            start: 0,
+            duration: Some(frames),
+            with_sound: false,
+        })
+        .map_err(|e| e.to_string())?;
+
+    if let Some(parent) = dest.parent() {
+        std::fs::create_dir_all(parent).map_err(|e| format!("{}: {e}", parent.display()))?;
+    }
+    let cache = crate::video::new_cache(&egui::Context::default());
+    let settings = picasso_export::Settings {
+        preset: picasso_export::Preset::H264Web,
+        path: dest.to_path_buf(),
+        start: 0,
+        end: frames,
+        options: picasso_export::Options {
+            // The sound stays with the original; a copy is only for the picture.
+            audio: false,
+            size: Some(copy_size((info.width, info.height))),
+            fps: Some(fps),
+            // A key frame often enough that a picture is found without reading back far, and no
+            // pictures that refer to later ones, which is what makes scrubbing slow.
+            keyframes: Some(8),
+            frame_reordering: false,
+            rate: picasso_export::Rate::Quality(picasso_export::Quality::Medium),
+            ..picasso_export::Options::default()
+        },
+    };
+    picasso_export::render(&session.project(), &cache, &settings, progress)
+        .map_err(|e| format!("{}: {e}", dest.display()))
+}
+
 /// The size a copy of a `(width, height)` picture has: inside [`LONG_SIDE`] on its longest
 /// side, the same shape, and never bigger than the file itself.
 pub(crate) fn copy_size((width, height): (u32, u32)) -> (u32, u32) {
@@ -366,5 +462,59 @@ mod tests {
     #[test]
     fn a_file_already_small_enough_is_kept_at_its_own_size() {
         assert_eq!(copy_size((720, 480)), (720, 480));
+    }
+
+    /// Two seconds of `size` at 25 fps; `None` when the `ffmpeg` program is not installed.
+    fn video(dir: &Path, name: &str, size: &str) -> Option<PathBuf> {
+        let path = dir.join(name);
+        std::process::Command::new("ffmpeg")
+            .args(["-y", "-v", "error", "-f", "lavfi", "-i"])
+            .arg(format!("testsrc=duration=2:size={size}:rate=25"))
+            .args(["-pix_fmt", "yuv420p", "-g", "50"])
+            .arg(&path)
+            .status()
+            .is_ok_and(|s| s.success())
+            .then_some(path)
+    }
+
+    #[test]
+    fn a_copy_is_the_same_length_and_frame_rate_at_a_smaller_size() {
+        let dir = scratch("make");
+        let Some(source) = video(&dir, "A001.mp4", "1920x1080") else {
+            return; // no ffmpeg here
+        };
+        let dest = dir.join("copy.mp4");
+        let mut frames = (0, 0);
+        make(&source, &dest, &mut |done, total| {
+            frames = (done, total);
+            true
+        })
+        .unwrap();
+
+        assert!(dest.is_file(), "the copy was written");
+        let info = picasso_decode::probe(&dest).unwrap();
+        assert_eq!((info.width, info.height), (1280, 720), "1280 on the long side");
+        // The frame rate is the file's own. The container's average reads a hair over, because
+        // the last picture is written without a length (an MP4 the export writes is one picture
+        // short); the pictures themselves are where the original's are, which is what matters.
+        let rate = f64::from(info.fps.0) / f64::from(info.fps.1.max(1));
+        assert!((rate - 25.0).abs() < 0.6, "25 a second, not {rate}");
+        let seconds = info.duration_us.unwrap() as f64 / 1e6;
+        assert!((seconds - 2.0).abs() < 0.15, "two seconds, not {seconds}");
+        assert_eq!(frames.1, 50, "50 pictures to write");
+        assert_eq!(frames.0, 50, "and all of them written");
+
+        // The same time is the same picture: one second in, the copy's picture starts at one
+        // second, so a project that asks for a time gets the picture it asks for.
+        let mut decoder = picasso_decode::VideoDecoder::open(&dest).unwrap();
+        use picasso_decode::FrameProvider;
+        let frame = decoder.frame_at(1_000_000).unwrap();
+        assert!(
+            (frame.pts_us - 1_000_000).abs() < 40_000,
+            "one second in is one second in, not {}",
+            frame.pts_us
+        );
+        assert_eq!((frame.width, frame.height), (1280, 720));
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }
