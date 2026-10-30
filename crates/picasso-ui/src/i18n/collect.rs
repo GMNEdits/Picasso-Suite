@@ -64,6 +64,14 @@ fn collect_ui_text() {
         app.page = page;
         frames(&mut app, &ctx, (1920.0, 1080.0), &mut found);
     }
+    // The pages with a clip chosen and the inspector open.
+    let first = app.project().tracks.iter().flat_map(|t| t.clips.first()).next().map(|c| c.id);
+    app.selection = first;
+    app.inspector_open = true;
+    for page in [Page::Cut, Page::Edit, Page::Color, Page::Effects, Page::Audio] {
+        app.page = page;
+        frames(&mut app, &ctx, (1920.0, 1080.0), &mut found);
+    }
     // The Deliver page's other tabs and the sections that open.
     app.page = Page::Deliver;
     app.deliver_ui.advanced_open = true;
@@ -180,6 +188,16 @@ fn painted_boxes_of(language: crate::i18n::Language, demo: bool) -> Vec<(String,
         app.page = page;
         take(&format!("{page:?}"), &mut app);
     }
+    // The pages with a clip chosen and the inspector open (the demo project has clips).
+    if demo {
+        let first = app.project().tracks.iter().flat_map(|t| t.clips.first()).next().map(|c| c.id);
+        app.selection = first;
+        app.inspector_open = true;
+        for page in [Page::Cut, Page::Edit, Page::Color, Page::Effects, Page::Audio] {
+            app.page = page;
+            take(&format!("{page:?}, clip chosen"), &mut app);
+        }
+    }
     // The Deliver page's other tabs and the sections that open.
     app.page = Page::Deliver;
     app.deliver_ui.advanced_open = true;
@@ -295,4 +313,106 @@ fn a_hint_in_a_panel_is_no_wider_than_the_english_one_in_any_language() {
         let now = width_of(&shown, text).unwrap_or_else(|| panic!("{language:?}: {text:?} is painted"));
         assert!(now <= was + 1.5, "{language:?}: the hint is {now} wide, the English {was}");
     }
+}
+
+/// Every small thing painted besides text (an icon, an arrow, a line of a divider) with its box, and
+/// every text with its box, in the order painted: `(is text, box)`.
+fn all_boxes(shape: &Shape, out: &mut Vec<(bool, Rect)>) {
+    match shape {
+        Shape::Text(t) => {
+            if !t.galley.job.text.trim().is_empty() {
+                out.push((true, t.visual_bounding_rect()));
+            }
+        }
+        Shape::Vec(shapes) => shapes.iter().for_each(|s| all_boxes(s, out)),
+        Shape::Noop => {}
+        other => {
+            let r = other.visual_bounding_rect();
+            // Icons, arrows and dividers are small; a background is not what a text can run into.
+            if r.is_positive() && r.width() <= 40.0 && r.height() <= 40.0 {
+                out.push((false, r));
+            }
+        }
+    }
+}
+
+fn painted_all(language: crate::i18n::Language) -> Vec<(String, Vec<(bool, Rect)>)> {
+    let ctx = Context::default();
+    let mut app = StudioApp::new(&ctx);
+    app.load_demo();
+    crate::i18n::set(language);
+    app.manager.open = false;
+    let first = app.project().tracks.iter().flat_map(|t| t.clips.first()).next().map(|c| c.id);
+    let mut all = Vec::new();
+    let mut take = |name: String, app: &mut StudioApp| {
+        let mut found = Vec::new();
+        for _ in 0..3 {
+            found.clear();
+            let input = RawInput {
+                screen_rect: Some(Rect::from_min_size(Pos2::ZERO, egui::vec2(1920.0, 1080.0))),
+                ..RawInput::default()
+            };
+            let mut output = ctx.run_ui(input, |ui| app.ui(ui));
+            output.textures_delta.clear();
+            for clipped in &output.shapes {
+                all_boxes(&clipped.shape, &mut found);
+            }
+        }
+        all.push((name, found));
+    };
+    for (chosen, pages) in [
+        (false, vec![Page::Media, Page::Cut, Page::Edit, Page::Color, Page::Capture, Page::Effects, Page::Audio, Page::Deliver]),
+        (true, vec![Page::Cut, Page::Edit, Page::Color, Page::Effects, Page::Audio]),
+    ] {
+        app.selection = if chosen { first } else { None };
+        app.inspector_open = chosen;
+        for page in pages {
+            app.page = page;
+            take(format!("{page:?}{}", if chosen { ", clip chosen" } else { "" }), &mut app);
+        }
+    }
+    crate::i18n::set(crate::i18n::Language::English);
+    all
+}
+
+#[test]
+fn no_language_runs_a_text_into_an_icon_that_english_did_not() {
+    use crate::i18n::{Language, CHANGING};
+    let _only = CHANGING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    let english = painted_all(Language::English);
+    let mut report = String::new();
+    for language in Language::ALL.into_iter().skip(1) {
+        let shown = painted_all(language);
+        for ((page, then), (_, now)) in english.iter().zip(&shown) {
+            if then.len() != now.len() {
+                report.push_str(&format!("{language:?} {page}: {} shapes, English {}
+", now.len(), then.len()));
+                continue;
+            }
+            let hits = |boxes: &[(bool, Rect)]| {
+                let mut hit = Vec::new();
+                for (i, (is_text, a)) in boxes.iter().enumerate() {
+                    if !*is_text {
+                        continue;
+                    }
+                    for (j, (other_text, b)) in boxes.iter().enumerate() {
+                        let both = a.intersect(*b);
+                        if !*other_text && both.width() > 2.0 && both.height() > 0.5 * b.height().min(a.height()) {
+                            hit.push((i, j));
+                        }
+                    }
+                }
+                hit
+            };
+            let before: std::collections::HashSet<_> = hits(then).into_iter().collect();
+            for (i, j) in hits(now) {
+                if !before.contains(&(i, j)) {
+                    report.push_str(&format!("{language:?} {page}: text #{i} at {:?} runs into an icon at {:?}
+", now[i].1, now[j].1));
+                }
+            }
+        }
+    }
+    assert!(report.is_empty(), "text on icons:
+{report}");
 }

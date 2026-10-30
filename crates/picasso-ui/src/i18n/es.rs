@@ -419,7 +419,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Parade", "Parade"),
     ("Pause", "Pausa"),
     ("Photo", "Foto"),
-    ("Photo Album", "Álbum de fotos"),
+    ("Photo Album", "Álbum"),
     ("Pivot", "Pivote"),
     ("Playback", "Reprod."),
     ("Position lock", "Bloq. posición"),
