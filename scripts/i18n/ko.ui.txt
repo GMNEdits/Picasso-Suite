@@ -1,0 +1,248 @@
+Clips|클립
+60 frames per second|60 프레임/초
+Add Job|작업 추가
+Add to Render Queue|렌더 대기열 추가
+Advanced Settings|고급
+Archive Project|프로젝트 보관
+Archive Project...|보관...
+Auto|자동
+Automatic|자동
+Balanced|균형
+Bins|빈
+Browse|찾아보기
+Bus Sends|버스 센드
+Capture|캡처
+Chapters from Markers|챕터
+Choose a folder|폴더 선택
+Clip Name|클립 이름
+Clone|복제
+Clone Tool|복제 도구
+Codec|코덱
+Col Boost|컬러+
+Collections|컬렉션
+Contrast|대비
+Control Room|컨트롤
+Create an Album|앨범 만들기
+Curves - Custom|커브 - 사용자
+Custom Export|사용자 내보내기
+Decode Options|디코드 옵션
+Demo Project|데모
+Drag photos into the Photo Album to start editing|사진을 앨범으로 끌어 편집 시작
+Drawn with|그린 도구
+Editing|편집 중
+Effects In|이펙트 입력
+Embedded Audio|내장 오디오
+Encoder|인코더
+Encoding Profile|인코딩 프로필
+Entire Timeline|전체 타임라인
+Estimated File Size|예상 크기
+Every|매
+Export Video|영상 내보내기
+Fairlight|Fairlight
+File Name|파일 이름
+Format|형식
+Frame rate|프레임 레이트
+Frame reordering|프레임 순서
+Full Frames|전체 프레임
+Full Screen|전체 화면
+Fusion|Fusion
+Gain|게인
+Gamma|감마
+Generator|제너레이터
+Graphics card|그래픽 카드
+Groups|그룹
+Hi/Light|하이라이트
+High|높음
+Hue|색조
+Image|이미지
+Index|인덱스
+Individual clips|개별 클립
+Input|입력
+Integrated|통합
+Key Frames|키프레임
+Keywords|키워드
+L. Mix|L 믹스
+Layer|레이어
+Local|로컬
+Location|위치
+Loop playback|반복 재생
+Loudness|라우드니스
+Low|낮음
+Mark|마크
+Media Management|미디어 관리
+Media Source|미디어 소스
+Media Storage|미디어 저장소
+Meters|미터
+Mid/Detail|중간/디테일
+Modifiers|수정자
+Monitor|모니터
+Monitor volume|모니터 볼륨
+Native|네이티브
+Network Optimization|네트워크 최적화
+No jobs in Queue|작업 없음
+No jobs in queue|작업 없음
+No stills created|스틸 없음
+Not reported|보고 안 됨
+Nothing to inspect|검사할 항목 없음
+Offset|오프셋
+Open|열기
+Order|순서
+Parade|퍼레이드
+Pause|일시정지
+Photo|사진
+Photo Album|앨범
+Playback|재생
+Position lock|위치 잠금
+Preset|프리셋
+Primaries - Color Wheels|프라이머리 - 컬러 휠
+Process Mode|처리 모드
+Project settings|프로젝트 설정
+Projects|프로젝트
+Quality|품질
+Quick Export|빠른 내보내기
+Range|범위
+Rate Control|비트레이트 제어
+Relink Missing Media|누락 미디어 재연결
+Relink Missing Media...|누락 미디어 재연결...
+Remove|제거
+Render|렌더
+Render All|모두 렌더
+Render Queue|렌더 대기열
+Render Settings|렌더 설정
+Render Settings - Custom Export|렌더 설정 - 사용자
+Reset|초기화
+Reset All|모두 초기화
+Resolution|해상도
+Search|검색
+Settings|설정
+Shad|섀도
+Short|짧게
+Short Max|짧게 최대
+Single clip|클립 하나
+Smart Bins|스마트 빈
+Source Color Space|소스 색 공간
+Source Gamma Space|소스 감마 공간
+Subtitle Settings|자막 설정
+System|시스템
+Timeline Resolution|타임라인 해상도
+Timeline proxy|타임라인 프록시
+Tint|틴트
+Tools|도구
+Track FX|트랙 FX
+Transitions|전환
+Untitled|이름 없음
+Use vertical resolution|세로 해상도
+Version 0.6.1|버전 0.6.1
+Video|비디오
+Waveform|파형
+Workspace|작업공간
+No clips in media pool|미디어 풀에 클립 없음
+Add clips with Import, or drop files here|가져오기로 클립 추가 또는 파일 놓기
+Add clips from Media Storage to get started|시작하려면 저장소에서 클립 추가
+No sound to show|표시할 소리 없음
+No clip to grade|그레이드할 클립 없음
+No Input|입력 없음
+DURATION|길이
+Export Audio|오디오 내보내기
+Data Rate|데이터 레이트
+Output Track 1|출력 트랙 1
+Use unique filename|고유 파일 이름
+Adds (1), (2) ... to the name instead of writing over a file.|파일을 덮어쓰지 않고 이름에 (1), (2)... 추가합니다.
+File type|파일 종류
+Whole timeline|전체 타임라인
+In to out marks|인에서 아웃
+Pixel aspect ratio|픽셀 비율
+Square|정사각형
+Cinemascope|시네마스코프
+Data Levels|데이터 레벨
+Retain sub-black and super-white data|서브블랙/슈퍼화이트 유지
+Color Space Tag|색 공간 태그
+Gamma Tag|감마 태그
+Data burn-in|데이터 번인
+Same as project|프로젝트와 동일
+Bypass re-encode when possible|가능하면 재인코딩 생략
+Use optimized media|최적화 미디어 사용
+Use proxy media|프록시 미디어 사용
+Use render cached images|렌더 캐시 이미지 사용
+Force sizing to highest quality|크기 조정 최고 품질
+Force debayer to highest quality|디베이어 최고 품질
+Render All Video Tracks|모든 비디오 트랙 렌더
+Enable Flat Pass|플랫 패스 사용
+visionOS Bypass|visionOS 바이패스
+Disable sizing and blanking output|크기 조정·블랭킹 끄기
+Trigger script at|스크립트 실행 시점
+Start|시작
+of render job|(렌더 작업)
+Export Subtitle|자막 내보내기
+As a separate file|별도 파일
+Export As|다른 형식으로
+frames|프레임
+Cut|컷
+Teal|청록
+Half|절반
+Color Bars|컬러 바
+Lightbox|라이트박스
+Edit|편집
+Mixer|믹서
+Sound Library|사운드
+Timeline: AAF, EDL, XML...|타임라인: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|타임라인: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rust로 만든 Windows, Linux, macOS, 웹용 비디오 편집기.
+Audio scrubbing (sound while the playhead is dragged)|오디오 스크러빙 (재생헤드를 끌 때 소리)
+Best|최고
+Changing the frame rate keeps every clip on the same frames.|프레임 레이트를 바꿔도 각 클립은 같은 프레임 유지.
+Click a command's keys, then press the key it should have. Escape gives up.|명령의 키를 클릭한 뒤 새 키를 누르세요. Esc는 취소.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|타임라인이 쓰는 파일을 폴더에 복사하고 그 파일을 가리키는 프로젝트 사본을 씁니다. 편집 중인 프로젝트는 바뀌지 않습니다.
+Decode supported video using hardware acceleration|지원되는 비디오를 하드웨어 가속으로 디코딩
+Every media file is where the project says it is.|모든 미디어 파일이 프로젝트가 가리키는 곳에 있습니다.
+Filters|필터
+Free software under the GPL, version 3 or later.|GPL 3 이상 버전의 자유 소프트웨어.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|드라이버가 지원하면 H.264, H.265, AV1, VP9, MPEG-2, VC-1은 그래픽 카드에서 디코딩됩니다. 클립이 초록색이거나 깨지면 끄세요. PICASSO_NO_HWACCEL=1은 한 번만 끕니다.
+Help|도움말
+Linked selection (picture and sound together)|연결된 선택 (화면과 소리 함께)
+Loaded the demo project|데모 프로젝트를 불러왔습니다
+Pivot|피벗
+Selection follows the playhead|선택이 재생헤드 따름
+Snap to clips, markers and the playhead|클립·마커·재생헤드에 스냅
+Soft Clip|소프트 클립
+Tape|테이프
+Trim|트림
+View|보기
+Full|전체
+Clip|클립
+Keyframes|키프레임
+LUTs|LUT
+Lift|리프트
+Master|마스터
+Pan|팬
+Sat|채도
+Scopes|스코프
+Spline|스플라인
+Sync Bin|동기 빈
+Temp|색온도
+Import Project...|프로젝트 가져오기...
+Export Project...|프로젝트 내보내기...
+Save Project As...|다른 이름...
+Save Copy As...|사본 저장...
+Import|가져오기
+Export|내보내기
+Subtitle...|자막...
+Media...|미디어...
+Folder as Bin...|폴더...
+Timeline|타임라인
+Media Pool|미디어 풀
+Inspector|인스펙터
+Metadata|메타데이터
+Eighth|8분의 1
+About Picasso Suite|정보
+New Project|새 프로젝트
+Open Project...|열기...
+Save Project|저장
+Dynamics|다이내믹스
+Titles|타이틀
+Gallery|갤러리
+Effects|이펙트
+Audio|오디오
+Timeline: EDL...|타임라인: EDL...
+Timeline: XML...|타임라인: XML...
+Media|미디어

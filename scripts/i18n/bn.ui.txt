@@ -1,0 +1,248 @@
+Clips|ক্লিপ
+60 frames per second|৬০ ফ্রেম/সেকেন্ড
+Add Job|কাজ যোগ
+Add to Render Queue|রেন্ডার সারিতে যোগ
+Advanced Settings|উন্নত
+Archive Project|আর্কাইভ
+Archive Project...|আর্কাইভ...
+Auto|অটো
+Automatic|স্বয়ংক্রিয়
+Balanced|সুষম
+Bins|বিন
+Browse|ব্রাউজ
+Bus Sends|বাস সেন্ড
+Capture|ক্যাপচার
+Chapters from Markers|অধ্যায়
+Choose a folder|ফোল্ডার বাছুন
+Clip Name|ক্লিপের নাম
+Clone|ক্লোন
+Clone Tool|ক্লোন টুল
+Codec|কোডেক
+Col Boost|রং+
+Collections|সংগ্রহ
+Contrast|কনট্রাস্ট
+Control Room|কন্ট্রোল
+Create an Album|অ্যালবাম তৈরি
+Curves - Custom|কার্ভ - নিজস্ব
+Custom Export|নিজস্ব এক্সপোর্ট
+Decode Options|ডিকোড বিকল্প
+Demo Project|ডেমো
+Drag photos into the Photo Album to start editing|এডিটে ছবি অ্যালবামে টানুন
+Drawn with|আঁকা
+Editing|এডিটিং
+Effects In|ইফেক্ট ইন
+Embedded Audio|এম্বেডেড অডিও
+Encoder|এনকোডার
+Encoding Profile|এনকোডিং প্রোফাইল
+Entire Timeline|পুরো টাইমলাইন
+Estimated File Size|আনুমানিক আকার
+Every|প্রতি
+Export Video|ভিডিও এক্সপোর্ট
+Fairlight|Fairlight
+File Name|ফাইলের নাম
+Format|ফরম্যাট
+Frame rate|ফ্রেম রেট
+Frame reordering|ফ্রেম ক্রম
+Full Frames|পূর্ণ ফ্রেম
+Full Screen|ফুলস্ক্রিন
+Fusion|Fusion
+Gain|গেইন
+Gamma|গামা
+Generator|জেনারেটর
+Graphics card|গ্রাফিক্স কার্ড
+Groups|গ্রুপ
+Hi/Light|হাইলাইট
+High|উচ্চ
+Hue|হিউ
+Image|ছবি
+Index|সূচি
+Individual clips|আলাদা ক্লিপ
+Input|ইনপুট
+Integrated|সমন্বিত
+Key Frames|কীফ্রেম
+Keywords|কীওয়ার্ড
+L. Mix|L মিক্স
+Layer|লেয়ার
+Local|স্থানীয়
+Location|অবস্থান
+Loop playback|লুপ
+Loudness|লাউডনেস
+Low|নিম্ন
+Mark|মার্ক
+Media Management|মিডিয়া ব্যবস্থাপনা
+Media Source|মিডিয়া উৎস
+Media Storage|মিডিয়া স্টোরেজ
+Meters|মিটার
+Mid/Detail|মধ্য/বিস্তারিত
+Modifiers|মডিফায়ার
+Monitor|মনিটর
+Monitor volume|মনিটর ভলিউম
+Native|নেটিভ
+Network Optimization|নেটওয়ার্ক অপ্টিমাইজ
+No jobs in Queue|কোনো কাজ নেই
+No jobs in queue|কোনো কাজ নেই
+No stills created|কোনো স্টিল নেই
+Not reported|জানানো হয়নি
+Nothing to inspect|দেখার কিছু নেই
+Offset|অফসেট
+Open|খুলুন
+Order|ক্রম
+Parade|প্যারেড
+Pause|বিরতি
+Photo|ফটো
+Photo Album|অ্যালবাম
+Playback|প্লেব্যাক
+Position lock|অবস্থান লক
+Preset|প্রিসেট
+Primaries - Color Wheels|প্রাইমারি - কালার হুইল
+Process Mode|প্রসেস মোড
+Project settings|প্রজেক্ট সেটিংস
+Projects|প্রজেক্ট
+Quality|মান
+Quick Export|দ্রুত এক্সপোর্ট
+Range|পরিসর
+Rate Control|রেট নিয়ন্ত্রণ
+Relink Missing Media|হারানো মিডিয়া সংযোগ
+Relink Missing Media...|হারানো মিডিয়া সংযোগ...
+Remove|সরান
+Render|রেন্ডার
+Render All|সব রেন্ডার
+Render Queue|রেন্ডার সারি
+Render Settings|রেন্ডার সেটিংস
+Render Settings - Custom Export|রেন্ডার - নিজস্ব
+Reset|রিসেট
+Reset All|সব রিসেট
+Resolution|রেজোলিউশন
+Search|খুঁজুন
+Settings|সেটিংস
+Shad|ছায়া
+Short|ছোট
+Short Max|ছোট সর্বোচ্চ
+Single clip|একটি ক্লিপ
+Smart Bins|স্মার্ট বিন
+Source Color Space|উৎস কালার স্পেস
+Source Gamma Space|উৎস গামা স্পেস
+Subtitle Settings|সাবটাইটেল সেটিংস
+System|সিস্টেম
+Timeline Resolution|টাইমলাইন রেজোলিউশন
+Timeline proxy|টাইমলাইন প্রক্সি
+Tint|টিন্ট
+Tools|টুল
+Track FX|ট্র্যাক FX
+Transitions|ট্রানজিশন
+Untitled|শিরোনামহীন
+Use vertical resolution|উল্লম্ব রেজোলিউশন
+Version 0.6.1|সংস্করণ ০.৬.১
+Video|ভিডিও
+Waveform|ওয়েভফর্ম
+Workspace|কর্মস্থান
+No clips in media pool|মিডিয়া পুলে ক্লিপ নেই
+Add clips with Import, or drop files here|ইম্পোর্ট করুন বা ফাইল এখানে ফেলুন
+Add clips from Media Storage to get started|শুরুতে স্টোরেজ থেকে ক্লিপ যোগ করুন
+No sound to show|দেখানোর শব্দ নেই
+No clip to grade|গ্রেডের ক্লিপ নেই
+No Input|ইনপুট নেই
+DURATION|সময়কাল
+Export Audio|অডিও এক্সপোর্ট
+Data Rate|ডেটা রেট
+Output Track 1|আউটপুট ট্র্যাক ১
+Use unique filename|অনন্য ফাইলের নাম
+Adds (1), (2) ... to the name instead of writing over a file.|ফাইল ওভাররাইটের বদলে নামে (১), (২)... যোগ করে.
+File type|ফাইলের ধরন
+Whole timeline|পুরো টাইমলাইন
+In to out marks|ইন থেকে আউট
+Pixel aspect ratio|পিক্সেল অনুপাত
+Square|বর্গ
+Cinemascope|সিনেমাস্কোপ
+Data Levels|ডেটা লেভেল
+Retain sub-black and super-white data|সাব-ব্ল্যাক/সুপার-হোয়াইট রাখুন
+Color Space Tag|কালার স্পেস ট্যাগ
+Gamma Tag|গামা ট্যাগ
+Data burn-in|ডেটা বার্ন-ইন
+Same as project|প্রজেক্টের মতো
+Bypass re-encode when possible|সম্ভব হলে রি-এনকোড এড়ান
+Use optimized media|অপ্টিমাইজড মিডিয়া ব্যবহার
+Use proxy media|প্রক্সি মিডিয়া ব্যবহার
+Use render cached images|রেন্ডার ক্যাশ ছবি ব্যবহার
+Force sizing to highest quality|সাইজিং সেরা মান
+Force debayer to highest quality|ডিবেয়ার সেরা মান
+Render All Video Tracks|সব ভিডিও ট্র্যাক রেন্ডার
+Enable Flat Pass|ফ্ল্যাট পাস চালু
+visionOS Bypass|visionOS বাইপাস
+Disable sizing and blanking output|সাইজিং/ব্ল্যাঙ্কিং বন্ধ
+Trigger script at|স্ক্রিপ্ট চালান
+Start|শুরু
+of render job|(রেন্ডার কাজ)
+Export Subtitle|সাবটাইটেল এক্সপোর্ট
+As a separate file|আলাদা ফাইল
+Export As|এভাবে এক্সপোর্ট
+frames|ফ্রেম
+Cut|কাট
+Teal|টিল
+Half|অর্ধেক
+Color Bars|কালার বার
+Lightbox|লাইটবক্স
+Edit|এডিট
+Mixer|মিক্সার
+Sound Library|সাউন্ড
+Timeline: AAF, EDL, XML...|টাইমলাইন: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|টাইমলাইন: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rust-এ লেখা ভিডিও এডিটর: Windows, Linux, macOS ও ওয়েবের জন্য.
+Audio scrubbing (sound while the playhead is dragged)|অডিও স্ক্রাবিং (প্লেহেড টানলে শব্দ)
+Best|সেরা
+Changing the frame rate keeps every clip on the same frames.|ফ্রেম রেট বদলালেও প্রতিটি ক্লিপ একই ফ্রেমে থাকে.
+Click a command's keys, then press the key it should have. Escape gives up.|কমান্ডের কী ক্লিক করে নতুন কী চাপুন. Esc বাতিল.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|টাইমলাইনের ফাইল ফোল্ডারে কপি করে সেগুলোর দিকে নির্দেশ করা প্রজেক্ট কপি লেখে. খোলা প্রজেক্ট বদলায় না.
+Decode supported video using hardware acceleration|সমর্থিত ভিডিও হার্ডওয়্যার ত্বরণে ডিকোড করুন
+Every media file is where the project says it is.|প্রতিটি মিডিয়া ফাইল প্রজেক্টের বলা জায়গায় আছে.
+Filters|ফিল্টার
+Free software under the GPL, version 3 or later.|GPL সংস্করণ ৩ বা পরবর্তী ফ্রি সফটওয়্যার.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|ড্রাইভার পারলে H.264, H.265, AV1, VP9, MPEG-2 ও VC-1 গ্রাফিক্স কার্ডে ডিকোড হয়. ক্লিপ সবুজ বা ভাঙা দেখালে বন্ধ করুন. PICASSO_NO_HWACCEL=1 একবারের জন্য বন্ধ করে.
+Help|সাহায্য
+Linked selection (picture and sound together)|সংযুক্ত নির্বাচন (ছবি ও শব্দ একসাথে)
+Loaded the demo project|ডেমো প্রজেক্ট লোড হয়েছে
+Pivot|পিভট
+Selection follows the playhead|নির্বাচন প্লেহেড অনুসরণ করে
+Snap to clips, markers and the playhead|ক্লিপ, মার্কার, প্লেহেডে স্ন্যাপ
+Soft Clip|সফট ক্লিপ
+Tape|টেপ
+Trim|ট্রিম
+View|ভিউ
+Full|পূর্ণ
+Clip|ক্লিপ
+Keyframes|কীফ্রেম
+LUTs|LUT
+Lift|লিফট
+Master|মাস্টার
+Pan|প্যান
+Sat|স্যাট
+Scopes|স্কোপ
+Spline|স্প্লাইন
+Sync Bin|সিঙ্ক বিন
+Temp|তাপমাত্রা
+Import Project...|প্রজেক্ট ইম্পোর্ট...
+Export Project...|প্রজেক্ট এক্সপোর্ট...
+Save Project As...|এই নামে...
+Save Copy As...|কপি সংরক্ষণ...
+Import|ইম্পোর্ট
+Export|এক্সপোর্ট
+Subtitle...|সাবটাইটেল...
+Media...|মিডিয়া...
+Folder as Bin...|ফোল্ডার...
+Timeline|টাইমলাইন
+Media Pool|মিডিয়া পুল
+Inspector|ইন্সপেক্টর
+Metadata|মেটাডেটা
+Eighth|১/৮
+About Picasso Suite|সম্পর্কে
+New Project|নতুন প্রজেক্ট
+Open Project...|খুলুন...
+Save Project|সংরক্ষণ
+Dynamics|ডায়নামিক্স
+Titles|টাইটেল
+Gallery|গ্যালারি
+Effects|ইফেক্ট
+Audio|অডিও
+Timeline: EDL...|টাইমলাইন: EDL...
+Timeline: XML...|টাইমলাইন: XML...
+Media|মিডিয়া

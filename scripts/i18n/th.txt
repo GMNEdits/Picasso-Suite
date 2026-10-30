@@ -1,0 +1,304 @@
+#menus
+ไฟล์
+แก้ไข
+ตัด
+ไทม์ไลน์
+คลิป
+มาร์ก
+ดู
+เล่น
+FX
+สี
+เสียง
+พื้นที่
+ช่วยเหลือ
+#entries
+New Project Library...|คลังโปรเจกต์ ใหม่...
+Open Project Library...|เปิด คลังโปรเจกต์...
+Show Current Project Library in File Explorer|แสดงคลังใน Explorer
+Project Manager|ตัวจัดการ โปรเจกต์
+New Project|โปรเจกต์ ใหม่
+Open Project...|เปิด โปรเจกต์...
+Import Project...|นำเข้า โปรเจกต์...
+Export Project...|ส่งออก โปรเจกต์...
+Restore Project Archive...|กู้คืน ไฟล์สำรอง โปรเจกต์...
+Save Project|บันทึก โปรเจกต์
+Save Project As...|บันทึก โปรเจกต์ เป็น...
+Save Copy As...|บันทึก สำเนา เป็น...
+Revert to Last Saved Version|กลับไปที่ บันทึกล่าสุด
+Import|นำเข้า
+Media...|มีเดีย...
+Folder as Bin...|โฟลเดอร์ เป็นถัง...
+Timeline: AAF, EDL, XML...|ไทม์ไลน์: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|ไทม์ไลน์: ก่อน-EDL...
+Subtitle...|คำบรรยาย...
+Metadata to Media Pool...|เมทาดาทา ไปยังพูลมีเดีย...
+Bin...|ถัง...
+Export|ส่งออก
+Timeline: EDL...|ไทม์ไลน์: EDL...
+Timeline: OpenTimelineIO...|ไทม์ไลน์: OpenTimelineIO...
+Timeline: XML...|ไทม์ไลน์: XML...
+Timeline: AAF...|ไทม์ไลน์: AAF...
+Metadata from Media Pool...|เมทาดาทา จากพูลมีเดีย...
+Media Management...|จัดการ มีเดีย...
+Project Settings...|ตั้งค่า โปรเจกต์...
+System Preferences...|การตั้งค่า ระบบ...
+Quick Export...|ส่งออก ด่วน...
+Quit|ออก
+Undo|เลิกทำ
+Redo|ทำซ้ำ
+Cut|ตัด
+Copy|คัดลอก
+Paste|วาง
+Paste Insert|วาง และแทรก
+Paste Mix to Current Track|วางมิกซ์ ลงแทร็ก
+Duplicate|ทำซ้ำ คลิป
+Fit to Fill|พอดี กับการเติม
+Place on Top|วางไว้ บนสุด
+Delete Selected|ลบ ที่เลือก
+Delete Selected with Ripple|ลบที่เลือก ด้วยริปเปิล
+Select All|เลือก ทั้งหมด
+Deselect All|ยกเลิก การเลือก
+Select Clips Forward|เลือก คลิปถัดไป
+Find...|ค้นหา...
+Recent Projects|โปรเจกต์ ล่าสุด
+Project Manager...|ตัวจัดการ โปรเจกต์...
+Keyboard Customization|ปุ่มลัด คีย์บอร์ด
+Select Nearest Edit Point|เลือก จุดตัดใกล้สุด
+Selection Mode|โหมด เลือก
+Trim Mode|โหมด ทริม
+Dynamic Trim Mode|โหมด ทริมไดนามิก
+Ripple Start|ริปเปิล เริ่มต้น
+Ripple End|ริปเปิล สิ้นสุด
+Ripple Trim Previous / Next|ริปเปิลทริม ก่อนหน้า / ถัดไป
+Ripple Trim Previous Edit to Playhead|ริปเปิล ก่อนหน้า ถึงหัวเล่น
+Ripple Trim Next Edit to Playhead|ริปเปิล ถัดไป ถึงหัวเล่น
+Trim Start to Playhead|ทริมจุดเริ่ม ถึงหัวเล่น
+Trim End to Playhead|ทริมจุดจบ ถึงหัวเล่น
+Extend Edit|ขยาย การตัดต่อ
+Slip Clip|สลิป คลิป
+Slip One Frame Earlier|สลิป ก่อน 1 เฟรม
+Slip One Frame Later|สลิป หลัง 1 เฟรม
+Slide Clip|สไลด์ คลิป
+Slide One Frame Left|สไลด์ ซ้าย 1 เฟรม
+Slide One Frame Right|สไลด์ ขวา 1 เฟรม
+Loop Trim|ทริม วนซ้ำ
+Asymmetric Trimming|ทริม ไม่สมมาตร
+Trim Editor|ตัวแก้ทริม
+New Timeline...|ไทม์ไลน์ ใหม่...
+New Timeline Using Selected Clips|ไทม์ไลน์ใหม่ จากคลิปที่เลือก
+Create New Compound Clip...|คลิปรวม ใหม่...
+New Effects Clip...|คลิปเอฟเฟกต์ ใหม่...
+Decompose in Place|แยกส่วน ในที่เดิม
+Decompose Compound Clip|แยก คลิปรวม
+Decompose Nested Timeline|แยก ไทม์ไลน์ซ้อน
+Split Clip|แบ่ง คลิป
+Create Timeline Using Bin...|ไทม์ไลน์ จากถัง...
+Import Timeline...|นำเข้า ไทม์ไลน์...
+Export Timeline...|ส่งออก ไทม์ไลน์...
+Timeline Resolution and Frame Rate...|ความละเอียด และเฟรมเรต...
+Timeline Settings|ตั้งค่า ไทม์ไลน์
+Snap|สแนป
+Linked Selection|การเลือก ที่เชื่อมกัน
+Position Lock|ล็อก ตำแหน่ง
+Selection Follows Playhead|การเลือก ตามหัวเล่น
+Add Marker|เพิ่ม มาร์กเกอร์
+Add Marker and Show Dialog|เพิ่มมาร์กเกอร์ และกล่องโต้ตอบ
+Delete All Markers|ลบ มาร์กเกอร์ทั้งหมด
+Create Subtitle Track|สร้าง แทร็กคำบรรยาย
+Create Subtitle Region|สร้าง พื้นที่คำบรรยาย
+Add Transition to All Edits|เพิ่มทรานซิชัน ทุกจุดตัด
+Switch Timeline|สลับ ไทม์ไลน์
+Open Timeline in New Window|เปิดไทม์ไลน์ ในหน้าต่างใหม่
+Delete Timeline|ลบ ไทม์ไลน์
+Enable Clip|เปิดใช้ คลิป
+Match Frame|จับคู่ เฟรม
+Lock Clip|ล็อก คลิป
+New Multicam Clip...|คลิปหลายกล้อง ใหม่...
+Multicam Viewer|ตัวดู หลายกล้อง
+Add to Media Pool as Stills|เพิ่ม เป็นภาพนิ่ง
+Change Clip Speed...|เปลี่ยน ความเร็วคลิป...
+Change Clip Duration...|เปลี่ยน ความยาวคลิป...
+Retime Controls|ควบคุม เวลา
+Retime Clip|ปรับเวลา คลิป
+Freeze Frame|หยุดภาพ เฟรม
+Speed Ramp...|แรมป์ ความเร็ว...
+Reverse Clip|กลับด้าน คลิป
+Create New Compound Clip|คลิปรวม ใหม่
+Link Clips|เชื่อม คลิป
+Unlink Audio and Video|แยก เสียงและภาพ
+Enable / Disable Audio Scrubbing|สครับเสียง เปิด/ปิด
+Auto Align Clips|จัดแนว คลิป อัตโนมัติ
+Based on Timecode|ตาม ไทม์โค้ด
+Based on Waveform|ตาม รูปคลื่น
+Normalize Audio Levels...|ปรับ ระดับเสียง ให้เท่ากัน...
+Render in Place|เรนเดอร์ ในที่เดิม
+New Effects Clip|คลิปเอฟเฟกต์ ใหม่
+New Compound Clip|คลิปรวม ใหม่
+Clip Attributes...|คุณสมบัติ คลิป...
+Mark In|มาร์ก อิน
+Mark Out|มาร์ก เอาต์
+Mark Clip|มาร์ก คลิป
+Mark Timeline In/Out|มาร์กไทม์ไลน์ อิน/เอาต์
+Clear In|ล้าง อิน
+Clear Out|ล้าง เอาต์
+Clear In and Out|ล้าง อินและเอาต์
+Modify Marker...|แก้ไข มาร์กเกอร์...
+Delete Marker at Current Position|ลบ มาร์กเกอร์ตรงนี้
+Delete All Markers in Timeline|ลบ มาร์กเกอร์ทั้งหมด
+Go to Previous Marker|ไป มาร์กเกอร์ก่อนหน้า
+Go to Next Marker|ไป มาร์กเกอร์ถัดไป
+Set Clip Color|สี คลิป
+Default|ค่าเริ่มต้น
+Orange|ส้ม
+Apricot|แอปริคอต
+Yellow|เหลือง
+Lime|เขียวมะนาว
+Olive|เขียวมะกอก
+Green|เขียว
+Teal|เขียวน้ำทะเล
+Navy|กรมท่า
+Blue|น้ำเงิน
+Purple|ม่วง
+Violet|ไวโอเลต
+Pink|ชมพู
+Tan|น้ำตาลอ่อน
+Beige|เบจ
+Brown|น้ำตาล
+Chocolate|ช็อกโกแลต
+Show Current Frame on Playback|แสดงเฟรม ปัจจุบันตอนเล่น
+Safe Area Overlay|โอเวอร์เลย์ พื้นที่ปลอดภัย
+Show Grid / Guides|แสดง กริด / เส้นไกด์
+Show Toolbar|แสดง แถบเครื่องมือ
+Show Full Screen Viewer|แสดง ตัวดูเต็มจอ
+Show Cinema Viewer|แสดง ตัวดูโรงหนัง
+Viewer Overlays|โอเวอร์เลย์ ตัวดู
+Transform / Crop / Dynamic Zoom|แปลง / ครอป / ซูม
+Safe Area|พื้นที่ ปลอดภัย
+Center Crosshair|กากบาท กลางจอ
+Checkerboard Background (Alpha)|พื้นหลังลายหมากรุก (อัลฟา)
+Show All Overlays|แสดง โอเวอร์เลย์ทั้งหมด
+Timecode Window|หน้าต่าง ไทม์โค้ด
+Show Scopes|แสดง สโคป
+Show Audio Meters|แสดง มิเตอร์เสียง
+Show Audio Mixer|แสดง มิกเซอร์เสียง
+Show Inspector|แสดง อินสเปกเตอร์
+Play Forward|เล่น ไปข้างหน้า
+Play Reverse|เล่น ย้อนกลับ
+Stop|หยุด
+Play Around Current Frame|เล่น รอบเฟรมปัจจุบัน
+Play In to Out|เล่น จากอินถึงเอาต์
+Play Around In / Around Out|เล่น รอบอิน/เอาต์
+Loop Playback|เล่น วนซ้ำ
+Go to First Frame|ไป เฟรมแรก
+Go to Last Frame|ไป เฟรมสุดท้าย
+Go to In|ไป จุดอิน
+Go to Out|ไป จุดเอาต์
+Previous Frame|เฟรม ก่อนหน้า
+Next Frame|เฟรม ถัดไป
+Previous Edit Point|จุดตัด ก่อนหน้า
+Next Edit Point|จุดตัด ถัดไป
+Timeline Playback Resolution|ความละเอียด ตอนเล่น
+Half|ครึ่ง
+Quarter|หนึ่งในสี่
+Effects Memory Cache|แคช หน่วยความจำเอฟเฟกต์
+Timeline Proxy Mode|โหมด พร็อกซี
+Off|ปิด
+Eighth|หนึ่งในแปด
+Hardware Decoding|ถอดรหัส ด้วยฮาร์ดแวร์
+Delete Render Cache|ลบ แคชเรนเดอร์
+Video Transitions|ทรานซิชัน วิดีโอ
+Cross Dissolve|ครอสดิสโซล์ฟ
+Dip to Color|จางผ่าน สี
+Audio Transitions|ทรานซิชัน เสียง
+Cross Fade|ครอสเฟด
+Remove Transition|ลบ ทรานซิชัน
+OpenFX|OpenFX
+Blur|เบลอ
+Gaussian Blur|เบลอ แบบเกาส์เซียน
+Sharpen|เพิ่มความคมชัด
+Color|สี
+Invert Colors|กลับสี
+Black and White|ขาวดำ
+Distort|บิดเบือน
+Mosaic|โมเสก
+Audio FX|เอฟเฟกต์ เสียง
+EQ|EQ
+Dynamics|ไดนามิก
+Picasso FX|Picasso FX
+Sepia|ซีเปีย
+Soft Blur|เบลอ นุ่ม
+Light|แสง
+Glow|เรืองแสง
+Stylize|ปรับสไตล์
+Vignette|วิกเนตต์
+Film Grain|เกรนฟิล์ม
+Compositing Effects|เอฟเฟกต์ คอมโพสิต
+Nodes|โหนด
+Generators|ตัวสร้าง
+Solid Color|สีล้วน
+Color Bars|แถบสี
+Gradient|ไล่เฉดสี
+Titles|ชื่อเรื่อง
+Text|ข้อความ
+Text+|ข้อความ+
+Effects Library Search|ค้นหา ในคลังเอฟเฟกต์
+Add Tool (Compositing)|เพิ่ม เครื่องมือ (คอมโพสิต)
+Reset All Grades and Nodes|รีเซ็ต เกรดและโหนดทั้งหมด
+Reset Current Node Grade|รีเซ็ต โหนดปัจจุบัน
+Enable/Disable Current Node|โหนด เปิด/ปิด
+Grab Still|จับภาพนิ่ง
+Play Still|เล่น ภาพนิ่ง
+Add Serial Node|เพิ่ม โหนดอนุกรม
+Add Serial Before|เพิ่ม อนุกรมก่อน
+Add Parallel Node|เพิ่ม โหนดขนาน
+Add Layer Mixer|เพิ่ม มิกเซอร์เลเยอร์
+Add Splitter / Combiner|เพิ่ม ตัวแยก / ตัวรวม
+Add Outside Node|เพิ่ม โหนดนอก
+Label Node|ตั้งป้าย โหนด
+Timeline|ไทม์ไลน์
+Previous Node Graph|กราฟโหนด ก่อนหน้า
+Next Node Graph|กราฟโหนด ถัดไป
+LUT|LUT
+Apply LUT from list|ใช้ LUT จากรายการ
+Gallery|แกลเลอรี
+Scopes On/Off|สโคป เปิด/ปิด
+Highlight|ไฮไลต์
+Lightbox|ไลต์บ็อกซ์
+ADR|ADR
+Automated Dialogue Replacement|แทนที่บทพูด อัตโนมัติ
+Bounce Mix to Track|บาวน์ซ์มิกซ์ ลงแทร็ก
+Bounce Selected Tracks|บาวน์ซ์ แทร็กที่เลือก
+Cache Audio Effects|แคช เอฟเฟกต์เสียง
+Audio Link|ลิงก์ เสียง
+Link Group|กลุ่ม ลิงก์
+Decompose|แยกส่วน
+Loop Jog|จ็อก วนซ้ำ
+Show Audio Timeline / Mixer|แสดง ไทม์ไลน์เสียง / มิกเซอร์
+Full Screen Viewer|ตัวดู เต็มจอ
+Show Panel in Workspace|แสดง แผงในพื้นที่
+Media Pool|พูลมีเดีย
+Effects Library|คลังเอฟเฟกต์
+Inspector|อินสเปกเตอร์
+Mixer|มิกเซอร์
+Metadata|เมทาดาทา
+Edit Index|ดัชนี การตัดต่อ
+Sound Library|คลังเสียง
+Layout|เลย์เอาต์
+Reset UI Layout|รีเซ็ต เลย์เอาต์ UI
+Save Layout|บันทึก เลย์เอาต์
+Load Layout|โหลด เลย์เอาต์
+Switch to Page|ไปที่ หน้า
+Media|มีเดีย
+Edit|ตัดต่อ
+Effects|เอฟเฟกต์
+Audio|เสียง
+Deliver|ส่งมอบ
+Dual Screen On/Off|สองจอ เปิด/ปิด
+Video Clean Feed|สัญญาณวิดีโอ สะอาด
+Picasso Suite Manual|คู่มือ Picasso Suite
+Picasso Suite Tutorials|สอนใช้ Picasso Suite
+Check for Updates...|ตรวจหา อัปเดต...
+Export Log File...|ส่งออก ไฟล์บันทึก...
+About Picasso Suite|เกี่ยวกับ Picasso Suite
+Language|ภาษา

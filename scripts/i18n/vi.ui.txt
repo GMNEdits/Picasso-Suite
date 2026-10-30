@@ -1,0 +1,248 @@
+Clips|Clip
+60 frames per second|60 khung/giây
+Add Job|Thêm việc
+Add to Render Queue|Thêm vào hàng
+Advanced Settings|Nâng cao
+Archive Project|Lưu trữ dự án
+Archive Project...|Lưu trữ...
+Auto|Tự động
+Automatic|Tự động
+Balanced|Cân bằng
+Bins|Bin
+Browse|Duyệt
+Bus Sends|Gửi bus
+Capture|Thu
+Chapters from Markers|Chương
+Choose a folder|Chọn thư mục
+Clip Name|Tên clip
+Clone|Nhân bản
+Clone Tool|Công cụ nhân bản
+Codec|Codec
+Col Boost|Màu+
+Collections|Bộ sưu tập
+Contrast|Tương phản
+Control Room|Điều khiển
+Create an Album|Tạo album
+Curves - Custom|Đường cong - riêng
+Custom Export|Xuất riêng
+Decode Options|Giải mã
+Demo Project|Dự án mẫu
+Drag photos into the Photo Album to start editing|Kéo ảnh vào album để bắt đầu sửa
+Drawn with|Vẽ bằng
+Editing|Đang sửa
+Effects In|Hiệu ứng vào
+Embedded Audio|Âm thanh nhúng
+Encoder|Bộ mã hóa
+Encoding Profile|Hồ sơ mã hóa
+Entire Timeline|Cả dòng TG
+Estimated File Size|Dung lượng
+Every|Mỗi
+Export Video|Xuất video
+Fairlight|Fairlight
+File Name|Tên tệp
+Format|Định dạng
+Frame rate|Khung/giây
+Frame reordering|Sắp xếp lại
+Full Frames|Khung đầy đủ
+Full Screen|Toàn màn hình
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Bộ tạo
+Graphics card|Card đồ họa
+Groups|Nhóm
+Hi/Light|Vùng sáng
+High|Cao
+Hue|Sắc độ
+Image|Hình ảnh
+Index|Chỉ mục
+Individual clips|Clip riêng lẻ
+Input|Vào
+Integrated|Tích hợp
+Key Frames|Khung chính
+Keywords|Từ khóa
+L. Mix|Trộn T
+Layer|Lớp
+Local|Cục bộ
+Location|Vị trí
+Loop playback|Lặp
+Loudness|Độ ồn
+Low|Thấp
+Mark|Dấu
+Media Management|Quản lý phương tiện
+Media Source|Nguồn phương tiện
+Media Storage|Kho phương tiện
+Meters|Đồng hồ
+Mid/Detail|Giữa/chi tiết
+Modifiers|Bộ sửa đổi
+Monitor|Màn hình
+Monitor volume|Âm lượng màn hình
+Native|Gốc
+Network Optimization|Tối ưu mạng
+No jobs in Queue|Không có việc
+No jobs in queue|Không có việc
+No stills created|Chưa có still
+Not reported|Chưa báo cáo
+Nothing to inspect|Không có gì để xem
+Offset|Độ lệch
+Open|Mở
+Order|Thứ tự
+Parade|Parade
+Pause|Tạm dừng
+Photo|Ảnh
+Photo Album|Album
+Playback|Phát
+Position lock|Khóa vị trí
+Preset|Cài sẵn
+Primaries - Color Wheels|Chính - bánh xe màu
+Process Mode|Chế độ xử lý
+Project settings|Cài đặt dự án
+Projects|Dự án
+Quality|Chất lượng
+Quick Export|Xuất nhanh
+Range|Phạm vi
+Rate Control|Điều khiển tốc độ
+Relink Missing Media|Liên kết lại phương tiện
+Relink Missing Media...|Liên kết lại phương tiện...
+Remove|Gỡ
+Render|Render
+Render All|Render tất cả
+Render Queue|Hàng render
+Render Settings|Cài đặt render
+Render Settings - Custom Export|Render - xuất riêng
+Reset|Đặt lại
+Reset All|Đặt lại tất cả
+Resolution|Độ phân giải
+Search|Tìm
+Settings|Cài đặt
+Shad|Bóng
+Short|Ngắn
+Short Max|Ngắn tối đa
+Single clip|Một clip
+Smart Bins|Bin thông minh
+Source Color Space|Không gian màu nguồn
+Source Gamma Space|Không gian gamma nguồn
+Subtitle Settings|Cài đặt phụ đề
+System|Hệ thống
+Timeline Resolution|Độ phân giải DTG
+Timeline proxy|Proxy DTG
+Tint|Sắc thái
+Tools|Công cụ
+Track FX|FX track
+Transitions|Chuyển cảnh
+Untitled|Chưa đặt tên
+Use vertical resolution|Độ phân giải dọc
+Version 0.6.1|Phiên bản 0.6.1
+Video|Video
+Waveform|Dạng sóng
+Workspace|Không gian
+No clips in media pool|Kho chưa có clip
+Add clips with Import, or drop files here|Nhập clip hoặc thả tệp vào đây
+Add clips from Media Storage to get started|Thêm clip từ kho để bắt đầu
+No sound to show|Không có âm thanh
+No clip to grade|Không có clip để grade
+No Input|Không có đầu vào
+DURATION|THỜI LƯỢNG
+Export Audio|Xuất âm thanh
+Data Rate|Tốc độ dữ liệu
+Output Track 1|Track ra 1
+Use unique filename|Tên duy nhất
+Adds (1), (2) ... to the name instead of writing over a file.|Thêm (1), (2) ... vào tên thay vì ghi đè.
+File type|Loại tệp
+Whole timeline|Cả dòng TG
+In to out marks|Từ vào đến ra
+Pixel aspect ratio|Tỉ lệ pixel
+Square|Vuông
+Cinemascope|Cinemascope
+Data Levels|Mức dữ liệu
+Retain sub-black and super-white data|Giữ dưới đen/trên trắng
+Color Space Tag|Thẻ không gian màu
+Gamma Tag|Thẻ gamma
+Data burn-in|Ghi dữ liệu vào hình
+Same as project|Như dự án
+Bypass re-encode when possible|Bỏ qua mã hóa lại
+Use optimized media|Phương tiện tối ưu
+Use proxy media|Phương tiện proxy
+Use render cached images|Ảnh bộ đệm
+Force sizing to highest quality|Co giãn tốt nhất
+Force debayer to highest quality|Debayer tốt nhất
+Render All Video Tracks|Mọi track video
+Enable Flat Pass|Bật flat pass
+visionOS Bypass|Bỏ qua visionOS
+Disable sizing and blanking output|Không co giãn/blanking
+Trigger script at|Chạy tập lệnh
+Start|Bắt đầu
+of render job|của việc render
+Export Subtitle|Xuất phụ đề
+As a separate file|Tệp riêng
+Export As|Xuất thành
+frames|khung
+Cut|Cắt
+Teal|Xanh két
+Half|Một nửa
+Color Bars|Thanh màu
+Lightbox|Lightbox
+Edit|Sửa
+Mixer|Bàn trộn
+Sound Library|Âm thanh
+Timeline: AAF, EDL, XML...|Dòng TG: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Dòng TG: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Trình dựng video viết bằng Rust cho Windows, Linux, macOS và web.
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing âm thanh (có tiếng khi kéo đầu phát)
+Best|Tốt nhất
+Changing the frame rate keeps every clip on the same frames.|Tốc độ khung mới giữ clip trên cùng các khung.
+Click a command's keys, then press the key it should have. Escape gives up.|Bấm phím của lệnh rồi nhấn phím mới. Esc để hủy.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Sao chép tệp mà dòng thời gian dùng vào một thư mục và ghi bản sao dự án trỏ tới chúng. Dự án đang mở không đổi.
+Decode supported video using hardware acceleration|Giải mã video được hỗ trợ bằng tăng tốc phần cứng
+Every media file is where the project says it is.|Mọi tệp phương tiện đều ở nơi dự án chỉ định.
+Filters|Bộ lọc
+Free software under the GPL, version 3 or later.|Phần mềm tự do theo GPL phiên bản 3 trở lên.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 và VC-1 được giải mã trên card đồ họa nếu driver hỗ trợ. Tắt nếu clip xanh hoặc vỡ hình. PICASSO_NO_HWACCEL=1 tắt cho một lần chạy.
+Help|Trợ giúp
+Linked selection (picture and sound together)|Chọn liên kết (hình và tiếng cùng nhau)
+Loaded the demo project|Đã tải dự án mẫu
+Pivot|Pivot
+Selection follows the playhead|Vùng chọn theo đầu phát
+Snap to clips, markers and the playhead|Bắt dính clip, dấu, đầu phát
+Soft Clip|Soft Clip
+Tape|Băng
+Trim|Xén
+View|Xem
+Full|Đủ
+Clip|Clip
+Keyframes|Khung chính
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scope
+Spline|Spline
+Sync Bin|Đồng bộ bin
+Temp|Nhiệt độ
+Import Project...|Nhập DA...
+Export Project...|Xuất DA...
+Save Project As...|Lưu thành...
+Save Copy As...|Bản sao...
+Import|Nhập
+Export|Xuất
+Subtitle...|Phụ đề...
+Media...|Phương tiện...
+Folder as Bin...|Thư mục...
+Timeline|Dòng TG
+Media Pool|Kho
+Inspector|Kiểm tra
+Metadata|Siêu dữ liệu
+Eighth|1/8
+About Picasso Suite|Giới thiệu
+New Project|Dự án mới
+Open Project...|Mở...
+Save Project|Lưu
+Dynamics|Động lực
+Titles|Tiêu đề
+Gallery|Thư viện
+Effects|Hiệu ứng
+Audio|Âm thanh
+Timeline: EDL...|Dòng TG: EDL...
+Timeline: XML...|Dòng TG: XML...
+Media|Phương tiện

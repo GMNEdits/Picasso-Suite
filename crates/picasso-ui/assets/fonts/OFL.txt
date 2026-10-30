@@ -5,7 +5,10 @@ Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Sour
 NotoSansArabic-Regular.subset.ttf is Noto Sans Arabic, Copyright 2022 The Noto Project Authors
 (https://github.com/notofonts/arabic); NotoSansDevanagari-Regular.subset.ttf is Noto Sans Devanagari,
 Copyright 2022 The Noto Project Authors (https://github.com/notofonts/devanagari), with each word of the
-Hindi tables made into one glyph of it (scripts/i18n/devanagari.py). The four are cut down to the characters the languages of
+Hindi tables made into one glyph of it (scripts/i18n/devanagari.py). NotoSansKR-Regular.subset.ttf is Noto Sans KR (Copyright 2014-2021 Adobe, with Reserved Font Name 'Source'),
+NotoSansBengali-Regular.subset.ttf and NotoSansThai-Regular.subset.ttf are Noto Sans Bengali and Thai
+(Copyright 2022 The Noto Project Authors, https://github.com/notofonts); the Bengali and Thai ones are made into
+glyphs of whole words like the Hindi one. All are cut down to the characters the languages of
 Help > Language need (scripts/i18n/subset.py) and are under the same license:
 
 

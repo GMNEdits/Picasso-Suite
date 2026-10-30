@@ -54,10 +54,14 @@ def arabic():
 JOBS = {
     'NotoSansSC': ('NotoSansSC-Regular.subset.ttf', lambda: decode_rows('gb2312', 0xA1, 0xA9) | decode_rows('gb2312', 0xB0, 0xD7) | kana_and_punct() | used('zh') | set('日本語')),
     'NotoSansJP': ('NotoSansJP-Regular.subset.ttf', lambda: sjis_level1() | kana_and_punct() | used('ja') | set('中文')),
+    'NotoSansKR': ('NotoSansKR-Regular.subset.ttf', lambda: decode_rows('euc_kr', 0xB0, 0xC8) | decode_rows('euc_kr', 0xA1, 0xAC) | kana_and_punct() | {chr(c) for c in range(0x3131, 0x318F)} | used('ko')),
     'NotoSansArabic': ('NotoSansArabic-Regular.subset.ttf', lambda: arabic() | used('ar')),
 }
 
+ONLY = os.environ.get('SUBSET_ONLY', '').split(',')
 for name, (out, chars) in JOBS.items():
+    if ONLY != [''] and name not in ONLY:
+        continue
     font = TTFont(f'{DL}/{name}.ttf')
     axes = {a.axisTag: a.defaultValue for a in font['fvar'].axes}
     axes['wght'] = 400

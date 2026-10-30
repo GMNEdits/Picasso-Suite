@@ -1,0 +1,15 @@
+Auto|อัตโนมัติ
+Clone Tool|โคลน
+L. Mix|มิกซ์ ซ้าย
+Mid/Detail|กลาง
+Pause|พัก
+Render All|ทั้งหมด
+Reset All|ทั้งหมด
+Tools|เครื่องมือ
+Track FX|FX แทร็ก
+Teal|เขียวน้ำ
+Help|ช่วย
+Sat|อิ่ม
+Auto|ออโต้
+L. Mix|มิกซ์ ซ.
+Tools|เครื่อง

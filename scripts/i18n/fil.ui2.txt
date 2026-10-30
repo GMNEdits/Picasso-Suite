@@ -1,0 +1,67 @@
+Clips|Clip
+Add Job|Job
+Browse|Browse
+Clip Name|Pangalan
+Collections|Koleksyon
+Drawn with|Iginuhit
+Embedded Audio|Embedded audio
+Encoding Profile|Encoding profile
+File Name|File
+Groups|Grupo
+High|Mataas
+Image|Larawan
+Individual clips|Isang clip
+Low|Low
+Media Source|Pinagmulan
+Media Storage|Storage
+Monitor volume|Volume
+Open|Buksan
+Order|Order
+Position lock|Lock pos.
+Process Mode|Mode
+Project settings|Setting proyekto
+Projects|Proyekto
+Quick Export|Mabilis export
+Render All|Lahat
+Reset All|Lahat
+Search|Hanap
+Settings|Setting
+Shad|Shadow
+Timeline Resolution|Resolution
+Tools|Tool
+Transitions|Transition
+Untitled|Walang title
+No clips in media pool|Walang clip
+No clip to grade|Walang clip
+No Input|Walang input
+Export Audio|Export audio
+Use unique filename|Natatanging pangalan
+Square|Square
+Enable Flat Pass|Flat pass on
+Trigger script at|Script sa
+Start|Simula
+Export Subtitle|Export subtitle
+Export As|Export bilang
+Half|Kalahati
+Best|Best
+Filters|Filter
+Help|Tulong
+Loaded the demo project|Na-load ang demo
+Selection follows the playhead|Sumusunod ang pili sa playhead
+Titles|Title
+Project Manager|Tagapamahala
+Keyboard Customization|Mga shortcut
+Nodes|Node
+High|High
+Image|Imahe
+Open|Open
+Shad|Shd
+Untitled|Walang tit.
+No Input|Walang in
+Use unique filename|Natatanging pangal.
+Start|Start
+Export As|Export
+Half|1/2
+Help|Help
+Selection follows the playhead|Pili sumusunod sa playhead
+Untitled|Untitled

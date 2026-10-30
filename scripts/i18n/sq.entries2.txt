@@ -1,0 +1,20 @@
+Project Manager|Menaxhuesi i proj.
+Timeline Settings|Cilësimet e kronol.
+Multicam Viewer|Shikuesi multikam.
+Change Clip Speed...|Ndrysho shpejtësinë...
+Retime Clip|Ricakto klipin
+Auto Align Clips|Rreshto klipet auto
+Mark Timeline In/Out|Shëno kronol. hyrje/dalje
+Clear In and Out|Pastro hyrje/dalje
+Show Grid / Guides|Shfaq rrjetën/udhëz.
+Show Toolbar|Shfaq veglat
+Show Full Screen Viewer|Shfaq shikuesin në ekran
+Viewer Overlays|Mbivendosjet
+Show All Overlays|Shfaq mbivendosjet
+Play In to Out|Luaj hyrje–dalje
+Effects Memory Cache|Cache e efekteve
+Dip to Color|Zbehje në ngjyrë
+Effects Library Search|Kërko në efekte
+Full Screen Viewer|Shikuesi në ekran
+Check for Updates...|Kontrollo përditësimet...
+Export Log File...|Eksporto regjistrin...

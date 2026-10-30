@@ -1,0 +1,553 @@
+#menus
+Sked.
+Red.
+Prer.
+Kronol.
+Klip
+Shenj
+Pamja
+Luajtja
+Efekte
+Ngjy.
+Audio
+Hapësira
+Ndihmë
+#entries
+1|Bibliotekë e re projektesh...
+2|Hap bibliotekën e projekteve...
+3|Shfaq bibliotekën në Explorer
+4|Menaxheri i projekteve
+5|Projekt i ri
+6|Hap projektin...
+7|Importo projektin...
+8|Eksporto projektin...
+9|Rikthe arkivin e projektit...
+10|Ruaj projektin
+11|Ruaj projektin si...
+12|Ruaj kopjen si...
+13|Kthehu te ruajtja e fundit
+14|Importo
+15|Media...
+16|Dosje si bin...
+17|Kronologji: AAF, EDL, XML...
+18|Kronologji: pre-EDL...
+19|Titra...
+20|Metadata në grupin e medias...
+21|Bin...
+22|Eksporto
+23|Kronologji: EDL...
+24|Kronologji: OpenTimelineIO...
+25|Kronologji: XML...
+26|Kronologji: AAF...
+27|Metadata nga grupi i medias...
+28|Menaxhimi i medias...
+29|Cilësimet e projektit...
+30|Preferencat e sistemit...
+31|Eksport i shpejtë...
+32|Dil
+33|Zhbëj
+34|Ribëj
+35|Prit
+36|Kopjo
+37|Ngjit
+38|Ngjit dhe fut
+39|Ngjit miksin në pistë
+40|Dyfisho
+41|Përshtat me mbushjen
+42|Vendos sipër
+43|Fshij të zgjedhurat
+44|Fshij të zgjedhurat me ripple
+45|Zgjidh të gjitha
+46|Hiq zgjedhjen
+47|Zgjidh klipet përpara
+48|Gjej...
+49|Projektet e fundit
+50|Menaxheri i projekteve...
+51|Shkurtoret e tastierës
+52|Zgjidh prerjen më të afërt
+53|Mënyra e zgjedhjes
+54|Mënyra e prerjes
+55|Prerje dinamike
+56|Ripple fillimi
+57|Ripple fundi
+58|Ripple i mëparshëm / tjetri
+59|Ripple i mëparshëm te koka
+60|Ripple tjetri te koka
+61|Prit fillimin te koka
+62|Prit fundin te koka
+63|Zgjat prerjen
+64|Slip klipi
+65|Slip një kuadër më herët
+66|Slip një kuadër më vonë
+67|Slide klipi
+68|Slide një kuadër majtas
+69|Slide një kuadër djathtas
+70|Prerje në lak
+71|Prerje asimetrike
+72|Redaktori i prerjes
+73|Kronologji e re...
+74|Kronologji nga klipet e zgjedhura
+75|Klip i ri i përbërë...
+76|Klip i ri efektesh...
+77|Zbërthe në vend
+78|Zbërthe klipin e përbërë
+79|Zbërthe kronologjinë e futur
+80|Ndaj klipin
+81|Kronologji nga bin...
+82|Importo kronologjinë...
+83|Eksporto kronologjinë...
+84|Rezolucioni dhe kuadrot...
+85|Cilësimet e kronologjisë
+86|Ngjit
+87|Zgjedhje e lidhur
+88|Kyçja e pozicionit
+89|Zgjedhja ndjek kokën
+90|Shto shënues
+91|Shto shënues me dialog
+92|Fshij të gjithë shënuesit
+93|Krijo pistë titrash
+94|Krijo zonë titrash
+95|Kalim në të gjitha prerjet
+96|Ndërro kronologjinë
+97|Hap kronologjinë në dritare
+98|Fshij kronologjinë
+99|Aktivizo klipin
+100|Kuadër përputhës
+101|Kyç klipin
+102|Klip i ri shumëkamerësh...
+103|Shikuesi shumëkamerësh
+104|Shto si imazhe statike
+105|Ndrysho shpejtësinë e klipit...
+106|Ndrysho kohëzgjatjen e klipit...
+107|Kontrollet e kohës
+108|Ricakto kohën e klipit
+109|Ngri kuadrin
+110|Rampë shpejtësie...
+111|Kthe klipin mbrapsht
+112|Klip i ri i përbërë
+113|Lidh klipet
+114|Ndaj zërin nga pamja
+115|Scrubbing zëri on/off
+116|Rreshto klipet automatikisht
+117|Sipas timecode
+118|Sipas formës së valës
+119|Normalizo nivelin e zërit...
+120|Rendero në vend
+121|Klip i ri efektesh
+122|Klip i ri i përbërë
+123|Atributet e klipit...
+124|Shëno hyrjen
+125|Shëno daljen
+126|Shëno klipin
+127|Shëno kronologjinë hyrje/dalje
+128|Pastro hyrjen
+129|Pastro daljen
+130|Pastro hyrjen dhe daljen
+131|Ndrysho shënuesin...
+132|Fshij shënuesin këtu
+133|Fshij të gjithë shënuesit
+134|Te shënuesi i mëparshëm
+135|Te shënuesi tjetër
+136|Ngjyra e klipit
+137|Parazgjedhja
+138|Portokalli
+139|Kajsi
+140|E verdhë
+141|Limon
+142|Ullinj
+143|E gjelbër
+144|Blu-jeshile
+145|Blu detar
+146|Blu
+147|Vjollcë
+148|Ngjyrë vjollce
+149|Rozë
+150|Kafe e çelët
+151|Bezhë
+152|Kafe
+153|Çokollatë
+154|Shfaq kuadrin gjatë luajtjes
+155|Zona e sigurt
+156|Shfaq rrjetën / udhëzuesit
+157|Shfaq shiritin e veglave
+158|Shfaq shikuesin në ekran të plotë
+159|Shfaq shikuesin kinema
+160|Mbivendosjet e shikuesit
+161|Transformo / prit / zmadho
+162|Zona e sigurt
+163|Kryqi qendror
+164|Sfondi shaku (alfa)
+165|Shfaq të gjitha mbivendosjet
+166|Dritarja e timecode
+167|Shfaq scopes
+168|Shfaq matësit e zërit
+169|Shfaq mikserin e zërit
+170|Shfaq inspektorin
+171|Luaj përpara
+172|Luaj mbrapsht
+173|Ndalo
+174|Luaj rreth kuadrit
+175|Luaj hyrje deri dalje
+176|Luaj rreth hyrjes/daljes
+177|Luaj në lak
+178|Te kuadri i parë
+179|Te kuadri i fundit
+180|Te hyrja
+181|Te dalja
+182|Kuadri i mëparshëm
+183|Kuadri tjetër
+184|Prerja e mëparshme
+185|Prerja tjetër
+186|Rezolucioni i luajtjes
+187|Gjysmë
+188|Çerek
+189|Cache e kujtesës së efekteve
+190|Mënyra proxy
+191|Fikur
+192|Një e teta
+193|Dekodim me harduer
+194|Fshij cache-in e render
+195|Kalimet e videos
+196|Shkrirje e kryqëzuar
+197|Zbehje përmes ngjyrës
+198|Kalimet e zërit
+199|Fade i kryqëzuar
+200|Hiq kalimin
+201|OpenFX
+202|Turbullim
+203|Turbullim Gauss
+204|Mprehje
+205|Ngjyra
+206|Anasjell ngjyrat
+207|Bardhezi
+208|Shtrembërim
+209|Mozaik
+210|Efekte zëri
+211|EQ
+212|Dinamika
+213|Picasso FX
+214|Seppia
+215|Turbullim i butë
+216|Dritë
+217|Shkëlqim
+218|Stilizim
+219|Vinjetë
+220|Kokrra filmi
+221|Efekte kompozimi
+222|Nyjet
+223|Gjeneratorë
+224|Ngjyrë e plotë
+225|Shirita ngjyrash
+226|Gradient
+227|Tituj
+228|Tekst
+229|Tekst+
+230|Kërko në bibliotekën e efekteve
+231|Shto vegël (kompozim)
+232|Rivendos gradimet dhe nyjet
+233|Rivendos nyjen aktuale
+234|Nyja on/off
+235|Kap still
+236|Luaj still
+237|Shto nyje serike
+238|Shto serike përpara
+239|Shto nyje paralele
+240|Shto mikser shtresash
+241|Shto ndarës / bashkues
+242|Shto nyje të jashtme
+243|Etiketo nyjen
+244|Kronologjia
+245|Grafi i mëparshëm i nyjeve
+246|Grafi tjetër i nyjeve
+247|LUT
+248|Apliko LUT nga lista
+249|Galeria
+250|Scopes on/off
+251|Dritat e forta
+252|Lightbox
+253|ADR
+254|Zëvendësim automatik dialogu
+255|Bounce miksi në pistë
+256|Bounce pistat e zgjedhura
+257|Cache efektesh zëri
+258|Lidhja e zërit
+259|Grupi i lidhjes
+260|Zbërthe
+261|Jog në lak
+262|Shfaq kronologjinë / mikserin e zërit
+263|Shikuesi në ekran të plotë
+264|Shfaq panelin në hapësirë
+265|Grupi i medias
+266|Biblioteka e efekteve
+267|Inspektori
+268|Mikseri
+269|Metadata
+270|Indeksi i redaktimit
+271|Biblioteka e zërave
+272|Paraqitja
+273|Rivendos paraqitjen
+274|Ruaj paraqitjen
+275|Ngarko paraqitjen
+276|Kalo te faqja
+277|Media
+278|Redaktim
+279|Efekte
+280|Audio
+281|Dorëzim
+282|Dy ekrane on/off
+283|Dalje e pastër videoje
+284|Manuali i Picasso Suite
+285|Tutorialet e Picasso Suite
+286|Kontrollo për përditësime...
+287|Eksporto skedarin e regjistrit...
+288|Rreth Picasso Suite
+289|Gjuha
+#ui
+1|Klipe
+2|60 kuadro/s
+3|Shto punë
+4|Shto në radhë
+5|Të avancuara
+6|Arkivo projektin
+7|Arkivo...
+8|Auto
+9|Automatik
+10|Ekuilibruar
+11|Bin-e
+12|Shfleto
+13|Dërgesa bus
+14|Kapje
+15|Kapituj
+16|Zgjidh dosje
+17|Emri i klipit
+18|Klon
+19|Klonim
+20|Kodek
+21|Ngjyra+
+22|Koleksione
+23|Kontrast
+24|Kontrolli
+25|Krijo album
+26|Kurba - vetjake
+27|Eksport vetjak
+28|Dekodimi
+29|Projekt demo
+30|Tërhiq foto në album për të redaktuar
+31|Vizatuar me
+32|Redaktim
+33|Efekte hyrje
+34|Zë i ngulitur
+35|Koduesi
+36|Profili i kodimit
+37|Gjithë kronologjia
+38|Madhësia
+39|Çdo
+40|Eksporto video
+41|Fairlight
+42|Emri i skedarit
+43|Formati
+44|Kuadro/s
+45|Rirenditja
+46|Kuadro të plota
+47|Ekran i plotë
+48|Fusion
+49|Gain
+50|Gamma
+51|Gjenerator
+52|Karta grafike
+53|Grupe
+54|Dritat
+55|Lartë
+56|Tonaliteti
+57|Imazhi
+58|Indeksi
+59|Klipe të veçanta
+60|Hyrje
+61|I integruar
+62|Kuadro çelës
+63|Fjalë çelës
+64|Mix M
+65|Shtresa
+66|Lokale
+67|Vendndodhja
+68|Lak
+69|Zëshmëria
+70|Ulët
+71|Shënuesi
+72|Menaxhimi i medias
+73|Burimi i medias
+74|Ruajtja e medias
+75|Matësit
+76|Mesi/detaje
+77|Modifikues
+78|Monitori
+79|Zëri i monitorit
+80|Natyral
+81|Optimizimi i rrjetit
+82|Pa punë
+83|Pa punë
+84|Pa still
+85|Nuk raportohet
+86|Asgjë për të parë
+87|Zhvendosja
+88|Hap
+89|Rendi
+90|Parade
+91|Pauzë
+92|Foto
+93|Album
+94|Luajtja
+95|Kyçja e pozicionit
+96|Paravendosje
+97|Parësore - rrotat e ngjyrës
+98|Mënyra e përpunimit
+99|Cilësimet e projektit
+100|Projekte
+101|Cilësia
+102|Eksport i shpejtë
+103|Diapazoni
+104|Kontrolli i shpejtësisë
+105|Rilidh median
+106|Rilidh median...
+107|Hiq
+108|Render
+109|Render të gjitha
+110|Radha e render
+111|Cilësimet e render
+112|Render - eksport vetjak
+113|Rivendos
+114|Rivendos të gjitha
+115|Rezolucioni
+116|Kërko
+117|Cilësimet
+118|Hijet
+119|E shkurtër
+120|E shkurtër maks
+121|Një klip
+122|Bin-e inteligjente
+123|Hapësira e ngjyrës burim
+124|Hapësira gamma burim
+125|Cilësimet e titrave
+126|Sistemi
+127|Rezol. e kronologjisë
+128|Proxy i kronologjisë
+129|Nuanca
+130|Veglat
+131|FX e pistës
+132|Kalimet
+133|Pa titull
+134|Rezolucioni vertikal
+135|Versioni 0.6.1
+136|Video
+137|Forma e valës
+138|Hapësira
+139|Nuk ka klipe në grup
+140|Importo klipe ose lësho skedarët këtu
+141|Për të nisur shto klipe nga ruajtja
+142|Nuk ka zë
+143|Nuk ka klip për gradim
+144|Pa hyrje
+145|KOHËZGJATJA
+146|Eksporto audio
+147|Shpejtësia e të dhënave
+148|Pista dalëse 1
+149|Emër unik
+150|Shton (1), (2) ... te emri në vend që të mbishkruajë.
+151|Lloji i skedarit
+152|Gjithë kronologjia
+153|Hyrje deri dalje
+154|Raporti i pikselit
+155|Katror
+156|Cinemascope
+157|Nivelet e të dhënave
+158|Ruaj nën-të-zezën/mbi-të-bardhën
+159|Etiketa e hapësirës së ngjyrës
+160|Etiketa gamma
+161|Të dhëna të djegura
+162|Si projekti
+163|Kapërce rikodimin
+164|Media e optimizuar
+165|Media proxy
+166|Imazhe nga cache
+167|Shkallëzim më i mirë
+168|Debayer më i mirë
+169|Të gjitha pistat video
+170|Aktivizo flat pass
+171|Anashkalim visionOS
+172|Pa shkallëzim/blanking
+173|Ekzekuto skriptin
+174|Nis
+175|e punës render
+176|Eksporto titrat
+177|Skedar i veçantë
+178|Eksporto si
+179|kuadro
+180|Prit
+181|Turkez
+182|Gjysmë
+183|Shirita ngjyrash
+184|Lightbox
+185|Red.
+186|Mikseri
+187|Zëra
+188|Kronologji: AAF, EDL, XML...
+189|Kronologji: OpenTimelineIO...
+190|Redaktor video në Rust për Windows, Linux, macOS dhe web.
+191|Scrubbing zëri (zë kur tërhiqet koka)
+192|Më i miri
+193|Kuadrot e reja i mbajnë klipet në të njëjtat kuadro.
+194|Kliko tastet e komandës dhe shtyp të riun. Esc anulon.
+195|Kopjon skedarët e kronologjive në një dosje dhe shkruan një kopje projekti që tregon tek ata. Projekti i hapur nuk ndryshon.
+196|Dekodo videon e mbështetur me përshpejtim hardueri
+197|Çdo skedar media është ku thotë projekti.
+198|Filtra
+199|Softuer i lirë nën GPL, versioni 3 ose më i ri.
+200|H.264, H.265, AV1, VP9, MPEG-2 dhe VC-1 dekodohen në kartën grafike kur drejtuesi mundet. Çaktivizo nëse klipet dalin jeshile ose të prishura. PICASSO_NO_HWACCEL=1 e çaktivizon për një ekzekutim.
+201|Ndihmë
+202|Zgjedhje e lidhur (pamje dhe zë bashkë)
+203|Projekti demo u ngarkua
+204|Pivot
+205|Zgjedhja ndjek kokën
+206|Ngjit te klipet, shënuesit, koka
+207|Soft Clip
+208|Shirit
+209|Prerje
+210|Pamja
+211|Plotë
+212|Klip
+213|Kuadro çelës
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Sink. bin
+222|Temp
+223|Imp. proj...
+224|Eks. proj...
+225|Ruaj si...
+226|Kopje si...
+227|Import
+228|Eksport
+229|Titra...
+230|Media...
+231|Dosje...
+232|Kronol.
+233|Grupi
+234|Inspektori
+235|Metadata
+236|1/8
+237|Rreth
+238|Proj. i ri
+239|Hap...
+240|Ruaj
+241|Dinamika
+242|Tituj
+243|Galeria
+244|Efekte
+245|Audio
+246|Kronologji: EDL...
+247|Kronologji: XML...
+248|Media

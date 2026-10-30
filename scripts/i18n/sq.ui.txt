@@ -1,0 +1,248 @@
+Clips|Klipe
+60 frames per second|60 kuadro/s
+Add Job|Shto punë
+Add to Render Queue|Shto në radhë
+Advanced Settings|Të avancuara
+Archive Project|Arkivo projektin
+Archive Project...|Arkivo...
+Auto|Auto
+Automatic|Automatik
+Balanced|Ekuilibruar
+Bins|Bin-e
+Browse|Shfleto
+Bus Sends|Dërgesa bus
+Capture|Kapje
+Chapters from Markers|Kapituj
+Choose a folder|Zgjidh dosje
+Clip Name|Emri i klipit
+Clone|Klon
+Clone Tool|Klonim
+Codec|Kodek
+Col Boost|Ngjyra+
+Collections|Koleksione
+Contrast|Kontrast
+Control Room|Kontrolli
+Create an Album|Krijo album
+Curves - Custom|Kurba - vetjake
+Custom Export|Eksport vetjak
+Decode Options|Dekodimi
+Demo Project|Projekt demo
+Drag photos into the Photo Album to start editing|Tërhiq foto në album për të redaktuar
+Drawn with|Vizatuar me
+Editing|Redaktim
+Effects In|Efekte hyrje
+Embedded Audio|Zë i ngulitur
+Encoder|Koduesi
+Encoding Profile|Profili i kodimit
+Entire Timeline|Gjithë kronologjia
+Estimated File Size|Madhësia
+Every|Çdo
+Export Video|Eksporto video
+Fairlight|Fairlight
+File Name|Emri i skedarit
+Format|Formati
+Frame rate|Kuadro/s
+Frame reordering|Rirenditja
+Full Frames|Kuadro të plota
+Full Screen|Ekran i plotë
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Gjenerator
+Graphics card|Karta grafike
+Groups|Grupe
+Hi/Light|Dritat
+High|Lartë
+Hue|Tonaliteti
+Image|Imazhi
+Index|Indeksi
+Individual clips|Klipe të veçanta
+Input|Hyrje
+Integrated|I integruar
+Key Frames|Kuadro çelës
+Keywords|Fjalë çelës
+L. Mix|Mix M
+Layer|Shtresa
+Local|Lokale
+Location|Vendndodhja
+Loop playback|Lak
+Loudness|Zëshmëria
+Low|Ulët
+Mark|Shënuesi
+Media Management|Menaxhimi i medias
+Media Source|Burimi i medias
+Media Storage|Ruajtja e medias
+Meters|Matësit
+Mid/Detail|Mesi/detaje
+Modifiers|Modifikues
+Monitor|Monitori
+Monitor volume|Zëri i monitorit
+Native|Natyral
+Network Optimization|Optimizimi i rrjetit
+No jobs in Queue|Pa punë
+No jobs in queue|Pa punë
+No stills created|Pa still
+Not reported|Nuk raportohet
+Nothing to inspect|Asgjë për të parë
+Offset|Zhvendosja
+Open|Hap
+Order|Rendi
+Parade|Parade
+Pause|Pauzë
+Photo|Foto
+Photo Album|Album
+Playback|Luajtja
+Position lock|Kyçja e pozicionit
+Preset|Paravendosje
+Primaries - Color Wheels|Parësore - rrotat e ngjyrës
+Process Mode|Mënyra e përpunimit
+Project settings|Cilësimet e projektit
+Projects|Projekte
+Quality|Cilësia
+Quick Export|Eksport i shpejtë
+Range|Diapazoni
+Rate Control|Kontrolli i shpejtësisë
+Relink Missing Media|Rilidh median
+Relink Missing Media...|Rilidh median...
+Remove|Hiq
+Render|Render
+Render All|Render të gjitha
+Render Queue|Radha e render
+Render Settings|Cilësimet e render
+Render Settings - Custom Export|Render - eksport vetjak
+Reset|Rivendos
+Reset All|Rivendos të gjitha
+Resolution|Rezolucioni
+Search|Kërko
+Settings|Cilësimet
+Shad|Hijet
+Short|E shkurtër
+Short Max|E shkurtër maks
+Single clip|Një klip
+Smart Bins|Bin-e inteligjente
+Source Color Space|Hapësira e ngjyrës burim
+Source Gamma Space|Hapësira gamma burim
+Subtitle Settings|Cilësimet e titrave
+System|Sistemi
+Timeline Resolution|Rezol. e kronologjisë
+Timeline proxy|Proxy i kronologjisë
+Tint|Nuanca
+Tools|Veglat
+Track FX|FX e pistës
+Transitions|Kalimet
+Untitled|Pa titull
+Use vertical resolution|Rezolucioni vertikal
+Version 0.6.1|Versioni 0.6.1
+Video|Video
+Waveform|Forma e valës
+Workspace|Hapësira
+No clips in media pool|Nuk ka klipe në grup
+Add clips with Import, or drop files here|Importo klipe ose lësho skedarët këtu
+Add clips from Media Storage to get started|Për të nisur shto klipe nga ruajtja
+No sound to show|Nuk ka zë
+No clip to grade|Nuk ka klip për gradim
+No Input|Pa hyrje
+DURATION|KOHËZGJATJA
+Export Audio|Eksporto audio
+Data Rate|Shpejtësia e të dhënave
+Output Track 1|Pista dalëse 1
+Use unique filename|Emër unik
+Adds (1), (2) ... to the name instead of writing over a file.|Shton (1), (2) ... te emri në vend që të mbishkruajë.
+File type|Lloji i skedarit
+Whole timeline|Gjithë kronologjia
+In to out marks|Hyrje deri dalje
+Pixel aspect ratio|Raporti i pikselit
+Square|Katror
+Cinemascope|Cinemascope
+Data Levels|Nivelet e të dhënave
+Retain sub-black and super-white data|Ruaj nën-të-zezën/mbi-të-bardhën
+Color Space Tag|Etiketa e hapësirës së ngjyrës
+Gamma Tag|Etiketa gamma
+Data burn-in|Të dhëna të djegura
+Same as project|Si projekti
+Bypass re-encode when possible|Kapërce rikodimin
+Use optimized media|Media e optimizuar
+Use proxy media|Media proxy
+Use render cached images|Imazhe nga cache
+Force sizing to highest quality|Shkallëzim më i mirë
+Force debayer to highest quality|Debayer më i mirë
+Render All Video Tracks|Të gjitha pistat video
+Enable Flat Pass|Aktivizo flat pass
+visionOS Bypass|Anashkalim visionOS
+Disable sizing and blanking output|Pa shkallëzim/blanking
+Trigger script at|Ekzekuto skriptin
+Start|Nis
+of render job|e punës render
+Export Subtitle|Eksporto titrat
+As a separate file|Skedar i veçantë
+Export As|Eksporto si
+frames|kuadro
+Cut|Prit
+Teal|Turkez
+Half|Gjysmë
+Color Bars|Shirita ngjyrash
+Lightbox|Lightbox
+Edit|Red.
+Mixer|Mikseri
+Sound Library|Zëra
+Timeline: AAF, EDL, XML...|Kronologji: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Kronologji: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Redaktor video në Rust për Windows, Linux, macOS dhe web.
+Audio scrubbing (sound while the playhead is dragged)|Scrubbing zëri (zë kur tërhiqet koka)
+Best|Më i miri
+Changing the frame rate keeps every clip on the same frames.|Kuadrot e reja i mbajnë klipet në të njëjtat kuadro.
+Click a command's keys, then press the key it should have. Escape gives up.|Kliko tastet e komandës dhe shtyp të riun. Esc anulon.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Kopjon skedarët e kronologjive në një dosje dhe shkruan një kopje projekti që tregon tek ata. Projekti i hapur nuk ndryshon.
+Decode supported video using hardware acceleration|Dekodo videon e mbështetur me përshpejtim hardueri
+Every media file is where the project says it is.|Çdo skedar media është ku thotë projekti.
+Filters|Filtra
+Free software under the GPL, version 3 or later.|Softuer i lirë nën GPL, versioni 3 ose më i ri.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 dhe VC-1 dekodohen në kartën grafike kur drejtuesi mundet. Çaktivizo nëse klipet dalin jeshile ose të prishura. PICASSO_NO_HWACCEL=1 e çaktivizon për një ekzekutim.
+Help|Ndihmë
+Linked selection (picture and sound together)|Zgjedhje e lidhur (pamje dhe zë bashkë)
+Loaded the demo project|Projekti demo u ngarkua
+Pivot|Pivot
+Selection follows the playhead|Zgjedhja ndjek kokën
+Snap to clips, markers and the playhead|Ngjit te klipet, shënuesit, koka
+Soft Clip|Soft Clip
+Tape|Shirit
+Trim|Prerje
+View|Pamja
+Full|Plotë
+Clip|Klip
+Keyframes|Kuadro çelës
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Sink. bin
+Temp|Temp
+Import Project...|Imp. proj...
+Export Project...|Eks. proj...
+Save Project As...|Ruaj si...
+Save Copy As...|Kopje si...
+Import|Import
+Export|Eksport
+Subtitle...|Titra...
+Media...|Media...
+Folder as Bin...|Dosje...
+Timeline|Kronol.
+Media Pool|Grupi
+Inspector|Inspektori
+Metadata|Metadata
+Eighth|1/8
+About Picasso Suite|Rreth
+New Project|Proj. i ri
+Open Project...|Hap...
+Save Project|Ruaj
+Dynamics|Dinamika
+Titles|Tituj
+Gallery|Galeria
+Effects|Efekte
+Audio|Audio
+Timeline: EDL...|Kronologji: EDL...
+Timeline: XML...|Kronologji: XML...
+Media|Media

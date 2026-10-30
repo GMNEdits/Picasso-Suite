@@ -1,0 +1,70 @@
+Add Job|Việc
+Auto|Auto
+Clone|Nhân
+Clone Tool|Nhân bản
+Contrast|T.phản
+Curves - Custom|Đường cong
+Editing|Sửa
+Effects In|HU vào
+Encoder|Mã hóa
+Format|Dạng
+Full Frames|Đủ khung
+Full Screen|Toàn màn
+Hi/Light|Sáng
+Hue|Sắc
+Image|Ảnh
+Index|Mục lục
+Local|Cục bộ
+Low|Thấp
+Media Source|Nguồn
+Monitor|Màn
+Monitor volume|Âm lượng
+Nothing to inspect|Không có
+Pause|Dừng
+Quality|C.lượng
+Rate Control|Điều khiển
+Relink Missing Media|Liên kết lại
+Relink Missing Media...|Liên kết lại...
+Render All|Tất cả
+Reset All|Tất cả
+Resolution|Phân giải
+Smart Bins|Bin thông m.
+Source Color Space|KG màu nguồn
+Source Gamma Space|KG gamma nguồn
+System|Hệ thống
+Tint|Tint
+Tools|Công cụ
+Untitled|Chưa tên
+Version 0.6.1|Bản 0.6.1
+No clip to grade|Không có clip
+No Input|Không vào
+DURATION|T.LƯỢNG
+Data Rate|Tốc độ
+Color Space Tag|Thẻ màu
+Data burn-in|Ghi vào hình
+Start|Bắt đầu
+Teal|Mòng két
+Half|1/2
+Mixer|Trộn
+Best|Tốt
+Help|Help
+Keyframes|Khung chính
+Sync Bin|Đồng bộ
+Temp|Nhiệt
+Media...|P.tiện...
+Metadata|Siêu DL
+Titles|T.đề
+Effects|Hiệu ứng
+Audio|Âm
+Media|P.tiện
+Project Manager|Quản lý dự án
+Quarter|1/4
+Index|Index
+Local|Cục
+Low|Low
+System|Hệ T.
+Tools|C.cụ
+Start|Start
+Teal|Két
+Keyframes|Khung ch.
+Effects|Hiệu

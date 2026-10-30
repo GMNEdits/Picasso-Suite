@@ -1,0 +1,304 @@
+#menus
+File
+Edit
+Trim
+Timeline
+Clip
+Marka
+View
+Playback
+Epekto
+Kulay
+Audio
+Workspace
+Tulong
+#entries
+New Project Library...|Bagong aklatan ng proyekto...
+Open Project Library...|Buksan ang aklatan ng proyekto...
+Show Current Project Library in File Explorer|Ipakita ang aklatan sa Explorer
+Project Manager|Tagapamahala ng Proyekto
+New Project|Bagong proyekto
+Open Project...|Buksan ang proyekto...
+Import Project...|I-import ang proyekto...
+Export Project...|I-export ang proyekto...
+Restore Project Archive...|Ibalik ang archive ng proyekto...
+Save Project|I-save ang proyekto
+Save Project As...|I-save ang proyekto bilang...
+Save Copy As...|I-save ang kopya bilang...
+Revert to Last Saved Version|Bumalik sa huling na-save
+Import|I-import
+Media...|Media...
+Folder as Bin...|Folder bilang bin...
+Timeline: AAF, EDL, XML...|Timeline: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Timeline: pre-EDL...
+Subtitle...|Subtitle...
+Metadata to Media Pool...|Metadata sa media pool...
+Bin...|Bin...
+Export|I-export
+Timeline: EDL...|Timeline: EDL...
+Timeline: OpenTimelineIO...|Timeline: OpenTimelineIO...
+Timeline: XML...|Timeline: XML...
+Timeline: AAF...|Timeline: AAF...
+Metadata from Media Pool...|Metadata mula sa media pool...
+Media Management...|Pamamahala ng media...
+Project Settings...|Mga setting ng proyekto...
+System Preferences...|Mga kagustuhan ng system...
+Quick Export...|Mabilis na export...
+Quit|Lumabas
+Undo|I-undo
+Redo|I-redo
+Cut|I-cut
+Copy|Kopyahin
+Paste|I-paste
+Paste Insert|I-paste at ipasok
+Paste Mix to Current Track|I-paste ang mix sa track
+Duplicate|I-duplicate
+Fit to Fill|I-fit sa fill
+Place on Top|Ilagay sa itaas
+Delete Selected|Burahin ang napili
+Delete Selected with Ripple|Burahin ang napili gamit ang ripple
+Select All|Piliin lahat
+Deselect All|Alisin ang lahat ng pili
+Select Clips Forward|Piliin ang mga clip pasulong
+Find...|Hanapin...
+Recent Projects|Mga kamakailang proyekto
+Project Manager...|Tagapamahala ng Proyekto...
+Keyboard Customization|Mga shortcut ng keyboard
+Select Nearest Edit Point|Piliin ang pinakamalapit na cut
+Selection Mode|Mode ng pagpili
+Trim Mode|Mode ng trim
+Dynamic Trim Mode|Dynamic na trim
+Ripple Start|Ripple simula
+Ripple End|Ripple dulo
+Ripple Trim Previous / Next|Ripple trim nauna / susunod
+Ripple Trim Previous Edit to Playhead|Ripple nauna hanggang playhead
+Ripple Trim Next Edit to Playhead|Ripple susunod hanggang playhead
+Trim Start to Playhead|I-trim ang simula sa playhead
+Trim End to Playhead|I-trim ang dulo sa playhead
+Extend Edit|Palawigin ang edit
+Slip Clip|Slip clip
+Slip One Frame Earlier|Slip isang frame nang mas maaga
+Slip One Frame Later|Slip isang frame nang mas huli
+Slide Clip|Slide clip
+Slide One Frame Left|Slide isang frame pakaliwa
+Slide One Frame Right|Slide isang frame pakanan
+Loop Trim|Loop trim
+Asymmetric Trimming|Asymmetric na trimming
+Trim Editor|Trim editor
+New Timeline...|Bagong timeline...
+New Timeline Using Selected Clips|Bagong timeline mula sa napili
+Create New Compound Clip...|Bagong compound clip...
+New Effects Clip...|Bagong effects clip...
+Decompose in Place|I-decompose sa lugar
+Decompose Compound Clip|I-decompose ang compound clip
+Decompose Nested Timeline|I-decompose ang nested timeline
+Split Clip|Hatiin ang clip
+Create Timeline Using Bin...|Timeline mula sa bin...
+Import Timeline...|I-import ang timeline...
+Export Timeline...|I-export ang timeline...
+Timeline Resolution and Frame Rate...|Resolution at frame rate...
+Timeline Settings|Mga setting ng timeline
+Snap|Snap
+Linked Selection|Naka-link na pagpili
+Position Lock|Lock ng posisyon
+Selection Follows Playhead|Sinusundan ng pili ang playhead
+Add Marker|Magdagdag ng marker
+Add Marker and Show Dialog|Magdagdag ng marker + dialog
+Delete All Markers|Burahin lahat ng marker
+Create Subtitle Track|Gumawa ng subtitle track
+Create Subtitle Region|Gumawa ng subtitle region
+Add Transition to All Edits|Transition sa lahat ng cut
+Switch Timeline|Palitan ang timeline
+Open Timeline in New Window|Buksan ang timeline sa bagong window
+Delete Timeline|Burahin ang timeline
+Enable Clip|I-enable ang clip
+Match Frame|Katugmang frame
+Lock Clip|I-lock ang clip
+New Multicam Clip...|Bagong multicam clip...
+Multicam Viewer|Multicam viewer
+Add to Media Pool as Stills|Idagdag bilang mga still
+Change Clip Speed...|Baguhin ang bilis ng clip...
+Change Clip Duration...|Baguhin ang haba ng clip...
+Retime Controls|Mga kontrol sa oras
+Retime Clip|I-retime ang clip
+Freeze Frame|I-freeze ang frame
+Speed Ramp...|Speed ramp...
+Reverse Clip|I-reverse ang clip
+Create New Compound Clip|Bagong compound clip
+Link Clips|I-link ang mga clip
+Unlink Audio and Video|Paghiwalayin ang audio at video
+Enable / Disable Audio Scrubbing|Audio scrubbing on/off
+Auto Align Clips|Awtomatikong i-align ang mga clip
+Based on Timecode|Batay sa timecode
+Based on Waveform|Batay sa waveform
+Normalize Audio Levels...|I-normalize ang audio level...
+Render in Place|I-render sa lugar
+New Effects Clip|Bagong effects clip
+New Compound Clip|Bagong compound clip
+Clip Attributes...|Mga katangian ng clip...
+Mark In|I-mark ang in
+Mark Out|I-mark ang out
+Mark Clip|I-mark ang clip
+Mark Timeline In/Out|I-mark ang timeline in/out
+Clear In|I-clear ang in
+Clear Out|I-clear ang out
+Clear In and Out|I-clear ang in at out
+Modify Marker...|Baguhin ang marker...
+Delete Marker at Current Position|Burahin ang marker dito
+Delete All Markers in Timeline|Burahin lahat ng marker
+Go to Previous Marker|Pumunta sa naunang marker
+Go to Next Marker|Pumunta sa susunod na marker
+Set Clip Color|Kulay ng clip
+Default|Default
+Orange|Orange
+Apricot|Apricot
+Yellow|Dilaw
+Lime|Lime
+Olive|Olive
+Green|Berde
+Teal|Teal
+Navy|Navy
+Blue|Asul
+Purple|Lila
+Violet|Violet
+Pink|Pink
+Tan|Tan
+Beige|Beige
+Brown|Kayumanggi
+Chocolate|Tsokolate
+Show Current Frame on Playback|Ipakita ang frame habang nagpe-play
+Safe Area Overlay|Safe area
+Show Grid / Guides|Ipakita ang grid / gabay
+Show Toolbar|Ipakita ang toolbar
+Show Full Screen Viewer|Ipakita ang full screen viewer
+Show Cinema Viewer|Ipakita ang cinema viewer
+Viewer Overlays|Mga overlay ng viewer
+Transform / Crop / Dynamic Zoom|Transform / crop / zoom
+Safe Area|Safe area
+Center Crosshair|Gitnang crosshair
+Checkerboard Background (Alpha)|Checkerboard na background (alpha)
+Show All Overlays|Ipakita ang lahat ng overlay
+Timecode Window|Window ng timecode
+Show Scopes|Ipakita ang scopes
+Show Audio Meters|Ipakita ang audio meter
+Show Audio Mixer|Ipakita ang audio mixer
+Show Inspector|Ipakita ang inspector
+Play Forward|I-play pasulong
+Play Reverse|I-play paatras
+Stop|Stop
+Play Around Current Frame|I-play sa paligid ng frame
+Play In to Out|I-play ang in hanggang out
+Play Around In / Around Out|I-play sa paligid ng in/out
+Loop Playback|I-loop ang playback
+Go to First Frame|Sa unang frame
+Go to Last Frame|Sa huling frame
+Go to In|Sa in
+Go to Out|Sa out
+Previous Frame|Nakaraang frame
+Next Frame|Susunod na frame
+Previous Edit Point|Nakaraang edit point
+Next Edit Point|Susunod na edit point
+Timeline Playback Resolution|Resolution ng playback
+Half|Kalahati
+Quarter|Kapat
+Effects Memory Cache|Memory cache ng effects
+Timeline Proxy Mode|Proxy mode
+Off|Off
+Eighth|Ikawalo
+Hardware Decoding|Hardware decoding
+Delete Render Cache|Burahin ang render cache
+Video Transitions|Mga video transition
+Cross Dissolve|Cross dissolve
+Dip to Color|Dip to color
+Audio Transitions|Mga audio transition
+Cross Fade|Cross fade
+Remove Transition|Alisin ang transition
+OpenFX|OpenFX
+Blur|Blur
+Gaussian Blur|Gaussian blur
+Sharpen|Sharpen
+Color|Kulay
+Invert Colors|I-invert ang kulay
+Black and White|Itim at puti
+Distort|Distort
+Mosaic|Mosaic
+Audio FX|Audio FX
+EQ|EQ
+Dynamics|Dynamics
+Picasso FX|Picasso FX
+Sepia|Sepia
+Soft Blur|Soft blur
+Light|Liwanag
+Glow|Glow
+Stylize|Stylize
+Vignette|Vignette
+Film Grain|Film grain
+Compositing Effects|Compositing effects
+Nodes|Mga node
+Generators|Mga generator
+Solid Color|Solid na kulay
+Color Bars|Color bars
+Gradient|Gradient
+Titles|Mga title
+Text|Teksto
+Text+|Teksto+
+Effects Library Search|Hanapin sa effects library
+Add Tool (Compositing)|Magdagdag ng tool (compositing)
+Reset All Grades and Nodes|I-reset lahat ng grade at node
+Reset Current Node Grade|I-reset ang kasalukuyang node
+Enable/Disable Current Node|Node on/off
+Grab Still|Kumuha ng still
+Play Still|I-play ang still
+Add Serial Node|Magdagdag ng serial node
+Add Serial Before|Magdagdag ng serial bago
+Add Parallel Node|Magdagdag ng parallel node
+Add Layer Mixer|Magdagdag ng layer mixer
+Add Splitter / Combiner|Magdagdag ng splitter / combiner
+Add Outside Node|Magdagdag ng outside node
+Label Node|Lagyan ng label ang node
+Timeline|Timeline
+Previous Node Graph|Naunang node graph
+Next Node Graph|Susunod na node graph
+LUT|LUT
+Apply LUT from list|Ilapat ang LUT mula sa listahan
+Gallery|Gallery
+Scopes On/Off|Scopes on/off
+Highlight|Highlight
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Awtomatikong pagpapalit ng dialogue
+Bounce Mix to Track|I-bounce ang mix sa track
+Bounce Selected Tracks|I-bounce ang napiling track
+Cache Audio Effects|Cache ng audio effects
+Audio Link|Audio link
+Link Group|Link group
+Decompose|I-decompose
+Loop Jog|Loop jog
+Show Audio Timeline / Mixer|Ipakita ang audio timeline / mixer
+Full Screen Viewer|Full screen viewer
+Show Panel in Workspace|Ipakita ang panel sa workspace
+Media Pool|Media pool
+Effects Library|Effects library
+Inspector|Inspector
+Mixer|Mixer
+Metadata|Metadata
+Edit Index|Edit index
+Sound Library|Sound library
+Layout|Layout
+Reset UI Layout|I-reset ang layout
+Save Layout|I-save ang layout
+Load Layout|I-load ang layout
+Switch to Page|Pumunta sa page
+Media|Media
+Edit|Edit
+Effects|Epekto
+Audio|Audio
+Deliver|Deliver
+Dual Screen On/Off|Dalawang screen on/off
+Video Clean Feed|Malinis na video feed
+Picasso Suite Manual|Manwal ng Picasso Suite
+Picasso Suite Tutorials|Mga tutorial ng Picasso Suite
+Check for Updates...|Tingnan ang mga update...
+Export Log File...|I-export ang log file...
+About Picasso Suite|Tungkol sa Picasso Suite
+Language|Wika

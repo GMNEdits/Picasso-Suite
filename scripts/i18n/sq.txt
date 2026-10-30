@@ -1,0 +1,304 @@
+#menus
+Sked.
+Red.
+Prer.
+Kronol.
+Klip
+Shenj
+Pamja
+Luajtja
+Efekte
+Ngjy.
+Audio
+Hapësira
+Ndihmë
+#entries
+New Project Library...|Bibliotekë e re projektesh...
+Open Project Library...|Hap bibliotekën e projekteve...
+Show Current Project Library in File Explorer|Shfaq bibliotekën në Explorer
+Project Manager|Menaxheri i projekteve
+New Project|Projekt i ri
+Open Project...|Hap projektin...
+Import Project...|Importo projektin...
+Export Project...|Eksporto projektin...
+Restore Project Archive...|Rikthe arkivin e projektit...
+Save Project|Ruaj projektin
+Save Project As...|Ruaj projektin si...
+Save Copy As...|Ruaj kopjen si...
+Revert to Last Saved Version|Kthehu te ruajtja e fundit
+Import|Importo
+Media...|Media...
+Folder as Bin...|Dosje si bin...
+Timeline: AAF, EDL, XML...|Kronologji: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Kronologji: pre-EDL...
+Subtitle...|Titra...
+Metadata to Media Pool...|Metadata në grupin e medias...
+Bin...|Bin...
+Export|Eksporto
+Timeline: EDL...|Kronologji: EDL...
+Timeline: OpenTimelineIO...|Kronologji: OpenTimelineIO...
+Timeline: XML...|Kronologji: XML...
+Timeline: AAF...|Kronologji: AAF...
+Metadata from Media Pool...|Metadata nga grupi i medias...
+Media Management...|Menaxhimi i medias...
+Project Settings...|Cilësimet e projektit...
+System Preferences...|Preferencat e sistemit...
+Quick Export...|Eksport i shpejtë...
+Quit|Dil
+Undo|Zhbëj
+Redo|Ribëj
+Cut|Prit
+Copy|Kopjo
+Paste|Ngjit
+Paste Insert|Ngjit dhe fut
+Paste Mix to Current Track|Ngjit miksin në pistë
+Duplicate|Dyfisho
+Fit to Fill|Përshtat me mbushjen
+Place on Top|Vendos sipër
+Delete Selected|Fshij të zgjedhurat
+Delete Selected with Ripple|Fshij të zgjedhurat me ripple
+Select All|Zgjidh të gjitha
+Deselect All|Hiq zgjedhjen
+Select Clips Forward|Zgjidh klipet përpara
+Find...|Gjej...
+Recent Projects|Projektet e fundit
+Project Manager...|Menaxheri i projekteve...
+Keyboard Customization|Shkurtoret e tastierës
+Select Nearest Edit Point|Zgjidh prerjen më të afërt
+Selection Mode|Mënyra e zgjedhjes
+Trim Mode|Mënyra e prerjes
+Dynamic Trim Mode|Prerje dinamike
+Ripple Start|Ripple fillimi
+Ripple End|Ripple fundi
+Ripple Trim Previous / Next|Ripple i mëparshëm / tjetri
+Ripple Trim Previous Edit to Playhead|Ripple i mëparshëm te koka
+Ripple Trim Next Edit to Playhead|Ripple tjetri te koka
+Trim Start to Playhead|Prit fillimin te koka
+Trim End to Playhead|Prit fundin te koka
+Extend Edit|Zgjat prerjen
+Slip Clip|Slip klipi
+Slip One Frame Earlier|Slip një kuadër më herët
+Slip One Frame Later|Slip një kuadër më vonë
+Slide Clip|Slide klipi
+Slide One Frame Left|Slide një kuadër majtas
+Slide One Frame Right|Slide një kuadër djathtas
+Loop Trim|Prerje në lak
+Asymmetric Trimming|Prerje asimetrike
+Trim Editor|Redaktori i prerjes
+New Timeline...|Kronologji e re...
+New Timeline Using Selected Clips|Kronologji nga klipet e zgjedhura
+Create New Compound Clip...|Klip i ri i përbërë...
+New Effects Clip...|Klip i ri efektesh...
+Decompose in Place|Zbërthe në vend
+Decompose Compound Clip|Zbërthe klipin e përbërë
+Decompose Nested Timeline|Zbërthe kronologjinë e futur
+Split Clip|Ndaj klipin
+Create Timeline Using Bin...|Kronologji nga bin...
+Import Timeline...|Importo kronologjinë...
+Export Timeline...|Eksporto kronologjinë...
+Timeline Resolution and Frame Rate...|Rezolucioni dhe kuadrot...
+Timeline Settings|Cilësimet e kronologjisë
+Snap|Ngjit
+Linked Selection|Zgjedhje e lidhur
+Position Lock|Kyçja e pozicionit
+Selection Follows Playhead|Zgjedhja ndjek kokën
+Add Marker|Shto shënues
+Add Marker and Show Dialog|Shto shënues me dialog
+Delete All Markers|Fshij të gjithë shënuesit
+Create Subtitle Track|Krijo pistë titrash
+Create Subtitle Region|Krijo zonë titrash
+Add Transition to All Edits|Kalim në të gjitha prerjet
+Switch Timeline|Ndërro kronologjinë
+Open Timeline in New Window|Hap kronologjinë në dritare
+Delete Timeline|Fshij kronologjinë
+Enable Clip|Aktivizo klipin
+Match Frame|Kuadër përputhës
+Lock Clip|Kyç klipin
+New Multicam Clip...|Klip i ri shumëkamerësh...
+Multicam Viewer|Shikuesi shumëkamerësh
+Add to Media Pool as Stills|Shto si imazhe statike
+Change Clip Speed...|Ndrysho shpejtësinë e klipit...
+Change Clip Duration...|Ndrysho kohëzgjatjen e klipit...
+Retime Controls|Kontrollet e kohës
+Retime Clip|Ricakto kohën e klipit
+Freeze Frame|Ngri kuadrin
+Speed Ramp...|Rampë shpejtësie...
+Reverse Clip|Kthe klipin mbrapsht
+Create New Compound Clip|Klip i ri i përbërë
+Link Clips|Lidh klipet
+Unlink Audio and Video|Ndaj zërin nga pamja
+Enable / Disable Audio Scrubbing|Scrubbing zëri on/off
+Auto Align Clips|Rreshto klipet automatikisht
+Based on Timecode|Sipas timecode
+Based on Waveform|Sipas formës së valës
+Normalize Audio Levels...|Normalizo nivelin e zërit...
+Render in Place|Rendero në vend
+New Effects Clip|Klip i ri efektesh
+New Compound Clip|Klip i ri i përbërë
+Clip Attributes...|Atributet e klipit...
+Mark In|Shëno hyrjen
+Mark Out|Shëno daljen
+Mark Clip|Shëno klipin
+Mark Timeline In/Out|Shëno kronologjinë hyrje/dalje
+Clear In|Pastro hyrjen
+Clear Out|Pastro daljen
+Clear In and Out|Pastro hyrjen dhe daljen
+Modify Marker...|Ndrysho shënuesin...
+Delete Marker at Current Position|Fshij shënuesin këtu
+Delete All Markers in Timeline|Fshij të gjithë shënuesit
+Go to Previous Marker|Te shënuesi i mëparshëm
+Go to Next Marker|Te shënuesi tjetër
+Set Clip Color|Ngjyra e klipit
+Default|Parazgjedhja
+Orange|Portokalli
+Apricot|Kajsi
+Yellow|E verdhë
+Lime|Limon
+Olive|Ullinj
+Green|E gjelbër
+Teal|Blu-jeshile
+Navy|Blu detar
+Blue|Blu
+Purple|Vjollcë
+Violet|Ngjyrë vjollce
+Pink|Rozë
+Tan|Kafe e çelët
+Beige|Bezhë
+Brown|Kafe
+Chocolate|Çokollatë
+Show Current Frame on Playback|Shfaq kuadrin gjatë luajtjes
+Safe Area Overlay|Zona e sigurt
+Show Grid / Guides|Shfaq rrjetën / udhëzuesit
+Show Toolbar|Shfaq shiritin e veglave
+Show Full Screen Viewer|Shfaq shikuesin në ekran të plotë
+Show Cinema Viewer|Shfaq shikuesin kinema
+Viewer Overlays|Mbivendosjet e shikuesit
+Transform / Crop / Dynamic Zoom|Transformo / prit / zmadho
+Safe Area|Zona e sigurt
+Center Crosshair|Kryqi qendror
+Checkerboard Background (Alpha)|Sfondi shaku (alfa)
+Show All Overlays|Shfaq të gjitha mbivendosjet
+Timecode Window|Dritarja e timecode
+Show Scopes|Shfaq scopes
+Show Audio Meters|Shfaq matësit e zërit
+Show Audio Mixer|Shfaq mikserin e zërit
+Show Inspector|Shfaq inspektorin
+Play Forward|Luaj përpara
+Play Reverse|Luaj mbrapsht
+Stop|Ndalo
+Play Around Current Frame|Luaj rreth kuadrit
+Play In to Out|Luaj hyrje deri dalje
+Play Around In / Around Out|Luaj rreth hyrjes/daljes
+Loop Playback|Luaj në lak
+Go to First Frame|Te kuadri i parë
+Go to Last Frame|Te kuadri i fundit
+Go to In|Te hyrja
+Go to Out|Te dalja
+Previous Frame|Kuadri i mëparshëm
+Next Frame|Kuadri tjetër
+Previous Edit Point|Prerja e mëparshme
+Next Edit Point|Prerja tjetër
+Timeline Playback Resolution|Rezolucioni i luajtjes
+Half|Gjysmë
+Quarter|Çerek
+Effects Memory Cache|Cache e kujtesës së efekteve
+Timeline Proxy Mode|Mënyra proxy
+Off|Fikur
+Eighth|Një e teta
+Hardware Decoding|Dekodim me harduer
+Delete Render Cache|Fshij cache-in e render
+Video Transitions|Kalimet e videos
+Cross Dissolve|Shkrirje e kryqëzuar
+Dip to Color|Zbehje përmes ngjyrës
+Audio Transitions|Kalimet e zërit
+Cross Fade|Fade i kryqëzuar
+Remove Transition|Hiq kalimin
+OpenFX|OpenFX
+Blur|Turbullim
+Gaussian Blur|Turbullim Gauss
+Sharpen|Mprehje
+Color|Ngjyra
+Invert Colors|Anasjell ngjyrat
+Black and White|Bardhezi
+Distort|Shtrembërim
+Mosaic|Mozaik
+Audio FX|Efekte zëri
+EQ|EQ
+Dynamics|Dinamika
+Picasso FX|Picasso FX
+Sepia|Seppia
+Soft Blur|Turbullim i butë
+Light|Dritë
+Glow|Shkëlqim
+Stylize|Stilizim
+Vignette|Vinjetë
+Film Grain|Kokrra filmi
+Compositing Effects|Efekte kompozimi
+Nodes|Nyjet
+Generators|Gjeneratorë
+Solid Color|Ngjyrë e plotë
+Color Bars|Shirita ngjyrash
+Gradient|Gradient
+Titles|Tituj
+Text|Tekst
+Text+|Tekst+
+Effects Library Search|Kërko në bibliotekën e efekteve
+Add Tool (Compositing)|Shto vegël (kompozim)
+Reset All Grades and Nodes|Rivendos gradimet dhe nyjet
+Reset Current Node Grade|Rivendos nyjen aktuale
+Enable/Disable Current Node|Nyja on/off
+Grab Still|Kap still
+Play Still|Luaj still
+Add Serial Node|Shto nyje serike
+Add Serial Before|Shto serike përpara
+Add Parallel Node|Shto nyje paralele
+Add Layer Mixer|Shto mikser shtresash
+Add Splitter / Combiner|Shto ndarës / bashkues
+Add Outside Node|Shto nyje të jashtme
+Label Node|Etiketo nyjen
+Timeline|Kronologjia
+Previous Node Graph|Grafi i mëparshëm i nyjeve
+Next Node Graph|Grafi tjetër i nyjeve
+LUT|LUT
+Apply LUT from list|Apliko LUT nga lista
+Gallery|Galeria
+Scopes On/Off|Scopes on/off
+Highlight|Dritat e forta
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Zëvendësim automatik dialogu
+Bounce Mix to Track|Bounce miksi në pistë
+Bounce Selected Tracks|Bounce pistat e zgjedhura
+Cache Audio Effects|Cache efektesh zëri
+Audio Link|Lidhja e zërit
+Link Group|Grupi i lidhjes
+Decompose|Zbërthe
+Loop Jog|Jog në lak
+Show Audio Timeline / Mixer|Shfaq kronologjinë / mikserin e zërit
+Full Screen Viewer|Shikuesi në ekran të plotë
+Show Panel in Workspace|Shfaq panelin në hapësirë
+Media Pool|Grupi i medias
+Effects Library|Biblioteka e efekteve
+Inspector|Inspektori
+Mixer|Mikseri
+Metadata|Metadata
+Edit Index|Indeksi i redaktimit
+Sound Library|Biblioteka e zërave
+Layout|Paraqitja
+Reset UI Layout|Rivendos paraqitjen
+Save Layout|Ruaj paraqitjen
+Load Layout|Ngarko paraqitjen
+Switch to Page|Kalo te faqja
+Media|Media
+Edit|Redaktim
+Effects|Efekte
+Audio|Audio
+Deliver|Dorëzim
+Dual Screen On/Off|Dy ekrane on/off
+Video Clean Feed|Dalje e pastër videoje
+Picasso Suite Manual|Manuali i Picasso Suite
+Picasso Suite Tutorials|Tutorialet e Picasso Suite
+Check for Updates...|Kontrollo për përditësime...
+Export Log File...|Eksporto skedarin e regjistrit...
+About Picasso Suite|Rreth Picasso Suite
+Language|Gjuha

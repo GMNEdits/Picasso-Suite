@@ -1,0 +1,304 @@
+#menus
+Tệp
+Sửa
+Xén
+Dòng TG
+Clip
+Dấu
+Xem
+Phát
+Hiệu
+Màu
+Âm thanh
+Không gian
+Trợ giúp
+#entries
+New Project Library...|Thư viện dự án mới...
+Open Project Library...|Mở thư viện dự án...
+Show Current Project Library in File Explorer|Hiện thư viện trong Explorer
+Project Manager|Trình quản lý dự án
+New Project|Dự án mới
+Open Project...|Mở dự án...
+Import Project...|Nhập dự án...
+Export Project...|Xuất dự án...
+Restore Project Archive...|Khôi phục kho lưu dự án...
+Save Project|Lưu dự án
+Save Project As...|Lưu dự án thành...
+Save Copy As...|Lưu bản sao thành...
+Revert to Last Saved Version|Về bản lưu gần nhất
+Import|Nhập
+Media...|Phương tiện...
+Folder as Bin...|Thư mục thành bin...
+Timeline: AAF, EDL, XML...|Dòng TG: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Dòng TG: tiền EDL...
+Subtitle...|Phụ đề...
+Metadata to Media Pool...|Siêu dữ liệu vào kho...
+Bin...|Bin...
+Export|Xuất
+Timeline: EDL...|Dòng TG: EDL...
+Timeline: OpenTimelineIO...|Dòng TG: OpenTimelineIO...
+Timeline: XML...|Dòng TG: XML...
+Timeline: AAF...|Dòng TG: AAF...
+Metadata from Media Pool...|Siêu dữ liệu từ kho...
+Media Management...|Quản lý phương tiện...
+Project Settings...|Cài đặt dự án...
+System Preferences...|Tùy chọn hệ thống...
+Quick Export...|Xuất nhanh...
+Quit|Thoát
+Undo|Hoàn tác
+Redo|Làm lại
+Cut|Cắt
+Copy|Sao chép
+Paste|Dán
+Paste Insert|Dán và chèn
+Paste Mix to Current Track|Dán bản trộn vào track
+Duplicate|Nhân đôi
+Fit to Fill|Vừa khít
+Place on Top|Đặt lên trên
+Delete Selected|Xóa mục đã chọn
+Delete Selected with Ripple|Xóa đã chọn kèm ripple
+Select All|Chọn tất cả
+Deselect All|Bỏ chọn tất cả
+Select Clips Forward|Chọn clip phía sau
+Find...|Tìm...
+Recent Projects|Dự án gần đây
+Project Manager...|Trình quản lý dự án...
+Keyboard Customization|Phím tắt
+Select Nearest Edit Point|Chọn điểm cắt gần nhất
+Selection Mode|Chế độ chọn
+Trim Mode|Chế độ xén
+Dynamic Trim Mode|Xén động
+Ripple Start|Ripple đầu
+Ripple End|Ripple cuối
+Ripple Trim Previous / Next|Ripple trước / sau
+Ripple Trim Previous Edit to Playhead|Ripple trước đến đầu phát
+Ripple Trim Next Edit to Playhead|Ripple sau đến đầu phát
+Trim Start to Playhead|Xén đầu đến đầu phát
+Trim End to Playhead|Xén cuối đến đầu phát
+Extend Edit|Kéo dài điểm cắt
+Slip Clip|Slip clip
+Slip One Frame Earlier|Slip sớm một khung
+Slip One Frame Later|Slip muộn một khung
+Slide Clip|Slide clip
+Slide One Frame Left|Slide một khung sang trái
+Slide One Frame Right|Slide một khung sang phải
+Loop Trim|Xén lặp
+Asymmetric Trimming|Xén bất đối xứng
+Trim Editor|Trình sửa xén
+New Timeline...|Dòng thời gian mới...
+New Timeline Using Selected Clips|Dòng TG từ clip đã chọn
+Create New Compound Clip...|Clip ghép mới...
+New Effects Clip...|Clip hiệu ứng mới...
+Decompose in Place|Tách ngay tại chỗ
+Decompose Compound Clip|Tách clip ghép
+Decompose Nested Timeline|Tách dòng TG lồng nhau
+Split Clip|Chia clip
+Create Timeline Using Bin...|Dòng TG từ bin...
+Import Timeline...|Nhập dòng thời gian...
+Export Timeline...|Xuất dòng thời gian...
+Timeline Resolution and Frame Rate...|Độ phân giải và tốc độ khung...
+Timeline Settings|Cài đặt dòng thời gian
+Snap|Bắt dính
+Linked Selection|Chọn liên kết
+Position Lock|Khóa vị trí
+Selection Follows Playhead|Vùng chọn theo đầu phát
+Add Marker|Thêm điểm đánh dấu
+Add Marker and Show Dialog|Thêm dấu và hiện hộp thoại
+Delete All Markers|Xóa mọi điểm đánh dấu
+Create Subtitle Track|Tạo track phụ đề
+Create Subtitle Region|Tạo vùng phụ đề
+Add Transition to All Edits|Chuyển cảnh cho mọi điểm cắt
+Switch Timeline|Đổi dòng thời gian
+Open Timeline in New Window|Mở dòng TG trong cửa sổ mới
+Delete Timeline|Xóa dòng thời gian
+Enable Clip|Bật clip
+Match Frame|Khung khớp
+Lock Clip|Khóa clip
+New Multicam Clip...|Clip đa camera mới...
+Multicam Viewer|Trình xem đa camera
+Add to Media Pool as Stills|Thêm thành ảnh tĩnh
+Change Clip Speed...|Đổi tốc độ clip...
+Change Clip Duration...|Đổi thời lượng clip...
+Retime Controls|Điều khiển thời gian
+Retime Clip|Đặt lại thời gian clip
+Freeze Frame|Đóng băng khung
+Speed Ramp...|Dốc tốc độ...
+Reverse Clip|Đảo ngược clip
+Create New Compound Clip|Clip ghép mới
+Link Clips|Liên kết clip
+Unlink Audio and Video|Tách âm thanh và hình
+Enable / Disable Audio Scrubbing|Scrubbing âm thanh bật/tắt
+Auto Align Clips|Tự động căn chỉnh clip
+Based on Timecode|Theo timecode
+Based on Waveform|Theo dạng sóng
+Normalize Audio Levels...|Chuẩn hóa mức âm thanh...
+Render in Place|Render tại chỗ
+New Effects Clip|Clip hiệu ứng mới
+New Compound Clip|Clip ghép mới
+Clip Attributes...|Thuộc tính clip...
+Mark In|Đánh dấu vào
+Mark Out|Đánh dấu ra
+Mark Clip|Đánh dấu clip
+Mark Timeline In/Out|Đánh dấu DTG vào/ra
+Clear In|Xóa điểm vào
+Clear Out|Xóa điểm ra
+Clear In and Out|Xóa điểm vào và ra
+Modify Marker...|Sửa điểm đánh dấu...
+Delete Marker at Current Position|Xóa dấu tại đây
+Delete All Markers in Timeline|Xóa mọi điểm đánh dấu
+Go to Previous Marker|Đến dấu trước
+Go to Next Marker|Đến dấu sau
+Set Clip Color|Màu clip
+Default|Mặc định
+Orange|Cam
+Apricot|Mơ
+Yellow|Vàng
+Lime|Chanh
+Olive|Ô liu
+Green|Xanh lá
+Teal|Xanh mòng két
+Navy|Xanh navy
+Blue|Xanh dương
+Purple|Tím
+Violet|Tím violet
+Pink|Hồng
+Tan|Nâu nhạt
+Beige|Be
+Brown|Nâu
+Chocolate|Sô cô la
+Show Current Frame on Playback|Hiện khung hiện tại khi phát
+Safe Area Overlay|Vùng an toàn
+Show Grid / Guides|Hiện lưới / đường dẫn
+Show Toolbar|Hiện thanh công cụ
+Show Full Screen Viewer|Hiện trình xem toàn màn hình
+Show Cinema Viewer|Hiện trình xem rạp
+Viewer Overlays|Lớp phủ trình xem
+Transform / Crop / Dynamic Zoom|Biến đổi / cắt / phóng
+Safe Area|Vùng an toàn
+Center Crosshair|Tâm chữ thập
+Checkerboard Background (Alpha)|Nền bàn cờ (alpha)
+Show All Overlays|Hiện mọi lớp phủ
+Timecode Window|Cửa sổ timecode
+Show Scopes|Hiện scope
+Show Audio Meters|Hiện đồng hồ âm thanh
+Show Audio Mixer|Hiện bàn trộn âm thanh
+Show Inspector|Hiện trình kiểm tra
+Play Forward|Phát tiến
+Play Reverse|Phát lùi
+Stop|Dừng
+Play Around Current Frame|Phát quanh khung
+Play In to Out|Phát từ vào đến ra
+Play Around In / Around Out|Phát quanh vào/ra
+Loop Playback|Phát lặp
+Go to First Frame|Đến khung đầu
+Go to Last Frame|Đến khung cuối
+Go to In|Đến điểm vào
+Go to Out|Đến điểm ra
+Previous Frame|Khung trước
+Next Frame|Khung sau
+Previous Edit Point|Điểm cắt trước
+Next Edit Point|Điểm cắt sau
+Timeline Playback Resolution|Độ phân giải phát
+Half|Một nửa
+Quarter|Một phần tư
+Effects Memory Cache|Bộ đệm bộ nhớ hiệu ứng
+Timeline Proxy Mode|Chế độ proxy
+Off|Tắt
+Eighth|Một phần tám
+Hardware Decoding|Giải mã phần cứng
+Delete Render Cache|Xóa bộ đệm render
+Video Transitions|Chuyển cảnh video
+Cross Dissolve|Hòa tan chéo
+Dip to Color|Nhúng qua màu
+Audio Transitions|Chuyển cảnh âm thanh
+Cross Fade|Mờ chéo
+Remove Transition|Gỡ chuyển cảnh
+OpenFX|OpenFX
+Blur|Làm mờ
+Gaussian Blur|Mờ Gauss
+Sharpen|Làm nét
+Color|Màu
+Invert Colors|Đảo màu
+Black and White|Đen trắng
+Distort|Biến dạng
+Mosaic|Khảm
+Audio FX|Hiệu ứng âm thanh
+EQ|EQ
+Dynamics|Động lực
+Picasso FX|Picasso FX
+Sepia|Sepia
+Soft Blur|Mờ nhẹ
+Light|Ánh sáng
+Glow|Phát sáng
+Stylize|Cách điệu
+Vignette|Vignette
+Film Grain|Hạt phim
+Compositing Effects|Hiệu ứng ghép
+Nodes|Nút
+Generators|Bộ tạo
+Solid Color|Màu đơn
+Color Bars|Thanh màu
+Gradient|Chuyển sắc
+Titles|Tiêu đề
+Text|Văn bản
+Text+|Văn bản+
+Effects Library Search|Tìm trong thư viện hiệu ứng
+Add Tool (Compositing)|Thêm công cụ (ghép)
+Reset All Grades and Nodes|Đặt lại mọi grade và nút
+Reset Current Node Grade|Đặt lại nút hiện tại
+Enable/Disable Current Node|Nút bật/tắt
+Grab Still|Chụp still
+Play Still|Phát still
+Add Serial Node|Thêm nút nối tiếp
+Add Serial Before|Thêm nối tiếp trước
+Add Parallel Node|Thêm nút song song
+Add Layer Mixer|Thêm bộ trộn lớp
+Add Splitter / Combiner|Thêm bộ chia / gộp
+Add Outside Node|Thêm nút ngoài
+Label Node|Gắn nhãn nút
+Timeline|Dòng thời gian
+Previous Node Graph|Đồ thị nút trước
+Next Node Graph|Đồ thị nút sau
+LUT|LUT
+Apply LUT from list|Áp dụng LUT từ danh sách
+Gallery|Thư viện
+Scopes On/Off|Scope bật/tắt
+Highlight|Vùng sáng
+Lightbox|Lightbox
+ADR|ADR
+Automated Dialogue Replacement|Thay thế thoại tự động
+Bounce Mix to Track|Bounce bản trộn vào track
+Bounce Selected Tracks|Bounce track đã chọn
+Cache Audio Effects|Bộ đệm hiệu ứng âm thanh
+Audio Link|Liên kết âm thanh
+Link Group|Nhóm liên kết
+Decompose|Tách
+Loop Jog|Jog lặp
+Show Audio Timeline / Mixer|Hiện dòng TG / bàn trộn âm thanh
+Full Screen Viewer|Trình xem toàn màn hình
+Show Panel in Workspace|Hiện bảng trong không gian
+Media Pool|Kho phương tiện
+Effects Library|Thư viện hiệu ứng
+Inspector|Trình kiểm tra
+Mixer|Bàn trộn
+Metadata|Siêu dữ liệu
+Edit Index|Chỉ mục chỉnh sửa
+Sound Library|Thư viện âm thanh
+Layout|Bố cục
+Reset UI Layout|Đặt lại bố cục
+Save Layout|Lưu bố cục
+Load Layout|Tải bố cục
+Switch to Page|Chuyển đến trang
+Media|Phương tiện
+Edit|Chỉnh sửa
+Effects|Hiệu ứng
+Audio|Âm thanh
+Deliver|Giao
+Dual Screen On/Off|Hai màn hình bật/tắt
+Video Clean Feed|Đầu ra video sạch
+Picasso Suite Manual|Sổ tay Picasso Suite
+Picasso Suite Tutorials|Hướng dẫn Picasso Suite
+Check for Updates...|Kiểm tra cập nhật...
+Export Log File...|Xuất tệp nhật ký...
+About Picasso Suite|Giới thiệu Picasso Suite
+Language|Ngôn ngữ

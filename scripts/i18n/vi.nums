@@ -1,0 +1,553 @@
+#menus
+Tệp
+Sửa
+Xén
+Dòng TG
+Clip
+Dấu
+Xem
+Phát
+Hiệu
+Màu
+Âm thanh
+Không gian
+Trợ giúp
+#entries
+1|Thư viện dự án mới...
+2|Mở thư viện dự án...
+3|Hiện thư viện trong Explorer
+4|Trình quản lý dự án
+5|Dự án mới
+6|Mở dự án...
+7|Nhập dự án...
+8|Xuất dự án...
+9|Khôi phục kho lưu dự án...
+10|Lưu dự án
+11|Lưu dự án thành...
+12|Lưu bản sao thành...
+13|Về bản lưu gần nhất
+14|Nhập
+15|Phương tiện...
+16|Thư mục thành bin...
+17|Dòng TG: AAF, EDL, XML...
+18|Dòng TG: tiền EDL...
+19|Phụ đề...
+20|Siêu dữ liệu vào kho...
+21|Bin...
+22|Xuất
+23|Dòng TG: EDL...
+24|Dòng TG: OpenTimelineIO...
+25|Dòng TG: XML...
+26|Dòng TG: AAF...
+27|Siêu dữ liệu từ kho...
+28|Quản lý phương tiện...
+29|Cài đặt dự án...
+30|Tùy chọn hệ thống...
+31|Xuất nhanh...
+32|Thoát
+33|Hoàn tác
+34|Làm lại
+35|Cắt
+36|Sao chép
+37|Dán
+38|Dán và chèn
+39|Dán bản trộn vào track
+40|Nhân đôi
+41|Vừa khít
+42|Đặt lên trên
+43|Xóa mục đã chọn
+44|Xóa đã chọn kèm ripple
+45|Chọn tất cả
+46|Bỏ chọn tất cả
+47|Chọn clip phía sau
+48|Tìm...
+49|Dự án gần đây
+50|Trình quản lý dự án...
+51|Phím tắt
+52|Chọn điểm cắt gần nhất
+53|Chế độ chọn
+54|Chế độ xén
+55|Xén động
+56|Ripple đầu
+57|Ripple cuối
+58|Ripple trước / sau
+59|Ripple trước đến đầu phát
+60|Ripple sau đến đầu phát
+61|Xén đầu đến đầu phát
+62|Xén cuối đến đầu phát
+63|Kéo dài điểm cắt
+64|Slip clip
+65|Slip sớm một khung
+66|Slip muộn một khung
+67|Slide clip
+68|Slide một khung sang trái
+69|Slide một khung sang phải
+70|Xén lặp
+71|Xén bất đối xứng
+72|Trình sửa xén
+73|Dòng thời gian mới...
+74|Dòng TG từ clip đã chọn
+75|Clip ghép mới...
+76|Clip hiệu ứng mới...
+77|Tách ngay tại chỗ
+78|Tách clip ghép
+79|Tách dòng TG lồng nhau
+80|Chia clip
+81|Dòng TG từ bin...
+82|Nhập dòng thời gian...
+83|Xuất dòng thời gian...
+84|Độ phân giải và tốc độ khung...
+85|Cài đặt dòng thời gian
+86|Bắt dính
+87|Chọn liên kết
+88|Khóa vị trí
+89|Vùng chọn theo đầu phát
+90|Thêm điểm đánh dấu
+91|Thêm dấu và hiện hộp thoại
+92|Xóa mọi điểm đánh dấu
+93|Tạo track phụ đề
+94|Tạo vùng phụ đề
+95|Chuyển cảnh cho mọi điểm cắt
+96|Đổi dòng thời gian
+97|Mở dòng TG trong cửa sổ mới
+98|Xóa dòng thời gian
+99|Bật clip
+100|Khung khớp
+101|Khóa clip
+102|Clip đa camera mới...
+103|Trình xem đa camera
+104|Thêm thành ảnh tĩnh
+105|Đổi tốc độ clip...
+106|Đổi thời lượng clip...
+107|Điều khiển thời gian
+108|Đặt lại thời gian clip
+109|Đóng băng khung
+110|Dốc tốc độ...
+111|Đảo ngược clip
+112|Clip ghép mới
+113|Liên kết clip
+114|Tách âm thanh và hình
+115|Scrubbing âm thanh bật/tắt
+116|Tự động căn chỉnh clip
+117|Theo timecode
+118|Theo dạng sóng
+119|Chuẩn hóa mức âm thanh...
+120|Render tại chỗ
+121|Clip hiệu ứng mới
+122|Clip ghép mới
+123|Thuộc tính clip...
+124|Đánh dấu vào
+125|Đánh dấu ra
+126|Đánh dấu clip
+127|Đánh dấu DTG vào/ra
+128|Xóa điểm vào
+129|Xóa điểm ra
+130|Xóa điểm vào và ra
+131|Sửa điểm đánh dấu...
+132|Xóa dấu tại đây
+133|Xóa mọi điểm đánh dấu
+134|Đến dấu trước
+135|Đến dấu sau
+136|Màu clip
+137|Mặc định
+138|Cam
+139|Mơ
+140|Vàng
+141|Chanh
+142|Ô liu
+143|Xanh lá
+144|Xanh mòng két
+145|Xanh navy
+146|Xanh dương
+147|Tím
+148|Tím violet
+149|Hồng
+150|Nâu nhạt
+151|Be
+152|Nâu
+153|Sô cô la
+154|Hiện khung hiện tại khi phát
+155|Vùng an toàn
+156|Hiện lưới / đường dẫn
+157|Hiện thanh công cụ
+158|Hiện trình xem toàn màn hình
+159|Hiện trình xem rạp
+160|Lớp phủ trình xem
+161|Biến đổi / cắt / phóng
+162|Vùng an toàn
+163|Tâm chữ thập
+164|Nền bàn cờ (alpha)
+165|Hiện mọi lớp phủ
+166|Cửa sổ timecode
+167|Hiện scope
+168|Hiện đồng hồ âm thanh
+169|Hiện bàn trộn âm thanh
+170|Hiện trình kiểm tra
+171|Phát tiến
+172|Phát lùi
+173|Dừng
+174|Phát quanh khung
+175|Phát từ vào đến ra
+176|Phát quanh vào/ra
+177|Phát lặp
+178|Đến khung đầu
+179|Đến khung cuối
+180|Đến điểm vào
+181|Đến điểm ra
+182|Khung trước
+183|Khung sau
+184|Điểm cắt trước
+185|Điểm cắt sau
+186|Độ phân giải phát
+187|Một nửa
+188|Một phần tư
+189|Bộ đệm bộ nhớ hiệu ứng
+190|Chế độ proxy
+191|Tắt
+192|Một phần tám
+193|Giải mã phần cứng
+194|Xóa bộ đệm render
+195|Chuyển cảnh video
+196|Hòa tan chéo
+197|Nhúng qua màu
+198|Chuyển cảnh âm thanh
+199|Mờ chéo
+200|Gỡ chuyển cảnh
+201|OpenFX
+202|Làm mờ
+203|Mờ Gauss
+204|Làm nét
+205|Màu
+206|Đảo màu
+207|Đen trắng
+208|Biến dạng
+209|Khảm
+210|Hiệu ứng âm thanh
+211|EQ
+212|Động lực
+213|Picasso FX
+214|Sepia
+215|Mờ nhẹ
+216|Ánh sáng
+217|Phát sáng
+218|Cách điệu
+219|Vignette
+220|Hạt phim
+221|Hiệu ứng ghép
+222|Nút
+223|Bộ tạo
+224|Màu đơn
+225|Thanh màu
+226|Chuyển sắc
+227|Tiêu đề
+228|Văn bản
+229|Văn bản+
+230|Tìm trong thư viện hiệu ứng
+231|Thêm công cụ (ghép)
+232|Đặt lại mọi grade và nút
+233|Đặt lại nút hiện tại
+234|Nút bật/tắt
+235|Chụp still
+236|Phát still
+237|Thêm nút nối tiếp
+238|Thêm nối tiếp trước
+239|Thêm nút song song
+240|Thêm bộ trộn lớp
+241|Thêm bộ chia / gộp
+242|Thêm nút ngoài
+243|Gắn nhãn nút
+244|Dòng thời gian
+245|Đồ thị nút trước
+246|Đồ thị nút sau
+247|LUT
+248|Áp dụng LUT từ danh sách
+249|Thư viện
+250|Scope bật/tắt
+251|Vùng sáng
+252|Lightbox
+253|ADR
+254|Thay thế thoại tự động
+255|Bounce bản trộn vào track
+256|Bounce track đã chọn
+257|Bộ đệm hiệu ứng âm thanh
+258|Liên kết âm thanh
+259|Nhóm liên kết
+260|Tách
+261|Jog lặp
+262|Hiện dòng TG / bàn trộn âm thanh
+263|Trình xem toàn màn hình
+264|Hiện bảng trong không gian
+265|Kho phương tiện
+266|Thư viện hiệu ứng
+267|Trình kiểm tra
+268|Bàn trộn
+269|Siêu dữ liệu
+270|Chỉ mục chỉnh sửa
+271|Thư viện âm thanh
+272|Bố cục
+273|Đặt lại bố cục
+274|Lưu bố cục
+275|Tải bố cục
+276|Chuyển đến trang
+277|Phương tiện
+278|Chỉnh sửa
+279|Hiệu ứng
+280|Âm thanh
+281|Giao
+282|Hai màn hình bật/tắt
+283|Đầu ra video sạch
+284|Sổ tay Picasso Suite
+285|Hướng dẫn Picasso Suite
+286|Kiểm tra cập nhật...
+287|Xuất tệp nhật ký...
+288|Giới thiệu Picasso Suite
+289|Ngôn ngữ
+#ui
+1|Clip
+2|60 khung/giây
+3|Thêm việc
+4|Thêm vào hàng
+5|Nâng cao
+6|Lưu trữ dự án
+7|Lưu trữ...
+8|Tự động
+9|Tự động
+10|Cân bằng
+11|Bin
+12|Duyệt
+13|Gửi bus
+14|Thu
+15|Chương
+16|Chọn thư mục
+17|Tên clip
+18|Nhân bản
+19|Công cụ nhân bản
+20|Codec
+21|Màu+
+22|Bộ sưu tập
+23|Tương phản
+24|Điều khiển
+25|Tạo album
+26|Đường cong - riêng
+27|Xuất riêng
+28|Giải mã
+29|Dự án mẫu
+30|Kéo ảnh vào album để bắt đầu sửa
+31|Vẽ bằng
+32|Đang sửa
+33|Hiệu ứng vào
+34|Âm thanh nhúng
+35|Bộ mã hóa
+36|Hồ sơ mã hóa
+37|Cả dòng TG
+38|Dung lượng
+39|Mỗi
+40|Xuất video
+41|Fairlight
+42|Tên tệp
+43|Định dạng
+44|Khung/giây
+45|Sắp xếp lại
+46|Khung đầy đủ
+47|Toàn màn hình
+48|Fusion
+49|Gain
+50|Gamma
+51|Bộ tạo
+52|Card đồ họa
+53|Nhóm
+54|Vùng sáng
+55|Cao
+56|Sắc độ
+57|Hình ảnh
+58|Chỉ mục
+59|Clip riêng lẻ
+60|Vào
+61|Tích hợp
+62|Khung chính
+63|Từ khóa
+64|Trộn T
+65|Lớp
+66|Cục bộ
+67|Vị trí
+68|Lặp
+69|Độ ồn
+70|Thấp
+71|Dấu
+72|Quản lý phương tiện
+73|Nguồn phương tiện
+74|Kho phương tiện
+75|Đồng hồ
+76|Giữa/chi tiết
+77|Bộ sửa đổi
+78|Màn hình
+79|Âm lượng màn hình
+80|Gốc
+81|Tối ưu mạng
+82|Không có việc
+83|Không có việc
+84|Chưa có still
+85|Chưa báo cáo
+86|Không có gì để xem
+87|Độ lệch
+88|Mở
+89|Thứ tự
+90|Parade
+91|Tạm dừng
+92|Ảnh
+93|Album
+94|Phát
+95|Khóa vị trí
+96|Cài sẵn
+97|Chính - bánh xe màu
+98|Chế độ xử lý
+99|Cài đặt dự án
+100|Dự án
+101|Chất lượng
+102|Xuất nhanh
+103|Phạm vi
+104|Điều khiển tốc độ
+105|Liên kết lại phương tiện
+106|Liên kết lại phương tiện...
+107|Gỡ
+108|Render
+109|Render tất cả
+110|Hàng render
+111|Cài đặt render
+112|Render - xuất riêng
+113|Đặt lại
+114|Đặt lại tất cả
+115|Độ phân giải
+116|Tìm
+117|Cài đặt
+118|Bóng
+119|Ngắn
+120|Ngắn tối đa
+121|Một clip
+122|Bin thông minh
+123|Không gian màu nguồn
+124|Không gian gamma nguồn
+125|Cài đặt phụ đề
+126|Hệ thống
+127|Độ phân giải DTG
+128|Proxy DTG
+129|Sắc thái
+130|Công cụ
+131|FX track
+132|Chuyển cảnh
+133|Chưa đặt tên
+134|Độ phân giải dọc
+135|Phiên bản 0.6.1
+136|Video
+137|Dạng sóng
+138|Không gian
+139|Kho chưa có clip
+140|Nhập clip hoặc thả tệp vào đây
+141|Thêm clip từ kho để bắt đầu
+142|Không có âm thanh
+143|Không có clip để grade
+144|Không có đầu vào
+145|THỜI LƯỢNG
+146|Xuất âm thanh
+147|Tốc độ dữ liệu
+148|Track ra 1
+149|Tên duy nhất
+150|Thêm (1), (2) ... vào tên thay vì ghi đè.
+151|Loại tệp
+152|Cả dòng TG
+153|Từ vào đến ra
+154|Tỉ lệ pixel
+155|Vuông
+156|Cinemascope
+157|Mức dữ liệu
+158|Giữ dưới đen/trên trắng
+159|Thẻ không gian màu
+160|Thẻ gamma
+161|Ghi dữ liệu vào hình
+162|Như dự án
+163|Bỏ qua mã hóa lại
+164|Phương tiện tối ưu
+165|Phương tiện proxy
+166|Ảnh bộ đệm
+167|Co giãn tốt nhất
+168|Debayer tốt nhất
+169|Mọi track video
+170|Bật flat pass
+171|Bỏ qua visionOS
+172|Không co giãn/blanking
+173|Chạy tập lệnh
+174|Bắt đầu
+175|của việc render
+176|Xuất phụ đề
+177|Tệp riêng
+178|Xuất thành
+179|khung
+180|Cắt
+181|Xanh két
+182|Một nửa
+183|Thanh màu
+184|Lightbox
+185|Sửa
+186|Bàn trộn
+187|Âm thanh
+188|Dòng TG: AAF, EDL, XML...
+189|Dòng TG: OpenTimelineIO...
+190|Trình dựng video viết bằng Rust cho Windows, Linux, macOS và web.
+191|Scrubbing âm thanh (có tiếng khi kéo đầu phát)
+192|Tốt nhất
+193|Tốc độ khung mới giữ clip trên cùng các khung.
+194|Bấm phím của lệnh rồi nhấn phím mới. Esc để hủy.
+195|Sao chép tệp mà dòng thời gian dùng vào một thư mục và ghi bản sao dự án trỏ tới chúng. Dự án đang mở không đổi.
+196|Giải mã video được hỗ trợ bằng tăng tốc phần cứng
+197|Mọi tệp phương tiện đều ở nơi dự án chỉ định.
+198|Bộ lọc
+199|Phần mềm tự do theo GPL phiên bản 3 trở lên.
+200|H.264, H.265, AV1, VP9, MPEG-2 và VC-1 được giải mã trên card đồ họa nếu driver hỗ trợ. Tắt nếu clip xanh hoặc vỡ hình. PICASSO_NO_HWACCEL=1 tắt cho một lần chạy.
+201|Trợ giúp
+202|Chọn liên kết (hình và tiếng cùng nhau)
+203|Đã tải dự án mẫu
+204|Pivot
+205|Vùng chọn theo đầu phát
+206|Bắt dính clip, dấu, đầu phát
+207|Soft Clip
+208|Băng
+209|Xén
+210|Xem
+211|Đủ
+212|Clip
+213|Khung chính
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scope
+220|Spline
+221|Đồng bộ bin
+222|Nhiệt độ
+223|Nhập DA...
+224|Xuất DA...
+225|Lưu thành...
+226|Bản sao...
+227|Nhập
+228|Xuất
+229|Phụ đề...
+230|Phương tiện...
+231|Thư mục...
+232|Dòng TG
+233|Kho
+234|Kiểm tra
+235|Siêu dữ liệu
+236|1/8
+237|Giới thiệu
+238|Dự án mới
+239|Mở...
+240|Lưu
+241|Động lực
+242|Tiêu đề
+243|Thư viện
+244|Hiệu ứng
+245|Âm thanh
+246|Dòng TG: EDL...
+247|Dòng TG: XML...
+248|Phương tiện

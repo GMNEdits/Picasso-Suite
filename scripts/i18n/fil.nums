@@ -1,0 +1,553 @@
+#menus
+File
+Edit
+Trim
+Timeline
+Clip
+Marka
+View
+Playback
+Epekto
+Kulay
+Audio
+Workspace
+Tulong
+#entries
+1|Bagong aklatan ng proyekto...
+2|Buksan ang aklatan ng proyekto...
+3|Ipakita ang aklatan sa Explorer
+4|Tagapamahala ng Proyekto
+5|Bagong proyekto
+6|Buksan ang proyekto...
+7|I-import ang proyekto...
+8|I-export ang proyekto...
+9|Ibalik ang archive ng proyekto...
+10|I-save ang proyekto
+11|I-save ang proyekto bilang...
+12|I-save ang kopya bilang...
+13|Bumalik sa huling na-save
+14|I-import
+15|Media...
+16|Folder bilang bin...
+17|Timeline: AAF, EDL, XML...
+18|Timeline: pre-EDL...
+19|Subtitle...
+20|Metadata sa media pool...
+21|Bin...
+22|I-export
+23|Timeline: EDL...
+24|Timeline: OpenTimelineIO...
+25|Timeline: XML...
+26|Timeline: AAF...
+27|Metadata mula sa media pool...
+28|Pamamahala ng media...
+29|Mga setting ng proyekto...
+30|Mga kagustuhan ng system...
+31|Mabilis na export...
+32|Lumabas
+33|I-undo
+34|I-redo
+35|I-cut
+36|Kopyahin
+37|I-paste
+38|I-paste at ipasok
+39|I-paste ang mix sa track
+40|I-duplicate
+41|I-fit sa fill
+42|Ilagay sa itaas
+43|Burahin ang napili
+44|Burahin ang napili gamit ang ripple
+45|Piliin lahat
+46|Alisin ang lahat ng pili
+47|Piliin ang mga clip pasulong
+48|Hanapin...
+49|Mga kamakailang proyekto
+50|Tagapamahala ng Proyekto...
+51|Mga shortcut ng keyboard
+52|Piliin ang pinakamalapit na cut
+53|Mode ng pagpili
+54|Mode ng trim
+55|Dynamic na trim
+56|Ripple simula
+57|Ripple dulo
+58|Ripple trim nauna / susunod
+59|Ripple nauna hanggang playhead
+60|Ripple susunod hanggang playhead
+61|I-trim ang simula sa playhead
+62|I-trim ang dulo sa playhead
+63|Palawigin ang edit
+64|Slip clip
+65|Slip isang frame nang mas maaga
+66|Slip isang frame nang mas huli
+67|Slide clip
+68|Slide isang frame pakaliwa
+69|Slide isang frame pakanan
+70|Loop trim
+71|Asymmetric na trimming
+72|Trim editor
+73|Bagong timeline...
+74|Bagong timeline mula sa napili
+75|Bagong compound clip...
+76|Bagong effects clip...
+77|I-decompose sa lugar
+78|I-decompose ang compound clip
+79|I-decompose ang nested timeline
+80|Hatiin ang clip
+81|Timeline mula sa bin...
+82|I-import ang timeline...
+83|I-export ang timeline...
+84|Resolution at frame rate...
+85|Mga setting ng timeline
+86|Snap
+87|Naka-link na pagpili
+88|Lock ng posisyon
+89|Sinusundan ng pili ang playhead
+90|Magdagdag ng marker
+91|Magdagdag ng marker + dialog
+92|Burahin lahat ng marker
+93|Gumawa ng subtitle track
+94|Gumawa ng subtitle region
+95|Transition sa lahat ng cut
+96|Palitan ang timeline
+97|Buksan ang timeline sa bagong window
+98|Burahin ang timeline
+99|I-enable ang clip
+100|Katugmang frame
+101|I-lock ang clip
+102|Bagong multicam clip...
+103|Multicam viewer
+104|Idagdag bilang mga still
+105|Baguhin ang bilis ng clip...
+106|Baguhin ang haba ng clip...
+107|Mga kontrol sa oras
+108|I-retime ang clip
+109|I-freeze ang frame
+110|Speed ramp...
+111|I-reverse ang clip
+112|Bagong compound clip
+113|I-link ang mga clip
+114|Paghiwalayin ang audio at video
+115|Audio scrubbing on/off
+116|Awtomatikong i-align ang mga clip
+117|Batay sa timecode
+118|Batay sa waveform
+119|I-normalize ang audio level...
+120|I-render sa lugar
+121|Bagong effects clip
+122|Bagong compound clip
+123|Mga katangian ng clip...
+124|I-mark ang in
+125|I-mark ang out
+126|I-mark ang clip
+127|I-mark ang timeline in/out
+128|I-clear ang in
+129|I-clear ang out
+130|I-clear ang in at out
+131|Baguhin ang marker...
+132|Burahin ang marker dito
+133|Burahin lahat ng marker
+134|Pumunta sa naunang marker
+135|Pumunta sa susunod na marker
+136|Kulay ng clip
+137|Default
+138|Orange
+139|Apricot
+140|Dilaw
+141|Lime
+142|Olive
+143|Berde
+144|Teal
+145|Navy
+146|Asul
+147|Lila
+148|Violet
+149|Pink
+150|Tan
+151|Beige
+152|Kayumanggi
+153|Tsokolate
+154|Ipakita ang frame habang nagpe-play
+155|Safe area
+156|Ipakita ang grid / gabay
+157|Ipakita ang toolbar
+158|Ipakita ang full screen viewer
+159|Ipakita ang cinema viewer
+160|Mga overlay ng viewer
+161|Transform / crop / zoom
+162|Safe area
+163|Gitnang crosshair
+164|Checkerboard na background (alpha)
+165|Ipakita ang lahat ng overlay
+166|Window ng timecode
+167|Ipakita ang scopes
+168|Ipakita ang audio meter
+169|Ipakita ang audio mixer
+170|Ipakita ang inspector
+171|I-play pasulong
+172|I-play paatras
+173|Stop
+174|I-play sa paligid ng frame
+175|I-play ang in hanggang out
+176|I-play sa paligid ng in/out
+177|I-loop ang playback
+178|Sa unang frame
+179|Sa huling frame
+180|Sa in
+181|Sa out
+182|Nakaraang frame
+183|Susunod na frame
+184|Nakaraang edit point
+185|Susunod na edit point
+186|Resolution ng playback
+187|Kalahati
+188|Kapat
+189|Memory cache ng effects
+190|Proxy mode
+191|Off
+192|Ikawalo
+193|Hardware decoding
+194|Burahin ang render cache
+195|Mga video transition
+196|Cross dissolve
+197|Dip to color
+198|Mga audio transition
+199|Cross fade
+200|Alisin ang transition
+201|OpenFX
+202|Blur
+203|Gaussian blur
+204|Sharpen
+205|Kulay
+206|I-invert ang kulay
+207|Itim at puti
+208|Distort
+209|Mosaic
+210|Audio FX
+211|EQ
+212|Dynamics
+213|Picasso FX
+214|Sepia
+215|Soft blur
+216|Liwanag
+217|Glow
+218|Stylize
+219|Vignette
+220|Film grain
+221|Compositing effects
+222|Mga node
+223|Mga generator
+224|Solid na kulay
+225|Color bars
+226|Gradient
+227|Mga title
+228|Teksto
+229|Teksto+
+230|Hanapin sa effects library
+231|Magdagdag ng tool (compositing)
+232|I-reset lahat ng grade at node
+233|I-reset ang kasalukuyang node
+234|Node on/off
+235|Kumuha ng still
+236|I-play ang still
+237|Magdagdag ng serial node
+238|Magdagdag ng serial bago
+239|Magdagdag ng parallel node
+240|Magdagdag ng layer mixer
+241|Magdagdag ng splitter / combiner
+242|Magdagdag ng outside node
+243|Lagyan ng label ang node
+244|Timeline
+245|Naunang node graph
+246|Susunod na node graph
+247|LUT
+248|Ilapat ang LUT mula sa listahan
+249|Gallery
+250|Scopes on/off
+251|Highlight
+252|Lightbox
+253|ADR
+254|Awtomatikong pagpapalit ng dialogue
+255|I-bounce ang mix sa track
+256|I-bounce ang napiling track
+257|Cache ng audio effects
+258|Audio link
+259|Link group
+260|I-decompose
+261|Loop jog
+262|Ipakita ang audio timeline / mixer
+263|Full screen viewer
+264|Ipakita ang panel sa workspace
+265|Media pool
+266|Effects library
+267|Inspector
+268|Mixer
+269|Metadata
+270|Edit index
+271|Sound library
+272|Layout
+273|I-reset ang layout
+274|I-save ang layout
+275|I-load ang layout
+276|Pumunta sa page
+277|Media
+278|Edit
+279|Epekto
+280|Audio
+281|Deliver
+282|Dalawang screen on/off
+283|Malinis na video feed
+284|Manwal ng Picasso Suite
+285|Mga tutorial ng Picasso Suite
+286|Tingnan ang mga update...
+287|I-export ang log file...
+288|Tungkol sa Picasso Suite
+289|Wika
+#ui
+1|Mga clip
+2|60 frame/s
+3|Dagdag job
+4|Idagdag sa queue
+5|Advanced
+6|I-archive
+7|I-archive...
+8|Auto
+9|Awtomatiko
+10|Balanse
+11|Bins
+12|Mag-browse
+13|Bus sends
+14|Capture
+15|Mga chapter
+16|Pumili ng folder
+17|Pangalan ng clip
+18|Clone
+19|Clone tool
+20|Codec
+21|Kulay+
+22|Mga koleksyon
+23|Contrast
+24|Control
+25|Gumawa ng album
+26|Curves - custom
+27|Custom export
+28|Decoding
+29|Demo project
+30|I-drag ang mga larawan sa album para mag-edit
+31|Iginuhit gamit
+32|Ine-edit
+33|Effects in
+34|Naka-embed na audio
+35|Encoder
+36|Profile ng encoding
+37|Buong timeline
+38|Laki
+39|Bawat
+40|I-export video
+41|Fairlight
+42|Pangalan ng file
+43|Format
+44|Frame/s
+45|Reordering
+46|Buong frame
+47|Full screen
+48|Fusion
+49|Gain
+50|Gamma
+51|Generator
+52|Graphics card
+53|Mga grupo
+54|Highlight
+55|Mataas
+56|Hue
+57|Larawan
+58|Index
+59|Mga indibidwal na clip
+60|Input
+61|Integrated
+62|Keyframes
+63|Keyword
+64|L mix
+65|Layer
+66|Lokal
+67|Lokasyon
+68|Loop
+69|Lakas
+70|Mababa
+71|Marka
+72|Pamamahala ng media
+73|Pinagmulan ng media
+74|Storage ng media
+75|Meters
+76|Mid/detail
+77|Modifiers
+78|Monitor
+79|Volume ng monitor
+80|Native
+81|Network optimization
+82|Walang job
+83|Walang job
+84|Walang still
+85|Hindi iniulat
+86|Walang makikita
+87|Offset
+88|Buksan
+89|Pagkakasunod
+90|Parade
+91|Pause
+92|Larawan
+93|Album
+94|Playback
+95|Lock ng posisyon
+96|Preset
+97|Primaries - color wheels
+98|Mode ng proseso
+99|Setting ng proyekto
+100|Mga proyekto
+101|Kalidad
+102|Mabilis na export
+103|Saklaw
+104|Rate control
+105|I-relink ang media
+106|I-relink ang media...
+107|Alisin
+108|Render
+109|Render lahat
+110|Render queue
+111|Setting ng render
+112|Render - custom export
+113|Reset
+114|Reset lahat
+115|Resolution
+116|Hanapin
+117|Mga setting
+118|Shadows
+119|Maikli
+120|Maikli max
+121|Isang clip
+122|Smart bins
+123|Source color space
+124|Source gamma space
+125|Setting ng subtitle
+126|System
+127|Resolution ng timeline
+128|Proxy ng timeline
+129|Tint
+130|Mga tool
+131|Track FX
+132|Mga transition
+133|Walang pamagat
+134|Vertical resolution
+135|Bersyon 0.6.1
+136|Video
+137|Waveform
+138|Workspace
+139|Walang clip sa media pool
+140|Mag-import ng clip o i-drop ang mga file dito
+141|Magdagdag ng clip mula sa storage para magsimula
+142|Walang tunog
+143|Walang clip na i-grade
+144|Walang input
+145|HABA
+146|I-export ang audio
+147|Data rate
+148|Output track 1
+149|Natatanging pangalan
+150|Nagdaragdag ng (1), (2) ... sa pangalan sa halip na mag-overwrite.
+151|Uri ng file
+152|Buong timeline
+153|In hanggang out
+154|Pixel aspect ratio
+155|Parisukat
+156|Cinemascope
+157|Data levels
+158|Panatilihin ang sub-black/super-white
+159|Color space tag
+160|Gamma tag
+161|Data burn-in
+162|Tulad ng proyekto
+163|Laktawan ang re-encode
+164|Optimized media
+165|Proxy media
+166|Mga larawan sa cache
+167|Pinakamahusay na sizing
+168|Pinakamahusay na debayer
+169|Lahat ng video track
+170|I-enable ang flat pass
+171|visionOS bypass
+172|Walang sizing/blanking
+173|Patakbuhin ang script
+174|Simula
+175|ng render job
+176|I-export ang subtitle
+177|Hiwalay na file
+178|I-export bilang
+179|frame
+180|I-cut
+181|Teal
+182|Kalahati
+183|Color bars
+184|Lightbox
+185|Edit
+186|Mixer
+187|Mga tunog
+188|Timeline: AAF, EDL, XML...
+189|Timeline: OpenTimelineIO...
+190|Video editor na gawa sa Rust para sa Windows, Linux, macOS at web.
+191|Audio scrubbing (tunog kapag hinihila ang playhead)
+192|Pinakamahusay
+193|Pinapanatili ng bagong frame rate ang mga clip sa parehong frame.
+194|I-click ang mga key ng command at pindutin ang bago. Esc ay kakansela.
+195|Kinokopya ang mga file ng timeline sa folder at sumusulat ng kopya ng proyektong tumuturo sa kanila. Hindi nagbabago ang bukas na proyekto.
+196|I-decode ang suportadong video gamit ang hardware acceleration
+197|Ang bawat media file ay nasa sinasabi ng proyekto.
+198|Mga filter
+199|Libreng software sa ilalim ng GPL, bersyon 3 o mas bago.
+200|Ang H.264, H.265, AV1, VP9, MPEG-2 at VC-1 ay dine-decode sa graphics card kung kaya ng driver. I-off kung berde o sira ang mga clip. PICASSO_NO_HWACCEL=1 ay nag-o-off nang isang beses.
+201|Tulong
+202|Naka-link na pagpili (larawan at tunog)
+203|Na-load ang demo project
+204|Pivot
+205|Sinusundan ng pili ang playhead
+206|Snap sa clip, marker, playhead
+207|Soft Clip
+208|Tape
+209|Trim
+210|View
+211|Buo
+212|Clip
+213|Keyframes
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Sync bin
+222|Temp
+223|Imp. proj...
+224|Exp. proj...
+225|I-save bilang...
+226|Kopya bilang...
+227|Import
+228|Export
+229|Subtitle...
+230|Media...
+231|Folder...
+232|Timeline
+233|Media pool
+234|Inspector
+235|Metadata
+236|1/8
+237|Tungkol
+238|Bagong proj.
+239|Buksan...
+240|I-save
+241|Dynamics
+242|Mga title
+243|Gallery
+244|Epekto
+245|Audio
+246|Timeline: EDL...
+247|Timeline: XML...
+248|Media

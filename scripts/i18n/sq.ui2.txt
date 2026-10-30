@@ -1,0 +1,60 @@
+Add Job|Punë
+Bus Sends|Dërges. bus
+Editing|Redakt.
+Effects In|Efekte hy.
+File Name|Skedari
+Full Frames|Kuadro
+Hue|Hue
+Index|Indeks
+Layer|Shtresa
+Location|Vendi
+Mark|Shenj.
+Offset|Zhvend.
+Position lock|Kyç. pozicionit
+Preset|Preset
+Primaries - Color Wheels|Parësore - rrotat
+Process Mode|Përpunimi
+Project settings|Cilës. projektit
+Quick Export|Eksp. i shpejtë
+Range|Zona
+Rate Control|Kontrolli
+Render All|Të gjitha
+Reset|Reset
+Reset All|Të gjitha
+Short|Shkurt
+Short Max|Shkurt maks
+Smart Bins|Inteligjente
+Source Color Space|Hapësira burim
+Source Gamma Space|Gamma burim
+Timeline Resolution|Rezol. kronol.
+Timeline proxy|Proxy kronol.
+Tint|Tint
+Track FX|FX pistës
+Waveform|Vala
+No clip to grade|Pa klip
+DURATION|KOHËZGJ.
+Data Rate|Shpejtësia
+File type|Lloji
+Data Levels|Nivelet
+Color Space Tag|Etiketa hapësirës
+Gamma Tag|Etiketa gamma
+Data burn-in|Të dhëna djegur
+visionOS Bypass|visionOS anashk.
+Half|1/2
+Mixer|Mikser
+Timeline: AAF, EDL, XML...|Kronol.: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Kronol.: OpenTimelineIO...
+Best|Max
+Help|Ndih.
+Trim|Pre.
+View|Pam.
+Full|Plot
+Keyframes|Kuadro çelës
+Project Manager|Menaxhuesi
+Default|Parazgj.
+Layer|Shtr.
+Offset|Zhv.
+Short Max|Shk. maks
+Gamma Tag|Etik. gamma
+Data burn-in|Djegie
+Keyframes|Kuadro çel.

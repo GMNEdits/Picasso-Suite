@@ -27,7 +27,9 @@ LATIN = ImageFont.truetype(str(FONT_DIR / 'NotoSans-Regular.ttf'), 14, layout_en
 # Languages whose script the bundled Latin font does not draw: their width is measured per character
 # (a Chinese or Japanese character is as wide as it is tall; the Arabic ones come from the Arabic font),
 # and their entries are held to a width in pixels, since a character count says little there.
-OTHER = {'zh', 'ja', 'ar', 'hi'}
+OTHER = {'zh', 'ja', 'ar', 'hi', 'bn', 'th', 'ko'}
+SHAPED = {'hi', 'bn', 'th'}
+NAMES = {'hi': 'हिन्दी', 'bn': 'বাংলা', 'th': 'ไทย'}
 CODE = ''
 _latin_cmap = None
 
@@ -35,8 +37,9 @@ _latin_cmap = None
 def shape(text):
     """Arabic is drawn letter by letter, left to right (the toolkit does not join or turn it): the text is
     joined into its presentation forms and put in the order it is seen, here, once."""
-    if CODE == 'hi':
+    if CODE in SHAPED:
         import devanagari
+        devanagari.select(CODE)
         return devanagari.to_pua(text)
     if CODE != 'ar':
         return text
@@ -53,10 +56,11 @@ def width(text):
         from fontTools.ttLib import TTFont
         _latin_cmap = set(TTFont(str(FONT_DIR / 'NotoSans-Regular.ttf')).getBestCmap())
     total = 0.0
-    if CODE == 'hi':
+    if CODE in SHAPED:
         import re
         import devanagari
-        for part in re.split('([ऀ-ॿ‌‍]+)', text):
+        devanagari.select(CODE)
+        for part in re.split('(' + devanagari.RUN.pattern + ')', text):
             if part and devanagari.RUN.fullmatch(part):
                 total += devanagari.run_width(part)
             else:
@@ -105,7 +109,7 @@ def entry_max(english):
 
 def clen(text):
     """Characters as the toolkit sets them: a word of Hindi is one."""
-    return len(shape(text)) if CODE == 'hi' else len(text)
+    return len(shape(text)) if CODE in SHAPED else len(text)
 
 
 def entry_px(english):
@@ -210,14 +214,17 @@ if __name__ == '__main__':
     for code in sys.argv[1:]:
         menus, pairs, ui, problems, missing = build(code)
         print(code, len(pairs), 'entries,', len(missing), 'not translated,', len(ui), 'texts of the pages')
-        if code == 'hi':
+        if code in SHAPED:
             import devanagari
-            devanagari.to_pua('हिन्दी')
+            devanagari.select(code)
+            devanagari.to_pua(NAMES[code])
         for p in problems:
             print('  TOO LONG:', p)
             bad = True
         (OUT / f'{code}.rs').write_text(rust(code, menus, pairs, ui), encoding='utf-8', newline='\n')
-    if 'hi' in sys.argv[1:]:
-        import devanagari
-        print('  font of', devanagari.write_font(str(FONT_DIR / 'NotoSansDevanagari-Regular.subset.ttf')), 'words written')
+    for code in sys.argv[1:]:
+        if code in SHAPED:
+            import devanagari
+            devanagari.select(code)
+            print('  font of', devanagari.write_font(str(FONT_DIR / devanagari.SCRIPTS[code]['out'])), 'words written')
     sys.exit(1 if bad else 0)

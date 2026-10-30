@@ -1,0 +1,29 @@
+Open Project Library...|Buksan ang aklatan...
+Project Manager|Tagapamahala
+Open Project...|Buksan ang proyekto
+Import Project...|I-import ang proyekto
+Export Project...|I-export ang proyekto
+Save Project As...|I-save bilang...
+Save Copy As...|I-save kopya...
+Deselect All|Alisin lahat ng pili
+Select Clips Forward|Piliin ang clip pasulong
+Recent Projects|Mga huling proyekto
+Project Manager...|Tagapamahala...
+Slip One Frame Earlier|Slip 1 frame nang maaga
+Slip One Frame Later|Slip 1 frame nang huli
+Change Clip Speed...|Bilis ng clip...
+Unlink Audio and Video|Ihiwalay audio at video
+Auto Align Clips|Auto-align ang clip
+Go to Next Marker|Susunod na marker
+Show All Overlays|Lahat ng overlay
+Show Audio Mixer|Audio mixer
+Show Inspector|Ipakita inspector
+Play In to Out|I-play in–out
+Add Tool (Compositing)|Dagdag tool (compositing)
+Add Serial Node|Dagdag serial node
+Add Serial Before|Dagdag serial bago
+Add Parallel Node|Dagdag parallel node
+Add Layer Mixer|Dagdag layer mixer
+Add Outside Node|Dagdag outside node
+Label Node|Label ng node
+Apply LUT from list|LUT mula sa listahan

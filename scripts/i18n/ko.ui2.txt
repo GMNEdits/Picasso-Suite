@@ -1,0 +1,20 @@
+Frame rate|프레임율
+Hi/Light|하이
+Native|원본
+Pause|정지
+Rate Control|비트율
+Reset All|모두 리셋
+No clip to grade|클립 없음
+Data Rate|데이터율
+Export As|형식
+Help|도움
+Loaded the demo project|데모를 불러옴
+Soft Clip|소프트
+Tape|테이프
+Lift|리프트
+Spline|스플라인
+Export Project...|프로젝트 출력...
+Export|출력
+Tape|Tape
+Lift|Lift
+Spline|Spline

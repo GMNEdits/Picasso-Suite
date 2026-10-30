@@ -26,13 +26,36 @@ from fontTools.ttLib.tables._g_l_y_f import Glyph, GlyphComponent
 from fontTools.varLib import instancer
 
 HERE = pathlib.Path(__file__).resolve().parent
+# The scripts that are shaped here, by language code: font, characters of a word, HarfBuzz script and
+# language, and where in the private use area their words begin.
+SCRIPTS = {
+    'hi': dict(font='NotoSansDevanagari.ttf', run='[ऀ-ॿ‌‍]+', script='Deva', lang='hi', first=0xE000,
+               out='NotoSansDevanagari-Regular.subset.ttf'),
+    'bn': dict(font='NotoSansBengali.ttf', run='[ঀ-৿‌‍]+', script='Beng', lang='bn', first=0xE800,
+               out='NotoSansBengali-Regular.subset.ttf'),
+    'th': dict(font='NotoSansThai.ttf', run='[฀-๿]+', script='Thai', lang='th', first=0xF000,
+               out='NotoSansThai-Regular.subset.ttf'),
+}
+CODE = 'hi'
 REGISTRY = HERE / 'hi_glyphs.json'
 FIRST = 0xE000
-RUN = re.compile('[ऀ-ॿ‌‍]+')
+RUN = re.compile(SCRIPTS['hi']['run'])
 
 _font_bytes = None
 _hb_font = None
 _upem = 1000
+
+
+def select(code):
+    """Works on the script of this language from now on."""
+    global CODE, REGISTRY, FIRST, RUN, _font_bytes, _hb_font
+    if code != CODE:
+        CODE = code
+        REGISTRY = HERE / f'{code}_glyphs.json'
+        FIRST = SCRIPTS[code]['first']
+        RUN = re.compile(SCRIPTS[code]['run'])
+        _font_bytes = None
+        _hb_font = None
 
 
 def download_dir():
@@ -43,7 +66,7 @@ def source():
     """The Noto Sans Devanagari at regular weight and width, as bytes of a font file."""
     global _font_bytes
     if _font_bytes is None:
-        path = os.environ.get('PICASSO_DEVANAGARI') or str(pathlib.Path(os.environ.get('TEMP', '.')) / 'fonts_dl' / 'NotoSansDevanagari.ttf')
+        path = str(pathlib.Path(os.environ.get('TEMP', '.')) / 'fonts_dl' / SCRIPTS[CODE]['font'])
         font = TTFont(path)
         axes = {a.axisTag: a.defaultValue for a in font['fvar'].axes}
         axes['wght'] = 400
@@ -70,8 +93,8 @@ def shape_run(run):
     font = shaper()
     buf = hb.Buffer()
     buf.add_str(run)
-    buf.script = 'Deva'
-    buf.language = 'hi'
+    buf.script = SCRIPTS[CODE]['script']
+    buf.language = SCRIPTS[CODE]['lang']
     buf.direction = 'ltr'
     hb.shape(font, buf, {'kern': True, 'liga': True, 'ccmp': True})
     return [(i.codepoint, p.x_offset, p.y_offset, p.x_advance) for i, p in zip(buf.glyph_infos, buf.glyph_positions)]

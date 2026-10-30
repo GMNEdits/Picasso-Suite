@@ -1,0 +1,248 @@
+Clips|คลิป
+60 frames per second|60 เฟรม/วินาที
+Add Job|เพิ่มงาน
+Add to Render Queue|เพิ่ม ลงคิว
+Advanced Settings|ขั้นสูง
+Archive Project|เก็บถาวร
+Archive Project...|เก็บถาวร...
+Auto|อัตโนมัติ
+Automatic|อัตโนมัติ
+Balanced|สมดุล
+Bins|ถัง
+Browse|เรียกดู
+Bus Sends|บัสเซนด์
+Capture|จับภาพ
+Chapters from Markers|บท
+Choose a folder|เลือก โฟลเดอร์
+Clip Name|ชื่อ คลิป
+Clone|โคลน
+Clone Tool|เครื่องมือ โคลน
+Codec|โคเดก
+Col Boost|สี+
+Collections|คอลเลกชัน
+Contrast|คอนทราสต์
+Control Room|ควบคุม
+Create an Album|สร้าง อัลบั้ม
+Curves - Custom|เส้นโค้ง - กำหนดเอง
+Custom Export|ส่งออก กำหนดเอง
+Decode Options|ถอดรหัส
+Demo Project|เดโม
+Drag photos into the Photo Album to start editing|ลากรูป เข้าอัลบั้ม เพื่อเริ่มแก้ไข
+Drawn with|วาดด้วย
+Editing|กำลังแก้ไข
+Effects In|เอฟเฟกต์ เข้า
+Embedded Audio|เสียง ฝังอยู่
+Encoder|ตัวเข้ารหัส
+Encoding Profile|โปรไฟล์ เข้ารหัส
+Entire Timeline|ทั้งไทม์ไลน์
+Estimated File Size|ขนาด ประมาณ
+Every|ทุก
+Export Video|ส่งออก วิดีโอ
+Fairlight|Fairlight
+File Name|ชื่อไฟล์
+Format|รูปแบบ
+Frame rate|เฟรม/วินาที
+Frame reordering|เรียงเฟรม
+Full Frames|เฟรม เต็ม
+Full Screen|เต็มจอ
+Fusion|Fusion
+Gain|เกน
+Gamma|แกมมา
+Generator|ตัวสร้าง
+Graphics card|การ์ดจอ
+Groups|กลุ่ม
+Hi/Light|ไฮไลต์
+High|สูง
+Hue|เฉดสี
+Image|ภาพ
+Index|ดัชนี
+Individual clips|คลิป เดี่ยว
+Input|อินพุต
+Integrated|รวม
+Key Frames|คีย์เฟรม
+Keywords|คำสำคัญ
+L. Mix|มิกซ์ ซ้าย
+Layer|เลเยอร์
+Local|ภายใน
+Location|ตำแหน่ง
+Loop playback|วนซ้ำ
+Loudness|ความดัง
+Low|ต่ำ
+Mark|มาร์ก
+Media Management|จัดการ มีเดีย
+Media Source|แหล่ง มีเดีย
+Media Storage|ที่เก็บ มีเดีย
+Meters|มิเตอร์
+Mid/Detail|กลาง/รายละเอียด
+Modifiers|ตัวปรับ
+Monitor|มอนิเตอร์
+Monitor volume|ระดับเสียง มอนิเตอร์
+Native|ดั้งเดิม
+Network Optimization|ปรับ เครือข่าย
+No jobs in Queue|ไม่มี งาน
+No jobs in queue|ไม่มี งาน
+No stills created|ไม่มี ภาพนิ่ง
+Not reported|ไม่ระบุ
+Nothing to inspect|ไม่มี อะไรให้ดู
+Offset|ออฟเซ็ต
+Open|เปิด
+Order|ลำดับ
+Parade|พาเรด
+Pause|หยุดชั่วคราว
+Photo|รูป
+Photo Album|อัลบั้ม
+Playback|เล่น
+Position lock|ล็อก ตำแหน่ง
+Preset|พรีเซ็ต
+Primaries - Color Wheels|หลัก - วงล้อสี
+Process Mode|โหมด ประมวลผล
+Project settings|ตั้งค่า โปรเจกต์
+Projects|โปรเจกต์
+Quality|คุณภาพ
+Quick Export|ส่งออก ด่วน
+Range|ช่วง
+Rate Control|ควบคุม อัตราบิต
+Relink Missing Media|เชื่อม มีเดียใหม่
+Relink Missing Media...|เชื่อม มีเดียใหม่...
+Remove|ลบ
+Render|เรนเดอร์
+Render All|เรนเดอร์ ทั้งหมด
+Render Queue|คิว เรนเดอร์
+Render Settings|ตั้งค่า เรนเดอร์
+Render Settings - Custom Export|เรนเดอร์ - กำหนดเอง
+Reset|รีเซ็ต
+Reset All|รีเซ็ต ทั้งหมด
+Resolution|ความละเอียด
+Search|ค้นหา
+Settings|ตั้งค่า
+Shad|เงา
+Short|สั้น
+Short Max|สั้น สูงสุด
+Single clip|คลิป เดียว
+Smart Bins|ถังอัจฉริยะ
+Source Color Space|ปริภูมิสี ต้นทาง
+Source Gamma Space|ปริภูมิแกมมา ต้นทาง
+Subtitle Settings|ตั้งค่า คำบรรยาย
+System|ระบบ
+Timeline Resolution|ความละเอียด ไทม์ไลน์
+Timeline proxy|พร็อกซี ไทม์ไลน์
+Tint|ทินต์
+Tools|เครื่องมือ
+Track FX|เอฟเฟกต์ แทร็ก
+Transitions|ทรานซิชัน
+Untitled|ไม่มีชื่อ
+Use vertical resolution|ความละเอียด แนวตั้ง
+Version 0.6.1|เวอร์ชัน 0.6.1
+Video|วิดีโอ
+Waveform|รูปคลื่น
+Workspace|พื้นที่
+No clips in media pool|ไม่มี คลิปในพูล
+Add clips with Import, or drop files here|นำเข้าคลิป หรือวางไฟล์ที่นี่
+Add clips from Media Storage to get started|เพิ่มคลิป จากที่เก็บ เพื่อเริ่ม
+No sound to show|ไม่มี เสียงให้แสดง
+No clip to grade|ไม่มี คลิปให้เกรด
+No Input|ไม่มี อินพุต
+DURATION|ระยะเวลา
+Export Audio|ส่งออก เสียง
+Data Rate|อัตรา ข้อมูล
+Output Track 1|แทร็กเอาต์พุต 1
+Use unique filename|ชื่อไฟล์ ไม่ซ้ำ
+Adds (1), (2) ... to the name instead of writing over a file.|เพิ่ม (1), (2) ... ที่ชื่อ แทนการเขียนทับ
+File type|ชนิดไฟล์
+Whole timeline|ทั้งไทม์ไลน์
+In to out marks|อิน ถึงเอาต์
+Pixel aspect ratio|สัดส่วน พิกเซล
+Square|จัตุรัส
+Cinemascope|ซีเนมาสโคป
+Data Levels|ระดับ ข้อมูล
+Retain sub-black and super-white data|คงค่า ต่ำกว่าดำ/สูงกว่าขาว
+Color Space Tag|แท็ก ปริภูมิสี
+Gamma Tag|แท็ก แกมมา
+Data burn-in|ฝังข้อมูล ลงภาพ
+Same as project|เหมือน โปรเจกต์
+Bypass re-encode when possible|ข้าม การเข้ารหัสใหม่
+Use optimized media|ใช้ มีเดียที่ปรับแล้ว
+Use proxy media|ใช้ มีเดียพร็อกซี
+Use render cached images|ใช้ ภาพจากแคช
+Force sizing to highest quality|ปรับขนาด คุณภาพสูงสุด
+Force debayer to highest quality|ดีเบเยอร์ คุณภาพสูงสุด
+Render All Video Tracks|ทุก แทร็กวิดีโอ
+Enable Flat Pass|เปิด แฟลตพาส
+visionOS Bypass|ข้าม visionOS
+Disable sizing and blanking output|ไม่ปรับขนาด/แบลงกิง
+Trigger script at|รันสคริปต์ เมื่อ
+Start|เริ่ม
+of render job|งานเรนเดอร์
+Export Subtitle|ส่งออก คำบรรยาย
+As a separate file|ไฟล์ แยก
+Export As|ส่งออก เป็น
+frames|เฟรม
+Cut|ตัด
+Teal|เขียวน้ำทะเล
+Half|ครึ่ง
+Color Bars|แถบสี
+Lightbox|ไลต์บ็อกซ์
+Edit|แก้ไข
+Mixer|มิกเซอร์
+Sound Library|เสียง
+Timeline: AAF, EDL, XML...|ไทม์ไลน์: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|ไทม์ไลน์: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|โปรแกรมตัดต่อวิดีโอ เขียนด้วย Rust สำหรับ Windows, Linux, macOS และเว็บ
+Audio scrubbing (sound while the playhead is dragged)|สครับเสียง (ได้ยินเสียง ตอนลากหัวเล่น)
+Best|ดีที่สุด
+Changing the frame rate keeps every clip on the same frames.|เปลี่ยนเฟรมเรต คลิปยังคงอยู่ ที่เฟรมเดิม
+Click a command's keys, then press the key it should have. Escape gives up.|คลิกปุ่มของคำสั่ง แล้วกดปุ่มใหม่ Esc ยกเลิก
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|คัดลอกไฟล์ที่ไทม์ไลน์ใช้ ไปยังโฟลเดอร์ และเขียนสำเนาโปรเจกต์ ที่ชี้ไปยังไฟล์เหล่านั้น โปรเจกต์ที่เปิดอยู่ ไม่เปลี่ยน
+Decode supported video using hardware acceleration|ถอดรหัสวิดีโอที่รองรับ ด้วยการเร่งฮาร์ดแวร์
+Every media file is where the project says it is.|ไฟล์มีเดียทุกไฟล์ อยู่ตามที่โปรเจกต์ระบุ
+Filters|ตัวกรอง
+Free software under the GPL, version 3 or later.|ซอฟต์แวร์เสรี ภายใต้ GPL เวอร์ชัน 3 ขึ้นไป
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 และ VC-1 ถอดรหัสบนการ์ดจอ เมื่อไดรเวอร์รองรับ ปิดหากคลิปเป็นสีเขียวหรือเสีย PICASSO_NO_HWACCEL=1 ปิดได้หนึ่งครั้ง
+Help|ช่วยเหลือ
+Linked selection (picture and sound together)|การเลือก ที่เชื่อมกัน (ภาพและเสียง)
+Loaded the demo project|โหลด โปรเจกต์เดโมแล้ว
+Pivot|พิวอต
+Selection follows the playhead|การเลือก ตามหัวเล่น
+Snap to clips, markers and the playhead|สแนปกับ คลิป มาร์กเกอร์ หัวเล่น
+Soft Clip|ซอฟต์คลิป
+Tape|เทป
+Trim|ทริม
+View|ดู
+Full|เต็ม
+Clip|คลิป
+Keyframes|คีย์เฟรม
+LUTs|LUT
+Lift|ลิฟต์
+Master|มาสเตอร์
+Pan|แพน
+Sat|ความอิ่ม
+Scopes|สโคป
+Spline|สไปลน์
+Sync Bin|ซิงก์ ถัง
+Temp|อุณหภูมิ
+Import Project...|นำเข้า โปรเจกต์...
+Export Project...|ส่งออก โปรเจกต์...
+Save Project As...|บันทึกเป็น...
+Save Copy As...|สำเนา เป็น...
+Import|นำเข้า
+Export|ส่งออก
+Subtitle...|คำบรรยาย...
+Media...|มีเดีย...
+Folder as Bin...|โฟลเดอร์...
+Timeline|ไทม์ไลน์
+Media Pool|พูลมีเดีย
+Inspector|อินสเปกเตอร์
+Metadata|เมทาดาทา
+Eighth|1/8
+About Picasso Suite|เกี่ยวกับ
+New Project|โปรเจกต์ ใหม่
+Open Project...|เปิด...
+Save Project|บันทึก
+Dynamics|ไดนามิก
+Titles|ชื่อเรื่อง
+Gallery|แกลเลอรี
+Effects|เอฟเฟกต์
+Audio|เสียง
+Timeline: EDL...|ไทม์ไลน์: EDL...
+Timeline: XML...|ไทม์ไลน์: XML...
+Media|มีเดีย

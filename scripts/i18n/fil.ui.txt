@@ -1,0 +1,248 @@
+Clips|Mga clip
+60 frames per second|60 frame/s
+Add Job|Dagdag job
+Add to Render Queue|Idagdag sa queue
+Advanced Settings|Advanced
+Archive Project|I-archive
+Archive Project...|I-archive...
+Auto|Auto
+Automatic|Awtomatiko
+Balanced|Balanse
+Bins|Bins
+Browse|Mag-browse
+Bus Sends|Bus sends
+Capture|Capture
+Chapters from Markers|Mga chapter
+Choose a folder|Pumili ng folder
+Clip Name|Pangalan ng clip
+Clone|Clone
+Clone Tool|Clone tool
+Codec|Codec
+Col Boost|Kulay+
+Collections|Mga koleksyon
+Contrast|Contrast
+Control Room|Control
+Create an Album|Gumawa ng album
+Curves - Custom|Curves - custom
+Custom Export|Custom export
+Decode Options|Decoding
+Demo Project|Demo project
+Drag photos into the Photo Album to start editing|I-drag ang mga larawan sa album para mag-edit
+Drawn with|Iginuhit gamit
+Editing|Ine-edit
+Effects In|Effects in
+Embedded Audio|Naka-embed na audio
+Encoder|Encoder
+Encoding Profile|Profile ng encoding
+Entire Timeline|Buong timeline
+Estimated File Size|Laki
+Every|Bawat
+Export Video|I-export video
+Fairlight|Fairlight
+File Name|Pangalan ng file
+Format|Format
+Frame rate|Frame/s
+Frame reordering|Reordering
+Full Frames|Buong frame
+Full Screen|Full screen
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Graphics card
+Groups|Mga grupo
+Hi/Light|Highlight
+High|Mataas
+Hue|Hue
+Image|Larawan
+Index|Index
+Individual clips|Mga indibidwal na clip
+Input|Input
+Integrated|Integrated
+Key Frames|Keyframes
+Keywords|Keyword
+L. Mix|L mix
+Layer|Layer
+Local|Lokal
+Location|Lokasyon
+Loop playback|Loop
+Loudness|Lakas
+Low|Mababa
+Mark|Marka
+Media Management|Pamamahala ng media
+Media Source|Pinagmulan ng media
+Media Storage|Storage ng media
+Meters|Meters
+Mid/Detail|Mid/detail
+Modifiers|Modifiers
+Monitor|Monitor
+Monitor volume|Volume ng monitor
+Native|Native
+Network Optimization|Network optimization
+No jobs in Queue|Walang job
+No jobs in queue|Walang job
+No stills created|Walang still
+Not reported|Hindi iniulat
+Nothing to inspect|Walang makikita
+Offset|Offset
+Open|Buksan
+Order|Pagkakasunod
+Parade|Parade
+Pause|Pause
+Photo|Larawan
+Photo Album|Album
+Playback|Playback
+Position lock|Lock ng posisyon
+Preset|Preset
+Primaries - Color Wheels|Primaries - color wheels
+Process Mode|Mode ng proseso
+Project settings|Setting ng proyekto
+Projects|Mga proyekto
+Quality|Kalidad
+Quick Export|Mabilis na export
+Range|Saklaw
+Rate Control|Rate control
+Relink Missing Media|I-relink ang media
+Relink Missing Media...|I-relink ang media...
+Remove|Alisin
+Render|Render
+Render All|Render lahat
+Render Queue|Render queue
+Render Settings|Setting ng render
+Render Settings - Custom Export|Render - custom export
+Reset|Reset
+Reset All|Reset lahat
+Resolution|Resolution
+Search|Hanapin
+Settings|Mga setting
+Shad|Shadows
+Short|Maikli
+Short Max|Maikli max
+Single clip|Isang clip
+Smart Bins|Smart bins
+Source Color Space|Source color space
+Source Gamma Space|Source gamma space
+Subtitle Settings|Setting ng subtitle
+System|System
+Timeline Resolution|Resolution ng timeline
+Timeline proxy|Proxy ng timeline
+Tint|Tint
+Tools|Mga tool
+Track FX|Track FX
+Transitions|Mga transition
+Untitled|Walang pamagat
+Use vertical resolution|Vertical resolution
+Version 0.6.1|Bersyon 0.6.1
+Video|Video
+Waveform|Waveform
+Workspace|Workspace
+No clips in media pool|Walang clip sa media pool
+Add clips with Import, or drop files here|Mag-import ng clip o i-drop ang mga file dito
+Add clips from Media Storage to get started|Magdagdag ng clip mula sa storage para magsimula
+No sound to show|Walang tunog
+No clip to grade|Walang clip na i-grade
+No Input|Walang input
+DURATION|HABA
+Export Audio|I-export ang audio
+Data Rate|Data rate
+Output Track 1|Output track 1
+Use unique filename|Natatanging pangalan
+Adds (1), (2) ... to the name instead of writing over a file.|Nagdaragdag ng (1), (2) ... sa pangalan sa halip na mag-overwrite.
+File type|Uri ng file
+Whole timeline|Buong timeline
+In to out marks|In hanggang out
+Pixel aspect ratio|Pixel aspect ratio
+Square|Parisukat
+Cinemascope|Cinemascope
+Data Levels|Data levels
+Retain sub-black and super-white data|Panatilihin ang sub-black/super-white
+Color Space Tag|Color space tag
+Gamma Tag|Gamma tag
+Data burn-in|Data burn-in
+Same as project|Tulad ng proyekto
+Bypass re-encode when possible|Laktawan ang re-encode
+Use optimized media|Optimized media
+Use proxy media|Proxy media
+Use render cached images|Mga larawan sa cache
+Force sizing to highest quality|Pinakamahusay na sizing
+Force debayer to highest quality|Pinakamahusay na debayer
+Render All Video Tracks|Lahat ng video track
+Enable Flat Pass|I-enable ang flat pass
+visionOS Bypass|visionOS bypass
+Disable sizing and blanking output|Walang sizing/blanking
+Trigger script at|Patakbuhin ang script
+Start|Simula
+of render job|ng render job
+Export Subtitle|I-export ang subtitle
+As a separate file|Hiwalay na file
+Export As|I-export bilang
+frames|frame
+Cut|I-cut
+Teal|Teal
+Half|Kalahati
+Color Bars|Color bars
+Lightbox|Lightbox
+Edit|Edit
+Mixer|Mixer
+Sound Library|Mga tunog
+Timeline: AAF, EDL, XML...|Timeline: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Timeline: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Video editor na gawa sa Rust para sa Windows, Linux, macOS at web.
+Audio scrubbing (sound while the playhead is dragged)|Audio scrubbing (tunog kapag hinihila ang playhead)
+Best|Pinakamahusay
+Changing the frame rate keeps every clip on the same frames.|Pinapanatili ng bagong frame rate ang mga clip sa parehong frame.
+Click a command's keys, then press the key it should have. Escape gives up.|I-click ang mga key ng command at pindutin ang bago. Esc ay kakansela.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Kinokopya ang mga file ng timeline sa folder at sumusulat ng kopya ng proyektong tumuturo sa kanila. Hindi nagbabago ang bukas na proyekto.
+Decode supported video using hardware acceleration|I-decode ang suportadong video gamit ang hardware acceleration
+Every media file is where the project says it is.|Ang bawat media file ay nasa sinasabi ng proyekto.
+Filters|Mga filter
+Free software under the GPL, version 3 or later.|Libreng software sa ilalim ng GPL, bersyon 3 o mas bago.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|Ang H.264, H.265, AV1, VP9, MPEG-2 at VC-1 ay dine-decode sa graphics card kung kaya ng driver. I-off kung berde o sira ang mga clip. PICASSO_NO_HWACCEL=1 ay nag-o-off nang isang beses.
+Help|Tulong
+Linked selection (picture and sound together)|Naka-link na pagpili (larawan at tunog)
+Loaded the demo project|Na-load ang demo project
+Pivot|Pivot
+Selection follows the playhead|Sinusundan ng pili ang playhead
+Snap to clips, markers and the playhead|Snap sa clip, marker, playhead
+Soft Clip|Soft Clip
+Tape|Tape
+Trim|Trim
+View|View
+Full|Buo
+Clip|Clip
+Keyframes|Keyframes
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Sync bin
+Temp|Temp
+Import Project...|Imp. proj...
+Export Project...|Exp. proj...
+Save Project As...|I-save bilang...
+Save Copy As...|Kopya bilang...
+Import|Import
+Export|Export
+Subtitle...|Subtitle...
+Media...|Media...
+Folder as Bin...|Folder...
+Timeline|Timeline
+Media Pool|Media pool
+Inspector|Inspector
+Metadata|Metadata
+Eighth|1/8
+About Picasso Suite|Tungkol
+New Project|Bagong proj.
+Open Project...|Buksan...
+Save Project|I-save
+Dynamics|Dynamics
+Titles|Mga title
+Gallery|Gallery
+Effects|Epekto
+Audio|Audio
+Timeline: EDL...|Timeline: EDL...
+Timeline: XML...|Timeline: XML...
+Media|Media
