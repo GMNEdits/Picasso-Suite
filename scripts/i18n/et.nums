@@ -1,0 +1,553 @@
+#menus
+Fail
+Muuda
+Lõik
+Ajajoon
+Klipp
+Märk
+Vaade
+Esitus
+Efektid
+Värv
+Heli
+Tööala
+Abi
+#entries
+1|Uus projektiraamatukogu...
+2|Ava projektiraamatukogu...
+3|Näita raamatukogu Exploreris
+4|Projektihaldur
+5|Uus projekt
+6|Ava projekt...
+7|Impordi projekt...
+8|Ekspordi projekt...
+9|Taasta projekti arhiiv...
+10|Salvesta projekt
+11|Salvesta projekt nimega...
+12|Salvesta koopia nimega...
+13|Tagasi viimase salvestuse juurde
+14|Impordi
+15|Meedia...
+16|Kaust prügikastina...
+17|Ajajoon: AAF, EDL, XML...
+18|Ajajoon: eel-EDL...
+19|Subtiitrid...
+20|Metaandmed meediakogusse...
+21|Kast...
+22|Ekspordi
+23|Ajajoon: EDL...
+24|Ajajoon: OpenTimelineIO...
+25|Ajajoon: XML...
+26|Ajajoon: AAF...
+27|Metaandmed meediakogust...
+28|Meediahaldus...
+29|Projekti seaded...
+30|Süsteemi eelistused...
+31|Kiirekspordi...
+32|Välju
+33|Võta tagasi
+34|Tee uuesti
+35|Lõika
+36|Kopeeri
+37|Kleebi
+38|Kleebi ja lisa
+39|Kleebi miks rajale
+40|Dubleeri
+41|Sobita täitmiseks
+42|Aseta üles
+43|Kustuta valitud
+44|Kustuta valitud ripple'iga
+45|Vali kõik
+46|Tühista valik
+47|Vali klipid edasi
+48|Otsi...
+49|Hiljutised projektid
+50|Projektihaldur...
+51|Kiirklahvid
+52|Vali lähim lõikepunkt
+53|Valiku režiim
+54|Lõikamisrežiim
+55|Dünaamiline lõikamine
+56|Ripple algus
+57|Ripple lõpp
+58|Ripple eelmine / järgmine
+59|Ripple eelmine esituspeani
+60|Ripple järgmine esituspeani
+61|Lõika algus esituspeani
+62|Lõika lõpp esituspeani
+63|Pikenda lõiget
+64|Slip klipp
+65|Slip kaader varem
+66|Slip kaader hiljem
+67|Slide klipp
+68|Slide kaader vasakule
+69|Slide kaader paremale
+70|Tsükliline lõikamine
+71|Asümmeetriline lõikamine
+72|Lõikamisredaktor
+73|Uus ajajoon...
+74|Uus ajajoon valitud klippidest
+75|Uus liitklipp...
+76|Uus efektiklipp...
+77|Lammuta kohapeal
+78|Lammuta liitklipp
+79|Lammuta pesastatud ajajoon
+80|Poolita klipp
+81|Ajajoon kastist...
+82|Impordi ajajoon...
+83|Ekspordi ajajoon...
+84|Eraldusvõime ja kaadrisagedus...
+85|Ajajoone seaded
+86|Kinnita
+87|Seotud valik
+88|Asukohalukk
+89|Valik järgib esituspead
+90|Lisa marker
+91|Lisa marker dialoogiga
+92|Kustuta kõik markerid
+93|Loo subtiitrirada
+94|Loo subtiitrite ala
+95|Üleminek kõikidele lõigetele
+96|Vaheta ajajoont
+97|Ava ajajoon uues aknas
+98|Kustuta ajajoon
+99|Luba klipp
+100|Sobiv kaader
+101|Lukusta klipp
+102|Uus multicam-klipp...
+103|Multicam-vaataja
+104|Lisa liikumatute piltidena
+105|Muuda klipi kiirust...
+106|Muuda klipi kestust...
+107|Ajastuse juhtnupud
+108|Ajasta klipp ümber
+109|Külmuta kaader
+110|Kiiruse ramp...
+111|Pööra klipp ümber
+112|Uus liitklipp
+113|Seo klipid
+114|Eralda heli ja pilt
+115|Heli scrubbing sees/väljas
+116|Joonda klipid automaatselt
+117|Ajakoodi järgi
+118|Lainekuju järgi
+119|Normaliseeri helitase...
+120|Renderda kohapeal
+121|Uus efektiklipp
+122|Uus liitklipp
+123|Klipi atribuudid...
+124|Märgi sisse
+125|Märgi välja
+126|Märgi klipp
+127|Märgi ajajoon sisse/välja
+128|Tühjenda sisse
+129|Tühjenda välja
+130|Tühjenda sisse ja välja
+131|Muuda markerit...
+132|Kustuta marker siin
+133|Kustuta kõik markerid
+134|Eelmise markeri juurde
+135|Järgmise markeri juurde
+136|Klipi värv
+137|Vaikimisi
+138|Oranž
+139|Aprikoos
+140|Kollane
+141|Laim
+142|Oliiv
+143|Roheline
+144|Türkiis
+145|Meresinine
+146|Sinine
+147|Lilla
+148|Violetne
+149|Roosa
+150|Helepruun
+151|Beež
+152|Pruun
+153|Šokolaad
+154|Näita praegust kaadrit esitusel
+155|Ohutu ala
+156|Näita ruudustikku / juhtjooni
+157|Näita tööriistariba
+158|Näita täisekraanivaadet
+159|Näita kinovaadet
+160|Vaataja ülekatted
+161|Teisenda / kärbi / suumi
+162|Ohutu ala
+163|Keskristik
+164|Malelaua taust (alfa)
+165|Näita kõiki ülekatteid
+166|Ajakoodi aken
+167|Näita scope'e
+168|Näita helimõõtjaid
+169|Näita heliseguriks
+170|Näita inspektorit
+171|Esita edasi
+172|Esita tagasi
+173|Stopp
+174|Esita kaadri ümbruses
+175|Esita sisse kuni välja
+176|Esita sisse/välja ümbruses
+177|Esita tsüklis
+178|Esimesele kaadrile
+179|Viimasele kaadrile
+180|Sissepunkti
+181|Väljapunkti
+182|Eelmine kaader
+183|Järgmine kaader
+184|Eelmine lõikepunkt
+185|Järgmine lõikepunkt
+186|Esituse eraldusvõime
+187|Pool
+188|Veerand
+189|Efektide mälupuhver
+190|Proxy režiim
+191|Väljas
+192|Kaheksandik
+193|Riistvaraline dekodeerimine
+194|Kustuta renderpuhver
+195|Videoüleminekud
+196|Ristlahtumine
+197|Üleminek värvi kaudu
+198|Heliüleminekud
+199|Ristuv hajumine
+200|Eemalda üleminek
+201|OpenFX
+202|Hägustamine
+203|Gaussi hägustamine
+204|Teravdamine
+205|Värv
+206|Pööra värvid ümber
+207|Must-valge
+208|Moonutus
+209|Mosaiik
+210|Heliefektid
+211|EQ
+212|Dünaamika
+213|Picasso FX
+214|Seepia
+215|Pehme hägustamine
+216|Valgus
+217|Hõõgus
+218|Stiliseerimine
+219|Vinjett
+220|Filmiterad
+221|Komposiitefektid
+222|Sõlmed
+223|Generaatorid
+224|Ühtlane värv
+225|Värviribad
+226|Üleminek
+227|Tiitrid
+228|Tekst
+229|Tekst+
+230|Otsi efektiraamatukogust
+231|Lisa tööriist (komp.)
+232|Lähtesta kõik gradeeringud ja sõlmed
+233|Lähtesta praegune sõlm
+234|Sõlm sees/väljas
+235|Võta still
+236|Esita still
+237|Lisa jadasõlm
+238|Lisa jada ette
+239|Lisa paralleelsõlm
+240|Lisa kihisegur
+241|Lisa jagaja / ühendaja
+242|Lisa välissõlm
+243|Pane sõlmele silt
+244|Ajajoon
+245|Eelmine sõlmegraaf
+246|Järgmine sõlmegraaf
+247|LUT
+248|Rakenda LUT loendist
+249|Galerii
+250|Scope'id sees/väljas
+251|Esiletõstud
+252|Valguslaud
+253|ADR
+254|Automaatne dialoogi asendus
+255|Bounce miks rajale
+256|Bounce valitud rajad
+257|Heliefektide puhver
+258|Heliseos
+259|Seosegrupp
+260|Lammuta
+261|Tsükliline jog
+262|Näita heliajajoont / segurit
+263|Täisekraanivaade
+264|Näita paneeli tööalal
+265|Meediakogu
+266|Efektiraamatukogu
+267|Inspektor
+268|Seguri
+269|Metaandmed
+270|Redigeerimisindeks
+271|Heliraamatukogu
+272|Paigutus
+273|Lähtesta paigutus
+274|Salvesta paigutus
+275|Laadi paigutus
+276|Mine lehele
+277|Meedia
+278|Redigeerimine
+279|Efektid
+280|Heli
+281|Esitus
+282|Kaks ekraani sees/väljas
+283|Puhas videoväljund
+284|Picasso Suite'i juhend
+285|Picasso Suite'i õpetused
+286|Otsi uuendusi...
+287|Ekspordi logifail...
+288|Info: Picasso Suite
+289|Keel
+#ui
+1|Klipid
+2|60 kaadrit/s
+3|Lisa töö
+4|Lisa järjekorda
+5|Täpsemalt
+6|Arhiveeri projekt
+7|Arhiveeri...
+8|Auto
+9|Automaatne
+10|Tasakaalus
+11|Kastid
+12|Sirvi
+13|Siinisaated
+14|Salvesta
+15|Peatükid
+16|Vali kaust
+17|Klipi nimi
+18|Klooni
+19|Kloonimine
+20|Kodek
+21|Värv+
+22|Kogud
+23|Kontrast
+24|Juhtruum
+25|Loo album
+26|Kõverad - oma
+27|Oma eksport
+28|Dekodeerimine
+29|Demoprojekt
+30|Lohistage fotod albumisse, et alustada
+31|Joonistatud
+32|Redigeerib
+33|Efektid sis.
+34|Sisseehitatud heli
+35|Kodeerija
+36|Kodeerimisprofiil
+37|Kogu ajajoon
+38|Suurus
+39|Iga
+40|Ekspordi video
+41|Fairlight
+42|Failinimi
+43|Vorming
+44|Kaadrit/s
+45|Ümberjärjest.
+46|Täiskaadrid
+47|Täisekraan
+48|Fusion
+49|Gain
+50|Gamma
+51|Generaator
+52|Videokaart
+53|Grupid
+54|Esil.
+55|Kõrge
+56|Toon
+57|Pilt
+58|Indeks
+59|Üksikud klipid
+60|Sisend
+61|Integreeritud
+62|Võtmekaadrid
+63|Märksõnad
+64|V miks
+65|Kiht
+66|Kohalik
+67|Asukoht
+68|Tsükkel
+69|Valjus
+70|Madal
+71|Märk
+72|Meediahaldus
+73|Meediaallikas
+74|Meediasalv.
+75|Mõõtjad
+76|Kesk/detail
+77|Muutjad
+78|Monitor
+79|Monitori helitugevus
+80|Natiivne
+81|Võrgu optimeerimine
+82|Töid pole
+83|Töid pole
+84|Stille pole
+85|Teatamata
+86|Pole midagi vaadata
+87|Nihe
+88|Ava
+89|Järjekord
+90|Parade
+91|Paus
+92|Foto
+93|Album
+94|Esitus
+95|Asukohalukk
+96|Eelseadistus
+97|Primaarsed - värviratas
+98|Töötlusrežiim
+99|Projekti seaded
+100|Projektid
+101|Kvaliteet
+102|Kiirekspordi
+103|Vahemik
+104|Bitikiiruse juhtimine
+105|Seo meedia uuesti
+106|Seo meedia uuesti...
+107|Eemalda
+108|Render
+109|Render kõik
+110|Renderjärjekord
+111|Renderi seaded
+112|Renderi seaded - oma eksport
+113|Lähtesta
+114|Lähtesta kõik
+115|Eraldusvõime
+116|Otsi
+117|Seaded
+118|Varjud
+119|Lühike
+120|Lühike max
+121|Üks klipp
+122|Nutikad kastid
+123|Allika värviruum
+124|Allika gammaruum
+125|Subtiitrite seaded
+126|Süsteem
+127|Ajajoone eraldusv.
+128|Ajajoone proxy
+129|Toon
+130|Tööriistad
+131|Raja FX
+132|Üleminekud
+133|Nimetu
+134|Püstine eraldusvõime
+135|Versioon 0.6.1
+136|Video
+137|Lainekuju
+138|Tööala
+139|Meediakogus pole klippe
+140|Importige klipid või lohistage failid siia
+141|Alustamiseks lisage klipid meediasalvest
+142|Heli pole
+143|Pole klippi gradeerimiseks
+144|Sisend puudub
+145|KESTUS
+146|Ekspordi heli
+147|Andmekiirus
+148|Väljundrada 1
+149|Unikaalne nimi
+150|Lisab nimele (1), (2) ... ülekirjutamise asemel.
+151|Failitüüp
+152|Kogu ajajoon
+153|Sisse kuni välja
+154|Pikslisuhe
+155|Ruut
+156|Cinemascope
+157|Andmetasemed
+158|Säilita musta-alune/valge-ülene
+159|Värviruumi silt
+160|Gamma silt
+161|Andmete põletus
+162|Nagu projekt
+163|Jäta ümberkodeerimine vahele
+164|Optimeeritud meedia
+165|Proxy meedia
+166|Puhvri pildid
+167|Parim skaleerimine
+168|Parim debayer
+169|Kõik videorajad
+170|Luba flat pass
+171|visionOS möödahoid
+172|Ilma skaleerimiseta/blankingita
+173|Käivita skript
+174|Algus
+175|renderdustööl
+176|Ekspordi subtiitrid
+177|Eraldi fail
+178|Ekspordi kui
+179|kaadrit
+180|Lõika
+181|Türkiis
+182|Pool
+183|Värviribad
+184|Valguslaud
+185|Muuda
+186|Seguri
+187|Helid
+188|Ajajoon: AAF, EDL, XML...
+189|Ajajoon: OpenTimelineIO...
+190|Rustis kirjutatud videoredaktor Windowsile, Linuxile, macOS-ile ja veebile.
+191|Heli scrubbing (heli pea lohistamisel)
+192|Parim
+193|Uus kaadrisagedus hoiab klipid samadel kaadritel.
+194|Klõpsake käsu klahvidel ja vajutage uut. Esc katkestab.
+195|Kopeerib ajajoonte failid kausta ja kirjutab neile viitava projektikoopia. Avatud projekt ei muutu.
+196|Dekodeeri toetatud video riistvarakiirendusega
+197|Iga meediafail on seal, kus projekt ütleb.
+198|Filtrid
+199|Vaba tarkvara GPL versiooni 3 või uuema all.
+200|H.264, H.265, AV1, VP9, MPEG-2 ja VC-1 dekodeeritakse videokaardil, kui draiver oskab. Lülitage välja, kui klipid on rohelised või katki. PICASSO_NO_HWACCEL=1 lülitab ühekordselt välja.
+201|Abi
+202|Seotud valik (pilt ja heli koos)
+203|Demoprojekt laaditud
+204|Pivot
+205|Valik järgib esituspead
+206|Kinnita klippidele, markeritele, peale
+207|Soft Clip
+208|Lint
+209|Lõikamine
+210|Vaade
+211|Täis
+212|Klipp
+213|Võtmekaadrid
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scope'id
+220|Spline
+221|Sünk. kast
+222|Temp
+223|Impordi proj...
+224|Ekspordi proj...
+225|Salvesta nimega...
+226|Koopia nimega...
+227|Impordi
+228|Ekspordi
+229|Subtiitrid...
+230|Meedia...
+231|Kaust...
+232|Ajajoon
+233|Meediakogu
+234|Inspektor
+235|Metaandmed
+236|1/8
+237|Info
+238|Uus proj.
+239|Ava...
+240|Salvesta
+241|Dünaamika
+242|Tiitrid
+243|Galerii
+244|Efektid
+245|Heli
+246|Ajajoon: EDL...
+247|Ajajoon: XML...
+248|Meedia

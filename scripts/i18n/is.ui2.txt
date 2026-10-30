@@ -1,0 +1,37 @@
+Add Job|Verk
+Auto|Auto
+Bins|Bakki
+Every|Hvert
+Export Video|Útfl. mynd
+Full Frames|Rammar
+L. Mix|V mix
+Local|Stað.
+Native|Upprun.
+Preset|Preset
+Project settings|Stillingar verk.
+Rate Control|Hraðastýr.
+Reset|Núllst.
+Reset All|Allt
+Shad|Skugg.
+Tools|Verkf.
+Video|Mynd
+No clip to grade|Ekkert klipp
+No Input|Ekkert inn
+Data Rate|Gagnahr.
+File type|Tegund
+Pixel aspect ratio|Pixlahlutfall
+Square|Fern.
+Data burn-in|Innbrennt
+Export As|Útfl. sem
+Cut|Klipp.
+Teal|Blágr.
+Mixer|Blandar
+Trim|Snyrta
+Clip|Klip
+Sync Bin|Samst.
+Inspector|Skoðari
+Quarter|1/4
+Native|Nát.
+Shad|Skg.
+Mixer|Mix
+Trim|Trim

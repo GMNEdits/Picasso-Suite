@@ -1,0 +1,304 @@
+#menus
+Skrá
+Brt.
+Snyrt
+Tímalína
+Klipp
+Merki
+Skoða
+Afspilun
+Brellur
+Litur
+Hljóð
+Vinnusv.
+Hjálp
+#entries
+New Project Library...|Nýtt verkefnasafn...
+Open Project Library...|Opna verkefnasafn...
+Show Current Project Library in File Explorer|Sýna safn í Explorer
+Project Manager|Verkefnastjóri
+New Project|Nýtt verkefni
+Open Project...|Opna verkefni...
+Import Project...|Flytja inn verkefni...
+Export Project...|Flytja út verkefni...
+Restore Project Archive...|Endurheimta verkefnasafn...
+Save Project|Vista verkefni
+Save Project As...|Vista verkefni sem...
+Save Copy As...|Vista afrit sem...
+Revert to Last Saved Version|Fara í síðustu vistun
+Import|Flytja inn
+Media...|Miðlar...
+Folder as Bin...|Mappa sem bakki...
+Timeline: AAF, EDL, XML...|Tímalína: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Tímalína: for-EDL...
+Subtitle...|Texti...
+Metadata to Media Pool...|Lýsigögn í miðlasafn...
+Bin...|Bakki...
+Export|Flytja út
+Timeline: EDL...|Tímalína: EDL...
+Timeline: OpenTimelineIO...|Tímalína: OpenTimelineIO...
+Timeline: XML...|Tímalína: XML...
+Timeline: AAF...|Tímalína: AAF...
+Metadata from Media Pool...|Lýsigögn úr miðlasafni...
+Media Management...|Miðlastjórnun...
+Project Settings...|Stillingar verkefnis...
+System Preferences...|Kerfisstillingar...
+Quick Export...|Hraðútflutningur...
+Quit|Hætta
+Undo|Afturkalla
+Redo|Endurgera
+Cut|Klippa
+Copy|Afrita
+Paste|Líma
+Paste Insert|Líma og setja inn
+Paste Mix to Current Track|Líma blöndu í spor
+Duplicate|Tvöfalda
+Fit to Fill|Laga að fyllingu
+Place on Top|Setja efst
+Delete Selected|Eyða völdu
+Delete Selected with Ripple|Eyða völdu með ripple
+Select All|Velja allt
+Deselect All|Afvelja allt
+Select Clips Forward|Velja klipp áfram
+Find...|Leita...
+Recent Projects|Nýleg verkefni
+Project Manager...|Verkefnastjóri...
+Keyboard Customization|Flýtilyklar
+Select Nearest Edit Point|Velja næsta skurð
+Selection Mode|Valhamur
+Trim Mode|Snyrtihamur
+Dynamic Trim Mode|Kvik snyrting
+Ripple Start|Ripple byrjun
+Ripple End|Ripple endir
+Ripple Trim Previous / Next|Ripple fyrri / næsta
+Ripple Trim Previous Edit to Playhead|Ripple fyrri að haus
+Ripple Trim Next Edit to Playhead|Ripple næsta að haus
+Trim Start to Playhead|Snyrta byrjun að haus
+Trim End to Playhead|Snyrta endi að haus
+Extend Edit|Lengja skurð
+Slip Clip|Slip klipp
+Slip One Frame Earlier|Slip einn ramma fyrr
+Slip One Frame Later|Slip einn ramma síðar
+Slide Clip|Slide klipp
+Slide One Frame Left|Slide einn ramma til vinstri
+Slide One Frame Right|Slide einn ramma til hægri
+Loop Trim|Lykkjusnyrting
+Asymmetric Trimming|Ósamhverf snyrting
+Trim Editor|Snyrtiritill
+New Timeline...|Ný tímalína...
+New Timeline Using Selected Clips|Ný tímalína úr völdum klippum
+Create New Compound Clip...|Nýtt samsett klipp...
+New Effects Clip...|Nýtt brelluklipp...
+Decompose in Place|Sundra á staðnum
+Decompose Compound Clip|Sundra samsettu klippi
+Decompose Nested Timeline|Sundra innfelldri tímalínu
+Split Clip|Skipta klippi
+Create Timeline Using Bin...|Tímalína úr bakka...
+Import Timeline...|Flytja inn tímalínu...
+Export Timeline...|Flytja út tímalínu...
+Timeline Resolution and Frame Rate...|Upplausn og rammatíðni...
+Timeline Settings|Stillingar tímalínu
+Snap|Smella
+Linked Selection|Tengt val
+Position Lock|Staðsetningarlás
+Selection Follows Playhead|Val fylgir haus
+Add Marker|Bæta við merki
+Add Marker and Show Dialog|Bæta við merki með glugga
+Delete All Markers|Eyða öllum merkjum
+Create Subtitle Track|Búa til textaspor
+Create Subtitle Region|Búa til textasvæði
+Add Transition to All Edits|Yfirfærsla á alla skurði
+Switch Timeline|Skipta um tímalínu
+Open Timeline in New Window|Opna tímalínu í nýjum glugga
+Delete Timeline|Eyða tímalínu
+Enable Clip|Virkja klipp
+Match Frame|Samsvarandi rammi
+Lock Clip|Læsa klippi
+New Multicam Clip...|Nýtt fjölmyndavélaklipp...
+Multicam Viewer|Fjölmyndavélaskoðari
+Add to Media Pool as Stills|Bæta við sem kyrrmyndum
+Change Clip Speed...|Breyta hraða klipps...
+Change Clip Duration...|Breyta lengd klipps...
+Retime Controls|Tímastýringar
+Retime Clip|Endurtímasetja klipp
+Freeze Frame|Frysta ramma
+Speed Ramp...|Hraðaskábraut...
+Reverse Clip|Snúa klippi við
+Create New Compound Clip|Nýtt samsett klipp
+Link Clips|Tengja klipp
+Unlink Audio and Video|Aðskilja hljóð og mynd
+Enable / Disable Audio Scrubbing|Hljóð-scrubbing á/af
+Auto Align Clips|Stilla klipp sjálfvirkt
+Based on Timecode|Eftir tímakóða
+Based on Waveform|Eftir bylgjuformi
+Normalize Audio Levels...|Jafna hljóðstig...
+Render in Place|Birta á staðnum
+New Effects Clip|Nýtt brelluklipp
+New Compound Clip|Nýtt samsett klipp
+Clip Attributes...|Eiginleikar klipps...
+Mark In|Merkja inn
+Mark Out|Merkja út
+Mark Clip|Merkja klipp
+Mark Timeline In/Out|Merkja tímalínu inn/út
+Clear In|Hreinsa inn
+Clear Out|Hreinsa út
+Clear In and Out|Hreinsa inn og út
+Modify Marker...|Breyta merki...
+Delete Marker at Current Position|Eyða merki hér
+Delete All Markers in Timeline|Eyða öllum merkjum
+Go to Previous Marker|Á fyrra merki
+Go to Next Marker|Á næsta merki
+Set Clip Color|Litur klipps
+Default|Sjálfgefið
+Orange|Appelsínugult
+Apricot|Apríkósu
+Yellow|Gult
+Lime|Límónugrænt
+Olive|Ólífugrænt
+Green|Grænt
+Teal|Blágrænt
+Navy|Dökkblátt
+Blue|Blátt
+Purple|Fjólublátt
+Violet|Fjólulitað
+Pink|Bleikt
+Tan|Ljósbrúnt
+Beige|Drapplitað
+Brown|Brúnt
+Chocolate|Súkkulaði
+Show Current Frame on Playback|Sýna ramma við afspilun
+Safe Area Overlay|Öruggt svæði
+Show Grid / Guides|Sýna rist / leiðarlínur
+Show Toolbar|Sýna verkfærastiku
+Show Full Screen Viewer|Sýna skoðara á öllum skjá
+Show Cinema Viewer|Sýna bíóskoðara
+Viewer Overlays|Yfirlög skoðara
+Transform / Crop / Dynamic Zoom|Umbreyta / klippa / aðdráttur
+Safe Area|Öruggt svæði
+Center Crosshair|Miðjukross
+Checkerboard Background (Alpha)|Taflborðsbakgrunnur (alfa)
+Show All Overlays|Sýna öll yfirlög
+Timecode Window|Tímakóðagluggi
+Show Scopes|Sýna scopes
+Show Audio Meters|Sýna hljóðmæla
+Show Audio Mixer|Sýna hljóðblandara
+Show Inspector|Sýna skoðunarmann
+Play Forward|Spila áfram
+Play Reverse|Spila afturábak
+Stop|Stöðva
+Play Around Current Frame|Spila í kringum ramma
+Play In to Out|Spila inn til út
+Play Around In / Around Out|Spila í kringum inn/út
+Loop Playback|Spila í lykkju
+Go to First Frame|Á fyrsta ramma
+Go to Last Frame|Á síðasta ramma
+Go to In|Á inn
+Go to Out|Á út
+Previous Frame|Fyrri rammi
+Next Frame|Næsti rammi
+Previous Edit Point|Fyrri skurður
+Next Edit Point|Næsti skurður
+Timeline Playback Resolution|Upplausn afspilunar
+Half|Hálft
+Quarter|Fjórðungur
+Effects Memory Cache|Brellumiðlægt skyndiminni
+Timeline Proxy Mode|Proxy-hamur
+Off|Af
+Eighth|Áttundi
+Hardware Decoding|Vélbúnaðarafkóðun
+Delete Render Cache|Eyða render-skyndiminni
+Video Transitions|Myndyfirfærslur
+Cross Dissolve|Krossblöndun
+Dip to Color|Dýfa í lit
+Audio Transitions|Hljóðyfirfærslur
+Cross Fade|Krossdofnun
+Remove Transition|Fjarlægja yfirfærslu
+OpenFX|OpenFX
+Blur|Móða
+Gaussian Blur|Gauss-móða
+Sharpen|Skerpa
+Color|Litur
+Invert Colors|Umsnúa litum
+Black and White|Svart-hvítt
+Distort|Aflögun
+Mosaic|Mósaík
+Audio FX|Hljóðbrellur
+EQ|EQ
+Dynamics|Hreyfisvið
+Picasso FX|Picasso FX
+Sepia|Sepía
+Soft Blur|Mjúk móða
+Light|Ljós
+Glow|Ljómi
+Stylize|Stílfæra
+Vignette|Vignetta
+Film Grain|Filmukorn
+Compositing Effects|Samsetningarbrellur
+Nodes|Hnútar
+Generators|Rafalar
+Solid Color|Einlitur
+Color Bars|Litastikur
+Gradient|Litbrigði
+Titles|Titlar
+Text|Texti
+Text+|Texti+
+Effects Library Search|Leita í brelluröðinni
+Add Tool (Compositing)|Bæta við verkfæri (samsetn.)
+Reset All Grades and Nodes|Núllstilla alla stigun og hnúta
+Reset Current Node Grade|Núllstilla núverandi hnút
+Enable/Disable Current Node|Hnútur á/af
+Grab Still|Taka still
+Play Still|Spila still
+Add Serial Node|Bæta við raðhnút
+Add Serial Before|Bæta við raðhnút fyrir
+Add Parallel Node|Bæta við hliðtengdum hnút
+Add Layer Mixer|Bæta við lagablandara
+Add Splitter / Combiner|Bæta við skiptara / sameinara
+Add Outside Node|Bæta við ytri hnút
+Label Node|Merkja hnút
+Timeline|Tímalína
+Previous Node Graph|Fyrra hnútarit
+Next Node Graph|Næsta hnútarit
+LUT|LUT
+Apply LUT from list|Beita LUT af lista
+Gallery|Gallerí
+Scopes On/Off|Scopes á/af
+Highlight|Hágljár
+Lightbox|Ljósaborð
+ADR|ADR
+Automated Dialogue Replacement|Sjálfvirk samræðuskipti
+Bounce Mix to Track|Bounce blöndu í spor
+Bounce Selected Tracks|Bounce valin spor
+Cache Audio Effects|Skyndiminni hljóðbrellna
+Audio Link|Hljóðtenging
+Link Group|Tengihópur
+Decompose|Sundra
+Loop Jog|Lykkju-jog
+Show Audio Timeline / Mixer|Sýna hljóðtímalínu / blandara
+Full Screen Viewer|Skoðari á öllum skjá
+Show Panel in Workspace|Sýna spjald í vinnusvæði
+Media Pool|Miðlasafn
+Effects Library|Brelluskrá
+Inspector|Skoðunarmaður
+Mixer|Blandari
+Metadata|Lýsigögn
+Edit Index|Breytingaskrá
+Sound Library|Hljóðasafn
+Layout|Skipulag
+Reset UI Layout|Núllstilla skipulag
+Save Layout|Vista skipulag
+Load Layout|Hlaða skipulag
+Switch to Page|Fara á síðu
+Media|Miðlar
+Edit|Klipping
+Effects|Brellur
+Audio|Hljóð
+Deliver|Afhending
+Dual Screen On/Off|Tveir skjáir á/af
+Video Clean Feed|Hreint myndúttak
+Picasso Suite Manual|Handbók Picasso Suite
+Picasso Suite Tutorials|Kennsla Picasso Suite
+Check for Updates...|Leita að uppfærslum...
+Export Log File...|Flytja út annálsskrá...
+About Picasso Suite|Um Picasso Suite
+Language|Tungumál

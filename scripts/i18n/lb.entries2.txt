@@ -1,0 +1,10 @@
+Save Copy As...|Kopie späicheren...
+Auto Align Clips|Clips auto ausriichten
+Show Grid / Guides|Raster/Linnen weisen
+Show Toolbar|Geräterleescht weis.
+Viewer Overlays|Iwwerlagerungen
+Show All Overlays|Iwwerlagerungen weisen
+Effects Library Search|An Effektbibliothéik sichen
+Reset All Grades and Nodes|Gradéierungen/Knäpp zrécksetzen
+Add Serial Node|Seriellen Knupp dobäi
+Check for Updates...|Aktualiséierunge sichen...

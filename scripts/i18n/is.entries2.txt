@@ -1,0 +1,3 @@
+Slide One Frame Left|Slide ramma til vinstri
+Auto Align Clips|Stilla klipp sjálfv.
+Add Parallel Node|Bæta við samsíða hnút

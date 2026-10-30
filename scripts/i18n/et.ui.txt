@@ -1,0 +1,248 @@
+Clips|Klipid
+60 frames per second|60 kaadrit/s
+Add Job|Lisa töö
+Add to Render Queue|Lisa järjekorda
+Advanced Settings|Täpsemalt
+Archive Project|Arhiveeri projekt
+Archive Project...|Arhiveeri...
+Auto|Auto
+Automatic|Automaatne
+Balanced|Tasakaalus
+Bins|Kastid
+Browse|Sirvi
+Bus Sends|Siinisaated
+Capture|Salvesta
+Chapters from Markers|Peatükid
+Choose a folder|Vali kaust
+Clip Name|Klipi nimi
+Clone|Klooni
+Clone Tool|Kloonimine
+Codec|Kodek
+Col Boost|Värv+
+Collections|Kogud
+Contrast|Kontrast
+Control Room|Juhtruum
+Create an Album|Loo album
+Curves - Custom|Kõverad - oma
+Custom Export|Oma eksport
+Decode Options|Dekodeerimine
+Demo Project|Demoprojekt
+Drag photos into the Photo Album to start editing|Lohistage fotod albumisse, et alustada
+Drawn with|Joonistatud
+Editing|Redigeerib
+Effects In|Efektid sis.
+Embedded Audio|Sisseehitatud heli
+Encoder|Kodeerija
+Encoding Profile|Kodeerimisprofiil
+Entire Timeline|Kogu ajajoon
+Estimated File Size|Suurus
+Every|Iga
+Export Video|Ekspordi video
+Fairlight|Fairlight
+File Name|Failinimi
+Format|Vorming
+Frame rate|Kaadrit/s
+Frame reordering|Ümberjärjest.
+Full Frames|Täiskaadrid
+Full Screen|Täisekraan
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generaator
+Graphics card|Videokaart
+Groups|Grupid
+Hi/Light|Esil.
+High|Kõrge
+Hue|Toon
+Image|Pilt
+Index|Indeks
+Individual clips|Üksikud klipid
+Input|Sisend
+Integrated|Integreeritud
+Key Frames|Võtmekaadrid
+Keywords|Märksõnad
+L. Mix|V miks
+Layer|Kiht
+Local|Kohalik
+Location|Asukoht
+Loop playback|Tsükkel
+Loudness|Valjus
+Low|Madal
+Mark|Märk
+Media Management|Meediahaldus
+Media Source|Meediaallikas
+Media Storage|Meediasalv.
+Meters|Mõõtjad
+Mid/Detail|Kesk/detail
+Modifiers|Muutjad
+Monitor|Monitor
+Monitor volume|Monitori helitugevus
+Native|Natiivne
+Network Optimization|Võrgu optimeerimine
+No jobs in Queue|Töid pole
+No jobs in queue|Töid pole
+No stills created|Stille pole
+Not reported|Teatamata
+Nothing to inspect|Pole midagi vaadata
+Offset|Nihe
+Open|Ava
+Order|Järjekord
+Parade|Parade
+Pause|Paus
+Photo|Foto
+Photo Album|Album
+Playback|Esitus
+Position lock|Asukohalukk
+Preset|Eelseadistus
+Primaries - Color Wheels|Primaarsed - värviratas
+Process Mode|Töötlusrežiim
+Project settings|Projekti seaded
+Projects|Projektid
+Quality|Kvaliteet
+Quick Export|Kiirekspordi
+Range|Vahemik
+Rate Control|Bitikiiruse juhtimine
+Relink Missing Media|Seo meedia uuesti
+Relink Missing Media...|Seo meedia uuesti...
+Remove|Eemalda
+Render|Render
+Render All|Render kõik
+Render Queue|Renderjärjekord
+Render Settings|Renderi seaded
+Render Settings - Custom Export|Renderi seaded - oma eksport
+Reset|Lähtesta
+Reset All|Lähtesta kõik
+Resolution|Eraldusvõime
+Search|Otsi
+Settings|Seaded
+Shad|Varjud
+Short|Lühike
+Short Max|Lühike max
+Single clip|Üks klipp
+Smart Bins|Nutikad kastid
+Source Color Space|Allika värviruum
+Source Gamma Space|Allika gammaruum
+Subtitle Settings|Subtiitrite seaded
+System|Süsteem
+Timeline Resolution|Ajajoone eraldusv.
+Timeline proxy|Ajajoone proxy
+Tint|Toon
+Tools|Tööriistad
+Track FX|Raja FX
+Transitions|Üleminekud
+Untitled|Nimetu
+Use vertical resolution|Püstine eraldusvõime
+Version 0.6.1|Versioon 0.6.1
+Video|Video
+Waveform|Lainekuju
+Workspace|Tööala
+No clips in media pool|Meediakogus pole klippe
+Add clips with Import, or drop files here|Importige klipid või lohistage failid siia
+Add clips from Media Storage to get started|Alustamiseks lisage klipid meediasalvest
+No sound to show|Heli pole
+No clip to grade|Pole klippi gradeerimiseks
+No Input|Sisend puudub
+DURATION|KESTUS
+Export Audio|Ekspordi heli
+Data Rate|Andmekiirus
+Output Track 1|Väljundrada 1
+Use unique filename|Unikaalne nimi
+Adds (1), (2) ... to the name instead of writing over a file.|Lisab nimele (1), (2) ... ülekirjutamise asemel.
+File type|Failitüüp
+Whole timeline|Kogu ajajoon
+In to out marks|Sisse kuni välja
+Pixel aspect ratio|Pikslisuhe
+Square|Ruut
+Cinemascope|Cinemascope
+Data Levels|Andmetasemed
+Retain sub-black and super-white data|Säilita musta-alune/valge-ülene
+Color Space Tag|Värviruumi silt
+Gamma Tag|Gamma silt
+Data burn-in|Andmete põletus
+Same as project|Nagu projekt
+Bypass re-encode when possible|Jäta ümberkodeerimine vahele
+Use optimized media|Optimeeritud meedia
+Use proxy media|Proxy meedia
+Use render cached images|Puhvri pildid
+Force sizing to highest quality|Parim skaleerimine
+Force debayer to highest quality|Parim debayer
+Render All Video Tracks|Kõik videorajad
+Enable Flat Pass|Luba flat pass
+visionOS Bypass|visionOS möödahoid
+Disable sizing and blanking output|Ilma skaleerimiseta/blankingita
+Trigger script at|Käivita skript
+Start|Algus
+of render job|renderdustööl
+Export Subtitle|Ekspordi subtiitrid
+As a separate file|Eraldi fail
+Export As|Ekspordi kui
+frames|kaadrit
+Cut|Lõika
+Teal|Türkiis
+Half|Pool
+Color Bars|Värviribad
+Lightbox|Valguslaud
+Edit|Muuda
+Mixer|Seguri
+Sound Library|Helid
+Timeline: AAF, EDL, XML...|Ajajoon: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Ajajoon: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rustis kirjutatud videoredaktor Windowsile, Linuxile, macOS-ile ja veebile.
+Audio scrubbing (sound while the playhead is dragged)|Heli scrubbing (heli pea lohistamisel)
+Best|Parim
+Changing the frame rate keeps every clip on the same frames.|Uus kaadrisagedus hoiab klipid samadel kaadritel.
+Click a command's keys, then press the key it should have. Escape gives up.|Klõpsake käsu klahvidel ja vajutage uut. Esc katkestab.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Kopeerib ajajoonte failid kausta ja kirjutab neile viitava projektikoopia. Avatud projekt ei muutu.
+Decode supported video using hardware acceleration|Dekodeeri toetatud video riistvarakiirendusega
+Every media file is where the project says it is.|Iga meediafail on seal, kus projekt ütleb.
+Filters|Filtrid
+Free software under the GPL, version 3 or later.|Vaba tarkvara GPL versiooni 3 või uuema all.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 ja VC-1 dekodeeritakse videokaardil, kui draiver oskab. Lülitage välja, kui klipid on rohelised või katki. PICASSO_NO_HWACCEL=1 lülitab ühekordselt välja.
+Help|Abi
+Linked selection (picture and sound together)|Seotud valik (pilt ja heli koos)
+Loaded the demo project|Demoprojekt laaditud
+Pivot|Pivot
+Selection follows the playhead|Valik järgib esituspead
+Snap to clips, markers and the playhead|Kinnita klippidele, markeritele, peale
+Soft Clip|Soft Clip
+Tape|Lint
+Trim|Lõikamine
+View|Vaade
+Full|Täis
+Clip|Klipp
+Keyframes|Võtmekaadrid
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scope'id
+Spline|Spline
+Sync Bin|Sünk. kast
+Temp|Temp
+Import Project...|Impordi proj...
+Export Project...|Ekspordi proj...
+Save Project As...|Salvesta nimega...
+Save Copy As...|Koopia nimega...
+Import|Impordi
+Export|Ekspordi
+Subtitle...|Subtiitrid...
+Media...|Meedia...
+Folder as Bin...|Kaust...
+Timeline|Ajajoon
+Media Pool|Meediakogu
+Inspector|Inspektor
+Metadata|Metaandmed
+Eighth|1/8
+About Picasso Suite|Info
+New Project|Uus proj.
+Open Project...|Ava...
+Save Project|Salvesta
+Dynamics|Dünaamika
+Titles|Tiitrid
+Gallery|Galerii
+Effects|Efektid
+Audio|Heli
+Timeline: EDL...|Ajajoon: EDL...
+Timeline: XML...|Ajajoon: XML...
+Media|Meedia

@@ -1,0 +1,553 @@
+#menus
+Skrá
+Brt.
+Snyrt
+Tímalína
+Klipp
+Merki
+Skoða
+Afspilun
+Brellur
+Litur
+Hljóð
+Vinnusv.
+Hjálp
+#entries
+1|Nýtt verkefnasafn...
+2|Opna verkefnasafn...
+3|Sýna safn í Explorer
+4|Verkefnastjóri
+5|Nýtt verkefni
+6|Opna verkefni...
+7|Flytja inn verkefni...
+8|Flytja út verkefni...
+9|Endurheimta verkefnasafn...
+10|Vista verkefni
+11|Vista verkefni sem...
+12|Vista afrit sem...
+13|Fara í síðustu vistun
+14|Flytja inn
+15|Miðlar...
+16|Mappa sem bakki...
+17|Tímalína: AAF, EDL, XML...
+18|Tímalína: for-EDL...
+19|Texti...
+20|Lýsigögn í miðlasafn...
+21|Bakki...
+22|Flytja út
+23|Tímalína: EDL...
+24|Tímalína: OpenTimelineIO...
+25|Tímalína: XML...
+26|Tímalína: AAF...
+27|Lýsigögn úr miðlasafni...
+28|Miðlastjórnun...
+29|Stillingar verkefnis...
+30|Kerfisstillingar...
+31|Hraðútflutningur...
+32|Hætta
+33|Afturkalla
+34|Endurgera
+35|Klippa
+36|Afrita
+37|Líma
+38|Líma og setja inn
+39|Líma blöndu í spor
+40|Tvöfalda
+41|Laga að fyllingu
+42|Setja efst
+43|Eyða völdu
+44|Eyða völdu með ripple
+45|Velja allt
+46|Afvelja allt
+47|Velja klipp áfram
+48|Leita...
+49|Nýleg verkefni
+50|Verkefnastjóri...
+51|Flýtilyklar
+52|Velja næsta skurð
+53|Valhamur
+54|Snyrtihamur
+55|Kvik snyrting
+56|Ripple byrjun
+57|Ripple endir
+58|Ripple fyrri / næsta
+59|Ripple fyrri að haus
+60|Ripple næsta að haus
+61|Snyrta byrjun að haus
+62|Snyrta endi að haus
+63|Lengja skurð
+64|Slip klipp
+65|Slip einn ramma fyrr
+66|Slip einn ramma síðar
+67|Slide klipp
+68|Slide einn ramma til vinstri
+69|Slide einn ramma til hægri
+70|Lykkjusnyrting
+71|Ósamhverf snyrting
+72|Snyrtiritill
+73|Ný tímalína...
+74|Ný tímalína úr völdum klippum
+75|Nýtt samsett klipp...
+76|Nýtt brelluklipp...
+77|Sundra á staðnum
+78|Sundra samsettu klippi
+79|Sundra innfelldri tímalínu
+80|Skipta klippi
+81|Tímalína úr bakka...
+82|Flytja inn tímalínu...
+83|Flytja út tímalínu...
+84|Upplausn og rammatíðni...
+85|Stillingar tímalínu
+86|Smella
+87|Tengt val
+88|Staðsetningarlás
+89|Val fylgir haus
+90|Bæta við merki
+91|Bæta við merki með glugga
+92|Eyða öllum merkjum
+93|Búa til textaspor
+94|Búa til textasvæði
+95|Yfirfærsla á alla skurði
+96|Skipta um tímalínu
+97|Opna tímalínu í nýjum glugga
+98|Eyða tímalínu
+99|Virkja klipp
+100|Samsvarandi rammi
+101|Læsa klippi
+102|Nýtt fjölmyndavélaklipp...
+103|Fjölmyndavélaskoðari
+104|Bæta við sem kyrrmyndum
+105|Breyta hraða klipps...
+106|Breyta lengd klipps...
+107|Tímastýringar
+108|Endurtímasetja klipp
+109|Frysta ramma
+110|Hraðaskábraut...
+111|Snúa klippi við
+112|Nýtt samsett klipp
+113|Tengja klipp
+114|Aðskilja hljóð og mynd
+115|Hljóð-scrubbing á/af
+116|Stilla klipp sjálfvirkt
+117|Eftir tímakóða
+118|Eftir bylgjuformi
+119|Jafna hljóðstig...
+120|Birta á staðnum
+121|Nýtt brelluklipp
+122|Nýtt samsett klipp
+123|Eiginleikar klipps...
+124|Merkja inn
+125|Merkja út
+126|Merkja klipp
+127|Merkja tímalínu inn/út
+128|Hreinsa inn
+129|Hreinsa út
+130|Hreinsa inn og út
+131|Breyta merki...
+132|Eyða merki hér
+133|Eyða öllum merkjum
+134|Á fyrra merki
+135|Á næsta merki
+136|Litur klipps
+137|Sjálfgefið
+138|Appelsínugult
+139|Apríkósu
+140|Gult
+141|Límónugrænt
+142|Ólífugrænt
+143|Grænt
+144|Blágrænt
+145|Dökkblátt
+146|Blátt
+147|Fjólublátt
+148|Fjólulitað
+149|Bleikt
+150|Ljósbrúnt
+151|Drapplitað
+152|Brúnt
+153|Súkkulaði
+154|Sýna ramma við afspilun
+155|Öruggt svæði
+156|Sýna rist / leiðarlínur
+157|Sýna verkfærastiku
+158|Sýna skoðara á öllum skjá
+159|Sýna bíóskoðara
+160|Yfirlög skoðara
+161|Umbreyta / klippa / aðdráttur
+162|Öruggt svæði
+163|Miðjukross
+164|Taflborðsbakgrunnur (alfa)
+165|Sýna öll yfirlög
+166|Tímakóðagluggi
+167|Sýna scopes
+168|Sýna hljóðmæla
+169|Sýna hljóðblandara
+170|Sýna skoðunarmann
+171|Spila áfram
+172|Spila afturábak
+173|Stöðva
+174|Spila í kringum ramma
+175|Spila inn til út
+176|Spila í kringum inn/út
+177|Spila í lykkju
+178|Á fyrsta ramma
+179|Á síðasta ramma
+180|Á inn
+181|Á út
+182|Fyrri rammi
+183|Næsti rammi
+184|Fyrri skurður
+185|Næsti skurður
+186|Upplausn afspilunar
+187|Hálft
+188|Fjórðungur
+189|Brellumiðlægt skyndiminni
+190|Proxy-hamur
+191|Af
+192|Áttundi
+193|Vélbúnaðarafkóðun
+194|Eyða render-skyndiminni
+195|Myndyfirfærslur
+196|Krossblöndun
+197|Dýfa í lit
+198|Hljóðyfirfærslur
+199|Krossdofnun
+200|Fjarlægja yfirfærslu
+201|OpenFX
+202|Móða
+203|Gauss-móða
+204|Skerpa
+205|Litur
+206|Umsnúa litum
+207|Svart-hvítt
+208|Aflögun
+209|Mósaík
+210|Hljóðbrellur
+211|EQ
+212|Hreyfisvið
+213|Picasso FX
+214|Sepía
+215|Mjúk móða
+216|Ljós
+217|Ljómi
+218|Stílfæra
+219|Vignetta
+220|Filmukorn
+221|Samsetningarbrellur
+222|Hnútar
+223|Rafalar
+224|Einlitur
+225|Litastikur
+226|Litbrigði
+227|Titlar
+228|Texti
+229|Texti+
+230|Leita í brelluröðinni
+231|Bæta við verkfæri (samsetn.)
+232|Núllstilla alla stigun og hnúta
+233|Núllstilla núverandi hnút
+234|Hnútur á/af
+235|Taka still
+236|Spila still
+237|Bæta við raðhnút
+238|Bæta við raðhnút fyrir
+239|Bæta við hliðtengdum hnút
+240|Bæta við lagablandara
+241|Bæta við skiptara / sameinara
+242|Bæta við ytri hnút
+243|Merkja hnút
+244|Tímalína
+245|Fyrra hnútarit
+246|Næsta hnútarit
+247|LUT
+248|Beita LUT af lista
+249|Gallerí
+250|Scopes á/af
+251|Hágljár
+252|Ljósaborð
+253|ADR
+254|Sjálfvirk samræðuskipti
+255|Bounce blöndu í spor
+256|Bounce valin spor
+257|Skyndiminni hljóðbrellna
+258|Hljóðtenging
+259|Tengihópur
+260|Sundra
+261|Lykkju-jog
+262|Sýna hljóðtímalínu / blandara
+263|Skoðari á öllum skjá
+264|Sýna spjald í vinnusvæði
+265|Miðlasafn
+266|Brelluskrá
+267|Skoðunarmaður
+268|Blandari
+269|Lýsigögn
+270|Breytingaskrá
+271|Hljóðasafn
+272|Skipulag
+273|Núllstilla skipulag
+274|Vista skipulag
+275|Hlaða skipulag
+276|Fara á síðu
+277|Miðlar
+278|Klipping
+279|Brellur
+280|Hljóð
+281|Afhending
+282|Tveir skjáir á/af
+283|Hreint myndúttak
+284|Handbók Picasso Suite
+285|Kennsla Picasso Suite
+286|Leita að uppfærslum...
+287|Flytja út annálsskrá...
+288|Um Picasso Suite
+289|Tungumál
+#ui
+1|Klipp
+2|60 rammar/s
+3|Bæta við verki
+4|Í biðröð
+5|Ítarlegt
+6|Safna verkefni
+7|Safna...
+8|Sjálfv.
+9|Sjálfvirkt
+10|Jafnvægi
+11|Bakkar
+12|Vafra
+13|Rútusend.
+14|Taka upp
+15|Kaflar
+16|Veldu möppu
+17|Heiti klipps
+18|Klóna
+19|Klónun
+20|Kóðari
+21|Litur+
+22|Söfn
+23|Birtuskil
+24|Stjórn
+25|Búa til albúm
+26|Ferlar - eigin
+27|Eigin útflutn.
+28|Afkóðun
+29|Sýniverkefni
+30|Dragðu myndir í albúmið til að klippa
+31|Teiknað með
+32|Klippir
+33|Brellur inn
+34|Innbyggt hljóð
+35|Kóðari
+36|Kóðunarsnið
+37|Öll tímalína
+38|Stærð
+39|Á hverju
+40|Flytja út myndband
+41|Fairlight
+42|Skráarheiti
+43|Snið
+44|Rammar/s
+45|Endurröðun
+46|Heilir rammar
+47|Allur skjár
+48|Fusion
+49|Gain
+50|Gamma
+51|Rafall
+52|Skjákort
+53|Hópar
+54|Hágljár
+55|Hátt
+56|Blær
+57|Mynd
+58|Skrá
+59|Stök klipp
+60|Inn
+61|Samþætt
+62|Lykilrammar
+63|Lykilorð
+64|V blanda
+65|Lag
+66|Staðbundið
+67|Staðsetn.
+68|Lykkja
+69|Hávaði
+70|Lágt
+71|Merki
+72|Miðlastjórnun
+73|Miðlagjafi
+74|Miðlageymsla
+75|Mælar
+76|Mið/smáatr.
+77|Breytar
+78|Skjár
+79|Skjáhljóðstyrkur
+80|Upprunalegt
+81|Netbestun
+82|Engin verk
+83|Engin verk
+84|Engin still
+85|Ekki gefið upp
+86|Ekkert að skoða
+87|Hliðrun
+88|Opna
+89|Röð
+90|Parade
+91|Hlé
+92|Mynd
+93|Albúm
+94|Afspilun
+95|Staðsetn.lás
+96|Forstilling
+97|Frumlitir - litahjól
+98|Vinnsluhamur
+99|Stillingar verkefnis
+100|Verkefni
+101|Gæði
+102|Hraðútflutn.
+103|Bil
+104|Bitahraðastýring
+105|Endurtengja miðla
+106|Endurtengja miðla...
+107|Fjarlægja
+108|Render
+109|Render allt
+110|Render-biðröð
+111|Render-stillingar
+112|Render - eigin útflutn.
+113|Núllstilla
+114|Núllstilla allt
+115|Upplausn
+116|Leita
+117|Stillingar
+118|Skuggar
+119|Stutt
+120|Stutt hám.
+121|Eitt klipp
+122|Snjallbakkar
+123|Uppruna litarými
+124|Uppruna gammarými
+125|Textastillingar
+126|Kerfi
+127|Upplausn tímal.
+128|Proxy tímal.
+129|Blær
+130|Verkfæri
+131|Spor FX
+132|Yfirfærslur
+133|Án heitis
+134|Lóðrétt upplausn
+135|Útgáfa 0.6.1
+136|Myndband
+137|Bylgjuform
+138|Vinnusv.
+139|Engin klipp í safni
+140|Fluttu inn klipp eða slepptu skrám hér
+141|Bættu klippum úr geymslu til að byrja
+142|Ekkert hljóð
+143|Ekkert klipp til stigunar
+144|Ekkert inntak
+145|LENGD
+146|Flytja út hljóð
+147|Gagnahraði
+148|Úttaksspor 1
+149|Einstakt heiti
+150|Bætir (1), (2) ... við heiti í stað þess að skrifa yfir.
+151|Skráartegund
+152|Öll tímalína
+153|Inn til út
+154|Myndpunktahlutfall
+155|Ferningur
+156|Cinemascope
+157|Gagnastig
+158|Halda undir-svörtu/yfir-hvítu
+159|Litarýmismerki
+160|Gamma-merki
+161|Innbrennd gögn
+162|Eins og verkefni
+163|Sleppa endurkóðun
+164|Bestuð miðlun
+165|Proxy-miðlun
+166|Myndir úr skyndiminni
+167|Besta stærðarbreyting
+168|Besta debayer
+169|Öll myndspor
+170|Virkja flat pass
+171|visionOS framhjá
+172|Án stærðarbr./blanking
+173|Keyra skriftu
+174|Byrja
+175|render-verks
+176|Flytja út texta
+177|Sérskrá
+178|Flytja út sem
+179|rammar
+180|Klippa
+181|Blágrænt
+182|Hálft
+183|Litastikur
+184|Ljósaborð
+185|Breyta
+186|Blandari
+187|Hljóð
+188|Tímalína: AAF, EDL, XML...
+189|Tímalína: OpenTimelineIO...
+190|Myndbandsritill í Rust fyrir Windows, Linux, macOS og vefinn.
+191|Hljóð-scrubbing (hljóð þegar haus er dreginn)
+192|Best
+193|Ný rammatíðni heldur klippum á sömu römmum.
+194|Smelltu á takka skipunar og ýttu á nýjan. Esc hættir við.
+195|Afritar skrár tímalína í möppu og skrifar verkefnisafrit sem bendir á þær. Opna verkefnið breytist ekki.
+196|Afkóða studd myndskeið með vélbúnaðarhröðun
+197|Hver miðlaskrá er þar sem verkefnið segir.
+198|Síur
+199|Frjáls hugbúnaður undir GPL útgáfu 3 eða nýrri.
+200|H.264, H.265, AV1, VP9, MPEG-2 og VC-1 eru afkóðuð á skjákortinu ef driverinn getur. Slökktu ef klipp eru græn eða biluð. PICASSO_NO_HWACCEL=1 slekkur í eitt skipti.
+201|Hjálp
+202|Tengt val (mynd og hljóð saman)
+203|Sýniverkefni hlaðið
+204|Pivot
+205|Val fylgir haus
+206|Smella á klipp, merki, haus
+207|Soft Clip
+208|Spóla
+209|Snyrting
+210|Skoða
+211|Fullt
+212|Klipp
+213|Lykilrammar
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Samstilla bakka
+222|Hiti
+223|Inn verk...
+224|Út verk...
+225|Vista sem...
+226|Afrit sem...
+227|Inn
+228|Út
+229|Texti...
+230|Miðlar...
+231|Mappa...
+232|Tímalína
+233|Miðlasafn
+234|Skoðunarm.
+235|Lýsigögn
+236|1/8
+237|Um
+238|Nýtt verk.
+239|Opna...
+240|Vista
+241|Hreyfisvið
+242|Titlar
+243|Gallerí
+244|Brellur
+245|Hljóð
+246|Tímalína: EDL...
+247|Tímalína: XML...
+248|Miðlar

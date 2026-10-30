@@ -1,0 +1,248 @@
+Clips|Klipp
+60 frames per second|60 rammar/s
+Add Job|Bæta við verki
+Add to Render Queue|Í biðröð
+Advanced Settings|Ítarlegt
+Archive Project|Safna verkefni
+Archive Project...|Safna...
+Auto|Sjálfv.
+Automatic|Sjálfvirkt
+Balanced|Jafnvægi
+Bins|Bakkar
+Browse|Vafra
+Bus Sends|Rútusend.
+Capture|Taka upp
+Chapters from Markers|Kaflar
+Choose a folder|Veldu möppu
+Clip Name|Heiti klipps
+Clone|Klóna
+Clone Tool|Klónun
+Codec|Kóðari
+Col Boost|Litur+
+Collections|Söfn
+Contrast|Birtuskil
+Control Room|Stjórn
+Create an Album|Búa til albúm
+Curves - Custom|Ferlar - eigin
+Custom Export|Eigin útflutn.
+Decode Options|Afkóðun
+Demo Project|Sýniverkefni
+Drag photos into the Photo Album to start editing|Dragðu myndir í albúmið til að klippa
+Drawn with|Teiknað með
+Editing|Klippir
+Effects In|Brellur inn
+Embedded Audio|Innbyggt hljóð
+Encoder|Kóðari
+Encoding Profile|Kóðunarsnið
+Entire Timeline|Öll tímalína
+Estimated File Size|Stærð
+Every|Á hverju
+Export Video|Flytja út myndband
+Fairlight|Fairlight
+File Name|Skráarheiti
+Format|Snið
+Frame rate|Rammar/s
+Frame reordering|Endurröðun
+Full Frames|Heilir rammar
+Full Screen|Allur skjár
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Rafall
+Graphics card|Skjákort
+Groups|Hópar
+Hi/Light|Hágljár
+High|Hátt
+Hue|Blær
+Image|Mynd
+Index|Skrá
+Individual clips|Stök klipp
+Input|Inn
+Integrated|Samþætt
+Key Frames|Lykilrammar
+Keywords|Lykilorð
+L. Mix|V blanda
+Layer|Lag
+Local|Staðbundið
+Location|Staðsetn.
+Loop playback|Lykkja
+Loudness|Hávaði
+Low|Lágt
+Mark|Merki
+Media Management|Miðlastjórnun
+Media Source|Miðlagjafi
+Media Storage|Miðlageymsla
+Meters|Mælar
+Mid/Detail|Mið/smáatr.
+Modifiers|Breytar
+Monitor|Skjár
+Monitor volume|Skjáhljóðstyrkur
+Native|Upprunalegt
+Network Optimization|Netbestun
+No jobs in Queue|Engin verk
+No jobs in queue|Engin verk
+No stills created|Engin still
+Not reported|Ekki gefið upp
+Nothing to inspect|Ekkert að skoða
+Offset|Hliðrun
+Open|Opna
+Order|Röð
+Parade|Parade
+Pause|Hlé
+Photo|Mynd
+Photo Album|Albúm
+Playback|Afspilun
+Position lock|Staðsetn.lás
+Preset|Forstilling
+Primaries - Color Wheels|Frumlitir - litahjól
+Process Mode|Vinnsluhamur
+Project settings|Stillingar verkefnis
+Projects|Verkefni
+Quality|Gæði
+Quick Export|Hraðútflutn.
+Range|Bil
+Rate Control|Bitahraðastýring
+Relink Missing Media|Endurtengja miðla
+Relink Missing Media...|Endurtengja miðla...
+Remove|Fjarlægja
+Render|Render
+Render All|Render allt
+Render Queue|Render-biðröð
+Render Settings|Render-stillingar
+Render Settings - Custom Export|Render - eigin útflutn.
+Reset|Núllstilla
+Reset All|Núllstilla allt
+Resolution|Upplausn
+Search|Leita
+Settings|Stillingar
+Shad|Skuggar
+Short|Stutt
+Short Max|Stutt hám.
+Single clip|Eitt klipp
+Smart Bins|Snjallbakkar
+Source Color Space|Uppruna litarými
+Source Gamma Space|Uppruna gammarými
+Subtitle Settings|Textastillingar
+System|Kerfi
+Timeline Resolution|Upplausn tímal.
+Timeline proxy|Proxy tímal.
+Tint|Blær
+Tools|Verkfæri
+Track FX|Spor FX
+Transitions|Yfirfærslur
+Untitled|Án heitis
+Use vertical resolution|Lóðrétt upplausn
+Version 0.6.1|Útgáfa 0.6.1
+Video|Myndband
+Waveform|Bylgjuform
+Workspace|Vinnusv.
+No clips in media pool|Engin klipp í safni
+Add clips with Import, or drop files here|Fluttu inn klipp eða slepptu skrám hér
+Add clips from Media Storage to get started|Bættu klippum úr geymslu til að byrja
+No sound to show|Ekkert hljóð
+No clip to grade|Ekkert klipp til stigunar
+No Input|Ekkert inntak
+DURATION|LENGD
+Export Audio|Flytja út hljóð
+Data Rate|Gagnahraði
+Output Track 1|Úttaksspor 1
+Use unique filename|Einstakt heiti
+Adds (1), (2) ... to the name instead of writing over a file.|Bætir (1), (2) ... við heiti í stað þess að skrifa yfir.
+File type|Skráartegund
+Whole timeline|Öll tímalína
+In to out marks|Inn til út
+Pixel aspect ratio|Myndpunktahlutfall
+Square|Ferningur
+Cinemascope|Cinemascope
+Data Levels|Gagnastig
+Retain sub-black and super-white data|Halda undir-svörtu/yfir-hvítu
+Color Space Tag|Litarýmismerki
+Gamma Tag|Gamma-merki
+Data burn-in|Innbrennd gögn
+Same as project|Eins og verkefni
+Bypass re-encode when possible|Sleppa endurkóðun
+Use optimized media|Bestuð miðlun
+Use proxy media|Proxy-miðlun
+Use render cached images|Myndir úr skyndiminni
+Force sizing to highest quality|Besta stærðarbreyting
+Force debayer to highest quality|Besta debayer
+Render All Video Tracks|Öll myndspor
+Enable Flat Pass|Virkja flat pass
+visionOS Bypass|visionOS framhjá
+Disable sizing and blanking output|Án stærðarbr./blanking
+Trigger script at|Keyra skriftu
+Start|Byrja
+of render job|render-verks
+Export Subtitle|Flytja út texta
+As a separate file|Sérskrá
+Export As|Flytja út sem
+frames|rammar
+Cut|Klippa
+Teal|Blágrænt
+Half|Hálft
+Color Bars|Litastikur
+Lightbox|Ljósaborð
+Edit|Breyta
+Mixer|Blandari
+Sound Library|Hljóð
+Timeline: AAF, EDL, XML...|Tímalína: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Tímalína: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Myndbandsritill í Rust fyrir Windows, Linux, macOS og vefinn.
+Audio scrubbing (sound while the playhead is dragged)|Hljóð-scrubbing (hljóð þegar haus er dreginn)
+Best|Best
+Changing the frame rate keeps every clip on the same frames.|Ný rammatíðni heldur klippum á sömu römmum.
+Click a command's keys, then press the key it should have. Escape gives up.|Smelltu á takka skipunar og ýttu á nýjan. Esc hættir við.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Afritar skrár tímalína í möppu og skrifar verkefnisafrit sem bendir á þær. Opna verkefnið breytist ekki.
+Decode supported video using hardware acceleration|Afkóða studd myndskeið með vélbúnaðarhröðun
+Every media file is where the project says it is.|Hver miðlaskrá er þar sem verkefnið segir.
+Filters|Síur
+Free software under the GPL, version 3 or later.|Frjáls hugbúnaður undir GPL útgáfu 3 eða nýrri.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 og VC-1 eru afkóðuð á skjákortinu ef driverinn getur. Slökktu ef klipp eru græn eða biluð. PICASSO_NO_HWACCEL=1 slekkur í eitt skipti.
+Help|Hjálp
+Linked selection (picture and sound together)|Tengt val (mynd og hljóð saman)
+Loaded the demo project|Sýniverkefni hlaðið
+Pivot|Pivot
+Selection follows the playhead|Val fylgir haus
+Snap to clips, markers and the playhead|Smella á klipp, merki, haus
+Soft Clip|Soft Clip
+Tape|Spóla
+Trim|Snyrting
+View|Skoða
+Full|Fullt
+Clip|Klipp
+Keyframes|Lykilrammar
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Samstilla bakka
+Temp|Hiti
+Import Project...|Inn verk...
+Export Project...|Út verk...
+Save Project As...|Vista sem...
+Save Copy As...|Afrit sem...
+Import|Inn
+Export|Út
+Subtitle...|Texti...
+Media...|Miðlar...
+Folder as Bin...|Mappa...
+Timeline|Tímalína
+Media Pool|Miðlasafn
+Inspector|Skoðunarm.
+Metadata|Lýsigögn
+Eighth|1/8
+About Picasso Suite|Um
+New Project|Nýtt verk.
+Open Project...|Opna...
+Save Project|Vista
+Dynamics|Hreyfisvið
+Titles|Titlar
+Gallery|Gallerí
+Effects|Brellur
+Audio|Hljóð
+Timeline: EDL...|Tímalína: EDL...
+Timeline: XML...|Tímalína: XML...
+Media|Miðlar

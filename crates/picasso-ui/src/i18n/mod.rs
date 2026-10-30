@@ -31,6 +31,11 @@ pub(crate) use paint::translate_frame;
 #[cfg(test)]
 mod collect;
 mod ar;
+mod lb;
+mod is;
+mod lt;
+mod lv;
+mod et;
 mod ca;
 mod sr;
 mod bs;
@@ -89,6 +94,11 @@ pub(crate) enum Language {
     Bosnian,
     Serbian,
     Catalan,
+    Estonian,
+    Latvian,
+    Lithuanian,
+    Icelandic,
+    Luxembourgish,
     Chinese,
     Japanese,
     Arabic,
@@ -97,7 +107,7 @@ pub(crate) enum Language {
 
 impl Language {
     /// Every language, in the order of the Help > Language menu.
-    pub(crate) const ALL: [Language; 29] = [
+    pub(crate) const ALL: [Language; 34] = [
         Language::English,
         Language::Spanish,
         Language::Portuguese,
@@ -123,6 +133,11 @@ impl Language {
         Language::Bosnian,
         Language::Serbian,
         Language::Catalan,
+        Language::Estonian,
+        Language::Latvian,
+        Language::Lithuanian,
+        Language::Icelandic,
+        Language::Luxembourgish,
         Language::Chinese,
         Language::Japanese,
         Language::Arabic,
@@ -157,6 +172,11 @@ impl Language {
             Self::Bosnian => "bs",
             Self::Serbian => "sr",
             Self::Catalan => "ca",
+            Self::Estonian => "et",
+            Self::Latvian => "lv",
+            Self::Lithuanian => "lt",
+            Self::Icelandic => "is",
+            Self::Luxembourgish => "lb",
             Self::Chinese => "zh",
             Self::Japanese => "ja",
             Self::Arabic => "ar",
@@ -192,6 +212,11 @@ impl Language {
             Self::Bosnian => "Bosanski",
             Self::Serbian => "Српски",
             Self::Catalan => "Català",
+            Self::Estonian => "Eesti",
+            Self::Latvian => "Latviešu",
+            Self::Lithuanian => "Lietuvių",
+            Self::Icelandic => "Íslenska",
+            Self::Luxembourgish => "Lëtzebuergesch",
             Self::Chinese => "中文",
             Self::Japanese => "日本語",
             // "العربية" as it is drawn (joined, and in the order seen).
@@ -239,6 +264,11 @@ impl Language {
             Self::Bosnian => (&bs::MENUS, bs::ENTRIES, bs::UI),
             Self::Serbian => (&sr::MENUS, sr::ENTRIES, sr::UI),
             Self::Catalan => (&ca::MENUS, ca::ENTRIES, ca::UI),
+            Self::Estonian => (&et::MENUS, et::ENTRIES, et::UI),
+            Self::Latvian => (&lv::MENUS, lv::ENTRIES, lv::UI),
+            Self::Lithuanian => (&lt::MENUS, lt::ENTRIES, lt::UI),
+            Self::Icelandic => (&is::MENUS, is::ENTRIES, is::UI),
+            Self::Luxembourgish => (&lb::MENUS, lb::ENTRIES, lb::UI),
             Self::Chinese => (&zh::MENUS, zh::ENTRIES, zh::UI),
             Self::Japanese => (&ja::MENUS, ja::ENTRIES, ja::UI),
             Self::Arabic => (&ar::MENUS, ar::ENTRIES, ar::UI),
@@ -326,8 +356,8 @@ pub(crate) fn menu_name_in(language: Language, name: &'static str) -> &'static s
 
 /// The entries of a language by their English label, made once.
 fn table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
-    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 29] =
-        [const { OnceLock::new() }; 29];
+    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 34] =
+        [const { OnceLock::new() }; 34];
     let (_, entries, _) = language.data()?;
     Some(
         TABLES[usize::from(language.index())]
@@ -337,8 +367,8 @@ fn table(language: Language) -> Option<&'static HashMap<&'static str, &'static s
 
 /// The text of the pages and windows of a language by its English text, made once.
 fn ui_table(language: Language) -> Option<&'static HashMap<&'static str, &'static str>> {
-    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 29] =
-        [const { OnceLock::new() }; 29];
+    static TABLES: [OnceLock<HashMap<&'static str, &'static str>>; 34] =
+        [const { OnceLock::new() }; 34];
     let (_, menus, ui) = language.data()?;
     Some(TABLES[usize::from(language.index())].get_or_init(|| {
         // A menu label is also text on a page ("Media", "Color"): one table for both.

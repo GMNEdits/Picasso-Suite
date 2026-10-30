@@ -1,0 +1,553 @@
+#menus
+Fail.
+Red.
+Karp.
+Juosta
+Klip.
+Žymė
+Rod.
+Atkūrimas
+Efektai
+Spal.
+Garsas
+Sritis
+Pagalba
+#entries
+1|Nauja projektų biblioteka...
+2|Atverti projektų biblioteką...
+3|Rodyti biblioteką Explorer
+4|Projektų tvarkyklė
+5|Naujas projektas
+6|Atverti projektą...
+7|Importuoti projektą...
+8|Eksportuoti projektą...
+9|Atkurti projekto archyvą...
+10|Įrašyti projektą
+11|Įrašyti projektą kaip...
+12|Įrašyti kopiją kaip...
+13|Grįžti prie paskutinio įrašyto
+14|Importuoti
+15|Medija...
+16|Aplankas kaip krepšelis...
+17|Juosta: AAF, EDL, XML...
+18|Juosta: išankst. EDL...
+19|Subtitrai...
+20|Metaduomenys į mediją...
+21|Krepšelis...
+22|Eksportuoti
+23|Juosta: EDL...
+24|Juosta: OpenTimelineIO...
+25|Juosta: XML...
+26|Juosta: AAF...
+27|Metaduomenys iš medijos...
+28|Medijos valdymas...
+29|Projekto nustatymai...
+30|Sistemos nuostatos...
+31|Greitas eksportas...
+32|Išeiti
+33|Atšaukti
+34|Kartoti
+35|Iškirpti
+36|Kopijuoti
+37|Įklijuoti
+38|Įklijuoti ir įterpti
+39|Įklijuoti miksą į takelį
+40|Dubliuoti
+41|Pritaikyti užpildymui
+42|Padėti viršuje
+43|Naikinti pasirinktus
+44|Naikinti pasirinktus su ripple
+45|Pasirinkti viską
+46|Atšaukti pasirinkimą
+47|Pasirinkti klipus pirmyn
+48|Ieškoti...
+49|Naujausi projektai
+50|Projektų tvarkyklė...
+51|Spartieji klavišai
+52|Pasirinkti artimiausią kirpimą
+53|Pasirinkimo režimas
+54|Karpymo režimas
+55|Dinaminis karpymas
+56|Ripple pradžia
+57|Ripple pabaiga
+58|Ripple ankstesnis / kitas
+59|Ripple ankstesnis iki galvutės
+60|Ripple kitas iki galvutės
+61|Karpyti pradžią iki galvutės
+62|Karpyti pabaigą iki galvutės
+63|Pratęsti kirpimą
+64|Slip klipas
+65|Slip vienu kadru anksčiau
+66|Slip vienu kadru vėliau
+67|Slide klipas
+68|Slide vienu kadru kairėn
+69|Slide vienu kadru dešinėn
+70|Ciklinis karpymas
+71|Asimetrinis karpymas
+72|Karpymo redaktorius
+73|Nauja laiko juosta...
+74|Nauja juosta iš pasirinktų
+75|Naujas sudėtinis klipas...
+76|Naujas efektų klipas...
+77|Išskaidyti vietoje
+78|Išskaidyti sudėtinį klipą
+79|Išskaidyti įdėtą juostą
+80|Padalyti klipą
+81|Juosta iš krepšelio...
+82|Importuoti laiko juostą...
+83|Eksportuoti laiko juostą...
+84|Skiriamoji geba ir kadrų dažnis...
+85|Laiko juostos nustatymai
+86|Prilipdyti
+87|Susietas pasirinkimas
+88|Padėties užraktas
+89|Pasirinkimas seka galvutę
+90|Pridėti žymeklį
+91|Pridėti žymeklį su dialogu
+92|Naikinti visus žymeklius
+93|Sukurti subtitrų takelį
+94|Sukurti subtitrų sritį
+95|Perėjimas visiems kirpimams
+96|Perjungti laiko juostą
+97|Atverti juostą naujame lange
+98|Naikinti laiko juostą
+99|Įjungti klipą
+100|Atitinkantis kadras
+101|Užrakinti klipą
+102|Naujas multikameros klipas...
+103|Multikameros žiūryklė
+104|Pridėti kaip nejudančius vaizdus
+105|Keisti klipo greitį...
+106|Keisti klipo trukmę...
+107|Laiko valdikliai
+108|Perskaičiuoti klipo laiką
+109|Sustabdyti kadrą
+110|Greičio rampa...
+111|Apversti klipą
+112|Naujas sudėtinis klipas
+113|Susieti klipus
+114|Atskirti garsą ir vaizdą
+115|Garso scrubbing įj./išj.
+116|Automatiškai lygiuoti klipus
+117|Pagal timecode
+118|Pagal bangos formą
+119|Normalizuoti garso lygį...
+120|Renderinti vietoje
+121|Naujas efektų klipas
+122|Naujas sudėtinis klipas
+123|Klipo savybės...
+124|Pažymėti pradžią
+125|Pažymėti pabaigą
+126|Pažymėti klipą
+127|Pažymėti juostos pradžią/pabaigą
+128|Valyti pradžią
+129|Valyti pabaigą
+130|Valyti pradžią ir pabaigą
+131|Keisti žymeklį...
+132|Naikinti žymeklį čia
+133|Naikinti visus žymeklius
+134|Į ankstesnį žymeklį
+135|Į kitą žymeklį
+136|Klipo spalva
+137|Numatytoji
+138|Oranžinė
+139|Abrikosinė
+140|Geltona
+141|Žaliosios citrinos
+142|Alyvuogių
+143|Žalia
+144|Žalsvai mėlyna
+145|Tamsiai mėlyna
+146|Mėlyna
+147|Purpurinė
+148|Violetinė
+149|Rožinė
+150|Šviesiai ruda
+151|Smėlio
+152|Ruda
+153|Šokolado
+154|Rodyti dabartinį kadrą atkuriant
+155|Saugi sritis
+156|Rodyti tinklelį / kreipiamąsias
+157|Rodyti įrankių juostą
+158|Rodyti viso ekrano vaizdą
+159|Rodyti kino vaizdą
+160|Žiūryklės uždangos
+161|Transformuoti / apkirpti / mastelis
+162|Saugi sritis
+163|Centro kryželis
+164|Šachmatų fonas (alfa)
+165|Rodyti visas uždangas
+166|Timecode langas
+167|Rodyti scopes
+168|Rodyti garso matuoklius
+169|Rodyti garso maišytuvą
+170|Rodyti inspektorių
+171|Groti pirmyn
+172|Groti atgal
+173|Stop
+174|Groti aplink kadrą
+175|Groti nuo pradžios iki pabaigos
+176|Groti aplink pradžią/pabaigą
+177|Groti ciklu
+178|Į pirmą kadrą
+179|Į paskutinį kadrą
+180|Į pradžią
+181|Į pabaigą
+182|Ankstesnis kadras
+183|Kitas kadras
+184|Ankstesnis kirpimas
+185|Kitas kirpimas
+186|Atkūrimo skiriamoji geba
+187|Pusė
+188|Ketvirtis
+189|Efektų atminties talpykla
+190|Proxy režimas
+191|Išj.
+192|Aštuntadalis
+193|Aparatinis dekodavimas
+194|Naikinti render talpyklą
+195|Vaizdo perėjimai
+196|Kryžminis tirpimas
+197|Pereiti per spalvą
+198|Garso perėjimai
+199|Kryžminis fade
+200|Pašalinti perėjimą
+201|OpenFX
+202|Suliejimas
+203|Gauso suliejimas
+204|Paryškinimas
+205|Spalva
+206|Invertuoti spalvas
+207|Nespalvotas
+208|Iškraipymas
+209|Mozaika
+210|Garso efektai
+211|EQ
+212|Dinamika
+213|Picasso FX
+214|Sepija
+215|Švelnus suliejimas
+216|Šviesa
+217|Švytėjimas
+218|Stilizavimas
+219|Vinjetė
+220|Filmo grūdėtumas
+221|Kompozicijos efektai
+222|Mazgai
+223|Generatoriai
+224|Vienspalvis
+225|Spalvų juostos
+226|Gradientas
+227|Titrai
+228|Tekstas
+229|Tekstas+
+230|Ieškoti efektų bibliotekoje
+231|Pridėti įrankį (kompozicija)
+232|Atstatyti visus gradavimus ir mazgus
+233|Atstatyti dabartinį mazgą
+234|Mazgas įj./išj.
+235|Fiksuoti still
+236|Groti still
+237|Pridėti nuoseklų mazgą
+238|Pridėti nuoseklų prieš
+239|Pridėti lygiagretų mazgą
+240|Pridėti sluoksnių maišytuvą
+241|Pridėti skirstytuvą / jungiklį
+242|Pridėti išorinį mazgą
+243|Pažymėti mazgą
+244|Laiko juosta
+245|Ankstesnis mazgų grafas
+246|Kitas mazgų grafas
+247|LUT
+248|Taikyti LUT iš sąrašo
+249|Galerija
+250|Scopes įj./išj.
+251|Šviesos
+252|Šviesos stalas
+253|ADR
+254|Automatinis dialogo keitimas
+255|Bounce miksą į takelį
+256|Bounce pasirinktus takelius
+257|Garso efektų talpykla
+258|Garso saitas
+259|Saitų grupė
+260|Išskaidyti
+261|Ciklinis jog
+262|Rodyti garso juostą / maišytuvą
+263|Viso ekrano vaizdas
+264|Rodyti skydelį srityje
+265|Medijos telkinys
+266|Efektų biblioteka
+267|Inspektorius
+268|Maišytuvas
+269|Metaduomenys
+270|Redagavimo indeksas
+271|Garsų biblioteka
+272|Išdėstymas
+273|Atstatyti išdėstymą
+274|Įrašyti išdėstymą
+275|Įkelti išdėstymą
+276|Pereiti į puslapį
+277|Medija
+278|Redagavimas
+279|Efektai
+280|Garsas
+281|Pristatymas
+282|Du ekranai įj./išj.
+283|Švarus vaizdo išvedimas
+284|Picasso Suite vadovas
+285|Picasso Suite pamokos
+286|Tikrinti naujinimus...
+287|Eksportuoti žurnalo failą...
+288|Apie Picasso Suite
+289|Kalba
+#ui
+1|Klipai
+2|60 kadrų/s
+3|Pridėti darbą
+4|Į eilę
+5|Papildomai
+6|Archyvuoti projektą
+7|Archyvuoti...
+8|Auto
+9|Automatinis
+10|Subalansuotas
+11|Krepšeliai
+12|Naršyti
+13|Magistralės
+14|Fiksuoti
+15|Skyriai
+16|Pasirinkite aplanką
+17|Klipo pavadinimas
+18|Klonas
+19|Klonavimas
+20|Kodekas
+21|Spalva+
+22|Kolekcijos
+23|Kontrastas
+24|Valdymas
+25|Sukurti albumą
+26|Kreivės - savos
+27|Savas eksportas
+28|Dekodavimas
+29|Demo projektas
+30|Nutempkite nuotraukas į albumą redaguoti
+31|Nupiešta
+32|Redaguojama
+33|Efektai įv.
+34|Įterptas garsas
+35|Kodavimo įr.
+36|Kodavimo profilis
+37|Visa juosta
+38|Dydis
+39|Kas
+40|Eksportuoti vaizdo įr.
+41|Fairlight
+42|Failo pavadinimas
+43|Formatas
+44|Kadrų/s
+45|Perrikiavimas
+46|Pilni kadrai
+47|Visas ekranas
+48|Fusion
+49|Gain
+50|Gamma
+51|Generatorius
+52|Vaizdo plokštė
+53|Grupės
+54|Šviesos
+55|Aukštas
+56|Atspalvis
+57|Vaizdas
+58|Indeksas
+59|Atskiri klipai
+60|Įvestis
+61|Integruotas
+62|Raktiniai kadrai
+63|Raktažodžiai
+64|K maiš.
+65|Sluoksnis
+66|Vietinis
+67|Vieta
+68|Ciklas
+69|Garsumas
+70|Žemas
+71|Žymė
+72|Medijos valdymas
+73|Medijos šaltinis
+74|Medijos saugykla
+75|Matuokliai
+76|Vidurys/detalės
+77|Modifikatoriai
+78|Monitorius
+79|Monitoriaus garsas
+80|Natyvus
+81|Tinklo optimizavimas
+82|Nėra darbų
+83|Nėra darbų
+84|Nėra still
+85|Nepranešta
+86|Nėra ką žiūrėti
+87|Poslinkis
+88|Atverti
+89|Eilė
+90|Parade
+91|Pauzė
+92|Foto
+93|Albumas
+94|Atkūrimas
+95|Padėties užraktas
+96|Šablonas
+97|Pirminiai - spalvų ratai
+98|Apdorojimo režimas
+99|Projekto nustatymai
+100|Projektai
+101|Kokybė
+102|Greitas eksportas
+103|Diapazonas
+104|Spartos valdymas
+105|Iš naujo susieti mediją
+106|Iš naujo susieti mediją...
+107|Pašalinti
+108|Render
+109|Render viską
+110|Render eilė
+111|Render nustatymai
+112|Render nust. - savas eksportas
+113|Atstatyti
+114|Atstatyti viską
+115|Skiriamoji geba
+116|Ieškoti
+117|Nustatymai
+118|Šešėliai
+119|Trumpas
+120|Trumpas maks.
+121|Vienas klipas
+122|Išmanieji krepšeliai
+123|Šaltinio spalvų erdvė
+124|Šaltinio gamma erdvė
+125|Subtitrų nustatymai
+126|Sistema
+127|Juostos skiriamoji
+128|Juostos proxy
+129|Atspalvis
+130|Įrankiai
+131|Takelio FX
+132|Perėjimai
+133|Be pavadinimo
+134|Vertikali skiriamoji
+135|Versija 0.6.1
+136|Vaizdo įr.
+137|Bangos forma
+138|Sritis
+139|Telkinyje nėra klipų
+140|Importuokite klipus arba numeskite failus čia
+141|Pradžiai pridėkite klipų iš saugyklos
+142|Nėra garso
+143|Nėra klipo gradavimui
+144|Nėra įvesties
+145|TRUKMĖ
+146|Eksportuoti garsą
+147|Duomenų sparta
+148|Išvesties takelis 1
+149|Unikalus pavadinimas
+150|Prideda (1), (2) ... prie pavadinimo vietoj perrašymo.
+151|Failo tipas
+152|Visa juosta
+153|Nuo pradžios iki pabaigos
+154|Pikselio santykis
+155|Kvadratas
+156|Cinemascope
+157|Duomenų lygiai
+158|Išsaugoti žemiau-juodos/virš-baltos
+159|Spalvų erdvės žyma
+160|Gamma žyma
+161|Duomenų įdegimas
+162|Kaip projekto
+163|Praleisti perkodavimą
+164|Optimizuota medija
+165|Proxy medija
+166|Talpyklos vaizdai
+167|Geriausias mastelis
+168|Geriausias debayer
+169|Visi vaizdo takeliai
+170|Įjungti flat pass
+171|visionOS apėjimas
+172|Be mastelio/blanking
+173|Paleisti scenarijų
+174|Pradžia
+175|render darbo
+176|Eksportuoti subtitrus
+177|Atskiras failas
+178|Eksportuoti kaip
+179|kadrų
+180|Iškirpti
+181|Turkis
+182|Pusė
+183|Spalvų juostos
+184|Šviesos stalas
+185|Redag.
+186|Maišytuvas
+187|Garsai
+188|Juosta: AAF, EDL, XML...
+189|Juosta: OpenTimelineIO...
+190|Rust parašytas vaizdo redaktorius Windows, Linux, macOS ir žiniatinkliui.
+191|Garso scrubbing (garsas tempiant galvutę)
+192|Geriausias
+193|Naujas kadrų dažnis palieka klipus tuose pačiuose kadruose.
+194|Spustelėkite komandos klavišus ir paspauskite naują. Esc atšaukia.
+195|Nukopijuoja juostų naudojamus failus į aplanką ir įrašo į juos nukreipiančią projekto kopiją. Atidarytas projektas nesikeičia.
+196|Dekoduoti palaikomą vaizdą aparatine sparta
+197|Kiekvienas medijos failas yra ten, kur nurodo projektas.
+198|Filtrai
+199|Laisva programinė įranga pagal GPL 3 ar naujesnę versiją.
+200|H.264, H.265, AV1, VP9, MPEG-2 ir VC-1 dekoduojami vaizdo plokštėje, jei tvarkyklė gali. Išjunkite, jei klipai žali ar sugadinti. PICASSO_NO_HWACCEL=1 išjungia vienam paleidimui.
+201|Pagalba
+202|Susietas pasirinkimas (vaizdas ir garsas kartu)
+203|Demo projektas įkeltas
+204|Pivot
+205|Pasirinkimas seka galvutę
+206|Prilipdyti prie klipų, žymeklių, galvutės
+207|Soft Clip
+208|Juosta
+209|Karpymas
+210|Rodinys
+211|Pilnas
+212|Klipas
+213|Raktiniai kadrai
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Sinch. krep.
+222|Temp
+223|Imp. proj...
+224|Eksp. proj...
+225|Įrašyti kaip...
+226|Kopija kaip...
+227|Import.
+228|Eksp.
+229|Subtitrai...
+230|Medija...
+231|Aplankas...
+232|Juosta
+233|Telkinys
+234|Inspektorius
+235|Metaduom.
+236|1/8
+237|Apie
+238|Naujas proj.
+239|Atverti...
+240|Įrašyti
+241|Dinamika
+242|Titrai
+243|Galerija
+244|Efektai
+245|Garsas
+246|Juosta: EDL...
+247|Juosta: XML...
+248|Medija

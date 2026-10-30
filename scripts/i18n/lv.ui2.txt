@@ -1,0 +1,62 @@
+Add Job|Darbs
+Bins|Tvert.
+Clip Name|Nosaukums
+Export Video|Eksp. video
+File Name|Fails
+High|Augst.
+Hue|Hue
+Index|Indekss
+L. Mix|K mikss
+Local|Vietēj.
+Low|Zems
+Mark|Marķ.
+Media Storage|Krātuve
+Mid/Detail|Vidus
+Modifiers|Modif.
+Position lock|Pozīc. slēdz.
+Preset|Preset
+Process Mode|Apstrāde
+Project settings|Projekta iest.
+Quick Export|Ātrā eksp.
+Range|Diap.
+Relink Missing Media|Saistīt multividi
+Relink Missing Media...|Saistīt multividi...
+Reset|Reset
+Reset All|Viss
+Settings|Iest.
+Smart Bins|Gudrās
+Tint|Tint
+Untitled|Bez nosauk.
+No clips in media pool|Nav klipu
+No clip to grade|Nav klipa
+Export Audio|Eksp. skaņu
+Data Rate|Datu ātr.
+File type|Veids
+Data burn-in|Iedegšana
+Export Subtitle|Eksp. subtitrus
+Export As|Eksp. kā
+Cut|Izgr.
+Lightbox|Gaismgald.
+Mixer|Mikseris
+Best|Labāk.
+Help|Pal.
+Trim|Trim
+Full|Pilns
+Sync Bin|Sinhr.
+Import|Imp.
+Export|Eksp.
+Media...|Multiv...
+Media Pool|Kopa
+Project Manager|Projektu pārv.
+Default|Noklus.
+Quarter|1/4
+Bins|Tv.
+High|Aug.
+Index|Ind.
+L. Mix|K mix
+Low|Low
+Untitled|Bez nos.
+Lightbox|Lightbox
+Mixer|Miks.
+Best|Lab.
+Full|Full

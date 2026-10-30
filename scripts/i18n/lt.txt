@@ -1,0 +1,304 @@
+#menus
+Fail.
+Red.
+Karp.
+Juosta
+Klip.
+Žymė
+Rod.
+Atkūrimas
+Efektai
+Spal.
+Garsas
+Sritis
+Pagalba
+#entries
+New Project Library...|Nauja projektų biblioteka...
+Open Project Library...|Atverti projektų biblioteką...
+Show Current Project Library in File Explorer|Rodyti biblioteką Explorer
+Project Manager|Projektų tvarkyklė
+New Project|Naujas projektas
+Open Project...|Atverti projektą...
+Import Project...|Importuoti projektą...
+Export Project...|Eksportuoti projektą...
+Restore Project Archive...|Atkurti projekto archyvą...
+Save Project|Įrašyti projektą
+Save Project As...|Įrašyti projektą kaip...
+Save Copy As...|Įrašyti kopiją kaip...
+Revert to Last Saved Version|Grįžti prie paskutinio įrašyto
+Import|Importuoti
+Media...|Medija...
+Folder as Bin...|Aplankas kaip krepšelis...
+Timeline: AAF, EDL, XML...|Juosta: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Juosta: išankst. EDL...
+Subtitle...|Subtitrai...
+Metadata to Media Pool...|Metaduomenys į mediją...
+Bin...|Krepšelis...
+Export|Eksportuoti
+Timeline: EDL...|Juosta: EDL...
+Timeline: OpenTimelineIO...|Juosta: OpenTimelineIO...
+Timeline: XML...|Juosta: XML...
+Timeline: AAF...|Juosta: AAF...
+Metadata from Media Pool...|Metaduomenys iš medijos...
+Media Management...|Medijos valdymas...
+Project Settings...|Projekto nustatymai...
+System Preferences...|Sistemos nuostatos...
+Quick Export...|Greitas eksportas...
+Quit|Išeiti
+Undo|Atšaukti
+Redo|Kartoti
+Cut|Iškirpti
+Copy|Kopijuoti
+Paste|Įklijuoti
+Paste Insert|Įklijuoti ir įterpti
+Paste Mix to Current Track|Įklijuoti miksą į takelį
+Duplicate|Dubliuoti
+Fit to Fill|Pritaikyti užpildymui
+Place on Top|Padėti viršuje
+Delete Selected|Naikinti pasirinktus
+Delete Selected with Ripple|Naikinti pasirinktus su ripple
+Select All|Pasirinkti viską
+Deselect All|Atšaukti pasirinkimą
+Select Clips Forward|Pasirinkti klipus pirmyn
+Find...|Ieškoti...
+Recent Projects|Naujausi projektai
+Project Manager...|Projektų tvarkyklė...
+Keyboard Customization|Spartieji klavišai
+Select Nearest Edit Point|Pasirinkti artimiausią kirpimą
+Selection Mode|Pasirinkimo režimas
+Trim Mode|Karpymo režimas
+Dynamic Trim Mode|Dinaminis karpymas
+Ripple Start|Ripple pradžia
+Ripple End|Ripple pabaiga
+Ripple Trim Previous / Next|Ripple ankstesnis / kitas
+Ripple Trim Previous Edit to Playhead|Ripple ankstesnis iki galvutės
+Ripple Trim Next Edit to Playhead|Ripple kitas iki galvutės
+Trim Start to Playhead|Karpyti pradžią iki galvutės
+Trim End to Playhead|Karpyti pabaigą iki galvutės
+Extend Edit|Pratęsti kirpimą
+Slip Clip|Slip klipas
+Slip One Frame Earlier|Slip vienu kadru anksčiau
+Slip One Frame Later|Slip vienu kadru vėliau
+Slide Clip|Slide klipas
+Slide One Frame Left|Slide vienu kadru kairėn
+Slide One Frame Right|Slide vienu kadru dešinėn
+Loop Trim|Ciklinis karpymas
+Asymmetric Trimming|Asimetrinis karpymas
+Trim Editor|Karpymo redaktorius
+New Timeline...|Nauja laiko juosta...
+New Timeline Using Selected Clips|Nauja juosta iš pasirinktų
+Create New Compound Clip...|Naujas sudėtinis klipas...
+New Effects Clip...|Naujas efektų klipas...
+Decompose in Place|Išskaidyti vietoje
+Decompose Compound Clip|Išskaidyti sudėtinį klipą
+Decompose Nested Timeline|Išskaidyti įdėtą juostą
+Split Clip|Padalyti klipą
+Create Timeline Using Bin...|Juosta iš krepšelio...
+Import Timeline...|Importuoti laiko juostą...
+Export Timeline...|Eksportuoti laiko juostą...
+Timeline Resolution and Frame Rate...|Skiriamoji geba ir kadrų dažnis...
+Timeline Settings|Laiko juostos nustatymai
+Snap|Prilipdyti
+Linked Selection|Susietas pasirinkimas
+Position Lock|Padėties užraktas
+Selection Follows Playhead|Pasirinkimas seka galvutę
+Add Marker|Pridėti žymeklį
+Add Marker and Show Dialog|Pridėti žymeklį su dialogu
+Delete All Markers|Naikinti visus žymeklius
+Create Subtitle Track|Sukurti subtitrų takelį
+Create Subtitle Region|Sukurti subtitrų sritį
+Add Transition to All Edits|Perėjimas visiems kirpimams
+Switch Timeline|Perjungti laiko juostą
+Open Timeline in New Window|Atverti juostą naujame lange
+Delete Timeline|Naikinti laiko juostą
+Enable Clip|Įjungti klipą
+Match Frame|Atitinkantis kadras
+Lock Clip|Užrakinti klipą
+New Multicam Clip...|Naujas multikameros klipas...
+Multicam Viewer|Multikameros žiūryklė
+Add to Media Pool as Stills|Pridėti kaip nejudančius vaizdus
+Change Clip Speed...|Keisti klipo greitį...
+Change Clip Duration...|Keisti klipo trukmę...
+Retime Controls|Laiko valdikliai
+Retime Clip|Perskaičiuoti klipo laiką
+Freeze Frame|Sustabdyti kadrą
+Speed Ramp...|Greičio rampa...
+Reverse Clip|Apversti klipą
+Create New Compound Clip|Naujas sudėtinis klipas
+Link Clips|Susieti klipus
+Unlink Audio and Video|Atskirti garsą ir vaizdą
+Enable / Disable Audio Scrubbing|Garso scrubbing įj./išj.
+Auto Align Clips|Automatiškai lygiuoti klipus
+Based on Timecode|Pagal timecode
+Based on Waveform|Pagal bangos formą
+Normalize Audio Levels...|Normalizuoti garso lygį...
+Render in Place|Renderinti vietoje
+New Effects Clip|Naujas efektų klipas
+New Compound Clip|Naujas sudėtinis klipas
+Clip Attributes...|Klipo savybės...
+Mark In|Pažymėti pradžią
+Mark Out|Pažymėti pabaigą
+Mark Clip|Pažymėti klipą
+Mark Timeline In/Out|Pažymėti juostos pradžią/pabaigą
+Clear In|Valyti pradžią
+Clear Out|Valyti pabaigą
+Clear In and Out|Valyti pradžią ir pabaigą
+Modify Marker...|Keisti žymeklį...
+Delete Marker at Current Position|Naikinti žymeklį čia
+Delete All Markers in Timeline|Naikinti visus žymeklius
+Go to Previous Marker|Į ankstesnį žymeklį
+Go to Next Marker|Į kitą žymeklį
+Set Clip Color|Klipo spalva
+Default|Numatytoji
+Orange|Oranžinė
+Apricot|Abrikosinė
+Yellow|Geltona
+Lime|Žaliosios citrinos
+Olive|Alyvuogių
+Green|Žalia
+Teal|Žalsvai mėlyna
+Navy|Tamsiai mėlyna
+Blue|Mėlyna
+Purple|Purpurinė
+Violet|Violetinė
+Pink|Rožinė
+Tan|Šviesiai ruda
+Beige|Smėlio
+Brown|Ruda
+Chocolate|Šokolado
+Show Current Frame on Playback|Rodyti dabartinį kadrą atkuriant
+Safe Area Overlay|Saugi sritis
+Show Grid / Guides|Rodyti tinklelį / kreipiamąsias
+Show Toolbar|Rodyti įrankių juostą
+Show Full Screen Viewer|Rodyti viso ekrano vaizdą
+Show Cinema Viewer|Rodyti kino vaizdą
+Viewer Overlays|Žiūryklės uždangos
+Transform / Crop / Dynamic Zoom|Transformuoti / apkirpti / mastelis
+Safe Area|Saugi sritis
+Center Crosshair|Centro kryželis
+Checkerboard Background (Alpha)|Šachmatų fonas (alfa)
+Show All Overlays|Rodyti visas uždangas
+Timecode Window|Timecode langas
+Show Scopes|Rodyti scopes
+Show Audio Meters|Rodyti garso matuoklius
+Show Audio Mixer|Rodyti garso maišytuvą
+Show Inspector|Rodyti inspektorių
+Play Forward|Groti pirmyn
+Play Reverse|Groti atgal
+Stop|Stop
+Play Around Current Frame|Groti aplink kadrą
+Play In to Out|Groti nuo pradžios iki pabaigos
+Play Around In / Around Out|Groti aplink pradžią/pabaigą
+Loop Playback|Groti ciklu
+Go to First Frame|Į pirmą kadrą
+Go to Last Frame|Į paskutinį kadrą
+Go to In|Į pradžią
+Go to Out|Į pabaigą
+Previous Frame|Ankstesnis kadras
+Next Frame|Kitas kadras
+Previous Edit Point|Ankstesnis kirpimas
+Next Edit Point|Kitas kirpimas
+Timeline Playback Resolution|Atkūrimo skiriamoji geba
+Half|Pusė
+Quarter|Ketvirtis
+Effects Memory Cache|Efektų atminties talpykla
+Timeline Proxy Mode|Proxy režimas
+Off|Išj.
+Eighth|Aštuntadalis
+Hardware Decoding|Aparatinis dekodavimas
+Delete Render Cache|Naikinti render talpyklą
+Video Transitions|Vaizdo perėjimai
+Cross Dissolve|Kryžminis tirpimas
+Dip to Color|Pereiti per spalvą
+Audio Transitions|Garso perėjimai
+Cross Fade|Kryžminis fade
+Remove Transition|Pašalinti perėjimą
+OpenFX|OpenFX
+Blur|Suliejimas
+Gaussian Blur|Gauso suliejimas
+Sharpen|Paryškinimas
+Color|Spalva
+Invert Colors|Invertuoti spalvas
+Black and White|Nespalvotas
+Distort|Iškraipymas
+Mosaic|Mozaika
+Audio FX|Garso efektai
+EQ|EQ
+Dynamics|Dinamika
+Picasso FX|Picasso FX
+Sepia|Sepija
+Soft Blur|Švelnus suliejimas
+Light|Šviesa
+Glow|Švytėjimas
+Stylize|Stilizavimas
+Vignette|Vinjetė
+Film Grain|Filmo grūdėtumas
+Compositing Effects|Kompozicijos efektai
+Nodes|Mazgai
+Generators|Generatoriai
+Solid Color|Vienspalvis
+Color Bars|Spalvų juostos
+Gradient|Gradientas
+Titles|Titrai
+Text|Tekstas
+Text+|Tekstas+
+Effects Library Search|Ieškoti efektų bibliotekoje
+Add Tool (Compositing)|Pridėti įrankį (kompozicija)
+Reset All Grades and Nodes|Atstatyti visus gradavimus ir mazgus
+Reset Current Node Grade|Atstatyti dabartinį mazgą
+Enable/Disable Current Node|Mazgas įj./išj.
+Grab Still|Fiksuoti still
+Play Still|Groti still
+Add Serial Node|Pridėti nuoseklų mazgą
+Add Serial Before|Pridėti nuoseklų prieš
+Add Parallel Node|Pridėti lygiagretų mazgą
+Add Layer Mixer|Pridėti sluoksnių maišytuvą
+Add Splitter / Combiner|Pridėti skirstytuvą / jungiklį
+Add Outside Node|Pridėti išorinį mazgą
+Label Node|Pažymėti mazgą
+Timeline|Laiko juosta
+Previous Node Graph|Ankstesnis mazgų grafas
+Next Node Graph|Kitas mazgų grafas
+LUT|LUT
+Apply LUT from list|Taikyti LUT iš sąrašo
+Gallery|Galerija
+Scopes On/Off|Scopes įj./išj.
+Highlight|Šviesos
+Lightbox|Šviesos stalas
+ADR|ADR
+Automated Dialogue Replacement|Automatinis dialogo keitimas
+Bounce Mix to Track|Bounce miksą į takelį
+Bounce Selected Tracks|Bounce pasirinktus takelius
+Cache Audio Effects|Garso efektų talpykla
+Audio Link|Garso saitas
+Link Group|Saitų grupė
+Decompose|Išskaidyti
+Loop Jog|Ciklinis jog
+Show Audio Timeline / Mixer|Rodyti garso juostą / maišytuvą
+Full Screen Viewer|Viso ekrano vaizdas
+Show Panel in Workspace|Rodyti skydelį srityje
+Media Pool|Medijos telkinys
+Effects Library|Efektų biblioteka
+Inspector|Inspektorius
+Mixer|Maišytuvas
+Metadata|Metaduomenys
+Edit Index|Redagavimo indeksas
+Sound Library|Garsų biblioteka
+Layout|Išdėstymas
+Reset UI Layout|Atstatyti išdėstymą
+Save Layout|Įrašyti išdėstymą
+Load Layout|Įkelti išdėstymą
+Switch to Page|Pereiti į puslapį
+Media|Medija
+Edit|Redagavimas
+Effects|Efektai
+Audio|Garsas
+Deliver|Pristatymas
+Dual Screen On/Off|Du ekranai įj./išj.
+Video Clean Feed|Švarus vaizdo išvedimas
+Picasso Suite Manual|Picasso Suite vadovas
+Picasso Suite Tutorials|Picasso Suite pamokos
+Check for Updates...|Tikrinti naujinimus...
+Export Log File...|Eksportuoti žurnalo failą...
+About Picasso Suite|Apie Picasso Suite
+Language|Kalba

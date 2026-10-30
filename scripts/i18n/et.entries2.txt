@@ -1,0 +1,7 @@
+Save Project As...|Salvesta projekt kui...
+Save Copy As...|Salvesta koopia...
+Auto Align Clips|Joonda klipid autom.
+Clear In and Out|Tühjenda sisse/välja
+Show Grid / Guides|Näita ruudustikku/jooni
+Play In to Out|Esita sisse–välja
+Hardware Decoding|Riistvara dekood.

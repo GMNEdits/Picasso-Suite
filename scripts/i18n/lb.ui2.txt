@@ -1,0 +1,56 @@
+Add Job|Job
+Archive Project|Archivéieren
+Automatic|Auto
+Balanced|Ausgegl.
+Browse|Sichen
+Collections|Kollekt.
+Drawn with|Gezeechent
+Export Video|Video export
+Hi/Light|Highl.
+Key Frames|Schlësselb.
+Keywords|Wierder
+Low|Nidd.
+Modifiers|Modif.
+Monitor volume|Monitor-Lautst.
+Network Optimization|Netzwierk-Optim.
+Open|Opmaach.
+Order|Reihenf.
+Position lock|Pos.-sperr
+Process Mode|Veraarbechtung
+Project settings|Projetsastell.
+Remove|Ewechhuel.
+Render All|Alles
+Render Settings|Render-Astell.
+Reset|Reset
+Reset All|Alles
+Settings|Astell.
+Shad|Schat.
+Subtitle Settings|Ënnertitel-Astell.
+Tools|Geschir
+Untitled|Ouni Num
+No clips in media pool|Keng Clips
+No clip to grade|Kee Clip
+No Input|Keen In
+Export Audio|Audio export
+Use unique filename|Eenzegaartegen Num
+Data Levels|Niveauen
+Data burn-in|Agebrannt
+of render job|vum Job
+Export Subtitle|Ënnertitel exp.
+Export As|Export als
+Cut|Ausschn
+Best|Beschte
+View|Usiicht
+Keyframes|Schlësselb.
+Subtitle...|Ënnertitel..
+Titles|Titel
+Low|Low
+Open|Op
+Order|Rei.
+Remove|Ewech
+Tools|Tool
+Untitled|Ouni N.
+Use unique filename|Eenzegaartegen N.
+Cut|Cut
+Best|Top
+View|Vue

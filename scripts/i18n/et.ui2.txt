@@ -1,0 +1,49 @@
+Bins|Kast
+Editing|Redig.
+Integrated|Integr.
+Key Frames|Võtmekaadr.
+Local|Koh.
+Low|Mad.
+Monitor volume|Monitori hääl
+Native|Natiiv.
+Nothing to inspect|Pole midagi
+Order|Järjek.
+Preset|Eelsead.
+Range|Vahem.
+Rate Control|Kiiruse juht.
+Reset|Lähtes.
+Reset All|Kõik
+Resolution|Eralduv.
+Shad|Varjud
+Smart Bins|Nutikad
+Tools|Tööriist.
+No clips in media pool|Klippe pole
+No clip to grade|Klippi pole
+No Input|Sisend puudub
+Data Rate|Andmek.
+Data Levels|Tasemed
+Data burn-in|Põletus
+Use optimized media|Optimeeritud
+visionOS Bypass|visionOS möödas
+Export Subtitle|Eksp. subtiitrid
+Export As|Ekspordi
+Lightbox|Valguslaud
+Edit|Muud.
+Best|Par.
+Trim|Lõik
+View|Vaade
+Clip|Klip
+Keyframes|Võtmekaadr.
+Save Project As...|Salvesta kui...
+Export|Eksp.
+Metadata|Metaand.
+Revert to Last Saved Version|Tagasi viimase salvestuse
+Low|Low
+Preset|Preset
+Reset|Reset
+Shad|Var.
+Tools|Töö.
+No Input|Sisendit pole
+Lightbox|Lightbox
+View|Vaa.
+No Input|Pole sis.

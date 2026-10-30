@@ -1,0 +1,248 @@
+Clips|Klipai
+60 frames per second|60 kadrų/s
+Add Job|Pridėti darbą
+Add to Render Queue|Į eilę
+Advanced Settings|Papildomai
+Archive Project|Archyvuoti projektą
+Archive Project...|Archyvuoti...
+Auto|Auto
+Automatic|Automatinis
+Balanced|Subalansuotas
+Bins|Krepšeliai
+Browse|Naršyti
+Bus Sends|Magistralės
+Capture|Fiksuoti
+Chapters from Markers|Skyriai
+Choose a folder|Pasirinkite aplanką
+Clip Name|Klipo pavadinimas
+Clone|Klonas
+Clone Tool|Klonavimas
+Codec|Kodekas
+Col Boost|Spalva+
+Collections|Kolekcijos
+Contrast|Kontrastas
+Control Room|Valdymas
+Create an Album|Sukurti albumą
+Curves - Custom|Kreivės - savos
+Custom Export|Savas eksportas
+Decode Options|Dekodavimas
+Demo Project|Demo projektas
+Drag photos into the Photo Album to start editing|Nutempkite nuotraukas į albumą redaguoti
+Drawn with|Nupiešta
+Editing|Redaguojama
+Effects In|Efektai įv.
+Embedded Audio|Įterptas garsas
+Encoder|Kodavimo įr.
+Encoding Profile|Kodavimo profilis
+Entire Timeline|Visa juosta
+Estimated File Size|Dydis
+Every|Kas
+Export Video|Eksportuoti vaizdo įr.
+Fairlight|Fairlight
+File Name|Failo pavadinimas
+Format|Formatas
+Frame rate|Kadrų/s
+Frame reordering|Perrikiavimas
+Full Frames|Pilni kadrai
+Full Screen|Visas ekranas
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generatorius
+Graphics card|Vaizdo plokštė
+Groups|Grupės
+Hi/Light|Šviesos
+High|Aukštas
+Hue|Atspalvis
+Image|Vaizdas
+Index|Indeksas
+Individual clips|Atskiri klipai
+Input|Įvestis
+Integrated|Integruotas
+Key Frames|Raktiniai kadrai
+Keywords|Raktažodžiai
+L. Mix|K maiš.
+Layer|Sluoksnis
+Local|Vietinis
+Location|Vieta
+Loop playback|Ciklas
+Loudness|Garsumas
+Low|Žemas
+Mark|Žymė
+Media Management|Medijos valdymas
+Media Source|Medijos šaltinis
+Media Storage|Medijos saugykla
+Meters|Matuokliai
+Mid/Detail|Vidurys/detalės
+Modifiers|Modifikatoriai
+Monitor|Monitorius
+Monitor volume|Monitoriaus garsas
+Native|Natyvus
+Network Optimization|Tinklo optimizavimas
+No jobs in Queue|Nėra darbų
+No jobs in queue|Nėra darbų
+No stills created|Nėra still
+Not reported|Nepranešta
+Nothing to inspect|Nėra ką žiūrėti
+Offset|Poslinkis
+Open|Atverti
+Order|Eilė
+Parade|Parade
+Pause|Pauzė
+Photo|Foto
+Photo Album|Albumas
+Playback|Atkūrimas
+Position lock|Padėties užraktas
+Preset|Šablonas
+Primaries - Color Wheels|Pirminiai - spalvų ratai
+Process Mode|Apdorojimo režimas
+Project settings|Projekto nustatymai
+Projects|Projektai
+Quality|Kokybė
+Quick Export|Greitas eksportas
+Range|Diapazonas
+Rate Control|Spartos valdymas
+Relink Missing Media|Iš naujo susieti mediją
+Relink Missing Media...|Iš naujo susieti mediją...
+Remove|Pašalinti
+Render|Render
+Render All|Render viską
+Render Queue|Render eilė
+Render Settings|Render nustatymai
+Render Settings - Custom Export|Render nust. - savas eksportas
+Reset|Atstatyti
+Reset All|Atstatyti viską
+Resolution|Skiriamoji geba
+Search|Ieškoti
+Settings|Nustatymai
+Shad|Šešėliai
+Short|Trumpas
+Short Max|Trumpas maks.
+Single clip|Vienas klipas
+Smart Bins|Išmanieji krepšeliai
+Source Color Space|Šaltinio spalvų erdvė
+Source Gamma Space|Šaltinio gamma erdvė
+Subtitle Settings|Subtitrų nustatymai
+System|Sistema
+Timeline Resolution|Juostos skiriamoji
+Timeline proxy|Juostos proxy
+Tint|Atspalvis
+Tools|Įrankiai
+Track FX|Takelio FX
+Transitions|Perėjimai
+Untitled|Be pavadinimo
+Use vertical resolution|Vertikali skiriamoji
+Version 0.6.1|Versija 0.6.1
+Video|Vaizdo įr.
+Waveform|Bangos forma
+Workspace|Sritis
+No clips in media pool|Telkinyje nėra klipų
+Add clips with Import, or drop files here|Importuokite klipus arba numeskite failus čia
+Add clips from Media Storage to get started|Pradžiai pridėkite klipų iš saugyklos
+No sound to show|Nėra garso
+No clip to grade|Nėra klipo gradavimui
+No Input|Nėra įvesties
+DURATION|TRUKMĖ
+Export Audio|Eksportuoti garsą
+Data Rate|Duomenų sparta
+Output Track 1|Išvesties takelis 1
+Use unique filename|Unikalus pavadinimas
+Adds (1), (2) ... to the name instead of writing over a file.|Prideda (1), (2) ... prie pavadinimo vietoj perrašymo.
+File type|Failo tipas
+Whole timeline|Visa juosta
+In to out marks|Nuo pradžios iki pabaigos
+Pixel aspect ratio|Pikselio santykis
+Square|Kvadratas
+Cinemascope|Cinemascope
+Data Levels|Duomenų lygiai
+Retain sub-black and super-white data|Išsaugoti žemiau-juodos/virš-baltos
+Color Space Tag|Spalvų erdvės žyma
+Gamma Tag|Gamma žyma
+Data burn-in|Duomenų įdegimas
+Same as project|Kaip projekto
+Bypass re-encode when possible|Praleisti perkodavimą
+Use optimized media|Optimizuota medija
+Use proxy media|Proxy medija
+Use render cached images|Talpyklos vaizdai
+Force sizing to highest quality|Geriausias mastelis
+Force debayer to highest quality|Geriausias debayer
+Render All Video Tracks|Visi vaizdo takeliai
+Enable Flat Pass|Įjungti flat pass
+visionOS Bypass|visionOS apėjimas
+Disable sizing and blanking output|Be mastelio/blanking
+Trigger script at|Paleisti scenarijų
+Start|Pradžia
+of render job|render darbo
+Export Subtitle|Eksportuoti subtitrus
+As a separate file|Atskiras failas
+Export As|Eksportuoti kaip
+frames|kadrų
+Cut|Iškirpti
+Teal|Turkis
+Half|Pusė
+Color Bars|Spalvų juostos
+Lightbox|Šviesos stalas
+Edit|Redag.
+Mixer|Maišytuvas
+Sound Library|Garsai
+Timeline: AAF, EDL, XML...|Juosta: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Juosta: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rust parašytas vaizdo redaktorius Windows, Linux, macOS ir žiniatinkliui.
+Audio scrubbing (sound while the playhead is dragged)|Garso scrubbing (garsas tempiant galvutę)
+Best|Geriausias
+Changing the frame rate keeps every clip on the same frames.|Naujas kadrų dažnis palieka klipus tuose pačiuose kadruose.
+Click a command's keys, then press the key it should have. Escape gives up.|Spustelėkite komandos klavišus ir paspauskite naują. Esc atšaukia.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Nukopijuoja juostų naudojamus failus į aplanką ir įrašo į juos nukreipiančią projekto kopiją. Atidarytas projektas nesikeičia.
+Decode supported video using hardware acceleration|Dekoduoti palaikomą vaizdą aparatine sparta
+Every media file is where the project says it is.|Kiekvienas medijos failas yra ten, kur nurodo projektas.
+Filters|Filtrai
+Free software under the GPL, version 3 or later.|Laisva programinė įranga pagal GPL 3 ar naujesnę versiją.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 ir VC-1 dekoduojami vaizdo plokštėje, jei tvarkyklė gali. Išjunkite, jei klipai žali ar sugadinti. PICASSO_NO_HWACCEL=1 išjungia vienam paleidimui.
+Help|Pagalba
+Linked selection (picture and sound together)|Susietas pasirinkimas (vaizdas ir garsas kartu)
+Loaded the demo project|Demo projektas įkeltas
+Pivot|Pivot
+Selection follows the playhead|Pasirinkimas seka galvutę
+Snap to clips, markers and the playhead|Prilipdyti prie klipų, žymeklių, galvutės
+Soft Clip|Soft Clip
+Tape|Juosta
+Trim|Karpymas
+View|Rodinys
+Full|Pilnas
+Clip|Klipas
+Keyframes|Raktiniai kadrai
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Sinch. krep.
+Temp|Temp
+Import Project...|Imp. proj...
+Export Project...|Eksp. proj...
+Save Project As...|Įrašyti kaip...
+Save Copy As...|Kopija kaip...
+Import|Import.
+Export|Eksp.
+Subtitle...|Subtitrai...
+Media...|Medija...
+Folder as Bin...|Aplankas...
+Timeline|Juosta
+Media Pool|Telkinys
+Inspector|Inspektorius
+Metadata|Metaduom.
+Eighth|1/8
+About Picasso Suite|Apie
+New Project|Naujas proj.
+Open Project...|Atverti...
+Save Project|Įrašyti
+Dynamics|Dinamika
+Titles|Titrai
+Gallery|Galerija
+Effects|Efektai
+Audio|Garsas
+Timeline: EDL...|Juosta: EDL...
+Timeline: XML...|Juosta: XML...
+Media|Medija

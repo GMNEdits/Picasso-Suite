@@ -1,0 +1,553 @@
+#menus
+Fails
+Red.
+Trim
+Laika l.
+Klips
+Marķ.
+Skats
+Atskaņ.
+Efekti
+Krāsa
+Skaņa
+Darbvieta
+Palīdz.
+#entries
+1|Jauna projektu bibliotēka...
+2|Atvērt projektu bibliotēku...
+3|Rādīt bibliotēku Explorer
+4|Projektu pārvaldnieks
+5|Jauns projekts
+6|Atvērt projektu...
+7|Importēt projektu...
+8|Eksportēt projektu...
+9|Atjaunot projekta arhīvu...
+10|Saglabāt projektu
+11|Saglabāt projektu kā...
+12|Saglabāt kopiju kā...
+13|Atgriezt pēdējo saglabāto
+14|Importēt
+15|Multivide...
+16|Mape kā tvertne...
+17|Laika līnija: AAF, EDL, XML...
+18|Laika līnija: pirms-EDL...
+19|Subtitri...
+20|Metadati multividei...
+21|Tvertne...
+22|Eksportēt
+23|Laika līnija: EDL...
+24|Laika līnija: OpenTimelineIO...
+25|Laika līnija: XML...
+26|Laika līnija: AAF...
+27|Metadati no multivides...
+28|Multivides pārvaldība...
+29|Projekta iestatījumi...
+30|Sistēmas iestatījumi...
+31|Ātrā eksportēšana...
+32|Iziet
+33|Atsaukt
+34|Atkārtot
+35|Izgriezt
+36|Kopēt
+37|Ielīmēt
+38|Ielīmēt un ievietot
+39|Ielīmēt miksu ierakstā
+40|Dublēt
+41|Pielāgot aizpildīšanai
+42|Novietot augšā
+43|Dzēst izvēlēto
+44|Dzēst izvēlēto ar ripple
+45|Izvēlēties visu
+46|Atcelt izvēli
+47|Izvēlēties klipus uz priekšu
+48|Meklēt...
+49|Nesenie projekti
+50|Projektu pārvaldnieks...
+51|Īsinājumtaustiņi
+52|Izvēlēties tuvāko griezumu
+53|Izvēles režīms
+54|Apgriešanas režīms
+55|Dinamiskā apgriešana
+56|Ripple sākums
+57|Ripple beigas
+58|Ripple iepriekšējais / nākamais
+59|Ripple iepriekšējais līdz galvai
+60|Ripple nākamais līdz galvai
+61|Apgriezt sākumu līdz galvai
+62|Apgriezt beigas līdz galvai
+63|Pagarināt griezumu
+64|Slip klips
+65|Slip viens kadrs agrāk
+66|Slip viens kadrs vēlāk
+67|Slide klips
+68|Slide viens kadrs pa kreisi
+69|Slide viens kadrs pa labi
+70|Cikliska apgriešana
+71|Asimetriska apgriešana
+72|Apgriešanas redaktors
+73|Jauna laika līnija...
+74|Jauna līnija no izvēlētajiem
+75|Jauns salikts klips...
+76|Jauns efektu klips...
+77|Sadalīt uz vietas
+78|Sadalīt saliktu klipu
+79|Sadalīt ligzdoto līniju
+80|Sadalīt klipu
+81|Laika līnija no tvertnes...
+82|Importēt laika līniju...
+83|Eksportēt laika līniju...
+84|Izšķirtspēja un kadru ātrums...
+85|Laika līnijas iestatījumi
+86|Piesaiste
+87|Saistīta izvēle
+88|Pozīcijas slēdzene
+89|Izvēle seko galvai
+90|Pievienot marķieri
+91|Pievienot marķieri ar dialogu
+92|Dzēst visus marķierus
+93|Izveidot subtitru celiņu
+94|Izveidot subtitru apgabalu
+95|Pāreja visiem griezumiem
+96|Pārslēgt laika līniju
+97|Atvērt līniju jaunā logā
+98|Dzēst laika līniju
+99|Iespējot klipu
+100|Atbilstošs kadrs
+101|Bloķēt klipu
+102|Jauns multikameras klips...
+103|Multikameras skatītājs
+104|Pievienot kā nekustīgus attēlus
+105|Mainīt klipa ātrumu...
+106|Mainīt klipa ilgumu...
+107|Laika vadība
+108|Pārlaicēt klipu
+109|Iesaldēt kadru
+110|Ātruma rampa...
+111|Apgriezt klipu
+112|Jauns salikts klips
+113|Saistīt klipus
+114|Atdalīt skaņu un attēlu
+115|Skaņas scrubbing ieslēgts/izslēgts
+116|Automātiski izlīdzināt klipus
+117|Pēc timecode
+118|Pēc viļņu formas
+119|Normalizēt skaņas līmeni...
+120|Renderēt uz vietas
+121|Jauns efektu klips
+122|Jauns salikts klips
+123|Klipa atribūti...
+124|Atzīmēt ieeju
+125|Atzīmēt izeju
+126|Atzīmēt klipu
+127|Atzīmēt līnijas ieeju/izeju
+128|Notīrīt ieeju
+129|Notīrīt izeju
+130|Notīrīt ieeju un izeju
+131|Mainīt marķieri...
+132|Dzēst marķieri šeit
+133|Dzēst visus marķierus
+134|Uz iepriekšējo marķieri
+135|Uz nākamo marķieri
+136|Klipa krāsa
+137|Noklusējums
+138|Oranža
+139|Aprikožu
+140|Dzeltena
+141|Laima
+142|Olīvu
+143|Zaļa
+144|Zilganzaļa
+145|Tumšzila
+146|Zila
+147|Violeta
+148|Vijolīte
+149|Rozā
+150|Gaišbrūna
+151|Bēša
+152|Brūna
+153|Šokolādes
+154|Rādīt pašreizējo kadru atskaņojot
+155|Drošais apgabals
+156|Rādīt režģi / vadotnes
+157|Rādīt rīkjoslu
+158|Rādīt pilnekrāna skatu
+159|Rādīt kino skatu
+160|Skatītāja pārklājumi
+161|Pārveidot / apcirpt / tālummaiņa
+162|Drošais apgabals
+163|Centra krusts
+164|Šaha fons (alfa)
+165|Rādīt visus pārklājumus
+166|Timecode logs
+167|Rādīt scopes
+168|Rādīt skaņas mērītājus
+169|Rādīt skaņas mikseri
+170|Rādīt inspektoru
+171|Atskaņot uz priekšu
+172|Atskaņot atpakaļ
+173|Stop
+174|Atskaņot ap kadru
+175|Atskaņot ieeja līdz izeja
+176|Atskaņot ap ieeju/izeju
+177|Atskaņot ciklā
+178|Uz pirmo kadru
+179|Uz pēdējo kadru
+180|Uz ieeju
+181|Uz izeju
+182|Iepriekšējais kadrs
+183|Nākamais kadrs
+184|Iepriekšējais griezums
+185|Nākamais griezums
+186|Atskaņošanas izšķirtspēja
+187|Puse
+188|Ceturtdaļa
+189|Efektu atmiņas kešatmiņa
+190|Proxy režīms
+191|Izsl.
+192|Astotdaļa
+193|Aparatūras dekodēšana
+194|Dzēst render kešatmiņu
+195|Video pārejas
+196|Krustiskā izzušana
+197|Izzušana caur krāsu
+198|Skaņas pārejas
+199|Krustiskais fade
+200|Noņemt pāreju
+201|OpenFX
+202|Izplūdums
+203|Gausa izplūdums
+204|Asināšana
+205|Krāsa
+206|Invertēt krāsas
+207|Melnbalts
+208|Kropļojums
+209|Mozaīka
+210|Skaņas efekti
+211|EQ
+212|Dinamika
+213|Picasso FX
+214|Sēpija
+215|Mīksts izplūdums
+216|Gaisma
+217|Mirdzums
+218|Stilizācija
+219|Vinjete
+220|Filmas grauds
+221|Kompozīcijas efekti
+222|Mezgli
+223|Ģeneratori
+224|Vienkrāsains
+225|Krāsu joslas
+226|Gradients
+227|Titri
+228|Teksts
+229|Teksts+
+230|Meklēt efektu bibliotēkā
+231|Pievienot rīku (kompozīcija)
+232|Atiestatīt visus gradējumus un mezglus
+233|Atiestatīt pašreizējo mezglu
+234|Mezgls ieslēgts/izslēgts
+235|Uzņemt still
+236|Atskaņot still
+237|Pievienot seriālo mezglu
+238|Pievienot seriālo pirms
+239|Pievienot paralēlo mezglu
+240|Pievienot slāņu mikseri
+241|Pievienot dalītāju / apvienotāju
+242|Pievienot ārējo mezglu
+243|Marķēt mezglu
+244|Laika līnija
+245|Iepriekšējais mezglu grafs
+246|Nākamais mezglu grafs
+247|LUT
+248|Lietot LUT no saraksta
+249|Galerija
+250|Scopes ieslēgts/izslēgts
+251|Gaišie
+252|Gaismas galds
+253|ADR
+254|Automātiska dialoga aizstāšana
+255|Bounce miksu ierakstā
+256|Bounce izvēlētos ierakstus
+257|Skaņas efektu kešatmiņa
+258|Skaņas saite
+259|Saišu grupa
+260|Sadalīt
+261|Cikliskais jog
+262|Rādīt skaņas līniju / mikseri
+263|Pilnekrāna skats
+264|Rādīt paneli darbvietā
+265|Multivides kopa
+266|Efektu bibliotēka
+267|Inspektors
+268|Mikseris
+269|Metadati
+270|Rediģēšanas indekss
+271|Skaņu bibliotēka
+272|Izkārtojums
+273|Atiestatīt izkārtojumu
+274|Saglabāt izkārtojumu
+275|Ielādēt izkārtojumu
+276|Pāriet uz lapu
+277|Multivide
+278|Rediģēšana
+279|Efekti
+280|Skaņa
+281|Piegāde
+282|Divi ekrāni ieslēgts/izslēgts
+283|Tīra video izvade
+284|Picasso Suite rokasgrāmata
+285|Picasso Suite pamācības
+286|Pārbaudīt atjauninājumus...
+287|Eksportēt žurnāla failu...
+288|Par Picasso Suite
+289|Valoda
+#ui
+1|Klipi
+2|60 kadri/s
+3|Pievienot darbu
+4|Pievienot rindai
+5|Papildus
+6|Arhivēt projektu
+7|Arhivēt...
+8|Auto
+9|Automātiski
+10|Līdzsvarots
+11|Tvertnes
+12|Pārlūkot
+13|Kopnes
+14|Tveršana
+15|Nodaļas
+16|Izvēlieties mapi
+17|Klipa nosaukums
+18|Klons
+19|Klonēšana
+20|Kodeks
+21|Krāsa+
+22|Kolekcijas
+23|Kontrasts
+24|Vadība
+25|Izveidot albumu
+26|Līknes - pašu
+27|Pašu eksports
+28|Dekodēšana
+29|Demo projekts
+30|Velciet fotoattēlus albumā, lai sāktu rediģēt
+31|Zīmēts ar
+32|Rediģē
+33|Efekti iek.
+34|Iegultā skaņa
+35|Kodētājs
+36|Kodēšanas profils
+37|Visa līnija
+38|Izmērs
+39|Katru
+40|Eksportēt video
+41|Fairlight
+42|Faila nosaukums
+43|Formāts
+44|Kadri/s
+45|Pārkārtošana
+46|Pilni kadri
+47|Pilns ekrāns
+48|Fusion
+49|Gain
+50|Gamma
+51|Ģenerators
+52|Video karte
+53|Grupas
+54|Gaišie
+55|Augsts
+56|Tonis
+57|Attēls
+58|Indekss
+59|Atsevišķi klipi
+60|Ieeja
+61|Integrēts
+62|Atslēgkadri
+63|Atslēgvārdi
+64|K mikss
+65|Slānis
+66|Vietējais
+67|Vieta
+68|Cikls
+69|Skaļums
+70|Zems
+71|Marķieris
+72|Multivides pārvaldība
+73|Multivides avots
+74|Multivides krātuve
+75|Mērītāji
+76|Vidus/detaļas
+77|Modifikatori
+78|Monitors
+79|Monitora skaļums
+80|Dabisks
+81|Tīkla optimizācija
+82|Nav darbu
+83|Nav darbu
+84|Nav stilu
+85|Nav ziņots
+86|Nav ko skatīt
+87|Nobīde
+88|Atvērt
+89|Secība
+90|Parade
+91|Pauze
+92|Foto
+93|Albums
+94|Atskaņ.
+95|Pozīcijas slēdzene
+96|Sākotnējais
+97|Primārie - krāsu riteņi
+98|Apstrādes režīms
+99|Projekta iestatījumi
+100|Projekti
+101|Kvalitāte
+102|Ātrā eksportēšana
+103|Diapazons
+104|Ātruma vadība
+105|Atkārtoti saistīt multividi
+106|Atkārtoti saistīt multividi...
+107|Noņemt
+108|Render
+109|Render visu
+110|Render rinda
+111|Render iestatījumi
+112|Render iestat. - pašu eksports
+113|Atiestatīt
+114|Atiestatīt visu
+115|Izšķirtspēja
+116|Meklēt
+117|Iestatījumi
+118|Ēnas
+119|Īss
+120|Īss maks.
+121|Viens klips
+122|Gudrās tvertnes
+123|Avota krāsu telpa
+124|Avota gamma telpa
+125|Subtitru iestatījumi
+126|Sistēma
+127|Līnijas izšķirtsp.
+128|Līnijas proxy
+129|Nokrāsa
+130|Rīki
+131|Celiņa FX
+132|Pārejas
+133|Bez nosaukuma
+134|Vertikālā izšķirtspēja
+135|Versija 0.6.1
+136|Video
+137|Viļņu forma
+138|Darbvieta
+139|Multivides kopā nav klipu
+140|Importējiet klipus vai velciet failus šeit
+141|Lai sāktu, pievienojiet klipus no krātuves
+142|Nav skaņas
+143|Nav klipa gradēšanai
+144|Nav ieejas
+145|ILGUMS
+146|Eksportēt skaņu
+147|Datu ātrums
+148|Izvades celiņš 1
+149|Unikāls nosaukums
+150|Pievieno (1), (2) ... nosaukumam, nepārrakstot.
+151|Faila veids
+152|Visa līnija
+153|Ieeja līdz izeja
+154|Pikseļa attiecība
+155|Kvadrāts
+156|Cinemascope
+157|Datu līmeņi
+158|Saglabāt zem-melnā/virs-baltā
+159|Krāsu telpas birka
+160|Gamma birka
+161|Datu iedegšana
+162|Kā projektam
+163|Izlaist pārkodēšanu
+164|Optimizēta multivide
+165|Proxy multivide
+166|Kešatmiņas attēli
+167|Labākā mērogošana
+168|Labākais debayer
+169|Visi video celiņi
+170|Ieslēgt flat pass
+171|visionOS apiešana
+172|Bez mērogošanas/blanking
+173|Palaist skriptu
+174|Sākt
+175|render darbam
+176|Eksportēt subtitrus
+177|Atsevišķs fails
+178|Eksportēt kā
+179|kadri
+180|Izgriezt
+181|Tirkīzs
+182|Puse
+183|Krāsu joslas
+184|Gaismas galds
+185|Rediģ.
+186|Mikseris
+187|Skaņas
+188|Laika l.: AAF, EDL, XML...
+189|Laika l.: OpenTimelineIO...
+190|Rust rakstīts video redaktors Windows, Linux, macOS un tīmeklim.
+191|Skaņas scrubbing (skaņa velkot galvu)
+192|Labākais
+193|Jauns kadru ātrums patur klipus tajos pašos kadros.
+194|Noklikšķiniet komandas taustiņus un nospiediet jauno. Esc atceļ.
+195|Nokopē laika līniju failus mapē un ieraksta uz tiem norādošu projekta kopiju. Atvērtais projekts nemainās.
+196|Dekodēt atbalstīto video ar aparatūras paātrinājumu
+197|Katrs multivides fails ir tur, kur projekts norāda.
+198|Filtri
+199|Brīvā programmatūra ar GPL 3. vai jaunāku versiju.
+200|H.264, H.265, AV1, VP9, MPEG-2 un VC-1 tiek dekodēti video kartē, ja draiveris var. Izslēdziet, ja klipi ir zaļi vai bojāti. PICASSO_NO_HWACCEL=1 izslēdz vienai reizei.
+201|Palīdz.
+202|Saistīta izvēle (attēls un skaņa kopā)
+203|Demo projekts ielādēts
+204|Pivot
+205|Izvēle seko galvai
+206|Piesaiste klipiem, marķieriem, galvai
+207|Soft Clip
+208|Lente
+209|Apgriešana
+210|Skats
+211|Pilns
+212|Klips
+213|Atslēgkadri
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Sinhr. tvert.
+222|Temp
+223|Imp. proj...
+224|Eksp. proj...
+225|Saglabāt kā...
+226|Kopija kā...
+227|Importēt
+228|Eksportēt
+229|Subtitri...
+230|Multivide...
+231|Mape...
+232|Laika l.
+233|Multivides kopa
+234|Inspektors
+235|Metadati
+236|1/8
+237|Par
+238|Jauns proj.
+239|Atvērt...
+240|Saglabāt
+241|Dinamika
+242|Titri
+243|Galerija
+244|Efekti
+245|Skaņa
+246|Laika l.: EDL...
+247|Laika l.: XML...
+248|Multivide

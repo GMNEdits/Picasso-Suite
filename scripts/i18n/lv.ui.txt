@@ -1,0 +1,248 @@
+Clips|Klipi
+60 frames per second|60 kadri/s
+Add Job|Pievienot darbu
+Add to Render Queue|Pievienot rindai
+Advanced Settings|Papildus
+Archive Project|Arhivēt projektu
+Archive Project...|Arhivēt...
+Auto|Auto
+Automatic|Automātiski
+Balanced|Līdzsvarots
+Bins|Tvertnes
+Browse|Pārlūkot
+Bus Sends|Kopnes
+Capture|Tveršana
+Chapters from Markers|Nodaļas
+Choose a folder|Izvēlieties mapi
+Clip Name|Klipa nosaukums
+Clone|Klons
+Clone Tool|Klonēšana
+Codec|Kodeks
+Col Boost|Krāsa+
+Collections|Kolekcijas
+Contrast|Kontrasts
+Control Room|Vadība
+Create an Album|Izveidot albumu
+Curves - Custom|Līknes - pašu
+Custom Export|Pašu eksports
+Decode Options|Dekodēšana
+Demo Project|Demo projekts
+Drag photos into the Photo Album to start editing|Velciet fotoattēlus albumā, lai sāktu rediģēt
+Drawn with|Zīmēts ar
+Editing|Rediģē
+Effects In|Efekti iek.
+Embedded Audio|Iegultā skaņa
+Encoder|Kodētājs
+Encoding Profile|Kodēšanas profils
+Entire Timeline|Visa līnija
+Estimated File Size|Izmērs
+Every|Katru
+Export Video|Eksportēt video
+Fairlight|Fairlight
+File Name|Faila nosaukums
+Format|Formāts
+Frame rate|Kadri/s
+Frame reordering|Pārkārtošana
+Full Frames|Pilni kadri
+Full Screen|Pilns ekrāns
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Ģenerators
+Graphics card|Video karte
+Groups|Grupas
+Hi/Light|Gaišie
+High|Augsts
+Hue|Tonis
+Image|Attēls
+Index|Indekss
+Individual clips|Atsevišķi klipi
+Input|Ieeja
+Integrated|Integrēts
+Key Frames|Atslēgkadri
+Keywords|Atslēgvārdi
+L. Mix|K mikss
+Layer|Slānis
+Local|Vietējais
+Location|Vieta
+Loop playback|Cikls
+Loudness|Skaļums
+Low|Zems
+Mark|Marķieris
+Media Management|Multivides pārvaldība
+Media Source|Multivides avots
+Media Storage|Multivides krātuve
+Meters|Mērītāji
+Mid/Detail|Vidus/detaļas
+Modifiers|Modifikatori
+Monitor|Monitors
+Monitor volume|Monitora skaļums
+Native|Dabisks
+Network Optimization|Tīkla optimizācija
+No jobs in Queue|Nav darbu
+No jobs in queue|Nav darbu
+No stills created|Nav stilu
+Not reported|Nav ziņots
+Nothing to inspect|Nav ko skatīt
+Offset|Nobīde
+Open|Atvērt
+Order|Secība
+Parade|Parade
+Pause|Pauze
+Photo|Foto
+Photo Album|Albums
+Playback|Atskaņ.
+Position lock|Pozīcijas slēdzene
+Preset|Sākotnējais
+Primaries - Color Wheels|Primārie - krāsu riteņi
+Process Mode|Apstrādes režīms
+Project settings|Projekta iestatījumi
+Projects|Projekti
+Quality|Kvalitāte
+Quick Export|Ātrā eksportēšana
+Range|Diapazons
+Rate Control|Ātruma vadība
+Relink Missing Media|Atkārtoti saistīt multividi
+Relink Missing Media...|Atkārtoti saistīt multividi...
+Remove|Noņemt
+Render|Render
+Render All|Render visu
+Render Queue|Render rinda
+Render Settings|Render iestatījumi
+Render Settings - Custom Export|Render iestat. - pašu eksports
+Reset|Atiestatīt
+Reset All|Atiestatīt visu
+Resolution|Izšķirtspēja
+Search|Meklēt
+Settings|Iestatījumi
+Shad|Ēnas
+Short|Īss
+Short Max|Īss maks.
+Single clip|Viens klips
+Smart Bins|Gudrās tvertnes
+Source Color Space|Avota krāsu telpa
+Source Gamma Space|Avota gamma telpa
+Subtitle Settings|Subtitru iestatījumi
+System|Sistēma
+Timeline Resolution|Līnijas izšķirtsp.
+Timeline proxy|Līnijas proxy
+Tint|Nokrāsa
+Tools|Rīki
+Track FX|Celiņa FX
+Transitions|Pārejas
+Untitled|Bez nosaukuma
+Use vertical resolution|Vertikālā izšķirtspēja
+Version 0.6.1|Versija 0.6.1
+Video|Video
+Waveform|Viļņu forma
+Workspace|Darbvieta
+No clips in media pool|Multivides kopā nav klipu
+Add clips with Import, or drop files here|Importējiet klipus vai velciet failus šeit
+Add clips from Media Storage to get started|Lai sāktu, pievienojiet klipus no krātuves
+No sound to show|Nav skaņas
+No clip to grade|Nav klipa gradēšanai
+No Input|Nav ieejas
+DURATION|ILGUMS
+Export Audio|Eksportēt skaņu
+Data Rate|Datu ātrums
+Output Track 1|Izvades celiņš 1
+Use unique filename|Unikāls nosaukums
+Adds (1), (2) ... to the name instead of writing over a file.|Pievieno (1), (2) ... nosaukumam, nepārrakstot.
+File type|Faila veids
+Whole timeline|Visa līnija
+In to out marks|Ieeja līdz izeja
+Pixel aspect ratio|Pikseļa attiecība
+Square|Kvadrāts
+Cinemascope|Cinemascope
+Data Levels|Datu līmeņi
+Retain sub-black and super-white data|Saglabāt zem-melnā/virs-baltā
+Color Space Tag|Krāsu telpas birka
+Gamma Tag|Gamma birka
+Data burn-in|Datu iedegšana
+Same as project|Kā projektam
+Bypass re-encode when possible|Izlaist pārkodēšanu
+Use optimized media|Optimizēta multivide
+Use proxy media|Proxy multivide
+Use render cached images|Kešatmiņas attēli
+Force sizing to highest quality|Labākā mērogošana
+Force debayer to highest quality|Labākais debayer
+Render All Video Tracks|Visi video celiņi
+Enable Flat Pass|Ieslēgt flat pass
+visionOS Bypass|visionOS apiešana
+Disable sizing and blanking output|Bez mērogošanas/blanking
+Trigger script at|Palaist skriptu
+Start|Sākt
+of render job|render darbam
+Export Subtitle|Eksportēt subtitrus
+As a separate file|Atsevišķs fails
+Export As|Eksportēt kā
+frames|kadri
+Cut|Izgriezt
+Teal|Tirkīzs
+Half|Puse
+Color Bars|Krāsu joslas
+Lightbox|Gaismas galds
+Edit|Rediģ.
+Mixer|Mikseris
+Sound Library|Skaņas
+Timeline: AAF, EDL, XML...|Laika l.: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Laika l.: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Rust rakstīts video redaktors Windows, Linux, macOS un tīmeklim.
+Audio scrubbing (sound while the playhead is dragged)|Skaņas scrubbing (skaņa velkot galvu)
+Best|Labākais
+Changing the frame rate keeps every clip on the same frames.|Jauns kadru ātrums patur klipus tajos pašos kadros.
+Click a command's keys, then press the key it should have. Escape gives up.|Noklikšķiniet komandas taustiņus un nospiediet jauno. Esc atceļ.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Nokopē laika līniju failus mapē un ieraksta uz tiem norādošu projekta kopiju. Atvērtais projekts nemainās.
+Decode supported video using hardware acceleration|Dekodēt atbalstīto video ar aparatūras paātrinājumu
+Every media file is where the project says it is.|Katrs multivides fails ir tur, kur projekts norāda.
+Filters|Filtri
+Free software under the GPL, version 3 or later.|Brīvā programmatūra ar GPL 3. vai jaunāku versiju.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 un VC-1 tiek dekodēti video kartē, ja draiveris var. Izslēdziet, ja klipi ir zaļi vai bojāti. PICASSO_NO_HWACCEL=1 izslēdz vienai reizei.
+Help|Palīdz.
+Linked selection (picture and sound together)|Saistīta izvēle (attēls un skaņa kopā)
+Loaded the demo project|Demo projekts ielādēts
+Pivot|Pivot
+Selection follows the playhead|Izvēle seko galvai
+Snap to clips, markers and the playhead|Piesaiste klipiem, marķieriem, galvai
+Soft Clip|Soft Clip
+Tape|Lente
+Trim|Apgriešana
+View|Skats
+Full|Pilns
+Clip|Klips
+Keyframes|Atslēgkadri
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Sinhr. tvert.
+Temp|Temp
+Import Project...|Imp. proj...
+Export Project...|Eksp. proj...
+Save Project As...|Saglabāt kā...
+Save Copy As...|Kopija kā...
+Import|Importēt
+Export|Eksportēt
+Subtitle...|Subtitri...
+Media...|Multivide...
+Folder as Bin...|Mape...
+Timeline|Laika l.
+Media Pool|Multivides kopa
+Inspector|Inspektors
+Metadata|Metadati
+Eighth|1/8
+About Picasso Suite|Par
+New Project|Jauns proj.
+Open Project...|Atvērt...
+Save Project|Saglabāt
+Dynamics|Dinamika
+Titles|Titri
+Gallery|Galerija
+Effects|Efekti
+Audio|Skaņa
+Timeline: EDL...|Laika l.: EDL...
+Timeline: XML...|Laika l.: XML...
+Media|Multivide

@@ -1,0 +1,93 @@
+Add Job|Darbas
+Archive Project|Archyvuoti
+Balanced|Subalans.
+Bins|Krep.
+Choose a folder|Rinkitės aplanką
+Clip Name|Pavadin.
+Codec|Kodek.
+Contrast|Kontr.
+Editing|Redag.
+Encoder|Koduotuv.
+Export Video|Eksp. vaizdą
+File Name|Failas
+Format|Formatas
+Full Screen|Visas ekr.
+Generator|Generat.
+High|Auks.
+Hue|Hue
+Index|Indek.
+Key Frames|Rakt. kadrai
+Keywords|Raktažod.
+L. Mix|K miks
+Layer|Sluoks.
+Local|Viet.
+Low|Žem.
+Meters|Matuok.
+Mid/Detail|Vidurys
+Modifiers|Modif.
+Monitor|Monit.
+Monitor volume|Monit. garsas
+Native|Natyv.
+Offset|Poslink.
+Position lock|Padėt. užrak.
+Preset|Preset
+Process Mode|Apdorojimas
+Project settings|Proj. nustat.
+Quick Export|Greit. eksp.
+Range|Diapaz.
+Rate Control|Spartos valdy.
+Relink Missing Media|Susieti mediją
+Relink Missing Media...|Susieti mediją...
+Render All|Viskas
+Reset|Reset
+Reset All|Viskas
+Resolution|Skiriam.
+Settings|Nustat.
+Shad|Šešėl.
+Short|Trump.
+Short Max|Trump. maks
+Single clip|Vienas klip.
+Smart Bins|Išmanieji
+Source Color Space|Šaltinio spalvų erd.
+Subtitle Settings|Subtitrų nust.
+Tint|Tint
+Tools|Įrank.
+Untitled|Be pavad.
+Video|Video
+Waveform|Bangos f.
+No clip to grade|Nėra klipo
+No Input|Nėra įvest.
+Export Audio|Eksp. garsą
+Data Rate|Duom. sparta
+Use unique filename|Unikalus pavad.
+In to out marks|Pradž.–pab.
+Square|Kvadr.
+Data Levels|Duom. lygiai
+Color Space Tag|Spalvų erdvė
+Data burn-in|Įdegimas
+Start|Start
+Export Subtitle|Eksp. subtitrus
+Export As|Eksp. kaip
+Cut|Iškirp.
+Lightbox|Šv. stalas
+Edit|Red.
+Mixer|Maišyt.
+Best|Geriaus.
+Help|Pagal.
+Trim|Karp.
+View|Rod.
+Full|Pil.
+Clip|Klip.
+Keyframes|Rakt. kadrai
+Sync Bin|Sinch.
+Inspector|Inspekt.
+Deliver|Pristat.
+Encoder|Kodav.
+Format|Forma
+Layer|Sluok.
+Short|Trum.
+Short Max|Trum. max
+Data Rate|Duom. sp.
+Mixer|Mikš.
+Best|Max
+Help|Pag.

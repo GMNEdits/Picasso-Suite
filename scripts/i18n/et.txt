@@ -1,0 +1,304 @@
+#menus
+Fail
+Muuda
+Lõik
+Ajajoon
+Klipp
+Märk
+Vaade
+Esitus
+Efektid
+Värv
+Heli
+Tööala
+Abi
+#entries
+New Project Library...|Uus projektiraamatukogu...
+Open Project Library...|Ava projektiraamatukogu...
+Show Current Project Library in File Explorer|Näita raamatukogu Exploreris
+Project Manager|Projektihaldur
+New Project|Uus projekt
+Open Project...|Ava projekt...
+Import Project...|Impordi projekt...
+Export Project...|Ekspordi projekt...
+Restore Project Archive...|Taasta projekti arhiiv...
+Save Project|Salvesta projekt
+Save Project As...|Salvesta projekt nimega...
+Save Copy As...|Salvesta koopia nimega...
+Revert to Last Saved Version|Tagasi viimase salvestuse juurde
+Import|Impordi
+Media...|Meedia...
+Folder as Bin...|Kaust prügikastina...
+Timeline: AAF, EDL, XML...|Ajajoon: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Ajajoon: eel-EDL...
+Subtitle...|Subtiitrid...
+Metadata to Media Pool...|Metaandmed meediakogusse...
+Bin...|Kast...
+Export|Ekspordi
+Timeline: EDL...|Ajajoon: EDL...
+Timeline: OpenTimelineIO...|Ajajoon: OpenTimelineIO...
+Timeline: XML...|Ajajoon: XML...
+Timeline: AAF...|Ajajoon: AAF...
+Metadata from Media Pool...|Metaandmed meediakogust...
+Media Management...|Meediahaldus...
+Project Settings...|Projekti seaded...
+System Preferences...|Süsteemi eelistused...
+Quick Export...|Kiirekspordi...
+Quit|Välju
+Undo|Võta tagasi
+Redo|Tee uuesti
+Cut|Lõika
+Copy|Kopeeri
+Paste|Kleebi
+Paste Insert|Kleebi ja lisa
+Paste Mix to Current Track|Kleebi miks rajale
+Duplicate|Dubleeri
+Fit to Fill|Sobita täitmiseks
+Place on Top|Aseta üles
+Delete Selected|Kustuta valitud
+Delete Selected with Ripple|Kustuta valitud ripple'iga
+Select All|Vali kõik
+Deselect All|Tühista valik
+Select Clips Forward|Vali klipid edasi
+Find...|Otsi...
+Recent Projects|Hiljutised projektid
+Project Manager...|Projektihaldur...
+Keyboard Customization|Kiirklahvid
+Select Nearest Edit Point|Vali lähim lõikepunkt
+Selection Mode|Valiku režiim
+Trim Mode|Lõikamisrežiim
+Dynamic Trim Mode|Dünaamiline lõikamine
+Ripple Start|Ripple algus
+Ripple End|Ripple lõpp
+Ripple Trim Previous / Next|Ripple eelmine / järgmine
+Ripple Trim Previous Edit to Playhead|Ripple eelmine esituspeani
+Ripple Trim Next Edit to Playhead|Ripple järgmine esituspeani
+Trim Start to Playhead|Lõika algus esituspeani
+Trim End to Playhead|Lõika lõpp esituspeani
+Extend Edit|Pikenda lõiget
+Slip Clip|Slip klipp
+Slip One Frame Earlier|Slip kaader varem
+Slip One Frame Later|Slip kaader hiljem
+Slide Clip|Slide klipp
+Slide One Frame Left|Slide kaader vasakule
+Slide One Frame Right|Slide kaader paremale
+Loop Trim|Tsükliline lõikamine
+Asymmetric Trimming|Asümmeetriline lõikamine
+Trim Editor|Lõikamisredaktor
+New Timeline...|Uus ajajoon...
+New Timeline Using Selected Clips|Uus ajajoon valitud klippidest
+Create New Compound Clip...|Uus liitklipp...
+New Effects Clip...|Uus efektiklipp...
+Decompose in Place|Lammuta kohapeal
+Decompose Compound Clip|Lammuta liitklipp
+Decompose Nested Timeline|Lammuta pesastatud ajajoon
+Split Clip|Poolita klipp
+Create Timeline Using Bin...|Ajajoon kastist...
+Import Timeline...|Impordi ajajoon...
+Export Timeline...|Ekspordi ajajoon...
+Timeline Resolution and Frame Rate...|Eraldusvõime ja kaadrisagedus...
+Timeline Settings|Ajajoone seaded
+Snap|Kinnita
+Linked Selection|Seotud valik
+Position Lock|Asukohalukk
+Selection Follows Playhead|Valik järgib esituspead
+Add Marker|Lisa marker
+Add Marker and Show Dialog|Lisa marker dialoogiga
+Delete All Markers|Kustuta kõik markerid
+Create Subtitle Track|Loo subtiitrirada
+Create Subtitle Region|Loo subtiitrite ala
+Add Transition to All Edits|Üleminek kõikidele lõigetele
+Switch Timeline|Vaheta ajajoont
+Open Timeline in New Window|Ava ajajoon uues aknas
+Delete Timeline|Kustuta ajajoon
+Enable Clip|Luba klipp
+Match Frame|Sobiv kaader
+Lock Clip|Lukusta klipp
+New Multicam Clip...|Uus multicam-klipp...
+Multicam Viewer|Multicam-vaataja
+Add to Media Pool as Stills|Lisa liikumatute piltidena
+Change Clip Speed...|Muuda klipi kiirust...
+Change Clip Duration...|Muuda klipi kestust...
+Retime Controls|Ajastuse juhtnupud
+Retime Clip|Ajasta klipp ümber
+Freeze Frame|Külmuta kaader
+Speed Ramp...|Kiiruse ramp...
+Reverse Clip|Pööra klipp ümber
+Create New Compound Clip|Uus liitklipp
+Link Clips|Seo klipid
+Unlink Audio and Video|Eralda heli ja pilt
+Enable / Disable Audio Scrubbing|Heli scrubbing sees/väljas
+Auto Align Clips|Joonda klipid automaatselt
+Based on Timecode|Ajakoodi järgi
+Based on Waveform|Lainekuju järgi
+Normalize Audio Levels...|Normaliseeri helitase...
+Render in Place|Renderda kohapeal
+New Effects Clip|Uus efektiklipp
+New Compound Clip|Uus liitklipp
+Clip Attributes...|Klipi atribuudid...
+Mark In|Märgi sisse
+Mark Out|Märgi välja
+Mark Clip|Märgi klipp
+Mark Timeline In/Out|Märgi ajajoon sisse/välja
+Clear In|Tühjenda sisse
+Clear Out|Tühjenda välja
+Clear In and Out|Tühjenda sisse ja välja
+Modify Marker...|Muuda markerit...
+Delete Marker at Current Position|Kustuta marker siin
+Delete All Markers in Timeline|Kustuta kõik markerid
+Go to Previous Marker|Eelmise markeri juurde
+Go to Next Marker|Järgmise markeri juurde
+Set Clip Color|Klipi värv
+Default|Vaikimisi
+Orange|Oranž
+Apricot|Aprikoos
+Yellow|Kollane
+Lime|Laim
+Olive|Oliiv
+Green|Roheline
+Teal|Türkiis
+Navy|Meresinine
+Blue|Sinine
+Purple|Lilla
+Violet|Violetne
+Pink|Roosa
+Tan|Helepruun
+Beige|Beež
+Brown|Pruun
+Chocolate|Šokolaad
+Show Current Frame on Playback|Näita praegust kaadrit esitusel
+Safe Area Overlay|Ohutu ala
+Show Grid / Guides|Näita ruudustikku / juhtjooni
+Show Toolbar|Näita tööriistariba
+Show Full Screen Viewer|Näita täisekraanivaadet
+Show Cinema Viewer|Näita kinovaadet
+Viewer Overlays|Vaataja ülekatted
+Transform / Crop / Dynamic Zoom|Teisenda / kärbi / suumi
+Safe Area|Ohutu ala
+Center Crosshair|Keskristik
+Checkerboard Background (Alpha)|Malelaua taust (alfa)
+Show All Overlays|Näita kõiki ülekatteid
+Timecode Window|Ajakoodi aken
+Show Scopes|Näita scope'e
+Show Audio Meters|Näita helimõõtjaid
+Show Audio Mixer|Näita heliseguriks
+Show Inspector|Näita inspektorit
+Play Forward|Esita edasi
+Play Reverse|Esita tagasi
+Stop|Stopp
+Play Around Current Frame|Esita kaadri ümbruses
+Play In to Out|Esita sisse kuni välja
+Play Around In / Around Out|Esita sisse/välja ümbruses
+Loop Playback|Esita tsüklis
+Go to First Frame|Esimesele kaadrile
+Go to Last Frame|Viimasele kaadrile
+Go to In|Sissepunkti
+Go to Out|Väljapunkti
+Previous Frame|Eelmine kaader
+Next Frame|Järgmine kaader
+Previous Edit Point|Eelmine lõikepunkt
+Next Edit Point|Järgmine lõikepunkt
+Timeline Playback Resolution|Esituse eraldusvõime
+Half|Pool
+Quarter|Veerand
+Effects Memory Cache|Efektide mälupuhver
+Timeline Proxy Mode|Proxy režiim
+Off|Väljas
+Eighth|Kaheksandik
+Hardware Decoding|Riistvaraline dekodeerimine
+Delete Render Cache|Kustuta renderpuhver
+Video Transitions|Videoüleminekud
+Cross Dissolve|Ristlahtumine
+Dip to Color|Üleminek värvi kaudu
+Audio Transitions|Heliüleminekud
+Cross Fade|Ristuv hajumine
+Remove Transition|Eemalda üleminek
+OpenFX|OpenFX
+Blur|Hägustamine
+Gaussian Blur|Gaussi hägustamine
+Sharpen|Teravdamine
+Color|Värv
+Invert Colors|Pööra värvid ümber
+Black and White|Must-valge
+Distort|Moonutus
+Mosaic|Mosaiik
+Audio FX|Heliefektid
+EQ|EQ
+Dynamics|Dünaamika
+Picasso FX|Picasso FX
+Sepia|Seepia
+Soft Blur|Pehme hägustamine
+Light|Valgus
+Glow|Hõõgus
+Stylize|Stiliseerimine
+Vignette|Vinjett
+Film Grain|Filmiterad
+Compositing Effects|Komposiitefektid
+Nodes|Sõlmed
+Generators|Generaatorid
+Solid Color|Ühtlane värv
+Color Bars|Värviribad
+Gradient|Üleminek
+Titles|Tiitrid
+Text|Tekst
+Text+|Tekst+
+Effects Library Search|Otsi efektiraamatukogust
+Add Tool (Compositing)|Lisa tööriist (komp.)
+Reset All Grades and Nodes|Lähtesta kõik gradeeringud ja sõlmed
+Reset Current Node Grade|Lähtesta praegune sõlm
+Enable/Disable Current Node|Sõlm sees/väljas
+Grab Still|Võta still
+Play Still|Esita still
+Add Serial Node|Lisa jadasõlm
+Add Serial Before|Lisa jada ette
+Add Parallel Node|Lisa paralleelsõlm
+Add Layer Mixer|Lisa kihisegur
+Add Splitter / Combiner|Lisa jagaja / ühendaja
+Add Outside Node|Lisa välissõlm
+Label Node|Pane sõlmele silt
+Timeline|Ajajoon
+Previous Node Graph|Eelmine sõlmegraaf
+Next Node Graph|Järgmine sõlmegraaf
+LUT|LUT
+Apply LUT from list|Rakenda LUT loendist
+Gallery|Galerii
+Scopes On/Off|Scope'id sees/väljas
+Highlight|Esiletõstud
+Lightbox|Valguslaud
+ADR|ADR
+Automated Dialogue Replacement|Automaatne dialoogi asendus
+Bounce Mix to Track|Bounce miks rajale
+Bounce Selected Tracks|Bounce valitud rajad
+Cache Audio Effects|Heliefektide puhver
+Audio Link|Heliseos
+Link Group|Seosegrupp
+Decompose|Lammuta
+Loop Jog|Tsükliline jog
+Show Audio Timeline / Mixer|Näita heliajajoont / segurit
+Full Screen Viewer|Täisekraanivaade
+Show Panel in Workspace|Näita paneeli tööalal
+Media Pool|Meediakogu
+Effects Library|Efektiraamatukogu
+Inspector|Inspektor
+Mixer|Seguri
+Metadata|Metaandmed
+Edit Index|Redigeerimisindeks
+Sound Library|Heliraamatukogu
+Layout|Paigutus
+Reset UI Layout|Lähtesta paigutus
+Save Layout|Salvesta paigutus
+Load Layout|Laadi paigutus
+Switch to Page|Mine lehele
+Media|Meedia
+Edit|Redigeerimine
+Effects|Efektid
+Audio|Heli
+Deliver|Esitus
+Dual Screen On/Off|Kaks ekraani sees/väljas
+Video Clean Feed|Puhas videoväljund
+Picasso Suite Manual|Picasso Suite'i juhend
+Picasso Suite Tutorials|Picasso Suite'i õpetused
+Check for Updates...|Otsi uuendusi...
+Export Log File...|Ekspordi logifail...
+About Picasso Suite|Info: Picasso Suite
+Language|Keel

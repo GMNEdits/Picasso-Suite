@@ -1,0 +1,553 @@
+#menus
+Datei
+Änn.
+Trim
+Zäitlinn
+Clip
+Mark.
+Usi.
+Ofspillen
+Effekt
+Faarf
+Audio
+Aarbecht
+Hëllef
+#entries
+1|Nei Projetsbibliothéik...
+2|Projetsbibliothéik opmaachen...
+3|Bibliothéik am Explorer weisen
+4|Projetsmanager
+5|Neit Projet
+6|Projet opmaachen...
+7|Projet importéieren...
+8|Projet exportéieren...
+9|Projetsarchiv restauréieren...
+10|Projet späicheren
+11|Projet späicheren als...
+12|Kopie späicheren als...
+13|Zréck op de leschte Stand
+14|Importéieren
+15|Medien...
+16|Dossier als Bin...
+17|Zäitlinn: AAF, EDL, XML...
+18|Zäitlinn: Prä-EDL...
+19|Ënnertitel...
+20|Metadaten an de Mediepool...
+21|Bin...
+22|Exportéieren
+23|Zäitlinn: EDL...
+24|Zäitlinn: OpenTimelineIO...
+25|Zäitlinn: XML...
+26|Zäitlinn: AAF...
+27|Metadaten aus dem Mediepool...
+28|Mediemanagement...
+29|Projetsastellungen...
+30|Systemastellungen...
+31|Séier Export...
+32|Verloossen
+33|Réckgängeg
+34|Widderhuelen
+35|Ausschneiden
+36|Kopéieren
+37|Apechen
+38|Apechen an astécken
+39|Mix an d'Spuer apechen
+40|Duplizéieren
+41|Un d'Fëllung upassen
+42|Uewen placéieren
+43|Ausgewielt läschen
+44|Ausgewielt mat Ripple läschen
+45|Alles auswielen
+46|Näischt auswielen
+47|Clips no vir auswielen
+48|Sichen...
+49|Rezent Projeten
+50|Projetsmanager...
+51|Tastekombinatiounen
+52|Nootste Schnëttpunkt wielen
+53|Auswielmodus
+54|Trimmodus
+55|Dynamesche Trimmodus
+56|Ripple Ufank
+57|Ripple Enn
+58|Ripple virdrun / nächst
+59|Ripple virdrun bis Kapp
+60|Ripple nächst bis Kapp
+61|Ufank bis Kapp trimmen
+62|Enn bis Kapp trimmen
+63|Schnëtt verlängeren
+64|Slip Clip
+65|Slip een Bild fréier
+66|Slip een Bild méi spéit
+67|Slide Clip
+68|Slide een Bild no lénks
+69|Slide een Bild no riets
+70|Loop-Trim
+71|Asymmetrescht Trimmen
+72|Trim-Editor
+73|Nei Zäitlinn...
+74|Nei Zäitlinn aus Clips
+75|Neie Verbond-Clip...
+76|Neien Effekt-Clip...
+77|Op der Plaz opléisen
+78|Verbond-Clip opléisen
+79|Verschachtelt Zäitlinn opléisen
+80|Clip deelen
+81|Zäitlinn aus Bin...
+82|Zäitlinn importéieren...
+83|Zäitlinn exportéieren...
+84|Opléisung a Bildrate...
+85|Zäitlinn-Astellungen
+86|Aschnappen
+87|Verlinkten Choix
+88|Positiounssperr
+89|Choix follegt dem Kapp
+90|Marker derbäisetzen
+91|Marker mat Dialog derbäi
+92|All Marker läschen
+93|Ënnertitelspuer erstellen
+94|Ënnertitelberäich erstellen
+95|Iwwergang op all Schnëtter
+96|Zäitlinn wiesselen
+97|Zäitlinn a nei Fënster
+98|Zäitlinn läschen
+99|Clip aktivéieren
+100|Passend Bild
+101|Clip spären
+102|Neie Multicam-Clip...
+103|Multicam-Viewer
+104|Als Stillbiller derbäi
+105|Clipvitess änneren...
+106|Clipdauer änneren...
+107|Zäitkontrollen
+108|Clip nei timen
+109|Bild frieren
+110|Vitessrampe...
+111|Clip ëmdréinen
+112|Neie Verbond-Clip
+113|Clips verlinken
+114|Toun a Bild trennen
+115|Toun-Scrubbing un/aus
+116|Clips automatesch ausriichten
+117|No Timecode
+118|No Wellenform
+119|Tounniveau normaliséieren...
+120|Op der Plaz rendere
+121|Neien Effekt-Clip
+122|Neie Verbond-Clip
+123|Clip-Attributer...
+124|Mark In
+125|Mark Out
+126|Clip markéieren
+127|Zäitlinn In/Out markéieren
+128|In läschen
+129|Out läschen
+130|In an Out läschen
+131|Marker änneren...
+132|Marker hei läschen
+133|All Marker läschen
+134|Zum virege Marker
+135|Zum nächste Marker
+136|Clipfaarf
+137|Standard
+138|Orange
+139|Aprikos
+140|Giel
+141|Limett
+142|Olive
+143|Gréng
+144|Blogréng
+145|Marineblo
+146|Blo
+147|Lila
+148|Violett
+149|Rosa
+150|Hellbrong
+151|Beige
+152|Brong
+153|Schockelat
+154|Aktuellt Bild beim Ofspillen
+155|Sécher Beräich
+156|Raster / Hëllefslinnen weisen
+157|Geräterleescht weisen
+158|Vollbild-Viewer weisen
+159|Kino-Viewer weisen
+160|Viewer-Iwwerlagerungen
+161|Transform. / Zuschneiden / Zoom
+162|Sécher Beräich
+163|Mëttelkräiz
+164|Schachbriet-Hannergrond (Alpha)
+165|All Iwwerlagerungen weisen
+166|Timecode-Fënster
+167|Scopes weisen
+168|Tounmeters weisen
+169|Tounmixer weisen
+170|Inspekter weisen
+171|No vir spillen
+172|Réckwäerts spillen
+173|Stopp
+174|Ronderëm d'Bild spillen
+175|In bis Out spillen
+176|Ronderëm In/Out spillen
+177|Ofspillen am Loop
+178|Op dat éischt Bild
+179|Op dat läscht Bild
+180|Op In
+181|Op Out
+182|Virdrun Bild
+183|Nächst Bild
+184|Virdrun Schnëttpunkt
+185|Nächste Schnëttpunkt
+186|Ofspillopléisung
+187|Hallef
+188|Véierel
+189|Effekt-Späicher-Cache
+190|Proxy-Modus
+191|Aus
+192|Aachtel
+193|Hardware-Dekodéierung
+194|Render-Cache läschen
+195|Videoiwwergäng
+196|Iwwerbländung
+197|Duerch Faarf blenden
+198|Tounwiwwergäng
+199|Cross-Fade
+200|Iwwergang ewechhuelen
+201|OpenFX
+202|Onschaarf
+203|Gauss-Onschaarf
+204|Schärfen
+205|Faarf
+206|Faarwen ëmkéieren
+207|Schwaarz-wäiss
+208|Verzerrung
+209|Mosaik
+210|Toun-Effekter
+211|EQ
+212|Dynamik
+213|Picasso FX
+214|Sepia
+215|Sanft Onschaarf
+216|Luucht
+217|Glanz
+218|Stiliséieren
+219|Vignette
+220|Filmkar
+221|Kompositioun-Effekter
+222|Knäpp
+223|Generatoren
+224|Eenfaarwen
+225|Faarfbalken
+226|Gradient
+227|Titelen
+228|Text
+229|Text+
+230|An der Effektbibliothéik sichen
+231|Geschir derbäi (Kompositioun)
+232|All Gradéierungen a Knäpp zrécksetzen
+233|Aktuelle Knupp zrécksetzen
+234|Knupp un/aus
+235|Still ophuelen
+236|Still ofspillen
+237|Seriellen Knupp derbäi
+238|Seriell virun derbäi
+239|Parallelen Knupp derbäi
+240|Layer-Mixer derbäi
+241|Splitter / Combiner derbäi
+242|Baussen-Knupp derbäi
+243|Knupp benennen
+244|Zäitlinn
+245|Virege Knuppgraph
+246|Nächste Knuppgraph
+247|LUT
+248|LUT aus Lëscht uwenden
+249|Galerie
+250|Scopes un/aus
+251|Highlights
+252|Lightbox
+253|ADR
+254|Automatesch Dialogersetzung
+255|Mix an d'Spur bouncen
+256|Gewielt Spuere bouncen
+257|Toun-Effekt-Cache
+258|Tounverbindung
+259|Verbindungsgrupp
+260|Opléisen
+261|Loop-Jog
+262|Tounzäitlinn / Mixer weisen
+263|Vollbild-Viewer
+264|Panel am Aarbechtsberäich weisen
+265|Mediepool
+266|Effektbibliothéik
+267|Inspekter
+268|Mixer
+269|Metadaten
+270|Editéierindex
+271|Tounbibliothéik
+272|Layout
+273|Layout zrécksetzen
+274|Layout späicheren
+275|Layout lueden
+276|Op Säit wiesselen
+277|Medien
+278|Editéieren
+279|Effekter
+280|Audio
+281|Liwwerung
+282|Zwee Bildschirmer un/aus
+283|Propperen Videoausgang
+284|Picasso Suite Handbuch
+285|Picasso Suite Tutorialen
+286|No Aktualiséierunge sichen...
+287|Logdatei exportéieren...
+288|Iwwer Picasso Suite
+289|Sprooch
+#ui
+1|Clips
+2|60 Biller/s
+3|Job derbäi
+4|An d'Schlaang
+5|Erweidert
+6|Projet archivéieren
+7|Archivéieren...
+8|Auto
+9|Automatesch
+10|Ausgeglach
+11|Bins
+12|Duerchsichen
+13|Bus-Sends
+14|Opnam
+15|Kapitelen
+16|Dossier wielen
+17|Clipnumm
+18|Klon
+19|Klonen
+20|Codec
+21|Faarf+
+22|Kollektiounen
+23|Kontrast
+24|Kontroll
+25|Album erstellen
+26|Kurven - eegen
+27|Eegenen Export
+28|Dekodéierung
+29|Demo-Projet
+30|Biller an d'Album zéien fir ze editéieren
+31|Gezeechent mat
+32|Editéiert
+33|Effekter an
+34|Agebonnenen Toun
+35|Encoder
+36|Kodéierprofil
+37|Ganz Zäitlinn
+38|Gréisst
+39|All
+40|Video exportéieren
+41|Fairlight
+42|Dateinumm
+43|Format
+44|Biller/s
+45|Ëmuerdnung
+46|Ganz Biller
+47|Vollbild
+48|Fusion
+49|Gain
+50|Gamma
+51|Generator
+52|Grafikkaart
+53|Gruppen
+54|Highlights
+55|Héich
+56|Téin
+57|Bild
+58|Index
+59|Eenzel Clips
+60|Entrée
+61|Integréiert
+62|Schlësselbiller
+63|Schlësselwierder
+64|L Mix
+65|Layer
+66|Lokal
+67|Plaz
+68|Loop
+69|Lautstäerkt
+70|Niddereg
+71|Mark
+72|Mediemanagement
+73|Medienquell
+74|Medienspäicher
+75|Meter
+76|Mëtt/Detail
+77|Modifikatoren
+78|Monitor
+79|Monitor-Lautstäerkt
+80|Nativ
+81|Netzwierk-Optimiéierung
+82|Keng Jobs
+83|Keng Jobs
+84|Keng Stills
+85|Net gemellt
+86|Näischt ze gesinn
+87|Offset
+88|Opmaachen
+89|Reihenfolleg
+90|Parade
+91|Paus
+92|Foto
+93|Album
+94|Ofspillen
+95|Positiounssperr
+96|Preset
+97|Primär - Faarfrieder
+98|Veraarbechtungsmodus
+99|Projetsastellungen
+100|Projeten
+101|Qualitéit
+102|Séier Export
+103|Beräich
+104|Ratekontroll
+105|Medien nei verlinken
+106|Medien nei verlinken...
+107|Ewechhuelen
+108|Render
+109|Alles rendere
+110|Render-Schlaang
+111|Render-Astellungen
+112|Render - eegenen Export
+113|Zrécksetzen
+114|Alles zrécksetzen
+115|Opléisung
+116|Sichen
+117|Astellungen
+118|Schatten
+119|Kuerz
+120|Kuerz Max
+121|Een Clip
+122|Smart Bins
+123|Quell-Faarfraum
+124|Quell-Gammaraum
+125|Ënnertitel-Astellungen
+126|System
+127|Zäitlinn-Opléis.
+128|Zäitlinn-Proxy
+129|Téin
+130|Geschir
+131|Spuer-FX
+132|Iwwergäng
+133|Ouni Numm
+134|Vertikal Opléisung
+135|Versioun 0.6.1
+136|Video
+137|Wellenform
+138|Aarbecht
+139|Keng Clips am Mediepool
+140|Clips importéieren oder Dateien hei fale loossen
+141|Clips aus dem Späicher derbäisetzen
+142|Keen Toun
+143|Kee Clip fir ze gradéieren
+144|Keen Input
+145|DAUER
+146|Audio exportéieren
+147|Datenrate
+148|Ausgangsspuer 1
+149|Eenzegaartegen Numm
+150|Setzt (1), (2) ... un den Numm amplaz ze iwwerschreiwen.
+151|Dateityp
+152|Ganz Zäitlinn
+153|In bis Out
+154|Pixelverhältnis
+155|Quadrat
+156|Cinemascope
+157|Datenniveauen
+158|Ënner-Schwaarz/Iwwer-Wäiss behalen
+159|Faarfraum-Tag
+160|Gamma-Tag
+161|Agebrannten Daten
+162|Wéi Projet
+163|Re-Encode iwwersprangen
+164|Optiméiert Medien
+165|Proxy-Medien
+166|Cache-Biller
+167|Beschte Skaléierung
+168|Beschten Debayer
+169|All Videospueren
+170|Flat Pass uschalten
+171|visionOS ëmgoen
+172|Ouni Skaléierung/Blanking
+173|Skript lafe loossen
+174|Start
+175|vum Render-Job
+176|Ënnertitel exportéieren
+177|Separat Datei
+178|Exportéieren als
+179|Biller
+180|Ausschn.
+181|Türkis
+182|Hallef
+183|Faarfbalken
+184|Lightbox
+185|Änn.
+186|Mixer
+187|Tounen
+188|Zäitlinn: AAF, EDL, XML...
+189|Zäitlinn: OpenTimelineIO...
+190|Videoeditor a Rust fir Windows, Linux, macOS an d'Web.
+191|Toun-Scrubbing (Toun beim Zéie vum Kapp)
+192|Beschten
+193|Nei Bildrate hält Clips op deene selwechte Biller.
+194|Klickt d'Tast vun enger Kommando a dréckt déi nei. Esc brécht of.
+195|Kopéiert d'Dateien vun den Zäitlinnen an en Dossier a schreift eng Projetskopie, déi drop weist. Dat oppent Projet ännert sech net.
+196|Ënnerstëtzte Video mat Hardware dekodéieren
+197|All Mediedatei ass, wou de Projet seet.
+198|Filteren
+199|Fräi Software ënner der GPL, Versioun 3 oder méi nei.
+200|H.264, H.265, AV1, VP9, MPEG-2 a VC-1 ginn op der Grafikkaart dekodéiert, wann den Treiber kann. Ausschalten, wann Clips gréng oder futtis sinn. PICASSO_NO_HWACCEL=1 schalt et fir een Ablaf aus.
+201|Hëllef
+202|Verlinkten Choix (Bild an Toun zesummen)
+203|Demo-Projet gelueden
+204|Pivot
+205|Choix follegt dem Kapp
+206|Aschnappen un Clips, Marker, Kapp
+207|Soft Clip
+208|Band
+209|Trim
+210|Usiicht
+211|Voll
+212|Clip
+213|Schlësselbiller
+214|LUT
+215|Lift
+216|Master
+217|Pan
+218|Sat
+219|Scopes
+220|Spline
+221|Sync-Bin
+222|Temp
+223|Imp. Projet...
+224|Exp. Projet...
+225|Späicheren als...
+226|Kopie als...
+227|Import
+228|Export
+229|Ënnertitel...
+230|Medien...
+231|Dossier...
+232|Zäitlinn
+233|Mediepool
+234|Inspekter
+235|Metadaten
+236|1/8
+237|Iwwer
+238|Neit Projet
+239|Opmaachen...
+240|Späicheren
+241|Dynamik
+242|Titelen
+243|Galerie
+244|Effekter
+245|Audio
+246|Zäitlinn: EDL...
+247|Zäitlinn: XML...
+248|Medien

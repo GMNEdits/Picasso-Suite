@@ -1,0 +1,248 @@
+Clips|Clips
+60 frames per second|60 Biller/s
+Add Job|Job derbäi
+Add to Render Queue|An d'Schlaang
+Advanced Settings|Erweidert
+Archive Project|Projet archivéieren
+Archive Project...|Archivéieren...
+Auto|Auto
+Automatic|Automatesch
+Balanced|Ausgeglach
+Bins|Bins
+Browse|Duerchsichen
+Bus Sends|Bus-Sends
+Capture|Opnam
+Chapters from Markers|Kapitelen
+Choose a folder|Dossier wielen
+Clip Name|Clipnumm
+Clone|Klon
+Clone Tool|Klonen
+Codec|Codec
+Col Boost|Faarf+
+Collections|Kollektiounen
+Contrast|Kontrast
+Control Room|Kontroll
+Create an Album|Album erstellen
+Curves - Custom|Kurven - eegen
+Custom Export|Eegenen Export
+Decode Options|Dekodéierung
+Demo Project|Demo-Projet
+Drag photos into the Photo Album to start editing|Biller an d'Album zéien fir ze editéieren
+Drawn with|Gezeechent mat
+Editing|Editéiert
+Effects In|Effekter an
+Embedded Audio|Agebonnenen Toun
+Encoder|Encoder
+Encoding Profile|Kodéierprofil
+Entire Timeline|Ganz Zäitlinn
+Estimated File Size|Gréisst
+Every|All
+Export Video|Video exportéieren
+Fairlight|Fairlight
+File Name|Dateinumm
+Format|Format
+Frame rate|Biller/s
+Frame reordering|Ëmuerdnung
+Full Frames|Ganz Biller
+Full Screen|Vollbild
+Fusion|Fusion
+Gain|Gain
+Gamma|Gamma
+Generator|Generator
+Graphics card|Grafikkaart
+Groups|Gruppen
+Hi/Light|Highlights
+High|Héich
+Hue|Téin
+Image|Bild
+Index|Index
+Individual clips|Eenzel Clips
+Input|Entrée
+Integrated|Integréiert
+Key Frames|Schlësselbiller
+Keywords|Schlësselwierder
+L. Mix|L Mix
+Layer|Layer
+Local|Lokal
+Location|Plaz
+Loop playback|Loop
+Loudness|Lautstäerkt
+Low|Niddereg
+Mark|Mark
+Media Management|Mediemanagement
+Media Source|Medienquell
+Media Storage|Medienspäicher
+Meters|Meter
+Mid/Detail|Mëtt/Detail
+Modifiers|Modifikatoren
+Monitor|Monitor
+Monitor volume|Monitor-Lautstäerkt
+Native|Nativ
+Network Optimization|Netzwierk-Optimiéierung
+No jobs in Queue|Keng Jobs
+No jobs in queue|Keng Jobs
+No stills created|Keng Stills
+Not reported|Net gemellt
+Nothing to inspect|Näischt ze gesinn
+Offset|Offset
+Open|Opmaachen
+Order|Reihenfolleg
+Parade|Parade
+Pause|Paus
+Photo|Foto
+Photo Album|Album
+Playback|Ofspillen
+Position lock|Positiounssperr
+Preset|Preset
+Primaries - Color Wheels|Primär - Faarfrieder
+Process Mode|Veraarbechtungsmodus
+Project settings|Projetsastellungen
+Projects|Projeten
+Quality|Qualitéit
+Quick Export|Séier Export
+Range|Beräich
+Rate Control|Ratekontroll
+Relink Missing Media|Medien nei verlinken
+Relink Missing Media...|Medien nei verlinken...
+Remove|Ewechhuelen
+Render|Render
+Render All|Alles rendere
+Render Queue|Render-Schlaang
+Render Settings|Render-Astellungen
+Render Settings - Custom Export|Render - eegenen Export
+Reset|Zrécksetzen
+Reset All|Alles zrécksetzen
+Resolution|Opléisung
+Search|Sichen
+Settings|Astellungen
+Shad|Schatten
+Short|Kuerz
+Short Max|Kuerz Max
+Single clip|Een Clip
+Smart Bins|Smart Bins
+Source Color Space|Quell-Faarfraum
+Source Gamma Space|Quell-Gammaraum
+Subtitle Settings|Ënnertitel-Astellungen
+System|System
+Timeline Resolution|Zäitlinn-Opléis.
+Timeline proxy|Zäitlinn-Proxy
+Tint|Téin
+Tools|Geschir
+Track FX|Spuer-FX
+Transitions|Iwwergäng
+Untitled|Ouni Numm
+Use vertical resolution|Vertikal Opléisung
+Version 0.6.1|Versioun 0.6.1
+Video|Video
+Waveform|Wellenform
+Workspace|Aarbecht
+No clips in media pool|Keng Clips am Mediepool
+Add clips with Import, or drop files here|Clips importéieren oder Dateien hei fale loossen
+Add clips from Media Storage to get started|Clips aus dem Späicher derbäisetzen
+No sound to show|Keen Toun
+No clip to grade|Kee Clip fir ze gradéieren
+No Input|Keen Input
+DURATION|DAUER
+Export Audio|Audio exportéieren
+Data Rate|Datenrate
+Output Track 1|Ausgangsspuer 1
+Use unique filename|Eenzegaartegen Numm
+Adds (1), (2) ... to the name instead of writing over a file.|Setzt (1), (2) ... un den Numm amplaz ze iwwerschreiwen.
+File type|Dateityp
+Whole timeline|Ganz Zäitlinn
+In to out marks|In bis Out
+Pixel aspect ratio|Pixelverhältnis
+Square|Quadrat
+Cinemascope|Cinemascope
+Data Levels|Datenniveauen
+Retain sub-black and super-white data|Ënner-Schwaarz/Iwwer-Wäiss behalen
+Color Space Tag|Faarfraum-Tag
+Gamma Tag|Gamma-Tag
+Data burn-in|Agebrannten Daten
+Same as project|Wéi Projet
+Bypass re-encode when possible|Re-Encode iwwersprangen
+Use optimized media|Optiméiert Medien
+Use proxy media|Proxy-Medien
+Use render cached images|Cache-Biller
+Force sizing to highest quality|Beschte Skaléierung
+Force debayer to highest quality|Beschten Debayer
+Render All Video Tracks|All Videospueren
+Enable Flat Pass|Flat Pass uschalten
+visionOS Bypass|visionOS ëmgoen
+Disable sizing and blanking output|Ouni Skaléierung/Blanking
+Trigger script at|Skript lafe loossen
+Start|Start
+of render job|vum Render-Job
+Export Subtitle|Ënnertitel exportéieren
+As a separate file|Separat Datei
+Export As|Exportéieren als
+frames|Biller
+Cut|Ausschn.
+Teal|Türkis
+Half|Hallef
+Color Bars|Faarfbalken
+Lightbox|Lightbox
+Edit|Änn.
+Mixer|Mixer
+Sound Library|Tounen
+Timeline: AAF, EDL, XML...|Zäitlinn: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Zäitlinn: OpenTimelineIO...
+A video editor written in Rust for Windows, Linux, macOS and the web.|Videoeditor a Rust fir Windows, Linux, macOS an d'Web.
+Audio scrubbing (sound while the playhead is dragged)|Toun-Scrubbing (Toun beim Zéie vum Kapp)
+Best|Beschten
+Changing the frame rate keeps every clip on the same frames.|Nei Bildrate hält Clips op deene selwechte Biller.
+Click a command's keys, then press the key it should have. Escape gives up.|Klickt d'Tast vun enger Kommando a dréckt déi nei. Esc brécht of.
+Copies the files the timelines use into a folder, and writes a copy of the project there that points at them. The project you are editing is not changed.|Kopéiert d'Dateien vun den Zäitlinnen an en Dossier a schreift eng Projetskopie, déi drop weist. Dat oppent Projet ännert sech net.
+Decode supported video using hardware acceleration|Ënnerstëtzte Video mat Hardware dekodéieren
+Every media file is where the project says it is.|All Mediedatei ass, wou de Projet seet.
+Filters|Filteren
+Free software under the GPL, version 3 or later.|Fräi Software ënner der GPL, Versioun 3 oder méi nei.
+H.264, H.265, AV1, VP9, MPEG-2 and VC-1 are decoded on the graphics card when its driver can. Turn this off if clips show green or broken pictures. PICASSO_NO_HWACCEL=1 turns it off for one run.|H.264, H.265, AV1, VP9, MPEG-2 a VC-1 ginn op der Grafikkaart dekodéiert, wann den Treiber kann. Ausschalten, wann Clips gréng oder futtis sinn. PICASSO_NO_HWACCEL=1 schalt et fir een Ablaf aus.
+Help|Hëllef
+Linked selection (picture and sound together)|Verlinkten Choix (Bild an Toun zesummen)
+Loaded the demo project|Demo-Projet gelueden
+Pivot|Pivot
+Selection follows the playhead|Choix follegt dem Kapp
+Snap to clips, markers and the playhead|Aschnappen un Clips, Marker, Kapp
+Soft Clip|Soft Clip
+Tape|Band
+Trim|Trim
+View|Usiicht
+Full|Voll
+Clip|Clip
+Keyframes|Schlësselbiller
+LUTs|LUT
+Lift|Lift
+Master|Master
+Pan|Pan
+Sat|Sat
+Scopes|Scopes
+Spline|Spline
+Sync Bin|Sync-Bin
+Temp|Temp
+Import Project...|Imp. Projet...
+Export Project...|Exp. Projet...
+Save Project As...|Späicheren als...
+Save Copy As...|Kopie als...
+Import|Import
+Export|Export
+Subtitle...|Ënnertitel...
+Media...|Medien...
+Folder as Bin...|Dossier...
+Timeline|Zäitlinn
+Media Pool|Mediepool
+Inspector|Inspekter
+Metadata|Metadaten
+Eighth|1/8
+About Picasso Suite|Iwwer
+New Project|Neit Projet
+Open Project...|Opmaachen...
+Save Project|Späicheren
+Dynamics|Dynamik
+Titles|Titelen
+Gallery|Galerie
+Effects|Effekter
+Audio|Audio
+Timeline: EDL...|Zäitlinn: EDL...
+Timeline: XML...|Zäitlinn: XML...
+Media|Medien

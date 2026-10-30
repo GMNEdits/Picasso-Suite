@@ -1,0 +1,17 @@
+Fit to Fill|Pielāgot aizpildei
+Select Clips Forward|Izvēlēties klipus uz priekšu
+Trim Editor|Apgriešanas redakt.
+Timeline Settings|Laika l. iestatījumi
+Multicam Viewer|Multikameras skats
+Auto Align Clips|Auto izlīdzināt
+Play In to Out|Atskaņot ie–iz
+Reset All Grades and Nodes|Atiestatīt gradējumus, mezglus
+Add Serial Node|Pievienot seriālo
+Add Parallel Node|Pievienot paralēlo
+Add Layer Mixer|Pievienot slāņu mikseri
+Scopes On/Off|Scopes iesl./izsl.
+Reset UI Layout|Atiestat. izkārtojumu
+Dual Screen On/Off|Divi ekrāni iesl./izsl.
+Export Log File...|Eksportēt žurnālu...
+Select Clips Forward|Izvēlēt klipus uz priekšu
+Add Layer Mixer|Pievienot slāņu miks.

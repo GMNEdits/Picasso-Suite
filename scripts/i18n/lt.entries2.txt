@@ -1,0 +1,25 @@
+Save Copy As...|Įrašyti kopiją...
+Folder as Bin...|Aplankas kaip krep...
+Fit to Fill|Pritaikyti užpild.
+Trim End to Playhead|Karpyti pabaigą iki galv.
+Import Timeline...|Importuoti juostą...
+Export Timeline...|Eksportuoti juostą...
+Timeline Settings|Juostos nustatymai
+Switch Timeline|Perjungti juostą
+New Multicam Clip...|Naujas multikam. klipas...
+Retime Clip|Perskaič. klipo laiką
+Auto Align Clips|Auto lygiuoti klipus
+Mark Timeline In/Out|Pažym. juostos pr./pab.
+Clear In and Out|Valyti pradžią/pabaigą
+Show Grid / Guides|Rodyti tinklelį/vadovus
+Show Toolbar|Rodyti įrankius
+Play In to Out|Groti pradžia–pabaiga
+Add Serial Node|Pridėti nuoseklų
+Add Parallel Node|Pridėti lygiagretų
+Add Layer Mixer|Pridėti sluoksnių maiš.
+Video Clean Feed|Švarus vaizdo išvedim.
+Export Log File...|Eksportuoti žurnalą...
+Retime Clip|Perskaič. klipą
+Play In to Out|Groti pr.–pab.
+Add Layer Mixer|Pridėti sluoksn. maiš.
+Add Layer Mixer|Pridėti sl. maišytuvą

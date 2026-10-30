@@ -1,0 +1,304 @@
+#menus
+Fails
+Red.
+Trim
+Laika l.
+Klips
+Marķ.
+Skats
+Atskaņ.
+Efekti
+Krāsa
+Skaņa
+Darbvieta
+Palīdz.
+#entries
+New Project Library...|Jauna projektu bibliotēka...
+Open Project Library...|Atvērt projektu bibliotēku...
+Show Current Project Library in File Explorer|Rādīt bibliotēku Explorer
+Project Manager|Projektu pārvaldnieks
+New Project|Jauns projekts
+Open Project...|Atvērt projektu...
+Import Project...|Importēt projektu...
+Export Project...|Eksportēt projektu...
+Restore Project Archive...|Atjaunot projekta arhīvu...
+Save Project|Saglabāt projektu
+Save Project As...|Saglabāt projektu kā...
+Save Copy As...|Saglabāt kopiju kā...
+Revert to Last Saved Version|Atgriezt pēdējo saglabāto
+Import|Importēt
+Media...|Multivide...
+Folder as Bin...|Mape kā tvertne...
+Timeline: AAF, EDL, XML...|Laika līnija: AAF, EDL, XML...
+Timeline: Pre-conformed EDL...|Laika līnija: pirms-EDL...
+Subtitle...|Subtitri...
+Metadata to Media Pool...|Metadati multividei...
+Bin...|Tvertne...
+Export|Eksportēt
+Timeline: EDL...|Laika līnija: EDL...
+Timeline: OpenTimelineIO...|Laika līnija: OpenTimelineIO...
+Timeline: XML...|Laika līnija: XML...
+Timeline: AAF...|Laika līnija: AAF...
+Metadata from Media Pool...|Metadati no multivides...
+Media Management...|Multivides pārvaldība...
+Project Settings...|Projekta iestatījumi...
+System Preferences...|Sistēmas iestatījumi...
+Quick Export...|Ātrā eksportēšana...
+Quit|Iziet
+Undo|Atsaukt
+Redo|Atkārtot
+Cut|Izgriezt
+Copy|Kopēt
+Paste|Ielīmēt
+Paste Insert|Ielīmēt un ievietot
+Paste Mix to Current Track|Ielīmēt miksu ierakstā
+Duplicate|Dublēt
+Fit to Fill|Pielāgot aizpildīšanai
+Place on Top|Novietot augšā
+Delete Selected|Dzēst izvēlēto
+Delete Selected with Ripple|Dzēst izvēlēto ar ripple
+Select All|Izvēlēties visu
+Deselect All|Atcelt izvēli
+Select Clips Forward|Izvēlēties klipus uz priekšu
+Find...|Meklēt...
+Recent Projects|Nesenie projekti
+Project Manager...|Projektu pārvaldnieks...
+Keyboard Customization|Īsinājumtaustiņi
+Select Nearest Edit Point|Izvēlēties tuvāko griezumu
+Selection Mode|Izvēles režīms
+Trim Mode|Apgriešanas režīms
+Dynamic Trim Mode|Dinamiskā apgriešana
+Ripple Start|Ripple sākums
+Ripple End|Ripple beigas
+Ripple Trim Previous / Next|Ripple iepriekšējais / nākamais
+Ripple Trim Previous Edit to Playhead|Ripple iepriekšējais līdz galvai
+Ripple Trim Next Edit to Playhead|Ripple nākamais līdz galvai
+Trim Start to Playhead|Apgriezt sākumu līdz galvai
+Trim End to Playhead|Apgriezt beigas līdz galvai
+Extend Edit|Pagarināt griezumu
+Slip Clip|Slip klips
+Slip One Frame Earlier|Slip viens kadrs agrāk
+Slip One Frame Later|Slip viens kadrs vēlāk
+Slide Clip|Slide klips
+Slide One Frame Left|Slide viens kadrs pa kreisi
+Slide One Frame Right|Slide viens kadrs pa labi
+Loop Trim|Cikliska apgriešana
+Asymmetric Trimming|Asimetriska apgriešana
+Trim Editor|Apgriešanas redaktors
+New Timeline...|Jauna laika līnija...
+New Timeline Using Selected Clips|Jauna līnija no izvēlētajiem
+Create New Compound Clip...|Jauns salikts klips...
+New Effects Clip...|Jauns efektu klips...
+Decompose in Place|Sadalīt uz vietas
+Decompose Compound Clip|Sadalīt saliktu klipu
+Decompose Nested Timeline|Sadalīt ligzdoto līniju
+Split Clip|Sadalīt klipu
+Create Timeline Using Bin...|Laika līnija no tvertnes...
+Import Timeline...|Importēt laika līniju...
+Export Timeline...|Eksportēt laika līniju...
+Timeline Resolution and Frame Rate...|Izšķirtspēja un kadru ātrums...
+Timeline Settings|Laika līnijas iestatījumi
+Snap|Piesaiste
+Linked Selection|Saistīta izvēle
+Position Lock|Pozīcijas slēdzene
+Selection Follows Playhead|Izvēle seko galvai
+Add Marker|Pievienot marķieri
+Add Marker and Show Dialog|Pievienot marķieri ar dialogu
+Delete All Markers|Dzēst visus marķierus
+Create Subtitle Track|Izveidot subtitru celiņu
+Create Subtitle Region|Izveidot subtitru apgabalu
+Add Transition to All Edits|Pāreja visiem griezumiem
+Switch Timeline|Pārslēgt laika līniju
+Open Timeline in New Window|Atvērt līniju jaunā logā
+Delete Timeline|Dzēst laika līniju
+Enable Clip|Iespējot klipu
+Match Frame|Atbilstošs kadrs
+Lock Clip|Bloķēt klipu
+New Multicam Clip...|Jauns multikameras klips...
+Multicam Viewer|Multikameras skatītājs
+Add to Media Pool as Stills|Pievienot kā nekustīgus attēlus
+Change Clip Speed...|Mainīt klipa ātrumu...
+Change Clip Duration...|Mainīt klipa ilgumu...
+Retime Controls|Laika vadība
+Retime Clip|Pārlaicēt klipu
+Freeze Frame|Iesaldēt kadru
+Speed Ramp...|Ātruma rampa...
+Reverse Clip|Apgriezt klipu
+Create New Compound Clip|Jauns salikts klips
+Link Clips|Saistīt klipus
+Unlink Audio and Video|Atdalīt skaņu un attēlu
+Enable / Disable Audio Scrubbing|Skaņas scrubbing ieslēgts/izslēgts
+Auto Align Clips|Automātiski izlīdzināt klipus
+Based on Timecode|Pēc timecode
+Based on Waveform|Pēc viļņu formas
+Normalize Audio Levels...|Normalizēt skaņas līmeni...
+Render in Place|Renderēt uz vietas
+New Effects Clip|Jauns efektu klips
+New Compound Clip|Jauns salikts klips
+Clip Attributes...|Klipa atribūti...
+Mark In|Atzīmēt ieeju
+Mark Out|Atzīmēt izeju
+Mark Clip|Atzīmēt klipu
+Mark Timeline In/Out|Atzīmēt līnijas ieeju/izeju
+Clear In|Notīrīt ieeju
+Clear Out|Notīrīt izeju
+Clear In and Out|Notīrīt ieeju un izeju
+Modify Marker...|Mainīt marķieri...
+Delete Marker at Current Position|Dzēst marķieri šeit
+Delete All Markers in Timeline|Dzēst visus marķierus
+Go to Previous Marker|Uz iepriekšējo marķieri
+Go to Next Marker|Uz nākamo marķieri
+Set Clip Color|Klipa krāsa
+Default|Noklusējums
+Orange|Oranža
+Apricot|Aprikožu
+Yellow|Dzeltena
+Lime|Laima
+Olive|Olīvu
+Green|Zaļa
+Teal|Zilganzaļa
+Navy|Tumšzila
+Blue|Zila
+Purple|Violeta
+Violet|Vijolīte
+Pink|Rozā
+Tan|Gaišbrūna
+Beige|Bēša
+Brown|Brūna
+Chocolate|Šokolādes
+Show Current Frame on Playback|Rādīt pašreizējo kadru atskaņojot
+Safe Area Overlay|Drošais apgabals
+Show Grid / Guides|Rādīt režģi / vadotnes
+Show Toolbar|Rādīt rīkjoslu
+Show Full Screen Viewer|Rādīt pilnekrāna skatu
+Show Cinema Viewer|Rādīt kino skatu
+Viewer Overlays|Skatītāja pārklājumi
+Transform / Crop / Dynamic Zoom|Pārveidot / apcirpt / tālummaiņa
+Safe Area|Drošais apgabals
+Center Crosshair|Centra krusts
+Checkerboard Background (Alpha)|Šaha fons (alfa)
+Show All Overlays|Rādīt visus pārklājumus
+Timecode Window|Timecode logs
+Show Scopes|Rādīt scopes
+Show Audio Meters|Rādīt skaņas mērītājus
+Show Audio Mixer|Rādīt skaņas mikseri
+Show Inspector|Rādīt inspektoru
+Play Forward|Atskaņot uz priekšu
+Play Reverse|Atskaņot atpakaļ
+Stop|Stop
+Play Around Current Frame|Atskaņot ap kadru
+Play In to Out|Atskaņot ieeja līdz izeja
+Play Around In / Around Out|Atskaņot ap ieeju/izeju
+Loop Playback|Atskaņot ciklā
+Go to First Frame|Uz pirmo kadru
+Go to Last Frame|Uz pēdējo kadru
+Go to In|Uz ieeju
+Go to Out|Uz izeju
+Previous Frame|Iepriekšējais kadrs
+Next Frame|Nākamais kadrs
+Previous Edit Point|Iepriekšējais griezums
+Next Edit Point|Nākamais griezums
+Timeline Playback Resolution|Atskaņošanas izšķirtspēja
+Half|Puse
+Quarter|Ceturtdaļa
+Effects Memory Cache|Efektu atmiņas kešatmiņa
+Timeline Proxy Mode|Proxy režīms
+Off|Izsl.
+Eighth|Astotdaļa
+Hardware Decoding|Aparatūras dekodēšana
+Delete Render Cache|Dzēst render kešatmiņu
+Video Transitions|Video pārejas
+Cross Dissolve|Krustiskā izzušana
+Dip to Color|Izzušana caur krāsu
+Audio Transitions|Skaņas pārejas
+Cross Fade|Krustiskais fade
+Remove Transition|Noņemt pāreju
+OpenFX|OpenFX
+Blur|Izplūdums
+Gaussian Blur|Gausa izplūdums
+Sharpen|Asināšana
+Color|Krāsa
+Invert Colors|Invertēt krāsas
+Black and White|Melnbalts
+Distort|Kropļojums
+Mosaic|Mozaīka
+Audio FX|Skaņas efekti
+EQ|EQ
+Dynamics|Dinamika
+Picasso FX|Picasso FX
+Sepia|Sēpija
+Soft Blur|Mīksts izplūdums
+Light|Gaisma
+Glow|Mirdzums
+Stylize|Stilizācija
+Vignette|Vinjete
+Film Grain|Filmas grauds
+Compositing Effects|Kompozīcijas efekti
+Nodes|Mezgli
+Generators|Ģeneratori
+Solid Color|Vienkrāsains
+Color Bars|Krāsu joslas
+Gradient|Gradients
+Titles|Titri
+Text|Teksts
+Text+|Teksts+
+Effects Library Search|Meklēt efektu bibliotēkā
+Add Tool (Compositing)|Pievienot rīku (kompozīcija)
+Reset All Grades and Nodes|Atiestatīt visus gradējumus un mezglus
+Reset Current Node Grade|Atiestatīt pašreizējo mezglu
+Enable/Disable Current Node|Mezgls ieslēgts/izslēgts
+Grab Still|Uzņemt still
+Play Still|Atskaņot still
+Add Serial Node|Pievienot seriālo mezglu
+Add Serial Before|Pievienot seriālo pirms
+Add Parallel Node|Pievienot paralēlo mezglu
+Add Layer Mixer|Pievienot slāņu mikseri
+Add Splitter / Combiner|Pievienot dalītāju / apvienotāju
+Add Outside Node|Pievienot ārējo mezglu
+Label Node|Marķēt mezglu
+Timeline|Laika līnija
+Previous Node Graph|Iepriekšējais mezglu grafs
+Next Node Graph|Nākamais mezglu grafs
+LUT|LUT
+Apply LUT from list|Lietot LUT no saraksta
+Gallery|Galerija
+Scopes On/Off|Scopes ieslēgts/izslēgts
+Highlight|Gaišie
+Lightbox|Gaismas galds
+ADR|ADR
+Automated Dialogue Replacement|Automātiska dialoga aizstāšana
+Bounce Mix to Track|Bounce miksu ierakstā
+Bounce Selected Tracks|Bounce izvēlētos ierakstus
+Cache Audio Effects|Skaņas efektu kešatmiņa
+Audio Link|Skaņas saite
+Link Group|Saišu grupa
+Decompose|Sadalīt
+Loop Jog|Cikliskais jog
+Show Audio Timeline / Mixer|Rādīt skaņas līniju / mikseri
+Full Screen Viewer|Pilnekrāna skats
+Show Panel in Workspace|Rādīt paneli darbvietā
+Media Pool|Multivides kopa
+Effects Library|Efektu bibliotēka
+Inspector|Inspektors
+Mixer|Mikseris
+Metadata|Metadati
+Edit Index|Rediģēšanas indekss
+Sound Library|Skaņu bibliotēka
+Layout|Izkārtojums
+Reset UI Layout|Atiestatīt izkārtojumu
+Save Layout|Saglabāt izkārtojumu
+Load Layout|Ielādēt izkārtojumu
+Switch to Page|Pāriet uz lapu
+Media|Multivide
+Edit|Rediģēšana
+Effects|Efekti
+Audio|Skaņa
+Deliver|Piegāde
+Dual Screen On/Off|Divi ekrāni ieslēgts/izslēgts
+Video Clean Feed|Tīra video izvade
+Picasso Suite Manual|Picasso Suite rokasgrāmata
+Picasso Suite Tutorials|Picasso Suite pamācības
+Check for Updates...|Pārbaudīt atjauninājumus...
+Export Log File...|Eksportēt žurnāla failu...
+About Picasso Suite|Par Picasso Suite
+Language|Valoda
