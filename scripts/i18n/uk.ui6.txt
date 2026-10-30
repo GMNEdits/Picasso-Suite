@@ -1,0 +1,10 @@
+Primaries - Color Wheels|Первинна - Кола
+Relink Missing Media|Підключити медіа
+Relink Missing Media...|Підключити медіа...
+Timeline Resolution|Розд. таймлайна
+Pixel aspect ratio|Пропорції
+Bypass re-encode when possible|Без перекодування
+Render All Video Tracks|Рендер відеодоріжок
+Revert to Last Saved Version|Повернути
+Timeline: AAF, EDL, XML...|Таймл.: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Таймл.: OpenTimelineIO...

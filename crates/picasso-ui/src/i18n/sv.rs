@@ -315,7 +315,7 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Add to Render Queue", "Till kön"),
     ("Advanced Settings", "Avancerat"),
     ("Archive Project", "Arkivera projekt"),
-    ("Archive Project...", "Arkivera projekt..."),
+    ("Archive Project...", "Arkivera..."),
     ("Auto", "Auto"),
     ("Automatic", "Automatisk"),
     ("Balanced", "Balans"),
@@ -508,4 +508,5 @@ pub(super) const UI: &[(&str, &str)] = &[
     ("Half", "Hälft."),
     ("Teal", "Blågr."),
     ("Edit", "Edit"),
+    ("Keyboard Customization", "Kortkommandon"),
 ];

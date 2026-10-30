@@ -1,0 +1,9 @@
+Relink Missing Media|Подключить медиа
+Relink Missing Media...|Подключить медиа...
+Timeline Resolution|Разр. таймлайна
+Pixel aspect ratio|Пропорции
+Bypass re-encode when possible|Без перекодирования
+As a separate file|Отд. файл
+Revert to Last Saved Version|Вернуть
+Timeline: AAF, EDL, XML...|Таймл.: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Таймл.: OpenTimelineIO...

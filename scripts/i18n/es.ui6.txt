@@ -1,0 +1,10 @@
+Archive Project...|Archivar...
+Chapters from Markers|Capítulos (marcad.)
+Primaries - Color Wheels|Primarios - Ruedas
+Source Gamma Space|Gamma origen
+Use vertical resolution|Resolución vertical
+Pixel aspect ratio|Aspecto de píxel
+Retain sub-black and super-white data|Mantener sub-negro/super-blanco
+Revert to Last Saved Version|Revertir
+Timeline: AAF, EDL, XML...|Crono: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Crono: OpenTimelineIO...

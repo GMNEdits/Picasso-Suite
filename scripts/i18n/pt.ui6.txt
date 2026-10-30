@@ -1,0 +1,13 @@
+Archive Project...|Arquivar...
+Chapters from Markers|Capítulos (marc.)
+Estimated File Size|Tam. estimado
+Nothing to inspect|Nada a ver
+Source Gamma Space|Gama de origem
+Pixel aspect ratio|Proporção píxel
+Retain sub-black and super-white data|Manter sub-preto/super-branco
+Force sizing to highest quality|Forçar escala máx.
+Force debayer to highest quality|Forçar debayer máx.
+As a separate file|Fich. separado
+Revert to Last Saved Version|Reverter
+Timeline: AAF, EDL, XML...|Crono: AAF, EDL, XML...
+Timeline: OpenTimelineIO...|Crono: OpenTimelineIO...

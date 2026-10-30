@@ -9,7 +9,8 @@
 //!
 //! A translation is put where the English text was, at the same size: the tables are written with
 //! short forms so that it is not wider than the English (`scripts/i18n/build.py` measures each
-//! one), and a text is never drawn smaller than the others around it.
+//! one), and a label is never drawn smaller than the others around it. A sentence (18 characters or
+//! more, on one row) that is still wider is drawn smaller, down to 70%, so it stays in its panel.
 
 use egui::epaint::text::LayoutJob;
 use egui::{Context, LayerId, Shape};
@@ -31,7 +32,7 @@ pub(crate) fn translate_frame_in(ctx: &Context, language: Language) {
     }
 
     // What is to be translated: where it is and the job to lay out.
-    let mut wanted: Vec<(LayerId, usize, LayoutJob)> = Vec::new();
+    let mut wanted: Vec<(LayerId, usize, LayoutJob, f32)> = Vec::new();
     ctx.graphics(|graphics| {
         for layer in &layers {
             let Some(list) = graphics.get(*layer) else {
@@ -56,7 +57,7 @@ pub(crate) fn translate_frame_in(ctx: &Context, language: Language) {
                 new.break_on_newline = job.break_on_newline;
                 new.first_row_min_height = job.first_row_min_height;
                 new.sections[0].leading_space = job.sections[0].leading_space;
-                wanted.push((*layer, i, new));
+                wanted.push((*layer, i, new, text.galley.rect.width()));
             }
         }
     });
@@ -67,12 +68,27 @@ pub(crate) fn translate_frame_in(ctx: &Context, language: Language) {
     let laid_out: Vec<_> = ctx.fonts_mut(|fonts| {
         wanted
             .iter()
-            .map(|(_, _, job)| fonts.layout_job(job.clone()))
+            .map(|(_, _, job, was)| {
+                let galley = fonts.layout_job(job.clone());
+                // A sentence on one row that is wider than the English one is drawn smaller; a short
+                // label never is (see `super::paint_text`).
+                if job.text.chars().count() < super::LONG || galley.rows.len() > 1 {
+                    return galley;
+                }
+                let Some(scale) = super::smaller(*was, galley.rect.width()) else {
+                    return galley;
+                };
+                let mut smaller = job.clone();
+                for section in &mut smaller.sections {
+                    section.format.font_id.size *= scale;
+                }
+                fonts.layout_job(smaller)
+            })
             .collect()
     });
 
     ctx.graphics_mut(|graphics| {
-        for ((layer, i, _), galley) in wanted.into_iter().zip(laid_out) {
+        for ((layer, i, _, _), galley) in wanted.into_iter().zip(laid_out) {
             if let Some(list) = graphics.get_mut(layer) {
                 list.mutate_shape(egui::layers::ShapeIdx(i), |clipped| {
                     if let Shape::Text(text) = &mut clipped.shape {

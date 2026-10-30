@@ -1,0 +1,6 @@
+Chapters from Markers|Rozdziały
+Nothing to inspect|Brak podglądu
+Relink Missing Media|Połącz media
+Relink Missing Media...|Połącz media...
+Source Color Space|Przestrz. kol. źr.
+Use optimized media|Media zoptym.

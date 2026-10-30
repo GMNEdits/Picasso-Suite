@@ -137,9 +137,16 @@ fn boxes(shape: &Shape, out: &mut Vec<(String, Rect)>) {
 
 /// What each page and window paints in `language`: its texts with their boxes.
 fn painted_boxes(language: crate::i18n::Language) -> Vec<(String, Vec<(String, Rect)>)> {
+    painted_boxes_of(language, true)
+}
+
+/// The same, for the demo project or for an empty one (whose pools say they are empty).
+fn painted_boxes_of(language: crate::i18n::Language, demo: bool) -> Vec<(String, Vec<(String, Rect)>)> {
     let ctx = Context::default();
     let mut app = StudioApp::new(&ctx);
-    app.load_demo();
+    if demo {
+        app.load_demo();
+    }
     crate::i18n::set(language);
     let mut all = Vec::new();
     let mut take = |name: &str, app: &mut StudioApp| {
@@ -205,24 +212,27 @@ fn collisions(boxes: &[(String, Rect)]) -> Vec<(usize, usize)> {
 fn no_language_puts_a_text_on_top_of_another_that_english_did_not() {
     use crate::i18n::{Language, CHANGING};
     let _only = CHANGING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
-    let english = painted_boxes(Language::English);
     let mut report = String::new();
-    for language in Language::ALL.into_iter().skip(1) {
-        let shown = painted_boxes(language);
-        for ((page, then), (_, now)) in english.iter().zip(&shown) {
-            if then.len() != now.len() {
-                report.push_str(&format!("{language:?} {page}: {} texts, English {}
+    // With the demo project, and with an empty one (whose pools show their hints).
+    for demo in [true, false] {
+        let english = painted_boxes_of(Language::English, demo);
+        for language in Language::ALL.into_iter().skip(1) {
+            let shown = painted_boxes_of(language, demo);
+            for ((page, then), (_, now)) in english.iter().zip(&shown) {
+                if then.len() != now.len() {
+                    report.push_str(&format!("{language:?} {page}: {} texts, English {}
 ", now.len(), then.len()));
-                continue;
-            }
-            let before: std::collections::HashSet<_> = collisions(then).into_iter().collect();
-            for (i, j) in collisions(now) {
-                if !before.contains(&(i, j)) {
-                    report.push_str(&format!(
-                        "{language:?} {page}: {:?} runs into {:?} (English {:?} / {:?})
+                    continue;
+                }
+                let before: std::collections::HashSet<_> = collisions(then).into_iter().collect();
+                for (i, j) in collisions(now) {
+                    if !before.contains(&(i, j)) {
+                        report.push_str(&format!(
+                            "{language:?} {page}: {:?} runs into {:?} (English {:?} / {:?})
 ",
-                        now[i].0, now[j].0, then[i].0, then[j].0
-                    ));
+                            now[i].0, now[j].0, then[i].0, then[j].0
+                        ));
+                    }
                 }
             }
         }
@@ -259,5 +269,30 @@ fn a_right_aligned_label_keeps_its_right_edge_in_every_language() {
             now.right(),
             was.right()
         );
+    }
+}
+
+#[test]
+fn a_hint_in_a_panel_is_no_wider_than_the_english_one_in_any_language() {
+    use crate::i18n::{Language, CHANGING};
+    let _only = CHANGING.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    let width_of = |all: &[(String, Vec<(String, Rect)>)], text: &str| {
+        all.iter()
+            .filter(|(page, _)| page == "Media")
+            .flat_map(|(_, boxes)| boxes.iter())
+            .find(|(t, _)| t == text)
+            .map(|(_, r)| r.width())
+    };
+    let english = painted_boxes_of(Language::English, false);
+    let was = width_of(&english, "Add clips from Media Storage to get started").expect("painted");
+    for (language, text) in [
+        (Language::Portuguese, "Adicione clips do armazenamento para começar"),
+        (Language::Spanish, "Añade clips desde Almacenamiento para empezar"),
+        (Language::French, "Ajoutez des clips depuis Stockage"),
+        (Language::German, "Clips aus dem Speicher hinzufügen"),
+    ] {
+        let shown = painted_boxes_of(language, false);
+        let now = width_of(&shown, text).unwrap_or_else(|| panic!("{language:?}: {text:?} is painted"));
+        assert!(now <= was + 1.5, "{language:?}: the hint is {now} wide, the English {was}");
     }
 }

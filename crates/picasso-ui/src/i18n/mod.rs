@@ -233,11 +233,41 @@ pub(crate) fn paint_text(
 ) -> egui::Rect {
     let text = text.to_string();
     let language = current();
-    let shown = match translate_ui(language, text.trim()) {
-        Some(translated) if language != Language::English => translated.to_string(),
-        _ => text,
+    let translated = match translate_ui(language, text.trim()) {
+        Some(translated) if language != Language::English => Some(translated.to_string()),
+        _ => None,
+    };
+    let Some(shown) = translated else {
+        return painter.text(pos, anchor, text, font, color);
+    };
+    // A sentence (a hint in the middle of a panel) that is wider than the English one is drawn smaller,
+    // not over the panel beside it. A short label is never drawn smaller than the ones around it.
+    let font = if shown.chars().count() >= LONG && !shown.contains('\n') {
+        let width = |t: &str| painter.layout_no_wrap(t.to_string(), font.clone(), color).size().x;
+        let (was, now) = (width(&text), width(&shown));
+        match smaller(was, now) {
+            Some(scale) => egui::FontId::new(font.size * scale, font.family.clone()),
+            None => font,
+        }
+    } else {
+        font
     };
     painter.text(pos, anchor, shown, font, color)
+}
+
+/// From this many characters a text is a sentence, which may be drawn smaller to fit its place.
+pub(crate) const LONG: usize = 18;
+/// The smallest a sentence is drawn.
+const SMALLEST: f32 = 0.7;
+
+/// How much smaller a text of width `now` is drawn to be as wide as the English one, `was`; `None`
+/// when it already is (or would have to go below [`SMALLEST`], when it is left to overflow instead
+/// of being unreadable).
+pub(crate) fn smaller(was: f32, now: f32) -> Option<f32> {
+    if now <= was + 1.0 || now <= 0.0 {
+        return None;
+    }
+    Some((was / now).max(SMALLEST))
 }
 
 /// Text painted on a page or in a window, in the language; `None` when it has no translation.
@@ -377,6 +407,15 @@ mod tests {
             assert_eq!((*label, *act), (l.name(), Act::Language(*l)));
         }
         assert_eq!(listed[0].0, "English (Default)", "English is first");
+    }
+
+    #[test]
+    fn a_sentence_wider_than_the_english_is_made_smaller_but_not_unreadable() {
+        assert_eq!(smaller(300.0, 290.0), None, "narrower: as it is");
+        assert_eq!(smaller(300.0, 300.5), None, "a pixel over: as it is");
+        let scale = smaller(300.0, 330.0).expect("wider is made smaller");
+        assert!((scale - 300.0 / 330.0).abs() < 1e-6);
+        assert_eq!(smaller(100.0, 400.0), Some(SMALLEST), "never below the smallest");
     }
 
     #[test]

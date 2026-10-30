@@ -39,6 +39,12 @@ TABS = {'Media', 'Photo', 'Cut', 'Edit', 'Fusion', 'Color', 'Fairlight', 'Delive
 def fits_page(english, shown):
     # Text on a page is made smaller down to 3/4 when it is wider than the English; wider than that
     # (a third more) would run into its neighbour.
+    if len(english) >= 18 and english not in ROOMY:
+        # A short sentence fills the room it has (a hint in the middle of a panel): not wider than the
+        # English. A long one is drawn smaller when it is wider (down to 3/4), so up to a third wider.
+        if len(english) >= 40:
+            return width(shown) <= width(english) * 1.3
+        return width(shown) <= width(english) + 2
     if english in TABS:
         return width(shown) <= width(english) * 1.4 + 10
     if english in ROOMY:

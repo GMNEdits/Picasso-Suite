@@ -1,0 +1,5 @@
+Relink Missing Media|Medyayı bağla
+Relink Missing Media...|Medyayı bağla...
+Timeline Resolution|Çizelge çözün.
+Render All Video Tracks|Video parçaları render
+About Picasso Suite|Hakkında

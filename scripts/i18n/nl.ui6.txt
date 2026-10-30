@@ -1,0 +1,6 @@
+Chapters from Markers|Hoofdstukken
+Nothing to inspect|Niets te zien
+Relink Missing Media...|Media koppelen...
+Use optimized media|Geoptim. media
+Render All Video Tracks|Alle videosporen
+Revert to Last Saved Version|Terug naar opgeslagen

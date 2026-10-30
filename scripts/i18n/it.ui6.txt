@@ -1,0 +1,6 @@
+Archive Project...|Archivia...
+Estimated File Size|Dimens. stimata
+Retain sub-black and super-white data|Mantieni sotto-nero/sopra-bianco
+Use optimized media|Media ottimizzati
+Render All Video Tracks|Render tracce video
+About Picasso Suite|Info su
