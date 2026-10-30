@@ -13,6 +13,8 @@ Picasso Suite 0.6.2 is the biggest update since 0.6.0: the program can be shown 
 - ✅ **Update window and frame-rate question translated:** the update window and "Change Project Frame Rate?" (with sentences that hold a version or a frame rate) are in all 39 languages.
 
 ### 🐛 Fixed
+- ✅ **Edit page Inspector scroll:** the Inspector's scroll area had the same id as another list on the page, so dragging its bar moved the other list and the mouse wheel did not scroll the Inspector. It has its own id now, and a test checks that no page draws two widgets with one id. Reported by a tester on CachyOS.
+- ✅ **Edit page Effects button:** it no longer jumps to the Fusion page; it opens the Inspector, where a clip's effects are added and ordered.
 - ✅ **Exported files no longer read back one frame short:** the encoder gave the last video packet no duration, so 24 frames at 24 fps had a length of 23/24 s; every packet now carries one frame. Thanks to GANESH NIKAM.
 - ✅ **Recovering a copy that cannot be read:** Autosave no longer says it recovered a copy that is not a project (the project was marked changed with changes that never existed); it names the file and points at Discard. Thanks to GANESH NIKAM.
 - ✅ **Optimised media, made safer:** the index of copies can only name files inside the copies folder (an edited index could make Delete Copies remove another file), two paths that hash alike never share a copy (the hash is 64 bits and a taken name is not reused), a file name with a tab or a line break keeps no copy, and copies that were never finished (the program closed while one was being made) are swept at the next start when they are an hour old.

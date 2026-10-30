@@ -541,3 +541,35 @@ fn a_label_with_a_version_in_it_is_painted_in_the_language_chosen() {
     assert!(found.contains("Picasso Suite 0.7.0 está disponible"), "{found:?}");
     assert!(found.contains("Actualizar ahora"), "{found:?}");
 }
+
+#[test]
+/// Two widgets with one id share what egui keeps for it: dragging one scroll bar moved another
+/// list, and the wheel did not reach the right one (the Inspector of the Edit page and the pool).
+fn no_page_uses_a_widget_id_twice() {
+    let mut found = BTreeSet::new();
+    for demo in [true, false] {
+        for inspector in [false, true] {
+            for page in [Page::Media, Page::Cut, Page::Edit, Page::Color, Page::Capture, Page::Effects, Page::Audio, Page::Deliver] {
+                let ctx = Context::default();
+                let mut app = StudioApp::new(&ctx);
+                app.manager.open = false;
+                if demo { app.load_demo(); }
+                app.page = page;
+                let first = app.project().tracks.iter().flat_map(|t| t.clips.first()).next().map(|c| c.id);
+                app.selection = first;
+                app.inspector_open = inspector;
+                for _ in 0..4 {
+                    let input = RawInput { screen_rect: Some(Rect::from_min_size(Pos2::ZERO, egui::vec2(1920.0, 1080.0))), ..RawInput::default() };
+                    let mut out = ctx.run_ui(input, |ui| app.ui(ui));
+                    out.textures_delta.clear();
+                    let mut all = BTreeSet::new();
+                    for c in &out.shapes { texts(&c.shape, &mut all); }
+                    for t in all { if t.contains("Second use") { found.insert(format!("{page:?} demo={demo} inspector={inspector}: {t}")); } }
+                }
+            }
+        }
+    }
+    assert!(found.is_empty(), "ids used twice:
+{}", found.iter().cloned().collect::<Vec<_>>().join("
+"));
+}

@@ -246,7 +246,10 @@ impl StudioApp {
             if self.tool(ui, s.p(x * K, y), icon, tool).clicked() {
                 match icon {
                     Icon::PhotoMusic => self.import_dialog(ctx),
-                    Icon::Wand => self.page = crate::app::Page::Effects,
+                    // The clip's effects are in the Inspector (its Effects part): this is where they
+                    // are added and ordered, so the button opens it rather than leaving for the
+                    // Fusion page.
+                    Icon::Wand => self.inspector_open = true,
                     Icon::Export => self.page = crate::app::Page::Deliver,
                     Icon::Mixer => self.page = crate::app::Page::Audio,
                     Icon::Tools => self.inspector_open = !self.inspector_open,
@@ -274,7 +277,11 @@ impl StudioApp {
             ui.scope_builder(
                 UiBuilder::new().max_rect(e.rect(1362.0, 150.0, 1990.0, 586.0)),
                 |ui| {
+                    // Its own id: the media pool's list is drawn from a sibling scope of this page and
+                    // got the same one, so dragging this scroll bar moved the pool's list (and the wheel
+                    // did not reach this one).
                     egui::ScrollArea::vertical()
+                        .id_salt("edit_inspector_scroll")
                         .auto_shrink([false, false])
                         .show(ui, |ui| self.inspector(ui, ctx));
                 },
