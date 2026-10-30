@@ -82,7 +82,7 @@ Status at 0.6.2.
 - [ ] Editing: Trim Editor window, JKL in dynamic trim, auto align by waveform, timeline in a new window
 - [ ] Multicam: sync by timecode or waveform, live angle previews, switching sound
 - [ ] Audio: choosing the input device, the "Bus 1 -> Auto" output, ADR, audio effect cache, link groups
-- [ ] Performance: optimised media can be cancelled while a copy is made, and copes with variable frame rate sources (a copy is made at a constant frame rate, so a picture may be a frame off), and its menu items and Media Management section are translated
+- [ ] Performance: optimised media's menu items and Media Management section are translated (the Cancel button and the "Read as it is" state are done: a copy can be stopped, and a variable frame rate file is read as it is)
 - [ ] Project: libraries, archives, media management, metadata import/export, Lightbox, dual screen, clean feed
 - [ ] Help: tutorials (the Welcome dialog was removed); Check for Updates: the release workflow now updates the .deb, .rpm, macOS app, Windows folder and Flatpak in place on every build (`--update-from`), and its first run is still to come (0.6.0's Flatpak test failed because the build container has no `flatpak-session-helper`); the download from GitHub itself is only tried on Windows
 - [ ] Plugins: OpenFX (OFX) image effect plugins, the open standard: find and load plugins from the standard folders, show their parameters in the inspector, run them on a clip and in an export, on the processor first and then the graphics card

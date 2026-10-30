@@ -324,6 +324,9 @@ pub(crate) fn make(
     if num == 0 || den == 0 {
         return Err(format!("{}: the file does not say its frame rate", source.display()));
     }
+    if info.variable_frame_rate {
+        return Err(VARIABLE_RATE.to_string());
+    }
     let fps = picasso_core::Fps { num, den };
     let duration_us = info
         .duration_us
@@ -419,8 +422,17 @@ pub(crate) fn copy_size((width, height): (u32, u32)) -> (u32, u32) {
 
 /// The copies being made: one at a time, so two of them do not fight over the processor and the
 /// window says clearly how far the work has got.
+/// What a copy that was stopped reports, so it is not shown as a failure.
+pub(crate) const STOPPED: &str = "stopped";
+/// Why a file keeps no copy: its pictures are not a fixed time apart.
+pub(crate) const VARIABLE_RATE: &str = "its frame rate is not fixed, so a copy would not have its pictures at the same times";
+
 #[derive(Clone, Debug, Default)]
 pub(crate) struct Jobs {
+    /// Set to stop the copy being made; the thread making it looks at it with every picture.
+    cancel: std::sync::Arc<std::sync::atomic::AtomicBool>,
+    /// Files that cannot have a copy (this run), so they are not asked for again.
+    unsuitable: std::collections::HashSet<String>,
     /// The files waiting, in the order they were asked for.
     queue: std::collections::VecDeque<String>,
     /// The file being made now, with the pictures done and the total.
@@ -450,6 +462,7 @@ impl Jobs {
             return None;
         }
         let source = self.queue.pop_front()?;
+        self.cancel.store(false, std::sync::atomic::Ordering::Relaxed);
         self.running = Some((source.clone(), 0, 0));
         Some(source)
     }
@@ -484,6 +497,27 @@ impl Jobs {
         })
     }
 
+    /// Stops the copy being made and forgets the ones waiting. The copies already made stay.
+    pub(crate) fn cancel_all(&mut self) {
+        self.queue.clear();
+        self.cancel.store(true, std::sync::atomic::Ordering::Relaxed);
+    }
+
+    /// The flag the thread making a copy looks at.
+    pub(crate) fn cancel_flag(&self) -> std::sync::Arc<std::sync::atomic::AtomicBool> {
+        self.cancel.clone()
+    }
+
+    /// Says that `source` cannot have a copy.
+    pub(crate) fn mark_unsuitable(&mut self, source: &str) {
+        self.unsuitable.insert(source.to_string());
+    }
+
+    /// Whether `source` was found unable to have a copy.
+    pub(crate) fn is_unsuitable(&self, source: &str) -> bool {
+        self.unsuitable.contains(source)
+    }
+
     /// Whether anything is waiting or being made.
     pub(crate) fn busy(&self) -> bool {
         self.running.is_some() || !self.queue.is_empty()
@@ -498,6 +532,7 @@ pub(crate) fn start(
     dest: PathBuf,
     inbox: crate::platform::Inbox,
     ctx: egui::Context,
+    cancel: std::sync::Arc<std::sync::atomic::AtomicBool>,
 ) {
     std::thread::spawn(move || {
         let mut told = 0u64;
@@ -515,8 +550,12 @@ pub(crate) fn start(
                     },
                 );
             }
-            true
+            !cancel.load(std::sync::atomic::Ordering::Relaxed)
         });
+        let result = match result {
+            Err(_) if cancel.load(std::sync::atomic::Ordering::Relaxed) => Err(STOPPED.to_string()),
+            other => other,
+        };
         // A failed render leaves a truncated file behind; remove it so a retry makes a fresh one
         // and no orphan is left in the data folder.
         let made = match result {
@@ -650,6 +689,7 @@ impl StudioApp {
             .filter(|path| Path::new(path).is_file())
             .filter(|path| self.proxies.path_for(path).is_none())
             .filter(|path| !self.proxy_jobs.holds(path))
+            .filter(|path| !self.proxy_jobs.is_unsuitable(path))
             .collect()
     }
 
@@ -689,24 +729,39 @@ impl StudioApp {
                 self.proxy_jobs.done(&source);
                 return;
             };
-            crate::proxy::start(source, dest, self.inbox.clone(), self.ctx.clone());
+            crate::proxy::start(
+                source,
+                dest,
+                self.inbox.clone(),
+                self.ctx.clone(),
+                self.proxy_jobs.cancel_flag(),
+            );
         }
     }
 
     /// The copy of `source` was made (where it is) or could not be. The next one starts.
     pub(crate) fn finish_proxy(&mut self, source: String, made: Result<String, String>) {
         self.proxy_jobs.done(&source);
+        let mut stopped = false;
         match made {
             Ok(copy) => {
                 self.proxies.record(&source, Path::new(&copy));
                 self.proxies.save();
                 self.info(format!("Optimised {}", name_of(&source)));
             }
+            Err(e) if e == STOPPED => {
+                stopped = true;
+                self.info("Optimising stopped");
+            }
+            Err(e) if e == VARIABLE_RATE => {
+                self.proxy_jobs.mark_unsuitable(&source);
+                self.info(format!("{} is read as it is: {VARIABLE_RATE}", name_of(&source)));
+            }
             Err(e) => self.fail(format!("could not optimise {}: {e}", name_of(&source))),
         }
         self.refresh_proxies();
         self.start_next_proxy();
-        if !self.proxy_jobs.busy() && !self.status.error {
+        if !stopped && !self.proxy_jobs.busy() && !self.status.error && !self.proxy_jobs.is_unsuitable(&source) {
             self.info("The optimised copies are ready");
         }
     }
@@ -716,6 +771,15 @@ impl StudioApp {
         self.proxy_jobs.progress(source, done, total);
         let percent = (done * 100).checked_div(total).unwrap_or(0);
         self.info(format!("Optimising {}: {percent}%", name_of(source)));
+    }
+
+    /// Stops making copies: the one being made is given up (its partial file removed) and the ones
+    /// waiting are forgotten. The copies already made stay.
+    pub(crate) fn cancel_proxies(&mut self) {
+        if self.proxy_jobs.busy() {
+            self.proxy_jobs.cancel_all();
+            self.info("Stopping the optimised copies...");
+        }
     }
 
     /// Deletes the copies of the video files the timelines use.
@@ -1159,6 +1223,74 @@ mod tests {
         assert!(!a.is_file(), "this project's copy goes");
         assert!(b.is_file(), "another project's copy stays");
         assert_eq!(app.cache.copy_for(&mine), None);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn cancelling_forgets_the_waiting_and_stops_the_one_being_made() {
+        let mut jobs = Jobs::default();
+        jobs.enqueue("a.mov");
+        jobs.enqueue("b.mov");
+        jobs.enqueue("c.mov");
+        assert_eq!(jobs.take().as_deref(), Some("a.mov"));
+        let flag = jobs.cancel_flag();
+        assert!(!flag.load(std::sync::atomic::Ordering::Relaxed));
+        jobs.cancel_all();
+        assert!(flag.load(std::sync::atomic::Ordering::Relaxed), "the thread is told to stop");
+        assert!(!jobs.holds("b.mov") && !jobs.holds("c.mov"), "the ones waiting are forgotten");
+        assert!(jobs.holds("a.mov"), "the one being made stays until it reports back");
+        jobs.done("a.mov");
+        assert!(!jobs.busy());
+        // The next job starts with the flag down again.
+        jobs.enqueue("d.mov");
+        assert_eq!(jobs.take().as_deref(), Some("d.mov"));
+        assert!(!jobs.cancel_flag().load(std::sync::atomic::Ordering::Relaxed));
+    }
+
+    #[test]
+    fn a_file_found_unable_to_have_a_copy_is_not_asked_for_again() {
+        let mut jobs = Jobs::default();
+        assert!(!jobs.is_unsuitable("phone.mp4"));
+        jobs.mark_unsuitable("phone.mp4");
+        assert!(jobs.is_unsuitable("phone.mp4") && !jobs.is_unsuitable("other.mp4"));
+    }
+
+    #[test]
+    fn a_copy_being_made_can_be_stopped_and_leaves_nothing_but_the_error() {
+        let dir = scratch("proxy_stop");
+        let Some(file) = video(&dir, "long.mp4", "640x360") else {
+            return; // no ffmpeg here
+        };
+        let dest = dir.join("copy.mp4");
+        // Stops at the third picture.
+        let result = make(&file, &dest, &mut |done, _| done < 3);
+        assert!(result.is_err(), "a copy that was stopped is an error, not a copy");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_file_whose_frame_rate_varies_is_not_given_a_copy() {
+        let dir = scratch("proxy_vfr");
+        let path = dir.join("vfr.mp4");
+        // Pictures dropped here and there: the rate the file runs at and its average differ.
+        let made = std::process::Command::new("ffmpeg")
+            .args(["-y", "-v", "error", "-f", "lavfi", "-i", "testsrc=duration=4:size=320x180:rate=60"])
+            .args(["-vf", "select='lt(mod(n,10),3)+gt(n,150)'", "-vsync", "vfr"])
+            .args(["-pix_fmt", "yuv420p"])
+            .arg(&path)
+            .status()
+            .is_ok_and(|s| s.success());
+        if !made {
+            return; // no ffmpeg here
+        }
+        let info = picasso_decode::probe(&path).unwrap();
+        assert!(info.variable_frame_rate, "the rate varies: {info:?}");
+        let result = make(&path, &dir.join("copy.mp4"), &mut |_, _| true);
+        assert_eq!(result, Err(VARIABLE_RATE.to_string()));
+        // A fixed rate is still given a copy.
+        if let Some(fixed) = video(&dir, "fixed.mp4", "320x180") {
+            assert!(!picasso_decode::probe(&fixed).unwrap().variable_frame_rate);
+        }
         let _ = std::fs::remove_dir_all(&dir);
     }
 

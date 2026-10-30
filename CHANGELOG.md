@@ -13,6 +13,7 @@ Picasso Suite 0.6.2 is the biggest update since 0.6.0: the program can be shown 
 - ✅ **Update window and frame-rate question translated:** the update window and "Change Project Frame Rate?" (with sentences that hold a version or a frame rate) are in all 39 languages.
 
 ### 🐛 Fixed
+- ✅ **Optimised Media: Cancel, and variable frame rate:** **File > Media Management... > Optimised Media** has a **Cancel** button that stops the copy being made (its partial file is removed) and forgets the ones waiting; the copies already made stay. A file whose frame rate is not fixed (a phone or screen recording) is no longer given a constant-rate copy, whose pictures could be a frame off: it is read as it is and listed as "Read as it is".
 - ✅ **Edit page Inspector scroll:** the Inspector's scroll area had the same id as another list on the page, so dragging its bar moved the other list and the mouse wheel did not scroll the Inspector. It has its own id now, and a test checks that no page draws two widgets with one id. Reported by a tester on CachyOS.
 - ✅ **Edit page Effects button:** it no longer jumps to the Fusion page; it opens the Inspector, where a clip's effects are added and ordered.
 - ✅ **Exported files no longer read back one frame short:** the encoder gave the last video packet no duration, so 24 frames at 24 fps had a length of 23/24 s; every packet now carries one frame. Thanks to GANESH NIKAM.

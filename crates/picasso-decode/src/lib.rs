@@ -58,6 +58,10 @@ pub struct MediaInfo {
     pub level: Option<String>,
     /// The start timecode the file carries ("01:00:00:00"), when it has one.
     pub timecode: Option<String>,
+    /// Whether the pictures are not a fixed time apart (a phone or a screen recording): the rate
+    /// the file is made to run at differs from the average one by more than a few percent. A copy
+    /// of such a file at one rate would not have its pictures at the original's times.
+    pub variable_frame_rate: bool,
 }
 
 impl MediaInfo {
@@ -246,6 +250,13 @@ pub fn probe(path: &Path) -> Result<MediaInfo, DecodeError> {
             r
         }
     };
+    let variable_frame_rate = {
+        let (avg, base) = (rational(video.avg_frame_rate()), rational(video.rate()));
+        avg.0 > 0 && base.0 > 0 && {
+            let (a, b) = (f64::from(avg.0) / f64::from(avg.1), f64::from(base.0) / f64::from(base.1));
+            (a - b).abs() / b > 0.03
+        }
+    };
     let duration = input.duration();
     // A camera writes its start timecode in the video stream's metadata (the `tmcd` track of a
     // QuickTime file); some containers keep it on the file instead.
@@ -260,6 +271,7 @@ pub fn probe(path: &Path) -> Result<MediaInfo, DecodeError> {
         profile,
         video_codec: codec_name,
         timecode,
+        variable_frame_rate,
         audio_codec: input.streams().best(Type::Audio).and_then(|a| {
             ff::codec::context::Context::from_parameters(a.parameters())
                 .ok()

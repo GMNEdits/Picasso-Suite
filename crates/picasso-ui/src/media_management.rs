@@ -151,6 +151,8 @@ impl StudioApp {
                 "Waiting".to_string()
             } else if self.proxies.path_for(path).is_some() {
                 "Optimised".to_string()
+            } else if self.proxy_jobs.is_unsuitable(path) {
+                "Read as it is".to_string()
             } else {
                 "Not optimised".to_string()
             };
@@ -181,6 +183,13 @@ impl StudioApp {
                 .clicked()
             {
                 self.optimise_media();
+            }
+            if ui
+                .add_enabled(self.proxy_jobs.busy(), egui::Button::new("Cancel"))
+                .on_hover_text("Stops making copies; the ones already made are kept")
+                .clicked()
+            {
+                self.cancel_proxies();
             }
             let made = rows.iter().any(|(_, state, _)| state == "Optimised");
             if ui
